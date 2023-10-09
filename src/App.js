@@ -42,6 +42,7 @@ import MainDashboard from "./dashboardNew/screens/mainDashboard";
 import ScreenLayout from "./dashboardNew/containers/screenLayout/screenLayout";
 import ProfileDashboard from "./dashboardNew/screens/profileDashboard";
 import SecuritySettings from "./dashboardNew/containers/securitySettings/securitySettings";
+import ConverterDashboard from "./dashboardNew/screens/converterDashboard";
 
 function App() {
   useEffect(() => {
@@ -83,7 +84,7 @@ function App() {
   return (
     <div className="App">
       <MessageContextProvider>
-        <BrowserRouter>
+        <HashRouter>
           <ScrollToTop>
             <Routes>
               <Route
@@ -344,12 +345,20 @@ function App() {
                   </ScreenLayout>
                 }
               />
+              <Route
+                path="/dashboardNew/converter"
+                element={
+                  <ScreenLayout>
+                    <ConverterDashboard />
+                  </ScreenLayout>
+                }
+              />
             </Routes>
           </ScrollToTop>
 
           {/* COOKIE BANNER */}
           {!ck && <CookieBanner close={() => setCK(true)} />}
-        </BrowserRouter>
+        </HashRouter>
       </MessageContextProvider>
     </div>
   );

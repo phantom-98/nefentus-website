@@ -1,0 +1,144 @@
+.card {
+  width: max-content;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15rem;
+  margin-bottom: 2rem;
+}
+
+.options {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 1rem;
+}
+
+.circle {
+  height: 1.5rem;
+  width: 1.5rem;
+  transform: translateY(-1.5px);
+  border-radius: 50%;
+  transition: 0.5s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.optionActive .circle {
+  border: 1px solid rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.label {
+  font-size: 1.6rem;
+}
+
+.optionText {
+  font-size: 1.4rem;
+  opacity: 0.6;
+  transition: 0.5s ease-out;
+}
+
+.optionActive .optionText {
+  opacity: 1;
+}
+
+.convertIcon {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.walletBox {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+}
+
+.walletTop {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  opacity: 0.6;
+  margin-bottom: 3rem;
+}
+
+.walletBody {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: flex-end;
+}
+
+.inputWrapper input {
+  background-color: transparent;
+  border: 0px;
+  outline: 0;
+  color: white;
+  width: 6.5rem;
+  font-size: 3rem;
+  padding: 0px !important;
+  height: max-content;
+}
+
+.inputWrapper div {
+  font-size: 1.2rem;
+  opacity: 0.6;
+  transform: translateY(-1px);
+}
+
+.button {
+  width: 100%;
+  margin-top: 3rem;
+}
+
+.button > div {
+  width: 100% !important;
+}
+
+.crypto {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.crypto img {
+  width: 2.4rem;
+}
+
+.crypto div {
+  transform: translateY(1px);
+  font-size: 1.4rem;
+}
+
+@media (max-width: 900px) {
+  .card {
+    width: 100%;
+  }
+
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .options {
+    gap: 0rem;
+    width: 100%;
+    justify-content: space-between;
+  }
+}

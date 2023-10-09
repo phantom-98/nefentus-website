@@ -1,0 +1,29 @@
+.popup {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: rgba(16, 16, 16, 0.3);
+}
+
+.popupBox {
+  width: max-content;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.popupBox .title {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.buttons {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+}

@@ -1,5 +1,3 @@
-import ReactDOM from "react-dom";
-
 import Button from "../button/button";
 import styles from "./settingsTitle.module.css";
 
@@ -9,6 +7,7 @@ import Correct from "../../../assets/icon/correct.svg";
 import { classNames } from "classnames";
 import { useEffect, useState } from "react";
 import Card from "../card/card";
+import Popup from "../popup/popup";
 
 const SettingsItem = ({ data }) => {
   const [value, setValue] = useState([]);
@@ -61,7 +60,6 @@ const SettingsItem = ({ data }) => {
   const handleData = (data, index) => {
     setValue((prev) => {
       prev[index] = data;
-      console.log(prev, index);
       return [...prev];
     });
   };
@@ -112,6 +110,7 @@ const SettingsItem = ({ data }) => {
               setValue={(data) => handleData(data, index)}
               setShow={setShow}
               type={item.type}
+              popup={item.popup}
             />
           </div>
         ))}
@@ -144,9 +143,12 @@ const EnableType = ({ value }) => {
   );
 };
 
-const EditPopup = ({ show, setShow, value, setValue, type }) => {
+const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
   const [inputValue, setInputValue] = useState(value);
-  const dashboardElement = document.getElementById("dashboard");
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -154,31 +156,24 @@ const EditPopup = ({ show, setShow, value, setValue, type }) => {
 
   const handleConfirmClick = () => {
     setValue(inputValue);
-    setShow(false);
   };
 
-  return ReactDOM.createPortal(
-    <div
-      className={styles.popup}
-      style={{ display: show ? "initial" : "none" }}
-    >
-      <Card className={styles.popupBox}>
-        <div className={styles.title}>Change Value</div>
+  return (
+    <Popup show={show} setShow={setShow} onClick={handleConfirmClick}>
+      {popup === "language" ? (
+        <select id="language" className={styles.input} onChange={handleChange}>
+          <option value="English">English</option>
+          <option value="Ukrainian">Ukrainian</option>
+          <option value="German">German</option>
+        </select>
+      ) : (
         <input
           value={inputValue}
           type={type}
           className={styles.input}
           onChange={handleChange}
         />
-
-        <div className={styles.buttons}>
-          <Button onClick={() => setShow(false)}>Cancel</Button>
-          <Button color="white" onClick={handleConfirmClick}>
-            Confirm
-          </Button>
-        </div>
-      </Card>
-    </div>,
-    dashboardElement,
+      )}
+    </Popup>
   );
 };

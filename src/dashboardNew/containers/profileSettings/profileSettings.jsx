@@ -57,6 +57,7 @@ const data = [
         description:
           "Select your preferred language for email, app push and on-site inbox notifications.",
         value: "English",
+        popup: "language",
       },
     ],
     type: "edit",
