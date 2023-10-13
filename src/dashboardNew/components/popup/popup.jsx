@@ -27,10 +27,10 @@ const Popup = ({
         <div className={styles.title}>{title}</div>
         {children}
         <div className={styles.buttons}>
-          <Button onClick={() => setShow(false)}>Cancel</Button>
-          <Button color="white" onClick={handleConfirmClick}>
-            Confirm
+          <Button color="light" onClick={() => setShow(false)}>
+            Cancel
           </Button>
+          <Button onClick={handleConfirmClick}>Confirm</Button>
         </div>
       </Card>
     </div>,

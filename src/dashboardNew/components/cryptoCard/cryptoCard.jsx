@@ -2,55 +2,82 @@ import Button from "../button/button";
 import Card from "../card/card";
 import styles from "./cryptoCard.module.css";
 
-import Bitcoin from "../../../assets/icon/crypto/bitcoin.svg";
+import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
+import { useState } from "react";
 
 const data = [
   {
-    icon: Bitcoin,
-    title: "Bitcoin",
-    subtitle: "100c",
-    value: "$380,000.00",
-    cryptoValue: "22.41854",
+    icon: Ethereum,
+    title: "Ethereum",
+    subtitle: "$1,226.08",
+    middleName: "Ethereum",
+    middleInfo: "Network",
+    value: "$37,953.88",
+    cryptoValue: "ETH 30.94823503",
   },
   {
-    icon: Bitcoin,
-    title: "Bitcoin",
-    subtitle: "100c",
-    value: "$380,000.00",
-    cryptoValue: "22.41854",
+    icon: Ethereum,
+    title: "Ethereum",
+    subtitle: "$1,226.08",
+    middleName: "Ethereum",
+    middleInfo: "Network",
+    value: "$37,953.88",
+    cryptoValue: "ETH 30.94823503",
   },
   {
-    icon: Bitcoin,
-    title: "Bitcoin",
-    subtitle: "100c",
-    value: "$380,000.00",
-    cryptoValue: "22.41854",
+    icon: Ethereum,
+    title: "Ethereum",
+    subtitle: "$1,226.08",
+    middleName: "Ethereum",
+    middleInfo: "Network",
+    value: "$37,953.88",
+    cryptoValue: "ETH 30.94823503",
   },
   {
-    icon: Bitcoin,
-    title: "Bitcoin",
-    subtitle: "100c",
-    value: "$380,000.00",
-    cryptoValue: "22.41854",
+    icon: Ethereum,
+    title: "Ethereum",
+    subtitle: "$1,226.08",
+    middleName: "Ethereum",
+    middleInfo: "Network",
+    value: "$37,953.88",
+    cryptoValue: "ETH 30.94823503",
   },
   {
-    icon: Bitcoin,
-    title: "Bitcoin",
-    subtitle: "100c",
-    value: "$380,000.00",
-    cryptoValue: "22.41854",
+    icon: Ethereum,
+    title: "Ethereum",
+    subtitle: "$1,226.08",
+    middleName: "Ethereum",
+    middleInfo: "Network",
+    value: "$37,953.88",
+    cryptoValue: "ETH 30.94823503",
   },
 ];
 
 const CryptoCard = () => {
+  const [activeToggle, setActiveToggle] = useState(true);
+
   return (
     <Card>
       <div className={styles.top}>
         <div className={styles.label}>Crypto Market</div>
 
-        <div className={styles.buttons}>
-          <Button color="transparent">Receive</Button>
-          <Button color="white">Send</Button>
+        <div className={styles.buttonWrapper}>
+          <div className={styles.btn}>
+            <p>Hide Zero Balance Assets</p>
+
+            <div
+              onClick={() => setActiveToggle((prev) => !prev)}
+              className={`${activeToggle ? styles.activeToggle : ""} ${
+                styles.toggle
+              }`}
+            >
+              <div className={`${styles.toggleCircle}`}></div>
+            </div>
+          </div>
+          <div className={styles.buttons}>
+            <Button color="light">Receive</Button>
+            <Button>Send</Button>
+          </div>
         </div>
       </div>
 
@@ -75,6 +102,10 @@ const CryptoItem = ({ data }) => {
           <div className={styles.title}>{data.title}</div>
           <div className={styles.subtitle}>{data.subtitle}</div>
         </div>
+      </div>
+      <div className={styles.middle}>
+        <div className={styles.title}>{data.middleName}</div>
+        <div className={styles.subtitle}>{data.middleInfo}</div>
       </div>
       <div className={styles.right}>
         <div className={styles.title}>{data.value}</div>

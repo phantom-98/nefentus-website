@@ -13,7 +13,7 @@ const data = {
   datasets: [
     {
       data: [80, 20, 10],
-      backgroundColor: ["#8CD1EA", "#F24236", "#16C172"],
+      backgroundColor: ["#107CDF", "#AF26E7", "#F5B51B"],
       borderWidth: 0,
     },
   ],
@@ -36,7 +36,7 @@ const BalanceCard = () => {
         <div className={styles.value}>$53.529.32</div>
         <div className={styles.subtitle}>7 Crypto</div>
 
-        <Button color="white">Connect wallet</Button>
+        <Button>Connect Your Wallet</Button>
       </div>
 
       <div className={styles.right}>

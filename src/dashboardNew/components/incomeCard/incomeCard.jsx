@@ -87,8 +87,8 @@ export const data = {
     {
       label: "Last 24h",
       data: [1, 2, 3, 4, 5, 6, 7],
-      borderColor: "#8CD1EA",
-      backgroundColor: "#8CD1EA",
+      borderColor: "#3E61E7",
+      backgroundColor: "#3E61E7",
     },
     {
       label: "Previous 24h",

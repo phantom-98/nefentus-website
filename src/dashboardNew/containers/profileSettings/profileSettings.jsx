@@ -80,7 +80,8 @@ const ProfileSettings = () => {
         className={styles.button}
         style={{ display: "flex", justifyContent: "flex-end" }}
       >
-        <Button color="white">Save Changes</Button>
+        <Button color="light">Cancel</Button>
+        <Button>Save Changes</Button>
       </div>
     </Card>
   );

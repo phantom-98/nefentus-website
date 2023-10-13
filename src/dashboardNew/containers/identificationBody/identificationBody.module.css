@@ -1,0 +1,78 @@
+.titleHeader > div {
+  flex-direction: row;
+
+  align-items: center;
+}
+
+.box,
+.uploadItem {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.boxTitle {
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+  margin-top: 2.5rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.rowLeft {
+  font-size: 1.2rem;
+}
+
+.rowLeft span {
+  opacity: 0.6;
+}
+
+.rowRight {
+  font-size: 1.2rem;
+}
+
+.uploadItem {
+  margin-bottom: 1.5rem;
+}
+
+.rightUpload {
+  width: 35rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.formItem {
+  margin-bottom: 1rem;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button > div {
+  width: max-content;
+}
+
+@media (max-width: 900px) {
+  .titleHeader > div {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 650px) {
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rightUpload {
+    width: 100%;
+  }
+}

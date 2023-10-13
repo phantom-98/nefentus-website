@@ -43,6 +43,7 @@ import ScreenLayout from "./dashboardNew/containers/screenLayout/screenLayout";
 import ProfileDashboard from "./dashboardNew/screens/profileDashboard";
 import SecuritySettings from "./dashboardNew/containers/securitySettings/securitySettings";
 import ConverterDashboard from "./dashboardNew/screens/converterDashboard";
+import IdentificationDashboard from "./dashboardNew/screens/identificationDashboard";
 
 function App() {
   useEffect(() => {
@@ -350,6 +351,26 @@ function App() {
                 element={
                   <ScreenLayout>
                     <ConverterDashboard />
+                  </ScreenLayout>
+                }
+              />
+              <Route
+                path="/dashboardNew/products"
+                element={<ScreenLayout></ScreenLayout>}
+              />
+              <Route
+                path="/dashboardNew/payments"
+                element={<ScreenLayout></ScreenLayout>}
+              />
+              <Route
+                path="/dashboardNew/transaction"
+                element={<ScreenLayout></ScreenLayout>}
+              />
+              <Route
+                path="/dashboardNew/Identification"
+                element={
+                  <ScreenLayout>
+                    <IdentificationDashboard />
                   </ScreenLayout>
                 }
               />

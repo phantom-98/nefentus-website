@@ -6,27 +6,24 @@ const Button = ({ children, color, onClick }) => {
       onClick={onClick}
       className={styles.button}
       style={{
-        border:
-          color === "white"
-            ? "1px solid rgba(255,255,255,1)"
-            : "1px solid rgba(255,255,255,0.2)",
-        width: color === "gray" ? "10rem" : "",
+        width: color === "gray" ? "7rem" : "",
+        border: color === "gray" ? "1px solid rgba(255, 255, 255, 0.2)" : "",
       }}
     >
       <div
         className={styles.background}
         style={{
           backgroundColor:
-            color === "white"
-              ? "white"
+            color === "light"
+              ? "#222836"
               : color === "gray"
-              ? "rgba(255,255,255,0.08)"
-              : "",
+              ? "rgba(255, 255, 255, 0.08)"
+              : "#3E61E7",
         }}
       ></div>
       <div
         style={{
-          color: color === "white" ? "black" : "",
+          fontSize: color === "gray" ? "1rem" : "",
         }}
         className={styles.text}
       >

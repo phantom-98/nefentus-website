@@ -143,7 +143,7 @@ const EnableType = ({ value }) => {
   );
 };
 
-const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
+export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {

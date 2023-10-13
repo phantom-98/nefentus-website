@@ -1,6 +1,9 @@
 .card {
   width: max-content;
   margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .header {
@@ -127,7 +130,7 @@
 
 @media (max-width: 900px) {
   .card {
-    width: 100%;
+    width: 95%;
   }
 
   .header {

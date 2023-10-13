@@ -43,7 +43,7 @@ const ConverterCard = () => {
         <WalletBox />
 
         <div className={styles.button}>
-          <Button color="white">Convert</Button>
+          <Button>Convert</Button>
         </div>
       </div>
     </Card>
