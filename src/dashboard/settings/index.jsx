@@ -1,13 +1,12 @@
-import { Attachment, Authentificator } from "../input/input";
+import InputComponent, { Attachment, RawInput, Switcher } from "../input/input";
 import styles from "./settings.module.css";
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import Logo from "../../assets/logo/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import backend_API from "../../api/backendAPI";
-import Cookies from "universal-cookie";
-import InputComponent, { RawInput } from "../input/input";
 import backendAPI from "../../api/backendAPI";
+import Cookies from "universal-cookie";
 import Header from "../header/header";
 import BlobPicture from "../../components/blobPicture/blobPicture";
 import { KYC } from "./components/KYC";
@@ -21,13 +20,20 @@ import Tabs from "../../components/tabs/index";
 import CropDialog, {
   dataURLtoFile,
 } from "../../components/cropDialog/cropDialog";
+import { QRCodeSVG } from "qrcode.react";
 
-let nav = ["Profile", "Change password", "Change email"];
+let nav = [
+  "Profile",
+  "Change password",
+  "Change email",
+  "2-Factor Authentication",
+];
 
 const nav_kyc = [
   "Profile",
   "Change password",
   "Change email",
+  "2-Factor Authentication",
   <div>
     <span className={styles.rest}>Know Your Customer(</span>KYC
     <span className={styles.rest}>)</span>
@@ -165,6 +171,8 @@ const SettingsBody = ({ type }) => {
               return <PasswordBody active={active} />;
             case nav[2]:
               return <EmailBody active={active} />;
+            case nav[3]:
+              return <AuthenticatorBody active={active} />;
             default:
               return <KYC />;
           }
@@ -189,10 +197,16 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [imageName, setImageName] = useState(null);
   const [imageChanged, setImageChanged] = useState(false); // Set to true if image changed (was added or deleted))
-  const [isTotp, setIsTotp] = useState(localStorage.getItem("isMfa"));
-  const [isOtp, setIsOtp] = useState(localStorage.getItem("requireOtp"));
+  const [isTotp, setIsTotp] = useState(
+    JSON.parse(localStorage.getItem("isMfa")),
+  );
+  const [isOtp, setIsOtp] = useState(
+    JSON.parse(localStorage.getItem("requireOtp")),
+  );
   const [phishingCode, setPhishingCode] = useState(
-    localStorage.getItem("antiPhishingCode"),
+    localStorage.getItem("antiPhishingCode") !== "undefined"
+      ? localStorage.getItem("antiPhishingCode")
+      : "",
   );
 
   useEffect(() => {
@@ -298,6 +312,9 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
       setTimeout(() => {
         navigate("/");
       }, 1000);
+    } else {
+      localStorage.setItem("isMfa", isOtp.toString());
+      localStorage.setItem("requireOtp", isTotp.toString());
     }
 
     resetValues();
@@ -344,31 +361,6 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
           placeholder={email}
           type={"text"}
           value={email}
-        />
-      </div>
-
-      <div>
-        <InputComponent
-          disabled
-          label="Time-based one-time password"
-          type="radio"
-          value={isTotp}
-          options={[
-            { name: "Yes", value: "true" },
-            { name: "No", value: "false" },
-          ]}
-          setState={setIsTotp}
-        />
-        <InputComponent
-          disabled
-          label="One-time passwords via email"
-          type="radio"
-          value={isOtp}
-          options={[
-            { name: "Yes", value: "true" },
-            { name: "No", value: "false" },
-          ]}
-          setState={setIsOtp}
         />
       </div>
 
@@ -534,12 +526,7 @@ const PasswordBody = ({ active }) => {
           />
         </div>
       ))}
-      {/*
-            <Authentificator
-                placeholder={"Google Authentificator"}
-                connected={true}
-                handleClick={() => {}}
-			/>*/}
+
       <Buttons functions={["", handleConfirm]} buttons={["Reset", "Confirm"]} />
     </div>
   );
@@ -678,13 +665,94 @@ const EmailBody = ({ active }) => {
           />
         </div>
       ))}
-      {/*
-            <Authentificator
-                placeholder={"Google Authentificator"}
-                connected={true}
-                handleClick={() => {}}
-			/>*/}
       <Buttons functions={["", handleConfirm]} buttons={["Reset", "Confirm"]} />
+    </div>
+  );
+};
+
+const AuthenticatorBody = ({ active }) => {
+  const [isTotp, setIsTotp] = useState(
+    JSON.parse(localStorage.getItem("isMfa")),
+  );
+  const [isOtp, setIsOtp] = useState(
+    JSON.parse(localStorage.getItem("requireOtp")),
+  );
+  const firstName = useRef(localStorage.getItem("firstName"));
+  const lastName = useRef(localStorage.getItem("lastName"));
+  const email = useRef(localStorage.getItem("email"));
+  const business = useRef(localStorage.getItem("business"));
+  const phoneNumber = useRef(localStorage.getItem("phoneNumber"));
+  const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
+  const phishingCode = useRef(
+    localStorage.getItem("antiPhishingCode") !== "undefined"
+      ? localStorage.getItem("antiPhishingCode")
+      : "",
+  );
+
+  const [checked, setChecked] = useState(false);
+  const backendAPI = new backend_API();
+
+  const handleConfirm = async () => {
+    const requestData = {
+      firstName: firstName.current,
+      lastName: lastName.current,
+      phoneNumber: phoneNumber.current,
+      email: email.current,
+      business: business.current || "",
+      isMfa: isTotp,
+      requireOtp: isOtp,
+      antiPhishingCode: phishingCode.current,
+    };
+
+    const response2 = await backendAPI.update(requestData);
+    if (response2 == null) {
+      setErrorMessage("Error on updating data");
+    } else {
+      localStorage.setItem("isMfa", isOtp.toString());
+      localStorage.setItem("requireOtp", isTotp.toString());
+      setInfoMessage("Settings updated successfully!");
+    }
+  };
+
+  return (
+    <div className={styles.tabContent}>
+      <MessageComponent />
+
+      <TopInfo
+        title={instruction[active].title}
+        description={instruction[active].description}
+      />
+
+      <Switcher
+        title={"2-Factor Authentication"}
+        checked={checked}
+        setChecked={setChecked}
+      />
+      <Switcher
+        title={"Time-based one-time password"}
+        checked={isOtp}
+        setChecked={setIsOtp}
+      />
+
+      <Switcher
+        title={"One-time passwords via email"}
+        checked={isTotp}
+        setChecked={setIsTotp}
+      />
+      {checked && (
+        <div className={styles.QRCode}>
+          <QRCodeSVG
+            size={"20rem"}
+            value={"http://localhost:5173/dashboard/settings"}
+          />
+          <p>Scan this QR-code by your Authentificator</p>
+        </div>
+      )}
+
+      <Buttons
+        functions={[() => {}, handleConfirm]}
+        buttons={["Reset", "Confirm"]}
+      />
     </div>
   );
 };

@@ -18,8 +18,11 @@ import { z } from "zod";
 import Error from "../error/error";
 import setCookie from "../setCookie/setCookie";
 import ReCAPTCHA from "react-google-recaptcha";
+import { OneTimeCodeInput } from "../../dashboard/input/input";
 
 const ConfirmMeEmail = ({ email, code, setCode, handleClick }) => {
+  console.log(code, "code");
+
   return (
     <div className={styles["confirm-email"]}>
       <h3>Check your email for a code</h3>
@@ -28,11 +31,8 @@ const ConfirmMeEmail = ({ email, code, setCode, handleClick }) => {
         please enter it soon.
       </p>
       <form onSubmit={handleClick}>
-        <Input
-          value={code}
-          setState={setCode}
-          style={{ backgroundColor: "#161616" }}
-        />
+        <OneTimeCodeInput setOTPCode={setCode} />
+
         <div className={styles["button-group"]}>
           <div className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}>
             <Button className={styles.button} onClick={handleClick}>

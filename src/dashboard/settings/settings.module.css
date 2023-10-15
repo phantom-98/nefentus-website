@@ -418,7 +418,16 @@
   border-radius: 0.5rem;
   display: flex;
   justify-content: center;
-  .kycImage {
-    height: 25rem;
-  }
+}
+.kycImage {
+  height: 25rem;
+}
+
+.QRCode {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.6rem;
+  gap: 2rem;
 }
