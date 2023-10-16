@@ -5,25 +5,7 @@ import Negative from "../../../assets/icon/negative.svg";
 
 import styles from "./earningCards.module.css";
 
-const data = [
-  {
-    label: "Sales Total",
-    value: "+$4,678.67",
-    percentage: 2.11,
-  },
-  {
-    label: "Sales Total",
-    value: "+$4,678.67",
-    percentage: -2.11,
-  },
-  {
-    label: "Sales Total",
-    value: "+$4,678.67",
-    percentage: 2.11,
-  },
-];
-
-const EarningCards = () => {
+const EarningCards = ({ data }) => {
   return (
     <div className={styles.cards}>
       {data.map((item, index) => (

@@ -6,17 +6,17 @@ import ProfileCard from "../components/profileCard/profileCard";
 
 const data = [
   {
-    label: "Sales Total",
+    label: "Total Income",
     value: "+$4,678.67",
     percentage: 2.11,
   },
   {
-    label: "Sales Total",
+    label: "Total Income",
     value: "+$4,678.67",
     percentage: -2.11,
   },
   {
-    label: "Sales Total",
+    label: "Total Income",
     value: "+$4,678.67",
     percentage: 2.11,
   },
@@ -42,16 +42,14 @@ const chartData = {
   ],
 };
 
-const MainDashboard = () => {
+const AffiliateDashboard = () => {
   return (
     <div>
-      <ProfileCard />
-      <BalanceCard />
+      <ProfileCard type="affiliate" />
       <EarningCards data={data} />
       <IncomeCard data={chartData} />
-      <CryptoCard />
     </div>
   );
 };
 
-export default MainDashboard;
+export default AffiliateDashboard;

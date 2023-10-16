@@ -23,18 +23,7 @@ import PasswordForgot from "./pages/PasswordForgot";
 import Product from "./pages/Product";
 import Pay from "./pages/Pay";
 import { useEffect, useState } from "react";
-import AffiliateDashboard from "./dashboard/Affiliate";
-import Settings from "./dashboard/Settings";
-import Vendor from "./dashboard/Vendor";
 import ResetPassword from "./pages/ResetPassword";
-import Products from "./dashboard/Products";
-import DashboardLayout from "./dashboard/dashboardLayout/dashboardLayout";
-import Transactions from "./dashboard/Transactions";
-import PaymentDashboard from "./dashboard/Payment";
-import PayrollDashboard from "./dashboard/Payroll";
-import Wallet from "./dashboard/Wallet";
-import Admin from "./dashboard/Admin";
-import Kyc from "./dashboard/Kyc";
 import CookieBanner from "./components/cookieBanner/cookieBanner";
 import Cookies from "js-cookie";
 import { MessageContextProvider } from "./context/message";
@@ -44,6 +33,12 @@ import ProfileDashboard from "./dashboardNew/screens/profileDashboard";
 import SecuritySettings from "./dashboardNew/containers/securitySettings/securitySettings";
 import ConverterDashboard from "./dashboardNew/screens/converterDashboard";
 import IdentificationDashboard from "./dashboardNew/screens/identificationDashboard";
+
+import AffiliateDashboard from "./dashboardNew/screens/affiliateDashboard";
+import ProductsDashboard from "./dashboardNew/screens/productsDashboard";
+import TransactionDashboard from "./dashboardNew/screens/transactionDashboard";
+import PaymentDashboard from "./dashboardNew/screens/paymentDashboard";
+import AdminDashboard from "./dashboardNew/screens/adminDashboard";
 
 function App() {
   useEffect(() => {
@@ -173,159 +168,21 @@ function App() {
                   </>
                 }
               />
-              <Route path="/dashboard">
-                <Route
-                  path="/dashboard/affiliate"
-                  element={
-                    <>
-                      <AffiliateDashboard />
-                    </>
-                  }
-                />
-                <Route
-                  path="/dashboard/settings"
-                  element={
-                    <>
-                      <Settings />
-                    </>
-                  }
-                />
-                <Route
-                  path="/dashboard/vendor"
-                  element={
-                    <DashboardLayout>
-                      <Vendor />
-                    </DashboardLayout>
-                  }
-                />
-
-                <Route
-                  path="/dashboard/product"
-                  element={
-                    <DashboardLayout>
-                      <Products />
-                    </DashboardLayout>
-                  }
-                />
-
-                <Route
-                  path="/dashboard/transactions"
-                  element={
-                    <DashboardLayout>
-                      <Transactions />
-                    </DashboardLayout>
-                  }
-                />
-
-                <Route
-                  path="/dashboard/payment"
-                  element={
-                    <DashboardLayout>
-                      <PaymentDashboard />
-                    </DashboardLayout>
-                  }
-                />
-
-                <Route
-                  path="/dashboard/payroll"
-                  element={
-                    <DashboardLayout>
-                      <PayrollDashboard />
-                    </DashboardLayout>
-                  }
-                />
-
-                <Route
-                  path="/dashboard/wallet"
-                  element={
-                    <DashboardLayout>
-                      <Wallet />
-                    </DashboardLayout>
-                  }
-                />
-
-                <Route
-                  path="/dashboard/admin"
-                  element={
-                    <>
-                      <Admin type={"admin"} />
-                    </>
-                  }
-                />
-
-                <Route
-                  path="/dashboard/seniorbroker"
-                  element={
-                    <>
-                      <Admin type={"seniorbroker"} />
-                    </>
-                  }
-                />
-
-                <Route
-                  path="/dashboard/broker"
-                  element={
-                    <>
-                      <Admin type={"broker"} />
-                    </>
-                  }
-                />
-
-                <Route
-                  path="/dashboard/leader"
-                  element={
-                    <>
-                      <Admin type={"leader"} />
-                    </>
-                  }
-                />
-
-                <Route
-                  path="/dashboard/kyc"
-                  element={
-                    <>
-                      <Kyc />
-                    </>
-                  }
-                />
-
-                <Route
-                  path="/dashboard/vendor/settings"
-                  element={
-                    <DashboardLayout>
-                      <Settings type="vendor" />
-                    </DashboardLayout>
-                  }
-                />
-              </Route>
-              <Route
-                path="/product/:productLink"
-                element={
-                  <>
-                    <Navigation />
-
-                    <Product />
-                    <Footer />
-                  </>
-                }
-              />
-              <Route
-                path="/pay/:payLink"
-                element={
-                  <>
-                    <Navigation />
-
-                    <Pay />
-                    <Footer />
-                  </>
-                }
-              />
 
               <Route
                 path="/dashboardNew/"
                 element={
                   <ScreenLayout>
                     <MainDashboard />
+                  </ScreenLayout>
+                }
+              />
+
+              <Route
+                path="/dashboardNew/affiliate"
+                element={
+                  <ScreenLayout>
+                    <AffiliateDashboard />
                   </ScreenLayout>
                 }
               />
@@ -356,15 +213,43 @@ function App() {
               />
               <Route
                 path="/dashboardNew/products"
-                element={<ScreenLayout></ScreenLayout>}
+                element={
+                  <ScreenLayout>
+                    <ProductsDashboard />
+                  </ScreenLayout>
+                }
               />
               <Route
                 path="/dashboardNew/payments"
-                element={<ScreenLayout></ScreenLayout>}
+                element={
+                  <ScreenLayout>
+                    <PaymentDashboard />
+                  </ScreenLayout>
+                }
+              />
+              <Route
+                path="/dashboardNew/admin"
+                element={
+                  <ScreenLayout>
+                    <AdminDashboard />
+                  </ScreenLayout>
+                }
+              />
+              <Route
+                path="/dashboardNew/partner"
+                element={
+                  <ScreenLayout>
+                    <AdminDashboard type="partner" />
+                  </ScreenLayout>
+                }
               />
               <Route
                 path="/dashboardNew/transaction"
-                element={<ScreenLayout></ScreenLayout>}
+                element={
+                  <ScreenLayout>
+                    <TransactionDashboard />
+                  </ScreenLayout>
+                }
               />
               <Route
                 path="/dashboardNew/Identification"

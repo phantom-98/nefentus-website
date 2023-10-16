@@ -145,10 +145,10 @@
 }
 
 .profileBody {
-  padding: 1rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1rem !important;
 }

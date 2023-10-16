@@ -18,7 +18,7 @@ const Button = ({ children, color, onClick }) => {
               ? "#222836"
               : color === "gray"
               ? "rgba(255, 255, 255, 0.08)"
-              : "#3E61E7",
+              : "#0784B5",
         }}
       ></div>
       <div

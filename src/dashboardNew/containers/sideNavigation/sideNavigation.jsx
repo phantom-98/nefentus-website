@@ -4,9 +4,9 @@ import Profile from "../../../assets/icon/user.svg";
 import LightMode from "../../../assets/icon/lightMode2.svg";
 import DarkMode from "../../../assets/icon/darkMode2.svg";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/button/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const content = [
   {
@@ -116,33 +116,74 @@ const content = [
 ];
 
 const SideNavigation = () => {
-  const [acitveIndex, setActiveIndex] = useState(0);
+  const query = useLocation();
+
+  const [active, setActive] = useState(0);
   const [lightMode, setLightMode] = useState(false);
 
-  const handleClick = (index, disable) => {
+  const handleClick = (name, disable) => {
     if (disable) return;
 
-    setActiveIndex(index);
+    setActive(name);
+  };
+
+  useEffect(() => {
+    switch (query.pathname) {
+      case "/dashboardNew/":
+        setActive("Dashboard");
+        break;
+      case "/dashboardNew/affiliate":
+        setActive("Affiliate");
+        break;
+      case "/dashboardNew/products":
+        setActive("Products");
+        break;
+      case "/dashboardNew/payments":
+        setActive("Payments");
+        break;
+      case "/dashboardNew/transaction":
+        setActive("Transaction");
+        break;
+      case "/dashboardNew/converter":
+        setActive("Converter");
+        break;
+      case "/dashboardNew/admin":
+        setActive("Admin");
+        break;
+      case "/dashboardNew/partner":
+        setActive("Admin");
+        break;
+      default:
+        setActive("");
+        break;
+    }
+  }, [query.pathname]);
+
+  const getFullSideBar = (active) => {
+    if (active === "Affiliate" || active === "Admin") return false;
+
+    return true;
   };
 
   return (
     <div className={styles.container}>
-      {content.map((item, index) => (
-        <Link
-          to={item.link}
-          key={index}
-          className={`${styles.item} ${
-            acitveIndex === index ? styles.active : ""
-          }`}
-          onClick={() => handleClick(index, item.soon)}
-          style={{ pointerEvents: item.soon ? "none" : "" }}
-        >
-          {item.icon}
-          <p>{item.text}</p>
+      {getFullSideBar(active) &&
+        content.map((item, index) => (
+          <Link
+            to={item.link}
+            key={index}
+            className={`${styles.item} ${
+              active === item.text ? styles.active : ""
+            }`}
+            onClick={() => handleClick(item.text, item.soon)}
+            style={{ pointerEvents: item.soon ? "none" : "" }}
+          >
+            {item.icon}
+            <p>{item.text}</p>
 
-          {item.soon && <div className={styles.soon}>Coming Soon</div>}
-        </Link>
-      ))}
+            {item.soon && <div className={styles.soon}>Coming Soon</div>}
+          </Link>
+        ))}
 
       <div className={styles.mobItems}>
         <div className={styles.item}>
@@ -165,7 +206,13 @@ const SideNavigation = () => {
       </div>
 
       <div className={styles.referral}>
-        <Button>Referral</Button>
+        {getFullSideBar(active) ? (
+          <Button>Referral</Button>
+        ) : (
+          <Link to="/dashboardNew/">
+            <Button>Vendor Dashboard</Button>
+          </Link>
+        )}
       </div>
     </div>
   );

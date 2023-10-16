@@ -79,29 +79,9 @@ export const options = {
   },
 };
 
-const labels = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "00:00"];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Last 24h",
-      data: [1, 2, 3, 4, 5, 6, 7],
-      borderColor: "#3E61E7",
-      backgroundColor: "#3E61E7",
-    },
-    {
-      label: "Previous 24h",
-      data: [12, 18, 9, 5, 3, 15, 20],
-      borderColor: "rgba(255, 255, 255,0.2)",
-      backgroundColor: "rgba(255, 255, 255,0.2)",
-    },
-  ],
-};
-
-const IncomeCard = () => {
+const IncomeCard = ({ data }) => {
   return (
-    <Card>
+    <Card className={styles.card}>
       <div className={styles.label}>Income 24 Hours</div>
 
       <div className={styles.chart}>

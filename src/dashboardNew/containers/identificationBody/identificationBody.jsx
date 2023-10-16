@@ -98,7 +98,9 @@ const IdentificationBody = () => {
             </div>
             <AddText label="Full Name" />
             <AddText label="Address" />
+            <AddText label="City and Zip Code" />
             <AddFile label="Government Issued ID" />
+            <AddFile label="Picture with ID in hand" />
           </div>
           <div className={styles.uploadItem}>
             <div className={`${styles.row} ${styles.rowItem}`}>

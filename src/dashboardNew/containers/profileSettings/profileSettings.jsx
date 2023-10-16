@@ -62,6 +62,17 @@ const data = [
     ],
     type: "edit",
   },
+  {
+    list: [
+      {
+        label: "Enable Invoicing",
+        description:
+          "Once disabled, you will not be able to receive marketing notifications (email, app push and on-site inbox notifications).",
+        value: false,
+      },
+    ],
+    type: "enable",
+  },
 ];
 
 const ProfileSettings = () => {

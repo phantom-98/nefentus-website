@@ -1,0 +1,19 @@
+.body {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  grid-template-rows: 1fr;
+
+  grid-template-areas: "chart chart .";
+}
+
+.body > div:first-child {
+  grid-area: chart;
+}
+
+@media (max-width: 900px) {
+  .body {
+    grid-template-areas: "chart";
+    grid-template-columns: 1fr;
+  }
+}
