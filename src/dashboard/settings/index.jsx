@@ -729,13 +729,13 @@ const AuthenticatorBody = ({ active }) => {
         setChecked={setChecked}
       />
       <Switcher
-        title={"Time-based one-time password"}
+        title={"One-time passwords via email"}
         checked={isOtp}
         setChecked={setIsOtp}
       />
 
       <Switcher
-        title={"One-time passwords via email"}
+        title={"Time-based one-time password"}
         checked={isTotp}
         setChecked={setIsTotp}
       />
