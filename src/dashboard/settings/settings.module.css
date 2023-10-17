@@ -140,6 +140,10 @@
   padding-top: 3rem;
 }
 
+.kycRequired {
+  color: red;
+}
+
 .kycDrop {
   text-align: center;
   border-radius: 1rem;
@@ -249,12 +253,15 @@
 }
 
 .popup {
-  text-align: center;
   border-radius: 1rem;
   padding: 3rem;
   width: 100%;
   margin: 2.5rem;
   max-width: 50rem;
+}
+
+.popup > p {
+  text-align: center;
 }
 
 .modalHeadline {

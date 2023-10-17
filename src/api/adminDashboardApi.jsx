@@ -5,9 +5,9 @@ export default class adminDashboardApi {
   constructor(type) {
     if (type !== "admin") type = "partner";
     this.baseURL =
-      process.env.REACT_APP_BASE_ENDPOINT_API + `/dashboard/${type}`;
+      process.env.VITE_REACT_APP_BASE_ENDPOINT_API + `/dashboard/${type}`;
     this.token = Cookies.get("token");
-    ReactGA.initialize(process.env.REACT_APP_GA_ID);
+    ReactGA.initialize(process.env.VITE_REACT_APP_GA_ID);
   }
 
   async checkPermission() {
@@ -119,6 +119,71 @@ export default class adminDashboardApi {
       const url = `${this.baseURL}/users`;
       const options = {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async getUsersWithKYC() {
+    try {
+      const url = `${this.baseURL}/users_kyc`;
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async acceptKYC(id) {
+    try {
+      console.log(id);
+      const url = `${this.baseURL}/accept_kyc/${id}`;
+      const options = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async declineKYC(id) {
+    try {
+      console.log(id);
+      const url = `${this.baseURL}/decline_kyc/${id}`;
+      const options = {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,

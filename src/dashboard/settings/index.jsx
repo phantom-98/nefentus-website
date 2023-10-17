@@ -22,11 +22,12 @@ import CropDialog, {
   dataURLtoFile,
 } from "../../components/cropDialog/cropDialog";
 
-let nav = ["Profile", "Change password"];
+let nav = ["Profile", "Change password", "Change email"];
 
 const nav_kyc = [
   "Profile",
   "Change password",
+  "Change email",
   <div>
     <span className={styles.rest}>Know Your Customer(</span>KYC
     <span className={styles.rest}>)</span>
@@ -150,17 +151,23 @@ const SettingsBody = ({ type }) => {
         initActiveTab={nav[active]}
         getHeader={(tabId) => tabId}
         getBody={(tabId) => {
-          if (tabId === nav[0])
-            return (
-              <ProfileBody
-                active={active}
-                afterUpdateSettings={() =>
-                  setProfilePicUrl(localStorage.getItem("profile_pic"))
-                }
-              />
-            );
-          else if (tabId === nav[1]) return <PasswordBody active={active} />;
-          else return <KYC />;
+          switch (tabId) {
+            case nav[0]:
+              return (
+                <ProfileBody
+                  active={active}
+                  afterUpdateSettings={() =>
+                    setProfilePicUrl(localStorage.getItem("profile_pic"))
+                  }
+                />
+              );
+            case nav[1]:
+              return <PasswordBody active={active} />;
+            case nav[2]:
+              return <EmailBody active={active} />;
+            default:
+              return <KYC />;
+          }
         }}
       />
     </div>
@@ -182,6 +189,11 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [imageName, setImageName] = useState(null);
   const [imageChanged, setImageChanged] = useState(false); // Set to true if image changed (was added or deleted))
+  const [isTotp, setIsTotp] = useState(localStorage.getItem("isMfa"));
+  const [isOtp, setIsOtp] = useState(localStorage.getItem("requireOtp"));
+  const [phishingCode, setPhishingCode] = useState(
+    localStorage.getItem("antiPhishingCode"),
+  );
 
   useEffect(() => {
     const profilePic = localStorage.getItem("profile_pic");
@@ -220,6 +232,7 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
   ];
 
   const backendAPI = new backend_API();
+  const navigate = useNavigate();
 
   const handleUpload = (uploadedFile) => {
     setFile(uploadedFile);
@@ -257,7 +270,10 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
       lastName: lastName,
       phoneNumber: phoneNumber,
       email: email,
-      business: business,
+      business: business || "",
+      isMfa: isTotp,
+      requireOtp: isOtp,
+      antiPhishingCode: phishingCode,
     };
 
     let response = 1;
@@ -278,6 +294,10 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
     const response2 = await backendAPI.update(requestData);
     if (response2 == null) {
       setErrorMessage("Error on updating data");
+      await backendAPI.signout();
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
 
     resetValues();
@@ -326,6 +346,39 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
           value={email}
         />
       </div>
+
+      <div>
+        <InputComponent
+          disabled
+          label="Time-based one-time password"
+          type="radio"
+          value={isTotp}
+          options={[
+            { name: "Yes", value: "true" },
+            { name: "No", value: "false" },
+          ]}
+          setState={setIsTotp}
+        />
+        <InputComponent
+          disabled
+          label="One-time passwords via email"
+          type="radio"
+          value={isOtp}
+          options={[
+            { name: "Yes", value: "true" },
+            { name: "No", value: "false" },
+          ]}
+          setState={setIsOtp}
+        />
+      </div>
+
+      <InputComponent
+        label="Anti Phishing Code"
+        placeholder="Anti Phishing Code"
+        type="text"
+        value={phishingCode}
+        setState={setPhishingCode}
+      />
 
       <Attachment
         label="Upload logo image"
@@ -418,7 +471,7 @@ const PasswordBody = ({ active }) => {
       setErrorMessage("Code is not valid or too old!");
       return;
     }
-    setInfoMessage("Password succesfully changed!");
+    setInfoMessage("Password successfully changed!");
     resetValues();
     setVerificationCode("");
     setOpenBox(false);
@@ -455,6 +508,150 @@ const PasswordBody = ({ active }) => {
                 Cancel
               </Button>
               <Button onClick={handleConfirmCode} color="white">
+                Confirm
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <MessageComponent hide={openBox} />
+
+      <TopInfo
+        title={instruction[active].title}
+        description={instruction[active].description}
+      />
+
+      {passwordContent.map((item) => (
+        <div>
+          <InputComponent
+            label={item.label + (item.required ? "*" : "")}
+            placeholder={item.placeholder}
+            type={item.type}
+            setState={item.onChange}
+            value={item.value}
+            secure
+          />
+        </div>
+      ))}
+      {/*
+            <Authentificator
+                placeholder={"Google Authentificator"}
+                connected={true}
+                handleClick={() => {}}
+			/>*/}
+      <Buttons functions={["", handleConfirm]} buttons={["Reset", "Confirm"]} />
+    </div>
+  );
+};
+
+const EmailBody = ({ active }) => {
+  const [openBox, setOpenBox] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
+  const [verificationCode, setVerificationCode] = useState(null);
+  const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
+
+  const backendAPI = new backend_API();
+  const navigate = useNavigate();
+
+  const passwordContent = [
+    {
+      label: "New Email",
+      placeholder: "Enter new email",
+      type: "email",
+      value: newEmail,
+      onChange: setNewEmail,
+      required: true,
+    },
+    {
+      label: "Confirm Email",
+      placeholder: "Confirm new email",
+      type: "email",
+      value: confirmEmail,
+      onChange: setConfirmEmail,
+      required: true,
+    },
+  ];
+
+  const logOut = async () => {
+    try {
+      await backendAPI.signout();
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleConfirm = async () => {
+    if (newEmail !== confirmEmail) {
+      setErrorMessage("Emails are not equal");
+      return;
+    }
+
+    const response = await backendAPI.changeEmailDashboard(newEmail);
+    if (response == null) {
+      setErrorMessage("Email is already in use!");
+      return;
+    } else {
+      setInfoMessage("Email successfully changed!");
+    }
+    setErrorMessage(null);
+    setOpenBox(true);
+  };
+
+  const resetValues = () => {
+    setNewEmail("");
+    setConfirmEmail("");
+  };
+
+  const handleClose = () => {
+    setOpenBox(false);
+    setVerificationCode("");
+  };
+
+  const handleCode = async () => {
+    if (verificationCode.trim().length === 0) {
+      setErrorMessage("Enter confirmation code!");
+      return;
+    } else {
+      const response = await backendAPI.confirmEmail(
+        verificationCode.trim(),
+        newEmail,
+      );
+      if (response == null) {
+        setErrorMessage("Wrong verification code!");
+        return;
+      } else {
+        setInfoMessage("Email successfully changed!");
+        resetValues();
+        await logOut();
+      }
+    }
+  };
+
+  return (
+    <div className={styles.tabContent}>
+      {openBox && (
+        <div className={styles.modal}>
+          <div className={`${styles.popup} card`}>
+            <MessageComponent />
+
+            <p className={styles.modalHeadline}>Enter verification code:</p>
+
+            <RawInput
+              value={verificationCode}
+              setState={setVerificationCode}
+              type="text"
+            />
+
+            <div className={styles.modalButtonRow}>
+              <Button onClick={handleClose} color="white">
+                Cancel
+              </Button>
+              <Button onClick={handleCode} color="black">
                 Confirm
               </Button>
             </div>
