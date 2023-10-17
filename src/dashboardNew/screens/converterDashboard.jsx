@@ -1,11 +1,7 @@
 import ConverterCard from "../components/converterCard/converterCard";
 
 const ConverterDashboard = () => {
-  return (
-    <div>
-      <ConverterCard />
-    </div>
-  );
+  return <ConverterCard />;
 };
 
 export default ConverterDashboard;

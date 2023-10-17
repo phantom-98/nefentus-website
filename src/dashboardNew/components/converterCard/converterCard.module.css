@@ -1,10 +1,10 @@
+.cardWrapper {
+  height: 100%;
+}
+
 .card {
   width: max-content;
-  margin: 0 auto;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  margin: auto;
 }
 
 .header {

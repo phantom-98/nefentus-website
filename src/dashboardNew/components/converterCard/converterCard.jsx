@@ -9,44 +9,46 @@ import Bitcoin from "../../../assets/icon/crypto/bitcoin.svg";
 const ConverterCard = () => {
   const [active, setActive] = useState(0);
   return (
-    <Card className={styles.card}>
-      <div className={styles.header}>
-        <div className={styles.label}>Wallet</div>
+    <div className={styles.cardWrapper}>
+      <Card className={styles.card}>
+        <div className={styles.header}>
+          <div className={styles.label}>Wallet</div>
 
-        <div className={styles.options}>
-          <div
-            onClick={() => setActive(0)}
-            className={`${styles.option} ${
-              active === 0 ? styles.optionActive : ""
-            }`}
-          >
-            <div className={styles.circle}></div>
-            <div className={styles.optionText}>Nef Wallet</div>
+          <div className={styles.options}>
+            <div
+              onClick={() => setActive(0)}
+              className={`${styles.option} ${
+                active === 0 ? styles.optionActive : ""
+              }`}
+            >
+              <div className={styles.circle}></div>
+              <div className={styles.optionText}>Nef Wallet</div>
+            </div>
+            <div
+              onClick={() => setActive(1)}
+              className={`${styles.option} ${
+                active === 1 ? styles.optionActive : ""
+              }`}
+            >
+              <div className={styles.circle}></div>
+              <div className={styles.optionText}>Wallet Connect</div>
+            </div>
           </div>
-          <div
-            onClick={() => setActive(1)}
-            className={`${styles.option} ${
-              active === 1 ? styles.optionActive : ""
-            }`}
-          >
-            <div className={styles.circle}></div>
-            <div className={styles.optionText}>Wallet Connect</div>
+        </div>
+
+        <div>
+          <WalletBox />
+          <div className={styles.convertIcon}>
+            <img src={Convert} alt="" />
+          </div>
+          <WalletBox />
+
+          <div className={styles.button}>
+            <Button>Convert</Button>
           </div>
         </div>
-      </div>
-
-      <div>
-        <WalletBox />
-        <div className={styles.convertIcon}>
-          <img src={Convert} alt="" />
-        </div>
-        <WalletBox />
-
-        <div className={styles.button}>
-          <Button>Convert</Button>
-        </div>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 };
 

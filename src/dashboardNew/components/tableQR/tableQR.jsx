@@ -1,10 +1,15 @@
+import { useState } from "react";
+import { QRPopup } from "../popup/popup";
+
 const TableQR = ({ link }) => {
+  const [show, setShow] = useState(false);
   return (
-    <div>
-      <a href={link} target="_blank" rel="noreferrer">
+    <>
+      <div style={{ cursor: "pointer" }} onClick={() => setShow(true)}>
         <img src={link} style={{ height: "2rem", width: "auto" }} alt="" />
-      </a>
-    </div>
+      </div>
+      <QRPopup show={show} setShow={setShow} />
+    </>
   );
 };
 

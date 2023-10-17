@@ -142,7 +142,7 @@ const SideNavigation = () => {
         setActive("Payments");
         break;
       case "/dashboardNew/transaction":
-        setActive("Transaction");
+        setActive("Transactions");
         break;
       case "/dashboardNew/converter":
         setActive("Converter");
