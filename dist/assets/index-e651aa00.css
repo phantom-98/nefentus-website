@@ -1,0 +1,98 @@
+._input_1fc7h_1,
+._textarea_1fc7h_2,
+._attachment_1fc7h_3 {
+  width: 100%;
+  background-color: #101010;
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 1rem;
+  padding: 1.8rem 2rem;
+  font-size: 1.4rem;
+  outline: 0 !important;
+  color: var(--white-color);
+}
+._inputWrapper_1fc7h_14 input::placeholder,
+._inputWrapper_1fc7h_14 textarea::placeholder,
+._inputWrapper_1fc7h_14 ._attachment_1fc7h_3::placeholder {
+  color: #ffffff6b;
+}
+._inputWrapper_1fc7h_14 ._label_1fc7h_24 {
+  font-size: 1.4rem !important;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+._input_1fc7h_1,
+._textarea_1fc7h_2,
+._attachment_1fc7h_3 {
+  position: relative;
+}
+._input_1fc7h_1 img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  right: 2rem;
+}
+._searchInput_1fc7h_45 {
+  color: var(--white-color);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.4rem;
+}
+._searchInput_1fc7h_45::placeholder {
+  font-family: Euclid, sans-serif;
+  font-size: 1.4rem;
+}
+._option_1fc7h_58 {
+  cursor: pointer;
+}
+._option_1fc7h_58 ._input_1fc7h_1 {
+  position: relative;
+}
+._body_1fc7h_66 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-radius: 0.5rem !important;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.2rem 2rem;
+  bottom: 0;
+  transform: translateY(100%);
+  max-height: 200px;
+  overflow-y: scroll;
+  z-index: 100;
+}
+._body_1fc7h_66::-webkit-scrollbar {
+  width: 7px;
+}
+._body_1fc7h_66::-webkit-scrollbar-track {
+  background: transparent;
+}
+._body_1fc7h_66::-webkit-scrollbar-thumb {
+  background: white;
+}
+._dashboardLabel_1fc7h_98 {
+  font-size: 1.6rem !important;
+}
+._dashboardInput_1fc7h_102,
+._dashboardTextarea_1fc7h_103,
+._attachment_1fc7h_3 {
+  font-size: 1.4rem !important;
+  color: var(--gray-color) !important;
+  padding: 1.6rem 2rem !important;
+}
+._attachment_1fc7h_3 {
+  display: flex;
+  gap: 1.5rem;
+  cursor: pointer;
+}
+._attachment_1fc7h_3 p {
+  flex: 1 1;
+}
+._hideInput_1fc7h_122 {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+}

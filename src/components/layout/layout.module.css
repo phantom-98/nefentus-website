@@ -82,7 +82,69 @@
 }
 
 .layout .description {
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
+}
+
+.inputHero {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.inputWrapper {
+  position: relative;
+  height: 100%;
+}
+
+.inputWrapper input {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  color: white;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100%;
+  height: 100%;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.connectWrapper {
+  display: flex;
+  gap: 5rem;
+}
+
+.connect p {
+  font-size: 1.4rem;
+  opacity: 0.4;
+  margin-bottom: 1rem;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.iconBox {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  height: 4rem;
+  width: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 0.5s ease-out;
+}
+
+.iconBox:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.iconBox img {
+  width: 1.6rem;
 }
 
 .store {
@@ -197,6 +259,14 @@
 @media (max-width: 650px) {
   .hero {
     min-height: max-content;
+  }
+
+  .connect2 {
+    display: none;
+  }
+
+  .inputHero {
+    gap: 1rem;
   }
 
   .layout {

@@ -26,9 +26,11 @@ const Prices = () => {
     };
     getPrices();
   }, []);
+
   return (
     prices && (
       <div className={`card ${styles.priceCard}`}>
+        <h2>Latest Price</h2>
         <div className={styles.container}>
           {prices?.map((price) => {
             return (

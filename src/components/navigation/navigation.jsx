@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import backend_API from "../../api/backendAPI";
 import { dashboardLink } from "../../utils";
+import UserProfile from "../userProfile/userProfile";
 
 const Navigation = () => {
   const { t, i18n } = useTranslation();
@@ -50,13 +51,7 @@ const Navigation = () => {
 
   function loginAndSignupWeb() {
     if (profile.email) {
-      return (
-        <>
-          <div className={`${styles.button} ${styles.dashboardButton}`}>
-            <Link to={profile.dashboardLink}>{dashboardString(profile)}</Link>
-          </div>
-        </>
-      );
+      return <UserProfile web />;
     } else {
       return (
         <>
@@ -75,16 +70,12 @@ const Navigation = () => {
   }
 
   function loginAndSignupTopButtons() {
-    if (profile.email) {
-      return (
-        <Link to={profile.dashboardLink}>
-          <div className={styles.mobButton}>{dashboardString(profile)}</div>
-        </Link>
-      );
-    } else {
+    if (!profile.email) {
       return (
         <>
-          <Button link="/signUp">{t("navigation.signUp")}</Button>
+          <div className={styles.mobileButtonWrapper}>
+            <Button link="/signUp">{t("navigation.signUp")}</Button>
+          </div>
         </>
       );
     }
@@ -185,9 +176,7 @@ const Navigation = () => {
 
             {loginAndSignupWeb()}
 
-            <div className={styles.mobileButtonWrapper}>
-              {loginAndSignupTopButtons()}
-            </div>
+            {loginAndSignupTopButtons()}
 
             <div className={styles.mobMenu}>
               <div

@@ -19,7 +19,7 @@
 
 /* Variable */
 :root {
-  --black-color: #111;
+  --black-color: rgb(17, 17, 17);
   --white-color: #fff;
   --gray-color: #c4c4c4;
   --blue-color: #0784b5;

@@ -1,0 +1,28 @@
+._section_5cp1o_1 {
+  margin-top: 15rem;
+  margin-bottom: 15rem;
+}
+._section_5cp1o_1 h2 {
+  margin-bottom: 3rem;
+}
+._section_5cp1o_1 h3 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+._section_5cp1o_1 h4 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+._leftContent_5cp1o_22 {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+._section_5cp1o_1 p {
+  font-size: 1.6rem;
+  line-height: 140%;
+  color: var(--gray-color);
+  margin-bottom: 2rem;
+}
