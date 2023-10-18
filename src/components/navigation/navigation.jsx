@@ -25,7 +25,8 @@ const Navigation = () => {
   async function getProfile() {
     const jwtIsValid = await backendAPI.checkJwt();
     if (jwtIsValid) {
-      const link = dashboardLink(localStorage);
+      // const link = dashboardLink(localStorage);
+      const link = "/dashboardNew/admin";
       console.log(link);
 
       const newProfile = {
