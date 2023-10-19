@@ -97,8 +97,7 @@ const LoginBox = () => {
   const [code, setCode] = useState("");
 
   function navigateDashboard() {
-    // const link = dashboardLink(localStorage);
-    const link = "/dashboardNew/admin";
+    const link = dashboardLink(localStorage);
 
     navigate(link);
   }

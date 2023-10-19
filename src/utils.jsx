@@ -63,7 +63,7 @@ export function getRole(localStorage) {
 }
 
 export function dashboardLink(localStorage) {
-  return "/dashboard/" + getRole(localStorage);
+  return "/dashboardNew/" + getRole(localStorage);
 }
 
 export const encryptData = (password) => {
