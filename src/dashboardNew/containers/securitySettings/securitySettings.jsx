@@ -20,32 +20,22 @@ const data = [
   {
     list: [
       {
-        label: "Email",
-        description: "Use your email to protect your account and transactions.",
-        value: "er**@gmail.com",
-      },
-    ],
-    type: "edit",
-  },
-  {
-    list: [
-      {
-        label: "Phone Number",
-        description:
-          "Use your phone number to protect your account and transactions.",
-        value: "+38162**80",
-      },
-    ],
-    type: "edit",
-  },
-  {
-    list: [
-      {
         label: "Authenticator App",
         description:
-          "Use Nefentus/Google Authenticator to protect your account and transactions.",
+          "Setup Multi-Factor-Authentication using Google Authenticator, Authy, Lastpass or similar.",
         value: false,
       },
+      {
+        label: "One-time passwords via email",
+        description:
+          "Setup Multi-Factor-Authentication based on one-time password sent via email.",
+        value: true,
+      },
+    ],
+    type: "enable",
+  },
+  {
+    list: [
       {
         label: "Anti-Phishing Code",
         description:
@@ -69,6 +59,7 @@ const SecuritySettings = () => {
         <SettingsItem data={item} />
       ))}
 
+      {/*
       <div
         className={styles.button}
         style={{ display: "flex", justifyContent: "flex-end" }}
@@ -76,6 +67,7 @@ const SecuritySettings = () => {
         <Button color="light">Cancel</Button>
         <Button>Save Changes</Button>
       </div>
+	  */}
     </Card>
   );
 };

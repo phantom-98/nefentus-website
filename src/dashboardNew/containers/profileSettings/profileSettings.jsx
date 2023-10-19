@@ -9,9 +9,35 @@ const data = [
   {
     list: [
       {
-        label: "Nickname",
-        description: "Set a customized nickname for your profile.",
-        value: "Erin Vaccaro",
+        label: "First name*",
+        description: "",
+        value: "Erin",
+      },
+      {
+        label: "Last name*",
+        description: "",
+        value: "Vaccaro",
+      },
+      {
+        label: "Business",
+        description:
+          "If you are a business, please enter your business name here.",
+        value: "",
+      },
+    ],
+    type: "edit",
+  },
+  {
+    list: [
+      {
+        label: "Email*",
+        description: "",
+        value: "er**@gmail.com",
+      },
+      {
+        label: "Phone number",
+        description: "",
+        value: "+38162**80",
       },
     ],
     type: "edit",
@@ -30,21 +56,20 @@ const data = [
   {
     list: [
       {
-        label: "Marketing Updates",
+        label: "Marketing updates",
         description:
-          "Once disabled, you will not be able to receive marketing notifications (email, app push and on-site inbox notifications).",
+          "Receive marketing updates via email, push notifications (in the mobile app) and inbox notifications (in the web application).",
         value: false,
       },
       {
-        label: "E-mail Transaction",
-        description:
-          "Once disabled, you will not be able to receive marketing notifications (email, app push and on-site inbox notifications).",
+        label: "Email notifications",
+        description: "Receive notifications via email.",
         value: true,
       },
       {
-        label: "App Transaction",
+        label: "App notifications",
         description:
-          "Once disabled, you will not be able to receive marketing notifications (email, app push and on-site inbox notifications).",
+          "Receive notifications via push notifications (in the mobile app).",
         value: false,
       },
     ],
@@ -53,7 +78,7 @@ const data = [
   {
     list: [
       {
-        label: "Notification Language",
+        label: "Notification language",
         description:
           "Select your preferred language for email, app push and on-site inbox notifications.",
         value: "English",
@@ -65,9 +90,9 @@ const data = [
   {
     list: [
       {
-        label: "Enable Invoicing",
+        label: "Enable invoicing",
         description:
-          "Once disabled, you will not be able to receive marketing notifications (email, app push and on-site inbox notifications).",
+          "Receive invoices for each product sold for your accounting. ",
         value: false,
       },
     ],
@@ -87,6 +112,7 @@ const ProfileSettings = () => {
         <SettingsItem data={item} />
       ))}
 
+      {/*
       <div
         className={styles.button}
         style={{ display: "flex", justifyContent: "flex-end" }}
@@ -94,6 +120,7 @@ const ProfileSettings = () => {
         <Button color="light">Cancel</Button>
         <Button>Save Changes</Button>
       </div>
+	  */}
     </Card>
   );
 };
