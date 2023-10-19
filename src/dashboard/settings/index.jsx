@@ -21,6 +21,7 @@ import Tabs from "../../components/tabs/index";
 import CropDialog, {
   dataURLtoFile,
 } from "../../components/cropDialog/cropDialog";
+import CheckBox from "../../assets/icon/whiteCheckmark.svg";
 
 let nav = ["Profile", "Change password", "Change email"];
 
@@ -32,6 +33,7 @@ const nav_kyc = [
     <span className={styles.rest}>Know Your Customer(</span>KYC
     <span className={styles.rest}>)</span>
   </div>,
+  "Invoice",
 ];
 
 const instruction = [
@@ -165,6 +167,8 @@ const SettingsBody = ({ type }) => {
               return <PasswordBody active={active} />;
             case nav[2]:
               return <EmailBody active={active} />;
+            case nav[4]:
+              return <InvoiceBody />;
             default:
               return <KYC />;
           }
@@ -684,6 +688,60 @@ const EmailBody = ({ active }) => {
                 connected={true}
                 handleClick={() => {}}
 			/>*/}
+      <Buttons functions={["", handleConfirm]} buttons={["Reset", "Confirm"]} />
+    </div>
+  );
+};
+
+const InvoiceBody = () => {
+  const [vatNumber, setVatNumber] = useState(localStorage.getItem("vatNumber"));
+  const [sendInvoice, setSendInvoice] = useState(
+    JSON.parse(localStorage.getItem("sendInvoice")),
+  );
+  const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
+
+  const backendAPI = new backend_API();
+
+  const handleConfirm = async () => {
+    const response = await backendAPI.updateInvoiceSettings({
+      sendInvoice,
+      vatNumber,
+    });
+    if (response == null) {
+      setErrorMessage("Failed to update");
+      return;
+    } else {
+      setInfoMessage("Successfully updated!");
+    }
+    setErrorMessage(null);
+  };
+
+  return (
+    <div className={styles.tabContent}>
+      <TopInfo
+        title="Invoice"
+        description="Enter your VAT number and confirm if you want to receive invoices."
+      />
+      <MessageComponent />
+
+      <InputComponent
+        label="VAT Number"
+        placeholder="Enter your VAT number"
+        type="text"
+        setState={setVatNumber}
+        value={vatNumber}
+        secure
+      />
+      <div className={styles.input}>
+        <p>Send invoices</p>
+        <div
+          onClick={() => setSendInvoice((prev) => !prev)}
+          className={styles.checkBox}
+        >
+          {sendInvoice && <img src={CheckBox} alt="checkbox" />}
+        </div>
+      </div>
+
       <Buttons functions={["", handleConfirm]} buttons={["Reset", "Confirm"]} />
     </div>
   );
