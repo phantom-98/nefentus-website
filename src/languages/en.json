@@ -13,9 +13,9 @@
     "menu": "Registration"
   },
   "home": {
-    "heroTitleGradient": "150M+",
-    "heroTitle": "Users Choose Us Register Today",
-    "heroDescription": "Register now and get up to 100 USDT in rewards",
+    "heroTitle": "Accept Crypto Payments",
+    "heroTitleGradient": "Risk Free",
+    "heroDescription": "Register now and get up to 50 USDT free transactions",
     "heroButton": "Get Started",
     "heroButton2": "Download App",
     "heroAvailable": "Available on:",
@@ -394,21 +394,47 @@
   "footer": {
     "copyright": "© 2023 Nefentus. All rights reserved.",
     "downloadButton": "DOWNLOAD NOW",
+    "contentLabel1": "Overview",
+    "contentLabel2": "Action",
     "content": [
       {
-        "text": "Home"
+        "text": "Home",
+        "link": "/"
       },
       {
-        "text": "Payment"
+        "text": "Payment",
+        "link": "/payment"
       },
       {
-        "text": "Resources"
+        "text": "Resources",
+        "link": "/support"
       },
       {
-        "text": "Affiliate"
+        "text": "Affiliate",
+        "link": "/affiliate"
+      },
+      {
+        "text": "Privacy Policy",
+        "link": "/privacy"
       }
     ],
-    "privacy": "Privacy Policy",
-    "imprint": "Imprint"
+    "content2": [
+      { "text": "Play Store", "link": "/" },
+      {
+        "text": "Sign In",
+        "link": "/link"
+      },
+      { "text": "App Store", "link": "/" },
+      {
+        "text": "Sign Up",
+        "link": "/signup"
+      },
+      {
+        "text": "Imprint",
+        "link": "/imprint"
+      }
+    ],
+    "socialTitle": "Follow us on:",
+    "socialDescription": " Go to the top\n of the page"
   }
 }

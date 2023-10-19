@@ -5,6 +5,8 @@ import Google from "../../assets/icon/google.svg";
 import Apple from "../../assets/icon/apple2.svg";
 import Chevron from "../../assets/icon/chevron.svg";
 
+import Gift from "../../assets/icon/gift.svg";
+
 import QR from "../../assets/icon/qrcode.svg";
 
 import Dummy from "../../assets/image/dummy.webp";
@@ -69,7 +71,10 @@ const Layout = ({
         {title && <h3>{title}</h3>}
 
         {description && (
-          <p className={`standard ${styles.description}`}>{description}</p>
+          <div className={styles.descriptionWrapper}>
+            {home && <img src={Gift} alt="" />}
+            <p className={`standard ${styles.description}`}>{description}</p>
+          </div>
         )}
 
         {home && (

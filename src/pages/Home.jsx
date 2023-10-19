@@ -36,8 +36,8 @@ const Home = () => {
       <Layout
         heading={
           <>
-            <span className="gradient">{t("home.heroTitleGradient")} </span>
             {t("home.heroTitle")}
+            <div className="gradient"> {t("home.heroTitleGradient")}</div>
           </>
         }
         description={<>{t("home.heroDescription")}</>}

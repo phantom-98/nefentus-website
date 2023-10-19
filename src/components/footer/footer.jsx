@@ -9,6 +9,7 @@ import Youtube from "../../assets/icon/youtube.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "../button/button";
+import separateText from "../../func/separate";
 
 const content = [
   { link: "/" },
@@ -21,6 +22,11 @@ const Footer = () => {
   const { t } = useTranslation();
 
   const footerContent = t("footer.content", { returnObjects: true });
+  const footerContent2 = t("footer.content2", { returnObjects: true });
+
+  const handleScroll = () => {
+    window.scrollTo(0, 0);
+  };
 
   return (
     <footer className={`${styles.footer} `}>
@@ -31,49 +37,50 @@ const Footer = () => {
             <div className={styles.content}>
               <div className={styles.linkWrapper}>
                 <div className={styles.linkBox}>
-                  <p className={styles.contentLabel}>Overview</p>
-                  <p>Home</p>
-                  <p>Payment</p>
-                  <p>Resources</p>
-                  <p>Affiliate</p>
-                  <p>Privacy Policy</p>
+                  <p className={styles.contentLabel}>
+                    {t("footer.contentLabel1")}
+                  </p>
+                  {footerContent.map((item) => (
+                    <Link to={item.link}>
+                      <p>{item.text}</p>
+                    </Link>
+                  ))}
                 </div>
                 <div className={styles.linkBox}>
-                  <p className={styles.contentLabel}>Action</p>
-                  <p>Play Store</p>
-                  <p>Sign In</p>
-                  <p>App Store</p>
-                  <p>Sign Up</p>
-                  <p>Imprint</p>
+                  <p className={styles.contentLabel}>
+                    {t("footer.contentLabel2")}
+                  </p>
+                  {footerContent2.map((item) => (
+                    <Link to={item.link}>
+                      <p>{item.text}</p>
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
-          <div className={styles.copyright}>
-            © 2023 Nefentus. All rights reserved. www.nefentus.com Cutting Edge{" "}
-            <br />
-            Cryptocurrency Trading and Research Platform DXone Ltd., Floor 7,{" "}
-            <br />
-            Novel Tower, Alexandrou Panagouli 1, Avenue, 6057 Larnaca, Cyprus
-            Reg Nr.: HE407003
-          </div>
+          <div className={styles.copyright}>{t("footer.copyright")}</div>
         </div>
 
         <div className={styles.socialBox}>
-          <h3>Follow us on:</h3>
+          <h3>{t("footer.socialTitle")}</h3>
 
           <div className={styles.icons}>
-            <img src={Instagram} alt="" />
-            <img src={Linkedin} alt="" />
-            <img src={Youtube} alt="" />
+            <Link to="https://www.linkedin.com/company/nefentuspay/">
+              <img src={Linkedin} alt="" />
+            </Link>
+            <Link to="https://www.instagram.com/nefentus/">
+              <img src={Instagram} alt="" />
+            </Link>
+            <Link to="https://www.youtube.com/channel/UCV1QWqkZXtZvXl6bq3AgkTA">
+              <img src={Youtube} alt="" />
+            </Link>
           </div>
 
           <div className={styles.boxBottom}>
-            <p>
-              Go to the top <br /> of the page
-            </p>
+            <p>{separateText(t("footer.socialDescription"))}</p>
 
-            <div className={styles.arrowWrapper}>
+            <div className={styles.arrowWrapper} onClick={handleScroll}>
               <svg
                 width="70"
                 height="70"
@@ -100,10 +107,7 @@ const Footer = () => {
         </div>
 
         <div className={`${styles.copyright} ${styles.copyrightMob}`}>
-          © 2023 Nefentus. All rights reserved. www.nefentus.com Cutting Edge
-          Cryptocurrency Trading and Research Platform DXone Ltd., Floor 7,
-          Novel Tower, Alexandrou Panagouli 1, Avenue, 6057 Larnaca, Cyprus Reg
-          Nr.: HE407003
+          {t("footer.copyright")}
         </div>
       </div>
     </footer>

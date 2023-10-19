@@ -7,6 +7,40 @@
 
 .priceCard {
   overflow: hidden;
+  background: radial-gradient(
+    74.22% 64.62% at 26.36% 14.29%,
+    #1a1a1a 0%,
+    #151515 50%,
+    #101010 100%
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.priceCard::before {
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 86px;
+  left: 0;
+  top: 80%;
+  z-index: 1;
+  opacity: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(59, 56, 65, 0) 22.4%,
+    #0784b5 60.94%,
+    rgba(59, 56, 65, 0)
+  );
+  transition:
+    top 0.8s cubic-bezier(0.215, 0.61, 0.355, 1),
+    opacity 0.4s linear;
+  will-change: transform, opacity;
+}
+
+.priceCard:hover::before {
+  opacity: 1;
+  top: 20%;
 }
 
 .priceCard h2 {

@@ -333,6 +333,12 @@
   width: 1.4rem;
 }
 
+.light {
+  width: 2rem !important;
+  cursor: pointer;
+  pointer-events: initial !important;
+}
+
 @media (max-width: 900px) {
   .logo {
     height: 2.2rem;
@@ -444,7 +450,7 @@
 
   .lineButton {
     position: absolute;
-    width: 50px;
+    width: 25px;
     right: 0;
     top: 0;
     transform: translateY(-50%);

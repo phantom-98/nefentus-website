@@ -3,6 +3,8 @@ import styles from "./navigation.module.css";
 import Logo from "../../assets/logo/logo.svg";
 
 import Hamburger from "../../assets/icon/hamburger.svg";
+import LightMode from "../../assets/icon/lightMode.svg";
+import DarkMode from "../../assets/icon/darkMode.svg";
 import Button from "../button/button";
 import Languages from "./languages.jsx/languages";
 import { useEffect, useState } from "react";
@@ -20,6 +22,8 @@ const Navigation = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [profile, setProfile] = useState({});
   const [height, setHeight] = useState("");
+
+  const [lightMode, setLightMode] = useState(false);
 
   const backendAPI = new backend_API();
 
@@ -73,9 +77,9 @@ const Navigation = () => {
     if (!profile.email) {
       return (
         <>
-          <div className={styles.mobileButtonWrapper}>
+          {/* <div className={styles.mobileButtonWrapper}>
             <Button link="/signUp">{t("navigation.signUp")}</Button>
-          </div>
+          </div> */}
         </>
       );
     }
@@ -167,11 +171,17 @@ const Navigation = () => {
               <img src={QR} alt="qr" />
               <div
                 className={`${styles.lang} ${
-                  openMenu ? styles.showLanguage : ""
+                  openMenu ? styles.showLanguage : styles.showLanguage
                 }`}
               >
                 <Languages />
               </div>
+              <img
+                onClick={() => setLightMode((prev) => !prev)}
+                src={lightMode ? DarkMode : LightMode}
+                className={styles.light}
+                alt=""
+              />
             </div>
 
             {loginAndSignupWeb()}
