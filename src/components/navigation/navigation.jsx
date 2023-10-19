@@ -3,8 +3,8 @@ import styles from "./navigation.module.css";
 import Logo from "../../assets/logo/logo.svg";
 
 import Hamburger from "../../assets/icon/hamburger.svg";
-import LightMode from "../../assets/icon/lightMode.svg";
-import DarkMode from "../../assets/icon/darkMode.svg";
+import LightMode from "../../assets/icon/lightMode2.svg";
+import DarkMode from "../../assets/icon/darkMode2.svg";
 import Button from "../button/button";
 import Languages from "./languages.jsx/languages";
 import { useEffect, useState } from "react";

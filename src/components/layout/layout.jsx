@@ -5,7 +5,7 @@ import Google from "../../assets/icon/google.svg";
 import Apple from "../../assets/icon/apple2.svg";
 import Chevron from "../../assets/icon/chevron.svg";
 
-import Gift from "../../assets/icon/gift.svg";
+import Mega from "../../assets/icon/mega.svg";
 
 import QR from "../../assets/icon/qrcode.svg";
 
@@ -72,8 +72,13 @@ const Layout = ({
 
         {description && (
           <div className={styles.descriptionWrapper}>
-            {home && <img src={Gift} alt="" />}
-            <p className={`standard ${styles.description}`}>{description}</p>
+            {home && <img src={Mega} alt="" />}
+            <p
+              style={{ fontSize: home ? "1.2rem" : "" }}
+              className={`standard ${styles.description}`}
+            >
+              {description}
+            </p>
           </div>
         )}
 

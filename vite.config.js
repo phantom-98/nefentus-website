@@ -6,7 +6,7 @@ export default ({ mode }) => {
   env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return defineConfig({
-    base: "/nefentus/",
+    base: "/",
     plugins: [react()],
     esbuild: {
       loader: "jsx",

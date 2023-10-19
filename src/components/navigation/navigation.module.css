@@ -334,7 +334,7 @@
 }
 
 .light {
-  width: 2rem !important;
+  width: 1.6rem !important;
   cursor: pointer;
   pointer-events: initial !important;
 }
@@ -455,6 +455,10 @@
     top: 0;
     transform: translateY(-50%);
     height: 40px;
+  }
+
+  .light {
+    margin-right: 1rem;
   }
 
   .line {

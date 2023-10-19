@@ -114,7 +114,7 @@ function App() {
             <ScrollToTop>
               <Routes>
                 <Route
-                  path="/nefentus/"
+                  path="/"
                   element={
                     <Layout>
                       <Home />
