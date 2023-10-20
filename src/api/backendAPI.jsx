@@ -287,7 +287,7 @@ export default class backendAPI {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      if (!data.requireOtp) {
+      if (!data.hasOtp) {
         setCookie("token", data.jwtToken);
         localStorage.setItem("token", data.jwtToken);
         localStorage.setItem("email", data.email);
@@ -301,9 +301,9 @@ export default class backendAPI {
         localStorage.setItem("profile_pic", data.profileImage);
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
-        localStorage.setItem("isMfa", data.isMfa);
+        localStorage.setItem("hasTotp", data.hasTotp);
         localStorage.setItem("requireKyc", data.requireKyc);
-        localStorage.setItem("requireOtp", data.requireOtp);
+        localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
       }
@@ -352,9 +352,9 @@ export default class backendAPI {
       localStorage.setItem("profile_pic", data.profileImage);
       localStorage.setItem("roles", data.roles);
       localStorage.setItem("country", data.country);
-      localStorage.setItem("isMfa", data.isMfa);
+      localStorage.setItem("hasTotp", data.hasTotp);
       localStorage.setItem("requireKyc", data.requireKyc);
-      localStorage.setItem("requireOtp", data.requireOtp);
+      localStorage.setItem("hasOtp", data.hasOtp);
       localStorage.setItem("userId", data.userId);
       localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
 

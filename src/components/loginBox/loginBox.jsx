@@ -138,7 +138,7 @@ const LoginBox = () => {
         if (response == null) {
           setErrorMessage("Invalid login data");
           return;
-        } else if (response.requireOtp) {
+        } else if (response.hasOtp) {
           setShowConfirmMeEmail(true);
           setEmail(response.email);
         } else {

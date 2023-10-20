@@ -259,7 +259,7 @@ function App() {
                   path="/dashboardNew/admin"
                   element={
                     <ScreenLayout>
-                      <AdminDashboard />
+                      <AdminDashboard type={"admin"} />
                     </ScreenLayout>
                   }
                 />

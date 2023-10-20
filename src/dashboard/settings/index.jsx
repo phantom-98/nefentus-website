@@ -189,8 +189,8 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [imageName, setImageName] = useState(null);
   const [imageChanged, setImageChanged] = useState(false); // Set to true if image changed (was added or deleted))
-  const [isTotp, setIsTotp] = useState(localStorage.getItem("isMfa"));
-  const [isOtp, setIsOtp] = useState(localStorage.getItem("requireOtp"));
+  const [isTotp, setIsTotp] = useState(localStorage.getItem("hasTotp"));
+  const [isOtp, setIsOtp] = useState(localStorage.getItem("hasOtp"));
   const [phishingCode, setPhishingCode] = useState(
     localStorage.getItem("antiPhishingCode"),
   );
@@ -271,8 +271,8 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
       phoneNumber: phoneNumber,
       email: email,
       business: business || "",
-      isMfa: isTotp,
-      requireOtp: isOtp,
+      hasTotp: isTotp,
+      hasOtp: isOtp,
       antiPhishingCode: phishingCode,
     };
 

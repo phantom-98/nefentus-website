@@ -20,8 +20,8 @@ export default EarningCards;
 const SingleCard = ({ data }) => {
   return (
     <Card>
-      <div className={styles.label}>{data.label}</div>
-      <div className={styles.value}>{data.value}</div>
+      <div className={styles.label}>{data.title}</div>
+      <div className={styles.value}>{data.amount}</div>
       <div className={styles.percentage}>
         <img src={data.percentage > 0 ? Positive : Negative} alt="" />
         <div className={styles.percentageText}>
