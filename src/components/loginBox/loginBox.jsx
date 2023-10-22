@@ -3,7 +3,7 @@ import styles from "./loginBox.module.css";
 
 import Logo from "../../assets/logo/logo2.svg";
 import Button from "./../button/button";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { dashboardLink, decryptData, encryptData } from "../../utils";
@@ -20,28 +20,114 @@ import setCookie from "../setCookie/setCookie";
 import ReCAPTCHA from "react-google-recaptcha";
 import { OneTimeCodeInput } from "../../dashboard/input/input";
 
-const ConfirmMeEmail = ({ email, code, setCode, handleClick }) => {
+const ConfirmMeEmail = ({
+  email,
+  code,
+  setCode,
+  handleClickTotp,
+  handleClickOtp,
+  otp,
+  totp,
+  step,
+}) => {
   console.log(code, "code");
+  console.log(totp, otp, "111");
+  useEffect(() => {
+    if (step) {
+      const form = document.getElementById("otpForm");
+      console.log(form, "step");
+      console.log(form.reset(), "step");
+    }
+  }, [step]);
 
   return (
-    <div className={styles["confirm-email"]}>
-      <h3>Check your email for a code</h3>
-      <p>
-        We have sent a 6-digits code to {email}. The code expires shortly, so
-        please enter it soon.
-      </p>
-      <form onSubmit={handleClick}>
-        <OneTimeCodeInput setOTPCode={setCode} />
+    <>
+      {otp && !totp && (
+        <div className={styles["confirm-email"]}>
+          <h3>Check your email for a code</h3>
+          <p>
+            We have sent a 6-digits code to {email}. The code expires shortly,
+            so please enter it soon.
+          </p>
+          <form onSubmit={handleClickOtp}>
+            <OneTimeCodeInput setOTPCode={setCode} />
 
-        <div className={styles["button-group"]}>
-          <div className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}>
-            <Button className={styles.button} onClick={handleClick}>
-              Confirm
-            </Button>
-          </div>
+            <div className={styles["button-group"]}>
+              <div
+                className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
+              >
+                <Button className={styles.button} onClick={handleClickOtp}>
+                  Confirm
+                </Button>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
+      )}
+      {totp && !otp && (
+        <div className={styles["confirm-email"]}>
+          <h3>Enter code from your Authenticator</h3>
+          <p>You need to enter 6-digit code from your Authenticator</p>
+          <form onSubmit={handleClickTotp}>
+            <OneTimeCodeInput setOTPCode={setCode} />
+
+            <div className={styles["button-group"]}>
+              <div
+                className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
+              >
+                <Button className={styles.button} onClick={handleClickTotp}>
+                  Confirm
+                </Button>
+              </div>
+            </div>
+          </form>
+        </div>
+      )}
+      {totp && otp && (
+        <>
+          {!step ? (
+            <div className={styles["confirm-email"]}>
+              <h3>Check your email for a code</h3>
+              <p>
+                We have sent a 6-digits code to {email}. The code expires
+                shortly, so please enter it soon.
+              </p>
+              <form onSubmit={handleClickOtp}>
+                <OneTimeCodeInput setOTPCode={setCode} />
+
+                <div className={styles["button-group"]}>
+                  <div
+                    className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
+                  >
+                    <Button className={styles.button} onClick={handleClickOtp}>
+                      Confirm
+                    </Button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          ) : (
+            <div className={styles["confirm-email"]}>
+              <h3>Enter code from your Authenticator</h3>
+              <p>You need to enter 6-digit code from your Authenticator</p>
+              <form id={"totpForm"} onSubmit={handleClickTotp}>
+                <OneTimeCodeInput setOTPCode={setCode} resetCodeFlag />
+
+                <div className={styles["button-group"]}>
+                  <div
+                    className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
+                  >
+                    <Button className={styles.button} onClick={handleClickTotp}>
+                      Confirm
+                    </Button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          )}
+        </>
+      )}
+    </>
   );
 };
 
@@ -95,6 +181,9 @@ const LoginBox = () => {
   const [showConfirmMeEmail, setShowConfirmMeEmail] = useState(false);
   const [email, setEmail] = useState(null);
   const [code, setCode] = useState("");
+  const [otp, setOtp] = useState(false);
+  const [totp, setTotp] = useState(false);
+  const [step, setStep] = useState(false);
 
   function navigateDashboard() {
     const link = dashboardLink(localStorage);
@@ -137,8 +226,10 @@ const LoginBox = () => {
         if (response == null) {
           setErrorMessage("Invalid login data");
           return;
-        } else if (response.requireOtp) {
+        } else if (response.hasOtp || response.hasTotp) {
           setShowConfirmMeEmail(true);
+          setOtp(response.hasOtp);
+          setTotp(response.hasTotp);
           setEmail(response.email);
         } else {
           navigateDashboard();
@@ -149,16 +240,37 @@ const LoginBox = () => {
     }
   }
 
-  async function verifyOtpCode(email, code, checkbox) {
+  async function verifyOtpCode(email, code, checkbox, step) {
     if (Cookies.get("acceptCookie") !== true) {
       checkbox = false;
     }
     try {
-      const response = await backendAPI.verifyOTP(email, code, checkbox);
+      const response = await backendAPI.verifyOTP(email, code, checkbox, step);
       if (response == null) {
         setErrorMessage("Failed to Confirm");
         return;
       }
+      if (otp && totp) {
+        setStep(true);
+      } else {
+        navigateDashboard();
+      }
+    } catch (error) {
+      setErrorMessage("There was an error logging in");
+    }
+  }
+
+  async function verifyTotpCode(email, code, checkbox) {
+    if (Cookies.get("acceptCookie") !== true) {
+      checkbox = false;
+    }
+    const response = await backendAPI.verifyTotpToken(email, code, checkbox);
+    try {
+      if (response == null) {
+        setErrorMessage("Failed to Confirm");
+        return;
+      }
+      console.log(response, "response");
       navigateDashboard();
     } catch (error) {
       setErrorMessage("There was an error logging in");
@@ -178,9 +290,13 @@ const LoginBox = () => {
     }
   };
 
-  const handleConfrimCode = (e) => {
+  const handleConfirmCodeOtp = (e) => {
     e.preventDefault();
-    verifyOtpCode(email, code, checkBox);
+    verifyOtpCode(email, code, checkBox, step);
+  };
+  const handleConfirmCodeTotp = (e) => {
+    e.preventDefault();
+    verifyTotpCode(email, code, checkBox);
   };
 
   return (
@@ -225,7 +341,11 @@ const LoginBox = () => {
             email={email}
             code={code}
             setCode={setCode}
-            handleClick={handleConfrimCode}
+            handleClickOtp={handleConfirmCodeOtp}
+            handleClickTotp={handleConfirmCodeTotp}
+            otp={otp}
+            totp={totp}
+            step={step}
           />
         ) : (
           <form onSubmit={handleSubmit(loginUser)}>

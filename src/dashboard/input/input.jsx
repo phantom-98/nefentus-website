@@ -169,11 +169,18 @@ export const Switcher = ({ title, checked, setChecked }) => {
   );
 };
 
-export const OneTimeCodeInput = ({ setOTPCode }) => {
+export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag }) => {
   const inputRefs = Array(6)
     .fill()
     .map(() => useRef(null));
   const [code, setCode] = useState(Array(6).fill(""));
+
+  useEffect(() => {
+    if (resetCodeFlag) {
+      setCode(Array(6).fill(""));
+      inputRefs[0].current.focus();
+    }
+  }, [resetCodeFlag]);
 
   const handleCodeChange = (e, index) => {
     const value = e.target.value;
@@ -211,30 +218,32 @@ export const OneTimeCodeInput = ({ setOTPCode }) => {
 
   return (
     <div className={styles.OTPInputWrap}>
-      {code.map((value, index) =>
-        index === 0 ? (
-          <input
-            className={styles.OTPInput}
-            key={index}
-            type="text"
-            value={value}
-            ref={inputRefs[index]}
-            onChange={(e) => handleCodeChange(e, index)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-          />
-        ) : (
-          <input
-            className={styles.OTPInput}
-            key={index}
-            type="text"
-            value={value}
-            ref={inputRefs[index]}
-            onChange={(e) => handleCodeChange(e, index)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-            maxLength={1}
-          />
-        ),
-      )}
+      <form id={"otpForm"}>
+        {code.map((value, index) =>
+          index === 0 ? (
+            <input
+              className={styles.OTPInput}
+              key={index}
+              type="text"
+              value={value}
+              ref={inputRefs[index]}
+              onChange={(e) => handleCodeChange(e, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+            />
+          ) : (
+            <input
+              className={styles.OTPInput}
+              key={index}
+              type="text"
+              value={value}
+              ref={inputRefs[index]}
+              onChange={(e) => handleCodeChange(e, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              maxLength={1}
+            />
+          ),
+        )}
+      </form>
     </div>
   );
 };

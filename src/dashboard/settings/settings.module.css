@@ -423,6 +423,7 @@
   display: flex;
   justify-content: center;
 }
+
 .kycImage {
   height: 25rem;
 }
@@ -434,4 +435,63 @@
   flex-direction: column;
   font-size: 1.6rem;
   gap: 2rem;
+}
+
+.linkBox {
+  margin-top: 2rem;
+  padding: 0.5rem 2rem;
+  border: var(--gray-color) 1px solid;
+  border-radius: 1rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  cursor: pointer;
+}
+
+.url {
+  font-size: 1.6rem;
+  color: var(--white-color) !important;
+  font-weight: 500;
+
+  display: flex;
+
+  transition: 0.3s ease;
+}
+
+.url:hover {
+  opacity: 0.8;
+}
+
+.tooltip {
+  position: absolute;
+  margin-left: 20%;
+
+  color: white;
+
+  z-index: 1;
+  animation: fadeout 10s forwards;
+}
+
+.copyLink {
+  position: relative;
+  padding: 1rem;
+}
+
+.modalTitle {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+.modalSubtitle {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

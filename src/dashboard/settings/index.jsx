@@ -1,4 +1,9 @@
-import InputComponent, { Attachment, RawInput, Switcher } from "../input/input";
+import InputComponent, {
+  Attachment,
+  OneTimeCodeInput,
+  RawInput,
+  Switcher,
+} from "../input/input";
 import styles from "./settings.module.css";
 import { useContext, useEffect, useRef, useState } from "react";
 
@@ -20,7 +25,9 @@ import Tabs from "../../components/tabs/index";
 import CropDialog, {
   dataURLtoFile,
 } from "../../components/cropDialog/cropDialog";
+import ModalOverlay from "../modal/modalOverlay";
 import { QRCodeSVG } from "qrcode.react";
+import UrlLink from "../../assets/icon/link.svg";
 
 let nav = [
   "Profile",
@@ -197,12 +204,8 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [imageName, setImageName] = useState(null);
   const [imageChanged, setImageChanged] = useState(false); // Set to true if image changed (was added or deleted))
-  const [isTotp, setIsTotp] = useState(
-    JSON.parse(localStorage.getItem("isMfa")),
-  );
-  const [isOtp, setIsOtp] = useState(
-    JSON.parse(localStorage.getItem("requireOtp")),
-  );
+  const isTotp = useRef(localStorage.getItem("isMfa") === "true");
+  const isOtp = useRef(localStorage.getItem("requireOtp") === "true");
   const [phishingCode, setPhishingCode] = useState(
     localStorage.getItem("antiPhishingCode") !== "undefined"
       ? localStorage.getItem("antiPhishingCode")
@@ -285,8 +288,8 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
       phoneNumber: phoneNumber,
       email: email,
       business: business || "",
-      isMfa: isTotp,
-      requireOtp: isOtp,
+      isMfa: isTotp.current,
+      requireOtp: isOtp.current,
       antiPhishingCode: phishingCode,
     };
 
@@ -672,44 +675,71 @@ const EmailBody = ({ active }) => {
 
 const AuthenticatorBody = ({ active }) => {
   const [isTotp, setIsTotp] = useState(
-    JSON.parse(localStorage.getItem("isMfa")),
+    localStorage.getItem("isMfa") === "true",
   );
   const [isOtp, setIsOtp] = useState(
-    JSON.parse(localStorage.getItem("requireOtp")),
+    localStorage.getItem("requireOtp") === "true",
   );
-  const firstName = useRef(localStorage.getItem("firstName"));
-  const lastName = useRef(localStorage.getItem("lastName"));
   const email = useRef(localStorage.getItem("email"));
-  const business = useRef(localStorage.getItem("business"));
-  const phoneNumber = useRef(localStorage.getItem("phoneNumber"));
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
-  const phishingCode = useRef(
-    localStorage.getItem("antiPhishingCode") !== "undefined"
-      ? localStorage.getItem("antiPhishingCode")
-      : "",
-  );
 
-  const [checked, setChecked] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [verify, setVerify] = useState(false);
+  const [code, setCode] = useState("");
+
+  const [open, setOpen] = useState(false);
+  const [secretToken, setSecretToken] = useState("");
+
   const backendAPI = new backend_API();
 
-  const handleConfirm = async () => {
-    const requestData = {
-      firstName: firstName.current,
-      lastName: lastName.current,
-      phoneNumber: phoneNumber.current,
-      email: email.current,
-      business: business.current || "",
-      isMfa: isTotp,
-      requireOtp: isOtp,
-      antiPhishingCode: phishingCode.current,
-    };
-
-    const response2 = await backendAPI.update(requestData);
-    if (response2 == null) {
-      setErrorMessage("Error on updating data");
+  const handleTotpSecretKey = async (isTotp) => {
+    setIsTotp(isTotp);
+    if (isTotp) {
+      setOpen(true);
+      const response = await backendAPI.getTotpToken();
+      setSecretToken(response);
     } else {
-      localStorage.setItem("isMfa", isOtp.toString());
-      localStorage.setItem("requireOtp", isTotp.toString());
+      await backendAPI.setupTotp({
+        active: false,
+      });
+    }
+  };
+
+  const handleTotpVerify = async (email, token, rememberMe) => {
+    const response = await backendAPI.verifyTotpToken(email, token, rememberMe);
+    if (response.status === 200) {
+      const response = await backendAPI.setupTotp({
+        active: true,
+      });
+
+      if (response == null) {
+        setErrorMessage("Error on updating data");
+      } else {
+        localStorage.setItem("isMfa", data.toString());
+        setInfoMessage("Settings updated successfully!");
+        setTimeout(() => {
+          setOpen(false);
+          setVerify(false);
+        }, 1000);
+      }
+    }
+    if (response.status === 400) {
+      setErrorMessage("Incorrect code");
+    }
+  };
+
+  const handleOtp = async (data) => {
+    setIsOtp(data);
+
+    const response = await backendAPI.setupOtp({ active: data });
+    if (response == null) {
+      setErrorMessage("Error on updating data");
+    }
+
+    if (response.status === 200) {
+      console.log(response.status, "status");
+      console.log(isOtp, "statusOtp");
+      localStorage.setItem("requireOtp", data.toString());
       setInfoMessage("Settings updated successfully!");
     }
   };
@@ -724,35 +754,89 @@ const AuthenticatorBody = ({ active }) => {
       />
 
       <Switcher
-        title={"2-Factor Authentication"}
-        checked={checked}
-        setChecked={setChecked}
-      />
-      <Switcher
         title={"One-time passwords via email"}
         checked={isOtp}
-        setChecked={setIsOtp}
+        setChecked={handleOtp}
       />
 
       <Switcher
         title={"Time-based one-time password"}
         checked={isTotp}
-        setChecked={setIsTotp}
+        setChecked={handleTotpSecretKey}
       />
-      {checked && (
-        <div className={styles.QRCode}>
-          <QRCodeSVG
-            size={"20rem"}
-            value={"http://localhost:5173/dashboard/settings"}
-          />
-          <p>Scan this QR-code by your Authentificator</p>
-        </div>
-      )}
 
-      <Buttons
-        functions={[() => {}, handleConfirm]}
-        buttons={["Reset", "Confirm"]}
-      />
+      {open && secretToken && (
+        <ModalOverlay>
+          <div className={styles.modalTitle}>TOTP Authentication</div>
+
+          {!verify ? (
+            <div>
+              <div className={styles.modalSubtitle}>
+                {" "}
+                Scan QR-code or paste code
+              </div>
+              <div className={styles.QRCode}>
+                <QRCodeSVG
+                  size={"20rem"}
+                  value={`otpauth://totp/Nefentus?secret=${secretToken}`}
+                />
+              </div>
+              <div className={styles.copyLink}>
+                {copied && (
+                  <div className={styles.tooltip}>
+                    Link copied to clipboard!
+                  </div>
+                )}
+                <div
+                  className={styles.linkBox}
+                  onClick={() => {
+                    navigator.clipboard.writeText(secretToken);
+                    setCopied(true);
+                  }}
+                >
+                  <p id="affiliate-link" className={styles.url}>
+                    {secretToken?.slice(0, 10) + "..."}
+                  </p>
+                  <img src={UrlLink} alt="url icon" />
+                </div>
+              </div>
+              <Buttons
+                buttons={["Close", "Verify"]}
+                functions={[
+                  () => {
+                    setOpen(!open);
+                    setIsTotp(!isTotp);
+                  },
+                  () => {
+                    setVerify(true);
+                  },
+                ]}
+              />
+            </div>
+          ) : (
+            <div>
+              <div className={styles.modalSubtitle}>
+                {" "}
+                Enter code from Authenticator
+              </div>
+              <MessageComponent />
+              <OneTimeCodeInput setOTPCode={setCode} />
+              <Buttons
+                buttons={["Close", "Verify"]}
+                functions={[
+                  () => {
+                    setOpen(!open);
+                    setIsTotp(!isTotp);
+                  },
+                  () => {
+                    handleTotpVerify(email.current, code, false);
+                  },
+                ]}
+              />
+            </div>
+          )}
+        </ModalOverlay>
+      )}
     </div>
   );
 };
