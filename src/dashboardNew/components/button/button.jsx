@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import styles from "./button.module.css";
 
-const Button = ({ children, color, onClick }) => {
+const Button = ({ children, color, onClick, link }) => {
   return (
     <div
       onClick={onClick}
@@ -21,14 +22,28 @@ const Button = ({ children, color, onClick }) => {
               : "#0784B5",
         }}
       ></div>
-      <div
-        style={{
-          fontSize: color === "gray" ? "1rem" : "",
-        }}
-        className={styles.text}
-      >
-        {children}
-      </div>
+
+      {link ? (
+        <Link to={link}>
+          <div
+            style={{
+              fontSize: color === "gray" ? "1rem" : "",
+            }}
+            className={styles.text}
+          >
+            {children}
+          </div>
+        </Link>
+      ) : (
+        <div
+          style={{
+            fontSize: color === "gray" ? "1rem" : "",
+          }}
+          className={styles.text}
+        >
+          {children}
+        </div>
+      )}
     </div>
   );
 };

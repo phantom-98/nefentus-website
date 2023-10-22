@@ -1,7 +1,13 @@
 import Button from "../button/button";
 import styles from "./settingsTitle.module.css";
 
-const SettingsTitle = ({ title, description, identification, product }) => {
+const SettingsTitle = ({
+  title,
+  description,
+  identification,
+  product,
+  onCreate,
+}) => {
   return (
     <div className={styles.wrapper}>
       <div>
@@ -12,7 +18,7 @@ const SettingsTitle = ({ title, description, identification, product }) => {
       {identification && <div className={styles.level}>Level: X</div>}
       {product && (
         <div>
-          <Button>Create New Product</Button>
+          <Button onClick={onCreate}>Create New Product</Button>
         </div>
       )}
     </div>

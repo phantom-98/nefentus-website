@@ -2,7 +2,6 @@ import styles from "./productCard.module.css";
 
 import Edit from "../../../assets/icon/edit.svg";
 import Delete from "../../../assets/icon/delete.svg";
-import { Link } from "react-router-dom";
 import Button from "../button/button";
 
 const ProductCard = ({ onClickEdit, onClickDelete, product = {} }) => {
@@ -28,9 +27,11 @@ const ProductCard = ({ onClickEdit, onClickDelete, product = {} }) => {
 
         <p className={styles.description}>{product.description}</p>
 
-        <p className={styles.price}>{product.price}</p>
+        <p className={styles.price}>{product.price} USD</p>
 
-        <Button color="light">Watch</Button>
+        <Button color="light" link={`/product/${product.link}`}>
+          Watch
+        </Button>
       </div>
     </div>
   );
