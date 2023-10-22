@@ -272,7 +272,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/dashboardNew/transaction"
+                  path="/dashboardNew/transactions"
                   element={
                     <ScreenLayout>
                       <TransactionDashboard />
