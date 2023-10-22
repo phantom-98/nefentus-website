@@ -6,9 +6,10 @@ import Clipboard from "../../../assets/icon/clipboard.svg";
 import styles from "./profileCard.module.css";
 
 const ProfileCard = ({ type }) => {
-  const [profileImage, setProfileImage] = useState(
-    "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3161&q=80",
-  );
+  const [firstName] = useState(localStorage.getItem("firstName"));
+  const [lastName] = useState(localStorage.getItem("lastName"));
+  const [email] = useState(localStorage.getItem("email"));
+  const [profileImage] = useState(localStorage.getItem("profile_pic"));
 
   return (
     <Card className={styles.profileCard}>
@@ -17,8 +18,8 @@ const ProfileCard = ({ type }) => {
           <img src={profileImage} alt="" />
         </div>
         <div>
-          <p className={styles.main}>Erin Vaccaro</p>
-          <p className={styles.subtitle}>erin.vaccaro@gmail.com</p>
+          <p className={styles.main}>{`${firstName} ${lastName}`}</p>
+          <p className={styles.subtitle}>{email}</p>
         </div>
       </div>
 
