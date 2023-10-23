@@ -13,7 +13,9 @@ import styles from "./topNavigation.module.css";
 import { useEffect, useState } from "react";
 import SideNavigation from "../sideNavigation/sideNavigation";
 import LanguageBox from "../../components/language/language";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import backend_API from "../../../api/backendAPI";
 
 const TopNavigation = () => {
   const [lightMode, setLightMode] = useState(false);
@@ -23,6 +25,8 @@ const TopNavigation = () => {
   const [openLanguage, setOpenLanguage] = useState(false);
 
   const [height, setHeight] = useState(0);
+  const backendAPI = new backend_API();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (window.innerHeight >= 900) return;
@@ -37,6 +41,15 @@ const TopNavigation = () => {
 
     return () => window.removeEventListener("resize", changeHeight);
   });
+
+  const logOut = async () => {
+    try {
+      const data = await backendAPI.signout();
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -68,7 +81,7 @@ const TopNavigation = () => {
                   <img src={Identification} alt="" />
                   <p>Identification</p>
                 </Link>
-                <div className={styles.profileItem}>
+                <div className={styles.profileItem} onClick={() => logOut()}>
                   <img src={Logout} alt="" />
                   <p>Log Out</p>
                 </div>
