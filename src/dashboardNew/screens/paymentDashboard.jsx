@@ -38,7 +38,8 @@ const PaymentDashboard = () => {
       new Date(invoice.createdAt).toLocaleString(),
       parseFloat(invoice.price).toFixed(2),
       <TableStatus color="green">Open</TableStatus>,
-      <TableQR link={`${window.location.origin}/pay/${invoice.link}`} />,
+      <TableQR link={process.env.VITE_REACT_APP_QR_CODE_LINK} />,
+      // <TableQR link={`${window.location.origin}/pay/${invoice.link}`} />,
       <TableAction
         button="Disable"
         button2="Delete"
