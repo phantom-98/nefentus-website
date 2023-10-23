@@ -240,12 +240,12 @@ const LoginBox = () => {
     }
   }
 
-  async function verifyOtpCode(email, code, checkbox, step) {
+  async function verifyOtpCode(email, code, checkbox) {
     if (Cookies.get("acceptCookie") !== true) {
       checkbox = false;
     }
     try {
-      const response = await backendAPI.verifyOTP(email, code, checkbox, step);
+      const response = await backendAPI.verifyOTP(email, code, checkbox);
       if (response == null) {
         setErrorMessage("Failed to Confirm");
         return;
@@ -292,7 +292,7 @@ const LoginBox = () => {
 
   const handleConfirmCodeOtp = (e) => {
     e.preventDefault();
-    verifyOtpCode(email, code, checkBox, step);
+    verifyOtpCode(email, code, checkBox);
   };
   const handleConfirmCodeTotp = (e) => {
     e.preventDefault();

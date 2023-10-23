@@ -218,32 +218,30 @@ export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag }) => {
 
   return (
     <div className={styles.OTPInputWrap}>
-      <form id={"otpForm"}>
-        {code.map((value, index) =>
-          index === 0 ? (
-            <input
-              className={styles.OTPInput}
-              key={index}
-              type="text"
-              value={value}
-              ref={inputRefs[index]}
-              onChange={(e) => handleCodeChange(e, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-            />
-          ) : (
-            <input
-              className={styles.OTPInput}
-              key={index}
-              type="text"
-              value={value}
-              ref={inputRefs[index]}
-              onChange={(e) => handleCodeChange(e, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              maxLength={1}
-            />
-          ),
-        )}
-      </form>
+      {code.map((value, index) =>
+        index === 0 ? (
+          <input
+            className={styles.OTPInput}
+            key={index}
+            type="text"
+            value={value}
+            ref={inputRefs[index]}
+            onChange={(e) => handleCodeChange(e, index)}
+            onKeyDown={(e) => handleKeyDown(e, index)}
+          />
+        ) : (
+          <input
+            className={styles.OTPInput}
+            key={index}
+            type="text"
+            value={value}
+            ref={inputRefs[index]}
+            onChange={(e) => handleCodeChange(e, index)}
+            onKeyDown={(e) => handleKeyDown(e, index)}
+            maxLength={1}
+          />
+        ),
+      )}
     </div>
   );
 };

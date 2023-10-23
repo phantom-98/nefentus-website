@@ -251,9 +251,9 @@ export default class backendAPI {
       localStorage.setItem("profile_pic", data.profileImage);
       localStorage.setItem("roles", data.roles);
       localStorage.setItem("country", data.country);
-      localStorage.setItem("isMfa", data.isMfa);
+      localStorage.setItem("hasTotp", data.hasTotp);
       localStorage.setItem("requireKyc", data.requireKyc);
-      localStorage.setItem("requireOtp", data.requireOtp);
+      localStorage.setItem("hasOtp", data.hasOtp);
       localStorage.setItem("userId", data.userId);
       localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
 
@@ -389,7 +389,7 @@ export default class backendAPI {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      if (!data.requireOtp) {
+      if (!data.hasOtp) {
         setCookie("token", data.jwtToken);
         localStorage.setItem("token", data.jwtToken);
         localStorage.setItem("email", data.email);
@@ -403,9 +403,9 @@ export default class backendAPI {
         localStorage.setItem("profile_pic", data.profileImage);
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
-        localStorage.setItem("isMfa", data.isMfa);
+        localStorage.setItem("hasTotp", data.hasTotp);
         localStorage.setItem("requireKyc", data.requireKyc);
-        localStorage.setItem("requireOtp", data.requireOtp);
+        localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
       }
@@ -422,7 +422,7 @@ export default class backendAPI {
     }
   }
 
-  async verifyOTP(email, code, longToken, step) {
+  async verifyOTP(email, code, longToken) {
     try {
       const url = `${this.baseURL}/auth/verify/otp`;
       const options = {
@@ -440,8 +440,11 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+
+      const data = await response.json();
+      const step = data.hasOtp !== data.hasTotp;
+
       if (step) {
-        const data = await response.json();
         setCookie("token", data.jwtToken);
         localStorage.setItem("token", data.jwtToken);
         localStorage.setItem("email", data.email);
@@ -455,9 +458,9 @@ export default class backendAPI {
         localStorage.setItem("profile_pic", data.profileImage);
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
-        localStorage.setItem("isMfa", data.isMfa);
+        localStorage.setItem("hasTotp", data.hasTotp);
         localStorage.setItem("requireKyc", data.requireKyc);
-        localStorage.setItem("requireOtp", data.requireOtp);
+        localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
 
@@ -739,6 +742,7 @@ export default class backendAPI {
       return null; // or return some default value
     }
   }
+
   async deleteProfileImage() {
     try {
       const url = `${this.baseURL}/auth/deleteImage`;
@@ -757,27 +761,6 @@ export default class backendAPI {
       const data = await response.json();
       localStorage.setItem("profile_pic", "null");
       return data;
-    } catch (error) {
-      return null; // or return some default value
-    }
-  }
-
-  async getByKYC(type) {
-    try {
-      const userId = localStorage.getItem("userId");
-      const url = `${this.baseURL}/auth/${userId}/kyc-image-url?type=${type}`;
-      const options = {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      };
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      return { [type]: data };
     } catch (error) {
       return null; // or return some default value
     }

@@ -204,8 +204,8 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [imageName, setImageName] = useState(null);
   const [imageChanged, setImageChanged] = useState(false); // Set to true if image changed (was added or deleted))
-  const isTotp = useRef(localStorage.getItem("isMfa") === "true");
-  const isOtp = useRef(localStorage.getItem("requireOtp") === "true");
+  const isTotp = useRef(localStorage.getItem("hasTotp") === "true");
+  const isOtp = useRef(localStorage.getItem("hasOtp") === "true");
   const [phishingCode, setPhishingCode] = useState(
     localStorage.getItem("antiPhishingCode") !== "undefined"
       ? localStorage.getItem("antiPhishingCode")
@@ -288,8 +288,6 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
       phoneNumber: phoneNumber,
       email: email,
       business: business || "",
-      isMfa: isTotp.current,
-      requireOtp: isOtp.current,
       antiPhishingCode: phishingCode,
     };
 
@@ -316,8 +314,8 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
         navigate("/");
       }, 1000);
     } else {
-      localStorage.setItem("isMfa", isOtp.toString());
-      localStorage.setItem("requireOtp", isTotp.toString());
+      localStorage.setItem("hasOtp", isOtp.toString());
+      localStorage.setItem("hasTotp", isTotp.toString());
     }
 
     resetValues();
@@ -675,11 +673,9 @@ const EmailBody = ({ active }) => {
 
 const AuthenticatorBody = ({ active }) => {
   const [isTotp, setIsTotp] = useState(
-    localStorage.getItem("isMfa") === "true",
+    localStorage.getItem("hasTotp") === "true",
   );
-  const [isOtp, setIsOtp] = useState(
-    localStorage.getItem("requireOtp") === "true",
-  );
+  const [isOtp, setIsOtp] = useState(localStorage.getItem("hasOtp") === "true");
   const email = useRef(localStorage.getItem("email"));
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
 
@@ -708,14 +704,14 @@ const AuthenticatorBody = ({ active }) => {
   const handleTotpVerify = async (email, token, rememberMe) => {
     const response = await backendAPI.verifyTotpToken(email, token, rememberMe);
     if (response.status === 200) {
-      const response = await backendAPI.setupTotp({
+      const response2 = await backendAPI.setupTotp({
         active: true,
       });
 
-      if (response == null) {
+      if (response2 == null) {
         setErrorMessage("Error on updating data");
       } else {
-        localStorage.setItem("isMfa", data.toString());
+        localStorage.setItem("hasTotp", true.toString());
         setInfoMessage("Settings updated successfully!");
         setTimeout(() => {
           setOpen(false);
@@ -739,7 +735,7 @@ const AuthenticatorBody = ({ active }) => {
     if (response.status === 200) {
       console.log(response.status, "status");
       console.log(isOtp, "statusOtp");
-      localStorage.setItem("requireOtp", data.toString());
+      localStorage.setItem("hasOtp", data.toString());
       setInfoMessage("Settings updated successfully!");
     }
   };

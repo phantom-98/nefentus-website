@@ -174,18 +174,20 @@
 
 .OTPInput {
   background: transparent;
-  width: 5rem;
-  height: 7.5rem;
-  margin-right: 3rem;
+  width: 4rem;
+  height: 5rem;
+  margin-right: 1.5rem;
   border-radius: 1rem;
   outline: none;
   border: var(--gray-color) solid 0.3rem;
   color: var(--gray-color);
   box-sizing: border-box;
   padding: 1rem;
-  font-size: 4.5rem;
+  font-size: 2.5rem;
 }
 
 .OTPInputWrap {
   margin-bottom: 2.5rem;
+  display: flex;
+  flex-wrap: nowrap;
 }
