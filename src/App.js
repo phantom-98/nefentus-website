@@ -27,6 +27,7 @@ import PaymentDashboard from "./dashboardNew/screens/paymentDashboard";
 import AdminDashboard from "./dashboardNew/screens/adminDashboard";
 import TransactionDashboard from "./dashboardNew/screens/transactionDashboard";
 import IdentificationDashboard from "./dashboardNew/screens/identificationDashboard";
+import IntegrationsDashboard from "./dashboardNew/screens/integrationsDashboard";
 
 import { Player } from "@lottiefiles/react-lottie-player";
 import LoadingAnimation from "./assets/logo/loadingAnimation.json";
@@ -284,6 +285,14 @@ function App() {
                   element={
                     <ScreenLayout>
                       <IdentificationDashboard />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboardNew/integrations"
+                  element={
+                    <ScreenLayout>
+                      <IntegrationsDashboard />
                     </ScreenLayout>
                   }
                 />
