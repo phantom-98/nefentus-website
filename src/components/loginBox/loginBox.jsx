@@ -3,7 +3,7 @@ import styles from "./loginBox.module.css";
 
 import Logo from "../../assets/logo/logo2.svg";
 import Button from "./../button/button";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { dashboardLink, decryptData, encryptData } from "../../utils";
@@ -145,8 +145,8 @@ const LoginBox = () => {
   );
 
   const schema = z.object({
-    email: z.string().min(1, { message: "Please enter your email" }),
-    password: z.string().min(1, { message: "Please enter your password" }),
+    email: z.string().min(1, { message: t("messages.validation.email") }),
+    password: z.string().min(1, { message: t("messages.validation.password") }),
   });
 
   const {
@@ -212,7 +212,7 @@ const LoginBox = () => {
     const captchaValue = recaptchaRef.current.getValue();
 
     if (!captchaValue) {
-      setErrorMessage("Please verify the reCAPTCHA!");
+      setErrorMessage(t("messages.error.reCAPTCHA"));
     } else {
       if (Cookies.get("acceptCookie") !== true) {
         checkbox = false;
@@ -224,7 +224,7 @@ const LoginBox = () => {
           checkbox,
         );
         if (response == null) {
-          setErrorMessage("Invalid login data");
+          setErrorMessage(t("messages.error.loginData"));
           return;
         } else if (response.hasOtp || response.hasTotp) {
           setShowConfirmMeEmail(true);
@@ -235,7 +235,7 @@ const LoginBox = () => {
           navigateDashboard();
         }
       } catch (error) {
-        setErrorMessage("There was an error logging in");
+        setErrorMessage(t("messages.error.login"));
       }
     }
   }
@@ -247,7 +247,7 @@ const LoginBox = () => {
     try {
       const response = await backendAPI.verifyOTP(email, code, checkbox);
       if (response == null) {
-        setErrorMessage("Failed to Confirm");
+        setErrorMessage(t("messages.error.confirm"));
         return;
       }
       if (otp && totp) {
@@ -273,7 +273,7 @@ const LoginBox = () => {
       console.log(response, "response");
       navigateDashboard();
     } catch (error) {
-      setErrorMessage("There was an error logging in");
+      setErrorMessage(t("messages.error.login"));
     }
   }
 
@@ -281,12 +281,12 @@ const LoginBox = () => {
     try {
       const response = await backendAPI.activateAccount(token);
       if (response == null) {
-        setErrorMessage("Error on activating account: ");
+        setErrorMessage(t("messages.error.activateAccount"));
         return;
       }
-      setMessage("Account successfully activated");
+      setMessage(t("messages.success.activateAccount"));
     } catch (error) {
-      setErrorMessage("Error on activating account: ");
+      setErrorMessage(t("messages.error.activateAccount"));
     }
   };
 
