@@ -114,8 +114,9 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
 
         <div className={styles.lineGroup}>
           <div className={styles.lineWrapper}>
-            {data.map((item) => (
+            {data.map((item, index) => (
               <div
+                key={index}
                 className={styles.line}
                 style={{
                   backgroundColor: item.color,
@@ -136,8 +137,8 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
           </div>
 
           <div className={styles.legendBody}>
-            {data.map((item) => (
-              <div className={styles.legend}>
+            {data.map((item, index) => (
+              <div key={index} className={styles.legend}>
                 <div className={styles.left}>
                   <div
                     className={styles.circle}

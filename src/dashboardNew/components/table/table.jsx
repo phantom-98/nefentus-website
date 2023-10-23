@@ -7,8 +7,8 @@ const Table = ({ grid, label, data }) => {
         <div className={`${styles.table} `}>
           <TableRow data={label} grid={grid} label />
 
-          {data.map((item) => (
-            <TableRow data={item} grid={grid} />
+          {data.map((item, index) => (
+            <TableRow key={index} data={item} grid={grid} />
           ))}
         </div>
       </div>
@@ -21,8 +21,10 @@ export default Table;
 const TableRow = ({ data, grid, label }) => {
   return (
     <div className={`${styles.tableRow}`} style={{ gridTemplateColumns: grid }}>
-      {data.map((item) => (
-        <div className={label ? styles.label : styles.dataItem}>{item}</div>
+      {data.map((item, index) => (
+        <div key={index} className={label ? styles.label : styles.dataItem}>
+          {item}
+        </div>
       ))}
     </div>
   );

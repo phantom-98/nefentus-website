@@ -20,6 +20,7 @@ const label = [
 
 const TransactionBody = () => {
   const [orderData, setOrderData] = useState([]);
+  const [orderIds, setOrderIds] = useState([]);
   const dashboardApi = new vendorDashboardApi();
 
   useEffect(() => {
