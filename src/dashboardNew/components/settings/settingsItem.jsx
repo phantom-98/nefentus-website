@@ -39,6 +39,7 @@ const SettingsItem = ({ data, setIsSaveData }) => {
 
   const handleEnable = () => {
     data.setValue((prev) => !prev);
+    setIsSaveData(true);
   };
 
   const handleData = (dataValue) => {

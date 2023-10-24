@@ -195,6 +195,59 @@ export default class backendAPI {
       localStorage.setItem("phoneNumber", data.phoneNumber);
       localStorage.setItem("username", data.username);
       localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+      localStorage.setItem("marketingUpdates", data.marketingUpdates);
+      localStorage.setItem("emailNotifications", data.emailNotifications);
+      localStorage.setItem("appNotifications", data.appNotifications);
+      localStorage.setItem("notificationLanguage", data.notificationLanguage);
+      localStorage.setItem("enableInvoicing", data.enableInvoicing);
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async updateFirstName(firstName) {
+    try {
+      const url = `${this.baseURL}/auth/update/first-name`;
+      const options = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify({ firstName }),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data);
+      localStorage.setItem("firstName", firstName);
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async updateLastName(lastName) {
+    try {
+      const url = `${this.baseURL}/auth/update/last-name`;
+      const options = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify({ lastName }),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data);
+      localStorage.setItem("lastName", lastName);
       return response;
     } catch (error) {
       return null; // or return some default value
@@ -306,6 +359,11 @@ export default class backendAPI {
         localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+        localStorage.setItem("marketingUpdates", data.marketingUpdates);
+        localStorage.setItem("emailNotifications", data.emailNotifications);
+        localStorage.setItem("appNotifications", data.appNotifications);
+        localStorage.setItem("notificationLanguage", data.notificationLanguage);
+        localStorage.setItem("enableInvoicing", data.enableInvoicing);
       }
 
       ReactGA.event({
@@ -357,6 +415,11 @@ export default class backendAPI {
       localStorage.setItem("hasOtp", data.hasOtp);
       localStorage.setItem("userId", data.userId);
       localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+      localStorage.setItem("marketingUpdates", data.marketingUpdates);
+      localStorage.setItem("emailNotifications", data.emailNotifications);
+      localStorage.setItem("appNotifications", data.appNotifications);
+      localStorage.setItem("notificationLanguage", data.notificationLanguage);
+      localStorage.setItem("enableInvoicing", data.enableInvoicing);
 
       ReactGA.event({
         category: "User",
