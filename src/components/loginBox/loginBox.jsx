@@ -32,13 +32,6 @@ const ConfirmMeEmail = ({
 }) => {
   console.log(code, "code");
   console.log(totp, otp, "111");
-  useEffect(() => {
-    if (step) {
-      const form = document.getElementById("otpForm");
-      console.log(form, "step");
-      console.log(form.reset(), "step");
-    }
-  }, [step]);
 
   return (
     <>
@@ -256,7 +249,7 @@ const LoginBox = () => {
         navigateDashboard();
       }
     } catch (error) {
-      setErrorMessage("There was an error logging in");
+      setErrorMessage(t("messages.error.login"));
     }
   }
 

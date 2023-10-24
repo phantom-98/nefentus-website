@@ -5,7 +5,7 @@ import InputComponent, {
   Switcher,
 } from "../input/input";
 import styles from "./settings.module.css";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 
 import Logo from "../../assets/logo/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
@@ -81,7 +81,7 @@ const SettingsBody = ({ type }) => {
     const handleStorageChange = () => {
       setProfilePicUrl(localStorage.getItem("profile_pic"));
       setCounter(counter + 1);
-      setRequireKyc(localStorage.setItem("requireKyc"));
+      setRequireKyc(localStorage.getItem("requireKyc"));
     };
 
     async function checkJwtAndNavigate() {
@@ -702,6 +702,7 @@ const AuthenticatorBody = ({ active }) => {
       await backendAPI.setupTotp({
         active: false,
       });
+      setInfoMessage("Settings updated successfully!");
     }
   };
 
@@ -717,10 +718,8 @@ const AuthenticatorBody = ({ active }) => {
       } else {
         localStorage.setItem("hasTotp", true.toString());
         setInfoMessage("Settings updated successfully!");
-        setTimeout(() => {
-          setOpen(false);
-          setVerify(false);
-        }, 1000);
+        setOpen(false);
+        setVerify(false);
       }
     }
     if (response.status === 400) {
