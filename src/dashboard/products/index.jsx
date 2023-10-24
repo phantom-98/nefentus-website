@@ -19,6 +19,7 @@ import { useContext } from "react";
 import CropDialog, {
   dataURLtoFile,
 } from "../../components/cropDialog/cropDialog";
+import { transactionLimit } from "../../constants";
 
 const ProductBody = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -95,6 +96,10 @@ const ProductBody = () => {
     }
     if (!price) {
       setErrorMessage("Price is required!");
+      return;
+    }
+    if (price > transactionLimit) {
+      setErrorMessage("Overage limit!");
       return;
     }
     let priceAsFloat = null;
