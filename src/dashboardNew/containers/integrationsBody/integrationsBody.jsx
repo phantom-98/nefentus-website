@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
 import {
@@ -7,8 +7,8 @@ import {
   walletConnect,
 } from "@thirdweb-dev/react";
 import styles from "./integrationsBody.module.css";
-import Header from "../../../dashboard/header/header";
 import WalletIntegration from "../../components/WalletIntegration/WalletIntegration";
+import SettingsTitle from "../../components/settings/settingsTitle";
 
 const IntegrationsBody = () => {
   const wallets = [
@@ -24,9 +24,22 @@ const IntegrationsBody = () => {
     },
   ];
 
+  const [connectStatus, setConnectStatus] = useState({
+    "Wallet Connect": "disconnected",
+    Metamask: "disconnected",
+  });
+  useEffect(() => {
+    console.log(connectStatus);
+  }, [connectStatus]);
+
   return (
     <div className={"dashboard-body"}>
-      <Header title="Integrations" />
+      <div className={styles.titleHeader}>
+        <SettingsTitle
+          title="Integrations"
+          description="Integrate your cryptocurrency wallet"
+        />
+      </div>
       <div className={styles.walletsWrap}>
         {wallets.map((wallet) => {
           return (
@@ -39,6 +52,8 @@ const IntegrationsBody = () => {
                   name={wallet.name}
                   config={wallet.connect}
                   icon={wallet.icon}
+                  connectStatus={connectStatus}
+                  setConnectStatus={setConnectStatus}
                 />
               </ThirdwebProvider>
             </React.Fragment>
