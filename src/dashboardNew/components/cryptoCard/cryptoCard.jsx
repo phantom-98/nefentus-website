@@ -64,12 +64,12 @@ const CryptoCard = ({ setTotal }) => {
   }
 
   useEffect(() => {
-    const data = prices.map((price, index) => ({
+    const data = balances[1].map((balance, index) => ({
       ...currencies[index],
       middleName: "Ethereum",
       middleInfo: "Network",
-      price,
-      value: balances[1][index],
+      price: prices[index],
+      value: balance,
     }));
 
     setTotal(calculateTotalBalanceUSD());
