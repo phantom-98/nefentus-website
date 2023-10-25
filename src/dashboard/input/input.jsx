@@ -25,12 +25,6 @@ const Input = ({
         <div className={styles["radio-group"]}>
           {options.map((option) => (
             <div key={option.value} className={styles["radio"]}>
-              {console.log(
-                "checked",
-                value,
-                option.value,
-                value === option.value,
-              )}
               <input
                 type="radio"
                 id={`${label} - ${option.name}`}
@@ -200,6 +194,11 @@ export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag }) => {
     if (value === "" && index > 0) {
       inputRefs[index - 1].current.focus();
     }
+
+    if (newCode[index + 1] && newCode[index - 1] && value === "") {
+      inputRefs[index].current.focus();
+    }
+
     if (index === 0 && value.length === 6) {
       setCode(value.split(""));
       newCode = value.split("");

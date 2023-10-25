@@ -234,38 +234,43 @@ export default class backendAPI {
       };
       const response = await fetch(url, options);
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setCookie("token", data.jwtToken);
-      localStorage.setItem("token", data.jwtToken);
-      localStorage.setItem("email", data.email);
-      localStorage.setItem("contactEmail", data.contactEmail);
-      localStorage.setItem("affiliateLink", data.affiliateLink);
-      localStorage.setItem("firstName", data.firstName);
-      localStorage.setItem("lastName", data.lastName);
-      localStorage.setItem("business", data.business);
-      localStorage.setItem("phoneNumber", data.phoneNumber);
-      localStorage.setItem("username", data.username);
-      localStorage.setItem("profile_pic", data.profileImage);
-      localStorage.setItem("roles", data.roles);
-      localStorage.setItem("country", data.country);
-      localStorage.setItem("hasTotp", data.hasTotp);
-      localStorage.setItem("requireKyc", data.requireKyc);
-      localStorage.setItem("hasOtp", data.hasOtp);
-      localStorage.setItem("userId", data.userId);
-      localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+      // if (!response.ok) {
+      //   throw new Error("Network response was not ok");
+      // }
 
-      ReactGA.event({
-        category: "User",
-        action: "login",
-        label: data.email,
-      });
+      if (response.ok) {
+        const data = await response.json();
+        setCookie("token", data.jwtToken);
+        localStorage.setItem("token", data.jwtToken);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("contactEmail", data.contactEmail);
+        localStorage.setItem("affiliateLink", data.affiliateLink);
+        localStorage.setItem("firstName", data.firstName);
+        localStorage.setItem("lastName", data.lastName);
+        localStorage.setItem("business", data.business);
+        localStorage.setItem("phoneNumber", data.phoneNumber);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("profile_pic", data.profileImage);
+        localStorage.setItem("roles", data.roles);
+        localStorage.setItem("country", data.country);
+        localStorage.setItem("hasTotp", data.hasTotp);
+        localStorage.setItem("requireKyc", data.requireKyc);
+        localStorage.setItem("hasOtp", data.hasOtp);
+        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+
+        ReactGA.event({
+          category: "User",
+          action: "login",
+          label: data.email,
+        });
+      }
 
       return response;
     } catch (e) {
-      throw new Error("Network response was not ok");
+      console.log(e, "responseresponse");
+
+      return e;
     }
   }
 

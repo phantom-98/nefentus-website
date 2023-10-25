@@ -26,9 +26,9 @@ import CropDialog, {
   dataURLtoFile,
 } from "../../components/cropDialog/cropDialog";
 import ModalOverlay from "../modal/modalOverlay";
-import { QRCodeSVG } from "qrcode.react";
 import UrlLink from "../../assets/icon/link.svg";
 import { useTranslation } from "react-i18next";
+import QRCode from "react-qr-code";
 
 let nav = [
   "Profile",
@@ -682,6 +682,7 @@ const AuthenticatorBody = ({ active }) => {
   const [isOtp, setIsOtp] = useState(localStorage.getItem("hasOtp") === "true");
   const email = useRef(localStorage.getItem("email"));
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
+  const [reset, setReset] = useState(false);
 
   const [copied, setCopied] = useState(false);
   const [verify, setVerify] = useState(false);
@@ -708,7 +709,8 @@ const AuthenticatorBody = ({ active }) => {
 
   const handleTotpVerify = async (email, token, rememberMe) => {
     const response = await backendAPI.verifyTotpToken(email, token, rememberMe);
-    if (response.status === 200) {
+    console.log(response, "response");
+    if (response?.status === 200) {
       const response2 = await backendAPI.setupTotp({
         active: true,
       });
@@ -724,6 +726,10 @@ const AuthenticatorBody = ({ active }) => {
     }
     if (response.status === 400) {
       setErrorMessage("Incorrect code");
+      setReset(true);
+      setTimeout(() => {
+        setReset(false);
+      });
     }
   };
 
@@ -775,9 +781,11 @@ const AuthenticatorBody = ({ active }) => {
                 Scan QR-code or paste code
               </div>
               <div className={styles.QRCode}>
-                <QRCodeSVG
-                  size={"20rem"}
+                <QRCode
+                  size={256}
+                  style={{ height: "auto", maxWidth: "100%", width: "100%" }}
                   value={`otpauth://totp/Nefentus?secret=${secretToken}`}
+                  viewBox={`0 0 256 256`}
                 />
               </div>
               <div className={styles.copyLink}>
@@ -819,7 +827,7 @@ const AuthenticatorBody = ({ active }) => {
                 Enter code from Authenticator
               </div>
               <MessageComponent />
-              <OneTimeCodeInput setOTPCode={setCode} />
+              <OneTimeCodeInput setOTPCode={setCode} resetCodeFlag={reset} />
               <Buttons
                 buttons={["Close", "Verify"]}
                 functions={[
