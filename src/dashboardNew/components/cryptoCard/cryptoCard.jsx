@@ -3,58 +3,79 @@ import Card from "../card/card";
 import styles from "./cryptoCard.module.css";
 
 import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useInternalWallet from "../../../hooks/internalWallet";
+import {
+  metamaskWallet,
+  useAddress,
+  useConnect,
+  useConnectionStatus,
+  useDisconnect,
+} from "@thirdweb-dev/react";
+import useBalances from "../../../hooks/balances";
+import usePrices from "../../../hooks/prices";
+import backendAPI from "../../../api/backendAPI";
+import { currencies } from "../../../constants";
+import { formatTokenBalance, formatUSDBalance } from "../../../utils";
 
-const data = [
-  {
-    icon: Ethereum,
-    title: "Ethereum",
-    subtitle: "$1,226.08",
-    middleName: "Ethereum",
-    middleInfo: "Network",
-    value: "$37,953.88",
-    cryptoValue: "ETH 30.94823503",
-  },
-  {
-    icon: Ethereum,
-    title: "Ethereum",
-    subtitle: "$1,226.08",
-    middleName: "Ethereum",
-    middleInfo: "Network",
-    value: "$37,953.88",
-    cryptoValue: "ETH 30.94823503",
-  },
-  {
-    icon: Ethereum,
-    title: "Ethereum",
-    subtitle: "$1,226.08",
-    middleName: "Ethereum",
-    middleInfo: "Network",
-    value: "$37,953.88",
-    cryptoValue: "ETH 30.94823503",
-  },
-  {
-    icon: Ethereum,
-    title: "Ethereum",
-    subtitle: "$1,226.08",
-    middleName: "Ethereum",
-    middleInfo: "Network",
-    value: "$37,953.88",
-    cryptoValue: "ETH 30.94823503",
-  },
-  {
-    icon: Ethereum,
-    title: "Ethereum",
-    subtitle: "$1,226.08",
-    middleName: "Ethereum",
-    middleInfo: "Network",
-    value: "$37,953.88",
-    cryptoValue: "ETH 30.94823503",
-  },
-];
-
-const CryptoCard = () => {
+const CryptoCard = ({ setTotal }) => {
   const [activeToggle, setActiveToggle] = useState(true);
+  const metamask = {
+    connect: useConnect(),
+    disconnect: useDisconnect(),
+    config: metamaskWallet(),
+    address: useAddress(),
+    status: useConnectionStatus(),
+  };
+  const backend_API = new backendAPI();
+  const [cryptList, setCryptList] = useState([]);
+
+  const { balances, fetchBalances } = useBalances(metamask);
+  const { prices, fetchPrices } = usePrices(metamask);
+
+  useEffect(() => {
+    fetchPrices();
+    fetchBalances();
+
+    if (metamask.status === "connected" && metamask.address) {
+      registerWallet();
+    }
+
+    async function registerWallet() {
+      const result = await backend_API.registerWalletAddress(metamask.address);
+    }
+  }, [metamask.status, metamask.address]);
+
+  function calculateTotalBalanceUSD() {
+    let totalBalanceUSD = 0.0;
+
+    for (let i = 0; i < currencies.length; i++) {
+      let balanceUSD = 0.0;
+      if (balances[1][i]) {
+        const balanceToken = balances[1][i];
+        if (prices[i]) {
+          balanceUSD = balanceToken * prices[i];
+        }
+      }
+
+      totalBalanceUSD += balanceUSD;
+    }
+    return totalBalanceUSD;
+  }
+
+  useEffect(() => {
+    const data = prices.map((price, index) => ({
+      ...currencies[index],
+      middleName: "Ethereum",
+      middleInfo: "Network",
+      price,
+      value: balances[1][index],
+    }));
+
+    setTotal(calculateTotalBalanceUSD());
+
+    setCryptList(data);
+  }, [prices, balances]);
 
   return (
     <Card>
@@ -82,8 +103,8 @@ const CryptoCard = () => {
       </div>
 
       <div className={styles.body}>
-        {data.map((item) => (
-          <CryptoItem data={item} />
+        {cryptList.map((item, index) => (
+          <CryptoItem key={index} data={item} />
         ))}
       </div>
     </Card>
@@ -93,14 +114,25 @@ const CryptoCard = () => {
 export default CryptoCard;
 
 const CryptoItem = ({ data }) => {
+  let balanceToken = "loading";
+  let balanceUSD = "loading";
+  if (data.value) {
+    balanceToken = data.value;
+    if (data.price) {
+      balanceUSD = data.value * data.price;
+    }
+  }
+
   return (
     <div className={styles.cryptoItem}>
       <div className={styles.left}>
         <img src={data.icon} alt="" />
 
         <div>
-          <div className={styles.title}>{data.title}</div>
-          <div className={styles.subtitle}>{data.subtitle}</div>
+          <div className={styles.title}>{data.name}</div>
+          <div className={styles.subtitle}>{`${parseFloat(data.price).toFixed(
+            2,
+          )}`}</div>
         </div>
       </div>
       <div className={styles.middle}>
@@ -108,8 +140,10 @@ const CryptoItem = ({ data }) => {
         <div className={styles.subtitle}>{data.middleInfo}</div>
       </div>
       <div className={styles.right}>
-        <div className={styles.title}>{data.value}</div>
-        <div className={styles.subtitle}>{data.cryptoValue}</div>
+        <div className={styles.title}>${formatUSDBalance(balanceUSD)}</div>
+        <div className={styles.subtitle}>
+          {formatTokenBalance(balanceToken, data.decimals)} {data.abbr}
+        </div>
       </div>
     </div>
   );

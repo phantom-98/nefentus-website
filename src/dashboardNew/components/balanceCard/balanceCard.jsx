@@ -5,6 +5,7 @@ import styles from "./balanceCard.module.css";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import { currencies } from "../../../constants";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -28,13 +29,13 @@ const options = {
   },
 };
 
-const BalanceCard = () => {
+const BalanceCard = ({ total }) => {
   return (
     <Card className={styles.card}>
       <div className={styles.left}>
         <div className={styles.label}>Balance</div>
-        <div className={styles.value}>$53.529.32</div>
-        <div className={styles.subtitle}>7 Crypto</div>
+        <div className={styles.value}>${total}</div>
+        <div className={styles.subtitle}>{currencies.length} Crypto</div>
       </div>
 
       <div className={styles.right}>
