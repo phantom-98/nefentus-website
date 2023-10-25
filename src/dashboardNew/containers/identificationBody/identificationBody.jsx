@@ -1,12 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/button/button";
 import Card from "../../components/card/card";
 import SettingsTitle from "../../components/settings/settingsTitle";
+import backend_API from "../../../api/backendAPI";
 
 import styles from "./identificationBody.module.css";
 import { EditPopup } from "../../components/settings/settingsItem";
 
 const IdentificationBody = () => {
+  const [level, setLevel] = useState(null);
+
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const getLevel = async () => {
+      const BackendAPI = new backend_API();
+      const { data } = await BackendAPI.getKYCLevel(userId);
+      if (data) {
+        setLevel(data.kycLevel);
+      }
+    };
+
+    getLevel();
+  }, [userId]);
+
   return (
     <Card className={styles.card}>
       <div className={styles.top}>
@@ -31,9 +48,9 @@ const IdentificationBody = () => {
             </div>
             <div
               className={styles.rowRight}
-              style={{ color: true ? "#16C172" : "#F24236" }}
+              style={{ color: level > 0 ? "#16C172" : "#F24236" }}
             >
-              Verified
+              <span>{level > 0 ? "Verified" : "Unverified"}</span>
             </div>
           </div>
           <div className={styles.row}>
@@ -42,9 +59,9 @@ const IdentificationBody = () => {
             </div>
             <div
               className={styles.rowRight}
-              style={{ color: true ? "#16C172" : "#F24236" }}
+              style={{ color: level > 1 ? "#16C172" : "#F24236" }}
             >
-              Verified
+              <span>{level > 1 ? "Verified" : "Unverified"}</span>
             </div>
           </div>
           <div className={styles.row}>
@@ -53,9 +70,9 @@ const IdentificationBody = () => {
             </div>
             <div
               className={styles.rowRight}
-              style={{ color: !true ? "#16C172" : "#F24236" }}
+              style={{ color: level > 2 ? "#16C172" : "#F24236" }}
             >
-              Unverified
+              <span>{level > 2 ? "Verified" : "Unverified"}</span>
             </div>
           </div>
         </div>
@@ -102,19 +119,25 @@ const IdentificationBody = () => {
             <AddFile label="Government Issued ID" />
             <AddFile label="Picture with ID in hand" />
           </div>
-          <div className={styles.uploadItem}>
-            <div className={`${styles.row} ${styles.rowItem}`}>
-              <div className={styles.rowLeft}>Level 2:</div>
+
+          {level > 0 ? (
+            <div className={styles.uploadItem}>
+              <div className={`${styles.row} ${styles.rowItem}`}>
+                <div className={styles.rowLeft}>Level 2:</div>
+              </div>
+              <AddFile label="Proof of Address" />
+              <AddFile label="Proof of Company" />
             </div>
-            <AddFile label="Proof of Address" />
-            <AddFile label="Proof of Company" />
-          </div>
-          <div className={styles.uploadItem}>
-            <div className={`${styles.row} ${styles.rowItem}`}>
-              <div className={styles.rowLeft}>Level 3:</div>
+          ) : null}
+
+          {level > 1 ? (
+            <div className={styles.uploadItem}>
+              <div className={`${styles.row} ${styles.rowItem}`}>
+                <div className={styles.rowLeft}>Level 3:</div>
+              </div>
+              <AddFile label="Enhanced Diligence" />
             </div>
-            <AddFile label="Enhanced Diligence" />
-          </div>
+          ) : null}
 
           <div className={styles.button}>
             <Button>Confirm</Button>

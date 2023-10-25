@@ -30,6 +30,7 @@ import IdentificationDashboard from "./dashboardNew/screens/identificationDashbo
 
 import { Player } from "@lottiefiles/react-lottie-player";
 import LoadingAnimation from "./assets/logo/loadingAnimation.json";
+import Invoices from "./pages/invoices";
 
 const Contact = React.lazy(() => import("./components/contact/contact"));
 const Home = React.lazy(() => import("./pages/Home"));
@@ -220,6 +221,14 @@ function App() {
                   element={
                     <ScreenLayout>
                       <ProfileDashboard />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboardNew/invoices"
+                  element={
+                    <ScreenLayout>
+                      <Invoices />
                     </ScreenLayout>
                   }
                 />

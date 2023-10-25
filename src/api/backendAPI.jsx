@@ -632,6 +632,8 @@ export default class backendAPI {
       const data = await response.json();
       return data;
     } catch (error) {
+      console.log(error);
+
       return null; // or return some default value
     }
   }
