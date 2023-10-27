@@ -18,7 +18,7 @@ import backendAPI from "../../../api/backendAPI";
 import { currencies } from "../../../constants";
 import { formatTokenBalance, formatUSDBalance } from "../../../utils";
 
-const CryptoCard = ({ setTotal }) => {
+const CryptoCard = () => {
   const [activeToggle, setActiveToggle] = useState(true);
   const metamask = {
     connect: useConnect(),
@@ -46,23 +46,6 @@ const CryptoCard = ({ setTotal }) => {
     }
   }, [metamask.status, metamask.address]);
 
-  function calculateTotalBalanceUSD() {
-    let totalBalanceUSD = 0.0;
-
-    for (let i = 0; i < currencies.length; i++) {
-      let balanceUSD = 0.0;
-      if (balances[1][i]) {
-        const balanceToken = balances[1][i];
-        if (prices[i]) {
-          balanceUSD = balanceToken * prices[i];
-        }
-      }
-
-      totalBalanceUSD += balanceUSD;
-    }
-    return totalBalanceUSD;
-  }
-
   useEffect(() => {
     const data = balances[1].map((balance, index) => ({
       ...currencies[index],
@@ -71,8 +54,6 @@ const CryptoCard = ({ setTotal }) => {
       price: prices[index],
       value: balance,
     }));
-
-    setTotal(calculateTotalBalanceUSD());
 
     setCryptList(data);
   }, [prices, balances]);

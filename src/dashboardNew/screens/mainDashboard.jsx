@@ -4,25 +4,6 @@ import CryptoCard from "../components/cryptoCard/cryptoCard";
 import EarningCards from "../components/earningCards/earningCards";
 import IncomeCard from "../components/incomeCard/incomeCard";
 import ProfileCard from "../components/profileCard/profileCard";
-import { useState } from "react";
-
-const data = [
-  {
-    label: "Sales Total",
-    value: "+$4,678.67",
-    percentage: 2.11,
-  },
-  {
-    label: "Sales Total",
-    value: "+$4,678.67",
-    percentage: -2.11,
-  },
-  {
-    label: "Sales Total",
-    value: "+$4,678.67",
-    percentage: 2.11,
-  },
-];
 
 const labels = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "00:00"];
 
@@ -45,8 +26,6 @@ const chartData = {
 };
 
 const MainDashboard = () => {
-  const [total, setTotal] = useState(0);
-
   return (
     <div>
       <ThirdwebProvider
@@ -55,10 +34,10 @@ const MainDashboard = () => {
         clientId="639eea2ebcabed7eab90b56aceeed08b"
       >
         <ProfileCard />
-        <BalanceCard total={total} />
-        <EarningCards data={data} />
+        <BalanceCard />
+        <EarningCards />
         <IncomeCard data={chartData} />
-        <CryptoCard setTotal={setTotal} />
+        <CryptoCard />
       </ThirdwebProvider>
     </div>
   );

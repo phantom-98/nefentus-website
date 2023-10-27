@@ -10,9 +10,22 @@ import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
 
+const langOptions = [
+  { value: "en", label: "English" },
+  { value: "uk", label: "Ukrainian" },
+  { value: "de", label: "German" },
+];
+
 const SettingsItem = ({ data, setIsSaveData }) => {
   const [show, setShow] = useState(false);
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
+  const [label, setLabel] = useState(null);
+
+  useEffect(() => {
+    console.log("data.value", data.value);
+    if (data.popup === "language")
+      setLabel(langOptions.find((option) => option.value === data.value).label);
+  }, []);
 
   const handleEdit = () => {
     setShow(true);
@@ -57,7 +70,10 @@ const SettingsItem = ({ data, setIsSaveData }) => {
           </div>
           <div className={styles.right}>
             {data.type === "edit" ? (
-              <EditType value={data.value} type={data.type} />
+              <EditType
+                value={data.popup === "language" ? label : data.value}
+                type={data.type}
+              />
             ) : data.type === "image" ? (
               <ImageType value={data.value} />
             ) : data.type === "enable" ? (
@@ -90,6 +106,7 @@ const SettingsItem = ({ data, setIsSaveData }) => {
             show={show}
             value={data.value}
             setValue={(editValue) => handleData(editValue)}
+            setLabel={setLabel}
             setShow={setShow}
             type={data.type}
             popup={data.popup}
@@ -137,7 +154,15 @@ const EnableType = ({ value }) => {
   );
 };
 
-export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
+export const EditPopup = ({
+  show,
+  setShow,
+  value,
+  setValue,
+  setLabel,
+  type,
+  popup,
+}) => {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
@@ -146,6 +171,9 @@ export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
+    setLabel(
+      langOptions.find((option) => option.value === e.target.value).label,
+    );
   };
 
   const handleConfirmClick = () => {
@@ -156,9 +184,9 @@ export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
     <Popup show={show} setShow={setShow} onClick={handleConfirmClick}>
       {popup === "language" ? (
         <select id="language" className={styles.input} onChange={handleChange}>
-          <option value="English">English</option>
-          <option value="Ukrainian">Ukrainian</option>
-          <option value="German">German</option>
+          {langOptions.map((option) => (
+            <option value={option.value}>{option.label}</option>
+          ))}
         </select>
       ) : (
         <input

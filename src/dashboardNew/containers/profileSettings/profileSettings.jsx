@@ -7,6 +7,7 @@ import SettingsTitle from "../../components/settings/settingsTitle";
 import styles from "./profileSettings.module.css";
 import backend_API from "../../../api/backendAPI";
 import { MessageContext } from "../../../context/message";
+import { useNavigate } from "react-router-dom";
 
 const ProfileSettings = () => {
   const [firstName, setFirstName] = useState(localStorage.getItem("firstName"));
@@ -39,6 +40,7 @@ const ProfileSettings = () => {
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
 
   const backendAPI = new backend_API();
+  const navigate = useNavigate();
 
   const updateUser = async () => {
     const requestData = {

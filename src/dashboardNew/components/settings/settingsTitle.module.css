@@ -18,6 +18,10 @@
   border-radius: 0.5rem;
 }
 
+.input > option {
+  background-color: #222 !important;
+}
+
 .itemWrapper {
   display: flex;
   align-items: center;
