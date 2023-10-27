@@ -9,7 +9,7 @@ import Popup from "../popup/popup";
 import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
-import { Options } from "../../../components/input/input";
+import Options from "../options/options";
 
 const langOptions = [
   { value: "en", label: "English" },
@@ -191,7 +191,6 @@ export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
           options={langOptions.map((op) => op.label)}
           value={value}
           setValue={setValue}
-          label="Language"
         />
       ) : (
         <input
