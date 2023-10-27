@@ -3,8 +3,8 @@
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1rem;
-  padding: 1.8rem 2rem;
-  font-size: 1.4rem;
+  padding: 1rem 1rem;
+  font-size: 1.2rem;
   outline: 0 !important;
   color: var(--white-color);
 }
@@ -41,7 +41,6 @@
 }
 .option {
   cursor: pointer;
-  width: 120px;
 }
 
 .option .input {
