@@ -23,8 +23,14 @@ const SettingsItem = ({ data, setIsSaveData }) => {
 
   useEffect(() => {
     console.log("data.value", data.value);
-    if (data.popup === "language")
-      setLabel(langOptions.find((option) => option.value === data.value).label);
+    if (data.popup === "language") {
+      const labelOption = langOptions.find(
+        (option) => option.value === data.value,
+      );
+      if (labelOption?.label) {
+        setLabel(labelOption?.label);
+      }
+    }
   }, []);
 
   const handleEdit = () => {
