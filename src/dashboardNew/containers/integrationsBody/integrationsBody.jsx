@@ -9,6 +9,7 @@ import {
 import styles from "./integrationsBody.module.css";
 import WalletIntegration from "../../components/WalletIntegration/WalletIntegration";
 import SettingsTitle from "../../components/settings/settingsTitle";
+import Card from "../../components/card/card";
 
 const IntegrationsBody = () => {
   const wallets = [
@@ -33,13 +34,14 @@ const IntegrationsBody = () => {
   }, [connectStatus]);
 
   return (
-    <div className={"dashboard-body"}>
+    <Card>
       <div className={styles.titleHeader}>
         <SettingsTitle
           title="Integrations"
-          description="Integrate your cryptocurrency wallet"
+          description="Use your external cryptocurrency wallet on Nefentus"
         />
       </div>
+
       <div className={styles.walletsWrap}>
         {wallets.map((wallet) => {
           return (
@@ -60,7 +62,7 @@ const IntegrationsBody = () => {
           );
         })}
       </div>
-    </div>
+    </Card>
   );
 };
 
