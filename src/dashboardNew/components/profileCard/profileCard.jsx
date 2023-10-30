@@ -4,12 +4,14 @@ import Card from "../card/card";
 import Clipboard from "../../../assets/icon/clipboard.svg";
 
 import styles from "./profileCard.module.css";
+import useInternalWallet from "../../../hooks/internalWallet";
 
 const ProfileCard = ({ type }) => {
   const [firstName] = useState(localStorage.getItem("firstName"));
   const [lastName] = useState(localStorage.getItem("lastName"));
   const [email] = useState(localStorage.getItem("email"));
   const [profileImage] = useState(localStorage.getItem("profile_pic"));
+  let internalWalletAddress = useInternalWallet();
 
   return (
     <Card className={styles.profileCard}>
@@ -39,7 +41,7 @@ const ProfileCard = ({ type }) => {
         <>
           <div>
             <p className={styles.main}>Wallet:</p>
-            <p className={styles.subtitle}>0x5A1B3D9fC8bEeD74008</p>
+            <p className={styles.subtitle}>{internalWalletAddress}</p>
           </div>
           <div>
             <p className={styles.main}>Plan:</p>

@@ -197,7 +197,7 @@ const AdminDashboard = ({ type }) => {
         ),
         formatUSDBalance(user.income),
         moment(user.createdAt).format("MMM D YYY"),
-        "$5,595.00",
+        `$${user.income}`,
         <TableAction
           button={user.activated ? "Disable" : "Enable"}
           onClick={() => updateStatusUser(user.email, user.activated)}

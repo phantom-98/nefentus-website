@@ -16,21 +16,46 @@ import Cookies from "js-cookie";
 import { MessageContextProvider } from "./context/message";
 import RingLoader from "react-spinners/RingLoader";
 
-import MainDashboard from "./dashboardNew/screens/mainDashboard";
-import ScreenLayout from "./dashboardNew/containers/screenLayout/screenLayout";
-import ProfileDashboard from "./dashboardNew/screens/profileDashboard";
-import SecuritySettings from "./dashboardNew/containers/securitySettings/securitySettings";
-import AffiliateDashboard from "./dashboardNew/screens/affiliateDashboard";
-import ConverterDashboard from "./dashboardNew/screens/converterDashboard";
-import ProductsDashboard from "./dashboardNew/screens/productsDashboard";
-import PaymentDashboard from "./dashboardNew/screens/paymentDashboard";
-import AdminDashboard from "./dashboardNew/screens/adminDashboard";
-import TransactionDashboard from "./dashboardNew/screens/transactionDashboard";
-import IdentificationDashboard from "./dashboardNew/screens/identificationDashboard";
-import IntegrationsDashboard from "./dashboardNew/screens/integrationsDashboard";
-
 import { Player } from "@lottiefiles/react-lottie-player";
 import LoadingAnimation from "./assets/logo/loadingAnimation.json";
+
+const MainDashboard = React.lazy(() =>
+  import("./dashboardNew/screens/mainDashboard"),
+);
+const ScreenLayout = React.lazy(() =>
+  import("./dashboardNew/containers/screenLayout/screenLayout"),
+);
+const ProfileDashboard = React.lazy(() =>
+  import("./dashboardNew/screens/profileDashboard"),
+);
+const SecuritySettings = React.lazy(() =>
+  import("./dashboardNew/containers/securitySettings/securitySettings"),
+);
+const AffiliateDashboard = React.lazy(() =>
+  import("./dashboardNew/screens/affiliateDashboard"),
+);
+const ConverterDashboard = React.lazy(() =>
+  import("./dashboardNew/screens/converterDashboard"),
+);
+const ProductsDashboard = React.lazy(() =>
+  import("./dashboardNew/screens/productsDashboard"),
+);
+const PaymentDashboard = React.lazy(() =>
+  import("./dashboardNew/screens/paymentDashboard"),
+);
+const AdminDashboard = React.lazy(() =>
+  import("./dashboardNew/screens/adminDashboard"),
+);
+const TransactionDashboard = React.lazy(() =>
+  import("./dashboardNew/screens/transactionDashboard"),
+);
+const IdentificationDashboard = React.lazy(() =>
+  import("./dashboardNew/screens/identificationDashboard"),
+);
+
+const IntegrationsDashboard = React.lazy(() =>
+  import("./dashboardNew/screens/integrationsDashboard"),
+);
 
 const Contact = React.lazy(() => import("./components/contact/contact"));
 const Home = React.lazy(() => import("./pages/Home"));
