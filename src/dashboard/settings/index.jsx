@@ -783,7 +783,13 @@ const AuthenticatorBody = ({ active }) => {
               <div className={styles.QRCode}>
                 <QRCode
                   size={256}
-                  style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                  style={{
+                    height: "auto",
+                    maxWidth: "100%",
+                    width: "100%",
+                    borderRadius: "2rem",
+                    border: "white 1rem solid",
+                  }}
                   value={`otpauth://totp/Nefentus?secret=${secretToken}`}
                   viewBox={`0 0 256 256`}
                 />
