@@ -43,7 +43,10 @@ const ConfirmMeEmail = ({
             so please enter it soon.
           </p>
           <form onSubmit={handleClickOtp}>
-            <OneTimeCodeInput setOTPCode={setCode} request={handleClickOtp} />
+            <OneTimeCodeInput
+              setOTPCode={setCode}
+              request={() => handleClickOtp()}
+            />
 
             <div className={styles["button-group"]}>
               <div
@@ -62,7 +65,10 @@ const ConfirmMeEmail = ({
           <h3>Enter code from your Authenticator</h3>
           <p>You need to enter 6-digit code from your Authenticator</p>
           <form onSubmit={handleClickTotp}>
-            <OneTimeCodeInput setOTPCode={setCode} request={handleClickOtp} />
+            <OneTimeCodeInput
+              setOTPCode={setCode}
+              request={() => handleClickOtp()}
+            />
 
             <div className={styles["button-group"]}>
               <div
@@ -88,7 +94,7 @@ const ConfirmMeEmail = ({
               <form onSubmit={handleClickOtp}>
                 <OneTimeCodeInput
                   setOTPCode={setCode}
-                  request={handleClickOtp}
+                  request={() => handleClickOtp()}
                 />
 
                 <div className={styles["button-group"]}>
@@ -110,7 +116,7 @@ const ConfirmMeEmail = ({
                 <OneTimeCodeInput
                   setOTPCode={setCode}
                   resetCodeFlag
-                  request={handleClickOtp}
+                  request={() => handleClickOtp()}
                 />
 
                 <div className={styles["button-group"]}>
@@ -290,15 +296,6 @@ const LoginBox = () => {
     }
   };
 
-  const handleConfirmCodeOtp = (e) => {
-    e.preventDefault();
-    verifyOtpCode(email, code, checkBox);
-  };
-  const handleConfirmCodeTotp = (e) => {
-    e.preventDefault();
-    verifyTotpCode(email, code, checkBox);
-  };
-
   return (
     <div className={`${styles.login}`}>
       <div className={styles.closeWrapper}>
@@ -341,8 +338,8 @@ const LoginBox = () => {
             email={email}
             code={code}
             setCode={setCode}
-            handleClickOtp={handleConfirmCodeOtp}
-            handleClickTotp={handleConfirmCodeTotp}
+            handleClickOtp={() => verifyOtpCode(email, code, checkBox)}
+            handleClickTotp={() => verifyTotpCode(email, code, checkBox)}
             otp={otp}
             totp={totp}
             step={step}

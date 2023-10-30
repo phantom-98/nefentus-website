@@ -808,7 +808,7 @@ const AuthenticatorBody = ({ active }) => {
                   }}
                 >
                   <p id="affiliate-link" className={styles.url}>
-                    {secretToken?.slice(0, 10) + "..."}
+                    {secretToken?.slice(0, 15) + "..."}
                   </p>
                   <img src={UrlLink} alt="url icon" />
                 </div>

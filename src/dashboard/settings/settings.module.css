@@ -443,6 +443,7 @@
   border: var(--gray-color) 1px solid;
   border-radius: 1rem;
   display: flex;
+  justify-content: space-between;
   gap: 2rem;
   align-items: center;
   cursor: pointer;
