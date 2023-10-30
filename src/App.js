@@ -53,6 +53,10 @@ const IdentificationDashboard = React.lazy(() =>
   import("./dashboardNew/screens/identificationDashboard"),
 );
 
+const IntegrationsDashboard = React.lazy(() =>
+  import("./dashboardNew/screens/integrationsDashboard"),
+);
+
 const Contact = React.lazy(() => import("./components/contact/contact"));
 const Home = React.lazy(() => import("./pages/Home"));
 const SignUp = React.lazy(() => import("./pages/Signup"));
@@ -306,6 +310,14 @@ function App() {
                   element={
                     <ScreenLayout>
                       <IdentificationDashboard />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboardNew/integrations"
+                  element={
+                    <ScreenLayout>
+                      <IntegrationsDashboard />
                     </ScreenLayout>
                   }
                 />
