@@ -43,7 +43,7 @@ const ConfirmMeEmail = ({
             so please enter it soon.
           </p>
           <form onSubmit={handleClickOtp}>
-            <OneTimeCodeInput setOTPCode={setCode} />
+            <OneTimeCodeInput setOTPCode={setCode} request={handleClickOtp} />
 
             <div className={styles["button-group"]}>
               <div
@@ -62,7 +62,7 @@ const ConfirmMeEmail = ({
           <h3>Enter code from your Authenticator</h3>
           <p>You need to enter 6-digit code from your Authenticator</p>
           <form onSubmit={handleClickTotp}>
-            <OneTimeCodeInput setOTPCode={setCode} />
+            <OneTimeCodeInput setOTPCode={setCode} request={handleClickOtp} />
 
             <div className={styles["button-group"]}>
               <div
@@ -86,7 +86,10 @@ const ConfirmMeEmail = ({
                 shortly, so please enter it soon.
               </p>
               <form onSubmit={handleClickOtp}>
-                <OneTimeCodeInput setOTPCode={setCode} />
+                <OneTimeCodeInput
+                  setOTPCode={setCode}
+                  request={handleClickOtp}
+                />
 
                 <div className={styles["button-group"]}>
                   <div
@@ -104,7 +107,11 @@ const ConfirmMeEmail = ({
               <h3>Enter code from your Authenticator</h3>
               <p>You need to enter 6-digit code from your Authenticator</p>
               <form id={"totpForm"} onSubmit={handleClickTotp}>
-                <OneTimeCodeInput setOTPCode={setCode} resetCodeFlag />
+                <OneTimeCodeInput
+                  setOTPCode={setCode}
+                  resetCodeFlag
+                  request={handleClickOtp}
+                />
 
                 <div className={styles["button-group"]}>
                   <div

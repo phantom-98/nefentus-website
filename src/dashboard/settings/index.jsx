@@ -827,7 +827,14 @@ const AuthenticatorBody = ({ active }) => {
                 Enter code from Authenticator
               </div>
               <MessageComponent />
-              <OneTimeCodeInput setOTPCode={setCode} resetCodeFlag={reset} />
+
+              <OneTimeCodeInput
+                setOTPCode={setCode}
+                resetCodeFlag={reset}
+                request={() => {
+                  handleTotpVerify(email.current, code, false);
+                }}
+              />
               <Buttons
                 buttons={["Close", "Verify"]}
                 functions={[

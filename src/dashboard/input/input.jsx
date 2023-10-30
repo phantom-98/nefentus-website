@@ -163,7 +163,7 @@ export const Switcher = ({ title, checked, setChecked }) => {
   );
 };
 
-export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag }) => {
+export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag, request }) => {
   const inputRefs = Array(6)
     .fill()
     .map(() => useRef(null));
@@ -192,7 +192,7 @@ export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag }) => {
     }
 
     if (value === "" && index > 0) {
-      inputRefs[index - 1].current.focus();
+      inputRefs[index].current.focus();
     }
 
     if (newCode[index + 1] && newCode[index - 1] && value === "") {
@@ -215,6 +215,12 @@ export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag }) => {
     }
   };
 
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      request();
+    }
+  };
+
   return (
     <div className={styles.OTPInputWrap}>
       {code.map((value, index) =>
@@ -227,6 +233,7 @@ export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag }) => {
             ref={inputRefs[index]}
             onChange={(e) => handleCodeChange(e, index)}
             onKeyDown={(e) => handleKeyDown(e, index)}
+            onKeyPress={handleEnterKeyPress} // Add this line
           />
         ) : (
           <input
@@ -238,6 +245,7 @@ export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag }) => {
             onChange={(e) => handleCodeChange(e, index)}
             onKeyDown={(e) => handleKeyDown(e, index)}
             maxLength={1}
+            onKeyPress={handleEnterKeyPress} // Add this line
           />
         ),
       )}
