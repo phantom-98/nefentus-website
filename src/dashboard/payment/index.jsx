@@ -37,7 +37,9 @@ const PaymentBody = () => {
   async function createInvoice() {
     // Check data
     if (!amount) {
-      setErrorMessage("Please enter a valid amount");
+      setErrorMessage(
+        `Price is above current transaction limit of ${transactionLimit}! The limit will be increased soon`,
+      );
       return;
     }
     if (amount > transactionLimit) {
