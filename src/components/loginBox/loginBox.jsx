@@ -116,7 +116,7 @@ const ConfirmMeEmail = ({
                 <OneTimeCodeInput
                   setOTPCode={setCode}
                   resetCodeFlag
-                  request={() => handleClickOtp()}
+                  request={() => handleClickTotp()}
                 />
 
                 <div className={styles["button-group"]}>
