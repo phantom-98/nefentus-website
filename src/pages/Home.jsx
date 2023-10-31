@@ -45,7 +45,8 @@ const Home = () => {
             <p>{t("home.heroButton")}</p>
           </>
         }
-        button2={t("home.heroButton2")}
+        // button2={t("home.heroButton2")}
+        home
         image={Main}
         full
         // video={HomeHeroVideo}

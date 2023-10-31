@@ -1,6 +1,8 @@
 import styles from "./navigation.module.css";
 
 import Logo from "../../assets/logo/logo.svg";
+import LightMode from "../../assets/icon/lightMode2.svg";
+import DarkMode from "../../assets/icon/darkMode2.svg";
 
 import Hamburger from "../../assets/icon/hamburger.svg";
 import Button from "../button/button";
@@ -13,12 +15,14 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import backend_API from "../../api/backendAPI";
 import { dashboardLink } from "../../utils";
+import UserProfile from "../userProfile/userProfile";
 
 const Navigation = () => {
   const { t, i18n } = useTranslation();
   const [openMenu, setOpenMenu] = useState(false);
   const [profile, setProfile] = useState({});
   const [height, setHeight] = useState("");
+  const [lightMode, setLightMode] = useState(false);
 
   const backendAPI = new backend_API();
 
@@ -50,13 +54,7 @@ const Navigation = () => {
 
   function loginAndSignupWeb() {
     if (profile.email) {
-      return (
-        <>
-          <div className={`${styles.button} ${styles.dashboardButton}`}>
-            <Link to={profile.dashboardLink}>{dashboardString(profile)}</Link>
-          </div>
-        </>
-      );
+      return <UserProfile web />;
     } else {
       return (
         <>
@@ -181,6 +179,12 @@ const Navigation = () => {
               >
                 <Languages />
               </div>
+              <img
+                onClick={() => setLightMode((prev) => !prev)}
+                src={lightMode ? DarkMode : LightMode}
+                className={styles.light}
+                alt=""
+              />
             </div>
 
             {loginAndSignupWeb()}

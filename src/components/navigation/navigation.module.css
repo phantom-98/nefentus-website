@@ -333,6 +333,12 @@
   width: 1.4rem;
 }
 
+.light {
+  width: 1.6rem !important;
+  cursor: pointer;
+  pointer-events: initial !important;
+}
+
 @media (max-width: 900px) {
   .logo {
     height: 2.2rem;
