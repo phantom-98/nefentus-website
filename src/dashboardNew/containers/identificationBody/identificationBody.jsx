@@ -84,41 +84,33 @@ const IdentificationBody = () => {
             <div className={styles.rowLeft}>
               <span>Sales volume</span>
             </div>
-            <div className={styles.rowRight}>2M USD Daily</div>
+            <div className={styles.rowRight}>
+              {level < 1
+                ? "10 000$"
+                : level < 2
+                ? "1 000 000$"
+                : level < 3
+                ? "10 000 000$"
+                : "Unlimited"}
+            </div>
           </div>
           <div className={styles.row}>
             <div className={styles.rowLeft}>
               <span>Crypto Deposit</span>
             </div>
-            <div className={styles.rowRight}>
-              {level < 1
-                ? "10 000$"
-                : level < 2
-                ? "1 000 000$"
-                : level < 3
-                ? "10 000 000$"
-                : "Unlimited"}
-            </div>
+            <div className={styles.rowRight}>Unlimited</div>
           </div>
           <div className={styles.row}>
             <div className={styles.rowLeft}>
               <span>Crypto Withdrawal Limit</span>
             </div>
-            <div className={styles.rowRight}>8M USD Daily</div>
+            <div className={styles.rowRight}>Unlimited</div>
           </div>
           <div className={styles.row}>
             <div className={styles.rowLeft}>
               <span>P2P Transaction</span>
             </div>
-            <div className={styles.rowRight}>
-              {level < 1
-                ? "10 000$"
-                : level < 2
-                ? "1 000 000$"
-                : level < 3
-                ? "10 000 000$"
-                : "Unlimited"}
-            </div>
+            <div className={styles.rowRight}>Unlimited</div>
           </div>
         </div>
 
