@@ -67,7 +67,7 @@ const ConfirmMeEmail = ({
           <form onSubmit={handleClickTotp}>
             <OneTimeCodeInput
               setOTPCode={setCode}
-              request={() => handleClickOtp()}
+              request={() => handleClickTotp()}
             />
 
             <div className={styles["button-group"]}>
