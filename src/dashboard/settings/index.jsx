@@ -790,7 +790,7 @@ const AuthenticatorBody = ({ active }) => {
                     borderRadius: "2rem",
                     border: "white 1rem solid",
                   }}
-                  value={`otpauth://totp/Nefentus?secret=${secretToken}`}
+                  value={`otpauth://totp/Nefentus?secret=${secretToken}&issuer=${email.current}`}
                   viewBox={`0 0 256 256`}
                 />
               </div>
