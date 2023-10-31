@@ -17,8 +17,11 @@ import usePrices from "../../../hooks/prices";
 import backendAPI from "../../../api/backendAPI";
 import { currencies } from "../../../constants";
 import { formatTokenBalance, formatUSDBalance } from "../../../utils";
+import { useTranslation } from "react-i18next";
 
 const CryptoCard = () => {
+  const { t } = useTranslation();
+
   const [activeToggle, setActiveToggle] = useState(true);
   const metamask = {
     connect: useConnect(),
@@ -61,11 +64,11 @@ const CryptoCard = () => {
   return (
     <Card>
       <div className={styles.top}>
-        <div className={styles.label}>Crypto Market</div>
+        <div className={styles.label}>{t("dashboard.cryptoMarket")}</div>
 
         <div className={styles.buttonWrapper}>
           <div className={styles.btn}>
-            <p>Hide Zero Balance Assets</p>
+            <p>{t("dashboard.hideBalance")}</p>
 
             <div
               onClick={() => setActiveToggle((prev) => !prev)}
@@ -77,8 +80,8 @@ const CryptoCard = () => {
             </div>
           </div>
           <div className={styles.buttons}>
-            <Button color="light">Receive</Button>
-            <Button>Send</Button>
+            <Button color="light">{t("general.receive")}</Button>
+            <Button>{t("general.send")}</Button>
           </div>
         </div>
       </div>

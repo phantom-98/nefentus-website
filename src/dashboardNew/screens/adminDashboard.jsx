@@ -12,17 +12,7 @@ import moment from "moment";
 import { MessageContext } from "../../context/message";
 import { useNavigate } from "react-router-dom";
 import { ROLE_TO_NAME } from "../../constants";
-
-const label = [
-  "Name",
-  "Roles",
-  "Email",
-  "Status",
-  "Incomes",
-  "Join on",
-  "Earnings",
-  "Action",
-];
+import { useTranslation } from "react-i18next";
 
 const roleColors = {
   vendor: "#107CDF",
@@ -60,6 +50,18 @@ const AdminDashboard = ({ type }) => {
   const [tableData, setTableData] = useState([]);
   const [isReloadData, setIsReloadData] = useState(false);
   const [totalRegUserCnt, setTotalRegUserCnt] = useState(0);
+  const { t } = useTranslation();
+
+  const label = [
+    t("dashboard.tableHeaders.name"),
+    t("dashboard.tableHeaders.roles"),
+    t("dashboard.tableHeaders.email"),
+    t("dashboard.tableHeaders.status"),
+    t("dashboard.tableHeaders.income"),
+    t("dashboard.tableHeaders.joinedOn"),
+    t("dashboard.tableHeaders.earnings"),
+    t("dashboard.tableHeaders.actions"),
+  ];
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -187,19 +189,28 @@ const AdminDashboard = ({ type }) => {
       const newDataUsers = dataUsers.map((user) => [
         `${user.firstName} ${user.lastName}`,
         user.roles
-          .map((role) => ROLE_TO_NAME[role.replace(" ", "")])
+          .map((role) =>
+            t(
+              `dashboard.roles.${ROLE_TO_NAME[role.replace(" ", "")].replaceAll(
+                " ",
+                "",
+              )}`,
+            ),
+          )
           .join(", "),
         user.email,
         user.activated ? (
-          <TableStatus color="green">Enabled</TableStatus>
+          <TableStatus color="green">{t("general.active")}</TableStatus>
         ) : (
-          <TableStatus color="red">Disabled</TableStatus>
+          <TableStatus color="red">{t("general.notActive")}</TableStatus>
         ),
         formatUSDBalance(user.income),
-        moment(user.createdAt).format("MMM D YYY"),
+        moment(user.createdAt).locale("Ukraine").format("MMM D YYYY"),
         `$${user.income}`,
         <TableAction
-          button={user.activated ? "Disable" : "Enable"}
+          button={
+            user.activated ? t("general.deactivate") : t("general.activate")
+          }
           onClick={() => updateStatusUser(user.email, user.activated)}
         />,
       ]);
@@ -220,7 +231,7 @@ const AdminDashboard = ({ type }) => {
       />
       <div>
         <div>
-          <TableSearch title="User Management" />
+          <TableSearch title={t("dashboard.userManagement")} />
           <Table
             grid="1.3fr 1fr 1.7fr 1fr 1fr 1fr 1fr 1fr"
             label={label}

@@ -9,6 +9,7 @@ import MessageComponent from "../../../components/message";
 import Input, { Options } from "../../../components/input/input";
 import { MessageContext } from "../../../context/message";
 import adminDashboardApi from "../../../api/adminDashboardApi";
+import { useTranslation } from "react-i18next";
 
 const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const [firstName, setFirstName] = useState("");
@@ -19,7 +20,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const [openModal, setOpenModal] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
-
+  const { t } = useTranslation();
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
 
@@ -110,7 +111,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   return (
     <>
       <Card>
-        <div className={styles.title}>Registrations Roles</div>
+        <div className={styles.title}>{t("dashboard.registrationsRoles")}</div>
 
         <div className={styles.lineGroup}>
           <div className={styles.lineWrapper}>
@@ -132,7 +133,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
           </div>
 
           <div className={styles.total}>
-            <p>Total</p>
+            <p>{t("dashboard.total")}</p>
             <p>{userCnt}</p>
           </div>
 
@@ -145,7 +146,9 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
                     style={{ backgroundColor: item.color }}
                   ></div>
 
-                  <p>{item.legend}</p>
+                  <p>
+                    {t(`dashboard.roles.${item.legend.replaceAll(" ", "")}`)}
+                  </p>
                 </div>
 
                 <div className={styles.right}>
@@ -156,12 +159,12 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
             ))}
           </div>
 
-          <Button onClick={modalAddUser}>Add User</Button>
+          <Button onClick={modalAddUser}>{t("dashboard.addUser")}</Button>
 
           {type !== "partner" && (
             <div style={{ marginTop: "1.5rem" }}>
               <Button color="light" link={"/dashboard/kyc"}>
-                KYC Requests
+                {t("dashboard.KYCRequests")}
               </Button>
             </div>
           )}

@@ -5,6 +5,7 @@ import Clipboard from "../../../assets/icon/clipboard.svg";
 
 import styles from "./profileCard.module.css";
 import useInternalWallet from "../../../hooks/internalWallet";
+import { useTranslation } from "react-i18next";
 
 const ProfileCard = ({ type }) => {
   const [firstName] = useState(localStorage.getItem("firstName"));
@@ -12,6 +13,8 @@ const ProfileCard = ({ type }) => {
   const [email] = useState(localStorage.getItem("email"));
   const [profileImage] = useState(localStorage.getItem("profile_pic"));
   let internalWalletAddress = useInternalWallet();
+
+  const { t } = useTranslation();
 
   return (
     <Card className={styles.profileCard}>
@@ -40,12 +43,12 @@ const ProfileCard = ({ type }) => {
       ) : (
         <>
           <div>
-            <p className={styles.main}>Wallet:</p>
+            <p className={styles.main}>{t("dashboard.wallet")}:</p>
             <p className={styles.subtitle}>{internalWalletAddress}</p>
           </div>
           <div>
-            <p className={styles.main}>Plan:</p>
-            <p className={styles.subtitle}>Enterprise</p>
+            <p className={styles.main}>{t("dashboard.plan")}:</p>
+            <p className={styles.subtitle}>{t("dashboard.enterprise")}</p>
           </div>
         </>
       )}
