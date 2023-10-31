@@ -1,0 +1,107 @@
+import React, { useEffect } from "react";
+import {
+  useAddress,
+  useBalance,
+  useConnect,
+  useConnectionStatus,
+  useDisconnect,
+} from "@thirdweb-dev/react";
+import Button from "../../components/button/button";
+import styles from "./walletIntegrations.module.css";
+
+const WalletIntegration = ({
+  name,
+  config,
+  icon,
+  connectStatus,
+  setConnectStatus,
+}) => {
+  const wallet = {
+    connect: useConnect(),
+    disconnect: useDisconnect(),
+    config: config,
+    address: useAddress(),
+    status: useConnectionStatus(),
+    balance: useBalance(),
+  };
+
+  useEffect(() => {
+    if (
+      (name === "Metamask" &&
+        connectStatus["Wallet Connect"] === "connected") ||
+      (name === "Wallet Connect" && connectStatus["Metamask"] === "connected")
+    ) {
+      wallet.disconnect();
+    }
+  }, [connectStatus, name]);
+
+  useEffect(() => {
+    if (wallet.status === "connected") {
+      if (name === "Wallet Connect") {
+        setConnectStatus({
+          "Wallet Connect": "connected",
+          Metamask: "disconnected",
+        });
+      } else if (name === "Metamask") {
+        setConnectStatus({
+          Metamask: "connected",
+          "Wallet Connect": "disconnected",
+        });
+      }
+    }
+  }, [wallet.status, name, setConnectStatus]);
+
+  return (
+    <div className={styles.walletWrap}>
+      <div className={styles.walletInfoWrap}>
+        <div className={styles.walletLogoWrap}>
+          <img src={icon} className={styles.walletLogo} alt={`${name}`} />
+        </div>
+        <div className={styles.walletTitle}>{name}</div>
+        {wallet.address && (
+          <div className={styles.walletAddressTitle}>
+            Wallet address:{" "}
+            <span className={styles.walletAddress}>
+              {`${wallet.address.substring(0, 5)}...${wallet.address.substring(
+                wallet.address.length - 5,
+              )}`}
+            </span>
+          </div>
+        )}
+        {wallet.address && (
+          <div className={styles.walletBalanceTitle}>
+            Wallet balance:{" "}
+            <span className={styles.walletBalance}>
+              {wallet?.balance?.data?.displayValue.slice(0, 5)}{" "}
+              {wallet?.balance?.data?.symbol}
+            </span>
+          </div>
+        )}
+      </div>
+      <div className={styles.buttonWrap}>
+        {wallet.status === "disconnected" && (
+          <Button
+            onClick={() => {
+              wallet.connect(wallet.config, { chainId: 1 });
+            }}
+          >
+            Connect to Wallet
+          </Button>
+        )}
+        {wallet.status === "unknown" && (
+          <Button disabled>Connect wallet is not available!</Button>
+        )}
+        {wallet.status === "connecting" && (
+          <Button disabled>Connecting...</Button>
+        )}
+        {wallet.status === "connected" && (
+          <Button color={"green"} onClick={() => wallet.disconnect()}>
+            Disconnect
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default WalletIntegration;

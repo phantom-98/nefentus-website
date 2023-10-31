@@ -1,0 +1,9 @@
+.box {
+  display: flex;
+  padding: 0.5rem 0.8rem 0.3rem 0.8rem;
+  align-items: flex-start;
+  width: max-content;
+  border-radius: 0.25rem;
+  line-height: 120%;
+  text-align: center;
+}

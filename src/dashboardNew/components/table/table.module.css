@@ -1,0 +1,46 @@
+.section {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 1rem;
+}
+
+.table {
+  background-color: #161616;
+
+  width: 100%;
+}
+
+.tableRow {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+
+  align-items: center;
+}
+
+.label {
+  font-size: 1rem;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.tableRow:nth-child(even) {
+  background-color: #232323;
+}
+
+.dataItem {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 900px) {
+  .section {
+    overflow-x: scroll;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 1rem;
+  }
+
+  .tableWrapper {
+    width: max-content;
+  }
+}

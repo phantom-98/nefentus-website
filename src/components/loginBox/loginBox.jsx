@@ -193,6 +193,7 @@ const LoginBox = () => {
 
   function navigateDashboard() {
     const link = dashboardLink(localStorage);
+
     navigate(link);
   }
 

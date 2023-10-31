@@ -1,0 +1,26 @@
+.title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.button {
+  display: flex;
+  margin-top: 2rem;
+  justify-content: flex-end;
+}
+
+.button > div {
+  width: max-content;
+}
+
+@media (max-width: 650px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,6 +1,7 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Nefentus",
+    "short_name": "Nefentus",
+	"description": "Nefentus is your solution for the innovative digitization of your business. We automate invoicing and offer the ability to accept cryptocurrencies.",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,7 +14,8 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "display": "standalone"
+    "theme_color": "#111",
+    "background_color": "#111",
+    "display": "standalone",
+    "start_url": "."
 }

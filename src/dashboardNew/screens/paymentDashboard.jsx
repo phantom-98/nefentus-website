@@ -1,0 +1,76 @@
+import { useEffect, useState } from "react";
+import { ThirdwebProvider } from "@thirdweb-dev/react";
+import { metamaskWallet } from "@thirdweb-dev/react";
+import PaymentForm from "../components/paymentForm/paymentForm";
+import Table from "../components/table/table";
+import TableAction from "../components/tableAction/tableAction";
+import TableQR from "../components/tableQR/tableQR";
+import TableSearch from "../components/tableSearch/tableSearch";
+import TableStatus from "../components/tableStatus/tableStatus";
+import vendorDashboardApi from "../../api/vendorDashboardApi";
+
+const label = ["Created At", "Price ($)", "Status", "QR Code", "Actions"];
+
+const PaymentDashboard = () => {
+  const [invoiceData, setInvoiceData] = useState([]);
+  const [isLoadingInvoiceData, setIsLoadingInvoiceData] = useState(false);
+
+  const vendorAPI = new vendorDashboardApi();
+
+  useEffect(() => {
+    fetchInvoices();
+  }, [isLoadingInvoiceData]);
+
+  async function fetchInvoices() {
+    let newInvoices = await vendorAPI.getInvoices();
+    // Reverse the array
+    newInvoices = newInvoices.reverse();
+    console.log(newInvoices);
+
+    if (newInvoices) {
+      const newInvoiceData = newInvoices.map((item) => invoiceToArray(item));
+      setInvoiceData(newInvoiceData);
+    }
+  }
+
+  function invoiceToArray(invoice) {
+    return [
+      new Date(invoice.createdAt).toLocaleString(),
+      parseFloat(invoice.price).toFixed(2),
+      <TableStatus color="green">Open</TableStatus>,
+      <TableQR link={process.env.VITE_REACT_APP_QR_CODE_LINK} />,
+      // <TableQR link={`${window.location.origin}/pay/${invoice.link}`} />,
+      <TableAction
+        button="Disable"
+        button2="Delete"
+        onClick2={() => deleteInvoice(invoice.link)}
+      />,
+    ];
+  }
+
+  async function deleteInvoice(link) {
+    const result = await vendorAPI.deleteInvoice(link);
+    if (result) {
+      setIsLoadingInvoiceData((prev) => !prev);
+      setInfoMessage("Invoice deleted!");
+    } else {
+      setIsLoadingInvoiceData((prev) => !prev);
+      setErrorMessage("Could not delete invoice!");
+    }
+  }
+
+  return (
+    <div>
+      <ThirdwebProvider
+        activeChain="ethereum"
+        supportedWallets={[metamaskWallet()]}
+        clientId="639eea2ebcabed7eab90b56aceeed08b"
+      >
+        <PaymentForm setLoadingData={setIsLoadingInvoiceData} />
+        <Table grid="1fr 1fr 1fr 1fr 1fr" label={label} data={invoiceData} />
+      </ThirdwebProvider>
+    </div>
+  );
+};
+
+export default PaymentDashboard;
