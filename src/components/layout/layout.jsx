@@ -86,7 +86,7 @@ const Layout = ({
           <>
             <div className={styles.inputHero}>
               <div className={styles.inputWrapper}>
-                <input type="text" placeholder="Email/Phone number" />
+                <input type="text" placeholder="Email" />
               </div>
               {button && <Button link="/signup">{button}</Button>}
             </div>
