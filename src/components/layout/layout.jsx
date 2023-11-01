@@ -92,7 +92,7 @@ const Layout = ({
             </div>
             <div className={styles.connectWrapper}>
               <div className={styles.connect}>
-                <p>Or Connect With</p>
+                <p>{t("home.connectWith")}</p>
 
                 <div className={styles.iconWrapper}>
                   <div className={styles.iconBox}>
@@ -105,7 +105,7 @@ const Layout = ({
               </div>
 
               <div className={`${styles.connect} ${styles.connect2}`}>
-                <p>App Download</p>
+                <p>{t("home.appDownload")}</p>
 
                 <div className={styles.iconWrapper}>
                   <div className={styles.iconBox}>
