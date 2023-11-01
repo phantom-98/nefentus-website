@@ -1,11 +1,10 @@
 import styles from "./layout.module.css";
 import Button from "./../button/button";
 
-import Android from "../../assets/icon/android2.svg";
+import Google from "../../assets/icon/google.svg";
 import Apple from "../../assets/icon/apple2.svg";
 import Chevron from "../../assets/icon/chevron.svg";
 
-import Google from "../../assets/icon/google.svg";
 import Mega from "../../assets/icon/mega.svg";
 
 import QR from "../../assets/icon/qrcode.svg";
@@ -87,7 +86,7 @@ const Layout = ({
           <>
             <div className={styles.inputHero}>
               <div className={styles.inputWrapper}>
-                <input type="text" placeholder="Email" />
+                <input type="text" placeholder="Email/Phone number" />
               </div>
               {button && <Button link="/signup">{button}</Button>}
             </div>
@@ -139,36 +138,11 @@ const Layout = ({
           </div>
         )}
 
-        <div className={styles.buttonWrapper}>
-          {/* {button && <Button link="/signup">{button}</Button>}
-          {button2 && (
-            <div className={styles.button}>
-              <p>{button2}</p>
-              <div className={styles.imgWrapper}>
-                <img src={Chevron} alt="chevron arrow" />
-
-                <div className={styles.buttonLine}></div>
-              </div>
-            </div>
-          )} */}
-
-          {store && (
-            <div className={styles.store}>
-              <p className="standard">{t("home.heroAvailable")}</p>
-
-              <div className={styles.buttonWrapperMob}>
-                <Button link="/" color="white">
-                  <img src={Android} alt="android logo" />
-                  <span>Play Store</span>
-                </Button>
-                <Button link="/" color="white">
-                  <img src={Apple} alt="apple logo" />
-                  <span>App Store</span>
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
+        {!home && button && (
+          <div className={styles.buttonWrapper}>
+            <Button link="/signup">{button}</Button>
+          </div>
+        )}
       </div>
       {!video && !children && (
         <img

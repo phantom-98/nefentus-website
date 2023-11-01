@@ -73,16 +73,12 @@ const Navigation = () => {
   }
 
   function loginAndSignupTopButtons() {
-    if (profile.email) {
-      return (
-        <Link to={profile.dashboardLink}>
-          <div className={styles.mobButton}>{dashboardString(profile)}</div>
-        </Link>
-      );
-    } else {
+    if (!profile.email) {
       return (
         <>
-          <Button link="/signUp">{t("navigation.signUp")}</Button>
+          {/* <div className={styles.mobileButtonWrapper}>
+            <Button link="/signUp">{t("navigation.signUp")}</Button>
+          </div> */}
         </>
       );
     }
@@ -174,7 +170,7 @@ const Navigation = () => {
               <img src={QR} alt="qr" />
               <div
                 className={`${styles.lang} ${
-                  openMenu ? styles.showLanguage : ""
+                  openMenu ? styles.showLanguage : styles.showLanguage
                 }`}
               >
                 <Languages />
@@ -189,9 +185,7 @@ const Navigation = () => {
 
             {loginAndSignupWeb()}
 
-            <div className={styles.mobileButtonWrapper}>
-              {loginAndSignupTopButtons()}
-            </div>
+            {loginAndSignupTopButtons()}
 
             <div className={styles.mobMenu}>
               <div

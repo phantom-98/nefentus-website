@@ -190,7 +190,7 @@
 }
 
 .right {
-  gap: 3rem;
+  gap: 2rem;
   /* margin-left: 20px; */
 }
 
@@ -372,7 +372,7 @@
   }
 
   .right {
-    gap: 2rem;
+    gap: 1rem;
   }
 
   .dropdownMenu p {
@@ -445,18 +445,20 @@
     cursor: pointer;
     pointer-events: initial !important;
 
-    /* background-color: red; */
-    /* width: 25px;
-    height: 50px; */
+    width: 25px;
   }
 
   .lineButton {
     position: absolute;
-    width: 50px;
+    width: 25px;
     right: 0;
     top: 0;
     transform: translateY(-50%);
     height: 40px;
+  }
+
+  .light {
+    margin-right: 1rem;
   }
 
   .line {
@@ -499,7 +501,6 @@
   .mobileButtonWrapper {
     display: initial;
     pointer-events: initial;
-    margin-right: 2rem;
   }
 
   .mobileButtonWrapper > div {
