@@ -14,6 +14,7 @@ import { MessageContext } from "../../context/message";
 import { formatUSDBalance } from "../../utils";
 import MessageComponent from "../../components/message";
 import { useTranslation } from "react-i18next";
+import { transactionLimit } from "../../constants";
 
 const headers = ["Created at", "Price ($)", "Status", "QR code", "Actions"];
 const colSizes = [1.5, 1, 1.5, 1.5, 1.5];
@@ -39,7 +40,13 @@ const PaymentBody = () => {
   async function createInvoice() {
     // Check data
     if (!amount) {
-      setErrorMessage(t("messages.error.amountValid"));
+      setErrorMessage(
+        `Price is above current transaction limit of ${transactionLimit}! The limit will be increased soon`,
+      );
+      return;
+    }
+    if (amount > transactionLimit) {
+      setErrorMessage("Overage limit amount");
       return;
     }
     if (!email) {
@@ -147,10 +154,10 @@ const PaymentBody = () => {
     const result = await vendorAPI.deleteInvoice(link);
     if (result) {
       fetchInvoices();
-      setInfoMessage(t("messages.success.deleteInvoice"));
+      setInfoMessage("Invoice deleted!");
     } else {
       fetchInvoices();
-      setErrorMessage(t("messages.error.deleteInvoice"));
+      setErrorMessage("Could not delete invoice!");
     }
   }
 
@@ -305,7 +312,6 @@ const Modal = ({
   onClose,
 }) => {
   const { setInfoMessage } = useContext(MessageContext);
-  const { t } = useTranslation();
 
   return (
     <ModalOverlay>
@@ -328,7 +334,9 @@ const Modal = ({
               "Link:",
               <CopyValue
                 value={qrValue}
-                onCopy={() => setInfoMessage(t("messages.info.paymentLink"))}
+                onCopy={() =>
+                  setInfoMessage("Payment link copied to clipboard!")
+                }
               />,
             ],
           ]}
@@ -346,7 +354,7 @@ const Modal = ({
 
         <div className={styles.modalButtons}>
           <Button onClick={onClose} color="white">
-            {t("general.close")}
+            Close
           </Button>
         </div>
       </div>

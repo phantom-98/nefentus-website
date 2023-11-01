@@ -19,7 +19,7 @@
 
 /* Variable */
 :root {
-  --black-color: #111;
+  --black-color: rgb(17, 17, 17);
   --white-color: #fff;
   --gray-color: #c4c4c4;
   --blue-color: #0784b5;
@@ -59,6 +59,7 @@ html {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -212,7 +213,8 @@ h3 {
 
 @media (max-width: 550px) {
   h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
+    line-height: 120%;
   }
 
   h2 {
@@ -233,6 +235,15 @@ h3 {
 .card {
   background-color: #161616;
   border: 1px solid rgba(255, 255, 255, 0.01);
+
+  background: radial-gradient(
+    74.22% 64.62% at 26.36% 14.29%,
+    #1a1a1a 0%,
+    #151515 50%,
+    #101010 100%
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 2.5rem;
 }
 

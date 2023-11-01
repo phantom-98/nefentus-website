@@ -82,7 +82,88 @@
 }
 
 .layout .description {
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
+}
+
+.descriptionWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.descriptionWrapper img {
+  height: 2.4rem;
+}
+
+.descriptionWrapper .description {
+  margin-bottom: 0;
+  transform: translateY(2px);
+}
+
+.inputHero {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  align-items: center;
+
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputWrapper input {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  color: white;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100%;
+  padding: 2rem 1.5rem;
+}
+
+.inputHero > button {
+  height: 100%;
+}
+
+.connectWrapper {
+  display: flex;
+  gap: 5rem;
+}
+
+.connect p {
+  font-size: 1.4rem;
+  opacity: 0.4;
+  margin-bottom: 1rem;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.iconBox {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  height: 4rem;
+  width: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 0.5s ease-out;
+}
+
+.iconBox:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.iconBox img {
+  width: 1.6rem;
 }
 
 .store {
@@ -199,6 +280,14 @@
     min-height: max-content;
   }
 
+  .connect2 {
+    display: none;
+  }
+
+  .inputHero {
+    gap: 1rem;
+  }
+
   .layout {
     margin-top: 3rem !important;
     margin-bottom: 3rem !important;
@@ -221,5 +310,9 @@
   /* .hero .buttonWrapper > div:first-child, */
   .button {
     display: none;
+  }
+
+  .descriptionWrapper .description {
+    transform: translateY(3px);
   }
 }

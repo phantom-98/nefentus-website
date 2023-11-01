@@ -281,11 +281,7 @@
     "close": "Close",
     "info": "Don't have an account? ",
     "infoButton": "Sign up",
-    "forgot": "Forgot password?",
-    "OTPTitle": "Check your email for a code",
-    "OTPSubtitleP1": "We have sent a 6-digits code to ",
-    "OTPSubtitleP2": ". The code expires shortly.",
-    "confirm": "Confirm"
+    "forgot": "Forgot password?"
   },
   "affiliate": {
     "heroTitleP1": "Probably",
@@ -860,5 +856,23 @@
     "connecting": "Connecting...",
     "disconnect": " Disconnect",
     "connectError": "Connect wallet is not available!"
-  }
+  },
+  "content2": [
+    { "text": "Play Store", "link": "/" },
+    {
+      "text": "Sign In",
+      "link": "/link"
+    },
+    { "text": "App Store", "link": "/" },
+    {
+      "text": "Sign Up",
+      "link": "/signup"
+    },
+    {
+      "text": "Imprint",
+      "link": "/imprint"
+    }
+  ],
+  "socialTitle": "Follow us on:",
+  "socialDescription": " Go to the top\n of the page"
 }
