@@ -13,6 +13,7 @@ import ModalOverlay from "../modal/modalOverlay";
 import { MessageContext } from "../../context/message";
 import { formatUSDBalance } from "../../utils";
 import MessageComponent from "../../components/message";
+import { transactionLimit } from "../../constants";
 
 const headers = ["Created at", "Price ($)", "Status", "QR code", "Actions"];
 const colSizes = [1.5, 1, 1.5, 1.5, 1.5];
@@ -36,7 +37,13 @@ const PaymentBody = () => {
   async function createInvoice() {
     // Check data
     if (!amount) {
-      setErrorMessage("Please enter a valid amount");
+      setErrorMessage(
+        `Price is above current transaction limit of ${transactionLimit}! The limit will be increased soon`,
+      );
+      return;
+    }
+    if (amount > transactionLimit) {
+      setErrorMessage("Overage limit amount");
       return;
     }
     if (!email) {
