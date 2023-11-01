@@ -436,7 +436,8 @@
     "logOut": "Ausloggen",
     "receive": "Empfangen",
     "send": "Senden",
-    "referral": "Verweis"
+    "referral": "Verweis",
+    "close": "Schließen"
   },
   "countries": {
     "Afghanistan": "Afghanistan",

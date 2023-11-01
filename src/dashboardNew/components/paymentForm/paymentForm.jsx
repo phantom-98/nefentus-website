@@ -28,27 +28,27 @@ const PaymentForm = ({ setLoadingData }) => {
   async function createInvoice() {
     // Check data
     if (!amount) {
-      setErrorMessage("Please enter a valid amount");
+      setErrorMessage(t("messages.error.amountValid"));
       return;
     }
     if (!email) {
-      setErrorMessage("Please enter a valid email");
+      setErrorMessage(t("messages.validation.validEmail"));
       return;
     }
     if (!name) {
-      setErrorMessage("Please enter a valid name");
+      setErrorMessage(t("messages.validation.nameValid"));
       return;
     }
     if (!company) {
-      setErrorMessage("Please enter a valid company");
+      setErrorMessage(t("messages.validation.companyValid"));
       return;
     }
     if (!address) {
-      setErrorMessage("Please enter a valid address");
+      setErrorMessage(t("messages.validation.addressValid"));
       return;
     }
     if (!taxNumber) {
-      setErrorMessage("Please enter a valid tax number");
+      setErrorMessage(t("messages.validation.taxNumberValid"));
       return;
     }
 
@@ -70,7 +70,7 @@ const PaymentForm = ({ setLoadingData }) => {
       setShowPopup("payment");
       setLoadingData((prev) => !prev);
     } else {
-      setErrorMessage("Could not create an invoice!");
+      setErrorMessage(t("messages.error.createInvoice"));
     }
   }
 

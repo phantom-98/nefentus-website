@@ -498,7 +498,8 @@
     "logOut": "Log Out",
     "receive": "Receive",
     "send": "Send",
-    "referral": "Referral"
+    "referral": "Referral",
+    "close": "Close"
   },
   "countries": {
     "Afghanistan": "Afghanistan",

@@ -285,14 +285,14 @@ const Signup = () => {
 
   async function submitForm(data) {
     if (CountryOption === t("signUp.option1Placeholder")) {
-      setErrorMessage("Please choose a country");
+      setErrorMessage(t("messages.error.country"));
       return;
     }
 
     const captchaValue = recaptchaRef.current.getValue();
 
     if (!captchaValue) {
-      setErrorMessage("Please verify the reCAPTCHA!");
+      setErrorMessage(t("messages.error.reCAPTCHA"));
     } else {
       const requestData = {
         ...data,
@@ -303,9 +303,9 @@ const Signup = () => {
 
       const response = await api.register(requestData);
       if (response == null) {
-        setErrorMessage("Error when registering");
+        setErrorMessage(t("messages.error.register"));
       } else {
-        setMessage("Please confirm your email address to proceed.");
+        setMessage(t("messages.error.confirmEmail"));
       }
       resetForm();
       setErrorMessage(null);

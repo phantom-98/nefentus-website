@@ -124,7 +124,7 @@ const LoginBox = () => {
     const captchaValue = recaptchaRef.current.getValue();
 
     if (!captchaValue) {
-      setErrorMessage("Please verify the reCAPTCHA!");
+      setErrorMessage(t("messages.error.reCAPTCHA"));
     } else {
       if (Cookies.get("acceptCookie") !== true) {
         checkbox = false;
@@ -136,7 +136,7 @@ const LoginBox = () => {
           checkbox,
         );
         if (response == null) {
-          setErrorMessage("Invalid login data");
+          setErrorMessage(t("messages.error.loginData"));
           return;
         } else if (response.hasOtp) {
           setShowConfirmMeEmail(true);
@@ -145,7 +145,7 @@ const LoginBox = () => {
           navigateDashboard();
         }
       } catch (error) {
-        setErrorMessage("There was an error logging in");
+        setErrorMessage(t("messages.error.login"));
       }
     }
   }
@@ -157,12 +157,12 @@ const LoginBox = () => {
     try {
       const response = await backendAPI.verifyOTP(email, code, checkbox);
       if (response == null) {
-        setErrorMessage("Failed to Confirm");
+        setErrorMessage(t("messages.error.confirm"));
         return;
       }
       navigateDashboard();
     } catch (error) {
-      setErrorMessage("There was an error logging in");
+      setErrorMessage(t("messages.error.login"));
     }
   }
 
@@ -170,12 +170,12 @@ const LoginBox = () => {
     try {
       const response = await backendAPI.activateAccount(token);
       if (response == null) {
-        setErrorMessage("Error on activating account: ");
+        setErrorMessage(t("messages.error.activateAccount"));
         return;
       }
-      setMessage("Account successfully activated");
+      setMessage(t("messages.success.activateAccount"));
     } catch (error) {
-      setErrorMessage("Error on activating account: ");
+      setErrorMessage(t("messages.error.activateAccount"));
     }
   };
 

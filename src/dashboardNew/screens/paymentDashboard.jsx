@@ -58,10 +58,10 @@ const PaymentDashboard = () => {
     const result = await vendorAPI.deleteInvoice(link);
     if (result) {
       setIsLoadingInvoiceData((prev) => !prev);
-      setInfoMessage("Invoice deleted!");
+      setInfoMessage(t("messages.success.deleteInvoice"));
     } else {
       setIsLoadingInvoiceData((prev) => !prev);
-      setErrorMessage("Could not delete invoice!");
+      setErrorMessage(t("messages.error.deleteInvoice"));
     }
   }
 

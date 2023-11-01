@@ -8,6 +8,7 @@ import styles from "./profileSettings.module.css";
 import backend_API from "../../../api/backendAPI";
 import { MessageContext } from "../../../context/message";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ProfileSettings = () => {
   const [firstName, setFirstName] = useState(localStorage.getItem("firstName"));
@@ -36,6 +37,7 @@ const ProfileSettings = () => {
   const [isSaveData, setIsSaveData] = useState(false);
   const [file, setFile] = useState(null);
   const [imageChanged, setImageChanged] = useState(false);
+  const { t } = useTranslation();
 
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
 
@@ -58,7 +60,7 @@ const ProfileSettings = () => {
 
     const response = await backendAPI.update(requestData);
     if (response == null) {
-      setErrorMessage("Error on updating data");
+      setErrorMessage(t("messages.error.updateData"));
       await backendAPI.signout();
       setTimeout(() => {
         navigate("/");
@@ -66,7 +68,7 @@ const ProfileSettings = () => {
     }
 
     if (response !== null) {
-      setInfoMessage("Settings updated successfully!");
+      setInfoMessage(t("messages.success.updateSettings"));
     }
 
     setIsSaveData(false);
@@ -81,7 +83,7 @@ const ProfileSettings = () => {
         resp2 = await backendAPI.deleteProfileImage(file);
       }
       if (resp2 == null) {
-        setErrorMessage("Error on uploading the profile picture");
+        setErrorMessage(t("messages.error.uploadPicture"));
       }
       setImageChanged(false);
       setIsSaveData(false);
