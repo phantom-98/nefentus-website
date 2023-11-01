@@ -741,5 +741,57 @@
     "converter": "Конвертер",
     "integration": "ІнтеграціЇ",
     "soon": "Скоро"
+  },
+  "products": {
+    "totalProducts": "Всі продукти",
+    "createNewProduct": "Створити новий продукт",
+    "subtitle1": "Ви додали",
+    "subtitle2": "нових товарів цього місяця"
+  },
+  "payments": {
+    "title": "Створити новий інвойс",
+    "enterAmount": "Введіть суму в $",
+    "email": "Електронна пошта",
+    "name": "Ім'я",
+    "company": "Компанія",
+    "address": "Адреса",
+    "taxNumber": "Податковий номер",
+    "createInvoice": "Створити інвойс",
+    "table": {
+      "created": "Створено",
+      "price": "Ціна ($)",
+      "status": "Статус",
+      "qr": "QR-код",
+      "actions": "Дії"
+    }
+  },
+  "transactions": {
+    "title": "Останні транзакції",
+    "subtitle": "Ваша поточна сума брутто становить:",
+    "table": {
+      "product": "Товар",
+      "order": "Замовлення",
+      "email": "Електронна пошта",
+      "amount": "Сума",
+      "currency": "Валюта",
+      "transaction": "Транзакція",
+      "date": "Дата",
+      "earnings": "Заробіток",
+      "action": "Дії"
+    }
+  },
+  "converter": {
+    "wallet": "Гаманець",
+    "from": "З",
+    "balance": "Баланс",
+    "convert": "Конвертувати"
+  },
+  "integrations": {
+    "title": "Інтеграції",
+    "subtitle": "Використовуйте свій зовнішній криптовалютний гаманець на Nefentus",
+    "connect": "Підключитися",
+    "connecting": "Підключення...",
+    "disconnect": "Від'єднати",
+    "connectError": "Підключення гаманця недоступне!"
   }
 }

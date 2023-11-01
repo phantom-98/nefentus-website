@@ -8,15 +8,21 @@ import TableQR from "../components/tableQR/tableQR";
 import TableSearch from "../components/tableSearch/tableSearch";
 import TableStatus from "../components/tableStatus/tableStatus";
 import vendorDashboardApi from "../../api/vendorDashboardApi";
-
-const label = ["Created At", "Price ($)", "Status", "QR Code", "Actions"];
+import { useTranslation } from "react-i18next";
 
 const PaymentDashboard = () => {
   const [invoiceData, setInvoiceData] = useState([]);
   const [isLoadingInvoiceData, setIsLoadingInvoiceData] = useState(false);
+  const { t } = useTranslation();
 
   const vendorAPI = new vendorDashboardApi();
-
+  const label = [
+    t("payments.table.created"),
+    t("payments.table.price"),
+    t("payments.table.status"),
+    t("payments.table.qr"),
+    t("payments.table.actions"),
+  ];
   useEffect(() => {
     fetchInvoices();
   }, [isLoadingInvoiceData]);

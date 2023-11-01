@@ -12,6 +12,7 @@ import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
 import Button from "../../../components/button/button";
+import { useTranslation } from "react-i18next";
 
 const ProductBody = () => {
   const [products, setProducts] = useState([]);
@@ -24,6 +25,8 @@ const ProductBody = () => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [productId, setProductId] = useState(null);
+
+  const { t } = useTranslation();
 
   const dashboardApi = new vendorDashboardApi();
 
@@ -150,8 +153,10 @@ const ProductBody = () => {
       <Card>
         <div className={styles.titleHeader}>
           <SettingsTitle
-            title="Total Products"
-            description="You’ve added 3 new product this month"
+            title={t("products.totalProducts")}
+            description={
+              t("products.subtitle1") + " " + 5 + " " + t("products.subtitle2")
+            }
             product
             onCreate={handleProductClick}
           />

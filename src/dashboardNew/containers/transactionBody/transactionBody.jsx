@@ -6,24 +6,26 @@ import TableSearch from "../../components/tableSearch/tableSearch";
 import TableStatus from "../../components/tableStatus/tableStatus";
 import moment from "moment";
 import { formatUSDBalance } from "../../../utils";
-
-const label = [
-  "Product",
-  "Order",
-  "Email",
-  "Amount",
-  "Currency",
-  "Transaction",
-  "Date",
-  "Earnings",
-  "Action",
-];
+import { useTranslation } from "react-i18next";
 
 const TransactionBody = () => {
   const [orderData, setOrderData] = useState([]);
   const [orderIds, setOrderIds] = useState([]);
   const dashboardApi = new vendorDashboardApi();
   const [totalAmount, setTotalAmount] = useState(0);
+  const { t } = useTranslation();
+
+  const label = [
+    t("transactions.table.product"),
+    t("transactions.table.order"),
+    t("transactions.table.email"),
+    t("transactions.table.amount"),
+    t("transactions.table.currency"),
+    t("transactions.table.transaction"),
+    t("transactions.table.date"),
+    t("transactions.table.earnings"),
+    t("transactions.table.action"),
+  ];
 
   useEffect(() => {
     fetchOrders();
@@ -64,8 +66,8 @@ const TransactionBody = () => {
   return (
     <div>
       <TableSearch
-        title="Recent Transactions"
-        description={`Your current gross amount is: $${totalAmount}`}
+        title={t("transactions.title")}
+        description={`${t("transactions.subtitle")} ${totalAmount}$`}
       />
       <Table
         grid="1.4fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr"

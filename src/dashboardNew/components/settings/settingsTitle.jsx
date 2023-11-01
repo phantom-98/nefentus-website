@@ -1,5 +1,6 @@
 import Button from "../button/button";
 import styles from "./settingsTitle.module.css";
+import { useTranslation } from "react-i18next";
 
 const SettingsTitle = ({
   title,
@@ -8,6 +9,8 @@ const SettingsTitle = ({
   product,
   onCreate,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.wrapper}>
       <div>
@@ -18,7 +21,7 @@ const SettingsTitle = ({
       {identification && <div className={styles.level}>Level: X</div>}
       {product && (
         <div>
-          <Button onClick={onCreate}>Create New Product</Button>
+          <Button onClick={onCreate}>{t("products.createNewProduct")}</Button>
         </div>
       )}
     </div>

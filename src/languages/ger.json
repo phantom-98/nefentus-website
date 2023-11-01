@@ -745,5 +745,57 @@
     "converter": "Konverter",
     "integration": "Integration",
     "soon": "Demnächst"
+  },
+  "products": {
+    "totalProducts": "Produkte insgesamt",
+    "createNewProduct": "Neues Produkt erstellen",
+    "subtitle1": "Sie haben hinzugefügt",
+    "subtitle2": "neues Produkt diesen Monat"
+  },
+  "payments": {
+    "title": "Eine neue Rechnung erstellen",
+    "enterAmount": "Betrag in $ eingeben",
+    "email": "E-Mail",
+    "name": "Name",
+    "company": "Firma",
+    "address": "Adresse",
+    "taxNumber": "Steuernummer",
+    "createInvoice": "Rechnung erstellen",
+    "table": {
+      "created": "Erstellt am",
+      "price": "Preis ($)",
+      "status": "Status",
+      "qr": "QR-Code",
+      "actions": "Actions"
+    }
+  },
+  "transactions": {
+    "title": "Neueste Transaktionen",
+    "subtitle": "Ihr aktueller Bruttobetrag ist:",
+    "table": {
+      "product": "Produkt",
+      "order": "Bestellung",
+      "email": "E-Mail",
+      "amount": "Betrag",
+      "currency": "Währung",
+      "transaction": "Transaction",
+      "date": "Datum",
+      "earnings": "Verdienst",
+      "action": "Action"
+    }
+  },
+  "converter": {
+    "wallet": "Brieftasche",
+    "from": "Von",
+    "balance": "Saldo",
+    "convert": "Konvertieren"
+  },
+  "integrations": {
+    "title": "Integrations",
+    "subtitle": "Verwenden Sie Ihre externe Kryptowährungs-Brieftasche auf Nefentus",
+    "connect": "Mit Wallet verbinden",
+    "connecting": "Verbinden...",
+    "disconnect": "Verbindung trennen",
+    "connectError": "Verbinden Brieftasche ist nicht verfügbar!"
   }
 }

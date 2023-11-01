@@ -7,8 +7,11 @@ import { PaymentPopup, QRPopup } from "../popup/popup";
 import { useContext, useState } from "react";
 import { MessageContext } from "../../../context/message";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
+import { useTranslation } from "react-i18next";
 
 const PaymentForm = ({ setLoadingData }) => {
+  const { t } = useTranslation();
+
   const [showPopup, setShowPopup] = useState(false);
   const [amount, setAmount] = useState("");
   const [email, setEmail] = useState("");
@@ -74,27 +77,43 @@ const PaymentForm = ({ setLoadingData }) => {
   return (
     <>
       <Card>
-        <div className={styles.title}>Create a new invoice</div>
+        <div className={styles.title}>{t("payments.title")}</div>
 
         <div className={styles.row}>
           <Input
-            placeholder="Enter amount in $"
+            placeholder={t("payments.enterAmount")}
             value={amount}
             setVaue={setAmount}
           />
-          <Input placeholder="Email" value={email} setVaue={setEmail} />
-          <Input placeholder="Name" value={name} setVaue={setName} />
-          <Input placeholder="Company" value={company} setVaue={setCompany} />
-          <Input placeholder="Address" value={address} setVaue={setAddress} />
           <Input
-            placeholder="Tax number"
+            placeholder={t("payments.email")}
+            value={email}
+            setVaue={setEmail}
+          />
+          <Input
+            placeholder={t("payments.name")}
+            value={name}
+            setVaue={setName}
+          />
+          <Input
+            placeholder={t("payments.company")}
+            value={company}
+            setVaue={setCompany}
+          />
+          <Input
+            placeholder={t("payments.address")}
+            value={address}
+            setVaue={setAddress}
+          />
+          <Input
+            placeholder={t("payments.taxNumber")}
             value={taxNumber}
             setVaue={setTaxNumber}
           />
         </div>
 
         <div className={styles.button}>
-          <Button onClick={createInvoice}>Create Invoice</Button>
+          <Button onClick={createInvoice}>{t("payments.createInvoice")}</Button>
         </div>
       </Card>
 
