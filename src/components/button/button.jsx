@@ -16,6 +16,7 @@ const Button = ({
       onClick={onClick}
       type={type}
       style={{
+        ...style,
         border:
           color === "white" ? "1px solid rgb(38, 38, 38)" : "1px solid #0784B5",
       }}
