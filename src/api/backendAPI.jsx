@@ -55,6 +55,110 @@ export default class backendAPI {
     }
   }
 
+  async registerByEmail(email) {
+    try {
+      const url = `${this.baseURL}/auth/register/email`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      } else {
+        const data = await response.json();
+        setCookie("token", data.jwtToken);
+        localStorage.setItem("token", data.jwtToken);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("contactEmail", data.contactEmail);
+        localStorage.setItem("affiliateLink", data.affiliateLink);
+        localStorage.setItem("firstName", data.firstName);
+        localStorage.setItem("lastName", data.lastName);
+        localStorage.setItem("business", data.business);
+        localStorage.setItem("phoneNumber", data.phoneNumber);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("profile_pic", data.profileImage);
+        localStorage.setItem("roles", data.roles);
+        localStorage.setItem("country", data.country);
+        localStorage.setItem("hasTotp", data.hasTotp);
+        localStorage.setItem("requireKyc", data.requireKyc);
+        localStorage.setItem("hasOtp", data.hasOtp);
+        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+        localStorage.setItem("marketingUpdates", data.marketingUpdates);
+        localStorage.setItem("emailNotifications", data.emailNotifications);
+        localStorage.setItem("appNotifications", data.appNotifications);
+        localStorage.setItem("notificationLanguage", data.notificationLanguage);
+        localStorage.setItem("enableInvoicing", data.enableInvoicing);
+
+        ReactGA.event({
+          category: "User",
+          action: "login",
+          label: data.email,
+        });
+
+        return data;
+      }
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async updateUserByEmail(updateRequest) {
+    try {
+      const url = `${this.baseURL}/auth/update/email`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateRequest),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      } else {
+        const data = await response.json();
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("contactEmail", data.contactEmail);
+        localStorage.setItem("affiliateLink", data.affiliateLink);
+        localStorage.setItem("firstName", data.firstName);
+        localStorage.setItem("lastName", data.lastName);
+        localStorage.setItem("business", data.business);
+        localStorage.setItem("phoneNumber", data.phoneNumber);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("profile_pic", data.profileImage);
+        localStorage.setItem("roles", data.roles);
+        localStorage.setItem("country", data.country);
+        localStorage.setItem("hasTotp", data.hasTotp);
+        localStorage.setItem("requireKyc", data.requireKyc);
+        localStorage.setItem("hasOtp", data.hasOtp);
+        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+        localStorage.setItem("marketingUpdates", data.marketingUpdates);
+        localStorage.setItem("emailNotifications", data.emailNotifications);
+        localStorage.setItem("appNotifications", data.appNotifications);
+        localStorage.setItem("notificationLanguage", data.notificationLanguage);
+        localStorage.setItem("enableInvoicing", data.enableInvoicing);
+
+        ReactGA.event({
+          category: "User",
+          action: "login",
+          label: data.email,
+        });
+
+        return data;
+      }
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async forgotPassword(email) {
     try {
       const url = `${this.baseURL}/auth/forgot-password`;

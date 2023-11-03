@@ -12,9 +12,11 @@ import QR from "../../assets/icon/qrcode.svg";
 import Dummy from "../../assets/image/dummy.webp";
 
 import Checkmark from "../../assets/icon/singleCheckmark.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import backendAPI from "../../api/backendAPI";
+import Error from "../error/error";
 
 const Layout = ({
   heading,
@@ -34,10 +36,14 @@ const Layout = ({
   children,
 }) => {
   const { t } = useTranslation();
+  const backend_API = new backendAPI();
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const content = t("affiliate.affiliateList", { returnObjects: true });
 
   const videoRef = useRef(null);
+  const [email, setEmail] = useState("");
 
   const handleLoad = (event) => {
     if (videoRef.current) {
@@ -51,6 +57,16 @@ const Layout = ({
             console.log("Playback prevented by browser");
           });
       }
+    }
+  };
+
+  const handleEnterEmail = async () => {
+    const result = await backend_API.registerByEmail(email);
+
+    if (result) {
+      navigate("/dashboardNew");
+    } else {
+      setErrorMessage("Email already exists");
     }
   };
 
@@ -86,9 +102,20 @@ const Layout = ({
           <>
             <div className={styles.inputHero}>
               <div className={styles.inputWrapper}>
-                <input type="text" placeholder="Email" />
+                <Error error={errorMessage} />
+                <input
+                  type="text"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleEnterEmail();
+                  }}
+                />
               </div>
-              {button && <Button link="/signup">{button}</Button>}
+              {button && (
+                <Button onClick={() => handleEnterEmail()}>{button}</Button>
+              )}
             </div>
             <div className={styles.connectWrapper}>
               <div className={styles.connect}>
