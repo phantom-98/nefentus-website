@@ -8,7 +8,7 @@ import Logout from "../../assets/icon/logout.svg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const UserProfile = ({ web }) => {
+const UserProfile = ({ web, logOut }) => {
   const [profileImage, setProfileImage] = useState(
     localStorage.getItem("profile_pic"),
   );
@@ -61,10 +61,10 @@ const UserProfile = ({ web }) => {
             <img src={Identification} alt="" />
             <p>Identification</p>
           </Link>
-          <div className={styles.profileItem}>
+          <Link onClick={logOut} to="/" className={styles.profileItem}>
             <img src={Logout} alt="" />
             <p>Log Out</p>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

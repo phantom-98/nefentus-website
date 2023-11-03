@@ -324,24 +324,57 @@
     "button": "Jetzt anmelden",
     "button2": "Planen Sie eine kostenlose Onboarding-Sitzung"
   },
+  "reward": {
+    "subtitle": "For every new user",
+    "title1": "Get up to",
+    "gradient": "50 USDT",
+    "title2": "in rewards",
+    "button": "Create Your Free Account Now"
+  },
   "footer": {
     "copyright": "© 2023 Nefentus. Alle Rechte vorbehalten.",
     "downloadButton": "JETZT RUNTERLADEN",
+    "contentLabel1": "Übersicht",
+    "contentLabel2": "Aktion",
     "content": [
       {
-        "text": "Startseite"
+        "text": "Heim",
+        "link": "/"
       },
       {
-        "text": "Unsere Solution"
+        "text": "Zahlung",
+        "link": "/payment"
       },
       {
-        "text": "Resourcen"
+        "text": "Ressourcen",
+        "link": "/support"
       },
       {
-        "text": "Affiliate"
+        "text": "Affiliate",
+        "link": "/affiliate"
+      },
+      {
+        "text": "Datenschutzrichtlinie",
+        "link": "/privacy"
       }
     ],
-    "privacy": "Datenschutzerklärung",
-    "imprint": "Impressum"
+    "content2": [
+      { "text": "Play Store", "link": "/" },
+      {
+        "text": "Anmelden",
+        "link": "/link"
+      },
+      { "text": "App Store", "link": "/" },
+      {
+        "text": "Anmeldung",
+        "link": "/signup"
+      },
+      {
+        "text": "Impressum",
+        "link": "/imprint"
+      }
+    ],
+    "socialTitle": "Folge uns auf:",
+    "socialDescription": "Gehen Sie zum Anfang\n der Seite"
   }
 }
