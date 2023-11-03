@@ -9,7 +9,7 @@
 
 .input {
   background-color: transparent;
-  outline: 0px;
+  outline: 0;
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 1rem 1rem;
   width: 30rem;
@@ -103,4 +103,79 @@
   .right {
     width: 100%;
   }
+}
+
+.QRCode {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.6rem;
+  gap: 2rem;
+}
+
+.linkBox {
+  margin-top: 2rem;
+  padding: 0.5rem 2rem;
+  border: var(--gray-color) 1px solid;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+  cursor: pointer;
+}
+
+.url {
+  font-size: 1.6rem;
+  color: var(--white-color) !important;
+  font-weight: 500;
+
+  display: flex;
+
+  transition: 0.3s ease;
+}
+
+.url:hover {
+  opacity: 0.8;
+}
+
+.tooltip {
+  position: absolute;
+  margin-left: 20%;
+
+  color: white;
+
+  z-index: 1;
+  animation: fadeout 10s forwards;
+}
+
+.copyLink {
+  position: relative;
+  padding: 1rem;
+}
+
+.modalTitle {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+.modalSubtitle {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.buttons {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
 }

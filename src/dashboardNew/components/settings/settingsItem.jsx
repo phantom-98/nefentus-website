@@ -159,7 +159,7 @@ const ImageType = ({ value }) => {
   );
 };
 
-const EnableType = ({ value }) => {
+export const EnableType = ({ value }) => {
   return (
     <div className={styles.enableWrapper}>
       <img className={styles.enableIcon} src={value ? Correct : Fail} alt="" />
