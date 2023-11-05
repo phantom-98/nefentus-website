@@ -32,7 +32,7 @@ const data = [
     description:
       "Protect your account from phishing attempts and ensure that your notification emails are from Nefentus only.",
     value: JSON.parse(localStorage.getItem("antiPhishingCode")),
-    type: "button",
+    type: "phishingCode   ",
     flow: "phishingCode",
   },
 ];

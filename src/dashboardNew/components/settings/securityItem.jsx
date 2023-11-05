@@ -6,8 +6,13 @@ import backend_API from "../../../api/backendAPI";
 import QRCode from "react-qr-code";
 import UrlLink from "../../../assets/icon/copyClipboardWhite.svg";
 import MessageComponent from "../../../components/message";
-import { OneTimeCodeInput } from "../../../dashboard/input/input";
+import InputComponent, {
+  OneTimeCodeInput,
+  RawInput,
+} from "../../../dashboard/input/input";
 import ModalOverlay from "../../../dashboard/modal/modalOverlay";
+import { useNavigate } from "react-router-dom";
+import Popup from "../popup/popup";
 
 const SecurityItem = ({ data }) => {
   const [isTotp, setIsTotp] = useState(
@@ -21,12 +26,22 @@ const SecurityItem = ({ data }) => {
   const [copied, setCopied] = useState(false);
   const [verify, setVerify] = useState(false);
   const [code, setCode] = useState("");
+  const [show, setShow] = useState(false);
 
   const [open, setOpen] = useState(false);
 
   const [secretToken, setSecretToken] = useState("");
 
+  const [openBox, setOpenBox] = useState(false);
+  const [openChangePassword, setOpenChangePassword] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [verificationCode, setVerificationCode] = useState(null);
+  const [phishingCode, setPhishingCode] = useState("");
+
   const backendAPI = new backend_API();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (data.flow === "otp") {
@@ -45,10 +60,9 @@ const SecurityItem = ({ data }) => {
     if (response.status === 200) {
       console.log(response.status, "status");
       console.log(isOtp, "statusOtp");
-      localStorage.setItem("hasOtp", data.toString());
+      localStorage.setItem("hasOtp", data.value.toString());
     }
   };
-
   const handleTotpSecretKey = async () => {
     setIsTotp(!isTotp);
     if (!isTotp) {
@@ -84,6 +98,92 @@ const SecurityItem = ({ data }) => {
     }
   };
 
+  const passwordContent = [
+    {
+      label: "Current Password",
+      placeholder: "Enter your password",
+      type: "password",
+      value: currentPassword,
+      onChange: setCurrentPassword,
+      required: true,
+    },
+    {
+      label: "New Password",
+      placeholder: "Enter new password",
+      type: "password",
+      value: newPassword,
+      onChange: setNewPassword,
+      required: true,
+    },
+    {
+      label: "Confirm Password",
+      placeholder: "Confirm new password",
+      type: "password",
+      value: confirmPassword,
+      onChange: setConfirmPassword,
+      required: true,
+    },
+  ];
+
+  const handleConfirm = async () => {
+    if (newPassword !== confirmPassword) {
+      return;
+    }
+
+    const response = await backendAPI.changePasswordDashboard(
+      newPassword,
+      currentPassword,
+    );
+    if (response == null) {
+      return;
+    }
+    setOpenBox(true);
+  };
+
+  const handleConfirmCode = async () => {
+    const response =
+      await backendAPI.changePasswordConfirmDashboard(verificationCode);
+    if (response == null) {
+      return;
+    }
+    resetValues();
+    setVerificationCode("");
+    setOpenBox(false);
+    setOpenChangePassword(false);
+  };
+
+  const resetValues = () => {
+    setConfirmPassword("");
+    setCurrentPassword("");
+    setNewPassword("");
+  };
+
+  const handleClose = () => {
+    setOpenBox(false);
+    setVerificationCode("");
+    setOpenChangePassword(false);
+  };
+
+  const handleConfirmPhishingCode = async () => {
+    const requestData = {
+      firstName: localStorage.getItem("firstName"),
+      lastName: localStorage.getItem("lastName"),
+      phoneNumber: localStorage.getItem("phoneNumber"),
+      email: localStorage.getItem("email"),
+      business: localStorage.getItem("business") || "",
+      antiPhishingCode: phishingCode,
+    };
+
+    const response2 = await backendAPI.update(requestData);
+    if (response2 == null) {
+      await backendAPI.signout();
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    }
+    setPhishingCode("");
+  };
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -93,7 +193,7 @@ const SecurityItem = ({ data }) => {
             <div className={styles.description}>{data.description}</div>
           </div>
           <div className={styles.right}>
-            {data.type === "button" ? (
+            {data.type === "button" || data.type === "phishingCode" ? (
               <EnableType value={status} />
             ) : (
               <PasswordIcon />
@@ -107,10 +207,16 @@ const SecurityItem = ({ data }) => {
                 ? handleOtp
                 : data.flow === "totp"
                 ? handleTotpSecretKey
-                : null
+                : data.flow === "password"
+                ? () => setOpenChangePassword(true)
+                : () => setShow(true)
             }
           >
-            {data.type === "button" ? (status ? "Disable" : "Enable") : "Edit"}
+            {data.type === "button" || data.type === "phishingCode"
+              ? status
+                ? "Disable"
+                : "Enable"
+              : "Edit"}
           </Button>
         </div>
       </div>
@@ -217,6 +323,91 @@ const SecurityItem = ({ data }) => {
           )}
         </ModalOverlay>
       )}
+
+      {openChangePassword && (
+        <ModalOverlay>
+          {!openBox ? (
+            <>
+              <div className={styles.modalTitle}>Change Password</div>
+              {passwordContent.map((item) => (
+                <div>
+                  <InputComponent
+                    label={item.label + (item.required ? "*" : "")}
+                    placeholder={item.placeholder}
+                    type={item.type}
+                    setState={item.onChange}
+                    value={item.value}
+                    secure
+                  />
+                </div>
+              ))}
+
+              <div className={styles.buttons}>
+                <Button
+                  color="light"
+                  onClick={() => {
+                    setOpenChangePassword(false);
+                  }}
+                >
+                  Close
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    handleConfirm();
+                  }}
+                >
+                  Confirm
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={styles.modalTitle}>Enter verification code:</div>
+
+              <RawInput
+                value={verificationCode}
+                setState={setVerificationCode}
+                type="text"
+              />
+
+              <div className={styles.buttons}>
+                <Button
+                  color="light"
+                  onClick={() => {
+                    handleClose();
+                  }}
+                >
+                  Close
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    handleConfirmCode();
+                  }}
+                >
+                  Confirm
+                </Button>
+              </div>
+            </>
+          )}
+        </ModalOverlay>
+      )}
+
+      <Popup
+        show={show}
+        setShow={setShow}
+        title={"Enter Anti-Phishing code:"}
+        onClick={handleConfirmPhishingCode}
+      >
+        <>
+          <RawInput
+            value={phishingCode}
+            setState={setPhishingCode}
+            type="text"
+          />
+        </>
+      </Popup>
     </>
   );
 };

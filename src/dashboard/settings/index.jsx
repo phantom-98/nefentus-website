@@ -316,8 +316,8 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
         navigate("/");
       }, 1000);
     } else {
-      localStorage.setItem("hasOtp", isOtp.toString());
-      localStorage.setItem("hasTotp", isTotp.toString());
+      // localStorage.setItem("hasOtp", isOtp.toString());
+      // localStorage.setItem("hasTotp", isTotp.toString());
     }
 
     resetValues();
