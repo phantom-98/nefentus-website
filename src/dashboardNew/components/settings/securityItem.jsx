@@ -195,7 +195,7 @@ const SecurityItem = ({ data }) => {
             {data.type === "button" ? (
               <EnableType value={status} />
             ) : (
-              <PasswordIcon value={data?.value} />
+              <PasswordIcon type={data.flow} value={data?.value} />
             )}
           </div>
 
@@ -211,11 +211,7 @@ const SecurityItem = ({ data }) => {
                 : () => setShow(true)
             }
           >
-            {data.type === "button" || data.type === "phishingCode"
-              ? status
-                ? "Disable"
-                : "Enable"
-              : "Edit"}
+            {data.type === "button" ? (status ? "Disable" : "Enable") : "Edit"}
           </Button>
         </div>
       </div>
@@ -421,8 +417,14 @@ const SecurityItem = ({ data }) => {
 
 export default SecurityItem;
 
-const PasswordIcon = ({ value }) => {
+const PasswordIcon = ({ type, value }) => {
   return (
-    <div className={styles.value}>{value ? <>{value}</> : <>**********</>}</div>
+    <div className={styles.value}>
+      {type === "password"
+        ? "**********"
+        : type === "phishingCode" && JSON.parse(value)
+        ? value
+        : "Not Set"}
+    </div>
   );
 };
