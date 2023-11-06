@@ -6,10 +6,7 @@ import backend_API from "../../../api/backendAPI";
 import QRCode from "react-qr-code";
 import UrlLink from "../../../assets/icon/copyClipboardWhite.svg";
 import MessageComponent from "../../../components/message";
-import InputComponent, {
-  OneTimeCodeInput,
-  RawInput,
-} from "../../../dashboard/input/input";
+import { OneTimeCodeInput, RawInput } from "../../../dashboard/input/input";
 import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 import { useNavigate } from "react-router-dom";
 import Popup from "../popup/popup";
@@ -18,7 +15,7 @@ const SecurityItem = ({ data }) => {
   const [isTotp, setIsTotp] = useState(
     localStorage.getItem("hasTotp") === "true",
   );
-  const [isOtp, setIsOtp] = useState(data.value);
+  const [isOtp, setIsOtp] = useState(localStorage.getItem("hasOtp") === "true");
   const [status, setStatus] = useState(data.value);
   const email = useRef(localStorage.getItem("email"));
   const [reset, setReset] = useState(false);
@@ -38,7 +35,9 @@ const SecurityItem = ({ data }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [verificationCode, setVerificationCode] = useState(null);
-  const [phishingCode, setPhishingCode] = useState("");
+  const [phishingCode, setPhishingCode] = useState(
+    localStorage.getItem("antiPhishingCode"),
+  );
 
   const backendAPI = new backend_API();
   const navigate = useNavigate();
@@ -60,7 +59,7 @@ const SecurityItem = ({ data }) => {
     if (response.status === 200) {
       console.log(response.status, "status");
       console.log(isOtp, "statusOtp");
-      localStorage.setItem("hasOtp", data.value.toString());
+      localStorage.setItem("hasOtp", (!isOtp).toString());
     }
   };
   const handleTotpSecretKey = async () => {
@@ -193,10 +192,10 @@ const SecurityItem = ({ data }) => {
             <div className={styles.description}>{data.description}</div>
           </div>
           <div className={styles.right}>
-            {data.type === "button" || data.type === "phishingCode" ? (
+            {data.type === "button" ? (
               <EnableType value={status} />
             ) : (
-              <PasswordIcon />
+              <PasswordIcon value={data?.value} />
             )}
           </div>
 
@@ -330,14 +329,19 @@ const SecurityItem = ({ data }) => {
             <>
               <div className={styles.modalTitle}>Change Password</div>
               {passwordContent.map((item) => (
-                <div>
-                  <InputComponent
-                    label={item.label + (item.required ? "*" : "")}
-                    placeholder={item.placeholder}
+                <div className={styles.inputItem}>
+                  <div className={styles.modalSubtitle}>{item.label}</div>
+                  <input
+                    className={styles.input}
                     type={item.type}
-                    setState={item.onChange}
+                    name=""
+                    id=""
                     value={item.value}
-                    secure
+                    placeholder={item.placeholder}
+                    onChange={(e) => {
+                      item.onChange(e.target.value);
+                    }}
+                    disabled={item.disabled === true}
                   />
                 </div>
               ))}
@@ -401,10 +405,13 @@ const SecurityItem = ({ data }) => {
         onClick={handleConfirmPhishingCode}
       >
         <>
-          <RawInput
+          <input
+            className={styles.input}
             value={phishingCode}
-            setState={setPhishingCode}
-            type="text"
+            placeholder={"Enter anti-phishing code"}
+            onChange={(e) => {
+              setPhishingCode(e.target.value);
+            }}
           />
         </>
       </Popup>
@@ -414,6 +421,8 @@ const SecurityItem = ({ data }) => {
 
 export default SecurityItem;
 
-const PasswordIcon = () => {
-  return <div className={styles.value}>**********</div>;
+const PasswordIcon = ({ value }) => {
+  return (
+    <div className={styles.value}>{value ? <>{value}</> : <>**********</>}</div>
+  );
 };

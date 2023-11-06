@@ -233,7 +233,7 @@ export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag, request }) => {
             ref={inputRefs[index]}
             onChange={(e) => handleCodeChange(e, index)}
             onKeyDown={(e) => handleKeyDown(e, index)}
-            onKeyPress={handleEnterKeyPress} // Add this line
+            onKeyPress={handleEnterKeyPress}
           />
         ) : (
           <input
@@ -245,7 +245,7 @@ export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag, request }) => {
             onChange={(e) => handleCodeChange(e, index)}
             onKeyDown={(e) => handleKeyDown(e, index)}
             maxLength={1}
-            onKeyPress={handleEnterKeyPress} // Add this line
+            onKeyPress={handleEnterKeyPress}
           />
         ),
       )}

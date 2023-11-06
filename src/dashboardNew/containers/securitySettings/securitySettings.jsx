@@ -31,8 +31,8 @@ const data = [
     label: "Anti-Phishing Code",
     description:
       "Protect your account from phishing attempts and ensure that your notification emails are from Nefentus only.",
-    value: JSON.parse(localStorage.getItem("antiPhishingCode")),
-    type: "phishingCode   ",
+    value: localStorage.getItem("antiPhishingCode"),
+    type: "phishingCode",
     flow: "phishingCode",
   },
 ];
