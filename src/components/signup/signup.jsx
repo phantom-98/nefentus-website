@@ -291,7 +291,7 @@ const Signup = () => {
 
     const captchaValue = recaptchaRef.current.getValue();
 
-    if (!captchaValue) {
+    if (captchaValue) {
       setErrorMessage("Please verify the reCAPTCHA!");
     } else {
       const requestData = {

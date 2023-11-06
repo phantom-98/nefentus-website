@@ -12,6 +12,13 @@ import moment from "moment";
 import { MessageContext } from "../../context/message";
 import { useNavigate } from "react-router-dom";
 import { ROLE_TO_NAME } from "../../constants";
+import MessageComponent from "../../components/message";
+import ModalOverlay from "../../dashboard/modal/modalOverlay";
+import Input, { Options } from "../../components/input/input";
+import Button from "../components/button/button";
+import styles from "./admin.module.css";
+import imputStyles from "../../components/input/input.module.css";
+import TablePagination from "../../components/tablePagination";
 
 const label = [
   "Name",
@@ -23,6 +30,8 @@ const label = [
   "Earnings",
   "Action",
 ];
+
+const colSizes = [2, 1, 2, 1, 1, 2, 1, 2];
 
 const roleColors = {
   vendor: "#107CDF",
@@ -61,6 +70,16 @@ const AdminDashboard = ({ type }) => {
   const [isReloadData, setIsReloadData] = useState(false);
   const [totalRegUserCnt, setTotalRegUserCnt] = useState(0);
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [editEmailAddress, setEditEmailAddress] = useState(null);
+  const [role, setRole] = useState("");
+  const [users, setUsers] = useState();
+  const [getDataInput, setGetDataInput] = useState("");
+  const [dataPage, setDataPage] = useState(1);
+
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
 
@@ -98,15 +117,15 @@ const AdminDashboard = ({ type }) => {
         totalPricePerDate,
       ] = await Promise.allSettled(getPromises);
 
-      console.log(
-        dataReg,
-        dataClick,
-        dataOrders,
-        dataInc,
-        dataUsers,
-        reportResp,
-        totalPricePerDate,
-      );
+      // console.log(
+      //   dataReg,
+      //   dataClick,
+      //   dataOrders,
+      //   dataInc,
+      //   dataUsers,
+      //   reportResp,
+      //   totalPricePerDate,
+      // );
 
       const cardsContent = [
         {
@@ -161,30 +180,118 @@ const AdminDashboard = ({ type }) => {
       setBarContent(regRoleGraphData);
 
       dataUsers.value.reverse();
+
       updateUsers(dataUsers.value);
+
+      setUsers(dataUsers.value);
 
       setGraphData(totalPricePerDate.value);
     }
   };
 
-  const updateStatusUser = async (userEmail, activated) => {
+  const updateStatusUser = async (userEmail, activated, dataUsers) => {
     let resp;
     if (activated) resp = await adminApi.deactivateUser(userEmail);
     else resp = await adminApi.patchStatus(userEmail);
     if (resp) {
-      updateUsersTable();
+      updateUsersTable(dataUsers);
     }
   };
 
-  const updateUsersTable = async () => {
+  const deleteUser = async (userEmail, dataUsers) => {
+    const resp = await adminApi.deleteUser(userEmail);
+    if (resp) {
+      updateUsersTable(dataUsers);
+    }
+  };
+
+  const updateUsersTable = async (dataUsers) => {
     const newUserData = await adminApi.getUsers();
     newUserData.reverse();
-    updateUsers(newUserData);
+
+    if (dataUsers) {
+      newUserData.map((item) => {
+        let pastData = {};
+        dataUsers.map((user) => {
+          pastData = user;
+        });
+        if (item.id === pastData.id) {
+          let getItem = [];
+          getItem.push(item);
+          updateUsers(getItem);
+        }
+      });
+    } else {
+      updateUsers(newUserData);
+    }
+  };
+
+  const editUser = async (user, dataUsers) => {
+    setEditEmailAddress(user.email);
+    setFirstName(user.firstName);
+    setLastName(user.lastName);
+    setEmail(user.email);
+    // Only one role!
+    setRole(ROLE_TO_NAME[user.roles[0]]);
+
+    setOpenModal(true);
+  };
+
+  const changeUser = async () => {
+    if (firstName === "") {
+      setErrorMessage("First name is required");
+      return;
+    }
+    if (lastName === "") {
+      setErrorMessage("Last name is required");
+      return;
+    }
+    if (email === "" && editEmailAddress === null) {
+      setErrorMessage("Email is required");
+      return;
+    }
+    if (role === "") {
+      setErrorMessage("Role is required");
+      return;
+    }
+
+    if ((editEmailAddress, dataUsers)) {
+      // Update
+      const resp = await adminApi.updateUser(
+        firstName,
+        lastName,
+        editEmailAddress,
+        role,
+      );
+      if (resp) {
+        setInfoMessage("User updated successfully!");
+        updateUsersTable(dataUsers);
+      } else {
+        setErrorMessage("Could not update user!");
+      }
+    } else {
+      // Add
+      const resp = await adminApi.addUser(firstName, lastName, email, role);
+      if (resp) {
+        if (resp.ok) {
+          setOpenModal(false);
+          fetchAdminData();
+          clearAddUserFields();
+          setInfoMessage("User added successfully!");
+          return;
+        } else if (resp.status === 409) {
+          setErrorMessage("User already exists!");
+          return;
+        }
+      }
+
+      setErrorMessage("Could not add user!");
+    }
   };
 
   function updateUsers(dataUsers) {
     if (dataUsers) {
-      const newDataUsers = dataUsers.map((user) => [
+      const newDataUsers = dataUsers?.map((user) => [
         `${user.firstName} ${user.lastName}`,
         user.roles
           .map((role) => ROLE_TO_NAME[role.replace(" ", "")])
@@ -196,17 +303,51 @@ const AdminDashboard = ({ type }) => {
           <TableStatus color="red">Disabled</TableStatus>
         ),
         formatUSDBalance(user.income),
-        moment(user.createdAt).format("MMM D YYY"),
+        moment(user.createdAt).format("MMM D YYYY, HH:mm:ss"),
         `$${user.income}`,
         <TableAction
           button={user.activated ? "Disable" : "Enable"}
-          onClick={() => updateStatusUser(user.email, user.activated)}
+          onClick={() =>
+            updateStatusUser(user.email, user.activated, dataUsers)
+          }
+          editUser={() => editUser(user)}
+          deleteUser={() => deleteUser(user.email)}
         />,
       ]);
 
       setTableData(newDataUsers);
     }
   }
+
+  const clearAddUserFields = () => {
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setRole("");
+  };
+
+  const findUser = () => {
+    const filteredData = users.filter((item) => {
+      return (
+        getDataInput.toLowerCase().includes(item.email.toLowerCase()) ||
+        getDataInput.toLowerCase().includes(item.firstName.toLowerCase()) ||
+        getDataInput.toLowerCase().includes(item.lastName.toLowerCase()) ||
+        getDataInput.includes(String(item.createdAt).toLowerCase()) ||
+        getDataInput
+          .toLowerCase()
+          .includes(String(item.income).toLowerCase()) ||
+        getDataInput.toLowerCase().includes(item.roles[0]?.toLowerCase())
+      );
+    });
+
+    setGetDataInput("");
+    updateUsers(filteredData);
+  };
+
+  const paginatedData = tableData.filter((item, index) => {
+    if (index >= dataPage * 10 && index < dataPage * 10 + 10) return true;
+    return false;
+  });
 
   return (
     <div>
@@ -220,14 +361,124 @@ const AdminDashboard = ({ type }) => {
       />
       <div>
         <div>
-          <TableSearch title="User Management" />
+          <TableSearch
+            title="User Management"
+            users={tableData}
+            setFiltered={tableData}
+            setGetDataInput={setGetDataInput}
+            findUser={findUser}
+            getDataInput={getDataInput}
+          />
           <Table
             grid="1.3fr 1fr 1.7fr 1fr 1fr 1fr 1fr 1fr"
             label={label}
-            data={tableData}
+            data={paginatedData}
           />
+
+          <>
+            <TablePagination
+              data={tableData}
+              setDataPage={setDataPage}
+              colSizes={colSizes}
+              striped
+            />
+          </>
         </div>
       </div>
+      <>
+        {openModal && (
+          <ModalOverlay>
+            <div className={styles.modal}>
+              <MessageComponent />
+
+              <h4>Edit User</h4>
+
+              <div className={styles.modalInputs}>
+                <Input
+                  dashboard
+                  label="First name*"
+                  placeholder={"Enter first name"}
+                  value={firstName}
+                  setState={setFirstName}
+                />
+                <Input
+                  dashboard
+                  label="Last name*"
+                  placeholder={"Enter last name"}
+                  value={lastName}
+                  setState={setLastName}
+                />
+                <Input
+                  dashboard
+                  label="Email*"
+                  placeholder={"Enter email"}
+                  value={email}
+                  setState={setEmail}
+                  disabled={editEmailAddress !== null}
+                />
+
+                {type === "admin" && (
+                  <Options
+                    label="Role*"
+                    value={role}
+                    options={[
+                      "Vendor",
+                      "Affiliate",
+                      "Broker",
+                      "Senior Broker",
+                      "Leader",
+                    ]}
+                    dashboard
+                    setValue={setRole}
+                  />
+                )}
+                {type === "leader" && (
+                  <Options
+                    label="Role*"
+                    value={role}
+                    options={["Vendor", "Affiliate", "Broker", "Senior Broker"]}
+                    dashboard
+                    setValue={setRole}
+                  />
+                )}
+                {type === "seniorbroker" && (
+                  <Options
+                    label="Role*"
+                    value={role}
+                    options={["Vendor", "Affiliate", "Broker"]}
+                    dashboard
+                    setValue={setRole}
+                  />
+                )}
+                {type === "broker" && (
+                  <Options
+                    label="Role*"
+                    value={role}
+                    options={["Vendor", "Affiliate"]}
+                    dashboard
+                    setValue={setRole}
+                  />
+                )}
+              </div>
+              <div className={styles.modalButtons}>
+                <div
+                  className={styles.button}
+                  onClick={() => {
+                    clearMessages();
+                    clearAddUserFields();
+                    setOpenModal(false);
+                  }}
+                >
+                  Cancel
+                </div>
+                <Button onClick={changeUser} color="white">
+                  Edit User
+                </Button>
+              </div>
+            </div>
+          </ModalOverlay>
+        )}
+      </>
     </div>
   );
 };

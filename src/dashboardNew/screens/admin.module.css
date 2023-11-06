@@ -1,0 +1,361 @@
+.body {
+  margin-bottom: 15rem;
+}
+
+.topButtonWrapper {
+  display: grid;
+  grid-gap: 2rem;
+}
+
+.topButtonWrapper > button {
+  width: unset;
+}
+
+.affiliateLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.linkBox {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  /* width: 50px; */
+}
+
+.affiliateLabel {
+  font-size: 1.6rem;
+  color: var(--gray-color);
+}
+
+.affiliateLink .url {
+  font-size: 1.6rem;
+  color: var(--white-color) !important;
+  font-weight: 500;
+
+  display: flex;
+
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.affiliateLink img {
+  width: 2rem;
+  cursor: pointer;
+}
+
+.affiliateLink .url:hover {
+  opacity: 0.8;
+}
+
+.rows {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: max-content 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.registration {
+  border-radius: 1rem;
+  padding: 3rem;
+}
+
+.registration h3 {
+  font-weight: 400;
+  font-size: 1.8rem;
+}
+
+.bar {
+  height: 2rem;
+  display: grid;
+  width: 100%;
+
+  margin-top: 2rem;
+}
+
+.bar > div {
+  height: 100%;
+  width: 100%;
+  top: 1px;
+}
+
+.barVendor,
+.lineBoxVendor {
+  background-color: #1595c2 !important;
+}
+
+.barAffiliate,
+.lineBoxAffiliate {
+  background-color: #ffa600;
+}
+
+.barBroker,
+.lineBoxBroker {
+  background-color: #23c215;
+}
+
+.barSeniorBroker,
+.lineBoxSeniorBroker {
+  background-color: #c21515;
+}
+
+.barLeader,
+.lineBoxLeader {
+  background-color: #7715c2;
+}
+
+.barAdmin,
+.lineBoxAdmin {
+  background-color: grey;
+}
+
+.leftLine > div:first-child {
+  height: 8px;
+  width: 8px;
+}
+
+.percentageLabel {
+  display: flex;
+  color: var(--gray-color);
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  justify-content: space-between;
+
+  margin-bottom: 3rem;
+}
+
+.totalBoxTop {
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 1.6rem;
+
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  margin-bottom: 1.5rem;
+}
+
+.infoBox {
+  display: flex;
+  justify-content: space-between;
+
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  margin-bottom: 2rem;
+}
+
+.leftLine {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.right {
+  display: flex;
+  gap: 3rem;
+}
+
+.right p {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.lineBox {
+  width: 1rem;
+  height: 1rem;
+}
+
+.button > button {
+  display: flex;
+  justify-content: center;
+  width: 100% !important;
+}
+
+.tableCard {
+  border-radius: 1rem;
+  margin-bottom: 5rem;
+
+  margin-top: 2rem;
+}
+
+.tableAdmin ul {
+  grid-template-columns: 1.2fr 0.8fr 1.5fr 1fr 1fr 1fr 0.5fr;
+}
+
+.tableDiamond ul {
+  grid-template-columns: 1.2fr 0.8fr 1.5fr 1fr 1fr 1fr;
+}
+
+.tableBody li:nth-child(4) {
+  padding: 0.3rem 1rem !important;
+  border-radius: 0.2rem;
+  width: max-content;
+}
+
+.box {
+  padding: 0.3rem 1rem !important;
+  border-radius: 0.2rem;
+  width: max-content;
+}
+
+.approved {
+  background-color: rgba(35, 194, 21, 0.1);
+  color: #23c215;
+}
+
+.pending {
+  background-color: rgba(194, 21, 21, 0.1);
+  color: #c21515;
+}
+
+.linkWrapper {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.actionsLink {
+  text-decoration: underline;
+  color: #1595c2;
+  cursor: pointer;
+}
+
+.deleteLink {
+  text-decoration: underline;
+  color: var(--error-color);
+  cursor: pointer;
+}
+
+.tableBody li:last-child {
+  color: #1595c2;
+  cursor: pointer;
+}
+
+.tableWrapper {
+  margin-top: 3rem;
+}
+
+.tableWrapper h4 {
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+
+.tableWrapper .top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputs {
+  margin-bottom: 1rem;
+  width: 300px;
+}
+
+.inputs input {
+  height: 100% !important;
+}
+
+.modalWrapper > div > div {
+  width: 50rem;
+}
+
+.modal {
+  width: 100%;
+}
+
+.modal h4 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 3rem;
+}
+
+.modalInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  margin-bottom: 3rem;
+}
+
+.modalButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  cursor: pointer;
+}
+
+.modalButtons > div {
+  width: 100%;
+}
+
+.button {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.6rem;
+  border-radius: 1rem;
+}
+
+.passwordWrapper {
+  display: grid;
+  grid-template-columns: 1fr 30px;
+  grid-gap: 2rem;
+}
+
+.iconEye {
+  height: 100%;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.iconEye svg {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+@media (max-width: 900px) {
+  .rows {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tableCard {
+    overflow-x: scroll;
+  }
+
+  .tableAdmin ul {
+    grid-template-columns: 1.2fr 0.8fr 1.5fr 1fr 1fr 1fr 0.8fr;
+  }
+
+  .tableDiamond ul {
+    grid-template-columns: 1.2fr 0.8fr 1.5fr 1fr 1fr 1fr;
+  }
+
+  .tableCard::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tableWrapper .top {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .inputs {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+  }
+}
