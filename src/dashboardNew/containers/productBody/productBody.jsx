@@ -11,7 +11,7 @@ import Input, { Textarea, Attachment } from "../../../components/input/input";
 import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
-import Button from "../../../components/button/button";
+import Button from "../../components/button/button";
 
 const ProductBody = () => {
   const [products, setProducts] = useState([]);
@@ -168,7 +168,7 @@ const ProductBody = () => {
         </div>
       </Card>
 
-      <div className={styles.modalWrapper}>
+      <div>
         {openModal !== false && (
           <ModalOverlay>
             <div className={styles.modal}>
@@ -223,9 +223,10 @@ const ProductBody = () => {
                   number
                 />
               </div>
-              <div className={styles.modalButtons}>
-                <div
-                  className={styles.button}
+
+              <div className={styles.buttons}>
+                <Button
+                  color="light"
                   onClick={() => {
                     clearMessages();
                     setOpenModal(false);
@@ -233,8 +234,8 @@ const ProductBody = () => {
                   }}
                 >
                   Cancel
-                </div>
-                <Button onClick={addOrUpdateProduct} color="white">
+                </Button>
+                <Button onClick={addOrUpdateProduct}>
                   {openModal === "add" ? "Add" : "Update"} Product
                 </Button>
               </div>

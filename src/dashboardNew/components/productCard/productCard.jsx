@@ -43,11 +43,13 @@ const ProductCard = ({ onClickDelete = () => {}, product = {} }) => {
             type="text"
             className={styles.input}
             placeholder="Change product name"
+            value={product.name}
           />
           <input
             type="number"
             className={styles.input}
             placeholder="Change product price in $"
+            value={product.price}
           />
 
           <textarea
@@ -55,6 +57,7 @@ const ProductCard = ({ onClickDelete = () => {}, product = {} }) => {
             className={styles.input}
             placeholder="Change product description"
             rows={3}
+            value={product.description}
           />
         </div>
       </Popup>

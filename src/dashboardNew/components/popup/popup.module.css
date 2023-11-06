@@ -10,10 +10,12 @@
 
 .popupBox {
   width: max-content;
+  max-height: 80vh;
   position: relative;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  overflow-y: scroll;
 }
 
 .popupBox .title {

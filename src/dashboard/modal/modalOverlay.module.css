@@ -21,7 +21,7 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  width: 600px;
+  background: #1a1a1a;
 }
 
 @media (max-width: 900px) {
