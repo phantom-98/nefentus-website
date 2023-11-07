@@ -403,7 +403,7 @@ const SecurityItem = ({ data }) => {
         <>
           <input
             className={styles.input}
-            value={phishingCode}
+            value={phishingCode === "null" ? "" : phishingCode}
             placeholder={"Enter anti-phishing code"}
             onChange={(e) => {
               setPhishingCode(e.target.value);
@@ -422,7 +422,7 @@ const PasswordIcon = ({ type, value }) => {
     <div className={styles.value}>
       {type === "password"
         ? "**********"
-        : type === "phishingCode" && JSON.parse(value)
+        : type === "phishingCode" && value !== "null" && value
         ? value
         : "Not Set"}
     </div>

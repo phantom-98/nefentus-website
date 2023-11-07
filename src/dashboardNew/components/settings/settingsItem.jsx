@@ -97,27 +97,27 @@ const SettingsItem = ({ data, setIsSaveData }) => {
             ) : (
               ""
             )}
-            <Button
-              color="gray"
-              onClick={
-                data.type === "edit"
-                  ? () => handleEdit()
-                  : data.type === "image"
-                  ? () => handleChangeImage()
-                  : data.type === "enable"
-                  ? () => handleEnable()
-                  : ""
-              }
-            >
-              {data.type === "edit"
-                ? "Edit"
-                : data.type === "image"
-                ? "Change"
-                : data.type === "enable"
-                ? "Enable"
-                : ""}
-            </Button>
           </div>
+          <Button
+            color="gray"
+            onClick={
+              data.type === "edit"
+                ? () => handleEdit()
+                : data.type === "image"
+                ? () => handleChangeImage()
+                : data.type === "enable"
+                ? () => handleEnable()
+                : ""
+            }
+          >
+            {data.type === "edit"
+              ? "Edit"
+              : data.type === "image"
+              ? "Change"
+              : data.type === "enable"
+              ? "Enable"
+              : ""}
+          </Button>
           <EditPopup
             show={show}
             value={data.popup === "language" ? label : data.value}

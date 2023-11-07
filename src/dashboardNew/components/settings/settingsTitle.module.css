@@ -47,13 +47,15 @@
 
 .right {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  width: 30%;
 }
 
 .value {
   font-size: 1.4rem;
   opacity: 0.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .imageWrapper {
