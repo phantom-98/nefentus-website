@@ -387,20 +387,7 @@
   "footer": {
     "copyright": "© 2023 Nefentus. All rights reserved.",
     "downloadButton": "DOWNLOAD NOW",
-    "content": [
-      {
-        "text": "Home"
-      },
-      {
-        "text": "Payment"
-      },
-      {
-        "text": "Resources"
-      },
-      {
-        "text": "Affiliate"
-      }
-    ],
+    "content": ["Home", "Payment", "Resources", "Affiliate"],
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
     "terms": "Terms and Condition",
@@ -858,12 +845,18 @@
     "connectError": "Connect wallet is not available!"
   },
   "content2": [
-    { "text": "Play Store", "link": "/" },
+    {
+      "text": "Play Store",
+      "link": "/"
+    },
     {
       "text": "Sign In",
       "link": "/link"
     },
-    { "text": "App Store", "link": "/" },
+    {
+      "text": "App Store",
+      "link": "/"
+    },
     {
       "text": "Sign Up",
       "link": "/signup"

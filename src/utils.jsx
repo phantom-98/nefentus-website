@@ -88,3 +88,13 @@ export const decryptData = (password) => {
     console.error("Decryption failed. Please check your input.");
   }
 };
+
+export const reformatFooterInfo = (pages, links) => {
+  let result = [];
+
+  for (let i = 0; i < pages.length; i++) {
+    result[i] = { text: pages[i], link: links[i] };
+  }
+  console.log(result, "resultresult");
+  return result;
+};
