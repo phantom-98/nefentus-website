@@ -149,3 +149,12 @@
     height: 20rem;
   }
 }
+
+.modalSubtitle {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.inputItem {
+  margin-top: 1.8rem;
+}

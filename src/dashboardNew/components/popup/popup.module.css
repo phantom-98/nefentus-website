@@ -15,12 +15,13 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .popupBox .title {
   margin-bottom: 1rem;
   font-size: 1.8rem;
+  width: 100%;
 }
 
 .buttons {
@@ -59,7 +60,8 @@
 }
 
 .paymentPopup .description {
-  width: 35rem;
+  width: 100%;
+  text-align: left;
 }
 
 .description {

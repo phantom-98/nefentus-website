@@ -39,26 +39,36 @@ const ProductCard = ({ onClickDelete = () => {}, product = {} }) => {
 
       <Popup show={show} setShow={setShow} title="Edit Product">
         <div className={styles.inputWrapper}>
-          <input
-            type="text"
-            className={styles.input}
-            placeholder="Change product name"
-            value={product.name}
-          />
-          <input
-            type="number"
-            className={styles.input}
-            placeholder="Change product price in $"
-            value={product.price}
-          />
+          <div className={styles.inputItem}>
+            <div className={styles.modalSubtitle}>Product name</div>
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Change product name"
+              value={product.name}
+            />
+          </div>
 
-          <textarea
-            type="text"
-            className={styles.input}
-            placeholder="Change product description"
-            rows={3}
-            value={product.description}
-          />
+          <div className={styles.inputItem}>
+            <div className={styles.modalSubtitle}>Product price in $</div>
+            <input
+              type="number"
+              className={styles.input}
+              placeholder="Change product price in $"
+              value={product.price}
+            />
+          </div>
+
+          <div className={styles.inputItem}>
+            <div className={styles.modalSubtitle}>Product description</div>
+            <textarea
+              type="text"
+              className={styles.input}
+              placeholder="Change product description"
+              rows={3}
+              value={product.description}
+            />
+          </div>
         </div>
       </Popup>
     </>
