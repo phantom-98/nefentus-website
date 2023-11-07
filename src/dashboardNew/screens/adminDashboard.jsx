@@ -44,23 +44,23 @@ const roleColors = {
 
 const labels = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "00:00"];
 
-const chartData = {
-  labels,
-  datasets: [
-    {
-      label: "Last 24h",
-      data: [1, 2, 3, 4, 5, 6, 7],
-      borderColor: "#0784B5",
-      backgroundColor: "#0784B5",
-    },
-    {
-      label: "Previous 24h",
-      data: [12, 18, 9, 5, 3, 15, 20],
-      borderColor: "rgba(255, 255, 255,0.2)",
-      backgroundColor: "rgba(255, 255, 255,0.2)",
-    },
-  ],
-};
+// const chartData = {
+//   labels,
+//   datasets: [
+//     {
+//       label: "Last 24h",
+//       data: [1, 2, 3, 4, 5, 6, 7],
+//       borderColor: "#0784B5",
+//       backgroundColor: "#0784B5",
+//     },
+//     {
+//       label: "Previous 24h",
+//       data: [12, 18, 9, 5, 3, 15, 20],
+//       borderColor: "rgba(255, 255, 255,0.2)",
+//       backgroundColor: "rgba(255, 255, 255,0.2)",
+//     },
+//   ],
+// };
 
 const AdminDashboard = ({ type }) => {
   const [cardInfo, setCardInfo] = useState([]);
@@ -89,6 +89,8 @@ const AdminDashboard = ({ type }) => {
 
   useEffect(() => {
     fetchAdminData();
+    fetchAdminUsersData();
+
     clearMessages();
   }, [isReloadData]);
 
@@ -102,7 +104,6 @@ const AdminDashboard = ({ type }) => {
         adminApi.getTotalClicks(),
         adminApi.getNumOrders(),
         adminApi.getTotalIncome(),
-        adminApi.getUsers(),
         adminApi.getRoleReport(),
         adminApi.getTotalIncomesPerDay(),
       ];
@@ -112,7 +113,6 @@ const AdminDashboard = ({ type }) => {
         dataClick,
         dataOrders,
         dataInc,
-        dataUsers,
         reportResp,
         totalPricePerDate,
       ] = await Promise.allSettled(getPromises);
@@ -179,13 +179,19 @@ const AdminDashboard = ({ type }) => {
 
       setBarContent(regRoleGraphData);
 
-      dataUsers.value.reverse();
-
-      updateUsers(dataUsers.value);
-
-      setUsers(dataUsers.value);
-
       setGraphData(totalPricePerDate.value);
+    }
+  };
+
+  const fetchAdminUsersData = async () => {
+    const result = await adminApi.checkPermission();
+    if (result !== true) {
+      navigate("/login");
+    } else {
+      const dataUsers = await adminApi.getUsers();
+
+      dataUsers.reverse();
+      updateUsers(dataUsers);
     }
   };
 
@@ -354,7 +360,7 @@ const AdminDashboard = ({ type }) => {
       <EarningCards data={cardInfo} />
       <AdminBody
         data={barContent}
-        chartData={chartData}
+        chartData={graphData}
         userCnt={totalRegUserCnt}
         type={type}
         setIsReloadData={setIsReloadData}

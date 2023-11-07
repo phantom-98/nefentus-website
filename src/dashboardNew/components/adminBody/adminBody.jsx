@@ -1,12 +1,12 @@
 import styles from "./adminBody.module.css";
 
-import IncomeCard from "../../components/incomeCard/incomeCard";
 import Roles from "../roles/roles";
+import IncomeCardAdmin from "../incomeCardAdmin/incomeCardAdmin";
 
 const AdminBody = ({ chartData, data, userCnt, type, setIsReloadData }) => {
   return (
     <div className={styles.body}>
-      <IncomeCard data={chartData} />
+      <IncomeCardAdmin data={chartData} />
       <Roles
         data={data}
         userCnt={userCnt}
