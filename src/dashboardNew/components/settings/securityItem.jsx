@@ -35,7 +35,8 @@ const SecurityItem = ({ data }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [verificationCode, setVerificationCode] = useState(null);
-  const [phishingCode, setPhishingCode] = useState(
+  const [phishingCode, setPhishingCode] = useState(data.value);
+  const [phishingCodeValue, setPhishingCodeValue] = useState(
     localStorage.getItem("antiPhishingCode"),
   );
 
@@ -49,7 +50,7 @@ const SecurityItem = ({ data }) => {
     if (data.flow === "totp") {
       setStatus(isTotp);
     }
-  }, [isOtp, isTotp]);
+  }, [isOtp, isTotp, phishingCodeValue.current]);
 
   const handleOtp = async () => {
     const response = await backendAPI.setupOtp({ active: !isOtp });
@@ -165,22 +166,22 @@ const SecurityItem = ({ data }) => {
 
   const handleConfirmPhishingCode = async () => {
     const requestData = {
-      firstName: localStorage.getItem("firstName"),
-      lastName: localStorage.getItem("lastName"),
-      phoneNumber: localStorage.getItem("phoneNumber"),
-      email: localStorage.getItem("email"),
-      business: localStorage.getItem("business") || "",
-      antiPhishingCode: phishingCode,
+      code: phishingCode,
     };
 
-    const response2 = await backendAPI.update(requestData);
+    const response2 = await backendAPI.setPhishingCode(requestData);
+    if (response2 === "Success") {
+      setPhishingCodeValue(requestData.code);
+      localStorage.setItem("antiPhishingCode", requestData.code);
+    }
+
     if (response2 == null) {
       await backendAPI.signout();
       setTimeout(() => {
         navigate("/");
       }, 1000);
+      setPhishingCode("");
     }
-    setPhishingCode("");
   };
 
   return (
@@ -195,7 +196,10 @@ const SecurityItem = ({ data }) => {
             {data.type === "button" ? (
               <EnableType value={status} />
             ) : (
-              <PasswordIcon type={data.flow} value={data?.value} />
+              <PasswordIcon
+                type={data.flow}
+                value={phishingCodeValue ? phishingCodeValue : data?.value}
+              />
             )}
           </div>
 

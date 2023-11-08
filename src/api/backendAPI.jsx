@@ -206,6 +206,28 @@ export default class backendAPI {
     }
   }
 
+  async setPhishingCode(code) {
+    try {
+      const url = `${this.baseURL}/auth/setup/antiPhishingCode`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(code),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      return response.text();
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async updateFirstName(firstName) {
     try {
       const url = `${this.baseURL}/auth/update/first-name`;
