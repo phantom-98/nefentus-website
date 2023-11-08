@@ -80,8 +80,6 @@ const KycBody = () => {
 
   return (
     <div style={{ marginBottom: "5rem" }}>
-      <Header title="Transactions" />
-
       <div className={styles.top}>
         <div className={styles.left}>
           <h3>KYC Request</h3>
@@ -143,7 +141,7 @@ const Table = ({ data, setData }) => {
             {data.map((items, index) => (
               <ul key={index}>
                 {items.map((item, index) => (
-                  <React.Fragment key={index}>
+                  <div key={index}>
                     {index === 0 ? (
                       <li className={styles.profile}>
                         <div className={styles.profileImage}>
@@ -167,7 +165,7 @@ const Table = ({ data, setData }) => {
                     ) : (
                       <li>{item}</li>
                     )}
-                  </React.Fragment>
+                  </div>
                 ))}
 
                 <li>

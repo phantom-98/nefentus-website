@@ -31,6 +31,8 @@ import IdentificationDashboard from "./dashboardNew/screens/identificationDashbo
 import { Player } from "@lottiefiles/react-lottie-player";
 import LoadingAnimation from "./assets/logo/loadingAnimation.json";
 import Invoices from "./pages/invoices";
+import { KYC } from "./dashboard/settings/components/KYC";
+import Kyc from "./dashboard/Kyc";
 
 const Contact = React.lazy(() => import("./components/contact/contact"));
 const Home = React.lazy(() => import("./pages/Home"));
@@ -269,6 +271,14 @@ function App() {
                   element={
                     <ScreenLayout>
                       <AdminDashboard type={"admin"} />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboardNew/kyc"
+                  element={
+                    <ScreenLayout>
+                      <Kyc />
                     </ScreenLayout>
                   }
                 />

@@ -160,7 +160,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
 
           {type !== "partner" && (
             <div style={{ marginTop: "1.5rem" }}>
-              <Button color="light" link={"/dashboard/kyc"}>
+              <Button color="light" link={"/dashboardNew/kyc"}>
                 KYC Requests
               </Button>
             </div>
