@@ -8,6 +8,7 @@ import {
 } from "@thirdweb-dev/react";
 import Button from "../../components/button/button";
 import styles from "./walletIntegrations.module.css";
+import backendAPI from "../../../api/backendAPI";
 
 const WalletIntegration = ({
   name,
@@ -16,6 +17,8 @@ const WalletIntegration = ({
   connectStatus,
   setConnectStatus,
 }) => {
+  const backend_API = new backendAPI();
+
   const wallet = {
     connect: useConnect(),
     disconnect: useDisconnect(),
@@ -48,8 +51,16 @@ const WalletIntegration = ({
           "Wallet Connect": "disconnected",
         });
       }
+
+      registerWallet(wallet.address);
     }
-  }, [wallet.status, name, setConnectStatus]);
+  }, [wallet.status, name, setConnectStatus, wallet.address]);
+
+  async function registerWallet(address) {
+    if (address) {
+      const result = await backend_API.registerWalletAddress(address);
+    }
+  }
 
   return (
     <div className={styles.walletWrap}>
