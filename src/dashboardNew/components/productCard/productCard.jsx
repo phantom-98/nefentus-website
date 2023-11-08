@@ -1,13 +1,83 @@
 import styles from "./productCard.module.css";
+import vendorDashboardApi from "../../../api/vendorDashboardApi";
 
 import Edit from "../../../assets/icon/edit.svg";
 import Delete from "../../../assets/icon/delete.svg";
 import Button from "../button/button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Popup from "../popup/popup";
+import Input, { Attachment, Textarea } from "../../../components/input/input";
+import CropDialog, {
+  dataURLtoFile,
+} from "../../../components/cropDialog/cropDialog";
+import MessageComponent from "../../../components/message";
+import { MessageContext } from "../../../context/message";
 
 const ProductCard = ({ onClickDelete = () => {}, product = {} }) => {
   const [show, setShow] = useState(false);
+  const [name, setName] = useState(product.name);
+  const [description, setDescription] = useState(product.description);
+  const [price, setPrice] = useState(product.price);
+  const [stock, setStock] = useState(product.stock);
+  const [image, setImage] = useState(null);
+  const [imageChanged, setImageChanged] = useState(false);
+  const [cropDialogOpen, setCropDialogOpen] = useState(false);
+  const dashboardApi = new vendorDashboardApi();
+  const { setInfoMessage, setErrorMessage, clearMessages } =
+    useContext(MessageContext);
+
+  const updateProduct = async () => {
+    if (!name) {
+      setErrorMessage("Name is required!");
+      return;
+    }
+    if (!description) {
+      setErrorMessage("Description is required!");
+      return;
+    }
+    if (!price) {
+      setErrorMessage("Price is required!");
+      return;
+    }
+    let priceAsFloat = null;
+    priceAsFloat = parseFloat(price);
+    if (!priceAsFloat) {
+      setErrorMessage("Price must be a number!");
+    }
+
+    const resp1 = await dashboardApi.upsertProduct(
+      product.id,
+      name,
+      description,
+      price,
+      stock,
+      image,
+    );
+    const imageProductId = resp1.id;
+
+    let resp2 = true;
+    if (imageChanged) {
+      if (image) {
+        console.log("Uploading image for product id: " + imageProductId);
+        resp2 = await dashboardApi.uploadProductImage(imageProductId, image);
+      } else {
+        resp2 = await dashboardApi.deleteProductImage(imageProductId, image);
+      }
+      setImageChanged(false);
+    }
+
+    if (resp1 && resp2) {
+      if (product.id !== null) setInfoMessage("Product updated successfully!");
+      else setInfoMessage("Product added successfully!");
+    } else {
+      if (product.id !== null) setErrorMessage("Could not update the product!");
+      else setErrorMessage("Could not add a new product!");
+    }
+
+    setShow(false);
+    clearMessages();
+  };
+
   return (
     <>
       <div className={`card ${styles.card}`}>
@@ -37,40 +107,73 @@ const ProductCard = ({ onClickDelete = () => {}, product = {} }) => {
         </div>
       </div>
 
-      <Popup show={show} setShow={setShow} title="Edit Product">
+      <Popup
+        show={show}
+        setShow={setShow}
+        title="Edit Product"
+        onClick={updateProduct}
+      >
+        <MessageComponent />
         <div className={styles.inputWrapper}>
-          <div className={styles.inputItem}>
-            <div className={styles.modalSubtitle}>Product name</div>
-            <input
-              type="text"
-              className={styles.input}
-              placeholder="Change product name"
-              value={product.name}
+          <div className={styles.modalInputs}>
+            <Attachment
+              label="Product image"
+              onUpload={(file) => {
+                setImage(file);
+                setImageChanged(true);
+                setCropDialogOpen(true);
+              }}
+              onDelete={() => {
+                setImage(null);
+                setImageChanged(true);
+              }}
+              value={image}
+              dashboard
             />
-          </div>
-
-          <div className={styles.inputItem}>
-            <div className={styles.modalSubtitle}>Product price in $</div>
-            <input
-              type="number"
-              className={styles.input}
-              placeholder="Change product price in $"
-              value={product.price}
+            <Input
+              dashboard
+              label="Name*"
+              placeholder="Enter name"
+              value={name}
+              setState={setName}
             />
-          </div>
-
-          <div className={styles.inputItem}>
-            <div className={styles.modalSubtitle}>Product description</div>
-            <textarea
-              type="text"
-              className={styles.input}
-              placeholder="Change product description"
-              rows={3}
-              value={product.description}
+            <Textarea
+              dashboard
+              label="Description*"
+              placeholder="Enter description"
+              value={description}
+              setState={setDescription}
+              rows={2}
+            />
+            <Input
+              dashboard
+              label="Price*"
+              placeholder="Enter price"
+              value={price}
+              setState={setPrice}
+              number
+            />
+            <Input
+              dashboard
+              label="Stock"
+              placeholder="Enter stock if limited stock"
+              value={stock}
+              setState={setStock}
+              number
             />
           </div>
         </div>
       </Popup>
+
+      <CropDialog
+        open={cropDialogOpen}
+        file={image}
+        onClose={() => setCropDialogOpen(false)}
+        onSave={(croppedImageData) => {
+          setCropDialogOpen(false);
+          setImage(dataURLtoFile(croppedImageData, image.name));
+        }}
+      />
     </>
   );
 };

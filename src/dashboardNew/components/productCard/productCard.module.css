@@ -95,7 +95,6 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-bottom: 3rem;
 }
 
 .modalButtons {
@@ -113,12 +112,13 @@
   display: flex;
   gap: 1rem;
   flex-direction: column;
+  width: 35vw;
 }
 
 .input {
-  font-family: "Axiforma";
+  font-family: "Axiforma", sans-serif;
   background-color: transparent;
-  outline: 0px;
+  outline: 0;
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 1rem 1rem;
   width: 30rem;
@@ -142,11 +142,19 @@
   .body {
     padding: 1rem 2rem 2rem 2rem;
   }
+
+  .inputWrapper {
+    width: 45vw;
+  }
 }
 
 @media (max-width: 650px) {
   .imageWrapper {
     height: 20rem;
+  }
+
+  .inputWrapper {
+    width: 100%;
   }
 }
 
