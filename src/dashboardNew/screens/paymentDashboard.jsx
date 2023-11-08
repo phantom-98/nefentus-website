@@ -40,11 +40,7 @@ const PaymentDashboard = () => {
       <TableStatus color="green">Open</TableStatus>,
       <TableQR data={invoice} link={process.env.VITE_REACT_APP_QR_CODE_LINK} />,
       // <TableQR link={`${window.location.origin}/pay/${invoice.link}`} />,
-      <TableAction
-        button="Disable"
-        button2="Delete"
-        onClick2={() => deleteInvoice(invoice.link)}
-      />,
+      <TableAction deleteUser={() => deleteInvoice(invoice.link)} />,
     ];
   }
 
