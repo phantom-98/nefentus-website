@@ -104,6 +104,8 @@ const Table = ({ data, setData }) => {
   const [checkModal, setCheckModal] = useState(false);
   const [feedbackModal, setFeedbackModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  const [declineReason, setDeclineReason] = useState("");
+
   const adminApi = new adminDashboardApi("admin");
 
   const acceptKYC = async (id) => {
@@ -114,11 +116,13 @@ const Table = ({ data, setData }) => {
   };
 
   const declineKYC = async (id) => {
-    setFeedbackModal(false);
-    try {
-      await adminApi.declineKYC(id);
-      setData(data.filter((item) => item[0].id !== id));
-    } catch {}
+    if (declineReason && id) {
+      setFeedbackModal(false);
+      try {
+        await adminApi.declineKYC(id, declineReason);
+        setData(data.filter((item) => item[0].id !== id));
+      } catch {}
+    }
   };
 
   return (
@@ -253,6 +257,7 @@ const Table = ({ data, setData }) => {
                 <p>Message</p>
 
                 <textarea
+                  onChange={(e) => setDeclineReason(e.target.value)}
                   name=""
                   id=""
                   cols="30"

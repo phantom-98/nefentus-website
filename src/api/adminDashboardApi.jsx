@@ -178,15 +178,17 @@ export default class adminDashboardApi {
     }
   }
 
-  async declineKYC(id) {
+  async declineKYC(id, declineReason) {
     try {
-      console.log(id);
       const url = `${this.baseURL}/decline_kyc/${id}`;
       const options = {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
+        },
+        body: {
+          declineReason: declineReason,
         },
       };
       const response = await fetch(url, options);
