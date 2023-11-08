@@ -188,9 +188,9 @@ export default class adminDashboardApi {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-        body: {
+        body: JSON.stringify({
           declineReason: declineReason,
-        },
+        }),
       };
       const response = await fetch(url, options);
       if (!response.ok) {
