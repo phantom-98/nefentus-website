@@ -271,7 +271,7 @@ const Table = ({ data, setData }) => {
                 <div
                   className={styles.button}
                   onClick={() => setFeedbackModal(false)}
-                  style={{ fontSize: "13px" }}
+                  style={{ fontSize: "15px" }}
                 >
                   Cancel
                 </div>

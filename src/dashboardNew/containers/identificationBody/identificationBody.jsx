@@ -6,6 +6,7 @@ import backend_API from "../../../api/backendAPI";
 
 import styles from "./identificationBody.module.css";
 import { EditPopup } from "../../components/settings/settingsItem";
+import adminDashboardApi from "../../../api/adminDashboardApi";
 
 const KYC_TYPE = {
   FULL_NAME: "FULL_NAME",
@@ -17,6 +18,20 @@ const KYC_TYPE = {
   PROOF_OF_COMPANY: "PROOF_OF_COMPANY",
   ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
 };
+
+const KYC_TYPE_WITHOUT_TEXT = {
+  GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
+  PICTURE_WIDTH_ID_IN_HAND: "PICTURE_WIDTH_ID_IN_HAND",
+  PROOF_OF_ADRESS: "PROOF_OF_ADRESS",
+  PROOF_OF_COMPANY: "PROOF_OF_COMPANY",
+  ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
+};
+
+// const KYC_TYPE_TEXT = {
+//   FULL_NAME: "FULL_NAME",
+//   ADRESS: "ADRESS",
+//   CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
+// }
 
 const KYCContent = [
   {
@@ -86,10 +101,45 @@ const INITIAL_TEXT = {
 const IdentificationBody = () => {
   const [level, setLevel] = useState(null);
   const BackendAPI = new backend_API();
+  const adminApi = new adminDashboardApi("admin");
   const [uploadingFiles, setUploadingFiles] = useState(INITIAL_FILES);
   const [uploadingText, setUploadingText] = useState(INITIAL_TEXT);
+  const [getData, setGetData] = useState([]);
 
   const userId = localStorage.getItem("userId");
+
+  const fetchFYC = async () => {
+    const users = await adminApi.getUsers();
+
+    const arrayWithResults = await Promise.all(
+      users.map(async (user) => {
+        const userId = user.id;
+
+        const userKYCData = await Promise.all(
+          Object.values(KYC_TYPE_WITHOUT_TEXT).map((type) =>
+            BackendAPI.getByKYC(type, userId),
+          ),
+        );
+
+        const transformedResults = userKYCData
+          ?.map((item) => {
+            const key = Object.keys(item)[0];
+            return { [key]: item[key].data };
+          })
+          .reduce((acc, curr) => ({ ...acc, ...curr }), {});
+
+        const filteredArray = KYCContent.map((item) => {
+          if (item.id in transformedResults) {
+            item.rejectReason = transformedResults[item.id].rejectReason;
+          }
+
+          return item;
+        });
+
+        setUploadingFiles(filteredArray);
+      }),
+    );
+  };
 
   useEffect(() => {
     const getLevel = async () => {
@@ -101,6 +151,7 @@ const IdentificationBody = () => {
     };
 
     getLevel();
+    fetchFYC();
   }, [userId]);
 
   const handleUpload = async () => {
@@ -236,6 +287,7 @@ const IdentificationBody = () => {
                     uploadingFiles={uploadingFiles}
                     id={item.id}
                     label={item.label}
+                    rejectReason={item.rejectReason}
                   />
                 );
               }
@@ -293,6 +345,7 @@ const IdentificationBody = () => {
                         uploadingFiles={uploadingFiles}
                         id={item.id}
                         label={item.label}
+                        rejectReason={item.rejectReason}
                       />
                     );
                   }
@@ -335,6 +388,7 @@ const IdentificationBody = () => {
                         uploadingFiles={uploadingFiles}
                         id={item.id}
                         label={item.label}
+                        rejectReason={item.rejectReason}
                       />
                     );
                   }
@@ -385,7 +439,13 @@ const AddText = ({ label, setUploadingText, id, uploadingText }) => {
   );
 };
 
-const AddFile = ({ label, setUploadingFiles, id, uploadingFiles }) => {
+const AddFile = ({
+  label,
+  setUploadingFiles,
+  id,
+  uploadingFiles,
+  rejectReason,
+}) => {
   const [value, setValue] = useState();
   const [show, setShow] = useState(false);
 
@@ -413,6 +473,7 @@ const AddFile = ({ label, setUploadingFiles, id, uploadingFiles }) => {
       <div className={`${styles.row} ${styles.formItem}`}>
         <div className={styles.rowLeft}>
           <span>{label}</span>
+          <span style={{ paddingLeft: 20, color: "red" }}>{rejectReason}</span>
         </div>
         <div className={`${styles.rowRight} ${styles.rightUpload}`}>
           <p className={styles.lvl}>{value}</p>
