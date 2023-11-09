@@ -1,17 +1,17 @@
 import styles from "./kyc.module.css";
-import Header from "../header/header";
+import Header from "../../../dashboard/header/header";
 
-import Search from "../../assets/icon/search.svg";
-import Correct from "../../assets/icon/correct.svg";
+// import Search from "../../assets/icon/search.svg";
+// import Correct from "../../assets/icon/correct.svg";
 
-import ModalOverlay from "../modal/modalOverlay";
+import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 
-import Download from "../../assets/icon/download.svg";
-import Button from "../../components/button/button";
+// import Download from "../../assets/icon/download.svg";
+import Button from "../../../components/button/button";
 import { useEffect, useState } from "react";
-import backendAPI from "../../api/backendAPI";
-import adminDashboardApi from "../../api/adminDashboardApi";
-import TableSearch from "../../dashboardNew/components/tableSearch/tableSearch";
+import backendAPI from "../../../api/backendAPI";
+import adminDashboardApi from "../../../api/adminDashboardApi";
+import TableSearch from "../tableSearch/tableSearch";
 
 const KYC_TYPE = {
   GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
@@ -271,6 +271,7 @@ const Table = ({ data, setData }) => {
                 <div
                   className={styles.button}
                   onClick={() => setFeedbackModal(false)}
+                  style={{ fontSize: "13px" }}
                 >
                   Cancel
                 </div>

@@ -32,7 +32,7 @@ import { Player } from "@lottiefiles/react-lottie-player";
 import LoadingAnimation from "./assets/logo/loadingAnimation.json";
 import Invoices from "./pages/invoices";
 import { KYC } from "./dashboard/settings/components/KYC";
-import Kyc from "./dashboard/Kyc";
+import Kyc from "./dashboardNew/components/kyc";
 
 const Contact = React.lazy(() => import("./components/contact/contact"));
 const Home = React.lazy(() => import("./pages/Home"));

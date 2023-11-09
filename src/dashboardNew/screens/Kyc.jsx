@@ -1,5 +1,4 @@
-import KycBody from "./kyc/index";
-import Footer from "./footer";
+import KycBody from "../components/kyc/index";
 
 const Kyc = () => {
   return (
@@ -7,7 +6,6 @@ const Kyc = () => {
       <div className="dashboardFont">
         <KycBody />
       </div>
-      {/* <Footer /> */}
     </>
   );
 };
