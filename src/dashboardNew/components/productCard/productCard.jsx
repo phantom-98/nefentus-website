@@ -13,7 +13,7 @@ import CropDialog, {
 import MessageComponent from "../../../components/message";
 import { MessageContext } from "../../../context/message";
 
-const ProductCard = ({ onClickDelete = () => {}, product = {} }) => {
+const ProductCard = ({ onClickDelete = () => {}, product = {}, update }) => {
   const [show, setShow] = useState(false);
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description);
@@ -75,6 +75,7 @@ const ProductCard = ({ onClickDelete = () => {}, product = {} }) => {
     }
 
     setShow(false);
+    update();
     clearMessages();
   };
 

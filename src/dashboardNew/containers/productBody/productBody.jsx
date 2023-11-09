@@ -24,6 +24,7 @@ const ProductBody = () => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [productId, setProductId] = useState(null);
+  const [load, setLoad] = useState(false);
 
   const dashboardApi = new vendorDashboardApi();
 
@@ -32,7 +33,7 @@ const ProductBody = () => {
 
   useEffect(() => {
     loadProducts();
-  }, []);
+  }, [load]);
 
   async function loadProducts() {
     const newProducts = await dashboardApi.getProducts();
@@ -163,6 +164,7 @@ const ProductBody = () => {
               product={item}
               onClickEdit={() => showModal(item.id)}
               onClickDelete={() => deleteProduct(item.id)}
+              update={() => setLoad(!load)}
             />
           ))}
         </div>
