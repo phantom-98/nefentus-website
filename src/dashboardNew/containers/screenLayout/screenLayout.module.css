@@ -20,7 +20,7 @@
 
 .children > div {
   display: flex;
-  gap: 2rem;
+  /* gap: 2rem; */
   flex-direction: column;
 }
 
