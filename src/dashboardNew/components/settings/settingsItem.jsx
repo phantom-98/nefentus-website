@@ -136,11 +136,23 @@ const EnableType = ({ value }) => {
   );
 };
 
-export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
+export const EditPopup = ({
+  show,
+  setShow,
+  value,
+  setValue,
+  type,
+  popup,
+  setUploadingFiles,
+  id,
+  uploadingFiles,
+}) => {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
     setInputValue(value);
+    const updatedFiles = { ...uploadingFiles, [id]: value };
+    setUploadingFiles(updatedFiles);
   }, [value]);
 
   const handleChange = (e) => {
