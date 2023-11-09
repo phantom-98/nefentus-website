@@ -387,7 +387,7 @@ const AddFile = ({ label, setUploadingFiles, id, uploadingFiles }) => {
         const fileName = selectedFile.name; // Ovo je ime fajla
         const imageURL = URL.createObjectURL(selectedFile);
 
-        const updatedFiles = { ...uploadingFiles, [id]: fileName };
+        const updatedFiles = { ...uploadingFiles, [id]: selectedFile };
         setUploadingFiles(updatedFiles);
         setValue(fileName);
       }
