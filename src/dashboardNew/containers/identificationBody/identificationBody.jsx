@@ -9,6 +9,7 @@ import { EditPopup } from "../../components/settings/settingsItem";
 
 const IdentificationBody = () => {
   const [level, setLevel] = useState(null);
+  const BackendAPI = new backend_API();
 
   const userId = localStorage.getItem("userId");
 
@@ -23,6 +24,18 @@ const IdentificationBody = () => {
 
     getLevel();
   }, [userId]);
+
+  const handleUpload = async () => {
+    const arrayWithResults = await Promise.allSettled(
+      Object.keys(uploadingFiles).map((type) =>
+        BackendAPI.uploadKYCByType(type, uploadingFiles[type]),
+      ),
+    );
+    if (arrayWithResults?.value) {
+      fetchFYC();
+      setUploadingFiles(INITIAL_FILES);
+    }
+  };
 
   return (
     <Card className={styles.card}>
@@ -208,7 +221,7 @@ const IdentificationBody = () => {
           </div>
 
           <div className={styles.button}>
-            <Button>Confirm</Button>
+            <Button onClick={handleUpload}>Confirm</Button>
           </div>
         </div>
       </div>
