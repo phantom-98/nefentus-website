@@ -7,96 +7,89 @@ import backend_API from "../../../api/backendAPI";
 import styles from "./identificationBody.module.css";
 import { EditPopup } from "../../components/settings/settingsItem";
 
-// const KYC_TYPE = {
-//   FULL_NAME: "FULL_NAME",
-//   ADRESS: "ADRESS",
-//   CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
-//   GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
-//   PICTURE_WIDTH_ID_IN_HAND: "PICTURE_WIDTH_ID_IN_HAND",
-// };
-
-// const KYCContent = [
-//   {
-//     id: KYC_TYPE.FULL_NAME,
-//     label: "Full Name",
-//     type: "text"
-//   },
-//   {
-//     id: KYC_TYPE.ADRESS,
-//     label: "Adress",
-//     type: "text"
-//   },
-//   {
-//     id: KYC_TYPE.CITY_AND_ZIP_CODE,
-//     label: "City and zip code",
-//     type: "text"
-//   },
-//   {
-//     id: KYC_TYPE.GOVERNMENT_ISSUES_ID,
-//     label: "Government issues id",
-//     type: "photo"
-//   },
-//   {
-//     id: KYC_TYPE.PICTURE_WIDTH_ID_IN_HAND,
-//     label: "Picture width in hand",
-//     type: "photo"
-//   },
-// ];
-
-// const INITIAL_FILES = {
-//   [KYC_TYPE.FULL_NAME]: null,
-//   [KYC_TYPE.ADRESS]: null,
-//   [KYC_TYPE.CITY_AND_ZIP_CODE]: null,
-//   [KYC_TYPE.GOVERNMENT_ISSUES_ID]: null,
-//   [KYC_TYPE.PICTURE_WIDTH_ID_IN_HAND]: null,
-// };
-
 const KYC_TYPE = {
-  PASSPORT: "PASSPORT",
-  PERSONAL_PICTURE: "PERSONAL_PICTURE",
-  COMPANY_REGISTRATION: "COMPANY_REGISTRATION",
-  UTILITY_BILL: "UTILITY_BILL",
+  FULL_NAME: "FULL_NAME",
   ADRESS: "ADRESS",
+  CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
+  GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
+  PICTURE_WIDTH_ID_IN_HAND: "PICTURE_WIDTH_ID_IN_HAND",
+  PROOF_OF_ADRESS: "PROOF_OF_ADRESS",
+  PROOF_OF_COMPANY: "PROOF_OF_COMPANY",
+  ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
 };
+
 const KYCContent = [
   {
-    id: KYC_TYPE.PASSPORT,
-    label: "Passport or ID card",
-  },
-  {
-    id: KYC_TYPE.PERSONAL_PICTURE,
-    label: "Picture with passport/ID",
-  },
-  {
-    id: KYC_TYPE.COMPANY_REGISTRATION,
-    label: "Company registration",
+    id: KYC_TYPE.FULL_NAME,
+    label: "Full Name",
+    type: "text",
+    level: 0,
   },
   {
     id: KYC_TYPE.ADRESS,
-    label: "Proof of address",
+    label: "Adress",
+    type: "text",
+    level: 0,
   },
   {
-    id: KYC_TYPE.UTILITY_BILL,
-    label: "Due deligence",
+    id: KYC_TYPE.CITY_AND_ZIP_CODE,
+    label: "City and zip code",
+    type: "text",
+    level: 0,
+  },
+  {
+    id: KYC_TYPE.GOVERNMENT_ISSUES_ID,
+    label: "Government issues id",
+    type: "photo",
+    level: 0,
+  },
+  {
+    id: KYC_TYPE.PICTURE_WIDTH_ID_IN_HAND,
+    label: "Picture width in hand",
+    type: "photo",
+    level: 0,
+  },
+  {
+    id: KYC_TYPE.PROOF_OF_ADRESS,
+    label: "Proof of adress",
+    type: "photo",
+    level: 1,
+  },
+  {
+    id: KYC_TYPE.PROOF_OF_COMPANY,
+    label: "Proof of company",
+    type: "photo",
+    level: 1,
+  },
+  {
+    id: KYC_TYPE.ENHANCED_DILIGENCE,
+    label: "Enhanced diligence",
+    type: "photo",
+    level: 2,
   },
 ];
 
 const INITIAL_FILES = {
-  [KYC_TYPE.PASSPORT]: null,
-  [KYC_TYPE.PERSONAL_PICTURE]: null,
-  [KYC_TYPE.COMPANY_REGISTRATION]: null,
-  [KYC_TYPE.UTILITY_BILL]: null,
+  [KYC_TYPE.GOVERNMENT_ISSUES_ID]: null,
+  [KYC_TYPE.PICTURE_WIDTH_ID_IN_HAND]: null,
+  [KYC_TYPE.PROOF_OF_ADRESS]: null,
+  [KYC_TYPE.PROOF_OF_COMPANY]: null,
+  [KYC_TYPE.ENHANCED_DILIGENCE]: null,
+};
+
+const INITIAL_TEXT = {
+  [KYC_TYPE.FULL_NAME]: null,
   [KYC_TYPE.ADRESS]: null,
+  [KYC_TYPE.CITY_AND_ZIP_CODE]: null,
 };
 
 const IdentificationBody = () => {
   const [level, setLevel] = useState(null);
   const BackendAPI = new backend_API();
   const [uploadingFiles, setUploadingFiles] = useState(INITIAL_FILES);
+  const [uploadingText, setUploadingText] = useState(INITIAL_TEXT);
 
   const userId = localStorage.getItem("userId");
-
-  console.log(uploadingFiles);
 
   useEffect(() => {
     const getLevel = async () => {
@@ -111,14 +104,18 @@ const IdentificationBody = () => {
   }, [userId]);
 
   const handleUpload = async () => {
-    console.log(uploadingFiles);
     const arrayWithResults = await Promise.allSettled(
       Object.keys(uploadingFiles).map((type) =>
         BackendAPI.uploadKYCByType(type, uploadingFiles[type]),
       ),
     );
+
+    const arrayWithResultsText = await Promise.allSettled(
+      Object.keys(uploadingText).map((type) =>
+        BackendAPI.uploadKYCByText(type, uploadingText[type]),
+      ),
+    );
     if (arrayWithResults?.value) {
-      fetchFYC();
       setUploadingFiles(INITIAL_FILES);
     }
   };
@@ -222,33 +219,27 @@ const IdentificationBody = () => {
             </div>
 
             {KYCContent.map((item) => {
-              {
-                /* if(item.type == "text"){ */
+              if (item.type == "text") {
+                return (
+                  <AddText
+                    setUploadingText={setUploadingText}
+                    uploadingText={uploadingText}
+                    id={item.id}
+                    label={item.label}
+                  />
+                );
               }
-              {
-                /* return  <AddText setUploadingFiles={setUploadingFiles} uploadingFiles={uploadingFiles} id={item.id} label={item.label} /> */
-              }
-              {
-                /* }if(item.type == "photo"){ */
-              }
-              return (
-                <AddFile
-                  setUploadingFiles={setUploadingFiles}
-                  uploadingFiles={uploadingFiles}
-                  id={item.id}
-                  label={item.label}
-                />
-              );
-              {
-                /* } */
+              if (item.type == "photo" && item.level === 0) {
+                return (
+                  <AddFile
+                    setUploadingFiles={setUploadingFiles}
+                    uploadingFiles={uploadingFiles}
+                    id={item.id}
+                    label={item.label}
+                  />
+                );
               }
             })}
-
-            {/* <AddText setUploadingFiles={setUploadingFiles} label="Full Name" />
-            <AddText setUploadingFiles={setUploadingFiles} label="Address" />
-            <AddText setUploadingFiles={setUploadingFiles} label="City and Zip Code" />
-            <AddFile setUploadingFiles={setUploadingFiles} label="Government Issued ID" />
-            <AddFile setUploadingFiles={setUploadingFiles} label="Picture with ID in hand" /> */}
           </div>
 
           <div className={styles.uploadItem}>
@@ -294,8 +285,18 @@ const IdentificationBody = () => {
               </div>
             ) : (
               <>
-                <AddFile label="Proof of Address" />
-                <AddFile label="Proof of Company" />
+                {KYCContent.map((item) => {
+                  if (item.level === 1) {
+                    return (
+                      <AddFile
+                        setUploadingFiles={setUploadingFiles}
+                        uploadingFiles={uploadingFiles}
+                        id={item.id}
+                        label={item.label}
+                      />
+                    );
+                  }
+                })}
               </>
             )}
           </div>
@@ -325,7 +326,20 @@ const IdentificationBody = () => {
                 </div>
               </div>
             ) : (
-              <AddFile label="Enhanced Diligence" />
+              <>
+                {KYCContent.map((item) => {
+                  if (item.level === 2) {
+                    return (
+                      <AddFile
+                        setUploadingFiles={setUploadingFiles}
+                        uploadingFiles={uploadingFiles}
+                        id={item.id}
+                        label={item.label}
+                      />
+                    );
+                  }
+                })}
+              </>
             )}
           </div>
 
@@ -340,7 +354,7 @@ const IdentificationBody = () => {
 
 export default IdentificationBody;
 
-const AddText = ({ label, setUploadingFiles, id, uploadingFiles }) => {
+const AddText = ({ label, setUploadingText, id, uploadingText }) => {
   const [value, setValue] = useState();
   const [show, setShow] = useState(false);
 
@@ -363,9 +377,9 @@ const AddText = ({ label, setUploadingFiles, id, uploadingFiles }) => {
         setShow={setShow}
         value={value}
         setValue={setValue}
-        setUploadingFiles={setUploadingFiles}
+        setUploadingText={setUploadingText}
         id={id}
-        uploadingFiles={uploadingFiles}
+        uploadingText={uploadingText}
       />
     </>
   );
