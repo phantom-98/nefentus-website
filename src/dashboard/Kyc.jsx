@@ -4,10 +4,10 @@ import Footer from "./footer";
 const Kyc = () => {
   return (
     <>
-      <div className="container dashboardFont">
+      <div className="dashboardFont">
         <KycBody />
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

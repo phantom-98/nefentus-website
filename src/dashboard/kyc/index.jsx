@@ -24,6 +24,7 @@ const KycBody = () => {
   const [data, setData] = useState([]);
   const backendapi = new backendAPI();
   const adminApi = new adminDashboardApi("admin");
+
   const fetchFYC = async () => {
     const users = await adminApi.getUsers();
     const arrayWithResults = await Promise.all(
@@ -82,14 +83,16 @@ const KycBody = () => {
     <div style={{ marginBottom: "5rem" }}>
       <div className={styles.top}>
         <div className={styles.left}>
-          <h3>KYC Request</h3>
+          <p style={{ fontSize: "22px", color: "white" }}>KYC Request</p>
 
-          <p>Check recent KYC requests and approve or deny users.</p>
+          <p style={{ fontSize: "13px" }}>
+            Check recent KYC requests and approve or deny users.
+          </p>
         </div>
 
         <div className={styles.input}>
           <img src={Search} alt="" />
-          <input type="text" name="" id="" placeholder="Search..." />
+          <input type="text" name="" id="" />
         </div>
       </div>
 
@@ -126,7 +129,7 @@ const Table = ({ data, setData }) => {
   };
 
   return (
-    <>
+    <div>
       <div className={`${styles.card} card`}>
         <div className={`${styles.table} dashboard-table`}>
           <div className={styles.tableHead}>
@@ -282,6 +285,6 @@ const Table = ({ data, setData }) => {
           </ModalOverlay>
         )}
       </div>
-    </>
+    </div>
   );
 };
