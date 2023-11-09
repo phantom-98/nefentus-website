@@ -151,8 +151,8 @@ export const EditPopup = ({
 
   useEffect(() => {
     setInputValue(value);
-    const updatedFiles = { ...uploadingText, [id]: value };
-    setUploadingText(updatedFiles);
+    // const updatedFiles = { ...uploadingText, [id]: value };
+    // setUploadingText(updatedFiles);
   }, [value]);
 
   const handleChange = (e) => {

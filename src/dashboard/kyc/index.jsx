@@ -11,13 +11,14 @@ import Button from "../../components/button/button";
 import { useEffect, useState } from "react";
 import backendAPI from "../../api/backendAPI";
 import adminDashboardApi from "../../api/adminDashboardApi";
+import TableSearch from "../../dashboardNew/components/tableSearch/tableSearch";
 
 const KYC_TYPE = {
-  PASSPORT: "PASSPORT",
-  PERSONAL_PICTURE: "PERSONAL_PICTURE",
-  COMPANY_REGISTRATION: "COMPANY_REGISTRATION",
-  ADRESS: "ADRESS",
-  UTILITY_BILL: "UTILITY_BILL",
+  GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
+  PICTURE_WIDTH_ID_IN_HAND: "PICTURE_WIDTH_ID_IN_HAND",
+  PROOF_OF_ADRESS: "PROOF_OF_ADRESS",
+  PROOF_OF_COMPANY: "PROOF_OF_COMPANY",
+  ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
 };
 
 const KycBody = () => {
@@ -27,6 +28,7 @@ const KycBody = () => {
 
   const fetchFYC = async () => {
     const users = await adminApi.getUsers();
+
     const arrayWithResults = await Promise.all(
       users.map(async (user) => {
         const userId = user.id;
@@ -89,11 +91,7 @@ const KycBody = () => {
             Check recent KYC requests and approve or deny users.
           </p>
         </div>
-
-        <div className={styles.input}>
-          <img src={Search} alt="" />
-          <input type="text" name="" id="" />
-        </div>
+        <TableSearch />
       </div>
 
       <Table data={data} setData={setData} />

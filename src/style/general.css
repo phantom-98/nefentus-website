@@ -425,11 +425,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .dashboard-table > div:last-child ul {
-  padding: 2rem 3rem;
+  padding: 1rem 3rem;
 }
 
 .dashboard-table > div:last-child {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 400;
   color: var(--gray-color);
 }
