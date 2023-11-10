@@ -5,7 +5,7 @@ import Button from "../../dashboardNew/components/button/button";
 
 const CopyValue = ({ value, onCopy, inputStyle, buttonStyle }) => {
   const handleClipboard = () => {
-    navigator.clipboard.writeText(`${window.location.origin}/pay/${value}`);
+    navigator.clipboard.writeText(value);
     onCopy();
   };
 
@@ -17,8 +17,8 @@ const CopyValue = ({ value, onCopy, inputStyle, buttonStyle }) => {
         disabled={true}
         style={inputStyle}
       >
-        <a href={`${window.location.origin}/pay/${value}`} target="_blank">
-          {window.location.origin + "/pay/" + value}
+        <a href={`${value}`} target="_blank">
+          {value}
         </a>
       </div>
       <Button
