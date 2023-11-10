@@ -29,57 +29,57 @@ const KYC_TYPE_FILE = {
   ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
 };
 
-// const KYC_TYPE_TEXT = {
-//   FULL_NAME: "FULL_NAME",
-//   ADRESS: "ADRESS",
-//   CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
-// }
+const KYC_TYPE_TEXT = {
+  FULL_NAME: "FULL_NAME",
+  ADRESS: "ADRESS",
+  CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
+};
 
 const KYCContent = [
   {
-    id: KYC_TYPE.FULL_NAME,
+    id: KYC_TYPE_TEXT.FULL_NAME,
     label: "Full Name",
     type: "text",
     level: 0,
   },
   {
-    id: KYC_TYPE.ADRESS,
+    id: KYC_TYPE_TEXT.ADRESS,
     label: "Adress",
     type: "text",
     level: 0,
   },
   {
-    id: KYC_TYPE.CITY_AND_ZIP_CODE,
+    id: KYC_TYPE_TEXT.CITY_AND_ZIP_CODE,
     label: "City and zip code",
     type: "text",
     level: 0,
   },
   {
-    id: KYC_TYPE.GOVERNMENT_ISSUES_ID,
+    id: KYC_TYPE_FILE.GOVERNMENT_ISSUES_ID,
     label: "Government issues id",
     type: "photo",
     level: 0,
   },
   {
-    id: KYC_TYPE.PICTURE_WIDTH_ID_IN_HAND,
+    id: KYC_TYPE_FILE.PICTURE_WIDTH_ID_IN_HAND,
     label: "Picture width in hand",
     type: "photo",
     level: 0,
   },
   {
-    id: KYC_TYPE.PROOF_OF_ADRESS,
+    id: KYC_TYPE_FILE.PROOF_OF_ADRESS,
     label: "Proof of adress",
     type: "photo",
     level: 1,
   },
   {
-    id: KYC_TYPE.PROOF_OF_COMPANY,
+    id: KYC_TYPE_FILE.PROOF_OF_COMPANY,
     label: "Proof of company",
     type: "photo",
     level: 1,
   },
   {
-    id: KYC_TYPE.ENHANCED_DILIGENCE,
+    id: KYC_TYPE_FILE.ENHANCED_DILIGENCE,
     label: "Enhanced diligence",
     type: "photo",
     level: 2,
@@ -104,8 +104,7 @@ const IdentificationBody = () => {
   const [level, setLevel] = useState(null);
   const BackendAPI = new backend_API();
   const adminApi = new adminDashboardApi("admin");
-  const [uploadingFiles, setUploadingFiles] = useState(INITIAL_FILES);
-  const [uploadingText, setUploadingText] = useState(INITIAL_TEXT);
+  const [uploadingFiles, setUploadingFiles] = useState(KYCContent);
   const [getData, setGetData] = useState();
   const [getText, setGetText] = useState("");
 
@@ -115,37 +114,52 @@ const IdentificationBody = () => {
   const userId = localStorage.getItem("userId");
 
   const fetchFYC = async () => {
-    const users = await adminApi.getUsers();
-
-    const arrayWithResults = await Promise.all(
-      users.map(async (user) => {
-        const userId = user.id;
-
-        const userKYCData = await Promise.all(
-          Object.values(KYC_TYPE_FILE).map((type) =>
-            BackendAPI.getByKYC(type, userId),
-          ),
-        );
-
-        const transformedResults = userKYCData
-          ?.map((item) => {
-            const key = Object.keys(item)[0];
-            return { [key]: item[key].data };
-          })
-          .reduce((acc, curr) => ({ ...acc, ...curr }), {});
-
-        const filteredArray = KYCContent.map((item) => {
-          if (item.id in transformedResults) {
-            item.rejectReason = transformedResults[item.id].rejectReason;
-            item.url = transformedResults[item.id].url;
-          }
-
-          return item;
-        });
-
-        setUploadingFiles(filteredArray);
-      }),
+    const userKYCData = await Promise.all(
+      Object.values(KYC_TYPE_FILE).map((type) =>
+        BackendAPI.getByKYC(type, userId),
+      ),
     );
+
+    const userKYCDataText = await Promise.all(
+      Object.values(KYC_TYPE_TEXT).map((type) =>
+        BackendAPI.getByKYCText(type, userId),
+      ),
+    );
+
+    const transformedResults = userKYCData
+      ?.map((item) => {
+        const key = Object.keys(item)[0];
+        return { [key]: item[key].data };
+      })
+      .reduce((acc, curr) => ({ ...acc, ...curr }), {});
+
+    const transformedResultsText = userKYCDataText
+      ?.map((item) => {
+        const key = Object.keys(item)[0];
+        return { [key]: item[key].data };
+      })
+      .reduce((acc, curr) => ({ ...acc, ...curr }), {});
+
+    const filteredArray = KYCContent.map((item) => {
+      if (item.id in transformedResults) {
+        item.rejectReason = transformedResults[item.id].rejectReason;
+        item.url = transformedResults[item.id].url;
+      }
+      if (item.id in transformedResultsText) {
+        item.rejectReason = transformedResultsText[item.id].rejectReason;
+        item.url = transformedResultsText[item.id].url;
+      }
+
+      return item;
+    });
+
+    setUploadingFiles(filteredArray);
+
+    if (arrayWithResults) {
+      console.log("Successfuly got data!");
+    } else {
+      console.log("error don't got data!");
+    }
   };
 
   useEffect(() => {
@@ -168,6 +182,12 @@ const IdentificationBody = () => {
           BackendAPI.uploadKYCByType(type, getData[type]),
         ),
       );
+
+      if (arrayWithResults) {
+        console.log("successfuly upload file!");
+      } else {
+        console.log("error upload file!");
+      }
     }
 
     if (getText) {
@@ -176,13 +196,17 @@ const IdentificationBody = () => {
           BackendAPI.uploadKYCByText(type, getText[type]),
         ),
       );
+
+      if (arrayWithResultsText) {
+        console.log("successfuly upload text!");
+      } else {
+        console.log("error upload text!");
+      }
     }
 
     setInfoMessage("Data successfuly upload!");
 
-    if (arrayWithResults?.value) {
-      setUploadingFiles(INITIAL_FILES);
-    }
+    fetchFYC();
   };
 
   return (
@@ -292,6 +316,8 @@ const IdentificationBody = () => {
                     label={item.label}
                     getText={getText}
                     setGetText={setGetText}
+                    rejectReason={item.rejectReason}
+                    text={item.url}
                   />
                 );
               }
@@ -353,7 +379,7 @@ const IdentificationBody = () => {
               </div>
             ) : (
               <>
-                {KYCContent.map((item) => {
+                {uploadingFiles.map((item) => {
                   if (item.level === 1) {
                     return (
                       <AddFile
@@ -426,9 +452,12 @@ const IdentificationBody = () => {
 
 export default IdentificationBody;
 
-const AddText = ({ label, id, getText, setGetText }) => {
-  const [value, setValue] = useState();
+const AddText = ({ label, id, getText, setGetText, rejectReason, text }) => {
+  const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
+
+  const updateValue = value.slice(0, 40);
+  const uploadValue = text?.slice(0, 40);
 
   useEffect(() => {
     if (value) {
@@ -442,9 +471,31 @@ const AddText = ({ label, id, getText, setGetText }) => {
       <div className={`${styles.row} ${styles.formItem}`}>
         <div className={styles.rowLeft}>
           <span>{label}</span>
+          {text ? (
+            rejectReason !== null ? (
+              <span style={{ paddingLeft: 20, color: "red" }}>
+                {rejectReason}
+              </span>
+            ) : (
+              <>
+                <span style={{ paddingLeft: 20, color: "gray" }}>
+                  Currently being checked
+                </span>
+              </>
+            )
+          ) : null}
         </div>
         <div className={`${styles.rowRight} ${styles.rightUpload}`}>
-          <p className={styles.lvl}>{value}</p>
+          <p className={styles.lvl}>
+            {uploadValue
+              ? uploadValue.length > 39
+                ? uploadValue + "..."
+                : uploadValue
+              : updateValue.length > 39
+              ? updateValue + "..."
+              : updateValue}
+          </p>
+
           <Button onClick={() => setShow(true)} color="gray">
             Add
           </Button>
@@ -463,8 +514,11 @@ const AddText = ({ label, id, getText, setGetText }) => {
 };
 
 const AddFile = ({ label, id, rejectReason, file, getData, setGetData }) => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
+  const [imageURL, setImageURL] = useState(null);
+
+  const updateValue = value.slice(0, 40);
 
   const handleAddFile = (index) => {
     const fileInput = document.createElement("input");
@@ -479,6 +533,7 @@ const AddFile = ({ label, id, rejectReason, file, getData, setGetData }) => {
         const imageURL = URL.createObjectURL(selectedFile);
 
         const updatedFiles = { ...getData, [id]: selectedFile };
+        setImageURL(imageURL);
         setGetData(updatedFiles);
         setValue(fileName);
       }
@@ -492,16 +547,8 @@ const AddFile = ({ label, id, rejectReason, file, getData, setGetData }) => {
           <span>{label}</span>
           {file ? (
             rejectReason !== null ? (
-              <span
-                style={
-                  rejectReason !== null
-                    ? { paddingLeft: 20, color: "red" }
-                    : { paddingLeft: 20, color: "gray" }
-                }
-              >
-                {rejectReason !== null
-                  ? rejectReason
-                  : "Currently being checked"}
+              <span style={{ paddingLeft: 20, color: "red" }}>
+                {rejectReason}
               </span>
             ) : (
               <>
@@ -512,8 +559,21 @@ const AddFile = ({ label, id, rejectReason, file, getData, setGetData }) => {
             )
           ) : null}
         </div>
+
         <div className={`${styles.rowRight} ${styles.rightUpload}`}>
-          <p className={styles.lvl}>{value}</p>
+          {file ? (
+            <img
+              style={{ borderRadius: 5, width: "50px", height: "50px" }}
+              src={file}
+            />
+          ) : imageURL ? (
+            <img
+              style={{ borderRadius: 5, width: "50px", height: "50px" }}
+              src={imageURL}
+            />
+          ) : (
+            <div></div>
+          )}
           <Button onClick={handleAddFile} color="gray">
             Upload
           </Button>

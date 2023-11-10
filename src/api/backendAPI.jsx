@@ -644,6 +644,27 @@ export default class backendAPI {
     }
   }
 
+  async getByKYCText(type, userId) {
+    try {
+      // const userId = localStorage.getItem("userId");
+      const url = `${this.baseURL}/auth/${userId}/kyc-text-url?type=${type}`;
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return { [type]: data };
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async getKYCLevel(userId) {
     try {
       const url = `${this.baseURL}/auth/${userId}/kyc-level`;
