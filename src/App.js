@@ -76,9 +76,9 @@ const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
 // const AffiliateDashboard = React.lazy(() => import("./dashboard/Affiliate"));
 // const Settings = React.lazy(() => import("./dashboard/Settings"));
 // const Vendor = React.lazy(() => import("./dashboard/Vendor"));
-// const Products = React.lazy(() => import("./dashboard/Products"));
+const Products = React.lazy(() => import("./dashboard/Products"));
 // const Transactions = React.lazy(() => import("./dashboard/Transactions"));
-// const PaymentDashboard = React.lazy(() => import("./dashboard/Payment"));
+// const PaymentDashboardOld = React.lazy(() => import("./dashboard/Payment"));
 // const PayrollDashboard = React.lazy(() => import("./dashboard/Payroll"));
 // const Wallet = React.lazy(() => import("./dashboard/Wallet"));
 // const Admin = React.lazy(() => import("./dashboard/Admin"));
@@ -273,6 +273,14 @@ function App() {
                   element={
                     <ScreenLayout>
                       <PaymentDashboard />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboard/payments"
+                  element={
+                    <ScreenLayout>
+                      <Products />
                     </ScreenLayout>
                   }
                 />

@@ -7,14 +7,20 @@ import inputStyles from "../../components/input/input.module.css";
 const CopyValue = ({ value, onCopy, inputStyle, buttonStyle }) => {
   return (
     <div className={styles.copyValueWrapper}>
-      <input
+      <div
         className={`${inputStyles.input} ${inputStyles.dashboardInput}`}
         type={"text"}
-        value={value}
         disabled={true}
         style={inputStyle}
-      />
-      <CopyToClipboard text={value} onCopy={onCopy}>
+      >
+        <a href={`${window.location.origin}/pay/${value}`} target="_blank">
+          {window.location.origin + "/pay/" + value}
+        </a>
+      </div>
+      <CopyToClipboard
+        text={`${window.location.origin}/pay/${value}`}
+        onCopy={onCopy}
+      >
         <Button
           color="white"
           className={styles.clipboardButton}

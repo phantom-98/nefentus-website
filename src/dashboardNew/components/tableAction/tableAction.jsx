@@ -10,12 +10,14 @@ const TableAction = ({
 }) => {
   return (
     <div className={styles.buttons}>
-      <div onClick={onClick}>{button}</div>
-      <div onClick={onClick2}>{button2}</div>
-      <div onClick={editUser}>Edit</div>
-      <div onClick={deleteUser} style={{ color: "red" }}>
-        Delete
-      </div>
+      {button && <div onClick={onClick}>{button}</div>}
+      {button2 && <div onClick={onClick2}>{button2}</div>}
+      {editUser && <div onClick={editUser}>Edit</div>}
+      {deleteUser && (
+        <div onClick={deleteUser} style={{ color: "red" }}>
+          Delete
+        </div>
+      )}
     </div>
   );
 };
