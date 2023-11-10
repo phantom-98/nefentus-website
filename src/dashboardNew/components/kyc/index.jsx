@@ -1,12 +1,12 @@
 import styles from "./kyc.module.css";
 import Header from "../../../dashboard/header/header";
 
-// import Search from "../../assets/icon/search.svg";
-// import Correct from "../../assets/icon/correct.svg";
+import Search from "../../../assets/icon/search.svg";
+import Correct from "../../../assets/icon/correct.svg";
 
 import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 
-// import Download from "../../assets/icon/download.svg";
+import Download from "../../../assets/icon/download.svg";
 import Button from "../../../components/button/button";
 import { useEffect, useState } from "react";
 import backendAPI from "../../../api/backendAPI";
@@ -238,7 +238,7 @@ const Table = ({ data, setData }) => {
                   ))}
               </div>
 
-              <div className={styles.checkButton}>
+              <div className={styles.checkButton} style={{ paddingTop: 10 }}>
                 <Button onClick={() => setCheckModal(false)} color="white">
                   Close
                 </Button>

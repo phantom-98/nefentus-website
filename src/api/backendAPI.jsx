@@ -596,31 +596,31 @@ export default class backendAPI {
     }
   }
 
-  async uploadKYCByText(type, file) {
-    // try {
-    //   if (!file) {
-    //     return null;
-    //   }
-    //   const formData = new FormData();
-    //   const userId = localStorage.getItem("userId");
-    //   const url = `${this.baseURL}/auth/${userId}/upload_kyc?type=${type}`;
-    //   formData.append("file", file);
-    //   const options = {
-    //     method: "POST",
-    //     headers: {
-    //       Authorization: `Bearer ${this.token}`,
-    //     },
-    //     body: formData,
-    //   };
-    //   const response = await fetch(url, options);
-    //   if (!response.ok) {
-    //     throw new Error("Network response was not ok");
-    //   }
-    //   const data = await response.json();
-    //   return data;
-    // } catch (error) {
-    //   return null; // or return some default value
-    // }
+  async uploadKYCByText(type, content) {
+    try {
+      if (!content) {
+        return null;
+      }
+      const formData = new FormData();
+      const userId = localStorage.getItem("userId");
+      const url = `${this.baseURL}/auth/${userId}/upload_kyc_text?type=${type}`;
+      formData.append("content", content);
+      const options = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: formData,
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
   }
 
   async getByKYC(type, userId) {
