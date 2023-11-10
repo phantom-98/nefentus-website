@@ -79,6 +79,7 @@ const AdminDashboard = ({ type }) => {
   const [users, setUsers] = useState();
   const [getDataInput, setGetDataInput] = useState("");
   const [dataPage, setDataPage] = useState(1);
+  const [getFilteredUser, setGetFilteredUser] = useState();
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -216,23 +217,17 @@ const AdminDashboard = ({ type }) => {
     newUserData.reverse();
 
     if (dataUsers) {
-      newUserData.map((item) => {
-        let pastData = {};
-        dataUsers.map((user) => {
-          pastData = user;
-        });
-        if (item.id === pastData.id) {
-          let getItem = [];
-          getItem.push(item);
-          updateUsers(getItem);
-        }
+      const filteredData = newUserData.filter((item) => {
+        return dataUsers.some((user) => item.id === user.id);
       });
+
+      updateUsers(filteredData);
     } else {
       updateUsers(newUserData);
     }
   };
 
-  const editUser = async (user, dataUsers) => {
+  const editUser = async (user) => {
     setEditEmailAddress(user.email);
     setFirstName(user.firstName);
     setLastName(user.lastName);
@@ -261,7 +256,7 @@ const AdminDashboard = ({ type }) => {
       return;
     }
 
-    if ((editEmailAddress, dataUsers)) {
+    if (editEmailAddress) {
       // Update
       const resp = await adminApi.updateUser(
         firstName,
@@ -345,9 +340,9 @@ const AdminDashboard = ({ type }) => {
         getDataInput.toLowerCase().includes(item.roles[0]?.toLowerCase())
       );
     });
-
-    setGetDataInput("");
-    updateUsers(filteredData);
+    setGetFilteredUser(filteredData);
+    // setGetDataInput("");
+    updateUsers(filteredData.length > 0 ? filteredData : users);
   };
 
   const paginatedData = tableData.filter((item, index) => {
@@ -376,7 +371,7 @@ const AdminDashboard = ({ type }) => {
             getDataInput={getDataInput}
           />
           <Table
-            grid="1.3fr 1fr 1.7fr 1fr 1fr 1fr 1fr 1fr"
+            grid="1.2fr 0.9fr 1.5fr 1fr 0.9fr 1fr 0.6fr 1.2fr"
             label={label}
             data={paginatedData}
           />
@@ -406,6 +401,7 @@ const AdminDashboard = ({ type }) => {
                   placeholder={"Enter first name"}
                   value={firstName}
                   setState={setFirstName}
+                  style={{ height: 35 }}
                 />
                 <Input
                   dashboard
@@ -413,6 +409,7 @@ const AdminDashboard = ({ type }) => {
                   placeholder={"Enter last name"}
                   value={lastName}
                   setState={setLastName}
+                  style={{ height: 35 }}
                 />
                 <Input
                   dashboard
@@ -421,6 +418,7 @@ const AdminDashboard = ({ type }) => {
                   value={email}
                   setState={setEmail}
                   disabled={editEmailAddress !== null}
+                  style={{ height: 35 }}
                 />
 
                 {type === "admin" && (
@@ -469,15 +467,22 @@ const AdminDashboard = ({ type }) => {
               <div className={styles.modalButtons}>
                 <div
                   className={styles.button}
+                  style={{ fontSize: 13 }}
                   onClick={() => {
                     clearMessages();
                     clearAddUserFields();
                     setOpenModal(false);
+                    updateUsersTable(getFilteredUser);
                   }}
                 >
                   Cancel
                 </div>
-                <Button onClick={changeUser} color="white">
+                <Button
+                  onClick={() => {
+                    changeUser();
+                  }}
+                  color="white"
+                >
                   Edit User
                 </Button>
               </div>

@@ -64,6 +64,7 @@
 
 .option .input {
   position: relative;
+  height: 33px;
 }
 
 .body {
