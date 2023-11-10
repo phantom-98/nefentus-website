@@ -20,6 +20,7 @@ import CropDialog, {
   dataURLtoFile,
 } from "../../components/cropDialog/cropDialog";
 import { useTranslation } from "react-i18next";
+import { transactionLimit } from "../../constants";
 
 const ProductBody = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -97,6 +98,10 @@ const ProductBody = () => {
     }
     if (!price) {
       setErrorMessage(t("messages.error.priceRequired"));
+      return;
+    }
+    if (price > transactionLimit) {
+      setErrorMessage("Overage limit!");
       return;
     }
     let priceAsFloat = null;

@@ -81,6 +81,8 @@ export const currencies = [
 
 export const ownerAddress = "0xBE011f8F08d05feCc83abeabb6C38b987B9bdD45";
 
+export const transactionLimit = 10000;
+
 export const contractDeposits = [
   {
     id: 1,

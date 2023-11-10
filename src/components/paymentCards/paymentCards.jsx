@@ -16,7 +16,6 @@ const PaymentCards = () => {
 
   return (
     <div className={styles.sectionWrapper}>
-      <div className={styles.bgImage}></div>
       <div className={`container scroll `}>
         <HeadingCenter
           noScroll

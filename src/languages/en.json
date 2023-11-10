@@ -15,11 +15,13 @@
   "home": {
     "heroTitle": "Accept Crypto Payments",
     "heroTitleGradient": "Risk Free",
-    "heroDescription": "Embrace the future with our innovative automation and secure crypto checkouts, empowering you to prioritize your business without the worry of crypto market fluctuations. Leave manual payments in the past, and let our technology simplify it all.",
-    "heroButton": "Join Now - It's free!",
+    "heroDescription": "Register now and get up to 50 USDT free transactions",
+    "heroButton": "Get Started",
     "heroButton2": "Download App",
     "heroAvailable": "Available on:",
-    "priceChange": "Price change last 24h",
+    "connectWith": "Or Login With",
+    "appDownload": "Download Mobile App",
+    "priceChange": "Price change in 24h",
     "cardSubtitle": "Step into the Future of Payments",
     "cardTitleP1": "Stay Competitive with Modern",
     "cardTitleP2": "Payment Processing",
@@ -388,21 +390,38 @@
     "button": "Sign up now",
     "button2": "Schedule Free Onboarding Support Session"
   },
+  "reward": {
+    "subtitle": "For every new user",
+    "title1": "Get up to",
+    "gradient": "50 USDT",
+    "title2": "in rewards",
+    "button": "Create Your Free Account Now"
+  },
   "footer": {
     "copyright": "© 2023 Nefentus. All rights reserved.",
     "downloadButton": "DOWNLOAD NOW",
+    "contentLabel1": "Overview",
+    "contentLabel2": "Action",
     "content": [
       {
-        "text": "Home"
+        "text": "Home",
+        "link": "/"
       },
       {
-        "text": "Payment"
+        "text": "Payment",
+        "link": "/payment"
       },
       {
-        "text": "Resources"
+        "text": "Resources",
+        "link": "/support"
       },
       {
-        "text": "Affiliate"
+        "text": "Affiliate",
+        "link": "/affiliate"
+      },
+      {
+        "text": "Privacy Policy",
+        "link": "/privacy"
       }
     ],
     "privacy": "Privacy Policy",
@@ -785,6 +804,24 @@
       "walletCopy": "Wallet address copied!",
       "paymentLink": "Payment link copied to clipboard!",
       "affiliateLink": "Affiliate link copied to clipboard"
-    }
+    },
+    "content2": [
+      { "text": "Play Store", "link": "/" },
+      {
+        "text": "Sign In",
+        "link": "/link"
+      },
+      { "text": "App Store", "link": "/" },
+      {
+        "text": "Sign Up",
+        "link": "/signup"
+      },
+      {
+        "text": "Imprint",
+        "link": "/imprint"
+      }
+    ],
+    "socialTitle": "Follow us on:",
+    "socialDescription": "Go to the top\n of the page"
   }
 }
