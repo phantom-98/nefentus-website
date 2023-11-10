@@ -1,49 +1,39 @@
-import Button from "../../components/button/button";
 import Card from "../../components/card/card";
-import SettingsItem from "../../components/settings/settingsItem";
 import SettingsTitle from "../../components/settings/settingsTitle";
 
 import styles from "./securitySettings.module.css";
+import SecurityItem from "../../components/settings/securityItem";
 
 const data = [
   {
-    list: [
-      {
-        label: "Login Password",
-        description: "Login password is used to log in to your account.",
-        value: "1234567",
-        type: "password",
-      },
-    ],
-    type: "edit",
+    label: "Login Password",
+    description: "Login password is used to log in to your account.",
+    type: "password",
+    flow: "password",
   },
   {
-    list: [
-      {
-        label: "Authenticator App",
-        description:
-          "Setup Multi-Factor-Authentication using Google Authenticator, Authy, Lastpass or similar.",
-        value: false,
-      },
-      {
-        label: "One-time passwords via email",
-        description:
-          "Setup Multi-Factor-Authentication based on one-time password sent via email.",
-        value: true,
-      },
-    ],
-    type: "enable",
+    label: "Authenticator App",
+    description:
+      "Setup Multi-Factor-Authentication using Google Authenticator, Authy, Lastpass or similar.",
+    value: JSON.parse(localStorage.getItem("hasTotp")),
+    type: "button",
+    flow: "totp",
   },
   {
-    list: [
-      {
-        label: "Anti-Phishing Code",
-        description:
-          "Protect your account from phishing attempts and ensure that your notification emails are from Nefentus only.",
-        value: true,
-      },
-    ],
-    type: "enable",
+    label: "One-time passwords via email",
+    description:
+      "Setup Multi-Factor-Authentication based on one-time password sent via email.",
+    value: JSON.parse(localStorage.getItem("hasOtp")),
+    type: "button",
+    flow: "otp",
+  },
+  {
+    label: "Anti-Phishing Code",
+    description:
+      "Protect your account from phishing attempts and ensure that your notification emails are from Nefentus only.",
+    value: localStorage.getItem("antiPhishingCode"),
+    type: "phishingCode",
+    flow: "phishingCode",
   },
 ];
 
@@ -56,18 +46,8 @@ const SecuritySettings = () => {
       />
 
       {data.map((item) => (
-        <SettingsItem data={item} />
+        <SecurityItem data={item} />
       ))}
-
-      {/*
-      <div
-        className={styles.button}
-        style={{ display: "flex", justifyContent: "flex-end" }}
-      >
-        <Button color="light">Cancel</Button>
-        <Button>Save Changes</Button>
-      </div>
-	  */}
     </Card>
   );
 };

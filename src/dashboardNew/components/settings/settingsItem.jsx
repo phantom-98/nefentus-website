@@ -97,27 +97,27 @@ const SettingsItem = ({ data, setIsSaveData }) => {
             ) : (
               ""
             )}
-            <Button
-              color="gray"
-              onClick={
-                data.type === "edit"
-                  ? () => handleEdit()
-                  : data.type === "image"
-                  ? () => handleChangeImage()
-                  : data.type === "enable"
-                  ? () => handleEnable()
-                  : ""
-              }
-            >
-              {data.type === "edit"
-                ? "Edit"
-                : data.type === "image"
-                ? "Change"
-                : data.type === "enable"
-                ? "Enable"
-                : ""}
-            </Button>
           </div>
+          <Button
+            color="gray"
+            onClick={
+              data.type === "edit"
+                ? () => handleEdit()
+                : data.type === "image"
+                ? () => handleChangeImage()
+                : data.type === "enable"
+                ? () => handleEnable()
+                : ""
+            }
+          >
+            {data.type === "edit"
+              ? "Edit"
+              : data.type === "image"
+              ? "Change"
+              : data.type === "enable"
+              ? "Enable"
+              : ""}
+          </Button>
           <EditPopup
             show={show}
             value={data.popup === "language" ? label : data.value}
@@ -159,7 +159,7 @@ const ImageType = ({ value }) => {
   );
 };
 
-const EnableType = ({ value }) => {
+export const EnableType = ({ value }) => {
   return (
     <div className={styles.enableWrapper}>
       <img className={styles.enableIcon} src={value ? Correct : Fail} alt="" />
