@@ -22,7 +22,7 @@ import TopInfo from "../../../dashboard/topInfo/topInfo";
 import CopyValue from "../../../dashboard/copyValue";
 import inputStyles from "../../../components/input/input.module.css";
 import Input, { Options } from "../../../components/input/input";
-import Button from "../../../components/button/button";
+import Button from "../button/button";
 
 const CryptoCard = () => {
   const [activeToggle, setActiveToggle] = useState(true);
@@ -188,7 +188,7 @@ const ReceiveModal = ({ walletAddress, setOpenReceiveModal }) => {
             </div>
           </div>
 
-          <div
+          {/* <div
             className={styles.button}
             onClick={() => {
               setOpenReceiveModal(false);
@@ -196,7 +196,15 @@ const ReceiveModal = ({ walletAddress, setOpenReceiveModal }) => {
             }}
           >
             Close
-          </div>
+          </div> */}
+          <Button
+            onClick={() => {
+              setOpenReceiveModal(false);
+              clearMessages();
+            }}
+          >
+            Close
+          </Button>
         </div>
       </ModalOverlay>
     </div>
@@ -317,20 +325,16 @@ const SendModal = ({ setOpenWithdrawModal }) => {
           </div>
 
           <div className={styles.modalButtons}>
-            <div
-              className={styles.button}
+            <Button
+              color="light"
               onClick={() => {
                 setOpenWithdrawModal(false);
                 clearMessages();
               }}
             >
               Close
-            </div>
-            <Button
-              color="white"
-              onClick={() => withdraw()}
-              style={{ width: "100%" }}
-            >
+            </Button>
+            <Button onClick={() => withdraw()} style={{ width: "100%" }}>
               Withdraw
             </Button>
           </div>

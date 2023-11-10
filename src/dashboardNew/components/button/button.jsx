@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import styles from "./button.module.css";
 
-const Button = ({ children, color, onClick, link }) => {
+const Button = ({ children, color, onClick, link, style }) => {
   return (
     <div
       onClick={onClick}
       className={styles.button}
       style={{
+        ...style,
         width: color === "gray" ? "7rem" : "",
         border: color === "gray" ? "1px solid rgba(255, 255, 255, 0.2)" : "",
       }}
