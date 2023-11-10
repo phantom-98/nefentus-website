@@ -17,9 +17,7 @@ const CopyValue = ({ value, onCopy, inputStyle, buttonStyle }) => {
         disabled={true}
         style={inputStyle}
       >
-        <a href={`${value}`} target="_blank">
-          {value}
-        </a>
+        {value}
       </div>
       <Button
         color="light"
