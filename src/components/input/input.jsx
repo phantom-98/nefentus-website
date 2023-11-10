@@ -89,11 +89,17 @@ export const Options = ({
         {open && (
           <div className={`card ${styles.body}`}>
             {options.length > 0 ? (
-              options.map((item) => (
-                <p key={item} onClick={() => setValue(item)}>
-                  {item}
-                </p>
-              ))
+              options.map((item) =>
+                item.value ? (
+                  <p key={item.value} onClick={() => setValue(item.value)}>
+                    {item.display}
+                  </p>
+                ) : (
+                  <p key={item} onClick={() => setValue(item)}>
+                    {item}
+                  </p>
+                ),
+              )
             ) : (
               <>
                 <p key={"vendor"} onClick={() => setValue("Vendor")}>
@@ -174,7 +180,7 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
   const handleChange = () => {
     const file = inputRef.current.files[0];
     const fileName = inputRef.current.value.split("\\").pop();
-    var extension = fileName.split(".").pop();
+    let extension = fileName.split(".").pop();
     console.log(extension);
     if (checkFileExtension(extension)) {
       setText(fileName);

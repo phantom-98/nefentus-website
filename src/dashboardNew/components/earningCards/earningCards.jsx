@@ -19,11 +19,15 @@ const EarningCards = () => {
     const getPromises = [dashboardApi.getTotalIncome()];
     const [sales] = await Promise.allSettled(getPromises);
 
+    console.log(sales, "qweqweqwe");
+
     const cardsContent = [
       {
         title: "Sales: Total",
-        value: parseFloat(sales?.value?.total?.number).toFixed(2),
-        percentage: parseFloat(sales?.value?.total?.percentage).toFixed(2),
+        value: `$${parseFloat(sales?.value?.total?.number).toFixed(2)}`,
+        percentage: sales?.value?.total?.percentage
+          ? parseFloat(sales?.value?.total?.percentage).toFixed(2)
+          : 0,
       },
       {
         title: "Sales: Last 24 hours",
@@ -61,10 +65,10 @@ const SingleCard = ({ data }) => {
       <div className={styles.label}>{data.title}</div>
       <div className={styles.value}>{data.value}</div>
       <div className={styles.percentage}>
-        <img src={data.percentage > 0 ? Positive : Negative} alt="" />
+        <img src={data.percentage >= 0 ? Positive : Negative} alt="" />
         <div className={styles.percentageText}>
           <div
-            className={data.percentage > 0 ? styles.positive : styles.negative}
+            className={data.percentage >= 0 ? styles.positive : styles.negative}
           >
             {data.percentage}%
           </div>

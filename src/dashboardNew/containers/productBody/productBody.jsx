@@ -7,11 +7,11 @@ import styles from "./productBody.module.css";
 import { MessageContext } from "../../../context/message";
 import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 import MessageComponent from "../../../components/message";
-import Input, { Textarea, Attachment } from "../../../components/input/input";
+import Input, { Attachment, Textarea } from "../../../components/input/input";
 import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
-import Button from "../../../components/button/button";
+import Button from "../../components/button/button";
 
 const ProductBody = () => {
   const [products, setProducts] = useState([]);
@@ -24,6 +24,7 @@ const ProductBody = () => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [productId, setProductId] = useState(null);
+  const [load, setLoad] = useState(false);
 
   const dashboardApi = new vendorDashboardApi();
 
@@ -32,7 +33,7 @@ const ProductBody = () => {
 
   useEffect(() => {
     loadProducts();
-  }, []);
+  }, [load]);
 
   async function loadProducts() {
     const newProducts = await dashboardApi.getProducts();
@@ -160,15 +161,17 @@ const ProductBody = () => {
         <div className={styles.row}>
           {products.map((item) => (
             <ProductCard
+              key={item.id}
               product={item}
               onClickEdit={() => showModal(item.id)}
               onClickDelete={() => deleteProduct(item.id)}
+              update={() => setLoad(!load)}
             />
           ))}
         </div>
       </Card>
 
-      <div className={styles.modalWrapper}>
+      <div>
         {openModal !== false && (
           <ModalOverlay>
             <div className={styles.modal}>
@@ -223,9 +226,10 @@ const ProductBody = () => {
                   number
                 />
               </div>
-              <div className={styles.modalButtons}>
-                <div
-                  className={styles.button}
+
+              <div className={styles.buttons}>
+                <Button
+                  color="light"
                   onClick={() => {
                     clearMessages();
                     setOpenModal(false);
@@ -233,8 +237,8 @@ const ProductBody = () => {
                   }}
                 >
                   Cancel
-                </div>
-                <Button onClick={addOrUpdateProduct} color="white">
+                </Button>
+                <Button onClick={addOrUpdateProduct}>
                   {openModal === "add" ? "Add" : "Update"} Product
                 </Button>
               </div>
