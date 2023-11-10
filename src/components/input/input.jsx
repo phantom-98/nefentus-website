@@ -180,7 +180,7 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
   const handleChange = () => {
     const file = inputRef.current.files[0];
     const fileName = inputRef.current.value.split("\\").pop();
-    var extension = fileName.split(".").pop();
+    let extension = fileName.split(".").pop();
     console.log(extension);
     if (checkFileExtension(extension)) {
       setText(fileName);

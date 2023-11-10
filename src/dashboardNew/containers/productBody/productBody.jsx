@@ -7,7 +7,7 @@ import styles from "./productBody.module.css";
 import { MessageContext } from "../../../context/message";
 import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 import MessageComponent from "../../../components/message";
-import Input, { Textarea, Attachment } from "../../../components/input/input";
+import Input, { Attachment, Textarea } from "../../../components/input/input";
 import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
@@ -161,6 +161,7 @@ const ProductBody = () => {
         <div className={styles.row}>
           {products.map((item) => (
             <ProductCard
+              key={item.id}
               product={item}
               onClickEdit={() => showModal(item.id)}
               onClickDelete={() => deleteProduct(item.id)}

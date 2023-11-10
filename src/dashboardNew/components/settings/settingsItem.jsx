@@ -3,6 +3,7 @@ import styles from "./settingsTitle.module.css";
 
 import Fail from "../../../assets/icon/fail.svg";
 import Correct from "../../../assets/icon/correct.svg";
+import ProfileImage from "../../../assets/icon/user.svg";
 
 import { useEffect, useState } from "react";
 import Popup from "../popup/popup";
@@ -154,7 +155,7 @@ const EditType = ({ value, type }) => {
 const ImageType = ({ value }) => {
   return (
     <div className={styles.imageWrapper}>
-      <img src={value} alt="" />
+      <img src={value ? value : ProfileImage} alt="" />
     </div>
   );
 };

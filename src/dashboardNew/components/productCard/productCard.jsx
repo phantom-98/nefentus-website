@@ -4,7 +4,7 @@ import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import Edit from "../../../assets/icon/edit.svg";
 import Delete from "../../../assets/icon/delete.svg";
 import Button from "../button/button";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Popup from "../popup/popup";
 import Input, { Attachment, Textarea } from "../../../components/input/input";
 import CropDialog, {
@@ -128,7 +128,7 @@ const ProductCard = ({ onClickDelete = () => {}, product = {}, update }) => {
                 setImage(null);
                 setImageChanged(true);
               }}
-              value={image}
+              value={product?.s3Key?.split("_")[1]}
               dashboard
             />
             <Input
