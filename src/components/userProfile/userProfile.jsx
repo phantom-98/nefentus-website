@@ -40,24 +40,21 @@ const UserProfile = ({ web, logOut }) => {
       </div>
       <div className={`${styles.profileDropdown}`}>
         <div className={`${styles.profileBody} card`}>
-          <Link to="/dashboardNew/profile" className={styles.profileItem}>
+          <Link to="/dashboard/profile" className={styles.profileItem}>
             <img src={User2} alt="" />
             <p>Profile</p>
           </Link>
           {web && (
-            <Link to="/dashboardNew/" className={styles.profileItem}>
+            <Link to="/dashboard/" className={styles.profileItem}>
               <img src={Dashboard} alt="" />
               <p>Dashboard</p>
             </Link>
           )}
-          <Link to="/dashboardNew/security" className={styles.profileItem}>
+          <Link to="/dashboard/security" className={styles.profileItem}>
             <img src={Security} alt="" />
             <p>Security</p>
           </Link>
-          <Link
-            to="/dashboardNew/identification"
-            className={styles.profileItem}
-          >
+          <Link to="/dashboard/identification" className={styles.profileItem}>
             <img src={Identification} alt="" />
             <p>Identification</p>
           </Link>
