@@ -424,6 +424,24 @@
         "link": "/privacy"
       }
     ],
+    "content2": [
+      { "text": "Play Store", "link": "/" },
+      {
+        "text": "Sign In",
+        "link": "/link"
+      },
+      { "text": "App Store", "link": "/" },
+      {
+        "text": "Sign Up",
+        "link": "/signup"
+      },
+      {
+        "text": "Imprint",
+        "link": "/imprint"
+      }
+    ],
+    "socialTitle": "Follow us on:",
+    "socialDescription": "Go to the top\n of the page",
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
     "terms": "Terms and Condition",
