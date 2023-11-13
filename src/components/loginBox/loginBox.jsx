@@ -123,7 +123,7 @@ const LoginBox = () => {
   async function loginUser(data, checkbox) {
     const captchaValue = recaptchaRef.current.getValue();
 
-    if (captchaValue) {
+    if (!captchaValue) {
       setErrorMessage("Please verify the reCAPTCHA!");
     } else {
       if (Cookies.get("acceptCookie") !== true) {
