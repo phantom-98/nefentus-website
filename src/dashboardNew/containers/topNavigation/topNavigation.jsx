@@ -75,7 +75,10 @@ const TopNavigation = () => {
                   <img src={Security} alt="" />
                   <p>Security</p>
                 </Link>
-                <Link to="/dashboardNew/invoice" className={styles.profileItem}>
+                <Link
+                  to="/dashboardNew/invoices"
+                  className={styles.profileItem}
+                >
                   <img src={InvoiceIcon} alt="" />
                   <p>Invoice</p>
                 </Link>

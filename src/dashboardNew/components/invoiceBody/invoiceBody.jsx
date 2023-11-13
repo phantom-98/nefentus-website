@@ -8,7 +8,7 @@ import { MessageContext } from "../../../context/message/index";
 import styles from "./settings.module.css";
 import CheckBox from "../../../assets/icon/whiteCheckmark.svg";
 
-const InvoiceBody = () => {
+const InvoicesBody = () => {
   const [vatNumber, setVatNumber] = useState(localStorage.getItem("vatNumber"));
   const [sendInvoice, setSendInvoice] = useState(
     JSON.parse(localStorage.getItem("sendInvoice")),
@@ -62,4 +62,4 @@ const InvoiceBody = () => {
   );
 };
 
-export default InvoiceBody;
+export default InvoicesBody;

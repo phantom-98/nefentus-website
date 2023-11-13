@@ -30,7 +30,9 @@ import IdentificationDashboard from "./dashboardNew/screens/identificationDashbo
 
 import { Player } from "@lottiefiles/react-lottie-player";
 import LoadingAnimation from "./assets/logo/loadingAnimation.json";
-import InvoiceBody from "./dashboardNew/components/invoiceBody/invoiceBody";
+import Kyc from "./dashboardNew/components/kyc";
+import ChoiceWallet from "./dashboardNew/containers/choiceWallet/choiceWallet.jsx";
+import InvoicesBody from "./dashboardNew/components/invoiceBody/invoiceBody";
 
 const Contact = React.lazy(() => import("./components/contact/contact"));
 const Home = React.lazy(() => import("./pages/Home"));
@@ -225,6 +227,14 @@ function App() {
                   }
                 />
                 <Route
+                  path="/dashboardNew/invoices"
+                  element={
+                    <ScreenLayout>
+                      <InvoicesBody />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
                   path="/dashboardNew/security"
                   element={
                     <ScreenLayout>
@@ -232,6 +242,7 @@ function App() {
                     </ScreenLayout>
                   }
                 />
+
                 <Route
                   path="/dashboardNew/choiceWallet"
                   element={
@@ -240,14 +251,7 @@ function App() {
                     </ScreenLayout>
                   }
                 />
-                <Route
-                  path="/dashboardNew/invoice"
-                  element={
-                    <ScreenLayout>
-                      <InvoiceBody />
-                    </ScreenLayout>
-                  }
-                />
+
                 <Route
                   path="/dashboardNew/converter"
                   element={
@@ -277,6 +281,14 @@ function App() {
                   element={
                     <ScreenLayout>
                       <AdminDashboard type={"admin"} />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboardNew/kyc"
+                  element={
+                    <ScreenLayout>
+                      <Kyc />
                     </ScreenLayout>
                   }
                 />
