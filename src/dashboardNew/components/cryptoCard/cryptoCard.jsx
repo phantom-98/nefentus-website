@@ -23,6 +23,7 @@ import CopyValue from "../../../dashboard/copyValue";
 import inputStyles from "../../../components/input/input.module.css";
 import Input, { Options } from "../../../components/input/input";
 import Button from "../button/button";
+import Popup from "../popup/popup";
 
 const CryptoCard = () => {
   const [activeToggle, setActiveToggle] = useState(true);
@@ -105,16 +106,13 @@ const CryptoCard = () => {
           ))}
       </div>
 
-      {openReceiveModal && (
-        <ReceiveModal
-          walletAddress={internalWalletAddress}
-          setOpenReceiveModal={setOpenReceiveModal}
-        />
-      )}
+      <ReceiveModal
+        show={openReceiveModal}
+        walletAddress={internalWalletAddress}
+        setOpenReceiveModal={setOpenReceiveModal}
+      />
 
-      {openWithdrawModal && (
-        <SendModal setOpenWithdrawModal={setOpenWithdrawModal} />
-      )}
+      <SendModal show={openWithdrawModal} setShow={setOpenWithdrawModal} />
     </Card>
   );
 };
@@ -157,61 +155,44 @@ const CryptoItem = ({ data }) => {
   );
 };
 
-const ReceiveModal = ({ walletAddress, setOpenReceiveModal }) => {
+const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
   const { setInfoMessage, clearMessages } = useContext(MessageContext);
 
   return (
-    <div className={styles.modalWrapper}>
-      <ModalOverlay>
-        <div className={styles.modal}>
-          <MessageComponent />
-          <TopInfo
-            title={"Receive funds"}
-            description={
-              "Receive funds by sending cryptocurrency to the address below."
-            }
-          />
-          <div className={styles.modalInputs}>
-            <div>
-              <div className={inputStyles.inputWrapper}>
-                <p
-                  className={`${inputStyles.label} ${inputStyles.dashboardLabel}`}
-                >
-                  Wallet address
-                </p>
+    <Popup
+      show={show}
+      onConfirm={() => {
+        setOpenReceiveModal(false);
+        clearMessages();
+      }}
+      confirmTitle="Close"
+    >
+      <MessageComponent />
+      <TopInfo
+        title={"Receive funds"}
+        description={
+          "Receive funds by sending cryptocurrency to the address below."
+        }
+      />
+      <div className={styles.modalInputs}>
+        <div>
+          <div className={inputStyles.inputWrapper}>
+            <p className={`${inputStyles.label} ${inputStyles.dashboardLabel}`}>
+              Wallet address
+            </p>
 
-                <CopyValue
-                  value={walletAddress}
-                  onCopy={() => setInfoMessage("Wallet address copied!")}
-                />
-              </div>
-            </div>
+            <CopyValue
+              value={walletAddress}
+              onCopy={() => setInfoMessage("Wallet address copied!")}
+            />
           </div>
-
-          {/* <div
-            className={styles.button}
-            onClick={() => {
-              setOpenReceiveModal(false);
-              clearMessages();
-            }}
-          >
-            Close
-          </div> */}
-          <Button
-            onClick={() => {
-              setOpenReceiveModal(false);
-              clearMessages();
-            }}
-          >
-            Close
-          </Button>
         </div>
-      </ModalOverlay>
-    </div>
+      </div>
+    </Popup>
   );
 };
 
-const SendModal = ({ setOpenWithdrawModal }) => {
+const SendModal = ({ show, setShow }) => {
   const [withdrawCurrency, setWithdrawCurrency] = useState(currencies[0].abbr);
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawAddress, setWithdrawAddress] = useState("");
@@ -279,67 +260,57 @@ const SendModal = ({ setOpenWithdrawModal }) => {
   };
 
   return (
-    <div className={styles.modalWrapper}>
-      <ModalOverlay>
-        <div className={styles.modal}>
-          <MessageComponent />
-          <TopInfo
-            title={"Withdraw funds"}
-            description={"You requested to withdraw funds from your account."}
-          />
+    <Popup
+      show={show}
+      cancelTitle="Close"
+      confirmTitle="WithDraw"
+      onClose={() => {
+        setShow(false);
+        clearMessages();
+      }}
+      onConfirm={() => withdraw()}
+    >
+      <MessageComponent />
+      <TopInfo
+        title={"Withdraw funds"}
+        description={"You requested to withdraw funds from your account."}
+      />
 
-          <div className={styles.modalInputs}>
-            <Options
-              dashboard
-              label="Currency options"
-              placeholder="Select Currency Option"
-              value={withdrawCurrency}
-              options={currencies.map((item) => item.abbr)}
-              setValue={setWithdrawCurrency}
-            />
+      <div className={styles.modalInputs}>
+        <Options
+          dashboard
+          label="Currency options"
+          placeholder="Select Currency Option"
+          value={withdrawCurrency}
+          options={currencies.map((item) => item.abbr)}
+          setValue={setWithdrawCurrency}
+        />
 
-            <Input
-              dashboard
-              label="Amount"
-              placeholder="Enter amount"
-              value={withdrawAmount}
-              setState={setWithdrawAmount}
-            />
+        <Input
+          dashboard
+          label="Amount"
+          placeholder="Enter amount"
+          value={withdrawAmount}
+          setState={setWithdrawAmount}
+        />
 
-            <Input
-              dashboard
-              label="Address"
-              placeholder="Enter address"
-              value={withdrawAddress}
-              setState={setWithdrawAddress}
-            />
+        <Input
+          dashboard
+          label="Address"
+          placeholder="Enter address"
+          value={withdrawAddress}
+          setState={setWithdrawAddress}
+        />
 
-            <Input
-              dashboard
-              label="Password"
-              placeholder="Enter password"
-              value={password}
-              setState={setPassword}
-              secure
-            />
-          </div>
-
-          <div className={styles.modalButtons}>
-            <Button
-              color="light"
-              onClick={() => {
-                setOpenWithdrawModal(false);
-                clearMessages();
-              }}
-            >
-              Close
-            </Button>
-            <Button onClick={() => withdraw()} style={{ width: "100%" }}>
-              Withdraw
-            </Button>
-          </div>
-        </div>
-      </ModalOverlay>
-    </div>
+        <Input
+          dashboard
+          label="Password"
+          placeholder="Enter password"
+          value={password}
+          setState={setPassword}
+          secure
+        />
+      </div>
+    </Popup>
   );
 };

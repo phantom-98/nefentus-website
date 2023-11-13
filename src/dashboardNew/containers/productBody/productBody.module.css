@@ -11,9 +11,20 @@
   padding-top: 2rem;
 }
 
+.modalInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 35vw;
+}
+
 @media (max-width: 900px) {
   .row {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .modalInputs {
+    width: 45vw;
   }
 }
 
@@ -26,20 +37,16 @@
   .row {
     grid-template-columns: 1fr;
   }
+
+  .modalInputs {
+    width: 100%;
+  }
 }
 
 .modal h4 {
   font-size: 1.8rem;
   font-weight: 500;
   margin-bottom: 3rem;
-}
-
-.modalInputs {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-bottom: 3rem;
-  width: 300px;
 }
 
 .modalButtons {

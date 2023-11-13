@@ -12,6 +12,7 @@ import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
 import Button from "../../components/button/button";
+import Popup from "../../components/popup/popup";
 
 const ProductBody = () => {
   const [products, setProducts] = useState([]);
@@ -172,7 +173,7 @@ const ProductBody = () => {
       </Card>
 
       <div>
-        {openModal !== false && (
+        {/* {openModal !== false && (
           <ModalOverlay>
             <div className={styles.modal}>
               <h4>{openModal === "add" ? "Create" : "Update"} Product</h4>
@@ -244,7 +245,68 @@ const ProductBody = () => {
               </div>
             </div>
           </ModalOverlay>
-        )}
+        )} */}
+
+        <Popup
+          show={openModal}
+          title={`${openModal === "add" ? "Create" : "Update"} Product`}
+          onConfirm={addOrUpdateProduct}
+          onClose={() => {
+            clearMessages();
+            setOpenModal(false);
+            setProductId(null);
+          }}
+        >
+          <MessageComponent />
+
+          <div className={styles.modalInputs}>
+            <Attachment
+              label="Product image"
+              onUpload={(file) => {
+                setImage(file);
+                setImageChanged(true);
+                setCropDialogOpen(true);
+              }}
+              onDelete={() => {
+                setImage(null);
+                setImageChanged(true);
+              }}
+              value={image}
+              dashboard
+            />
+            <Input
+              dashboard
+              label="Name*"
+              placeholder="Enter name"
+              value={name}
+              setState={setName}
+            />
+            <Textarea
+              dashboard
+              label="Description*"
+              placeholder="Enter description"
+              value={description}
+              setState={setDescription}
+              rows={2}
+            />
+            <Input
+              dashboard
+              label="Price*"
+              placeholder="Enter price"
+              value={price}
+              setState={setPrice}
+              number
+            />
+            <Input
+              dashboard
+              label="Stock"
+              placeholder="Enter stock if limited stock"
+              value={stock}
+              setState={setStock}
+              number
+            />
+          </div>
+        </Popup>
       </div>
 
       <CropDialog

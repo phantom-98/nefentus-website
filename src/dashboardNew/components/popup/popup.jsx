@@ -13,17 +13,14 @@ import CopyValue from "../../../dashboard/copyValue";
 
 const Popup = ({
   show,
-  setShow,
   children,
-  onClick = () => {},
-  title = "Change Value",
+  onConfirm,
+  onClose,
+  cancelTitle = "Cancel",
+  confirmTitle = "Confirm",
+  title,
 }) => {
   const dashboardElement = document.getElementById("dashboard");
-
-  const handleConfirmClick = () => {
-    onClick();
-    setShow(false);
-  };
 
   return ReactDOM.createPortal(
     <div
@@ -31,13 +28,15 @@ const Popup = ({
       style={{ display: show ? "initial" : "none" }}
     >
       <Card className={styles.popupBox}>
-        <div className={styles.title}>{title}</div>
+        {title && <div className={styles.title}>{title}</div>}
         {children}
         <div className={styles.buttons}>
-          <Button color="light" onClick={() => setShow(false)}>
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmClick}>Confirm</Button>
+          {onClose && (
+            <Button color="light" onClick={onClose}>
+              {cancelTitle}
+            </Button>
+          )}
+          {onConfirm && <Button onClick={onConfirm}>{confirmTitle}</Button>}
         </div>
       </Card>
     </div>,

@@ -7,9 +7,9 @@ const Button = ({ children, color, onClick, link, style }) => {
       onClick={onClick}
       className={styles.button}
       style={{
-        ...style,
         width: color === "gray" ? "7rem" : "",
         border: color === "gray" ? "1px solid rgba(255, 255, 255, 0.2)" : "",
+        ...style,
       }}
     >
       <div

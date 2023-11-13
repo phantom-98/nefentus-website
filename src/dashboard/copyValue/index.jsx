@@ -13,16 +13,16 @@ const CopyValue = ({ value, onCopy, inputStyle, buttonStyle }) => {
     <div className={styles.copyValueWrapper}>
       <div
         className={`${inputStyles.input} ${inputStyles.dashboardInput}`}
-        type={"text"}
+        type="text"
         disabled={true}
         style={inputStyle}
       >
-        {value}
+        <p style={{ overflowWrap: "anywhere" }}>{value}</p>
       </div>
       <Button
         color="light"
         onClick={handleClipboard}
-        style={{ padding: "0.5rem 1rem" }}
+        style={{ padding: "0.5rem 1rem", width: "15%" }}
       >
         <img
           src={copyClipboard}
