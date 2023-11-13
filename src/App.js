@@ -33,6 +33,7 @@ import LoadingAnimation from "./assets/logo/loadingAnimation.json";
 import Invoices from "./pages/invoices";
 import { KYC } from "./dashboard/settings/components/KYC";
 import Kyc from "./dashboardNew/components/kyc";
+import ChoiceWallet from "./dashboardNew/containers/choiceWallet/choiceWallet.jsx";
 
 const Contact = React.lazy(() => import("./components/contact/contact"));
 const Home = React.lazy(() => import("./pages/Home"));
@@ -239,6 +240,14 @@ function App() {
                   element={
                     <ScreenLayout>
                       <SecuritySettings />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboardNew/choiceWallet"
+                  element={
+                    <ScreenLayout>
+                      <ChoiceWallet />
                     </ScreenLayout>
                   }
                 />

@@ -1,0 +1,25 @@
+.button {
+  gap: 2rem;
+}
+
+.button > div {
+  width: max-content;
+}
+
+.wrapper {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 1.8rem;
+}
+
+.description {
+  font-size: 1.2rem;
+  opacity: 0.6;
+}
