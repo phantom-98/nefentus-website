@@ -183,10 +183,15 @@ export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
 
   const handleConfirmClick = () => {
     setValue(inputValue);
+    setShow(false);
   };
 
   return (
-    <Popup show={show} setShow={setShow} onClick={handleConfirmClick}>
+    <Popup
+      show={show}
+      onConfirm={handleConfirmClick}
+      onClose={() => setShow(false)}
+    >
       {popup === "language" ? (
         <Options
           options={langOptions.map((op) => op.label)}

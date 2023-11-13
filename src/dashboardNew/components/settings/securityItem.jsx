@@ -182,6 +182,8 @@ const SecurityItem = ({ data }) => {
       }, 1000);
       setPhishingCode("");
     }
+
+    setShow(false);
   };
 
   return (
@@ -400,9 +402,9 @@ const SecurityItem = ({ data }) => {
 
       <Popup
         show={show}
-        setShow={setShow}
-        title={"Enter Anti-Phishing code:"}
-        onClick={handleConfirmPhishingCode}
+        title="Enter Anti-Phishing code:"
+        onConfirm={handleConfirmPhishingCode}
+        onClose={() => setShow(false)}
       >
         <>
           <input

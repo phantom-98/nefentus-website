@@ -110,9 +110,9 @@ const ProductCard = ({ onClickDelete = () => {}, product = {}, update }) => {
 
       <Popup
         show={show}
-        setShow={setShow}
         title="Edit Product"
-        onClick={updateProduct}
+        onConfirm={updateProduct}
+        onClose={() => setShow(false)}
       >
         <MessageComponent />
         <div className={styles.inputWrapper}>
