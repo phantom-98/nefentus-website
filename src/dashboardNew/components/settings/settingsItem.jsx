@@ -189,6 +189,7 @@ export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
   return (
     <Popup
       show={show}
+      title="Change Value"
       onConfirm={handleConfirmClick}
       onClose={() => setShow(false)}
     >

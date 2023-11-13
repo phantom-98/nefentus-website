@@ -18,7 +18,7 @@ const Popup = ({
   onClose,
   cancelTitle = "Cancel",
   confirmTitle = "Confirm",
-  title = "Change Value",
+  title,
 }) => {
   const dashboardElement = document.getElementById("dashboard");
 
@@ -28,7 +28,7 @@ const Popup = ({
       style={{ display: show ? "initial" : "none" }}
     >
       <Card className={styles.popupBox}>
-        <div className={styles.title}>{title}</div>
+        {title && <div className={styles.title}>{title}</div>}
         {children}
         <div className={styles.buttons}>
           {onClose && (
