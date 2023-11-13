@@ -5,9 +5,9 @@ const TopInfo = ({ title, description, children }) => {
   return (
     <div className={styles.top}>
       <div>
-        <h4>{title}</h4>
+        <p style={{ fontSize: 21, color: "white" }}>{title}</p>
 
-        <p>{description}</p>
+        <p style={{ fontSize: 13 }}>{description}</p>
       </div>
 
       {children}

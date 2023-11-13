@@ -19,7 +19,7 @@ const Input = ({
 
   return (
     <div className={styles.input}>
-      <p>{label}</p>
+      <p style={{ fontSize: 15 }}>{label}</p>
 
       {type === "radio" ? (
         <div className={styles["radio-group"]}>
