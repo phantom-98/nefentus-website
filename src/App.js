@@ -233,6 +233,14 @@ function App() {
                   }
                 />
                 <Route
+                  path="/dashboardNew/choiceWallet"
+                  element={
+                    <ScreenLayout>
+                      <ChoiceWallet />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
                   path="/dashboardNew/invoice"
                   element={
                     <ScreenLayout>
