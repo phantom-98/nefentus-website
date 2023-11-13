@@ -30,7 +30,7 @@ const Prices = () => {
   return (
     prices && (
       <div className={`card ${styles.priceCard}`}>
-        <h2>Latest Price</h2>
+        <h2>{t("home.latestPrice")}</h2>
         <div className={styles.container}>
           {prices?.map((price, index) => {
             return (

@@ -10,6 +10,7 @@ import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
 import Options from "../options/options";
+import { useTranslation } from "react-i18next";
 
 const langOptions = [
   { value: "en", label: "English" },
@@ -21,6 +22,8 @@ const SettingsItem = ({ data, setIsSaveData }) => {
   const [show, setShow] = useState(false);
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [label, setLabel] = useState(null);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (data.popup === "language") {
@@ -110,11 +113,11 @@ const SettingsItem = ({ data, setIsSaveData }) => {
               }
             >
               {data.type === "edit"
-                ? "Edit"
+                ? `${t("security.actions.edit")}`
                 : data.type === "image"
-                ? "Change"
+                ? `${t("security.actions.change")}`
                 : data.type === "enable"
-                ? "Enable"
+                ? `${t("security.actions.enable")}`
                 : ""}
             </Button>
           </div>

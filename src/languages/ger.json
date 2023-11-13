@@ -6,7 +6,12 @@
     "affiliate": "Affiliateprogramm",
     "login": "Login",
     "signUp": "Registrierung",
-    "menu": "Registrierung"
+    "menu": "Registrierung",
+    "profile": "Profil",
+    "dashboard": "Dashboard",
+    "security": "Armaturenbrett",
+    "identification": "Identifikation",
+    "logOut": "Ausloggen"
   },
   "home": {
     "heroTitle": "Akzeptieren Sie Krypto Zahlungen",
@@ -17,6 +22,7 @@
     "heroAvailable": "Verfügbar für:",
     "connectWith": "Oder Login mit",
     "appDownload": "Mobile App herunterladen",
+    "latestPrice": "Letzter Preis",
     "priceChange": "Preisveränderung der letzten 24h",
     "cardSubtitle": "Ihr Schritt zu einem modernen Zahlungsverkehr",
     "cardTitleP1": "Mit moderner Zahlungsverarbeitung",
@@ -787,5 +793,80 @@
     "connecting": "Verbinden...",
     "disconnect": "Verbindung trennen",
     "connectError": "Verbinden Brieftasche ist nicht verfügbar!"
+  },
+  "security": {
+    "settings": {
+      "title": "Sicherheit",
+      "description": "Seien Sie sicher und richten Sie mehrere Möglichkeiten ein, um Ihr Konto zu sichern"
+    },
+    "actions": {
+      "edit": "Bearbeiten",
+      "enable": "Aktivieren",
+      "change": "Ändern"
+    }
+  },
+  "profile": {
+    "title": "Benutzerprofil",
+    "description": "Aktualisieren Sie Ihre persönlichen Daten und Benachrichtigungseinstellungen",
+    "firstName": "Vorname*",
+    "lastName": "Familienname, Nachname*",
+    "business": "Geschäft",
+    "businessDescription": "Wenn Sie ein Unternehmen sind, geben Sie hier bitte Ihren Firmennamen ein.",
+    "email": "Email*",
+    "phoneNumber": "Telefonnummer",
+    "avatar": "Benutzerbild",
+    "avatarDescription": "Wählen Sie einen Avatar aus, um Ihr Konto zu personalisieren.",
+    "marketingUpdates": "Marketing-Updates",
+    "marketingUpdatesDescription": "Erhalten Sie Marketing-Updates per E-Mail, Push-Benachrichtigungen (in der mobilen App) und Posteingangsbenachrichtigungen (in der Webanwendung).",
+    "emailNotifications": "E-Mail Benachrichtigungen",
+    "emailNotificationsDescription": "E-Mail Benachrichtigungen",
+    "appNotifications": "App-Benachrichtigungen",
+    "appNotificationsDescription": "Erhalten Sie Benachrichtigungen über Push-Benachrichtigungen (in der mobilen App).",
+    "notificationLanguage": "Benachrichtigungssprache",
+    "notificationLanguageDescription": "Wählen Sie Ihre bevorzugte Sprache für E-Mail-, App-Push- und Posteingangsbenachrichtigungen vor Ort.",
+    "enableInvoicing": "Rechnungsstellung aktivieren",
+    "enableInvoicingDescription": "Erhalten Sie Rechnungen für jedes verkaufte Produkt für Ihre Buchhaltung."
+  },
+  "identification": {
+    "title": "Identifikation",
+    "description": "Lassen Sie Ihre Identität überprüfen, um zu kaufen und zu handeln",
+    "verified": "Verifiziert",
+    "unverified": "Unverified",
+    "unlimited": "Nicht bestätigt",
+    "verificationLevels": "Verifizierungsstufen",
+    "level": "Ebene",
+    "level1Description": "Persönliche Daten, amtlicher Ausweis und Gesichtserkennung Erkennung",
+    "level2Description": "Adressnachweis und Firmennachweis",
+    "level3Description": "Erhöhte Sorgfalt",
+    "accountLimit": {
+      "title": "Kontolimit",
+      "fiatDeposit": "Kontolimit",
+      "cryptoDepositLimit": "Krypto-Einzahlungslimit",
+      "daily": "Täglich",
+      "cryptoWithdrawal": "Krypto-Auszahlungslimit",
+      "transactionLimits": "P2P-Transaktionslimits"
+    },
+    "verification": {
+      "title": "Verifiziert werden",
+      "fullName": "Vollständiger Name",
+      "address": "Adresse",
+      "city": "Stadt und Postleitzahl",
+      "issueId": "Von der Regierung ausgestellter Ausweis",
+      "picture": "Bild mit Ausweis in der Hand",
+      "proofAddress": "Nachweis der Adresse",
+      "proofCompany": "Firmennachweis",
+      "enhanced": "Erhöhte Sorgfalt",
+      "confirm": "Bestätigen",
+      "upload": "Hochladen",
+      "add": "Hinzufügen"
+    }
+  },
+  "cookieBanner": {
+    "first": "Wir nutzen Drittanbieter ",
+    "cookies": "cookies ",
+    "second": "um zu ",
+    "last": "personalisieren Sie Ihr Website-Erlebnis.",
+    "decline": "Abfall",
+    "accept": "Akzeptieren"
   }
 }

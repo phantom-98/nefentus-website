@@ -4,6 +4,7 @@ import SettingsItem from "../../components/settings/settingsItem";
 import SettingsTitle from "../../components/settings/settingsTitle";
 
 import styles from "./securitySettings.module.css";
+import { useTranslation } from "react-i18next";
 
 const data = [
   {
@@ -48,11 +49,13 @@ const data = [
 ];
 
 const SecuritySettings = () => {
+  const { t } = useTranslation();
+
   return (
     <Card className={styles.card}>
       <SettingsTitle
-        title="Security"
-        description="Be safe and set multiple way to secure your account"
+        title={t("security.settings.title")}
+        description={t("security.settings.description")}
       />
 
       {data.map((item) => (

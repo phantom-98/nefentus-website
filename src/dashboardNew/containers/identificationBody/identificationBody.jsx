@@ -5,119 +5,142 @@ import SettingsTitle from "../../components/settings/settingsTitle";
 
 import styles from "./identificationBody.module.css";
 import { EditPopup } from "../../components/settings/settingsItem";
+import { useTranslation } from "react-i18next";
 
 const IdentificationBody = () => {
+  const { t } = useTranslation();
+
   return (
     <Card className={styles.card}>
       <div className={styles.top}>
         <div className={styles.titleHeader}>
           <SettingsTitle
-            title="Identification"
-            description="Get your identity verified to buy and trade"
+            title={t("identification.title")}
+            description={t("identification.description")}
             identification
           />
         </div>
 
         <div className={styles.box}>
-          <div className={styles.boxTitle}>Verification Levels</div>
+          <div className={styles.boxTitle}>
+            {t("identification.verificationLevels")}
+          </div>
 
           <div className={styles.row}>
             <div className={styles.rowLeft}>
-              Level 1:{" "}
-              <span>
-                Personal Information, Government Issued ID and Facial
-                Recognition
-              </span>
+              {t("identification.level").concat("1 :")}{" "}
+              <span>{t("identification.level1Description")}</span>
             </div>
             <div
               className={styles.rowRight}
               style={{ color: true ? "#16C172" : "#F24236" }}
             >
-              Verified
+              {t("identification.verified")}
             </div>
           </div>
           <div className={styles.row}>
             <div className={styles.rowLeft}>
-              Level 2: <span> Proof of Address & Proof of Company</span>
+              {t("identification.level").concat("2 :")}
+              <span> {t("identification.level2Description")}</span>
             </div>
             <div
               className={styles.rowRight}
               style={{ color: true ? "#16C172" : "#F24236" }}
             >
-              Verified
+              {t("identification.verified")}
             </div>
           </div>
           <div className={styles.row}>
             <div className={styles.rowLeft}>
-              Level 3: <span> Enhanced Diligence</span>
+              {t("identification.level").concat("3 :")}
+              <span> {t("identification.level3Description")}</span>
             </div>
             <div
               className={styles.rowRight}
               style={{ color: !true ? "#16C172" : "#F24236" }}
             >
-              Unverified
+              {t("identification.unverified")}
             </div>
           </div>
         </div>
 
         <div className={styles.box}>
-          <div className={styles.boxTitle}>Account Limit</div>
+          <div className={styles.boxTitle}>
+            {" "}
+            {t("identification.accountLimit.title")}
+          </div>
 
           <div className={styles.row}>
             <div className={styles.rowLeft}>
-              <span>Fiat Deposit & Withdrawal Limits</span>
+              <span>{t("identification.accountLimit.fiatDeposit")}</span>
             </div>
-            <div className={styles.rowRight}>2M USD Daily</div>
+            <div className={styles.rowRight}>
+              {"2M USD ".concat(`${t("identification.accountLimit.daily")}`)}
+            </div>
           </div>
           <div className={styles.row}>
             <div className={styles.rowLeft}>
-              <span>Crypto Deposit Limit</span>
+              <span>{t("identification.accountLimit.cryptoDepositLimit")}</span>
             </div>
-            <div className={styles.rowRight}>Unlimited</div>
+            <div className={styles.rowRight}>
+              {t("identification.unlimited")}
+            </div>
           </div>
           <div className={styles.row}>
             <div className={styles.rowLeft}>
-              <span>Crypto Withdrawal Limit</span>
+              <span>{t("identification.accountLimit.cryptoWithdrawal")}</span>
             </div>
-            <div className={styles.rowRight}>8M BUSD Daily</div>
+            <div className={styles.rowRight}>
+              {"8M BUSD ".concat(`${t("identification.accountLimit.daily")}`)}
+            </div>
           </div>
           <div className={styles.row}>
             <div className={styles.rowLeft}>
-              <span>P2P Transaction Limits</span>
+              <span>{t("identification.accountLimit.transactionLimits")}</span>
             </div>
-            <div className={styles.rowRight}>Unlimited</div>
+            <div className={styles.rowRight}>
+              {t("identification.accountLimit.unlimited")}
+            </div>
           </div>
         </div>
 
         <div className={styles.uploadBox}>
-          <div className={styles.boxTitle}>Get verified</div>
+          <div className={styles.boxTitle}>
+            {t("identification.verification.title")}
+          </div>
 
           <div className={styles.uploadItem}>
             <div className={`${styles.row} ${styles.rowItem}`}>
-              <div className={styles.rowLeft}>Level 1:</div>
+              <div className={styles.rowLeft}>
+                {t("identification.level").concat("1:")}
+              </div>
             </div>
-            <AddText label="Full Name" />
-            <AddText label="Address" />
-            <AddText label="City and Zip Code" />
-            <AddFile label="Government Issued ID" />
-            <AddFile label="Picture with ID in hand" />
+            <AddText label={t("identification.verification.fullName")} />
+            <AddText label={t("identification.verification.address")} />
+            <AddText label={t("identification.verification.city")} />
+            <AddFile label={t("identification.verification.issueId")} />
+            <AddFile label={t("identification.verification.picture")} />
           </div>
           <div className={styles.uploadItem}>
             <div className={`${styles.row} ${styles.rowItem}`}>
-              <div className={styles.rowLeft}>Level 2:</div>
+              <div className={styles.rowLeft}>
+                {t("identification.level").concat("2:")}
+              </div>
             </div>
-            <AddFile label="Proof of Address" />
-            <AddFile label="Proof of Company" />
+            <AddFile label={t("identification.verification.proofAddress")} />
+            <AddFile label={t("identification.verification.proofCompany")} />
           </div>
           <div className={styles.uploadItem}>
             <div className={`${styles.row} ${styles.rowItem}`}>
-              <div className={styles.rowLeft}>Level 3:</div>
+              <div className={styles.rowLeft}>
+                {t("identification.level").concat("3:")}
+              </div>
             </div>
-            <AddFile label="Enhanced Diligence" />
+            <AddFile label={t("identification.verification.enhanced")} />
           </div>
 
           <div className={styles.button}>
-            <Button>Confirm</Button>
+            <Button>{t("identification.verification.confirm")}</Button>
           </div>
         </div>
       </div>
@@ -130,6 +153,7 @@ export default IdentificationBody;
 const AddText = ({ label }) => {
   const [value, setValue] = useState();
   const [show, setShow] = useState(false);
+  const { t } = useTranslation();
   return (
     <>
       <div className={`${styles.row} ${styles.formItem}`}>
@@ -139,7 +163,7 @@ const AddText = ({ label }) => {
         <div className={`${styles.rowRight} ${styles.rightUpload}`}>
           <p className={styles.lvl}>{value}</p>
           <Button onClick={() => setShow(true)} color="gray">
-            Add
+            {t("identification.verification.add")}
           </Button>
         </div>
       </div>
@@ -157,7 +181,7 @@ const AddText = ({ label }) => {
 const AddFile = ({ label }) => {
   const [value, setValue] = useState();
   const [show, setShow] = useState(false);
-
+  const { t } = useTranslation();
   const handleAddFile = (index) => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";

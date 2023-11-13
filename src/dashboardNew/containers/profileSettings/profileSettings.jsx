@@ -58,6 +58,8 @@ const ProfileSettings = () => {
       enableInvoicing,
     };
 
+    const { t } = useTranslation();
+
     const response = await backendAPI.update(requestData);
     if (response == null) {
       setErrorMessage(t("messages.error.updateData"));
@@ -100,44 +102,43 @@ const ProfileSettings = () => {
 
   const data = [
     {
-      label: "First name*",
+      label: `${t("profile.firstName")}`,
       description: "",
       value: firstName,
       setValue: setFirstName,
       type: "edit",
     },
     {
-      label: "Last name*",
+      label: `${t("profile.lastName")}`,
       description: "",
       value: lastName,
       setValue: setLastName,
       type: "edit",
     },
     {
-      label: "Business",
-      description:
-        "If you are a business, please enter your business name here.",
+      label: `${t("profile.business")}`,
+      description: `${t("profile.businessDescription")}`,
       value: business,
       setValue: setBusiness,
       type: "edit",
     },
     {
-      label: "Email*",
+      label: `${t("profile.email")}`,
       description: "",
       value: email,
       setValue: setEmail,
       type: "edit",
     },
     {
-      label: "Phone number",
+      label: `${t("profile.phoneNumber")}`,
       description: "",
       value: phoneNumber,
       setValue: setPhoneNumber,
       type: "edit",
     },
     {
-      label: "Avatar",
-      description: "Select an avatar to personalize your account. ",
+      label: `${t("profile.avatar")}`,
+      description: `${t("profile.avatarDescription")}`,
       value: imageName,
       setValue: setImageName,
       type: "image",
@@ -147,41 +148,37 @@ const ProfileSettings = () => {
       setImageChanged: setImageChanged,
     },
     {
-      label: "Marketing updates",
-      description:
-        "Receive marketing updates via email, push notifications (in the mobile app) and inbox notifications (in the web application).",
+      label: `${t("profile.marketingUpdates")}`,
+      description: `${t("profile.marketingUpdatesDescription")}`,
       value: marketingUpdates,
       setValue: setMarketingUpdates,
       type: "enable",
     },
     {
-      label: "Email notifications",
-      description: "Receive notifications via email.",
+      label: `${t("profile.emailNotifications")}`,
+      description: `${t("profile.emailNotificationsDescription")}`,
       value: emailNotifications,
       setValue: setEmailNotifications,
       type: "enable",
     },
     {
-      label: "App notifications",
-      description:
-        "Receive notifications via push notifications (in the mobile app).",
+      label: `${t("profile.appNotifications")}`,
+      description: `${t("profile.appNotificationsDescription")}`,
       value: appNotifications,
       setValue: setAppNotifications,
       type: "enable",
     },
     {
-      label: "Notification language",
-      description:
-        "Select your preferred language for email, app push and on-site inbox notifications.",
+      label: `${t("profile.notificationLanguage")}`,
+      description: `${t("profile.notificationLanguageDescription")}`,
       value: notificationLanguage,
       setValue: setNotificationLanguage,
       popup: "language",
       type: "edit",
     },
     {
-      label: "Enable invoicing",
-      description:
-        "Receive invoices for each product sold for your accounting. ",
+      label: `${t("profile.enableInvoicing")}`,
+      description: `${t("profile.enableInvoicingDescription")}`,
       value: enableInvoicing,
       setValue: setEnableInvoicing,
       type: "enable",
@@ -196,8 +193,8 @@ const ProfileSettings = () => {
   return (
     <Card className={styles.card}>
       <SettingsTitle
-        title="User Profile"
-        description="Update your personal information and notification settings"
+        title={t("profile.title")}
+        description={t("profile.description")}
       />
 
       {data.map((item) => (
