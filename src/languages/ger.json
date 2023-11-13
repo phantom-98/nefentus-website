@@ -732,7 +732,7 @@
     "payments": "Zahlungen",
     "defiCard": "DeFi Card",
     "transactions": "Transaktionen",
-    "converter": "Konverter",
+    "converter": "Konvertierung",
     "integration": "Integration",
     "soon": "Demnächst"
   },
@@ -760,28 +760,28 @@
     }
   },
   "transactions": {
-    "title": "Neueste Transaktionen",
-    "subtitle": "Ihr aktueller Bruttobetrag ist:",
+    "title": "Letzte Transaktionen",
+    "subtitle": "Der Gesamtwert aller Transaktionen ist:",
     "table": {
       "product": "Produkt",
       "order": "Bestellung",
       "email": "E-Mail",
       "amount": "Betrag",
       "currency": "Währung",
-      "transaction": "Transaction",
+      "transaction": "Transaktion",
       "date": "Datum",
-      "earnings": "Verdienst",
-      "action": "Action"
+      "earnings": "Betrag ($)",
+      "action": "Aktion"
     }
   },
   "converter": {
-    "wallet": "Brieftasche",
+    "wallet": "Wallet",
     "from": "Von",
     "balance": "Saldo",
     "convert": "Konvertieren"
   },
   "integrations": {
-    "title": "Integrations",
+    "title": "Integrationen",
     "subtitle": "Verwenden Sie Ihre externe Kryptowährungs-Brieftasche auf Nefentus",
     "connect": "Mit Wallet verbinden",
     "connecting": "Verbinden...",

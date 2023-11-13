@@ -817,7 +817,7 @@
   },
   "transactions": {
     "title": "Recent Transactions",
-    "subtitle": "Your current gross amount is:",
+    "subtitle": "Your total transaction value is:",
     "table": {
       "product": "Product",
       "order": "Order",
@@ -826,7 +826,7 @@
       "currency": "Currency",
       "transaction": "Transaction",
       "date": "Date",
-      "earnings": "Earnings",
+      "earnings": "Amount ($)",
       "action": "Action"
     }
   },
