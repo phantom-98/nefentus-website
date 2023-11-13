@@ -3,6 +3,7 @@ import styles from "./settingsTitle.module.css";
 
 import Fail from "../../../assets/icon/fail.svg";
 import Correct from "../../../assets/icon/correct.svg";
+import ProfileImage from "../../../assets/icon/user.svg";
 
 import { useEffect, useState } from "react";
 import Popup from "../popup/popup";
@@ -100,36 +101,36 @@ const SettingsItem = ({ data, setIsSaveData }) => {
             ) : (
               ""
             )}
-            <Button
-              color="gray"
-              onClick={
-                data.type === "edit"
-                  ? () => handleEdit()
-                  : data.type === "image"
-                  ? () => handleChangeImage()
-                  : data.type === "enable"
-                  ? () => handleEnable()
-                  : ""
-              }
-            >
-              {data.type === "edit"
-                ? `${t("security.actions.edit")}`
-                : data.type === "image"
-                ? `${t("security.actions.change")}`
-                : data.type === "enable"
-                ? `${t("security.actions.enable")}`
-                : ""}
-            </Button>
           </div>
-          <EditPopup
-            show={show}
-            value={data.popup === "language" ? label : data.value}
-            setValue={(editValue) => handleData(editValue)}
-            setShow={setShow}
-            type={data.type}
-            popup={data.popup}
-          />
+          <Button
+            color="gray"
+            onClick={
+              data.type === "edit"
+                ? () => handleEdit()
+                : data.type === "image"
+                ? () => handleChangeImage()
+                : data.type === "enable"
+                ? () => handleEnable()
+                : ""
+            }
+          >
+            {data.type === "edit"
+              ? `${t("security.actions.edit")}`
+              : data.type === "image"
+              ? `${t("security.actions.change")}`
+              : data.type === "enable"
+              ? `${t("security.actions.enable")}`
+              : ""}
+          </Button>
         </div>
+        <EditPopup
+          show={show}
+          value={data.popup === "language" ? label : data.value}
+          setValue={(editValue) => handleData(editValue)}
+          setShow={setShow}
+          type={data.type}
+          popup={data.popup}
+        />
       </div>
 
       <CropDialog

@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const UserProfile = ({ web }) => {
+const UserProfile = ({ web, logOut }) => {
   const [profileImage, setProfileImage] = useState(
     localStorage.getItem("profile_pic"),
   );
@@ -43,29 +43,29 @@ const UserProfile = ({ web }) => {
         <div className={`${styles.profileBody} card`}>
           <Link to="/dashboardNew/profile" className={styles.profileItem}>
             <img src={User2} alt="" />
-            <p>{t("navigation.profile")}</p>
+            <p>Profile</p>
           </Link>
           {web && (
             <Link to="/dashboardNew/" className={styles.profileItem}>
               <img src={Dashboard} alt="" />
-              <p>{t("navigation.dashboard")}</p>
+              <p>Dashboard</p>
             </Link>
           )}
           <Link to="/dashboardNew/security" className={styles.profileItem}>
             <img src={Security} alt="" />
-            <p>{t("navigation.security")}</p>
+            <p>Security</p>
           </Link>
           <Link
             to="/dashboardNew/identification"
             className={styles.profileItem}
           >
             <img src={Identification} alt="" />
-            <p>{t("navigation.identification")}</p>
+            <p>Identification</p>
           </Link>
-          <div className={styles.profileItem}>
+          <Link onClick={logOut} to="/" className={styles.profileItem}>
             <img src={Logout} alt="" />
             <p>{t("navigation.logOut")}</p>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

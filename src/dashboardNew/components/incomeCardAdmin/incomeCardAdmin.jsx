@@ -1,20 +1,88 @@
-import styles from "./graph.module.css";
-import { formatUSDBalance } from "../../utils";
+import { formatUSDBalance } from "../../../utils";
 
-import {
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-} from "chart.js";
+import Card from "../card/card";
 import { Line } from "react-chartjs-2";
-import { Options } from "../../components/input/input";
+
+import styles from "./incomeCardAdmin.module.css";
+
+import { Options } from "../../../components/input/input";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+);
+
+export const optionsChart = {
+  responsive: true,
+  maintainAspectRatio: false,
+
+  tension: 0.1,
+
+  plugins: {
+    title: {
+      display: true,
+    },
+    legend: {
+      position: "bottom",
+    },
+  },
+
+  scales: {
+    y: {
+      beginAtZero: true,
+
+      grid: {
+        color: "rgba(255,255,255,0.08)",
+      },
+      ticks: {
+        callback: function (value, index, ticks) {
+          return value + " $";
+        },
+        suggestedMin: 0,
+        padding: 10,
+        color: "rgba(255,255,255,0.6)",
+        font: {
+          size: window.innerWidth < 550 ? 8 : 12,
+          family: "Axiforma ",
+          weight: 400,
+        },
+      },
+    },
+    x: {
+      grid: {
+        display: false,
+      },
+
+      ticks: {
+        color: "rgba(255,255,255,0.6)",
+        padding: 10,
+        font: {
+          family: "Axiforma",
+          weight: 400,
+          size: window.innerWidth < 550 ? 8 : 12,
+        },
+      },
+    },
+  },
+};
 
 const today = new Date();
 
@@ -49,9 +117,8 @@ function populateGraph(totalPrices) {
       {
         label: "Income",
         data: values,
-        borderColor: "#1595C2",
-        backgroundColor: "#1595C2",
-        tension: 0.1,
+        borderColor: "#0784B5",
+        backgroundColor: "#0784B5",
       },
     ],
   };
@@ -86,75 +153,7 @@ function getEndDate(data) {
   }
 }
 
-// Rest des Codes bleibt gleich
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-);
-
-export const options = {
-  responsive: true,
-  maintainAspectRatio: false,
-
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-    },
-  },
-
-  tension: 0.4,
-
-  scales: {
-    y: {
-      beginAtZero: true,
-      grid: {
-        color: "rgba(255,255,255,8%)",
-      },
-      ticks: {
-        // Include a eur sign in the ticks
-        callback: function (value, index, ticks) {
-          return value + " $";
-        },
-        // beginAtZero: true,
-        beginAtZero: true,
-        suggestedMin: 0,
-        maxTicksLimit: 8,
-        padding: 10,
-        color: "#c4c4c4",
-        font: {
-          size: window.innerWidth < 550 ? 8 : 14,
-          family: "Euclid, sans-serif",
-          weight: 400,
-        },
-      },
-    },
-    x: {
-      grid: {
-        display: false,
-      },
-
-      ticks: {
-        color: "#c4c4c4",
-
-        font: {
-          family: "Euclid, sans-serif",
-          weight: 400,
-          size: window.innerWidth < 550 ? 8 : 14,
-        },
-      },
-    },
-  },
-};
-
-const Graph = ({ data, style }) => {
+const IncomeCardAdmin = ({ data }) => {
   const { t } = useTranslation();
   const [period, setPeriod] = useState(t("graph.choosePeriod"));
 
@@ -215,7 +214,7 @@ const Graph = ({ data, style }) => {
   const graphData = filterDataByPeriod({ ...data }, period);
 
   return (
-    <div className={`card ${styles.graphCard}`} style={style}>
+    <Card className={`${styles.card}`}>
       <div className={styles.info}>
         <div className={styles.left}>
           <div className={styles.label}>{t("dashboard.income")}</div>
@@ -239,11 +238,11 @@ const Graph = ({ data, style }) => {
         </div>
       </div>
 
-      <div className={styles.chartContainer}>
-        <Line options={options} data={populateGraph(graphData)} />
+      <div className={styles.chart}>
+        <Line options={optionsChart} data={populateGraph(graphData)} />
       </div>
-    </div>
+    </Card>
   );
 };
 
-export default Graph;
+export default IncomeCardAdmin;

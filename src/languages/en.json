@@ -287,7 +287,11 @@
     "close": "Close",
     "info": "Don't have an account? ",
     "infoButton": "Sign up",
-    "forgot": "Forgot password?"
+    "forgot": "Forgot password?",
+    "OTPTitle": "Check your email for a code",
+    "OTPSubtitleP1": "We have sent a 6-digits code to ",
+    "OTPSubtitleP2": ". The code expires shortly.",
+    "confirm": "Confirm"
   },
   "affiliate": {
     "heroTitleP1": "Probably",

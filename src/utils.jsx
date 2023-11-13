@@ -63,7 +63,17 @@ export function getRole(localStorage) {
 }
 
 export function dashboardLink(localStorage) {
-  return "/dashboardNew/" + getRole(localStorage);
+  let role = getRole(localStorage);
+  if (
+    role === "vendor" ||
+    role === "affiliate" ||
+    role === "broker" ||
+    role === "seniorbroker" ||
+    role === "leader"
+  ) {
+    role = "partner";
+  }
+  return "/dashboard/" + role;
 }
 
 export const encryptData = (password) => {

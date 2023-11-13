@@ -1,15 +1,23 @@
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 1.6rem;
+}
+
+.chart {
+  min-height: 25rem;
+  height: 100%;
+}
+
 .graphCard {
   padding: 3rem 3rem 5rem 3rem;
   border-radius: 1rem;
 }
 
-.graphCard .label {
-  font-size: 1.6rem;
-  color: var(--gray-color);
-  margin-bottom: 1rem;
-}
-
-.graphCard .info {
+.card .info {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -80,10 +88,6 @@
 @media (max-width: 900px) {
   .graphCard {
     padding: 2rem 2rem 3.5rem 2rem;
-  }
-
-  .graphCard .label {
-    margin-bottom: 1rem;
   }
 
   .graphCard .info {

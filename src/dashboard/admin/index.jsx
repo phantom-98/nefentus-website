@@ -18,20 +18,22 @@ import MessageComponent from "../../components/message";
 import imputStyles from "../../components/input/input.module.css";
 import { useTranslation } from "react-i18next";
 
-const header = [
-  "First Name",
-  "Last Name",
-  "Email",
-  "Roles",
-  "Status",
-  "Income ($)",
-  "Joined on",
-  "Actions",
-];
-
-const colSizes = [1, 1, 2, 1, 1, 1, 1, 2];
+const colSizes = [1, 1, 2, 1, 1, 1, 1, 3];
 
 const AdminBody = ({ type }) => {
+  const { t } = useTranslation();
+
+  const header = [
+    t("dashboard.tableHeaders.firstName"),
+    t("dashboard.tableHeaders.lastName"),
+    t("dashboard.tableHeaders.email"),
+    t("dashboard.tableHeaders.roles"),
+    t("dashboard.tableHeaders.status"),
+    t("dashboard.tableHeaders.income"),
+    t("dashboard.tableHeaders.joinedOn"),
+    t("dashboard.tableHeaders.actions"),
+  ];
+
   const [cardInfo, setCardInfo] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -46,7 +48,6 @@ const AdminBody = ({ type }) => {
   const [openModal, setOpenModal] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
-  const { t } = useTranslation();
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -57,6 +58,7 @@ const AdminBody = ({ type }) => {
 
   useEffect(() => {
     fetchAdminData();
+    fetchAdminUsersData();
     clearMessages();
   }, []);
 
@@ -66,50 +68,38 @@ const AdminBody = ({ type }) => {
       navigate("/login");
     } else {
       const getPromises = [
-        adminApi.getTotalRegistrations(),
         adminApi.getTotalClicks(),
-        adminApi.getNumOrders(),
-        adminApi.getTotalIncome(),
-        adminApi.getUsers(),
         adminApi.getRoleReport(),
         adminApi.getTotalIncomesPerDay(),
+        adminApi.getTotalIncome(),
+        adminApi.getNumOrders(),
+        adminApi.getTotalRegistrations(),
       ];
 
       const [
-        dataReg,
         dataClick,
-        dataOrders,
-        dataInc,
-        dataUsers,
         reportResp,
         totalPricePerDate,
+        dataInc,
+        dataOrders,
+        dataReg,
       ] = await Promise.allSettled(getPromises);
-
-      console.log(
-        dataReg,
-        dataClick,
-        dataOrders,
-        dataInc,
-        dataUsers,
-        reportResp,
-        totalPricePerDate,
-      );
 
       const cardsContent = [
         {
-          title: "Total Income",
+          title: t("dashboard.totalIncome"),
           amount: dataInc?.value?.number,
           percentage: dataInc?.value?.percentage,
           isMonetary: true,
         },
         {
-          title: "Clicks",
+          title: t("dashboard.clicks"),
           amount: dataClick?.value?.number,
           percentage: dataClick?.value?.percentage,
           isMonetary: false,
         },
         {
-          title: "Registrations",
+          title: t("dashboard.registrations"),
           amount: dataReg?.value?.number,
           percentage: dataReg?.value?.percentage,
           isMonetary: false,
@@ -122,7 +112,7 @@ const AdminBody = ({ type }) => {
         type === "broker"
       ) {
         cardsContent[1] = {
-          title: "Orders",
+          title: t("dashboard.orders"),
           amount: dataOrders?.value?.number,
           percentage: dataOrders?.value?.percentage,
           isMonetary: false,
@@ -132,14 +122,23 @@ const AdminBody = ({ type }) => {
       console.log(cardsContent);
       setCardInfo(cardsContent);
 
-      dataUsers.value.reverse();
-      updateUsers(dataUsers.value);
-
       console.log(reportResp);
       setBarContent(reportResp.value);
 
       setGraphData(totalPricePerDate.value);
       console.log(totalPricePerDate);
+    }
+  };
+
+  const fetchAdminUsersData = async () => {
+    const result = await adminApi.checkPermission();
+    if (result !== true) {
+      navigate("/login");
+    } else {
+      const dataUsers = await adminApi.getUsers();
+
+      dataUsers.reverse();
+      updateUsers(dataUsers);
     }
   };
 
@@ -166,14 +165,21 @@ const AdminBody = ({ type }) => {
         user.lastName,
         user.email,
         user.roles
-          .map((role) => ROLE_TO_NAME[role.replace(" ", "")])
+          .map((role) =>
+            t(
+              `dashboard.roles.${ROLE_TO_NAME[role.replace(" ", "")].replaceAll(
+                " ",
+                "",
+              )}`,
+            ),
+          )
           .join(", "),
         <span
           className={`${styles.box} ${
             user.activated ? styles.approved : styles.pending
           }`}
         >
-          {user.activated ? "active" : "not active"}
+          {user.activated ? t("general.active") : t("general.notActive")}
         </span>,
         formatUSDBalance(user.income),
         new Date(user.createdAt).toLocaleString(),
@@ -193,24 +199,24 @@ const AdminBody = ({ type }) => {
             className={styles.actionsLink}
             onClick={() => activateUser(user.email)}
           >
-            Activate
+            {t("general.activate")}
           </span>
         ) : (
           <span
             className={styles.actionsLink}
             onClick={() => deactivateUser(user.email)}
           >
-            Deactivate
+            {t("general.deactivate")}
           </span>
         )}
         <span className={styles.actionsLink} onClick={() => editUser(user)}>
-          Edit
+          {t("general.edit")}
         </span>
         <span
           className={styles.deleteLink}
           onClick={() => deleteUser(user.email)}
         >
-          Delete
+          {t("general.delete")}
         </span>
       </div>
     );
@@ -310,7 +316,7 @@ const AdminBody = ({ type }) => {
         role,
       );
       if (resp) {
-        setInfoMessage(t("messages.success.updateProduct"));
+        setInfoMessage(t("messages.success.updateUser"));
       } else {
         setErrorMessage(t("messages.error.updateUser"));
       }
@@ -350,19 +356,21 @@ const AdminBody = ({ type }) => {
   return (
     <>
       <div className={styles.body}>
-        <Header title={ROLE_TO_NAME[type] + " Dashboard"} />
+        <Header title={ROLE_TO_NAME[type] + " " + t("dashboard.title")} />
 
         <TopInfo
-          title="Overview"
-          description="Check information on income, clicks, and registrations."
+          title={t("dashboard.overview")}
+          description={t("dashboard.overviewSubtitle")}
         >
           <div
             className={styles.topButtonWrapper}
             style={{ gridTemplateColumns: !affiliate ? "1fr 1fr" : "1fr" }}
           >
-            {!affiliate && <Button onClick={modalAddUser}>Add User</Button>}
+            {!affiliate && (
+              <Button onClick={modalAddUser}> {t("dashboard.addUser")}</Button>
+            )}
             <Button color="white" onClick={() => navigate("/dashboard/vendor")}>
-              Vendor Dashboard
+              {t("dashboard.vendorButton")}
             </Button>
           </div>
         </TopInfo>
@@ -402,7 +410,7 @@ const AdminBody = ({ type }) => {
 
           {!affiliate && (
             <div className={`${styles.registration} card`}>
-              <h3>Registrations Roles</h3>
+              <h3>{t("dashboard.registrationsRoles")}</h3>
 
               <div
                 style={{
@@ -429,7 +437,7 @@ const AdminBody = ({ type }) => {
 
               <div className={styles.totalBox}>
                 <div className={styles.totalBoxTop}>
-                  <p>Total</p>
+                  <p>{t("dashboard.total")}</p>
                   <p className={styles.label}>
                     {barContent.reduce((total, item) => {
                       const amount = Number(item.count);

@@ -72,11 +72,11 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
   async function handleBuy(providerSource, currencyIdx) {
     // Checks
     if (!(priceUSD > 0.0)) {
-      setErrorMessage(t("messages.validation.invalidPrice"));
+      setErrorMessage(t("messages.error.invalidPrice"));
       return;
     }
     if (!userId) {
-      setErrorMessage(t("messages.validation.invalidUserId"));
+      setErrorMessage(t("messages.error.invalidUserId"));
       return;
     }
 
@@ -115,11 +115,11 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
           setInfoMessage(t("messages.success.transaction"));
         } else {
           setInfoMessage(
-            "Transaction successfull but could not send transaction info!",
+            "Transaction successfully but could not send transaction info!",
           );
         }
       } else {
-        setErrorMessage(t("messages.validation.transactionFailed"));
+        setErrorMessage(t("messages.error.transactionFailed"));
       }
     } else if (providerSource === "internal") {
       const ret = await backend_API.makePayment(
@@ -132,11 +132,11 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
       );
 
       if (ret === "insufficientFunds") {
-        setErrorMessage(t("messages.validation.transactionFailed2"));
+        setErrorMessage(t("messages.error.transactionFailed2"));
       } else if (ret) {
         setInfoMessage(t("messages.success.transaction"));
       } else {
-        setErrorMessage(t("messages.validation.transactionFailed"));
+        setErrorMessage(t("messages.error.transactionFailed"));
       }
     }
   }

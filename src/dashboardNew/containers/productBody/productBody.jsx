@@ -13,6 +13,7 @@ import CropDialog, {
 } from "../../../components/cropDialog/cropDialog";
 import Button from "../../../components/button/button";
 import { useTranslation } from "react-i18next";
+import Popup from "../../components/popup/popup";
 
 const ProductBody = () => {
   const [products, setProducts] = useState([]);
@@ -25,6 +26,7 @@ const ProductBody = () => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [productId, setProductId] = useState(null);
+  const [load, setLoad] = useState(false);
 
   const { t } = useTranslation();
 
@@ -35,7 +37,7 @@ const ProductBody = () => {
 
   useEffect(() => {
     loadProducts();
-  }, []);
+  }, [load]);
 
   async function loadProducts() {
     const newProducts = await dashboardApi.getProducts();
@@ -60,21 +62,21 @@ const ProductBody = () => {
 
   const addOrUpdateProduct = async () => {
     if (!name) {
-      setErrorMessage(t("messages.error.nameRequired"));
+      setErrorMessage("Name is required!");
       return;
     }
     if (!description) {
-      setErrorMessage(t("messages.error.descriptionRequired"));
+      setErrorMessage("Description is required!");
       return;
     }
     if (!price) {
-      setErrorMessage(t("messages.error.priceRequired"));
+      setErrorMessage("Price is required!");
       return;
     }
     let priceAsFloat = null;
     priceAsFloat = parseFloat(price);
     if (!priceAsFloat) {
-      setErrorMessage(t("messages.error.priceValidation"));
+      setErrorMessage("Price must be a number!");
     }
 
     const resp1 = await dashboardApi.upsertProduct(
@@ -99,13 +101,11 @@ const ProductBody = () => {
     }
 
     if (resp1 && resp2) {
-      if (productId !== null)
-        setInfoMessage(t("messages.success.updateProduct"));
-      else setInfoMessage(t("messages.success.addProduct"));
+      if (productId !== null) setInfoMessage("Product updated successfully!");
+      else setInfoMessage("Product added successfully!");
     } else {
-      if (productId !== null)
-        setErrorMessage(t("messages.error.updateProduct"));
-      else setErrorMessage(t("messages.error.addProduct"));
+      if (productId !== null) setErrorMessage("Could not update the product!");
+      else setErrorMessage("Could not add a new product!");
     }
 
     loadProducts();
@@ -115,9 +115,9 @@ const ProductBody = () => {
   const deleteProduct = async (productId) => {
     const resp = await dashboardApi.deleteProduct(productId);
     if (resp) {
-      setInfoMessage(t("messages.success.deleteProduct"));
+      setInfoMessage("Product deleted successfully!");
     } else {
-      setErrorMessage(t("messages.error.deleteProduct"));
+      setErrorMessage("Could not delete the product!");
     }
     loadProducts();
   };
@@ -155,10 +155,8 @@ const ProductBody = () => {
       <Card>
         <div className={styles.titleHeader}>
           <SettingsTitle
-            title={t("products.totalProducts")}
-            description={
-              t("products.subtitle1") + " " + 5 + " " + t("products.subtitle2")
-            }
+            title="Total Products"
+            description="You’ve added 3 new product this month"
             product
             onCreate={handleProductClick}
           />
@@ -167,9 +165,11 @@ const ProductBody = () => {
         <div className={styles.row}>
           {products.map((item) => (
             <ProductCard
+              key={item.id}
               product={item}
               onClickEdit={() => showModal(item.id)}
               onClickDelete={() => deleteProduct(item.id)}
+              update={() => setLoad(!load)}
             />
           ))}
         </div>

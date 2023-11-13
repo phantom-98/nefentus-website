@@ -40,9 +40,7 @@ const PaymentBody = () => {
   async function createInvoice() {
     // Check data
     if (!amount) {
-      setErrorMessage(
-        `Price is above current transaction limit of ${transactionLimit}! The limit will be increased soon`,
-      );
+      setErrorMessage(t("messages.error.amountValid"));
       return;
     }
     if (amount > transactionLimit) {
@@ -154,10 +152,10 @@ const PaymentBody = () => {
     const result = await vendorAPI.deleteInvoice(link);
     if (result) {
       fetchInvoices();
-      setInfoMessage("Invoice deleted!");
+      setInfoMessage(t("messages.success.deleteInvoice"));
     } else {
       fetchInvoices();
-      setErrorMessage("Could not delete invoice!");
+      setErrorMessage(t("messages.error.deleteInvoice"));
     }
   }
 
@@ -312,6 +310,7 @@ const Modal = ({
   onClose,
 }) => {
   const { setInfoMessage } = useContext(MessageContext);
+  const { t } = useTranslation();
 
   return (
     <ModalOverlay>
@@ -334,9 +333,7 @@ const Modal = ({
               "Link:",
               <CopyValue
                 value={qrValue}
-                onCopy={() =>
-                  setInfoMessage("Payment link copied to clipboard!")
-                }
+                onCopy={() => setInfoMessage(t("messages.info.paymentLink"))}
               />,
             ],
           ]}

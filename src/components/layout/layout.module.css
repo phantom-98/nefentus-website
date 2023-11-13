@@ -83,6 +83,7 @@
 
 .layout .description {
   margin-bottom: 2rem;
+  font-size: 1.6rem !important;
 }
 
 .descriptionWrapper {
@@ -102,16 +103,24 @@
 }
 
 .inputHero {
-  display: grid;
-  grid-template-columns: 1fr max-content;
+  display: flex;
   align-items: center;
 
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
+.inputHero > button {
+  flex: 1 1 0;
+}
+
+.inputHero > button div {
+  padding: 2rem 1.5rem !important;
+}
+
 .inputWrapper {
   position: relative;
+  flex: 2 1 0;
 }
 
 .inputWrapper input {

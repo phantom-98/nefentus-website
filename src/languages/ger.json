@@ -17,7 +17,7 @@
     "heroTitle": "Akzeptieren Sie Krypto Zahlungen",
     "heroTitleGradient": "Ohne Risiko",
     "heroDescription": "Registrieren Sie sich jetzt und erhalten Sie bis zu 50 USDT in kostenlosen Transaktionen",
-    "heroButton": "Starte Jetzt - Kostenlos!",
+    "heroButton": "Jetzt loslegen",
     "heroButton2": "Jetzt Downloaden",
     "heroAvailable": "Verfügbar für:",
     "connectWith": "Oder Login mit",
@@ -333,6 +333,13 @@
     "description": "Wir bei Nefentus glauben daran, dass wir unsere Kunden bei jedem Schritt unterstützen müssen. Deshalb bieten wir kostenlose Onboarding-Anrufe an, um bei der Registrierung und Einrichtung zu helfen. Ganz gleich, ob Sie Barbesitzer, Berater, Coach, Trainer, Redner oder Agenturinhaber sind, wir sind bestrebt, die perfekte Lösung für Ihre individuellen Bedürfnisse zu finden.",
     "button": "Jetzt anmelden",
     "button2": "Planen Sie eine kostenlose Onboarding-Sitzung"
+  },
+  "reward": {
+    "subtitle": "For every new user",
+    "title1": "Get up to",
+    "gradient": "50 USDT",
+    "title2": "in rewards",
+    "button": "Create Your Free Account Now"
   },
   "footer": {
     "copyright": "© 2023 Nefentus. Alle Rechte vorbehalten.",

@@ -18,30 +18,122 @@ import { z } from "zod";
 import Error from "../error/error";
 import setCookie from "../setCookie/setCookie";
 import ReCAPTCHA from "react-google-recaptcha";
+import { OneTimeCodeInput } from "../../dashboard/input/input";
 
-const ConfirmMeEmail = ({ email, code, setCode, handleClick }) => {
+const ConfirmMeEmail = ({
+  email,
+  code,
+  setCode,
+  handleClickTotp,
+  handleClickOtp,
+  otp,
+  totp,
+  step,
+}) => {
+  console.log(code, "code");
+  console.log(totp, otp, "111");
+
   return (
-    <div className={styles["confirm-email"]}>
-      <h3>Check your email for a code</h3>
-      <p>
-        We have sent a 6-digits code to {email}. The code expires shortly, so
-        please enter it soon.
-      </p>
-      <form onSubmit={handleClick}>
-        <Input
-          value={code}
-          setState={setCode}
-          style={{ backgroundColor: "#161616" }}
-        />
-        <div className={styles["button-group"]}>
-          <div className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}>
-            <Button className={styles.button} onClick={handleClick}>
-              Confirm
-            </Button>
-          </div>
+    <>
+      {otp && !totp && (
+        <div className={styles["confirm-email"]}>
+          <h3>Check your email for a code</h3>
+          <p>
+            We have sent a 6-digits code to {email}. The code expires shortly,
+            so please enter it soon.
+          </p>
+          <form onSubmit={handleClickOtp}>
+            <OneTimeCodeInput
+              setOTPCode={setCode}
+              request={() => handleClickOtp()}
+            />
+
+            <div className={styles["button-group"]}>
+              <div
+                className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
+              >
+                <Button className={styles.button} onClick={handleClickOtp}>
+                  Confirm
+                </Button>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
+      )}
+      {totp && !otp && (
+        <div className={styles["confirm-email"]}>
+          <h3>Enter code from your Authenticator</h3>
+          <p>You need to enter 6-digit code from your Authenticator</p>
+          <form onSubmit={handleClickTotp}>
+            <OneTimeCodeInput
+              setOTPCode={setCode}
+              request={() => handleClickTotp()}
+            />
+
+            <div className={styles["button-group"]}>
+              <div
+                className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
+              >
+                <Button className={styles.button} onClick={handleClickTotp}>
+                  Confirm
+                </Button>
+              </div>
+            </div>
+          </form>
+        </div>
+      )}
+      {totp && otp && (
+        <>
+          {!step ? (
+            <div className={styles["confirm-email"]}>
+              <h3>Check your email for a code</h3>
+              <p>
+                We have sent a 6-digits code to {email}. The code expires
+                shortly, so please enter it soon.
+              </p>
+              <form onSubmit={handleClickOtp}>
+                <OneTimeCodeInput
+                  setOTPCode={setCode}
+                  request={() => handleClickOtp()}
+                />
+
+                <div className={styles["button-group"]}>
+                  <div
+                    className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
+                  >
+                    <Button className={styles.button} onClick={handleClickOtp}>
+                      Confirm
+                    </Button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          ) : (
+            <div className={styles["confirm-email"]}>
+              <h3>Enter code from your Authenticator</h3>
+              <p>You need to enter 6-digit code from your Authenticator</p>
+              <form id={"totpForm"} onSubmit={handleClickTotp}>
+                <OneTimeCodeInput
+                  setOTPCode={setCode}
+                  resetCodeFlag
+                  request={() => handleClickTotp()}
+                />
+
+                <div className={styles["button-group"]}>
+                  <div
+                    className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
+                  >
+                    <Button className={styles.button} onClick={handleClickTotp}>
+                      Confirm
+                    </Button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          )}
+        </>
+      )}
+    </>
   );
 };
 
@@ -59,8 +151,8 @@ const LoginBox = () => {
   );
 
   const schema = z.object({
-    email: z.string().min(1, { message: "Please enter your email" }),
-    password: z.string().min(1, { message: "Please enter your password" }),
+    email: z.string().min(1, { message: t("messages.validation.email") }),
+    password: z.string().min(1, { message: t("messages.validation.password") }),
   });
 
   const {
@@ -95,6 +187,9 @@ const LoginBox = () => {
   const [showConfirmMeEmail, setShowConfirmMeEmail] = useState(false);
   const [email, setEmail] = useState(null);
   const [code, setCode] = useState("");
+  const [otp, setOtp] = useState(false);
+  const [totp, setTotp] = useState(false);
+  const [step, setStep] = useState(false);
 
   function navigateDashboard() {
     const link = dashboardLink(localStorage);
@@ -124,7 +219,7 @@ const LoginBox = () => {
     const captchaValue = recaptchaRef.current.getValue();
 
     if (!captchaValue) {
-      setErrorMessage(t("messages.error.reCAPTCHA"));
+      setErrorMessage("Please verify the reCAPTCHA!");
     } else {
       if (Cookies.get("acceptCookie") !== true) {
         checkbox = false;
@@ -138,8 +233,10 @@ const LoginBox = () => {
         if (response == null) {
           setErrorMessage(t("messages.error.loginData"));
           return;
-        } else if (response.hasOtp) {
+        } else if (response.hasOtp || response.hasTotp) {
           setShowConfirmMeEmail(true);
+          setOtp(response.hasOtp);
+          setTotp(response.hasTotp);
           setEmail(response.email);
         } else {
           navigateDashboard();
@@ -160,9 +257,29 @@ const LoginBox = () => {
         setErrorMessage(t("messages.error.confirm"));
         return;
       }
-      navigateDashboard();
+      if (otp && totp) {
+        setStep(true);
+      } else {
+        navigateDashboard();
+      }
     } catch (error) {
       setErrorMessage(t("messages.error.login"));
+    }
+  }
+
+  async function verifyTotpCode(email, code, checkbox) {
+    if (Cookies.get("acceptCookie") !== true) {
+      checkbox = false;
+    }
+    const response = await backendAPI.verifyTotpToken(email, code, checkbox);
+    try {
+      if (response == null) {
+        setErrorMessage("Failed to Confirm");
+        return;
+      }
+      navigateDashboard();
+    } catch (error) {
+      setErrorMessage("There was an error logging in");
     }
   }
 
@@ -170,12 +287,12 @@ const LoginBox = () => {
     try {
       const response = await backendAPI.activateAccount(token);
       if (response == null) {
-        setErrorMessage(t("messages.error.activateAccount"));
+        setErrorMessage("Error on activating account: ");
         return;
       }
-      setMessage(t("messages.success.activateAccount"));
+      setMessage("Account successfully activated");
     } catch (error) {
-      setErrorMessage(t("messages.error.activateAccount"));
+      setErrorMessage("Error on activating account: ");
     }
   };
 

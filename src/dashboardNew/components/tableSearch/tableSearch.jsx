@@ -4,7 +4,13 @@ import styles from "./tableSearch.module.css";
 import Search from "../../../assets/icon/search.svg";
 import { useTranslation } from "react-i18next";
 
-const TableSearch = ({ title, description }) => {
+const TableSearch = ({
+  title,
+  description,
+  findUser,
+  setGetDataInput,
+  getDataInput,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -18,9 +24,13 @@ const TableSearch = ({ title, description }) => {
         <div className={styles.inputWrapper}>
           <img src={Search} alt="" />
 
-          <input type="text" />
+          <input
+            type="text"
+            onChange={(e) => setGetDataInput(e.target.value)}
+            value={getDataInput}
+          />
         </div>
-        <Button>{t("general.search")}</Button>
+        <Button onClick={findUser}>{t("general.search")}</Button>
       </div>
     </div>
   );

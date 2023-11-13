@@ -9,6 +9,7 @@ import {
 import Button from "../../components/button/button";
 import styles from "./walletIntegrations.module.css";
 import { useTranslation } from "react-i18next";
+import backendAPI from "../../../api/backendAPI";
 
 const WalletIntegration = ({
   name,
@@ -17,6 +18,8 @@ const WalletIntegration = ({
   connectStatus,
   setConnectStatus,
 }) => {
+  const backend_API = new backendAPI();
+
   const wallet = {
     connect: useConnect(),
     disconnect: useDisconnect(),
@@ -88,18 +91,18 @@ const WalletIntegration = ({
               wallet.connect(wallet.config, { chainId: 1 });
             }}
           >
-            {t("integrations.connect")}
+            Connect to Wallet
           </Button>
         )}
         {wallet.status === "unknown" && (
-          <Button disabled>{t("integrations.connectError")}</Button>
+          <Button disabled>Connect wallet is not available!</Button>
         )}
         {wallet.status === "connecting" && (
-          <Button disabled>{t("integrations.connecting")}</Button>
+          <Button disabled>Connecting...</Button>
         )}
         {wallet.status === "connected" && (
           <Button color={"green"} onClick={() => wallet.disconnect()}>
-            {t("integrations.disconnect")}
+            Disconnect
           </Button>
         )}
       </div>

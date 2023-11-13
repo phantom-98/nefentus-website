@@ -1,6 +1,11 @@
-import { Attachment, Authentificator } from "../input/input";
+import InputComponent, {
+  Attachment,
+  OneTimeCodeInput,
+  RawInput,
+  Switcher,
+} from "../input/input";
 import styles from "./settings.module.css";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 
 import Logo from "../../assets/logo/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +13,7 @@ import backend_API from "../../api/backendAPI";
 import Cookies from "universal-cookie";
 import InputComponent, { RawInput } from "../input/input";
 import backendAPI from "../../api/backendAPI";
+import Cookies from "universal-cookie";
 import Header from "../header/header";
 import BlobPicture from "../../components/blobPicture/blobPicture";
 import { KYC } from "./components/KYC";
@@ -22,13 +28,23 @@ import CropDialog, {
   dataURLtoFile,
 } from "../../components/cropDialog/cropDialog";
 import { useTranslation } from "react-i18next";
+import ModalOverlay from "../modal/modalOverlay";
+import UrlLink from "../../assets/icon/copyClipboardWhite.svg";
+import { useTranslation } from "react-i18next";
+import QRCode from "react-qr-code";
 
-let nav = ["Profile", "Change password", "Change email"];
+let nav = [
+  "Profile",
+  "Change password",
+  "Change email",
+  "2-Factor Authentication",
+];
 
 const nav_kyc = [
   "Profile",
   "Change password",
   "Change email",
+  "2-Factor Authentication",
   <div>
     <span className={styles.rest}>Know Your Customer(</span>KYC
     <span className={styles.rest}>)</span>
@@ -195,7 +211,6 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
   const [phishingCode, setPhishingCode] = useState(
     localStorage.getItem("antiPhishingCode"),
   );
-  const { t } = useTranslation();
 
   useEffect(() => {
     const profilePic = localStorage.getItem("profile_pic");
@@ -244,17 +259,17 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
 
   const checkErrors = () => {
     if (!firstName) {
-      setErrorMessage(t("messages.error.firstNameRequired"));
+      setErrorMessage("First name is required.");
       return null;
     }
 
     if (!lastName) {
-      setErrorMessage(t("messages.error.lastNameRequired"));
+      setErrorMessage("Last name is required.");
       return null;
     }
 
     if (!email || !email.trim()) {
-      setErrorMessage(t("messages.error.emailRequired"));
+      setErrorMessage("Email is required.");
       return null;
     }
 
@@ -288,14 +303,14 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
         resp2 = await backendAPI.deleteProfileImage(file);
       }
       if (resp2 == null) {
-        setErrorMessage(t("messages.error.uploadPicture"));
+        setErrorMessage("Error on uploading the profile picture");
       }
       setImageChanged(false);
     }
 
     const response2 = await backendAPI.update(requestData);
     if (response2 == null) {
-      setErrorMessage(t("messages.error.updateData"));
+      setErrorMessage("Error on updating data");
       await backendAPI.signout();
       setTimeout(() => {
         navigate("/");
@@ -306,7 +321,7 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
     afterUpdateSettings();
 
     if (response !== null && response2 !== null) {
-      setInfoMessage(t("messages.success.updateSettings"));
+      setInfoMessage("Settings updated successfully!");
     }
   };
 
@@ -418,7 +433,6 @@ const PasswordBody = ({ active }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [verificationCode, setVerificationCode] = useState(null);
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
-  const { t } = useTranslation();
 
   const backendAPI = new backend_API();
 
@@ -451,7 +465,7 @@ const PasswordBody = ({ active }) => {
 
   const handleConfirm = async () => {
     if (newPassword !== confirmPassword) {
-      setErrorMessage(t("messages.error.passwordEqual"));
+      setErrorMessage("Passwords are not equal");
       return;
     }
 
@@ -460,7 +474,7 @@ const PasswordBody = ({ active }) => {
       currentPassword,
     );
     if (response == null) {
-      setErrorMessage(t("messages.error.oldPassword"));
+      setErrorMessage("Old password is not the right one!");
       return;
     }
     setErrorMessage(null);
@@ -471,10 +485,10 @@ const PasswordBody = ({ active }) => {
     const response =
       await backendAPI.changePasswordConfirmDashboard(verificationCode);
     if (response == null) {
-      setErrorMessage(t("messages.error.codeValid"));
+      setErrorMessage("Code is not valid or too old!");
       return;
     }
-    setInfoMessage(t("messages.success.passwordChange"));
+    setInfoMessage("Password successfully changed!");
     resetValues();
     setVerificationCode("");
     setOpenBox(false);
@@ -554,7 +568,6 @@ const EmailBody = ({ active }) => {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState(null);
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
-  const { t } = useTranslation();
 
   const backendAPI = new backend_API();
   const navigate = useNavigate();
@@ -591,16 +604,16 @@ const EmailBody = ({ active }) => {
 
   const handleConfirm = async () => {
     if (newEmail !== confirmEmail) {
-      setErrorMessage(t("messages.error.emailEqual"));
+      setErrorMessage("Emails are not equal");
       return;
     }
 
     const response = await backendAPI.changeEmailDashboard(newEmail);
     if (response == null) {
-      setErrorMessage(t("messages.error.emailUsed"));
+      setErrorMessage("Email is already in use!");
       return;
     } else {
-      setInfoMessage(t("messages.success.email"));
+      setInfoMessage("Email successfully changed!");
     }
     setErrorMessage(null);
     setOpenBox(true);
@@ -618,7 +631,7 @@ const EmailBody = ({ active }) => {
 
   const handleCode = async () => {
     if (verificationCode.trim().length === 0) {
-      setErrorMessage(t("messages.error.confirmCode"));
+      setErrorMessage("Enter confirmation code!");
       return;
     } else {
       const response = await backendAPI.confirmEmail(
@@ -626,10 +639,10 @@ const EmailBody = ({ active }) => {
         newEmail,
       );
       if (response == null) {
-        setErrorMessage(t("messages.error.verificationCode"));
+        setErrorMessage("Wrong verification code!");
         return;
       } else {
-        setInfoMessage(t("messages.success.email"));
+        setInfoMessage("Email successfully changed!");
         resetValues();
         await logOut();
       }
