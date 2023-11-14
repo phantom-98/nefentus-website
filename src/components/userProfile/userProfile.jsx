@@ -41,26 +41,23 @@ const UserProfile = ({ web, logOut }) => {
       </div>
       <div className={`${styles.profileDropdown}`}>
         <div className={`${styles.profileBody} card`}>
-          <Link to="/dashboardNew/profile" className={styles.profileItem}>
+          <Link to="/dashboard/profile" className={styles.profileItem}>
             <img src={User2} alt="" />
-            <p>Profile</p>
+            <p>{t("navigation.profile")}</p>
           </Link>
           {web && (
-            <Link to="/dashboardNew/" className={styles.profileItem}>
+            <Link to="/dashboard/" className={styles.profileItem}>
               <img src={Dashboard} alt="" />
-              <p>Dashboard</p>
+              <p>{t("navigation.dashboard")}</p>
             </Link>
           )}
-          <Link to="/dashboardNew/security" className={styles.profileItem}>
+          <Link to="/dashboard/security" className={styles.profileItem}>
             <img src={Security} alt="" />
-            <p>Security</p>
+            <p>{t("navigation.security")}</p>
           </Link>
-          <Link
-            to="/dashboardNew/identification"
-            className={styles.profileItem}
-          >
+          <Link to="/dashboard/identification" className={styles.profileItem}>
             <img src={Identification} alt="" />
-            <p>Identification</p>
+            <p>{t("navigation.identification")}</p>
           </Link>
           <Link onClick={logOut} to="/" className={styles.profileItem}>
             <img src={Logout} alt="" />

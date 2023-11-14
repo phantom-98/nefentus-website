@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./settingsTitle.module.css";
-import { EnableType } from "./settingsItem";
+// import { EnableType } from "./settingsItem";
 import Button from "../button/button";
 import backend_API from "../../../api/backendAPI";
 import QRCode from "react-qr-code";
