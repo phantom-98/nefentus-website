@@ -62,21 +62,21 @@ const ProductBody = () => {
 
   const addOrUpdateProduct = async () => {
     if (!name) {
-      setErrorMessage("Name is required!");
+      setErrorMessage(t("products.error.name"));
       return;
     }
     if (!description) {
-      setErrorMessage("Description is required!");
+      setErrorMessage(t("products.error.description"));
       return;
     }
     if (!price) {
-      setErrorMessage("Price is required!");
+      setErrorMessage(t("products.error.price"));
       return;
     }
     let priceAsFloat = null;
     priceAsFloat = parseFloat(price);
     if (!priceAsFloat) {
-      setErrorMessage("Price must be a number!");
+      setErrorMessage(t("products.error.priceAsFloat"));
     }
 
     const resp1 = await dashboardApi.upsertProduct(
@@ -155,8 +155,8 @@ const ProductBody = () => {
       <Card>
         <div className={styles.titleHeader}>
           <SettingsTitle
-            title="Total Products"
-            description="You’ve added 3 new product this month"
+            title={t("products.totalProducts")}
+            description={t("products.description")}
             product
             onCreate={handleProductClick}
           />
@@ -185,7 +185,7 @@ const ProductBody = () => {
 
               <div className={styles.modalInputs}>
                 <Attachment
-                  label="Product image"
+                  label={t("products.createProductModal.imageLabel")}
                   onUpload={(file) => {
                     setImage(file);
                     setImageChanged(true);
@@ -200,31 +200,37 @@ const ProductBody = () => {
                 />
                 <Input
                   dashboard
-                  label="Name*"
-                  placeholder="Enter name"
+                  label={t("products.createProductModal.nameLabel")}
+                  placeholder={t("products.createProductModal.namePlaceholder")}
                   value={name}
                   setState={setName}
                 />
                 <Textarea
                   dashboard
-                  label="Description*"
-                  placeholder="Enter description"
+                  label={t("products.createProductModal.descriptionLabel")}
+                  placeholder={t(
+                    "products.createProductModal.descriptionPlaceholder",
+                  )}
                   value={description}
                   setState={setDescription}
                   rows={2}
                 />
                 <Input
                   dashboard
-                  label="Price*"
-                  placeholder="Enter price"
+                  label={t("products.createProductModal.priceLabel")}
+                  placeholder={t(
+                    "products.createProductModal.pricePlaceholder",
+                  )}
                   value={price}
                   setState={setPrice}
                   number
                 />
                 <Input
                   dashboard
-                  label="Stock"
-                  placeholder="Enter stock if limited stock"
+                  label={t("products.createProductModal.stockLabel")}
+                  placeholder={t(
+                    "products.createProductModal.stockPlaceholder",
+                  )}
                   value={stock}
                   setState={setStock}
                   number
@@ -239,10 +245,13 @@ const ProductBody = () => {
                     setProductId(null);
                   }}
                 >
-                  Cancel
+                  {t("products.createProductModal.cancel")}
                 </div>
                 <Button onClick={addOrUpdateProduct} color="white">
-                  {openModal === "add" ? "Add" : "Update"} Product
+                  {openModal === "add"
+                    ? t("products.createProductModal.add")
+                    : t("products.createProductModal.update")}{" "}
+                  Product
                 </Button>
               </div>
             </div>

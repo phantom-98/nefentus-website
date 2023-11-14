@@ -91,18 +91,18 @@ const WalletIntegration = ({
               wallet.connect(wallet.config, { chainId: 1 });
             }}
           >
-            Connect to Wallet
+            {t("dashboard.integrations.connect")}
           </Button>
         )}
         {wallet.status === "unknown" && (
-          <Button disabled>Connect wallet is not available!</Button>
+          <Button disabled>{t("dashboard.integrations.don'tConnect")}</Button>
         )}
         {wallet.status === "connecting" && (
-          <Button disabled>Connecting...</Button>
+          <Button disabled>{t("dashboard.integrations.connecting")}</Button>
         )}
         {wallet.status === "connected" && (
           <Button color={"green"} onClick={() => wallet.disconnect()}>
-            Disconnect
+            {t("dashboard.integrations.disconnect")}
           </Button>
         )}
       </div>

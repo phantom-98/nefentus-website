@@ -165,6 +165,8 @@ export const Textarea = ({
 export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
   const inputRef = useRef(null);
 
+  const { t } = useTranslation();
+
   const [text, setText] = useState(value ? value : false);
 
   const handleClick = () => {
@@ -204,7 +206,7 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
       <div className={styles.attachment}>
         <img src={AttachmentImage} alt="Attachment" onClick={handleClick} />
         <p style={{ color: text ? "#fff" : "#c4c4c4" }} onClick={handleClick}>
-          {text ? text : "Add attachment"}
+          {text ? text : t("products.createProductModal.attach")}
         </p>
         <img
           src={Delete}

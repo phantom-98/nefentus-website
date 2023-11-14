@@ -372,6 +372,8 @@
     "balance": "Saldo",
     "cryptoMarket": "Krypto-Markt",
     "hideBalance": "Nullsaldo-Vermögenswerte ausblenden",
+    "send": "Schicken",
+    "receive": "Erhalten",
     "roles": {
       "Vendor": "Verkäufer",
       "Admin": "Administrator",
@@ -404,6 +406,43 @@
       "password": "Passwort*",
       "passwordPlaceholder": "Geben Sie das Passwort ein",
       "role": "Rolle*"
+    },
+    "earningCards": {
+      "first": "Verkäufe: Insgesamt",
+      "second": "Verkäufe: Letzte 24 Stunden",
+      "third": "Verkäufe: Letzte 30 Tage",
+      "progress": "im Vergleich zu den letzten 30 Tagen"
+    },
+    "incomeTitle": "Einkommen 24 Stunden",
+    "cryptoCard": {
+      "receiveModal": {
+        "title": "Geld empfangen",
+        "description": "Erhalten Sie Geld, indem Sie Kryptowährung an die unten stehende Adresse senden."
+      },
+      "sendModal": {
+        "title": "Gelder abheben",
+        "description": "Sie haben eine Abhebung von Ihrem Konto angefordert.",
+        "currencyLabel": "Währungsoptionen",
+        "currencyPlaceholder": "Währungsoption wählen",
+        "amountLabel": "Betrag",
+        "amountPlaceholder": "Betrag eingeben",
+        "addressLabel": "Adresse",
+        "addressPlaceholder": "Adresse eingeben",
+        "passwordLabel": "Passwort",
+        "passwordPlaceholder": "Passwort eingeben",
+        "amountError": "Bitte geben Sie einen Betrag zum Abheben ein.",
+        "addressError": "Bitte geben Sie eine Adresse für die Abhebung ein.",
+        "passwordError": "Bitte geben Sie Ihr Passwort ein.",
+        "currencyError": "Please select a correct currency to withdraw."
+      },
+      "wallet": "Wallet-Adresse",
+      "close": "Schließen"
+    },
+    "integrations": {
+      "connect": "Mit Wallet verbinden",
+      "connecting": "Verbinden...",
+      "disconnect": "Trennen",
+      "don'tConnect": "Connect Wallet ist nicht verfügbar!"
     }
   },
   "graph": {
@@ -753,7 +792,29 @@
     "totalProducts": "Produkte insgesamt",
     "createNewProduct": "Neues Produkt erstellen",
     "subtitle1": "Sie haben hinzugefügt",
-    "subtitle2": "neues Produkt diesen Monat"
+    "subtitle2": "neues Produkt diesen Monat",
+    "description": "Sie haben diesen Monat drei neue Produkte hinzugefügt",
+    "error": {
+      "name": "Name ist erforderlich!",
+      "description": "Beschreibung ist erforderlich!",
+      "price": "Preis ist erforderlich!",
+      "priceAsFloat": "Preis muss eine Zahl sein!"
+    },
+    "createProductModal": {
+      "imageLabel": "Produktbild",
+      "attach": "Anhang hinzufügen",
+      "nameLabel": "Name*",
+      "namePlaceholder": "Name eingeben",
+      "descriptionLabel": "Beschreibung*",
+      "descriptionPlaceholder": "Beschreibung eingeben",
+      "priceLabel": "Preis*",
+      "pricePlaceholder": "Geben Sie den Preis ein",
+      "stockLabel": "Aktie",
+      "stockPlaceholder": "Geben Sie den Lagerbestand ein, wenn der Lagerbestand begrenzt ist",
+      "add": "Hinzufügen",
+      "update": "Aktualisieren",
+      "cancel": "Stornieren"
+    }
   },
   "payments": {
     "title": "Eine neue Rechnung erstellen",

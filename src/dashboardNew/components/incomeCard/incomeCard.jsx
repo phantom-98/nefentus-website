@@ -14,6 +14,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(
   CategoryScale,
@@ -80,9 +81,10 @@ export const options = {
 };
 
 const IncomeCard = ({ data }) => {
+  const { t } = useTranslation();
   return (
     <Card className={styles.card}>
-      <div className={styles.label}>Income 24 Hours</div>
+      <div className={styles.label}>{t("dashboard.incomeTitle")}</div>
 
       <div className={styles.chart}>
         <Line options={options} data={data} />

@@ -397,6 +397,8 @@
     "balance": "Баланс",
     "cryptoMarket": "Криптомаркет",
     "hideBalance": "Приховати активи з нульовим балансом",
+    "send": "Відправит",
+    "receive": "Отримати",
     "roles": {
       "Vendor": "Постачальник",
       "Admin": "Адміністратор",
@@ -429,6 +431,43 @@
       "password": "Пароль*",
       "passwordPlaceholder": "Введіть пароль",
       "role": "Роль*"
+    },
+    "earningCards": {
+      "first": "Продажі: Всього",
+      "second": "Продажі: останні 24 години",
+      "third": "Продажі: останні 30 днів",
+      "progress": "порівняно з останніми 30 днями"
+    },
+    "incomeTitle": "Дохід 24 години",
+    "cryptoCard": {
+      "receiveModal": {
+        "title": "Отримати кошти",
+        "description": "Отримайте кошти, відправивши криптовалюту на вказану нижче адресу."
+      },
+      "sendModal": {
+        "title": "Виведення коштів",
+        "description": "Ви запросили виведення коштів з вашого рахунку.",
+        "currencyLabel": "Варіанти валюти",
+        "currencyPlaceholder": "Виберіть варіант валюти",
+        "amountLabel": "Сума",
+        "amountPlaceholder": "Введіть суму",
+        "addressLabel": "Адреса",
+        "addressPlaceholder": "Введіть адресу",
+        "passwordLabel": "Пароль",
+        "passwordPlaceholder": "Введіть пароль",
+        "amountError": "Будь ласка, введіть суму для зняття.",
+        "addressError": "Будь ласка, введіть адресу для зняття коштів.",
+        "passwordError": "Будь ласка, введіть свій пароль.",
+        "currencyError": "Виберіть правильну валюту для виведення."
+      },
+      "wallet": "Адреса гаманця",
+      "close": "Закрити"
+    },
+    "integrations": {
+      "connect": "Підключитися",
+      "connecting": "Підключення...",
+      "disconnect": "Відключити",
+      "don'tConnect": "Підключення гаманеця недоступно!"
     }
   },
   "graph": {
@@ -778,7 +817,29 @@
     "totalProducts": "Всі продукти",
     "createNewProduct": "Створити новий продукт",
     "subtitle1": "Ви додали",
-    "subtitle2": "нових товарів цього місяця"
+    "subtitle2": "нових товарів цього місяця",
+    "description": "Цього місяця ви додали 3 нові продукти",
+    "error": {
+      "name": "Необхідно вказати ім'я!",
+      "description": "Необхідно вказати опис!",
+      "price": "Необхідно вказати ціну!",
+      "priceAsFloat": "Ціна має бути числом!"
+    },
+    "createProductModal": {
+      "imageLabel": "Картинка продукту",
+      "attach": "Додайте вкладення",
+      "nameLabel": "Ім'я*",
+      "namePlaceholder": "Введіть ім'я",
+      "descriptionLabel": "Опис*",
+      "descriptionPlaceholder": "Введіть опис",
+      "priceLabel": "Ціна*",
+      "pricePlaceholder": "Введіть ціну",
+      "stockLabel": "Запис",
+      "stockPlaceholder": "Введіть запас, якщо запас обмежений",
+      "add": "Додати",
+      "update": "Оновити",
+      "cancel": "Скасувати"
+    }
   },
   "payments": {
     "title": "Створити новий інвойс",

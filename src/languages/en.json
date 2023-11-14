@@ -425,6 +425,8 @@
     "balance": "Balance",
     "cryptoMarket": "Crypto Market",
     "hideBalance": "Hide Zero Balance Assets",
+    "send": "Send",
+    "receive": "Receive",
     "roles": {
       "Vendor": "Vendor",
       "Admin": "Admin",
@@ -457,6 +459,43 @@
       "password": "Password*",
       "passwordPlaceholder": "Enter password",
       "role": "Role*"
+    },
+    "earningCards": {
+      "first": "Sales: Total",
+      "second": "Sales: Last 24 hours",
+      "third": "Sales: Last 30 days",
+      "progress": "vs last 30 days"
+    },
+    "incomeTitle": "Income 24 Hours",
+    "cryptoCard": {
+      "receiveModal": {
+        "title": "Receive funds",
+        "description": "Receive funds by sending cryptocurrency to the address below."
+      },
+      "sendModal": {
+        "title": "Withdraw funds",
+        "description": "You requested to withdraw funds from your account.",
+        "currencyLabel": "Currency options",
+        "currencyPlaceholder": "Select Currency Option",
+        "amountLabel": "Amount",
+        "amountPlaceholder": "Enter amount",
+        "addressLabel": "Address",
+        "addressPlaceholder": "Enter address",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Enter password",
+        "amountError": "Please enter an amount to withdraw.",
+        "addressError": "Please enter an address to withdraw to.",
+        "passwordError": "Please enter your password.",
+        "currencyError": "Bitte wählen Sie für die Auszahlung die korrekte Währung aus."
+      },
+      "wallet": "Wallet Address",
+      "close": "Close"
+    },
+    "integrations": {
+      "connect": "Connect to Wallet",
+      "connecting": "Connecting...",
+      "disconnect": "Disconnect",
+      "don'tConnect": "Connect wallet is not available!"
     }
   },
   "graph": {
@@ -806,7 +845,29 @@
     "totalProducts": "Total Products",
     "createNewProduct": "Create New Product",
     "subtitle1": "You’ve added",
-    "subtitle2": "new product this month"
+    "subtitle2": "new product this month",
+    "description": "You’ve added 3 new product this month",
+    "error": {
+      "name": "Name is required!",
+      "description": "Description is required!",
+      "price": "Price is required!",
+      "priceAsFloat": "Price must be a number!"
+    },
+    "createProductModal": {
+      "imageLabel": "Product image",
+      "attach": "Add attachment",
+      "nameLabel": "Name*",
+      "namePlaceholder": "Enter name",
+      "descriptionLabel": "Description*",
+      "descriptionPlaceholder": "Enter description",
+      "priceLabel": "Price*",
+      "pricePlaceholder": "Enter price",
+      "stockLabel": "Stock",
+      "stockPlaceholder": "Enter stock if limited stock",
+      "add": "Add",
+      "update": "Update",
+      "cancel": "Cancel"
+    }
   },
   "payments": {
     "title": "Create a new invoice",
