@@ -265,9 +265,13 @@ const Table = ({ data, setData }) => {
                         </div>
 
                         {item.typeData == "photo" ? (
-                          <a href={item.file} download>
-                            <img src={Download} alt="" />
-                          </a>
+                          item.file ? (
+                            <a href={item.file} download>
+                              <img src={Download} alt="" />
+                            </a>
+                          ) : (
+                            <div></div>
+                          )
                         ) : (
                           <p>{item.file}</p>
                         )}
