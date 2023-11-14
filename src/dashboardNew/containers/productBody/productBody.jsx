@@ -200,14 +200,16 @@ const ProductBody = () => {
                 />
                 <Input
                   dashboard
-                  label={t("products.createProductModal.nameLabel")}
+                  label={t("products.createProductModal.nameLabel") + "*"}
                   placeholder={t("products.createProductModal.namePlaceholder")}
                   value={name}
                   setState={setName}
                 />
                 <Textarea
                   dashboard
-                  label={t("products.createProductModal.descriptionLabel")}
+                  label={
+                    t("products.createProductModal.descriptionLabel") + "*"
+                  }
                   placeholder={t(
                     "products.createProductModal.descriptionPlaceholder",
                   )}
@@ -217,7 +219,7 @@ const ProductBody = () => {
                 />
                 <Input
                   dashboard
-                  label={t("products.createProductModal.priceLabel")}
+                  label={t("products.createProductModal.priceLabel") + "*"}
                   placeholder={t(
                     "products.createProductModal.pricePlaceholder",
                   )}
@@ -251,7 +253,6 @@ const ProductBody = () => {
                   {openModal === "add"
                     ? t("products.createProductModal.add")
                     : t("products.createProductModal.update")}{" "}
-                  Product
                 </Button>
               </div>
             </div>

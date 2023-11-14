@@ -842,10 +842,10 @@
     "soon": "Coming Soon"
   },
   "products": {
-    "totalProducts": "Total Products",
+    "totalProducts": "All Products",
     "createNewProduct": "Create New Product",
-    "subtitle1": "You’ve added",
-    "subtitle2": "new product this month",
+    "subtitle1": "You currently have",
+    "subtitle2": "products",
     "description": "You’ve added 3 new product this month",
     "error": {
       "name": "Name is required!",
@@ -856,11 +856,11 @@
     "createProductModal": {
       "imageLabel": "Product image",
       "attach": "Add attachment",
-      "nameLabel": "Name*",
+      "nameLabel": "Name",
       "namePlaceholder": "Enter name",
-      "descriptionLabel": "Description*",
+      "descriptionLabel": "Description",
       "descriptionPlaceholder": "Enter description",
-      "priceLabel": "Price*",
+      "priceLabel": "Price",
       "pricePlaceholder": "Enter price",
       "stockLabel": "Stock",
       "stockPlaceholder": "Enter stock if limited stock",
@@ -974,14 +974,14 @@
   },
   "identification": {
     "title": "Identification",
-    "description": "Get your identity verified to buy and trade",
+    "description": "Get your identity verified to sell and trade",
     "verified": "Verified",
     "unverified": "Unverified",
     "unlimited": "Unlimited",
     "verificationLevels": "Verification Levels",
     "level": "Level",
-    "level1Description": "Personal Information, Government Issued ID and Facial\n                Recognition",
-    "level2Description": "Proof of Address & Proof of Company",
+    "level1Description": "Personal Information, Government Issued ID and Facial\n Recognition",
+    "level2Description": "Proof of Address & Proof of Company (if applicable)",
     "level3Description": " Enhanced Diligence",
     "accountLimit": {
       "title": "Account Limit",

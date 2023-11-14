@@ -9,7 +9,7 @@
     "menu": "Registrierung",
     "profile": "Profil",
     "dashboard": "Dashboard",
-    "security": "Armaturenbrett",
+    "security": "Sicherheit",
     "identification": "Identifikation",
     "logOut": "Ausloggen"
   },
@@ -789,10 +789,10 @@
     "soon": "Demnächst"
   },
   "products": {
-    "totalProducts": "Produkte insgesamt",
+    "totalProducts": "Alle Produkte",
     "createNewProduct": "Neues Produkt erstellen",
-    "subtitle1": "Sie haben hinzugefügt",
-    "subtitle2": "neues Produkt diesen Monat",
+    "subtitle1": "Sie haben momentan",
+    "subtitle2": "Produkte",
     "description": "Sie haben diesen Monat drei neue Produkte hinzugefügt",
     "error": {
       "name": "Name ist erforderlich!",
@@ -803,21 +803,21 @@
     "createProductModal": {
       "imageLabel": "Produktbild",
       "attach": "Anhang hinzufügen",
-      "nameLabel": "Name*",
+      "nameLabel": "Name",
       "namePlaceholder": "Name eingeben",
-      "descriptionLabel": "Beschreibung*",
+      "descriptionLabel": "Beschreibung",
       "descriptionPlaceholder": "Beschreibung eingeben",
-      "priceLabel": "Preis*",
-      "pricePlaceholder": "Geben Sie den Preis ein",
-      "stockLabel": "Aktie",
-      "stockPlaceholder": "Geben Sie den Lagerbestand ein, wenn der Lagerbestand begrenzt ist",
+      "priceLabel": "Preis",
+      "pricePlaceholder": "Preis eingeben",
+      "stockLabel": "Lagerbestand",
+      "stockPlaceholder": "Lagerbestand eingeben, wenn dieser begrenzt ist",
       "add": "Hinzufügen",
       "update": "Aktualisieren",
       "cancel": "Stornieren"
     }
   },
   "payments": {
-    "title": "Eine neue Rechnung erstellen",
+    "title": "Neue Rechnung erstellen",
     "enterAmount": "Betrag in $ eingeben",
     "email": "E-Mail",
     "name": "Name",
@@ -830,7 +830,7 @@
       "price": "Preis ($)",
       "status": "Status",
       "qr": "QR-Code",
-      "actions": "Actions"
+      "actions": "Aktionen"
     }
   },
   "transactions": {
@@ -856,11 +856,11 @@
   },
   "integrations": {
     "title": "Integrationen",
-    "subtitle": "Verwenden Sie Ihre externe Kryptowährungs-Brieftasche auf Nefentus",
-    "connect": "Mit Wallet verbinden",
+    "subtitle": "Verwenden Sie Ihre externe Kryptowährungs-Wallet auf Nefentus",
+    "connect": "Wallet verbinden",
     "connecting": "Verbinden...",
     "disconnect": "Verbindung trennen",
-    "connectError": "Verbinden Brieftasche ist nicht verfügbar!"
+    "connectError": "Konnte Wallet nicht verbinden!"
   },
   "security": {
     "settings": {
@@ -877,34 +877,34 @@
     "title": "Benutzerprofil",
     "description": "Aktualisieren Sie Ihre persönlichen Daten und Benachrichtigungseinstellungen",
     "firstName": "Vorname*",
-    "lastName": "Familienname, Nachname*",
-    "business": "Geschäft",
+    "lastName": "Nachname*",
+    "business": "Firma",
     "businessDescription": "Wenn Sie ein Unternehmen sind, geben Sie hier bitte Ihren Firmennamen ein.",
     "email": "Email*",
     "phoneNumber": "Telefonnummer",
     "avatar": "Benutzerbild",
     "avatarDescription": "Wählen Sie einen Avatar aus, um Ihr Konto zu personalisieren.",
     "marketingUpdates": "Marketing-Updates",
-    "marketingUpdatesDescription": "Erhalten Sie Marketing-Updates per E-Mail, Push-Benachrichtigungen (in der mobilen App) und Posteingangsbenachrichtigungen (in der Webanwendung).",
+    "marketingUpdatesDescription": "Erhalten Sie Marketing-Updates per E-Mail, Push-Benachrichtigungen (in der mobilen App) und Benachrichtigungen (in der Webanwendung).",
     "emailNotifications": "E-Mail Benachrichtigungen",
-    "emailNotificationsDescription": "E-Mail Benachrichtigungen",
+    "emailNotificationsDescription": "Erhalten Sie Benachrichtigungen per E-Mail",
     "appNotifications": "App-Benachrichtigungen",
     "appNotificationsDescription": "Erhalten Sie Benachrichtigungen über Push-Benachrichtigungen (in der mobilen App).",
     "notificationLanguage": "Benachrichtigungssprache",
-    "notificationLanguageDescription": "Wählen Sie Ihre bevorzugte Sprache für E-Mail-, App-Push- und Posteingangsbenachrichtigungen vor Ort.",
+    "notificationLanguageDescription": "Wählen Sie Ihre bevorzugte Sprache für E-Mail-, App-Push- und Benachrichtigungen auf der Webseite.",
     "enableInvoicing": "Rechnungsstellung aktivieren",
     "enableInvoicingDescription": "Erhalten Sie Rechnungen für jedes verkaufte Produkt für Ihre Buchhaltung."
   },
   "identification": {
     "title": "Identifikation",
-    "description": "Lassen Sie Ihre Identität überprüfen, um zu kaufen und zu handeln",
+    "description": "Lassen Sie Ihre Identität überprüfen, um zu verkaufen und zu handeln",
     "verified": "Verifiziert",
     "unverified": "Unverified",
     "unlimited": "Nicht bestätigt",
     "verificationLevels": "Verifizierungsstufen",
     "level": "Ebene",
-    "level1Description": "Persönliche Daten, amtlicher Ausweis und Gesichtserkennung Erkennung",
-    "level2Description": "Adressnachweis und Firmennachweis",
+    "level1Description": "Persönliche Daten, offizieller Pass oder Personalausweis, und Bild",
+    "level2Description": "Adressnachweis und Firmennachweis (wenn zutreffend)",
     "level3Description": "Erhöhte Sorgfalt",
     "accountLimit": {
       "title": "Kontolimit",
@@ -919,8 +919,8 @@
       "fullName": "Vollständiger Name",
       "address": "Adresse",
       "city": "Stadt und Postleitzahl",
-      "issueId": "Von der Regierung ausgestellter Ausweis",
-      "picture": "Bild mit Ausweis in der Hand",
+      "issueId": "Von den Behörden ausgestellter Pass oder Personalausweis",
+      "picture": "Bild mit Pass oder Personalausweis in der Hand",
       "proofAddress": "Nachweis der Adresse",
       "proofCompany": "Firmennachweis",
       "enhanced": "Erhöhte Sorgfalt",
@@ -931,10 +931,10 @@
   },
   "cookieBanner": {
     "first": "Wir nutzen Drittanbieter ",
-    "cookies": "cookies ",
+    "cookies": "Cookies ",
     "second": "um zu ",
     "last": "personalisieren Sie Ihr Website-Erlebnis.",
-    "decline": "Abfall",
+    "decline": "Ablehnen",
     "accept": "Akzeptieren"
   }
 }
