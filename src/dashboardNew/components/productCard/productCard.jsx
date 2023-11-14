@@ -104,10 +104,7 @@ const ProductCard = ({ onClickDelete = () => {}, product = {}, update }) => {
 
           <p className={styles.price}>{product.price}</p>
 
-          <Button
-            color="light"
-            link={`${window.location.origin}/product/${product.link}`}
-          >
+          <Button link={`${window.location.origin}/product/${product.link}`}>
             Open
           </Button>
         </div>
