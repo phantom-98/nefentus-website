@@ -7,13 +7,16 @@ import Correct from "../../../assets/icon/correct.svg";
 import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 
 import Download from "../../../assets/icon/download.svg";
-import Button from "../../../components/button/button";
+import Button from "../../components/button/button";
 import { useEffect, useState } from "react";
 import backendAPI from "../../../api/backendAPI";
 import adminDashboardApi from "../../../api/adminDashboardApi";
 import TableSearch from "../tableSearch/tableSearch";
 
 const KYC_TYPE = {
+  FULL_NAME: "FULL_NAME",
+  ADRESS: "ADRESS",
+  CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
   GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
   PICTURE_WIDTH_ID_IN_HAND: "PICTURE_WIDTH_ID_IN_HAND",
   PROOF_OF_ADRESS: "PROOF_OF_ADRESS",
@@ -21,9 +24,23 @@ const KYC_TYPE = {
   ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
 };
 
+const KYC_TYPE_FILE = {
+  GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
+  PICTURE_WIDTH_ID_IN_HAND: "PICTURE_WIDTH_ID_IN_HAND",
+  PROOF_OF_ADRESS: "PROOF_OF_ADRESS",
+  PROOF_OF_COMPANY: "PROOF_OF_COMPANY",
+  ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
+};
+
+const KYC_TYPE_TEXT = {
+  FULL_NAME: "FULL_NAME",
+  ADRESS: "ADRESS",
+  CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
+};
+
 const KycBody = () => {
   const [data, setData] = useState([]);
-  const backendapi = new backendAPI();
+  const BackendAPI = new backendAPI();
   const adminApi = new adminDashboardApi("admin");
 
   const fetchFYC = async () => {
@@ -32,14 +49,22 @@ const KycBody = () => {
     const arrayWithResults = await Promise.all(
       users.map(async (user) => {
         const userId = user.id;
-        const level = await backendapi.getKYCLevel(userId);
-        const userKYCData = await Promise.all(
-          Object.values(KYC_TYPE).map((type) =>
-            backendapi.getByKYC(type, userId),
+
+        const level = await BackendAPI.getKYCLevel(userId);
+
+        const userKYCDataFile = await Promise.all(
+          Object.values(KYC_TYPE_FILE).map((type) =>
+            BackendAPI.getByKYC(type, userId),
           ),
         );
 
-        const transformedResults = userKYCData.map((item) => {
+        const userKYCDataText = await Promise.all(
+          Object.values(KYC_TYPE_TEXT).map((type) =>
+            BackendAPI.getByKYCText(type, userId),
+          ),
+        );
+
+        const transformedResults = userKYCDataFile.map((item) => {
           const key = Object.keys(item)[0];
           const fileType = key.replace(/_/g, " ").toLowerCase();
           return {
@@ -48,6 +73,21 @@ const KycBody = () => {
             verify: item[key].data.verify,
           };
         });
+
+        const transformedResultsText = userKYCDataText.map((item) => {
+          const key = Object.keys(item)[0];
+          const fileType = key.replace(/_/g, " ").toLowerCase();
+          return {
+            type: fileType.charAt(0).toUpperCase() + fileType.slice(1),
+            file: item[key].data.url,
+            verify: item[key].data.verify,
+          };
+        });
+
+        const combinedResults = [
+          ...transformedResultsText,
+          ...transformedResults,
+        ];
 
         if (
           transformedResults.every(
@@ -66,7 +106,7 @@ const KycBody = () => {
             id: user.id,
           },
           user.email,
-          transformedResults,
+          combinedResults,
           user.tel,
           user.business,
           level.data.kycLevel,
@@ -214,8 +254,8 @@ const Table = ({ data, setData }) => {
                   .map((item, index) => (
                     <div>
                       {index === 0 && <h5 className={styles.level}>Level 1</h5>}
-                      {index === 3 && <h5 className={styles.level}>Level 2</h5>}
-                      {index === 4 && <h5 className={styles.level}>Level 3</h5>}
+                      {index === 5 && <h5 className={styles.level}>Level 2</h5>}
+                      {index === 7 && <h5 className={styles.level}>Level 3</h5>}
                       <div className={styles.line} key={index}>
                         <div className={styles.row}>
                           <p>
@@ -238,8 +278,8 @@ const Table = ({ data, setData }) => {
                   ))}
               </div>
 
-              <div className={styles.checkButton} style={{ paddingTop: 10 }}>
-                <Button onClick={() => setCheckModal(false)} color="white">
+              <div style={{ paddingTop: 10 }}>
+                <Button onClick={() => setCheckModal(false)} color="gray">
                   Close
                 </Button>
               </div>
