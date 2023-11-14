@@ -258,13 +258,7 @@ const Table = ({ data, setData }) => {
                       {index === 7 && <h5 className={styles.level}>Level 3</h5>}
                       <div className={styles.line} key={index}>
                         <div className={styles.row}>
-                          <p>
-                            {item.type === "Adress"
-                              ? "Proof of adress"
-                              : item.type === "Utility bill"
-                              ? "Due deligence"
-                              : item.type}
-                          </p>
+                          <p>{item.type}</p>
                           {item.verify && <img src={Correct} alt="" />}
                         </div>
 
