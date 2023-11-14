@@ -64,7 +64,7 @@ const Layout = ({
     const result = await backend_API.registerByEmail(email);
 
     if (result) {
-      navigate("/dashboardNew");
+      navigate("/dashboard");
     } else {
       setErrorMessage("Email already exists");
     }

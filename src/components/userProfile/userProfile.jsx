@@ -16,7 +16,7 @@ const UserProfile = ({ web, logOut }) => {
   return (
     <div className={styles.profileWrapper}>
       <div className={styles.profileImage}>
-        {profileImage ? (
+        {profileImage !== "null" ? (
           <img src={profileImage} alt="Profile" />
         ) : (
           <svg

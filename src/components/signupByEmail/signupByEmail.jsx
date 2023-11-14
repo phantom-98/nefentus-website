@@ -3,7 +3,7 @@ import Button from "../button/button";
 import Input, { Options } from "../input/input";
 import styles from "./signupByEmail.module.css";
 import { Link } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import ReCAPTCHA from "react-google-recaptcha";
 import backendAPI from "../../api/backendAPI";
@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import isMobilePhone from "../../func/isMobilePhone";
 import Error from "../error/error";
+import Popup from "../../dashboardNew/components/popup/popup";
 
 var country_list = [
   "Afghanistan",
@@ -221,7 +222,7 @@ var country_list = [
   "Zimbabwe",
 ];
 
-const SignupByEmail = ({ setShowModal }) => {
+const SignupByEmail = () => {
   const recaptchaRef = useRef();
   const { t } = useTranslation();
   const [errorMessage, setErrorMessage] = useState(null);
@@ -229,7 +230,12 @@ const SignupByEmail = ({ setShowModal }) => {
   const [CountryOption, setCountryOption] = useState(
     t("signUp.option1Placeholder"),
   );
+  const [showModal, setShowModal] = useState(false);
   const api = new backendAPI();
+
+  useEffect(() => {
+    if (localStorage.getItem("firstName") === "") setShowModal(true);
+  }, []);
 
   const schema = z
     .object({
@@ -311,7 +317,7 @@ const SignupByEmail = ({ setShowModal }) => {
   }
 
   return (
-    <div>
+    <Popup show={showModal}>
       <form onSubmit={handleSubmit(submitForm)}>
         <Error
           error={
@@ -383,6 +389,7 @@ const SignupByEmail = ({ setShowModal }) => {
           ref={recaptchaRef}
           sitekey={process.env.VITE_REACT_APP_RECAPTCHA_SITE_KEY}
           theme="dark"
+          style={{ marginTop: "2rem" }}
         />
 
         <div className={styles.buttonWrapper}>
@@ -391,7 +398,7 @@ const SignupByEmail = ({ setShowModal }) => {
           </Button>
         </div>
       </form>
-    </div>
+    </Popup>
   );
 };
 
