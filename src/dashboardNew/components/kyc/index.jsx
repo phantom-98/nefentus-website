@@ -71,6 +71,7 @@ const KycBody = () => {
             type: fileType.charAt(0).toUpperCase() + fileType.slice(1),
             file: item[key].data.url,
             verify: item[key].data.verify,
+            typeData: "photo",
           };
         });
 
@@ -81,6 +82,7 @@ const KycBody = () => {
             type: fileType.charAt(0).toUpperCase() + fileType.slice(1),
             file: item[key].data.url,
             verify: item[key].data.verify,
+            typeData: "text",
           };
         });
 
@@ -262,10 +264,12 @@ const Table = ({ data, setData }) => {
                           {item.verify && <img src={Correct} alt="" />}
                         </div>
 
-                        {item.file && (
+                        {item.typeData == "photo" ? (
                           <a href={item.file} download>
                             <img src={Download} alt="" />
                           </a>
+                        ) : (
+                          <p>{item.file}</p>
                         )}
                       </div>
                     </div>

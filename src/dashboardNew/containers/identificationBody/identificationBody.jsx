@@ -495,10 +495,13 @@ const AddText = ({ label, id, getText, setGetText, rejectReason, text }) => {
               ? updateValue + "..."
               : updateValue}
           </p>
-
-          <Button onClick={() => setShow(true)} color="gray">
-            Add
-          </Button>
+          {text ? (
+            <Button color="gray">Add</Button>
+          ) : (
+            <Button onClick={() => setShow(true)} color="gray">
+              Add
+            </Button>
+          )}
         </div>
       </div>
 
@@ -574,9 +577,13 @@ const AddFile = ({ label, id, rejectReason, file, getData, setGetData }) => {
           ) : (
             <div></div>
           )}
-          <Button onClick={handleAddFile} color="gray">
-            Upload
-          </Button>
+          {file ? (
+            <Button color="gray">Upload</Button>
+          ) : (
+            <Button onClick={handleAddFile} color="gray">
+              Upload
+            </Button>
+          )}
         </div>
       </div>
     </>
