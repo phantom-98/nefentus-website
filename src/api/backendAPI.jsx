@@ -119,8 +119,25 @@ export default class backendAPI {
         body: JSON.stringify(updateRequest),
       };
       const response = await fetch(url, options);
+
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        if (response.status === 500) {
+          throw new Error("Internal Server Error");
+        }
+
+        return response.text().then((error) => {
+          try {
+            const errorData = JSON.parse(error);
+            const valueArray = Object.values(errorData);
+            throw new Error(valueArray[0]);
+          } catch (e) {
+            if (e instanceof SyntaxError) {
+              throw new Error(error);
+            } else {
+              throw e;
+            }
+          }
+        });
       } else {
         const data = await response.json();
         localStorage.setItem("email", data.email);
