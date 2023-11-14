@@ -496,7 +496,9 @@ const AddText = ({ label, id, getText, setGetText, rejectReason, text }) => {
               : updateValue}
           </p>
           {text ? (
-            <Button color="gray">Add</Button>
+            <Button color="gray">
+              <span style={{ color: "grey" }}>Add</span>
+            </Button>
           ) : (
             <Button onClick={() => setShow(true)} color="gray">
               Add
@@ -578,7 +580,9 @@ const AddFile = ({ label, id, rejectReason, file, getData, setGetData }) => {
             <div></div>
           )}
           {file ? (
-            <Button color="gray">Upload</Button>
+            <Button color="gray">
+              <span style={{ color: "grey" }}>Upload</span>
+            </Button>
           ) : (
             <Button onClick={handleAddFile} color="gray">
               Upload
