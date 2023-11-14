@@ -7,6 +7,7 @@ import DarkMode from "../../../assets/icon/darkMode2.svg";
 import { useEffect, useState } from "react";
 import Button from "../../components/button/button";
 import { Link, useLocation } from "react-router-dom";
+import { dashboardLink } from "../../../utils";
 
 const content = [
   {
@@ -151,7 +152,7 @@ const SideNavigation = () => {
         setActive("Admin");
         break;
       case "/dashboard/partner":
-        setActive("Admin");
+        setActive("Partner");
         break;
       default:
         setActive("");
@@ -160,7 +161,8 @@ const SideNavigation = () => {
   }, [query.pathname]);
 
   const getFullSideBar = (active) => {
-    if (active === "Affiliate" || active === "Admin") return false;
+    if (active === "Affiliate" || active === "Admin" || active === "Partner")
+      return false;
 
     return true;
   };
@@ -207,7 +209,9 @@ const SideNavigation = () => {
 
       <div className={styles.referral}>
         {getFullSideBar(active) ? (
-          <Button>Referral</Button>
+          <Link to={dashboardLink(localStorage)}>
+            <Button>Referral</Button>
+          </Link>
         ) : (
           <Link to="/dashboard/">
             <Button>Vendor Dashboard</Button>

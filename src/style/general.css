@@ -549,7 +549,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* Loading animation */
 
 .loadingAnimation {
-  max-width: 400px;
+  max-width: 200px;
   margin-top: auto;
   margin-bottom: auto;
   height: auto;
@@ -558,7 +558,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 @media (max-width: 900px) {
   .loadingAnimation {
-    max-width: 100%;
+    max-width: 50%;
   }
 }
 
