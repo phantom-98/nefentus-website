@@ -102,7 +102,7 @@ const ProductCard = ({ onClickDelete = () => {}, product = {}, update }) => {
 
           <p className={styles.description}>{product.description}</p>
 
-          <p className={styles.price}>{product.price}</p>
+          <p className={styles.price}>${product.price}</p>
 
           <Button color="light">Watch</Button>
         </div>
