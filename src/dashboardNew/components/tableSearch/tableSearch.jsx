@@ -3,7 +3,13 @@ import styles from "./tableSearch.module.css";
 
 import Search from "../../../assets/icon/search.svg";
 
-const TableSearch = ({ title, description }) => {
+const TableSearch = ({
+  title,
+  description,
+  findUser,
+  setGetDataInput,
+  getDataInput,
+}) => {
   return (
     <div className={styles.search}>
       <div>
@@ -15,9 +21,13 @@ const TableSearch = ({ title, description }) => {
         <div className={styles.inputWrapper}>
           <img src={Search} alt="" />
 
-          <input type="text" />
+          <input
+            type="text"
+            onChange={(e) => setGetDataInput(e.target.value)}
+            value={getDataInput}
+          />
         </div>
-        <Button>Search</Button>
+        <Button onClick={findUser}>Search</Button>
       </div>
     </div>
   );

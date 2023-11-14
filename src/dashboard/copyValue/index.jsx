@@ -1,32 +1,35 @@
 import styles from "./copyValue.module.css";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 import copyClipboard from "../../assets/icon/copyClipboard.svg";
-import Button from "../../components/button/button";
 import inputStyles from "../../components/input/input.module.css";
+import Button from "../../dashboardNew/components/button/button";
 
 const CopyValue = ({ value, onCopy, inputStyle, buttonStyle }) => {
+  const handleClipboard = () => {
+    navigator.clipboard.writeText(value);
+    onCopy();
+  };
+
   return (
     <div className={styles.copyValueWrapper}>
-      <input
+      <div
         className={`${inputStyles.input} ${inputStyles.dashboardInput}`}
-        type={"text"}
-        value={value}
+        type="text"
         disabled={true}
         style={inputStyle}
-      />
-      <CopyToClipboard text={value} onCopy={onCopy}>
-        <Button
-          color="white"
-          className={styles.clipboardButton}
-          style={buttonStyle}
-        >
-          <img
-            src={copyClipboard}
-            className={styles.copyClipboard}
-            alt="Copy to clipboard"
-          />
-        </Button>
-      </CopyToClipboard>
+      >
+        <p style={{ overflowWrap: "anywhere" }}>{value}</p>
+      </div>
+      <Button
+        color="light"
+        onClick={handleClipboard}
+        style={{ padding: "0.5rem 1rem", width: "15%" }}
+      >
+        <img
+          src={copyClipboard}
+          className={styles.copyClipboard}
+          alt="Copy to clipboard"
+        />
+      </Button>
     </div>
   );
 };

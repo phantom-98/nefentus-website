@@ -7,11 +7,12 @@ import styles from "./productBody.module.css";
 import { MessageContext } from "../../../context/message";
 import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 import MessageComponent from "../../../components/message";
-import Input, { Textarea, Attachment } from "../../../components/input/input";
+import Input, { Attachment, Textarea } from "../../../components/input/input";
 import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
-import Button from "../../../components/button/button";
+import Button from "../../components/button/button";
+import Popup from "../../components/popup/popup";
 
 const ProductBody = () => {
   const [products, setProducts] = useState([]);
@@ -24,6 +25,7 @@ const ProductBody = () => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [productId, setProductId] = useState(null);
+  const [load, setLoad] = useState(false);
 
   const dashboardApi = new vendorDashboardApi();
 
@@ -32,7 +34,7 @@ const ProductBody = () => {
 
   useEffect(() => {
     loadProducts();
-  }, []);
+  }, [load]);
 
   async function loadProducts() {
     const newProducts = await dashboardApi.getProducts();
@@ -160,16 +162,18 @@ const ProductBody = () => {
         <div className={styles.row}>
           {products.map((item) => (
             <ProductCard
+              key={item.id}
               product={item}
               onClickEdit={() => showModal(item.id)}
               onClickDelete={() => deleteProduct(item.id)}
+              update={() => setLoad(!load)}
             />
           ))}
         </div>
       </Card>
 
-      <div className={styles.modalWrapper}>
-        {openModal !== false && (
+      <div>
+        {/* {openModal !== false && (
           <ModalOverlay>
             <div className={styles.modal}>
               <h4>{openModal === "add" ? "Create" : "Update"} Product</h4>
@@ -223,9 +227,10 @@ const ProductBody = () => {
                   number
                 />
               </div>
-              <div className={styles.modalButtons}>
-                <div
-                  className={styles.button}
+
+              <div className={styles.buttons}>
+                <Button
+                  color="light"
                   onClick={() => {
                     clearMessages();
                     setOpenModal(false);
@@ -233,14 +238,75 @@ const ProductBody = () => {
                   }}
                 >
                   Cancel
-                </div>
-                <Button onClick={addOrUpdateProduct} color="white">
+                </Button>
+                <Button onClick={addOrUpdateProduct}>
                   {openModal === "add" ? "Add" : "Update"} Product
                 </Button>
               </div>
             </div>
           </ModalOverlay>
-        )}
+        )} */}
+
+        <Popup
+          show={openModal}
+          title={`${openModal === "add" ? "Create" : "Update"} Product`}
+          onConfirm={addOrUpdateProduct}
+          onClose={() => {
+            clearMessages();
+            setOpenModal(false);
+            setProductId(null);
+          }}
+        >
+          <MessageComponent />
+
+          <div className={styles.modalInputs}>
+            <Attachment
+              label="Product image"
+              onUpload={(file) => {
+                setImage(file);
+                setImageChanged(true);
+                setCropDialogOpen(true);
+              }}
+              onDelete={() => {
+                setImage(null);
+                setImageChanged(true);
+              }}
+              value={image}
+              dashboard
+            />
+            <Input
+              dashboard
+              label="Name*"
+              placeholder="Enter name"
+              value={name}
+              setState={setName}
+            />
+            <Textarea
+              dashboard
+              label="Description*"
+              placeholder="Enter description"
+              value={description}
+              setState={setDescription}
+              rows={2}
+            />
+            <Input
+              dashboard
+              label="Price*"
+              placeholder="Enter price"
+              value={price}
+              setState={setPrice}
+              number
+            />
+            <Input
+              dashboard
+              label="Stock"
+              placeholder="Enter stock if limited stock"
+              value={stock}
+              setState={setStock}
+              number
+            />
+          </div>
+        </Popup>
       </div>
 
       <CropDialog

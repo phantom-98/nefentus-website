@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 import QR from "../../assets/icon/qrcode.svg";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import backend_API from "../../api/backendAPI";
 import { dashboardLink } from "../../utils";
@@ -23,8 +23,19 @@ const Navigation = () => {
   const [profile, setProfile] = useState({});
   const [height, setHeight] = useState("");
   const [lightMode, setLightMode] = useState(false);
+  const navigate = useNavigate();
 
   const backendAPI = new backend_API();
+
+  const logOut = async () => {
+    try {
+      const data = await backendAPI.signout();
+      navigate("/");
+      setProfile({});
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   async function getProfile() {
     const jwtIsValid = await backendAPI.checkJwt();
@@ -48,13 +59,15 @@ const Navigation = () => {
 
   function dashboardString(profile) {
     if (profile.firstName || profile.lastName)
-      return `Dashboard: ${profile.firstName} ${profile.lastName}`;
-    else return "Dashboard";
+      return `${t("dashboard.title")}: ${profile.firstName} ${
+        profile.lastName
+      }`;
+    else return t("dashboard.title");
   }
 
   function loginAndSignupWeb() {
     if (profile.email) {
-      return <UserProfile web />;
+      return <UserProfile web logOut={logOut} />;
     } else {
       return (
         <>
@@ -91,6 +104,7 @@ const Navigation = () => {
           <Button
             link={profile.dashboardLink}
             onClick={() => setOpenMenu(false)}
+            style={{ width: "100%" }}
           >
             {dashboardString(profile)}
           </Button>
@@ -98,18 +112,30 @@ const Navigation = () => {
       );
     } else {
       return (
-        <>
-          <Button link="/login" onClick={() => setOpenMenu(false)}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+            width: "100%",
+          }}
+        >
+          <Button
+            style={{ width: "100%" }}
+            link="/login"
+            onClick={() => setOpenMenu(false)}
+          >
             {t("navigation.login")}
           </Button>
           <Button
+            style={{ width: "100%" }}
             link="/signup"
             color="white"
             onClick={() => setOpenMenu(false)}
           >
             {t("navigation.signUp")}
           </Button>
-        </>
+        </div>
       );
     }
   }

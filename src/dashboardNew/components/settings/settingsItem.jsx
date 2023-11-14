@@ -3,6 +3,7 @@ import styles from "./settingsTitle.module.css";
 
 import Fail from "../../../assets/icon/fail.svg";
 import Correct from "../../../assets/icon/correct.svg";
+import ProfileImage from "../../../assets/icon/user.svg";
 
 import { useEffect, useState } from "react";
 import Popup from "../popup/popup";
@@ -97,27 +98,27 @@ const SettingsItem = ({ data, setIsSaveData }) => {
             ) : (
               ""
             )}
-            <Button
-              color="gray"
-              onClick={
-                data.type === "edit"
-                  ? () => handleEdit()
-                  : data.type === "image"
-                  ? () => handleChangeImage()
-                  : data.type === "enable"
-                  ? () => handleEnable()
-                  : ""
-              }
-            >
-              {data.type === "edit"
-                ? "Edit"
-                : data.type === "image"
-                ? "Change"
-                : data.type === "enable"
-                ? "Enable"
-                : ""}
-            </Button>
           </div>
+          <Button
+            color="gray"
+            onClick={
+              data.type === "edit"
+                ? () => handleEdit()
+                : data.type === "image"
+                ? () => handleChangeImage()
+                : data.type === "enable"
+                ? () => handleEnable()
+                : ""
+            }
+          >
+            {data.type === "edit"
+              ? "Edit"
+              : data.type === "image"
+              ? "Change"
+              : data.type === "enable"
+              ? "Enable"
+              : ""}
+          </Button>
           <EditPopup
             show={show}
             value={data.popup === "language" ? label : data.value}
@@ -154,12 +155,12 @@ const EditType = ({ value, type }) => {
 const ImageType = ({ value }) => {
   return (
     <div className={styles.imageWrapper}>
-      <img src={value} alt="" />
+      <img src={value ? value : ProfileImage} alt="" />
     </div>
   );
 };
 
-const EnableType = ({ value }) => {
+export const EnableType = ({ value }) => {
   return (
     <div className={styles.enableWrapper}>
       <img className={styles.enableIcon} src={value ? Correct : Fail} alt="" />
@@ -182,10 +183,16 @@ export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
 
   const handleConfirmClick = () => {
     setValue(inputValue);
+    setShow(false);
   };
 
   return (
-    <Popup show={show} setShow={setShow} onClick={handleConfirmClick}>
+    <Popup
+      show={show}
+      title="Change Value"
+      onConfirm={handleConfirmClick}
+      onClose={() => setShow(false)}
+    >
       {popup === "language" ? (
         <Options
           options={langOptions.map((op) => op.label)}

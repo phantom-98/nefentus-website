@@ -8,7 +8,7 @@ import Logout from "../../assets/icon/logout.svg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const UserProfile = ({ web }) => {
+const UserProfile = ({ web, logOut }) => {
   const [profileImage, setProfileImage] = useState(
     localStorage.getItem("profile_pic"),
   );
@@ -40,31 +40,28 @@ const UserProfile = ({ web }) => {
       </div>
       <div className={`${styles.profileDropdown}`}>
         <div className={`${styles.profileBody} card`}>
-          <Link to="/dashboardNew/profile" className={styles.profileItem}>
+          <Link to="/dashboard/profile" className={styles.profileItem}>
             <img src={User2} alt="" />
             <p>Profile</p>
           </Link>
           {web && (
-            <Link to="/dashboardNew/" className={styles.profileItem}>
+            <Link to="/dashboard/" className={styles.profileItem}>
               <img src={Dashboard} alt="" />
               <p>Dashboard</p>
             </Link>
           )}
-          <Link to="/dashboardNew/security" className={styles.profileItem}>
+          <Link to="/dashboard/security" className={styles.profileItem}>
             <img src={Security} alt="" />
             <p>Security</p>
           </Link>
-          <Link
-            to="/dashboardNew/identification"
-            className={styles.profileItem}
-          >
+          <Link to="/dashboard/identification" className={styles.profileItem}>
             <img src={Identification} alt="" />
             <p>Identification</p>
           </Link>
-          <div className={styles.profileItem}>
+          <Link onClick={logOut} to="/" className={styles.profileItem}>
             <img src={Logout} alt="" />
             <p>Log Out</p>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

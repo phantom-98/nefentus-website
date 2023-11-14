@@ -54,7 +54,7 @@ const TopNavigation = () => {
         <img className={styles.logo} src={Logo} alt="" />
         <img className={styles.logo2} src={Logo2} alt="" />
         <div className={styles.rightSide}>
-          <UserProfile />
+          <UserProfile logOut={logOut} />
 
           <div>
             <img src={Notification} alt="" />

@@ -8,20 +8,19 @@ import Verify from "../../../assets/icon/verify.svg";
 import Clipboard from "../../../assets/icon/clipboard.svg";
 
 import Checkmark from "../../../assets/icon/checkmark.svg";
+import Table from "../../../components/table";
+import CopyValue from "../../../dashboard/copyValue";
 
 const Popup = ({
   show,
-  setShow,
   children,
-  onClick = () => {},
-  title = "Change Value",
+  onConfirm,
+  onClose,
+  cancelTitle = "Cancel",
+  confirmTitle = "Confirm",
+  title,
 }) => {
   const dashboardElement = document.getElementById("dashboard");
-
-  const handleConfirmClick = () => {
-    onClick();
-    setShow(false);
-  };
 
   return ReactDOM.createPortal(
     <div
@@ -29,13 +28,15 @@ const Popup = ({
       style={{ display: show ? "initial" : "none" }}
     >
       <Card className={styles.popupBox}>
-        <div className={styles.title}>{title}</div>
+        {title && <div className={styles.title}>{title}</div>}
         {children}
         <div className={styles.buttons}>
-          <Button color="light" onClick={() => setShow(false)}>
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmClick}>Confirm</Button>
+          {onClose && (
+            <Button color="light" onClick={onClose}>
+              {cancelTitle}
+            </Button>
+          )}
+          {onConfirm && <Button onClick={onConfirm}>{confirmTitle}</Button>}
         </div>
       </Card>
     </div>,
@@ -147,17 +148,11 @@ export const PaymentPopup = ({
   );
 };
 
-export const QRPopup = ({
-  show,
-  setShow,
-  name,
-  email,
-  company,
-  address,
-  link,
-  onClick = () => {},
-}) => {
+export const QRPopup = ({ show, setShow, data, onClick }) => {
   const dashboardElement = document.getElementById("dashboard");
+  const { name, email, price, company, address, taxNumber, link } = data;
+
+  console.log(data, "datadatadata");
 
   return ReactDOM.createPortal(
     <div
@@ -173,6 +168,19 @@ export const QRPopup = ({
         <div className={styles.description}>
           To confirm you need to scan QR code
         </div>
+
+        <Table
+          data={[
+            ["Amount:", `${price} USD`],
+            ["Email:", `${email}`],
+            ["Name:", `${name}`],
+            ["Company:", `${company}`],
+            ["Address:", `${address}`],
+            ["Tax number:", `${taxNumber}`],
+            ["Link:", <CopyValue value={link} onCopy={() => {}} />],
+          ]}
+          colSizes={[1, 3]}
+        />
 
         <img
           src={

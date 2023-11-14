@@ -2,7 +2,6 @@ import Footer from "./components/footer/footer";
 import "./style/general.css";
 import Navigation from "./components/navigation/navigation";
 import setCookies from "./components/setCookie/setCookie";
-import DashboardLayout from "./dashboard/dashboardLayout/dashboardLayout";
 import React, { useEffect, useState, Suspense } from "react";
 import {
   Route,
@@ -52,7 +51,6 @@ const TransactionDashboard = React.lazy(() =>
 const IdentificationDashboard = React.lazy(() =>
   import("./dashboardNew/screens/identificationDashboard"),
 );
-
 const IntegrationsDashboard = React.lazy(() =>
   import("./dashboardNew/screens/integrationsDashboard"),
 );
@@ -76,9 +74,9 @@ const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
 // const AffiliateDashboard = React.lazy(() => import("./dashboard/Affiliate"));
 // const Settings = React.lazy(() => import("./dashboard/Settings"));
 // const Vendor = React.lazy(() => import("./dashboard/Vendor"));
-// const Products = React.lazy(() => import("./dashboard/Products"));
+//const Products = React.lazy(() => import("./dashboard/Products"));
 // const Transactions = React.lazy(() => import("./dashboard/Transactions"));
-// const PaymentDashboard = React.lazy(() => import("./dashboard/Payment"));
+// const PaymentDashboardOld = React.lazy(() => import("./dashboard/Payment"));
 // const PayrollDashboard = React.lazy(() => import("./dashboard/Payroll"));
 // const Wallet = React.lazy(() => import("./dashboard/Wallet"));
 // const Admin = React.lazy(() => import("./dashboard/Admin"));
@@ -219,16 +217,31 @@ function App() {
                 />
 
                 <Route
-                  path="/dashboardNew/"
+                  path="/dashboard/"
                   element={
                     <ScreenLayout>
                       <MainDashboard />
                     </ScreenLayout>
                   }
                 />
-
                 <Route
-                  path="/dashboardNew/affiliate"
+                  path="/dashboard/admin"
+                  element={
+                    <ScreenLayout>
+                      <AdminDashboard type={"admin"} />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboard/partner"
+                  element={
+                    <ScreenLayout>
+                      <AdminDashboard type="partner" />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboard/affiliate"
                   element={
                     <ScreenLayout>
                       <AffiliateDashboard />
@@ -237,7 +250,7 @@ function App() {
                 />
 
                 <Route
-                  path="/dashboardNew/profile"
+                  path="/dashboard/profile"
                   element={
                     <ScreenLayout>
                       <ProfileDashboard />
@@ -245,7 +258,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/dashboardNew/security"
+                  path="/dashboard/security"
                   element={
                     <ScreenLayout>
                       <SecuritySettings />
@@ -253,7 +266,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/dashboardNew/converter"
+                  path="/dashboard/converter"
                   element={
                     <ScreenLayout>
                       <ConverterDashboard />
@@ -261,7 +274,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/dashboardNew/products"
+                  path="/dashboard/products"
                   element={
                     <ScreenLayout>
                       <ProductsDashboard />
@@ -269,7 +282,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/dashboardNew/payments"
+                  path="/dashboard/payments"
                   element={
                     <ScreenLayout>
                       <PaymentDashboard />
@@ -277,23 +290,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/dashboardNew/admin"
-                  element={
-                    <ScreenLayout>
-                      <AdminDashboard type={"admin"} />
-                    </ScreenLayout>
-                  }
-                />
-                <Route
-                  path="/dashboardNew/partner"
-                  element={
-                    <ScreenLayout>
-                      <AdminDashboard type="partner" />
-                    </ScreenLayout>
-                  }
-                />
-                <Route
-                  path="/dashboardNew/transactions"
+                  path="/dashboard/transactions"
                   element={
                     <ScreenLayout>
                       <TransactionDashboard />
@@ -301,7 +298,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/dashboardNew/Identification"
+                  path="/dashboard/identification"
                   element={
                     <ScreenLayout>
                       <IdentificationDashboard />
@@ -309,7 +306,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/dashboardNew/integrations"
+                  path="/dashboard/integrations"
                   element={
                     <ScreenLayout>
                       <IntegrationsDashboard />
