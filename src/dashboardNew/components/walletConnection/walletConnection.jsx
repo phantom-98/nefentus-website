@@ -1,14 +1,3 @@
-// const WalletConnection = ({ name, icon }) => {
-//   return (
-//     <div style={{ textAlign: "center" }}>
-//       <p style={{ fontSize: 20 }}>{name}</p>
-//       <img src={icon} style={{ height: 100 }} alt=" " />
-//     </div>
-//   );
-// };
-
-// export default WalletConnection;
-
 import React, { useEffect } from "react";
 import {
   useAddress,
@@ -17,7 +6,6 @@ import {
   useConnectionStatus,
   useDisconnect,
 } from "@thirdweb-dev/react";
-import Button from "../../components/button/button";
 import styles from "./walletConnection.module.css";
 import backendAPI from "../../../api/backendAPI";
 
@@ -28,7 +16,6 @@ const WalletConnection = ({
   connectStatus,
   setConnectStatus,
   activeToggle,
-  connectedWallet,
 }) => {
   const backend_API = new backendAPI();
 
@@ -79,22 +66,20 @@ const WalletConnection = ({
     if (activeToggle == true) {
       if (name == "MetaMask") {
         wallet.connect(wallet.config, { chainId: 1 });
-      } else {
+      }
+      if (name == "WalletConnect") {
         wallet.disconnect();
       }
     }
     if (activeToggle == false) {
-      if (connectedWallet.internal == false) {
-        if (name == "WalletConnect") {
-          wallet.connect(wallet.config, { chainId: 1 });
-        } else {
-          wallet.disconnect();
-        }
+      if (name == "WalletConnect") {
+        wallet.connect(wallet.config, { chainId: 1 });
+      }
+      if (name == "MetaMask") {
+        wallet.disconnect();
       }
     }
   }, [activeToggle]);
-
-  console.log(connectedWallet);
 
   return (
     <div className={styles.walletWrap}>

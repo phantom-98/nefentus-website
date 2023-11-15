@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Options } from "../input/input";
 
-const Pagination = ({ renderItems, data }) => {
+const Pagination = ({ renderItems, data, setDataPage }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
 
@@ -20,10 +20,13 @@ const Pagination = ({ renderItems, data }) => {
     setCurrentPage(0);
     renderItems(0, newPageSize);
   }
+  useEffect(() => {
+    setDataPage(currentPage);
+  }, [currentPage, pageSize]);
 
   useEffect(() => {
     renderItems(currentPage * pageSize, (currentPage + 1) * pageSize);
-  }, [data]);
+  }, [data, currentPage, pageSize]);
 
   return (
     <div className={styles.paginationWrapper}>
@@ -63,12 +66,12 @@ const Pagination = ({ renderItems, data }) => {
           </li>
         </ul>
       </nav>
-
+      {/* 
       <Options
         options={[10, 20, 50, 100]}
         value={pageSize}
         setValue={updatePageSize}
-      />
+      /> */}
     </div>
   );
 };

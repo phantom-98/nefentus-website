@@ -7,6 +7,7 @@ import SettingsTitle from "../../components/settings/settingsTitle";
 import styles from "./profileSettings.module.css";
 import backend_API from "../../../api/backendAPI";
 import { MessageContext } from "../../../context/message";
+import { useNavigate } from "react-router-dom";
 
 const ProfileSettings = () => {
   const [firstName, setFirstName] = useState(localStorage.getItem("firstName"));
@@ -17,11 +18,21 @@ const ProfileSettings = () => {
   );
   const [email, setEmail] = useState(localStorage.getItem("email"));
   const [imageName, setImageName] = useState(null);
-  const [marketingUpdates, setMarketingUpdates] = useState(false);
-  const [emailNotification, setEmailNotification] = useState(false);
-  const [appNotification, setAppNotification] = useState(false);
-  const [notificationLanguage, setNotificationLanguage] = useState(false);
-  const [enableInvoicing, setEnableInvoicing] = useState(false);
+  const [marketingUpdates, setMarketingUpdates] = useState(
+    localStorage.getItem("marketingUpdates") === "true",
+  );
+  const [emailNotifications, setEmailNotifications] = useState(
+    localStorage.getItem("emailNotifications") === "true",
+  );
+  const [appNotifications, setAppNotifications] = useState(
+    localStorage.getItem("appNotifications") === "true",
+  );
+  const [notificationLanguage, setNotificationLanguage] = useState(
+    localStorage.getItem("notificationLanguage"),
+  );
+  const [enableInvoicing, setEnableInvoicing] = useState(
+    localStorage.getItem("enableInvoicing") === "true",
+  );
   const [isSaveData, setIsSaveData] = useState(false);
   const [file, setFile] = useState(null);
   const [imageChanged, setImageChanged] = useState(false);
@@ -29,6 +40,7 @@ const ProfileSettings = () => {
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
 
   const backendAPI = new backend_API();
+  const navigate = useNavigate();
 
   const updateUser = async () => {
     const requestData = {
@@ -37,6 +49,11 @@ const ProfileSettings = () => {
       phoneNumber: phoneNumber,
       email: email,
       business: business || "",
+      marketingUpdates,
+      emailNotifications,
+      appNotifications,
+      notificationLanguage,
+      enableInvoicing,
     };
 
     const response = await backendAPI.update(requestData);
@@ -72,6 +89,7 @@ const ProfileSettings = () => {
   };
 
   useEffect(() => {
+    console.log("hello");
     if (isSaveData) {
       if (!imageChanged) updateUser();
       else uploadAvatar();
@@ -137,16 +155,16 @@ const ProfileSettings = () => {
     {
       label: "Email notifications",
       description: "Receive notifications via email.",
-      value: emailNotification,
-      setValue: setEmailNotification,
+      value: emailNotifications,
+      setValue: setEmailNotifications,
       type: "enable",
     },
     {
       label: "App notifications",
       description:
         "Receive notifications via push notifications (in the mobile app).",
-      value: appNotification,
-      setValue: setAppNotification,
+      value: appNotifications,
+      setValue: setAppNotifications,
       type: "enable",
     },
     {

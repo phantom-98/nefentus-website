@@ -1,0 +1,19 @@
+.sectionWrapper {
+  margin-top: 4rem;
+  padding-bottom: 10rem;
+  text-align: center;
+}
+
+.sectionWrapper > div {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.sectionWrapper p {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+.sectionWrapper h3 {
+  margin-bottom: 2rem;
+}

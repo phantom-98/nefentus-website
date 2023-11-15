@@ -16,22 +16,36 @@ import WalletConnection from "../../components/walletConnection/walletConnection
 
 const WalletSetting = () => {
   const BackandAPI = new backendAPI();
-  const [activeToggle, setActiveToggle] = useState(true);
-
-  const [connectedWallet, setConnectedWallet] = useState(null);
-
+  const [activeToggle, setActiveToggle] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [data, setData] = useState(null);
   const [connectStatus, setConnectStatus] = useState({
     "Wallet Connect": "disconnected",
     Metamask: "disconnected",
   });
-  useEffect(() => {
-    console.log(connectStatus);
-  }, [connectStatus]);
 
   useEffect(() => {
     const getWalletAddresses = async () => {
-      const data = await BackandAPI.getWalletAddresses();
-      data.map((item) => setConnectedWallet(item));
+      try {
+        const data = await BackandAPI.getWalletAddresses();
+        setData(data);
+
+        if (data.length > 0) {
+          const lastObject = data[data.length - 1];
+
+          if (lastObject.internal === true) {
+            setActiveToggle(false);
+            console.log("false");
+          } else {
+            setActiveToggle(true);
+            console.log("true");
+          }
+        }
+
+        setLoaded(true);
+      } catch (error) {
+        console.error("Error fetching wallet addresses:", error);
+      }
     };
     getWalletAddresses();
   }, []);
@@ -49,10 +63,6 @@ const WalletSetting = () => {
     },
   ];
 
-  // useEffect(() => {
-  //   BackandAPI.registerWalletAddress()
-  // },[])
-
   return (
     <Card className={styles.card}>
       <div className={styles.wrapper}>
@@ -66,44 +76,66 @@ const WalletSetting = () => {
           </div>
         </div>
       </div>
-      <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+      {data ? (
+        <>
+          <div
+            style={{ display: "flex", width: "100%", justifyContent: "center" }}
+          >
+            <div
+              style={{
+                display: "flex",
+                width: "40%",
+                justifyContent: "space-between",
+              }}
+            >
+              {wallets.map((wallet, index) => (
+                <div key={index}>
+                  <ThirdwebProvider
+                    clientId="639eea2ebcabed7eab90b56aceeed08b"
+                    supportedWallets={[wallet.connect]}
+                  >
+                    {loaded && (
+                      <WalletConnection
+                        name={wallet.name}
+                        icon={wallet.icon}
+                        connectStatus={connectStatus}
+                        setConnectStatus={setConnectStatus}
+                        config={wallet.connect}
+                        activeToggle={activeToggle}
+                      />
+                    )}
+                  </ThirdwebProvider>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            style={{ display: "flex", width: "100%", justifyContent: "center" }}
+          >
+            <div
+              onClick={() => setActiveToggle((prev) => !prev)}
+              className={`${activeToggle ? styles.activeToggle : ""} ${
+                styles.toggle
+              }`}
+            >
+              <div className={`${styles.toggleCircle}`}></div>
+            </div>
+          </div>
+        </>
+      ) : (
         <div
           style={{
             display: "flex",
-            width: "40%",
-            justifyContent: "space-between",
+            width: "100%",
+            height: 200,
+            paddingTop: 50,
+            justifyContent: "center",
+            fontSize: 20,
           }}
         >
-          {wallets.map((wallet, index) => (
-            <div key={index}>
-              <ThirdwebProvider
-                clientId="639eea2ebcabed7eab90b56aceeed08b"
-                supportedWallets={[wallet.connect]}
-              >
-                <WalletConnection
-                  name={wallet.name}
-                  icon={wallet.icon}
-                  connectStatus={connectStatus}
-                  setConnectStatus={setConnectStatus}
-                  config={wallet.connect}
-                  activeToggle={activeToggle}
-                  connectedWallet={connectedWallet}
-                />
-              </ThirdwebProvider>
-            </div>
-          ))}
+          <p>You can't connected the wallet</p>
         </div>
-      </div>
-      <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-        <div
-          onClick={() => setActiveToggle((prev) => !prev)}
-          className={`${activeToggle ? styles.activeToggle : ""} ${
-            styles.toggle
-          }`}
-        >
-          <div className={`${styles.toggleCircle}`}></div>
-        </div>
-      </div>
+      )}
     </Card>
   );
 };

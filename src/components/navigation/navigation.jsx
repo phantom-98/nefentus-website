@@ -1,6 +1,8 @@
 import styles from "./navigation.module.css";
 
 import Logo from "../../assets/logo/logo.svg";
+import LightMode from "../../assets/icon/lightMode2.svg";
+import DarkMode from "../../assets/icon/darkMode2.svg";
 
 import Hamburger from "../../assets/icon/hamburger.svg";
 import Button from "../button/button";
@@ -9,18 +11,31 @@ import { useEffect, useState } from "react";
 
 import QR from "../../assets/icon/qrcode.svg";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import backend_API from "../../api/backendAPI";
 import { dashboardLink } from "../../utils";
+import UserProfile from "../userProfile/userProfile";
 
 const Navigation = () => {
   const { t, i18n } = useTranslation();
   const [openMenu, setOpenMenu] = useState(false);
   const [profile, setProfile] = useState({});
   const [height, setHeight] = useState("");
+  const [lightMode, setLightMode] = useState(false);
+  const navigate = useNavigate();
 
   const backendAPI = new backend_API();
+
+  const logOut = async () => {
+    try {
+      const data = await backendAPI.signout();
+      navigate("/");
+      setProfile({});
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   async function getProfile() {
     const jwtIsValid = await backendAPI.checkJwt();
@@ -44,19 +59,15 @@ const Navigation = () => {
 
   function dashboardString(profile) {
     if (profile.firstName || profile.lastName)
-      return `Dashboard: ${profile.firstName} ${profile.lastName}`;
-    else return "Dashboard";
+      return `${t("dashboard.title")}: ${profile.firstName} ${
+        profile.lastName
+      }`;
+    else return t("dashboard.title");
   }
 
   function loginAndSignupWeb() {
     if (profile.email) {
-      return (
-        <>
-          <div className={`${styles.button} ${styles.dashboardButton}`}>
-            <Link to={profile.dashboardLink}>{dashboardString(profile)}</Link>
-          </div>
-        </>
-      );
+      return <UserProfile web logOut={logOut} />;
     } else {
       return (
         <>
@@ -75,16 +86,12 @@ const Navigation = () => {
   }
 
   function loginAndSignupTopButtons() {
-    if (profile.email) {
-      return (
-        <Link to={profile.dashboardLink}>
-          <div className={styles.mobButton}>{dashboardString(profile)}</div>
-        </Link>
-      );
-    } else {
+    if (!profile.email) {
       return (
         <>
-          <Button link="/signUp">{t("navigation.signUp")}</Button>
+          {/* <div className={styles.mobileButtonWrapper}>
+            <Button link="/signUp">{t("navigation.signUp")}</Button>
+          </div> */}
         </>
       );
     }
@@ -97,6 +104,7 @@ const Navigation = () => {
           <Button
             link={profile.dashboardLink}
             onClick={() => setOpenMenu(false)}
+            style={{ width: "100%" }}
           >
             {dashboardString(profile)}
           </Button>
@@ -104,18 +112,30 @@ const Navigation = () => {
       );
     } else {
       return (
-        <>
-          <Button link="/login" onClick={() => setOpenMenu(false)}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+            width: "100%",
+          }}
+        >
+          <Button
+            style={{ width: "100%" }}
+            link="/login"
+            onClick={() => setOpenMenu(false)}
+          >
             {t("navigation.login")}
           </Button>
           <Button
+            style={{ width: "100%" }}
             link="/signup"
             color="white"
             onClick={() => setOpenMenu(false)}
           >
             {t("navigation.signUp")}
           </Button>
-        </>
+        </div>
       );
     }
   }
@@ -176,18 +196,22 @@ const Navigation = () => {
               <img src={QR} alt="qr" />
               <div
                 className={`${styles.lang} ${
-                  openMenu ? styles.showLanguage : ""
+                  openMenu ? styles.showLanguage : styles.showLanguage
                 }`}
               >
                 <Languages />
               </div>
+              <img
+                onClick={() => setLightMode((prev) => !prev)}
+                src={lightMode ? DarkMode : LightMode}
+                className={styles.light}
+                alt=""
+              />
             </div>
 
             {loginAndSignupWeb()}
 
-            <div className={styles.mobileButtonWrapper}>
-              {loginAndSignupTopButtons()}
-            </div>
+            {loginAndSignupTopButtons()}
 
             <div className={styles.mobMenu}>
               <div
