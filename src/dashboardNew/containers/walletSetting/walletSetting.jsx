@@ -15,11 +15,25 @@ import WalletConnectLogo from "../../../assets/logo/logo.svg";
 import WalletConnection from "../../components/walletConnection/walletConnection";
 
 const WalletSetting = () => {
-  const [activeToggle, setActiveToggle] = useState(true);
   const BackandAPI = new backendAPI();
+  const [activeToggle, setActiveToggle] = useState(true);
+
+  const [connectedWallet, setConnectedWallet] = useState(null);
+
+  const [connectStatus, setConnectStatus] = useState({
+    "Wallet Connect": "disconnected",
+    Metamask: "disconnected",
+  });
+  useEffect(() => {
+    console.log(connectStatus);
+  }, [connectStatus]);
 
   useEffect(() => {
-    BackandAPI.getWalletAddresses();
+    const getWalletAddresses = async () => {
+      const data = await BackandAPI.getWalletAddresses();
+      data.map((item) => setConnectedWallet(item));
+    };
+    getWalletAddresses();
   }, []);
 
   const wallets = [
@@ -39,8 +53,6 @@ const WalletSetting = () => {
   //   BackandAPI.registerWalletAddress()
   // },[])
 
-  console.log(walletConnect());
-
   return (
     <Card className={styles.card}>
       <div className={styles.wrapper}>
@@ -58,13 +70,26 @@ const WalletSetting = () => {
         <div
           style={{
             display: "flex",
-            width: "50%",
+            width: "40%",
             justifyContent: "space-between",
           }}
         >
-          {wallets.map((item, index) => (
+          {wallets.map((wallet, index) => (
             <div key={index}>
-              <WalletConnection name={item.name} icon={item.icon} />
+              <ThirdwebProvider
+                clientId="639eea2ebcabed7eab90b56aceeed08b"
+                supportedWallets={[wallet.connect]}
+              >
+                <WalletConnection
+                  name={wallet.name}
+                  icon={wallet.icon}
+                  connectStatus={connectStatus}
+                  setConnectStatus={setConnectStatus}
+                  config={wallet.connect}
+                  activeToggle={activeToggle}
+                  connectedWallet={connectedWallet}
+                />
+              </ThirdwebProvider>
             </div>
           ))}
         </div>
