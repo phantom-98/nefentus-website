@@ -162,6 +162,8 @@ export default class backendAPI {
         localStorage.setItem("notificationLanguage", data.notificationLanguage);
         localStorage.setItem("enableInvoicing", data.enableInvoicing);
 
+        window.dispatchEvent(new Event("storage"));
+
         ReactGA.event({
           category: "User",
           action: "login",

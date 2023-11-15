@@ -19,9 +19,7 @@ const SignupByEmail = () => {
   const { t } = useTranslation();
   const [errorMessage, setErrorMessage] = useState(null);
   const [message, setMessage] = useState(null);
-  const [CountryOption, setCountryOption] = useState(
-    t("signUp.option1Placeholder"),
-  );
+  const [CountryOption, setCountryOption] = useState("");
   const [showModal, setShowModal] = useState(false);
   const api = new backendAPI();
 
