@@ -10,6 +10,7 @@ import { OneTimeCodeInput, RawInput } from "../../../dashboard/input/input";
 import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 import { useNavigate } from "react-router-dom";
 import Popup from "../popup/popup";
+import { useTranslation } from "react-i18next";
 
 const SecurityItem = ({ data }) => {
   const [isTotp, setIsTotp] = useState(
@@ -40,6 +41,7 @@ const SecurityItem = ({ data }) => {
     localStorage.getItem("antiPhishingCode"),
   );
 
+  const { t } = useTranslation();
   const backendAPI = new backend_API();
   const navigate = useNavigate();
 
@@ -222,183 +224,118 @@ const SecurityItem = ({ data }) => {
         </div>
       </div>
 
-      {open && secretToken && (
-        <ModalOverlay>
-          <div className={styles.modalTitle}>TOTP Authentication</div>
+      <Popup
+        show={open && secretToken}
+        onClose={() => {
+          setOpen(!open);
+          setIsTotp(!isTotp);
+        }}
+        onConfirm={() => handleTotpVerify(email.current, code, false)}
+        cancelTitle={t("security.actions.close")}
+        confirmTitle={t("security.actions.verify")}
+      >
+        <div className={styles.modalTitle}>
+          {"TOTP ".concat(t("security.authentication"))}
+        </div>
 
-          {!verify ? (
-            <div>
-              <div className={styles.modalSubtitle}>
-                {" "}
-                Scan QR-code or paste code
+        {!verify ? (
+          <div>
+            <div className={styles.modalSubtitle}>
+              {" "}
+              {t("security.scanModal.title")}
+            </div>
+            <div className={styles.QRCode}>
+              <QRCode
+                size={256}
+                style={{
+                  height: "auto",
+                  maxWidth: "100%",
+                  width: "100%",
+                  borderRadius: "2rem",
+                  border: "white 1rem solid",
+                }}
+                value={`otpauth://totp/Nefentus?secret=${secretToken}&issuer=${email.current}`}
+                viewBox={`0 0 256 256`}
+              />
+            </div>
+            <div className={styles.copyLink}>
+              {copied && (
+                <div className={styles.tooltip}>Link copied to clipboard!</div>
+              )}
+              <div
+                className={styles.linkBox}
+                onClick={() => {
+                  navigator.clipboard.writeText(secretToken);
+                  setCopied(true);
+                }}
+              >
+                <p id="affiliate-link" className={styles.url}>
+                  {secretToken?.slice(0, 15) + "..."}
+                </p>
+                <img src={UrlLink} alt="url icon" />
               </div>
-              <div className={styles.QRCode}>
-                <QRCode
-                  size={256}
-                  style={{
-                    height: "auto",
-                    maxWidth: "100%",
-                    width: "100%",
-                    borderRadius: "2rem",
-                    border: "white 1rem solid",
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className={styles.modalSubtitle}>
+              {" "}
+              Enter code from Authenticator
+            </div>
+            <MessageComponent />
+
+            <OneTimeCodeInput
+              setOTPCode={setCode}
+              resetCodeFlag={reset}
+              request={() => {
+                handleTotpVerify(email.current, code, false);
+              }}
+            />
+          </div>
+        )}
+      </Popup>
+
+      <Popup
+        show={openChangePassword}
+        onClose={!openBox ? setOpenChangePassword(false) : handleClose}
+        onConfirm={handleConfirm}
+        cancelTitle={t("security.actions.close")}
+        confirmTitle={t("security.actions.verify")}
+      >
+        {!openBox ? (
+          <>
+            <div className={styles.modalTitle}>Change Password</div>
+            {passwordContent.map((item) => (
+              <div className={styles.inputItem}>
+                <div className={styles.modalSubtitle}>{item.label}</div>
+                <input
+                  className={styles.input}
+                  type={item.type}
+                  name=""
+                  id=""
+                  value={item.value}
+                  placeholder={item.placeholder}
+                  onChange={(e) => {
+                    item.onChange(e.target.value);
                   }}
-                  value={`otpauth://totp/Nefentus?secret=${secretToken}&issuer=${email.current}`}
-                  viewBox={`0 0 256 256`}
+                  disabled={item.disabled === true}
                 />
               </div>
-              <div className={styles.copyLink}>
-                {copied && (
-                  <div className={styles.tooltip}>
-                    Link copied to clipboard!
-                  </div>
-                )}
-                <div
-                  className={styles.linkBox}
-                  onClick={() => {
-                    navigator.clipboard.writeText(secretToken);
-                    setCopied(true);
-                  }}
-                >
-                  <p id="affiliate-link" className={styles.url}>
-                    {secretToken?.slice(0, 15) + "..."}
-                  </p>
-                  <img src={UrlLink} alt="url icon" />
-                </div>
-              </div>
-              <div className={styles.buttons}>
-                <Button
-                  color="light"
-                  onClick={() => {
-                    setOpen(!open);
-                    setIsTotp(!isTotp);
-                  }}
-                >
-                  Close
-                </Button>
+            ))}
+          </>
+        ) : (
+          <>
+            <div className={styles.modalTitle}>{t("security.enterCode")}</div>
 
-                <Button
-                  onClick={() => {
-                    setVerify(true);
-                  }}
-                >
-                  Verify
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div className={styles.modalSubtitle}>
-                {" "}
-                Enter code from Authenticator
-              </div>
-              <MessageComponent />
-
-              <OneTimeCodeInput
-                setOTPCode={setCode}
-                resetCodeFlag={reset}
-                request={() => {
-                  handleTotpVerify(email.current, code, false);
-                }}
-              />
-
-              <div className={styles.buttons}>
-                <Button
-                  color="light"
-                  onClick={() => {
-                    setOpen(!open);
-                    setIsTotp(!isTotp);
-                  }}
-                >
-                  Close
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    handleTotpVerify(email.current, code, false);
-                  }}
-                >
-                  Verify
-                </Button>
-              </div>
-            </div>
-          )}
-        </ModalOverlay>
-      )}
-
-      {openChangePassword && (
-        <ModalOverlay>
-          {!openBox ? (
-            <>
-              <div className={styles.modalTitle}>Change Password</div>
-              {passwordContent.map((item) => (
-                <div className={styles.inputItem}>
-                  <div className={styles.modalSubtitle}>{item.label}</div>
-                  <input
-                    className={styles.input}
-                    type={item.type}
-                    name=""
-                    id=""
-                    value={item.value}
-                    placeholder={item.placeholder}
-                    onChange={(e) => {
-                      item.onChange(e.target.value);
-                    }}
-                    disabled={item.disabled === true}
-                  />
-                </div>
-              ))}
-
-              <div className={styles.buttons}>
-                <Button
-                  color="light"
-                  onClick={() => {
-                    setOpenChangePassword(false);
-                  }}
-                >
-                  Close
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    handleConfirm();
-                  }}
-                >
-                  Confirm
-                </Button>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className={styles.modalTitle}>Enter verification code:</div>
-
-              <RawInput
-                value={verificationCode}
-                setState={setVerificationCode}
-                type="text"
-              />
-
-              <div className={styles.buttons}>
-                <Button
-                  color="light"
-                  onClick={() => {
-                    handleClose();
-                  }}
-                >
-                  Close
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    handleConfirmCode();
-                  }}
-                >
-                  Confirm
-                </Button>
-              </div>
-            </>
-          )}
-        </ModalOverlay>
-      )}
+            <RawInput
+              value={verificationCode}
+              setState={setVerificationCode}
+              type="text"
+            />
+          </>
+        )}
+      </Popup>
+      {/*)}*/}
 
       <Popup
         show={show}

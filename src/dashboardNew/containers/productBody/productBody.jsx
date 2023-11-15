@@ -5,13 +5,11 @@ import ProductCard from "../../components/productCard/productCard";
 import SettingsTitle from "../../components/settings/settingsTitle";
 import styles from "./productBody.module.css";
 import { MessageContext } from "../../../context/message";
-import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 import MessageComponent from "../../../components/message";
 import Input, { Textarea, Attachment } from "../../../components/input/input";
 import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
-import Button from "../../../components/button/button";
 import { useTranslation } from "react-i18next";
 import Popup from "../../components/popup/popup";
 
@@ -156,7 +154,9 @@ const ProductBody = () => {
         <div className={styles.titleHeader}>
           <SettingsTitle
             title={t("products.totalProducts")}
-            description={t("products.description")}
+            description={t("products.subtitle1")
+              .concat(` ${products.length.toString()} `)
+              .concat(t("products.subtitle2"))}
             product
             onCreate={handleProductClick}
           />
@@ -177,10 +177,19 @@ const ProductBody = () => {
 
       <div className={styles.modalWrapper}>
         {openModal !== false && (
-          <ModalOverlay>
+          <Popup
+            show={openModal}
+            title={openModal === "add" ? t("create") : t("update")}
+            onClose={() => {
+              clearMessages();
+              setOpenModal(false);
+              setProductId(null);
+            }}
+            onConfirm={() => addOrUpdateProduct}
+            cancelTitle={t("cancel")}
+            confirmTitle={openModal === "add" ? t("add") : t("update")}
+          >
             <div className={styles.modal}>
-              <h4>{openModal === "add" ? "Create" : "Update"} Product</h4>
-
               <MessageComponent />
 
               <div className={styles.modalInputs}>
@@ -238,25 +247,8 @@ const ProductBody = () => {
                   number
                 />
               </div>
-              <div className={styles.modalButtons}>
-                <div
-                  className={styles.button}
-                  onClick={() => {
-                    clearMessages();
-                    setOpenModal(false);
-                    setProductId(null);
-                  }}
-                >
-                  {t("products.createProductModal.cancel")}
-                </div>
-                <Button onClick={addOrUpdateProduct} color="white">
-                  {openModal === "add"
-                    ? t("products.createProductModal.add")
-                    : t("products.createProductModal.update")}{" "}
-                </Button>
-              </div>
             </div>
-          </ModalOverlay>
+          </Popup>
         )}
       </div>
 

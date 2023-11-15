@@ -11,6 +11,8 @@ import Button from "../../components/button/button";
 import { useEffect, useState } from "react";
 import backendAPI from "../../api/backendAPI";
 import adminDashboardApi from "../../api/adminDashboardApi";
+import Popup from "../../dashboardNew/components/popup/popup";
+import { useTranslation } from "react-i18next";
 
 const KYC_TYPE = {
   PASSPORT: "PASSPORT",
@@ -108,6 +110,8 @@ const Table = ({ data, setData }) => {
   const [selectedId, setSelectedId] = useState(null);
   const adminApi = new adminDashboardApi("admin");
 
+  const { t } = useTranslation();
+
   const acceptKYC = async (id) => {
     try {
       await adminApi.acceptKYC(id);
@@ -188,96 +192,86 @@ const Table = ({ data, setData }) => {
       </div>
 
       <div className={styles.modalWrapper}>
-        {checkModal && (
-          <ModalOverlay>
-            <div className={styles.modal}>
-              <h4>Check verification</h4>
-
-              <div className={styles.lines}>
-                {data
-                  .find((item) => {
-                    if (Array.isArray(item) && item.length > 0) {
-                      const firstElement = item[0];
-                      if (
-                        firstElement &&
-                        typeof firstElement === "object" &&
-                        "id" in firstElement
-                      ) {
-                        return firstElement.id === selectedId;
-                      }
+        <Popup
+          show={checkModal}
+          title={t("kyc.modalTitle")}
+          onClose={() => setCheckModal(false)}
+          cancelTitle={t("close")}
+        >
+          <div className={styles.modal}>
+            <div className={styles.lines}>
+              {data
+                .find((item) => {
+                  if (Array.isArray(item) && item.length > 0) {
+                    const firstElement = item[0];
+                    if (
+                      firstElement &&
+                      typeof firstElement === "object" &&
+                      "id" in firstElement
+                    ) {
+                      return firstElement.id === selectedId;
                     }
-                    return false;
-                  })[2]
-                  .map((item, index) => (
-                    <div>
-                      {index === 0 && <h5 className={styles.level}>Level 1</h5>}
-                      {index === 3 && <h5 className={styles.level}>Level 2</h5>}
-                      {index === 4 && <h5 className={styles.level}>Level 3</h5>}
-                      <div className={styles.line} key={index}>
-                        <div className={styles.row}>
-                          <p>
-                            {item.type === "Adress"
-                              ? "Proof of adress"
-                              : item.type === "Utility bill"
-                              ? "Due deligence"
-                              : item.type}
-                          </p>
-                          {item.verify && <img src={Correct} alt="" />}
-                        </div>
-
-                        {item.file && (
-                          <a href={item.file} download>
-                            <img src={Download} alt="" />
-                          </a>
-                        )}
+                  }
+                  return false;
+                })[2]
+                .map((item, index) => (
+                  <div>
+                    {index === 0 && <h5 className={styles.level}>Level 1</h5>}
+                    {index === 3 && <h5 className={styles.level}>Level 2</h5>}
+                    {index === 4 && <h5 className={styles.level}>Level 3</h5>}
+                    <div className={styles.line} key={index}>
+                      <div className={styles.row}>
+                        <p>
+                          {item.type === "Adress"
+                            ? "Proof of adress"
+                            : item.type === "Utility bill"
+                            ? "Due deligence"
+                            : item.type}
+                        </p>
+                        {item.verify && <img src={Correct} alt="" />}
                       </div>
-                    </div>
-                  ))}
-              </div>
 
-              <div className={styles.checkButton}>
-                <Button onClick={() => setCheckModal(false)} color="white">
-                  Close
-                </Button>
-              </div>
+                      {item.file && (
+                        <a href={item.file} download>
+                          <img src={Download} alt="" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
             </div>
-          </ModalOverlay>
-        )}
+
+            <div className={styles.checkButton}></div>
+          </div>
+        </Popup>
+        {/*)}*/}
       </div>
 
       <div className={styles.modalWrapper}>
-        {feedbackModal && (
-          <ModalOverlay>
-            <div className={styles.modal}>
-              <h4>Leave a reason</h4>
+        {/*{feedbackModal && (*/}
+        <Popup
+          show={feedbackModal}
+          title={t("kyc.feedbackModal")}
+          onClose={() => setFeedbackModal(false)}
+          onConfirm={() => declineKYC(selectedId)}
+          cancelTitle={t("cancel")}
+          confirmTitle={t("confirm")}
+        >
+          <div className={styles.modal}>
+            <div className={styles.message}>
+              <p>Message</p>
 
-              <div className={styles.message}>
-                <p>Message</p>
-
-                <textarea
-                  name=""
-                  id=""
-                  cols="30"
-                  rows="10"
-                  placeholder="Some message..."
-                ></textarea>
-              </div>
-
-              <div className={styles.buttons}>
-                <div
-                  className={styles.button}
-                  onClick={() => setFeedbackModal(false)}
-                >
-                  Cancel
-                </div>
-
-                <Button onClick={() => declineKYC(selectedId)} color="white">
-                  Confirm
-                </Button>
-              </div>
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+                placeholder="Some message..."
+              ></textarea>
             </div>
-          </ModalOverlay>
-        )}
+          </div>
+        </Popup>
+        {/*)}*/}
       </div>
     </>
   );

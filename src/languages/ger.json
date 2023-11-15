@@ -397,15 +397,15 @@
     "modal": {
       "titleCreate": "Benutzer hinzufügen",
       "titleEdit": "Benutzer bearbeiten",
-      "firstName": "Vorname*",
+      "firstName": "Vorname",
       "firstNamePlaceholder": "Geben Sie den Vornamen ein",
-      "lastName": "Nachname*",
+      "lastName": "Nachname",
       "lastNamePlaceholder": "Geben Sie den Nachnamen ein",
-      "email": "E-Mail*",
+      "email": "E-Mail",
       "emailPlaceholder": "Geben Sie die E-Mail-Adresse ein",
-      "password": "Passwort*",
+      "password": "Passwort",
       "passwordPlaceholder": "Geben Sie das Passwort ein",
-      "role": "Rolle*"
+      "role": "Rolle"
     },
     "earningCards": {
       "first": "Verkäufe: Insgesamt",
@@ -870,17 +870,24 @@
     "actions": {
       "edit": "Bearbeiten",
       "enable": "Aktivieren",
-      "change": "Ändern"
-    }
+      "change": "Ändern",
+      "close": "Schließen",
+      "verify": "Verifizieren"
+    },
+    "scanModal": {
+      "title": "QR-Code scannen oder Code einfügen"
+    },
+    "authentication": "Authentifizierung",
+    "enterCode": "Verifizierungscode eingeben:"
   },
   "profile": {
     "title": "Benutzerprofil",
     "description": "Aktualisieren Sie Ihre persönlichen Daten und Benachrichtigungseinstellungen",
-    "firstName": "Vorname*",
-    "lastName": "Nachname*",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
     "business": "Firma",
     "businessDescription": "Wenn Sie ein Unternehmen sind, geben Sie hier bitte Ihren Firmennamen ein.",
-    "email": "Email*",
+    "email": "Email",
     "phoneNumber": "Telefonnummer",
     "avatar": "Benutzerbild",
     "avatarDescription": "Wählen Sie einen Avatar aus, um Ihr Konto zu personalisieren.",
@@ -936,5 +943,15 @@
     "last": "personalisieren Sie Ihr Website-Erlebnis.",
     "decline": "Ablehnen",
     "accept": "Akzeptieren"
+  },
+  "kyc": {
+    "modalTitle": "Überprüfen Sie die Verifizierung",
+    "feedbackModal": "Hinterlassen Sie einen Grund",
+    "cancel": "Stornieren",
+    "confirm": "Bestätigen",
+    "close": "Schließen",
+    "add": "Hinzufügen",
+    "create": "Erstellen",
+    "update": "Aktualisieren"
   }
 }

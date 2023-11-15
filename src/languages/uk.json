@@ -422,15 +422,15 @@
     "modal": {
       "titleCreate": "Додати Користувача",
       "titleEdit": "Редагувати Користувача",
-      "firstName": "Ім'я*",
+      "firstName": "Ім'я",
       "firstNamePlaceholder": "Введіть ім'я",
-      "lastName": "Прізвище*",
+      "lastName": "Прізвище",
       "lastNamePlaceholder": "Введіть прізвище",
-      "email": "Електронна пошта*",
+      "email": "Електронна пошта",
       "emailPlaceholder": "Введіть електронну пошту",
-      "password": "Пароль*",
+      "password": "Пароль",
       "passwordPlaceholder": "Введіть пароль",
-      "role": "Роль*"
+      "role": "Роль"
     },
     "earningCards": {
       "first": "Продажі: Всього",
@@ -816,8 +816,8 @@
   "products": {
     "totalProducts": "Всі продукти",
     "createNewProduct": "Створити новий продукт",
-    "subtitle1": "Ви додали",
-    "subtitle2": "нових товарів цього місяця",
+    "subtitle1": "Ви зараз маєте",
+    "subtitle2": "продукти",
     "description": "Цього місяця ви додали 3 нові продукти",
     "error": {
       "name": "Необхідно вказати ім'я!",
@@ -828,11 +828,11 @@
     "createProductModal": {
       "imageLabel": "Картинка продукту",
       "attach": "Додайте вкладення",
-      "nameLabel": "Ім'я*",
+      "nameLabel": "Ім'я",
       "namePlaceholder": "Введіть ім'я",
-      "descriptionLabel": "Опис*",
+      "descriptionLabel": "Опис",
       "descriptionPlaceholder": "Введіть опис",
-      "priceLabel": "Ціна*",
+      "priceLabel": "Ціна",
       "pricePlaceholder": "Введіть ціну",
       "stockLabel": "Запис",
       "stockPlaceholder": "Введіть запас, якщо запас обмежений",
@@ -895,17 +895,24 @@
     "actions": {
       "edit": "Редагувати",
       "enable": "Увімкнути",
-      "change": "Змінити"
-    }
+      "change": "Змінити",
+      "close": "Закрити",
+      "verify": "Перевірити"
+    },
+    "scanModal": {
+      "title": "Скануйте QR-код або вставте код"
+    },
+    "authentication": "Аутентифікація",
+    "enterCode": "Введіть код верифікації:"
   },
   "profile": {
     "title": "Профіль користувача",
     "description": "Оновіть особисту інформацію та налаштування сповіщень",
-    "firstName": "Ім'я*",
-    "lastName": "Прізвище*",
+    "firstName": "Ім'я",
+    "lastName": "Прізвище",
     "business": "Бізнес",
     "businessDescription": "Якщо ви є підприємством, будь ласка, введіть назву свого підприємства тут.",
-    "email": "Email*",
+    "email": "Email",
     "phoneNumber": "Номер телефону",
     "avatar": "Аватар",
     "avatarDescription": "Виберіть аватар, щоб персоналізувати свій обліковий запис.",
@@ -922,14 +929,14 @@
   },
   "identification": {
     "title": "Ідентифікація",
-    "description": "Підтвердьте свою особу, щоб купувати та торгувати",
+    "description": "Підтвердьте свою особу, щоб продавати та торгувати",
     "verified": "Перевірено",
     "unverified": "Неперевірений",
     "unlimited": "Необмежений",
     "verificationLevels": "Рівні перевірки",
     "level": "Рівень",
     "level1Description": "Особиста інформація, державне посвідчення особи та розпізнанння обличя",
-    "level2Description": "Підтвердження адреси та підтвердження компанії",
+    "level2Description": "Підтвердження адреси та підтвердження компанії (якщо є)",
     "level3Description": " Посилена старанність",
     "accountLimit": {
       "title": "Ліміт рахунку",
@@ -961,5 +968,15 @@
     "last": "персоналізувати свій сайт.",
     "decline": "Відхилити",
     "accept": "Прийняти"
+  },
+  "kyc": {
+    "modalTitle": "Перевірити верифікацію",
+    "feedbackModal": "Залиште причину",
+    "cancel": "Скасувати",
+    "confirm": "Підтвердити",
+    "close": "Закрити",
+    "add": "Додати",
+    "create": "Створити",
+    "update": "Оновити"
   }
 }

@@ -102,35 +102,35 @@ const ProfileSettings = () => {
 
   const data = [
     {
-      label: `${t("profile.firstName")}`,
+      label: `${t("profile.firstName").concat("*")}`,
       description: "",
       value: firstName,
       setValue: setFirstName,
       type: "edit",
     },
     {
-      label: `${t("profile.lastName")}`,
+      label: `${t("profile.lastName").concat("*")}`,
       description: "",
       value: lastName,
       setValue: setLastName,
       type: "edit",
     },
     {
-      label: `${t("profile.business")}`,
+      label: `${t("profile.business").concat("*")}`,
       description: `${t("profile.businessDescription")}`,
       value: business,
       setValue: setBusiness,
       type: "edit",
     },
     {
-      label: `${t("profile.email")}`,
+      label: `${t("profile.email").concat("*")}`,
       description: "",
       value: email,
       setValue: setEmail,
       type: "edit",
     },
     {
-      label: `${t("profile.phoneNumber")}`,
+      label: `${t("profile.phoneNumber").concat("*")}`,
       description: "",
       value: phoneNumber,
       setValue: setPhoneNumber,
@@ -138,7 +138,7 @@ const ProfileSettings = () => {
     },
     {
       label: `${t("profile.avatar")}`,
-      description: `${t("profile.avatarDescription")}`,
+      description: `${t("profile.avatarDescription").concat("*")}`,
       value: imageName,
       setValue: setImageName,
       type: "image",

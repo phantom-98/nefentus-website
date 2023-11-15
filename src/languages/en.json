@@ -450,15 +450,16 @@
     "modal": {
       "titleCreate": "Add User",
       "titleEdit": "Edit User",
-      "firstName": "First name*",
+      "titleNewUser": "Create User",
+      "firstName": "First name",
       "firstNamePlaceholder": "Enter first name",
-      "lastName": "Last name*",
+      "lastName": "Last name",
       "lastNamePlaceholder": "Enter last name",
-      "email": "Email*",
+      "email": "Email",
       "emailPlaceholder": "Enter email",
-      "password": "Password*",
+      "password": "Password",
       "passwordPlaceholder": "Enter password",
-      "role": "Role*"
+      "role": "Role"
     },
     "earningCards": {
       "first": "Sales: Total",
@@ -947,17 +948,24 @@
     "actions": {
       "edit": "Edit",
       "enable": "Enable",
-      "change": "Change"
-    }
+      "change": "Change",
+      "close": "Close",
+      "verify": "Verify"
+    },
+    "scanModal": {
+      "title": "Scan QR-code or paste code"
+    },
+    "authentication": "Authentication",
+    "enterCode": "Enter verification code:"
   },
   "profile": {
     "title": "User Profile",
     "description": "Update your personal information and notification settings",
-    "firstName": "First name*",
-    "lastName": "Last name*",
+    "firstName": "First name",
+    "lastName": "Last name",
     "business": "Business",
     "businessDescription": "If you are a business, please enter your business name here.",
-    "email": "Email*",
+    "email": "Email",
     "phoneNumber": "Phone number",
     "avatar": "Avatar",
     "avatarDescription": "Select an avatar to personalize your account.",
@@ -1013,5 +1021,15 @@
     "last": "personalize your site experience.",
     "decline": "Decline",
     "accept": "Accept"
-  }
+  },
+  "kyc": {
+    "modalTitle": "Check verification",
+    "feedbackModal": "Leave a reason"
+  },
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "close": "Close",
+  "add": "Add",
+  "create": "Create",
+  "update": "Update"
 }

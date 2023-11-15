@@ -20,6 +20,7 @@ import Button from "../components/button/button";
 import styles from "./admin.module.css";
 import imputStyles from "../../components/input/input.module.css";
 import TablePagination from "../../components/tablePagination";
+import Popup from "../components/popup/popup";
 
 const label = [
   "Name",
@@ -253,19 +254,19 @@ const AdminDashboard = ({ type }) => {
 
   const changeUser = async () => {
     if (firstName === "") {
-      setErrorMessage("First name is required");
+      setErrorMessage(t("messages.error.firstNameRequired"));
       return;
     }
     if (lastName === "") {
-      setErrorMessage("Last name is required");
+      setErrorMessage(t("messages.error.lastNameRequired"));
       return;
     }
     if (email === "" && editEmailAddress === null) {
-      setErrorMessage("Email is required");
+      setErrorMessage(t("messages.error.emailRequired"));
       return;
     }
     if (role === "") {
-      setErrorMessage("Role is required");
+      setErrorMessage(t("messages.error.roleRequired"));
       return;
     }
 
@@ -278,10 +279,10 @@ const AdminDashboard = ({ type }) => {
         role,
       );
       if (resp) {
-        setInfoMessage("User updated successfully!");
+        setInfoMessage(t("messages.success.updateUser"));
         updateUsersTable(dataUsers);
       } else {
-        setErrorMessage("Could not update user!");
+        setErrorMessage(t("messages.error.updateUser"));
       }
     } else {
       // Add
@@ -291,15 +292,15 @@ const AdminDashboard = ({ type }) => {
           setOpenModal(false);
           fetchAdminData();
           clearAddUserFields();
-          setInfoMessage("User added successfully!");
+          setInfoMessage(t("messages.success.addUser"));
           return;
         } else if (resp.status === 409) {
-          setErrorMessage("User already exists!");
+          setErrorMessage(t("messages.error.userExist"));
           return;
         }
       }
 
-      setErrorMessage("Could not add user!");
+      setErrorMessage(t("messages.error.addUser"));
     }
   };
 
@@ -407,108 +408,95 @@ const AdminDashboard = ({ type }) => {
         </div>
       </div>
       <>
-        {openModal && (
-          <ModalOverlay>
-            <div className={styles.modal}>
-              <MessageComponent />
+        <Popup
+          show={openModal}
+          onClose={() => {
+            clearMessages();
+            clearAddUserFields();
+            setOpenModal(false);
+            updateUsersTable(getFilteredUser);
+          }}
+          onConfirm={changeUser}
+          cancelTitle={t("cancel")}
+          confirmTitle={t("dashboard.modal.titleEdit")}
+        >
+          <div className={styles.modal}>
+            <MessageComponent />
 
-              <h4>Edit User</h4>
+            <h4>Edit User</h4>
 
-              <div className={styles.modalInputs}>
-                <Input
-                  dashboard
-                  label="First name*"
-                  placeholder={"Enter first name"}
-                  value={firstName}
-                  setState={setFirstName}
-                  style={{ height: 35 }}
-                />
-                <Input
-                  dashboard
-                  label="Last name*"
-                  placeholder={"Enter last name"}
-                  value={lastName}
-                  setState={setLastName}
-                  style={{ height: 35 }}
-                />
-                <Input
-                  dashboard
-                  label="Email*"
-                  placeholder={"Enter email"}
-                  value={email}
-                  setState={setEmail}
-                  disabled={editEmailAddress !== null}
-                  style={{ height: 35 }}
-                />
+            <div className={styles.modalInputs}>
+              <Input
+                dashboard
+                label={t("dashboard.modal.firstName").concat("*")}
+                placeholder={t("dashboard.modal.firstNamePlaceholder")}
+                value={firstName}
+                setState={setFirstName}
+                style={{ height: 35 }}
+              />
+              <Input
+                dashboard
+                label={t("dashboard.modal.lastName").concat("*")}
+                placeholder={t("dashboard.modal.lastNamePlaceholder")}
+                value={lastName}
+                setState={setLastName}
+                style={{ height: 35 }}
+              />
+              <Input
+                dashboard
+                label={t("dashboard.roles.modal.email").concat("*")}
+                placeholder={t("dashboard.modal.emailPlaceholder")}
+                value={email}
+                setState={setEmail}
+                disabled={editEmailAddress !== null}
+                style={{ height: 35 }}
+              />
 
-                {type === "admin" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={[
-                      "Vendor",
-                      "Affiliate",
-                      "Broker",
-                      "Senior Broker",
-                      "Leader",
-                    ]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-                {type === "leader" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate", "Broker", "Senior Broker"]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-                {type === "seniorbroker" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate", "Broker"]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-                {type === "broker" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate"]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-              </div>
-              <div className={styles.modalButtons}>
-                <div
-                  className={styles.button}
-                  style={{ fontSize: 13 }}
-                  onClick={() => {
-                    clearMessages();
-                    clearAddUserFields();
-                    setOpenModal(false);
-                    updateUsersTable(getFilteredUser);
-                  }}
-                >
-                  Cancel
-                </div>
-                <Button
-                  onClick={() => {
-                    changeUser();
-                  }}
-                  color="white"
-                >
-                  Edit User
-                </Button>
-              </div>
+              {type === "admin" && (
+                <Options
+                  label={t("dashboard.modal.role").concat("*")}
+                  value={role}
+                  options={[
+                    "Vendor",
+                    "Affiliate",
+                    "Broker",
+                    "Senior Broker",
+                    "Leader",
+                  ]}
+                  dashboard
+                  setValue={setRole}
+                />
+              )}
+              {type === "leader" && (
+                <Options
+                  label={t("dashboard.modal.role").concat("*")}
+                  value={role}
+                  options={["Vendor", "Affiliate", "Broker", "Senior Broker"]}
+                  dashboard
+                  setValue={setRole}
+                />
+              )}
+              {type === "seniorbroker" && (
+                <Options
+                  label={t("dashboard.modal.role").concat("*")}
+                  value={role}
+                  options={["Vendor", "Affiliate", "Broker"]}
+                  dashboard
+                  setValue={setRole}
+                />
+              )}
+              {type === "broker" && (
+                <Options
+                  label={t("dashboard.modal.role").concat("*")}
+                  value={role}
+                  options={["Vendor", "Affiliate"]}
+                  dashboard
+                  setValue={setRole}
+                />
+              )}
             </div>
-          </ModalOverlay>
-        )}
+          </div>
+        </Popup>
       </>
     </div>
   );
