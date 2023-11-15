@@ -23,3 +23,28 @@
   font-size: 1.2rem;
   opacity: 0.6;
 }
+
+.toggle {
+  background-color: #222836;
+  width: 4rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  padding: 3px;
+  transition: 0.5s ease-out;
+}
+
+.toggleCircle {
+  width: 2rem;
+  border-radius: 50%;
+  height: 2rem;
+  transition: 0.5s ease-out;
+  background-color: white;
+}
+
+.activeToggle {
+  background-color: #0784b5;
+}
+
+.activeToggle .toggleCircle {
+  transform: translateX(100%);
+}

@@ -12,12 +12,10 @@ import {
 
 import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../../assets/logo/logo.svg";
+import WalletConnection from "../../components/walletConnection/walletConnection";
 
 const WalletSetting = () => {
-  const [connectStatus, setConnectStatus] = useState({
-    "Wallet Connect": "disconnected",
-    Metamask: "disconnected",
-  });
+  const [activeToggle, setActiveToggle] = useState(true);
   const BackandAPI = new backendAPI();
 
   useEffect(() => {
@@ -37,9 +35,11 @@ const WalletSetting = () => {
     },
   ];
 
-  useEffect(() => {
-    console.log(connectStatus);
-  }, [connectStatus]);
+  // useEffect(() => {
+  //   BackandAPI.registerWalletAddress()
+  // },[])
+
+  console.log(walletConnect());
 
   return (
     <Card className={styles.card}>
@@ -53,15 +53,30 @@ const WalletSetting = () => {
             selling product
           </div>
         </div>
-        <div>
-          {wallets.map((item) => (
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <div>
-                <p style={{ fontSize: 20 }}>{item.name}</p>
-                <img src={item.icon} style={{ height: 100 }} alt=" " />
-              </div>
+      </div>
+      <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            width: "50%",
+            justifyContent: "space-between",
+          }}
+        >
+          {wallets.map((item, index) => (
+            <div key={index}>
+              <WalletConnection name={item.name} icon={item.icon} />
             </div>
           ))}
+        </div>
+      </div>
+      <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+        <div
+          onClick={() => setActiveToggle((prev) => !prev)}
+          className={`${activeToggle ? styles.activeToggle : ""} ${
+            styles.toggle
+          }`}
+        >
+          <div className={`${styles.toggleCircle}`}></div>
         </div>
       </div>
     </Card>
