@@ -490,6 +490,7 @@ const AdminDashboard = ({ type }) => {
           </ModalOverlay>
         )}
       </>
+      <SignupByEmail />
     </div>
   );
 };
