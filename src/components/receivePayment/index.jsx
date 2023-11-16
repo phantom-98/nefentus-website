@@ -31,6 +31,7 @@ import { useTranslation } from "react-i18next";
 const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
   let internalWalletAddress = useInternalWallet();
   const { t } = useTranslation();
+
   const [password, setPassword] = useState("");
   const [internalPayIdx, setInternalPayIdx] = useState(-1); // Index of the currency to pay with (or -1 if not selected)
 

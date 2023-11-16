@@ -459,7 +459,11 @@ const AdminBody = ({ type }) => {
                           }
                         ></div>
                         <div className={styles.name}>
-                          {ROLE_TO_NAME[item.role]}
+                          {t(
+                            `dashboard.roles.${ROLE_TO_NAME[
+                              item.role
+                            ].replaceAll(" ", "")}`,
+                          )}
                         </div>
                       </div>
                     ))}
@@ -481,7 +485,7 @@ const AdminBody = ({ type }) => {
                 {type === "admin" && (
                   <div className={styles.button}>
                     <Button color="white" link={"/dashboard/kyc"}>
-                      KYC Requests
+                      {t("dashboard.KYCRequests")}
                     </Button>
                   </div>
                 )}
@@ -492,11 +496,11 @@ const AdminBody = ({ type }) => {
 
         <div className={styles.tableWrapper}>
           <div className={styles.top}>
-            <h4>User Management</h4>
+            <h4>{t("dashboard.userManagement")}</h4>
 
             <div className={styles.inputs}>
               <Input
-                placeholder="Search"
+                placeholder={t("general.search")}
                 dashboard
                 value={searchText}
                 setState={changeSearchText}
@@ -519,27 +523,31 @@ const AdminBody = ({ type }) => {
             <div className={styles.modal}>
               <MessageComponent />
 
-              <h4>{editEmailAddress ? "Edit" : "Create"} User</h4>
+              <h4>
+                {editEmailAddress
+                  ? t("dashboard.modal.titleEdit")
+                  : t("dashboard.modal.titleCreate")}
+              </h4>
 
               <div className={styles.modalInputs}>
                 <Input
                   dashboard
-                  label="First name*"
-                  placeholder={"Enter first name"}
+                  label={t("dashboard.modal.firstName")}
+                  placeholder={t("dashboard.modal.firstNamePlaceholder")}
                   value={firstName}
                   setState={setFirstName}
                 />
                 <Input
                   dashboard
-                  label="Last name*"
-                  placeholder={"Enter last name"}
+                  label={t("dashboard.modal.lastName")}
+                  placeholder={t("dashboard.modal.lastNamePlaceholder")}
                   value={lastName}
                   setState={setLastName}
                 />
                 <Input
                   dashboard
-                  label="Email*"
-                  placeholder={"Enter email"}
+                  label={t("dashboard.modal.email")}
+                  placeholder={t("dashboard.modal.emailPlaceholder")}
                   value={email}
                   setState={setEmail}
                   disabled={editEmailAddress !== null}
@@ -549,14 +557,14 @@ const AdminBody = ({ type }) => {
                     <p
                       className={`${imputStyles.label} ${imputStyles.dashboardLabel}`}
                     >
-                      Password*
+                      {t("dashboard.modal.password")}
                     </p>
 
                     <div className={styles.passwordWrapper}>
                       <input
                         className={`${imputStyles.input} ${imputStyles.dashboardInput}`}
                         type={showPassword ? "text" : "password"}
-                        placeholder={"Enter password"}
+                        placeholder={t("dashboard.modal.passwordPlaceholder")}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
@@ -583,14 +591,24 @@ const AdminBody = ({ type }) => {
 
                 {type === "admin" && (
                   <Options
-                    label="Role*"
-                    value={role}
+                    label={t("dashboard.modal.role").concat("*")}
+                    value={
+                      role
+                        ? t(`dashboard.roles.${role.replaceAll(" ", "")}`)
+                        : ""
+                    }
                     options={[
-                      "Vendor",
-                      "Affiliate",
-                      "Broker",
-                      "Senior Broker",
-                      "Leader",
+                      { value: "Vendor", display: t("dashboard.roles.Vendor") },
+                      {
+                        value: "Affiliate",
+                        display: t("dashboard.roles.Affiliate"),
+                      },
+                      { value: "Broker", display: t("dashboard.roles.Broker") },
+                      {
+                        value: "Senior Broker",
+                        display: t("dashboard.roles.SeniorBroker"),
+                      },
+                      { value: "Leader", display: t("dashboard.roles.Leader") },
                     ]}
                     dashboard
                     setValue={setRole}
@@ -598,27 +616,63 @@ const AdminBody = ({ type }) => {
                 )}
                 {type === "leader" && (
                   <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate", "Broker", "Senior Broker"]}
+                    label={t("dashboard.modal.role").concat("*")}
+                    value={
+                      role
+                        ? t(`dashboard.roles.${role.replaceAll(" ", "")}`)
+                        : ""
+                    }
+                    options={[
+                      { value: "Vendor", display: t("dashboard.roles.Vendor") },
+                      {
+                        value: "Affiliate",
+                        display: t("dashboard.roles.Affiliate"),
+                      },
+                      { value: "Broker", display: t("dashboard.roles.Broker") },
+                      {
+                        value: "Senior Broker",
+                        display: t("dashboard.roles.SeniorBroker"),
+                      },
+                    ]}
                     dashboard
                     setValue={setRole}
                   />
                 )}
                 {type === "seniorbroker" && (
                   <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate", "Broker"]}
+                    label={t("dashboard.modal.role").concat("*")}
+                    value={
+                      role
+                        ? t(`dashboard.roles.${role.replaceAll(" ", "")}`)
+                        : ""
+                    }
+                    options={[
+                      { value: "Vendor", display: t("dashboard.roles.Vendor") },
+                      {
+                        value: "Affiliate",
+                        display: t("dashboard.roles.Affiliate"),
+                      },
+                      { value: "Broker", display: t("dashboard.roles.Broker") },
+                    ]}
                     dashboard
                     setValue={setRole}
                   />
                 )}
                 {type === "broker" && (
                   <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate"]}
+                    label={t("dashboard.modal.role").concat("*")}
+                    value={
+                      role
+                        ? t(`dashboard.roles.${role.replaceAll(" ", "")}`)
+                        : ""
+                    }
+                    options={[
+                      { value: "Vendor", display: t("dashboard.roles.Vendor") },
+                      {
+                        value: "Affiliate",
+                        display: t("dashboard.roles.Affiliate"),
+                      },
+                    ]}
                     dashboard
                     setValue={setRole}
                   />
@@ -633,10 +687,12 @@ const AdminBody = ({ type }) => {
                     setOpenModal(false);
                   }}
                 >
-                  Cancel
+                  {t("general.cancel")}
                 </div>
                 <Button onClick={addUser} color="white">
-                  {editEmailAddress ? "Edit" : "Create"} User
+                  {editEmailAddress
+                    ? t("dashboard.modal.titleEdit")
+                    : t("dashboard.modal.titleCreate")}
                 </Button>
               </div>
             </div>

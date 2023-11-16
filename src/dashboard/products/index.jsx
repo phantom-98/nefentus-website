@@ -101,6 +101,10 @@ const ProductBody = () => {
       setErrorMessage(t("messages.error.priceRequired"));
       return;
     }
+    if (price > transactionLimit) {
+      setErrorMessage("Overage limit!");
+      return;
+    }
     let priceAsFloat = null;
     priceAsFloat = parseFloat(price);
     if (!priceAsFloat) {

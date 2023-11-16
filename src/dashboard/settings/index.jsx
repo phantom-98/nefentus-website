@@ -84,7 +84,7 @@ const SettingsBody = ({ type }) => {
     const handleStorageChange = () => {
       setProfilePicUrl(localStorage.getItem("profile_pic"));
       setCounter(counter + 1);
-      setRequireKyc(localStorage.setItem("requireKyc"));
+      setRequireKyc(localStorage.getItem("requireKyc"));
     };
 
     async function checkJwtAndNavigate() {
@@ -182,6 +182,8 @@ const SettingsBody = ({ type }) => {
               return <PasswordBody active={active} />;
             case nav[2]:
               return <EmailBody active={active} />;
+            case nav[3]:
+              return <AuthenticatorBody active={active} />;
             default:
               return <KYC />;
           }
@@ -206,11 +208,14 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [imageName, setImageName] = useState(null);
   const [imageChanged, setImageChanged] = useState(false); // Set to true if image changed (was added or deleted))
-  const [isTotp, setIsTotp] = useState(localStorage.getItem("hasTotp"));
-  const [isOtp, setIsOtp] = useState(localStorage.getItem("hasOtp"));
+  const isTotp = useRef(localStorage.getItem("hasTotp") === "true");
+  const isOtp = useRef(localStorage.getItem("hasOtp") === "true");
   const [phishingCode, setPhishingCode] = useState(
-    localStorage.getItem("antiPhishingCode"),
+    localStorage.getItem("antiPhishingCode") !== "undefined"
+      ? localStorage.getItem("antiPhishingCode")
+      : "",
   );
+  const { t } = useTranslation();
 
   useEffect(() => {
     const profilePic = localStorage.getItem("profile_pic");
@@ -259,17 +264,17 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
 
   const checkErrors = () => {
     if (!firstName) {
-      setErrorMessage("First name is required.");
+      setErrorMessage(t("messages.error.firstNameRequired"));
       return null;
     }
 
     if (!lastName) {
-      setErrorMessage("Last name is required.");
+      setErrorMessage(t("messages.error.lastNameRequired"));
       return null;
     }
 
     if (!email || !email.trim()) {
-      setErrorMessage("Email is required.");
+      setErrorMessage(t("messages.error.emailRequired"));
       return null;
     }
 
@@ -288,8 +293,6 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
       phoneNumber: phoneNumber,
       email: email,
       business: business || "",
-      hasTotp: isTotp,
-      hasOtp: isOtp,
       antiPhishingCode: phishingCode,
     };
 
@@ -303,25 +306,28 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
         resp2 = await backendAPI.deleteProfileImage(file);
       }
       if (resp2 == null) {
-        setErrorMessage("Error on uploading the profile picture");
+        setErrorMessage(t("messages.error.uploadPicture"));
       }
       setImageChanged(false);
     }
 
     const response2 = await backendAPI.update(requestData);
     if (response2 == null) {
-      setErrorMessage("Error on updating data");
+      setErrorMessage(t("messages.error.updateData"));
       await backendAPI.signout();
       setTimeout(() => {
         navigate("/");
       }, 1000);
+    } else {
+      // localStorage.setItem("hasOtp", isOtp.toString());
+      // localStorage.setItem("hasTotp", isTotp.toString());
     }
 
     resetValues();
     afterUpdateSettings();
 
     if (response !== null && response2 !== null) {
-      setInfoMessage("Settings updated successfully!");
+      setInfoMessage(t("messages.success.updateSettings"));
     }
   };
 
@@ -361,31 +367,6 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
           placeholder={email}
           type={"text"}
           value={email}
-        />
-      </div>
-
-      <div>
-        <InputComponent
-          disabled
-          label="Time-based one-time password"
-          type="radio"
-          value={isTotp}
-          options={[
-            { name: "Yes", value: "true" },
-            { name: "No", value: "false" },
-          ]}
-          setState={setIsTotp}
-        />
-        <InputComponent
-          disabled
-          label="One-time passwords via email"
-          type="radio"
-          value={isOtp}
-          options={[
-            { name: "Yes", value: "true" },
-            { name: "No", value: "false" },
-          ]}
-          setState={setIsOtp}
         />
       </div>
 
@@ -433,6 +414,7 @@ const PasswordBody = ({ active }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [verificationCode, setVerificationCode] = useState(null);
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
+  const { t } = useTranslation();
 
   const backendAPI = new backend_API();
 
@@ -465,7 +447,7 @@ const PasswordBody = ({ active }) => {
 
   const handleConfirm = async () => {
     if (newPassword !== confirmPassword) {
-      setErrorMessage("Passwords are not equal");
+      setErrorMessage(t("messages.error.passwordEqual"));
       return;
     }
 
@@ -474,7 +456,7 @@ const PasswordBody = ({ active }) => {
       currentPassword,
     );
     if (response == null) {
-      setErrorMessage("Old password is not the right one!");
+      setErrorMessage(t("messages.error.oldPassword"));
       return;
     }
     setErrorMessage(null);
@@ -485,10 +467,10 @@ const PasswordBody = ({ active }) => {
     const response =
       await backendAPI.changePasswordConfirmDashboard(verificationCode);
     if (response == null) {
-      setErrorMessage("Code is not valid or too old!");
+      setErrorMessage(t("messages.error.codeValid"));
       return;
     }
-    setInfoMessage("Password successfully changed!");
+    setInfoMessage(t("messages.success.passwordChange"));
     resetValues();
     setVerificationCode("");
     setOpenBox(false);
@@ -551,12 +533,7 @@ const PasswordBody = ({ active }) => {
           />
         </div>
       ))}
-      {/*
-            <Authentificator
-                placeholder={"Google Authentificator"}
-                connected={true}
-                handleClick={() => {}}
-			/>*/}
+
       <Buttons functions={["", handleConfirm]} buttons={["Reset", "Confirm"]} />
     </div>
   );
@@ -568,6 +545,7 @@ const EmailBody = ({ active }) => {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState(null);
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
+  const { t } = useTranslation();
 
   const backendAPI = new backend_API();
   const navigate = useNavigate();
@@ -604,16 +582,16 @@ const EmailBody = ({ active }) => {
 
   const handleConfirm = async () => {
     if (newEmail !== confirmEmail) {
-      setErrorMessage("Emails are not equal");
+      setErrorMessage(t("messages.error.emailEqual"));
       return;
     }
 
     const response = await backendAPI.changeEmailDashboard(newEmail);
     if (response == null) {
-      setErrorMessage("Email is already in use!");
+      setErrorMessage(t("messages.error.emailUsed"));
       return;
     } else {
-      setInfoMessage("Email successfully changed!");
+      setInfoMessage(t("messages.success.email"));
     }
     setErrorMessage(null);
     setOpenBox(true);
@@ -631,7 +609,7 @@ const EmailBody = ({ active }) => {
 
   const handleCode = async () => {
     if (verificationCode.trim().length === 0) {
-      setErrorMessage("Enter confirmation code!");
+      setErrorMessage(t("messages.error.confirmCode"));
       return;
     } else {
       const response = await backendAPI.confirmEmail(
@@ -639,10 +617,10 @@ const EmailBody = ({ active }) => {
         newEmail,
       );
       if (response == null) {
-        setErrorMessage("Wrong verification code!");
+        setErrorMessage(t("messages.error.verificationCode"));
         return;
       } else {
-        setInfoMessage("Email successfully changed!");
+        setInfoMessage(t("messages.success.email"));
         resetValues();
         await logOut();
       }
@@ -695,13 +673,193 @@ const EmailBody = ({ active }) => {
           />
         </div>
       ))}
-      {/*
-            <Authentificator
-                placeholder={"Google Authentificator"}
-                connected={true}
-                handleClick={() => {}}
-			/>*/}
       <Buttons functions={["", handleConfirm]} buttons={["Reset", "Confirm"]} />
+    </div>
+  );
+};
+
+const AuthenticatorBody = ({ active }) => {
+  const [isTotp, setIsTotp] = useState(
+    localStorage.getItem("hasTotp") === "true",
+  );
+  const [isOtp, setIsOtp] = useState(localStorage.getItem("hasOtp") === "true");
+  const email = useRef(localStorage.getItem("email"));
+  const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
+  const [reset, setReset] = useState(false);
+
+  const [copied, setCopied] = useState(false);
+  const [verify, setVerify] = useState(false);
+  const [code, setCode] = useState("");
+
+  const [open, setOpen] = useState(false);
+  const [secretToken, setSecretToken] = useState("");
+
+  const backendAPI = new backend_API();
+
+  const handleTotpSecretKey = async (isTotp) => {
+    setIsTotp(isTotp);
+    if (isTotp) {
+      setOpen(true);
+      const response = await backendAPI.getTotpToken();
+      setSecretToken(response);
+    } else {
+      await backendAPI.setupTotp({
+        active: false,
+      });
+      setInfoMessage("Settings updated successfully!");
+    }
+  };
+
+  const handleTotpVerify = async (email, token, rememberMe) => {
+    const response = await backendAPI.verifyTotpToken(email, token, rememberMe);
+    console.log(response, "response");
+    if (response?.status === 200) {
+      const response2 = await backendAPI.setupTotp({
+        active: true,
+      });
+
+      if (response2 == null) {
+        setErrorMessage("Error on updating data");
+      } else {
+        localStorage.setItem("hasTotp", true.toString());
+        setInfoMessage("Settings updated successfully!");
+        setOpen(false);
+        setVerify(false);
+      }
+    }
+    if (response.status === 400) {
+      setErrorMessage("Incorrect code");
+      setReset(true);
+      setTimeout(() => {
+        setReset(false);
+      });
+    }
+  };
+
+  const handleOtp = async (data) => {
+    setIsOtp(data);
+
+    const response = await backendAPI.setupOtp({ active: data });
+    if (response == null) {
+      setErrorMessage("Error on updating data");
+    }
+
+    if (response.status === 200) {
+      console.log(response.status, "status");
+      console.log(isOtp, "statusOtp");
+      localStorage.setItem("hasOtp", data.toString());
+      setInfoMessage("Settings updated successfully!");
+    }
+  };
+
+  return (
+    <div className={styles.tabContent}>
+      <MessageComponent />
+
+      <TopInfo
+        title={instruction[active].title}
+        description={instruction[active].description}
+      />
+
+      <Switcher
+        title={"One-time passwords via email"}
+        checked={isOtp}
+        setChecked={handleOtp}
+      />
+
+      <Switcher
+        title={"Time-based one-time password"}
+        checked={isTotp}
+        setChecked={handleTotpSecretKey}
+      />
+
+      {open && secretToken && (
+        <ModalOverlay>
+          <div className={styles.modalTitle}>TOTP Authentication</div>
+
+          {!verify ? (
+            <div>
+              <div className={styles.modalSubtitle}>
+                {" "}
+                Scan QR-code or paste code
+              </div>
+              <div className={styles.QRCode}>
+                <QRCode
+                  size={256}
+                  style={{
+                    height: "auto",
+                    maxWidth: "100%",
+                    width: "100%",
+                    borderRadius: "2rem",
+                    border: "white 1rem solid",
+                  }}
+                  value={`otpauth://totp/Nefentus?secret=${secretToken}&issuer=${email.current}`}
+                  viewBox={`0 0 256 256`}
+                />
+              </div>
+              <div className={styles.copyLink}>
+                {copied && (
+                  <div className={styles.tooltip}>
+                    Link copied to clipboard!
+                  </div>
+                )}
+                <div
+                  className={styles.linkBox}
+                  onClick={() => {
+                    navigator.clipboard.writeText(secretToken);
+                    setCopied(true);
+                  }}
+                >
+                  <p id="affiliate-link" className={styles.url}>
+                    {secretToken?.slice(0, 15) + "..."}
+                  </p>
+                  <img src={UrlLink} alt="url icon" />
+                </div>
+              </div>
+              <Buttons
+                buttons={["Close", "Verify"]}
+                functions={[
+                  () => {
+                    setOpen(!open);
+                    setIsTotp(!isTotp);
+                  },
+                  () => {
+                    setVerify(true);
+                  },
+                ]}
+              />
+            </div>
+          ) : (
+            <div>
+              <div className={styles.modalSubtitle}>
+                {" "}
+                Enter code from Authenticator
+              </div>
+              <MessageComponent />
+
+              <OneTimeCodeInput
+                setOTPCode={setCode}
+                resetCodeFlag={reset}
+                request={() => {
+                  handleTotpVerify(email.current, code, false);
+                }}
+              />
+              <Buttons
+                buttons={["Close", "Verify"]}
+                functions={[
+                  () => {
+                    setOpen(!open);
+                    setIsTotp(!isTotp);
+                  },
+                  () => {
+                    handleTotpVerify(email.current, code, false);
+                  },
+                ]}
+              />
+            </div>
+          )}
+        </ModalOverlay>
+      )}
     </div>
   );
 };

@@ -224,10 +224,10 @@ const Navigation = () => {
                 className={`${styles.line} ${openMenu ? styles.openLine : ""}`}
               ></div>
 
-              {/*<div*/}
-              {/*  onClick={() => setOpenMenu((prev) => !prev)}*/}
-              {/*  className={styles.lineButton}*/}
-              {/*></div>*/}
+              <div
+                onClick={() => setOpenMenu((prev) => !prev)}
+                className={styles.lineButton}
+              ></div>
             </div>
           </div>
         </div>

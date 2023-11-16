@@ -54,8 +54,16 @@ const WalletIntegration = ({
           "Wallet Connect": "disconnected",
         });
       }
+
+      registerWallet(wallet.address);
     }
-  }, [wallet.status, name, setConnectStatus]);
+  }, [wallet.status, name, setConnectStatus, wallet.address]);
+
+  async function registerWallet(address) {
+    if (address) {
+      const result = await backend_API.registerWalletAddress(address);
+    }
+  }
 
   return (
     <div className={styles.walletWrap}>

@@ -9,7 +9,12 @@ import { useTranslation } from "react-i18next";
 import separateText from "../../func/separate";
 import { reformatFooterInfo } from "../../utils";
 
-const content = ["/", "/payment", "/support", "/affiliate"];
+const content = [
+  { link: "/" },
+  { link: "/payment" },
+  { link: "/support" },
+  { link: "/affiliate" },
+];
 
 const Footer = () => {
   const { t } = useTranslation();

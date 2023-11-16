@@ -158,10 +158,9 @@ const Balances = ({
   const [isWithdrawing, setIsWithdrawing] = useState(false);
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
+  const { t } = useTranslation();
 
   const isMetaMask = metamask !== null;
-
-  const { t } = useTranslation();
 
   function calculateTotalBalanceUSD() {
     let totalBalanceUSD = 0.0;

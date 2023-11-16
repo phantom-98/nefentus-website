@@ -184,81 +184,73 @@ const ProductBody = () => {
         </div>
       </Card>
 
-      <div className={styles.modalWrapper}>
-        {openModal !== false && (
-          <Popup
-            show={openModal}
-            title={openModal === "add" ? t("create") : t("update")}
-            onClose={() => {
-              clearMessages();
-              setOpenModal(false);
-              setProductId(null);
-            }}
-            onConfirm={() => addOrUpdateProduct}
-            cancelTitle={t("cancel")}
-            confirmTitle={openModal === "add" ? t("add") : t("update")}
-          >
-            <div className={styles.modal}>
-              <MessageComponent />
+      <div>
+        <Popup
+          show={openModal}
+          title={openModal === "add" ? t("create") : t("update")}
+          onClose={() => {
+            clearMessages();
+            setOpenModal(false);
+            setProductId(null);
+          }}
+          onConfirm={() => addOrUpdateProduct}
+          cancelTitle={t("cancel")}
+          confirmTitle={openModal === "add" ? t("add") : t("update")}
+        >
+          <div className={styles.modal}>
+            <MessageComponent />
 
-              <div className={styles.modalInputs}>
-                <Attachment
-                  label={t("products.createProductModal.imageLabel")}
-                  onUpload={(file) => {
-                    setImage(file);
-                    setImageChanged(true);
-                    setCropDialogOpen(true);
-                  }}
-                  onDelete={() => {
-                    setImage(null);
-                    setImageChanged(true);
-                  }}
-                  value={image}
-                  dashboard
-                />
-                <Input
-                  dashboard
-                  label={t("products.createProductModal.nameLabel") + "*"}
-                  placeholder={t("products.createProductModal.namePlaceholder")}
-                  value={name}
-                  setState={setName}
-                />
-                <Textarea
-                  dashboard
-                  label={
-                    t("products.createProductModal.descriptionLabel") + "*"
-                  }
-                  placeholder={t(
-                    "products.createProductModal.descriptionPlaceholder",
-                  )}
-                  value={description}
-                  setState={setDescription}
-                  rows={2}
-                />
-                <Input
-                  dashboard
-                  label={t("products.createProductModal.priceLabel") + "*"}
-                  placeholder={t(
-                    "products.createProductModal.pricePlaceholder",
-                  )}
-                  value={price}
-                  setState={setPrice}
-                  number
-                />
-                <Input
-                  dashboard
-                  label={t("products.createProductModal.stockLabel")}
-                  placeholder={t(
-                    "products.createProductModal.stockPlaceholder",
-                  )}
-                  value={stock}
-                  setState={setStock}
-                  number
-                />
-              </div>
+            <div className={styles.modalInputs}>
+              <Attachment
+                label={t("products.createProductModal.imageLabel")}
+                onUpload={(file) => {
+                  setImage(file);
+                  setImageChanged(true);
+                  setCropDialogOpen(true);
+                }}
+                onDelete={() => {
+                  setImage(null);
+                  setImageChanged(true);
+                }}
+                value={image}
+                dashboard
+              />
+              <Input
+                dashboard
+                label={t("products.createProductModal.nameLabel") + "*"}
+                placeholder={t("products.createProductModal.namePlaceholder")}
+                value={name}
+                setState={setName}
+              />
+              <Textarea
+                dashboard
+                label={t("products.createProductModal.descriptionLabel") + "*"}
+                placeholder={t(
+                  "products.createProductModal.descriptionPlaceholder",
+                )}
+                value={description}
+                setState={setDescription}
+                rows={2}
+              />
+              <Input
+                dashboard
+                label={t("products.createProductModal.priceLabel") + "*"}
+                placeholder={t("products.createProductModal.pricePlaceholder")}
+                value={price}
+                setState={setPrice}
+                number
+              />
+              <Input
+                dashboard
+                label={t("products.createProductModal.stockLabel")}
+                placeholder={t("products.createProductModal.stockPlaceholder")}
+                value={stock}
+                setState={setStock}
+                number
+              />
             </div>
-          </Popup>
-        )}
+          </div>
+        </Popup>
       </div>
 
       <CropDialog

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import Button from "../../components/button/button";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-
+import { dashboardLink } from "../../../utils";
 const SideNavigation = () => {
   const { t } = useTranslation();
 
@@ -154,7 +154,7 @@ const SideNavigation = () => {
         setActive("Admin");
         break;
       case "/dashboard/partner":
-        setActive("Admin");
+        setActive("Partner");
         break;
       default:
         setActive("");

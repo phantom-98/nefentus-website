@@ -219,7 +219,7 @@ const LoginBox = () => {
     const captchaValue = recaptchaRef.current.getValue();
 
     if (!captchaValue) {
-      setErrorMessage("Please verify the reCAPTCHA!");
+      setErrorMessage(t("messages.error.reCAPTCHA"));
     } else {
       if (Cookies.get("acceptCookie") !== true) {
         checkbox = false;
@@ -279,7 +279,7 @@ const LoginBox = () => {
       }
       navigateDashboard();
     } catch (error) {
-      setErrorMessage("There was an error logging in");
+      setErrorMessage(t("messages.error.login"));
     }
   }
 
@@ -287,18 +287,13 @@ const LoginBox = () => {
     try {
       const response = await backendAPI.activateAccount(token);
       if (response == null) {
-        setErrorMessage("Error on activating account: ");
+        setErrorMessage(t("messages.error.activateAccount"));
         return;
       }
-      setMessage("Account successfully activated");
+      setMessage(t("messages.success.activateAccount"));
     } catch (error) {
-      setErrorMessage("Error on activating account: ");
+      setErrorMessage(t("messages.error.activateAccount"));
     }
-  };
-
-  const handleConfrimCode = (e) => {
-    e.preventDefault();
-    verifyOtpCode(email, code, checkBox);
   };
 
   return (
@@ -343,7 +338,11 @@ const LoginBox = () => {
             email={email}
             code={code}
             setCode={setCode}
-            handleClick={handleConfrimCode}
+            handleClickOtp={() => verifyOtpCode(email, code, checkBox)}
+            handleClickTotp={() => verifyTotpCode(email, code, checkBox)}
+            otp={otp}
+            totp={totp}
+            step={step}
           />
         ) : (
           <form onSubmit={handleSubmit(loginUser)}>

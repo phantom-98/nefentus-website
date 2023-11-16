@@ -244,11 +244,9 @@ const Table = ({ data, setData }) => {
             <div className={styles.checkButton}></div>
           </div>
         </Popup>
-        {/*)}*/}
       </div>
 
       <div className={styles.modalWrapper}>
-        {/*{feedbackModal && (*/}
         <Popup
           show={feedbackModal}
           title={t("kyc.feedbackModal")}
@@ -271,7 +269,6 @@ const Table = ({ data, setData }) => {
             </div>
           </div>
         </Popup>
-        {/*)}*/}
       </div>
     </>
   );
