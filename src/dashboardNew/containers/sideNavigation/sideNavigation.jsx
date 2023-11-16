@@ -132,28 +132,28 @@ const SideNavigation = () => {
 
   useEffect(() => {
     switch (query.pathname) {
-      case "/dashboardNew/":
+      case "/dashboard/":
         setActive("Dashboard");
         break;
-      case "/dashboardNew/affiliate":
+      case "/dashboard/affiliate":
         setActive("Affiliate");
         break;
-      case "/dashboardNew/products":
+      case "/dashboard/products":
         setActive("Products");
         break;
-      case "/dashboardNew/payments":
+      case "/dashboard/payments":
         setActive("Payments");
         break;
-      case "/dashboardNew/transactions":
+      case "/dashboard/transactions":
         setActive("Transactions");
         break;
-      case "/dashboardNew/converter":
+      case "/dashboard/converter":
         setActive("Converter");
         break;
-      case "/dashboardNew/admin":
+      case "/dashboard/admin":
         setActive("Admin");
         break;
-      case "/dashboardNew/partner":
+      case "/dashboard/partner":
         setActive("Admin");
         break;
       default:
@@ -163,7 +163,8 @@ const SideNavigation = () => {
   }, [query.pathname]);
 
   const getFullSideBar = (active) => {
-    if (active === "Affiliate" || active === "Admin") return false;
+    if (active === "Affiliate" || active === "Admin" || active === "Partner")
+      return false;
 
     return true;
   };
@@ -212,7 +213,9 @@ const SideNavigation = () => {
 
       <div className={styles.referral}>
         {getFullSideBar(active) ? (
-          <Button>Referral</Button>
+          <Link to={dashboardLink(localStorage)}>
+            <Button>Referral</Button>
+          </Link>
         ) : (
           <Link to="/dashboard/">
             <Button>Vendor Dashboard</Button>

@@ -77,18 +77,25 @@ const ProductBody = () => {
       setErrorMessage(t("products.error.priceAsFloat"));
     }
 
+    // Set stock to -1 if not given
+    let stockRequest = stock;
+    if (stock === null || stock === "") {
+      stockRequest = -1;
+    }
+
     const resp1 = await dashboardApi.upsertProduct(
       productId,
       name,
       description,
       price,
-      stock,
+      stockRequest,
       image,
     );
-    const imageProductId = resp1.id;
 
     let resp2 = true;
-    if (imageChanged) {
+    if (resp1 && imageChanged) {
+      const imageProductId = resp1.id;
+
       if (image) {
         console.log("Uploading image for product id: " + imageProductId);
         resp2 = await dashboardApi.uploadProductImage(imageProductId, image);
@@ -150,6 +157,8 @@ const ProductBody = () => {
 
   return (
     <>
+      <MessageComponent />
+
       <Card>
         <div className={styles.titleHeader}>
           <SettingsTitle

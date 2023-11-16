@@ -268,7 +268,7 @@ const SendModal = ({ show, setShow }) => {
     <Popup
       show={show}
       cancelTitle="Close"
-      confirmTitle="WithDraw"
+      confirmTitle="Withdraw"
       onClose={() => {
         setShow(false);
         clearMessages();
