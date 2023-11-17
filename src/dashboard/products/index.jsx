@@ -192,9 +192,7 @@ const ProductBody = () => {
         <Popup
           show={openModal}
           title={
-            openModal === "add"
-              ? t("create").concat("  Product")
-              : t("update").concat("  Product")
+            openModal === "add" ? t("general.create") : t("general.update")
           }
           onClose={() => {
             clearMessages();
@@ -202,11 +200,9 @@ const ProductBody = () => {
             setProductId(null);
           }}
           onConfirm={() => addOrUpdateProduct}
-          cancelTitle={t("cancel")}
+          cancelTitle={t("general.cancel")}
           confirmTitle={
-            openModal === "add"
-              ? t("add").concat("  Product")
-              : t("update").concat("  Product")
+            openModal === "add" ? t("general.create") : t("general.update")
           }
         >
           <div className={styles.modal}>

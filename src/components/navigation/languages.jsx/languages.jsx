@@ -9,35 +9,43 @@ import UK from "../../../assets/icon/flags/uk.svg";
 import styles from "./languages.module.css";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
-
-let list = [
-  {
-    label: "English",
-    flag: USA,
-    code: "en",
-  },
-  {
-    label: "Deutsch",
-    flag: DE,
-    code: "de",
-  },
-  {
-    label: "Ukrainian",
-    flag: UK,
-    code: "uk",
-  },
-];
+import { useEffect, useMemo, useState } from "react";
 
 const Languages = () => {
   const query = useLocation();
-  const [langList, setLangList] = useState(list);
 
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { language } = i18n;
+
+  const list = useMemo(() => {
+    return [
+      {
+        label: t("languages.english"),
+        flag: USA,
+        code: "en",
+      },
+      {
+        label: t("languages.deutsch"),
+        flag: DE,
+        code: "de",
+      },
+      {
+        label: t("languages.ukrainian"),
+        flag: UK,
+        code: "uk",
+      },
+    ];
+  }, [language]);
+
+  const [langList, setLangList] = useState(list);
 
   const handleTrans = (code) => {
     i18n.changeLanguage(code);
   };
+
+  useEffect(() => {
+    setLangList(list);
+  }, [language]);
 
   useEffect(() => {
     if (query.pathname === "/support") {

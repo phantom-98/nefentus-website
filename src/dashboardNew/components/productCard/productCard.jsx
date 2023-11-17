@@ -69,11 +69,13 @@ const ProductCard = ({ onClickDelete = () => {}, product = {}, update }) => {
     }
 
     if (resp1 && resp2) {
-      if (product.id !== null) setInfoMessage("Product updated successfully!");
-      else setInfoMessage("Product added successfully!");
+      if (product.id !== null)
+        setInfoMessage(t("products.createProductModal.updatedSuccessfully"));
+      else setInfoMessage(t("products.createProductModal.addedSuccessfully"));
     } else {
-      if (product.id !== null) setErrorMessage("Could not update the product!");
-      else setErrorMessage("Could not add a new product!");
+      if (product.id !== null)
+        setErrorMessage(t("products.createProductModal.updateError"));
+      else setErrorMessage(t("products.createProductModal.addError"));
     }
 
     setShow(false);
@@ -107,16 +109,18 @@ const ProductCard = ({ onClickDelete = () => {}, product = {}, update }) => {
           <p className={styles.price}>${product.price}</p>
 
           <Button link={`${window.location.origin}/product/${product.link}`}>
-            Open
+            {t("general.open")}
           </Button>
         </div>
       </div>
 
       <Popup
         show={show}
-        title="Edit Product"
+        title={t("products.editProduct")}
         onConfirm={updateProduct}
         onClose={() => setShow(false)}
+        confirmTitle={t("general.confirm")}
+        cancelTitle={t("general.cancel")}
       >
         <MessageComponent />
         <div className={styles.inputWrapper}>

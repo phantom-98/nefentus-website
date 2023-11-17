@@ -187,7 +187,9 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
 
             <CopyValue
               value={walletAddress}
-              onCopy={() => setInfoMessage("Wallet address copied!")}
+              onCopy={() =>
+                setInfoMessage(t("dashboard.cryptoCard.walletCopied"))
+              }
             />
           </div>
         </div>
@@ -229,7 +231,7 @@ const SendModal = ({ show, setShow }) => {
       (currency) => currency.abbr === withdrawCurrency,
     );
     if (!sendCurrency) {
-      setErrorMessage("Please select a correct currency to withdraw.");
+      setErrorMessage(t("dashboard.cryptoCard.sendModal.correctCurrencyError"));
       return;
     }
 
@@ -238,14 +240,14 @@ const SendModal = ({ show, setShow }) => {
     const passwordCorrect = await backend_Api.checkPassword(password);
     console.log("passwordCorrect: " + passwordCorrect);
     if (!passwordCorrect) {
-      setErrorMessage("You did not provide the correct password!");
+      setErrorMessage(t("dashboard.cryptoCard.sendModal.correctPasswordError"));
       return;
     }
 
     //Before withdraw
     setPassword("");
     setIsWithdrawing(true);
-    setInfoMessage("Withdrawing...");
+    setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawing"));
 
     // Withdraw
     const tokenAddress = sendCurrency.address;
@@ -257,18 +259,18 @@ const SendModal = ({ show, setShow }) => {
       password,
     );
     if (ret) {
-      setInfoMessage("Withdrawal successful!");
+      setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawSuccess"));
       fetchBalances();
     } else {
-      setErrorMessage("Withdrawal failed!");
+      setErrorMessage(t("dashboard.cryptoCard.sendModal.withdrawFailed"));
     }
   };
 
   return (
     <Popup
       show={show}
-      cancelTitle="Close"
-      confirmTitle="Withdraw"
+      cancelTitle={t("general.close")}
+      confirmTitle={t("general.withdraw")}
       onClose={() => {
         setShow(false);
         clearMessages();

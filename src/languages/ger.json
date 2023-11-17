@@ -405,7 +405,10 @@
       "emailPlaceholder": "Geben Sie die E-Mail-Adresse ein",
       "password": "Passwort",
       "passwordPlaceholder": "Geben Sie das Passwort ein",
-      "role": "Rolle"
+      "role": "Rolle",
+      "name": "Name",
+      "company": "Firma",
+      "address": "Adresse"
     },
     "earningCards": {
       "first": "Verkäufe: Insgesamt",
@@ -433,9 +436,15 @@
         "amountError": "Bitte geben Sie einen Betrag zum Abheben ein.",
         "addressError": "Bitte geben Sie eine Adresse für die Abhebung ein.",
         "passwordError": "Bitte geben Sie Ihr Passwort ein.",
-        "currencyError": "Please select a correct currency to withdraw."
+        "currencyError": "Please select a correct currency to withdraw.",
+        "correctCurrencyError": "Bitte wählen Sie die richtige Währung zum Abheben aus.",
+        "correctPasswordError": "Sie haben das falsche Passwort eingegeben!",
+        "withdrawing": "Abheben...",
+        "withdrawSuccess": "Auszahlung erfolgreich!",
+        "withdrawFailed": "Auszahlung fehlgeschlagen!"
       },
       "wallet": "Wallet-Adresse",
+      "walletCopied": "Wallet-Adresse kopiert!",
       "close": "Schließen"
     },
     "integrations": {
@@ -443,6 +452,14 @@
       "connecting": "Verbinden...",
       "disconnect": "Trennen",
       "don'tConnect": "Connect Wallet ist nicht verfügbar!"
+    },
+    "admin": {
+      "cardsContent": {
+        "totalIncome": "Gesamteinkommen",
+        "clicks": "Klicks",
+        "registrations": "Registrierungen",
+        "orders": "Bestellungen"
+      }
     }
   },
   "graph": {
@@ -478,7 +495,12 @@
     "receive": "Empfangen",
     "send": "Senden",
     "referral": "Referral",
-    "close": "Schließen"
+    "close": "Schließen",
+    "add": "Hinzufügen",
+    "update": "Aktualisieren",
+    "open": "Offen",
+    "confirm": "Bestätigen",
+    "withdraw": "Abheben"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -786,14 +808,27 @@
     "transactions": "Transaktionen",
     "converter": "Konvertierung",
     "integration": "Integration",
-    "soon": "Demnächst"
+    "soon": "Demnächst",
+    "referral": "Empfehlung",
+    "vendorDashboard": "Anbieter-Dashboard",
+    "notification": "Benachrichtigung"
   },
   "products": {
     "totalProducts": "Alle Produkte",
     "createNewProduct": "Neues Produkt erstellen",
     "subtitle1": "Sie haben momentan",
     "subtitle2": "Produkte",
+    "editProduct": "Produkt bearbeiten",
     "description": "Sie haben diesen Monat drei neue Produkte hinzugefügt",
+    "stock": "Auf Lager",
+    "unlimited": "Unbegrenzt",
+    "price": "Preis",
+    "notAvailable": " ist nicht verfügbar!",
+    "connecting": "Verbinden...",
+    "topInfoTitle": "Produkt kaufen",
+    "connect": "Verbinden mit ",
+    "login": "Einloggen in ",
+    "topInfoDescription": "Sie können dieses Produkt mit MetaMask oder Nefentus Wallet kaufen, falls Sie ein Nefentus-Konto haben.",
     "error": {
       "name": "Name ist erforderlich!",
       "description": "Beschreibung ist erforderlich!",
@@ -813,18 +848,27 @@
       "stockPlaceholder": "Lagerbestand eingeben, wenn dieser begrenzt ist",
       "add": "Hinzufügen",
       "update": "Aktualisieren",
-      "cancel": "Stornieren"
+      "cancel": "Stornieren",
+      "updatedSuccessfully": "Produkt erfolgreich aktualisiert!",
+      "addedSuccessfully": "Produkt erfolgreich hinzugefügt!",
+      "deletedSuccessfully": "Produkt erfolgreich gelöscht!",
+      "deletedError": "Das Produkt konnte nicht gelöscht werden!",
+      "updateError": "Das Produkt konnte nicht aktualisiert werden!",
+      "addError": "Ein neues Produkt konnte nicht hinzugefügt werden!"
     }
   },
   "payments": {
     "title": "Neue Rechnung erstellen",
     "enterAmount": "Betrag in $ eingeben",
+    "amount": "Betrag",
     "email": "E-Mail",
     "name": "Name",
     "company": "Firma",
     "address": "Adresse",
     "taxNumber": "Steuernummer",
     "createInvoice": "Rechnung erstellen",
+    "scan": "QR-Code scannen",
+    "downloadInvoice": "Rechnung herunterladen",
     "table": {
       "created": "Erstellt am",
       "price": "Preis ($)",
@@ -944,14 +988,22 @@
     "decline": "Ablehnen",
     "accept": "Akzeptieren"
   },
+  "settingsItem": {
+    "title": "Wert ändern"
+  },
   "kyc": {
     "modalTitle": "Überprüfen Sie die Verifizierung",
-    "feedbackModal": "Hinterlassen Sie einen Grund",
-    "cancel": "Stornieren",
-    "confirm": "Bestätigen",
-    "close": "Schließen",
-    "add": "Hinzufügen",
-    "create": "Erstellen",
-    "update": "Aktualisieren"
-  }
+    "feedbackModal": "Hinterlassen Sie einen Grund"
+  },
+  "languages": {
+    "english": "Englisch",
+    "deutsch": "Deutsch",
+    "ukrainian": "Ukrainisch"
+  },
+  "cancel": "Stornieren",
+  "confirm": "Bestätigen",
+  "close": "Schließen",
+  "add": "Hinzufügen",
+  "create": "Erstellen",
+  "update": "Aktualisieren"
 }

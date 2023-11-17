@@ -187,7 +187,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
                 ? t("dashboard.modal.titleEdit")
                 : t("dashboard.modal.titleNewUser")
             }
-            cancelTitle={t("cancel")}
+            cancelTitle={t("general.cancel")}
             confirmTitle={
               editEmailAddress
                 ? t("dashboard.modal.titleEdit")

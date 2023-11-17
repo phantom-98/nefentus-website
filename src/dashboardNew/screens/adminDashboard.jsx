@@ -14,11 +14,8 @@ import { useNavigate } from "react-router-dom";
 import { ROLE_TO_NAME } from "../../constants";
 import { useTranslation } from "react-i18next";
 import MessageComponent from "../../components/message";
-import ModalOverlay from "../../dashboard/modal/modalOverlay";
 import Input, { Options } from "../../components/input/input";
-import Button from "../components/button/button";
 import styles from "./admin.module.css";
-import imputStyles from "../../components/input/input.module.css";
 import TablePagination from "../../components/tablePagination";
 import Popup from "../components/popup/popup";
 
@@ -144,19 +141,19 @@ const AdminDashboard = ({ type }) => {
 
       const cardsContent = [
         {
-          title: "Total Income",
+          title: t("dashboard.admin.cardsContent.totalIncome"),
           amount: `${parseFloat(dataInc?.value?.number).toFixed(2)}$`,
           percentage: dataInc?.value?.percentage,
           isMonetary: true,
         },
         {
-          title: "Clicks",
+          title: t("dashboard.admin.cardsContent.clicks"),
           amount: dataClick?.value?.number,
           percentage: dataClick?.value?.percentage,
           isMonetary: false,
         },
         {
-          title: "Registrations",
+          title: t("dashboard.admin.cardsContent.registrations"),
           amount: dataReg?.value?.number,
           percentage: dataReg?.value?.percentage,
           isMonetary: false,
@@ -169,7 +166,7 @@ const AdminDashboard = ({ type }) => {
         type === "broker"
       ) {
         cardsContent[1] = {
-          title: "Orders",
+          title: t("dashboard.admin.cardsContent.orders"),
           amount: dataOrders?.value?.number,
           percentage: dataOrders?.value?.percentage,
           isMonetary: false,
@@ -417,13 +414,13 @@ const AdminDashboard = ({ type }) => {
             updateUsersTable(getFilteredUser);
           }}
           onConfirm={changeUser}
-          cancelTitle={t("cancel")}
+          cancelTitle={t("general.cancel")}
           confirmTitle={t("dashboard.modal.titleEdit")}
         >
           <div className={styles.modal}>
             <MessageComponent />
 
-            <h4>Edit User</h4>
+            <h4>{t("dashboard.modal.titleEdit")}</h4>
 
             <div className={styles.modalInputs}>
               <Input

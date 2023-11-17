@@ -252,8 +252,8 @@ const Table = ({ data, setData }) => {
           title={t("kyc.feedbackModal")}
           onClose={() => setFeedbackModal(false)}
           onConfirm={() => declineKYC(selectedId)}
-          cancelTitle={t("cancel")}
-          confirmTitle={t("confirm")}
+          cancelTitle={t("general.cancel")}
+          confirmTitle={t("general.confirm")}
         >
           <div className={styles.modal}>
             <div className={styles.message}>

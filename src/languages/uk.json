@@ -430,7 +430,10 @@
       "emailPlaceholder": "Введіть електронну пошту",
       "password": "Пароль",
       "passwordPlaceholder": "Введіть пароль",
-      "role": "Роль"
+      "role": "Роль",
+      "name": "Ім'я",
+      "company": "Компанія",
+      "address": "Адреса"
     },
     "earningCards": {
       "first": "Продажі: Всього",
@@ -458,9 +461,15 @@
         "amountError": "Будь ласка, введіть суму для зняття.",
         "addressError": "Будь ласка, введіть адресу для зняття коштів.",
         "passwordError": "Будь ласка, введіть свій пароль.",
-        "currencyError": "Виберіть правильну валюту для виведення."
+        "currencyError": "Виберіть правильну валюту для виведення.",
+        "correctCurrencyError": "Будь ласка, виберіть правильну валюту для зняття коштів.",
+        "correctPasswordError": "Ви ввели неправильний пароль!",
+        "withdrawing": "Здійснюється зняття коштів...",
+        "withdrawSuccess": "Виведення коштів успішне!",
+        "withdrawFailed": "Не вдалося вивести кошти!"
       },
       "wallet": "Адреса гаманця",
+      "walletCopied": "Адресу гаманця скопійовано!",
       "close": "Закрити"
     },
     "integrations": {
@@ -468,6 +477,14 @@
       "connecting": "Підключення...",
       "disconnect": "Відключити",
       "don'tConnect": "Підключення гаманеця недоступно!"
+    },
+    "admin": {
+      "cardsContent": {
+        "totalIncome": "Загальний Дохід",
+        "clicks": "Кліки",
+        "registrations": "Реєстрації",
+        "orders": "Замовлення"
+      }
     }
   },
   "graph": {
@@ -503,7 +520,12 @@
     "receive": "Отримати",
     "send": "Надіслати",
     "referral": "Реферальна програма",
-    "close": "Закрити"
+    "close": "Закрити",
+    "add": "Додати",
+    "update": "Оновити",
+    "open": "Відкрити",
+    "confirm": "Підтвердити",
+    "withdraw": "Вивести"
   },
   "countries": {
     "Afghanistan": "Афганістан",
@@ -811,7 +833,10 @@
     "transactions": "Транзакції",
     "converter": "Конвертер",
     "integration": "ІнтеграціЇ",
-    "soon": "Скоро"
+    "soon": "Скоро",
+    "referral": "Реферал",
+    "vendorDashboard": "Панель управління продавця",
+    "notification": "Сповіщення"
   },
   "products": {
     "totalProducts": "Всі продукти",
@@ -819,6 +844,16 @@
     "subtitle1": "Ви зараз маєте",
     "subtitle2": "продукти",
     "description": "Цього місяця ви додали 3 нові продукти",
+    "editProduct": "Pедагувати продукт",
+    "stock": "Запас",
+    "unlimited": "Необмежено",
+    "price": "Ціна",
+    "notAvailable": " недоступний!",
+    "connecting": "З'єднання...",
+    "topInfoTitle": "Купити продукт",
+    "connect": "Підключитися до ",
+    "login": "Увійти в ",
+    "topInfoDescription": "Ви можете купити цей продукт, використовуючи MetaMask або гаманець Nefentus, якщо у вас є обліковий запис Nefentus.",
     "error": {
       "name": "Необхідно вказати ім'я!",
       "description": "Необхідно вказати опис!",
@@ -838,18 +873,27 @@
       "stockPlaceholder": "Введіть запас, якщо запас обмежений",
       "add": "Додати",
       "update": "Оновити",
-      "cancel": "Скасувати"
+      "cancel": "Скасувати",
+      "updatedSuccessfully": "Продукт успішно оновлено!",
+      "addedSuccessfully": "Продукт успішно додано!",
+      "deletedSuccessfully": "Продукт успішно видалено!",
+      "deletedError": "Не вдалося видалити продукт!",
+      "updateError": "Не вдалося оновити продукт!",
+      "addError": "Не вдалося додати новий продукт!"
     }
   },
   "payments": {
     "title": "Створити новий інвойс",
     "enterAmount": "Введіть суму в $",
+    "amount": "Сума",
     "email": "Електронна пошта",
     "name": "Ім'я",
     "company": "Компанія",
     "address": "Адреса",
     "taxNumber": "Податковий номер",
     "createInvoice": "Створити інвойс",
+    "scan": "Сканувати QR-код",
+    "downloadInvoice": "Завантажити рахунок-фактуру",
     "table": {
       "created": "Створено",
       "price": "Ціна ($)",
@@ -971,12 +1015,20 @@
   },
   "kyc": {
     "modalTitle": "Перевірити верифікацію",
-    "feedbackModal": "Залиште причину",
-    "cancel": "Скасувати",
-    "confirm": "Підтвердити",
-    "close": "Закрити",
-    "add": "Додати",
-    "create": "Створити",
-    "update": "Оновити"
+    "feedbackModal": "Залиште причину"
+  },
+  "cancel": "Скасувати",
+  "confirm": "Підтвердити",
+  "close": "Закрити",
+  "add": "Додати",
+  "create": "Створити",
+  "update": "Оновити",
+  "languages": {
+    "english": "Англійська",
+    "deutsch": "Німецька",
+    "ukrainian": "Українська"
+  },
+  "settingsItem": {
+    "title": "Wert ändern"
   }
 }

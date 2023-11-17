@@ -106,11 +106,13 @@ const ProductBody = () => {
     }
 
     if (resp1 && resp2) {
-      if (productId !== null) setInfoMessage("Product updated successfully!");
-      else setInfoMessage("Product added successfully!");
+      if (productId !== null)
+        setInfoMessage(t("products.createProductModal.updatedSuccessfully"));
+      else setInfoMessage(t("products.createProductModal.addedSuccessfully"));
     } else {
-      if (productId !== null) setErrorMessage("Could not update the product!");
-      else setErrorMessage("Could not add a new product!");
+      if (productId !== null)
+        setErrorMessage(t("products.createProductModal.updateError"));
+      else setErrorMessage(t("products.createProductModal.addError"));
     }
 
     loadProducts();
@@ -120,9 +122,9 @@ const ProductBody = () => {
   const deleteProduct = async (productId) => {
     const resp = await dashboardApi.deleteProduct(productId);
     if (resp) {
-      setInfoMessage("Product deleted successfully!");
+      setInfoMessage(t("products.createProductModal.deletedSuccessfully"));
     } else {
-      setErrorMessage("Could not delete the product!");
+      setErrorMessage(t("products.createProductModal.deletedError"));
     }
     loadProducts();
   };
@@ -187,15 +189,19 @@ const ProductBody = () => {
       <div>
         <Popup
           show={openModal}
-          title={openModal === "add" ? t("create") : t("update")}
+          title={
+            openModal === "add" ? t("general.create") : t("general.update")
+          }
           onClose={() => {
             clearMessages();
             setOpenModal(false);
             setProductId(null);
           }}
-          onConfirm={() => addOrUpdateProduct}
-          cancelTitle={t("cancel")}
-          confirmTitle={openModal === "add" ? t("add") : t("update")}
+          onConfirm={() => addOrUpdateProduct()}
+          cancelTitle={t("general.cancel")}
+          confirmTitle={
+            openModal === "add" ? t("general.add") : t("general.update")
+          }
         >
           <div className={styles.modal}>
             <MessageComponent />
