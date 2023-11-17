@@ -19,17 +19,20 @@ const WalletSetting = () => {
   const [data, setData] = useState(null);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [activeWallet, setActiveWallet] = useState(null);
-  const [index, setIndex] = useState();
+  const [index, setIndex] = useState(null);
   const [connectStatus, setConnectStatus] = useState({
     "Wallet Connect": "disconnected",
     Metamask: "disconnected",
   });
+  // const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const getWalletAddresses = async () => {
       try {
         const data = await BackandAPI.getWalletAddresses();
         setData(data);
+
+        // setLoaded(true);
       } catch (error) {
         console.error("Error fetching wallet addresses:", error);
       }
@@ -91,7 +94,7 @@ const WalletSetting = () => {
                     icon={activeWallet.icon}
                     connectStatus={connectStatus}
                     setConnectStatus={setConnectStatus}
-                    config={activeWallet.config}
+                    config={activeWallet.connect}
                     index={index}
                   />
                 </ThirdwebProvider>
@@ -117,7 +120,11 @@ const WalletSetting = () => {
                     {wallets.map((wallet, index) => (
                       <div
                         key={index}
-                        style={{ display: "flex", flexDirection: "row" }}
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          paddingTop: 5,
+                        }}
                         onClick={() => handleWalletClick(wallet, index)}
                       >
                         <div>
@@ -127,7 +134,7 @@ const WalletSetting = () => {
                             alt=""
                           />
                         </div>
-                        <div>
+                        <div style={{ paddingTop: 8 }}>
                           <p>{wallet.name}</p>
                           <span>{wallet.connectStatus}</span>
                         </div>

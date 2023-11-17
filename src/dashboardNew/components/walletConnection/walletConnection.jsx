@@ -38,6 +38,8 @@ const WalletConnection = ({
     }
   }, [connectStatus, name]);
 
+  console.log(wallet);
+
   useEffect(() => {
     if (wallet.status === "connected") {
       if (name === "Wallet Connect") {
@@ -90,28 +92,13 @@ const WalletConnection = ({
               style={{ width: "50px", height: "30px" }}
               alt={`${name}`}
             />
-            <p style={{ paddingTop: 1, paddingLeft: 5 }}>{name}</p>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <p style={{ paddingTop: 1, paddingLeft: 5 }}>{name}</p>
+              {wallet.address && (
+                <p style={{ color: "green", paddingLeft: 5 }}>Connected</p>
+              )}
+            </div>
           </div>
-          {wallet.address && (
-            <div className={styles.walletAddressTitle}>
-              Wallet address:{" "}
-              <span className={styles.walletAddress}>
-                {`${wallet.address.substring(
-                  0,
-                  5,
-                )}...${wallet.address.substring(wallet.address.length - 5)}`}
-              </span>
-            </div>
-          )}
-          {wallet.address && (
-            <div className={styles.walletBalanceTitle}>
-              Wallet balance:{" "}
-              <span className={styles.walletBalance}>
-                {wallet?.balance?.data?.displayValue.slice(0, 5)}{" "}
-                {wallet?.balance?.data?.symbol}
-              </span>
-            </div>
-          )}
         </div>
       </div>
     </div>
