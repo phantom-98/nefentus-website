@@ -1,14 +1,14 @@
 import { useContext, useState } from "react";
 import TopInfo from "../../../dashboard/topInfo/topInfo";
 import MessageComponent from "../../../components/message";
-import { Buttons } from "../../../dashboard/settings/components/buttons";
 import backend_API from "../../../api/backendAPI";
 import InputComponent, { RawInput } from "../../../dashboard/input/input";
 import { MessageContext } from "../../../context/message/index";
 import styles from "./settings.module.css";
 import CheckBox from "../../../assets/icon/whiteCheckmark.svg";
-import Cards from "../../../components/cards/cards";
 import Card from "../card/card";
+import WalletSetting from "../../containers/walletSetting/walletSetting";
+import Button from "../button/button";
 
 const InvoicesBody = () => {
   const [vatNumber, setVatNumber] = useState(localStorage.getItem("vatNumber"));
@@ -59,11 +59,22 @@ const InvoicesBody = () => {
             {sendInvoice && <img src={CheckBox} alt="checkbox" />}
           </div>
         </div>
-        <Buttons
-          functions={["", handleConfirm]}
-          buttons={["Reset", "Confirm"]}
-        />
+        <div style={{ display: "flex", justifyContent: "end" }}>
+          <Button
+            color="gray"
+            style={{ width: 100, marginRight: 10 }}
+            onClick={() => setVatNumber("")}
+          >
+            Reset
+          </Button>
+          <Button style={{ width: 100 }} onClick={handleConfirm}>
+            <p style={{ fontSize: "1rem" }}>Confirm</p>
+          </Button>
+        </div>
       </Card>
+      <div>
+        <WalletSetting />
+      </div>
     </div>
   );
 };

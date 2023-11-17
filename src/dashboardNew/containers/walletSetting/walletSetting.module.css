@@ -24,27 +24,14 @@
   opacity: 0.6;
 }
 
-.toggle {
-  background-color: #222836;
-  width: 4rem;
-  border-radius: 3rem;
-  cursor: pointer;
-  padding: 3px;
+.walletDropdown {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 1rem);
+  padding-top: 0.5rem;
+  opacity: 0;
   transition: 0.5s ease-out;
-}
+  z-index: 100;
 
-.toggleCircle {
-  width: 2rem;
-  border-radius: 50%;
-  height: 2rem;
-  transition: 0.5s ease-out;
-  background-color: white;
-}
-
-.activeToggle {
-  background-color: #0784b5;
-}
-
-.activeToggle .toggleCircle {
-  transform: translateX(100%);
+  pointer-events: none;
 }

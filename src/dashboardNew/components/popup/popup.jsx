@@ -152,8 +152,6 @@ export const QRPopup = ({ show, setShow, data, onClick }) => {
   const dashboardElement = document.getElementById("dashboard");
   const { name, email, price, company, address, taxNumber, link } = data;
 
-  console.log(data, "datadatadata");
-
   return ReactDOM.createPortal(
     <div
       className={`${styles.popup} ${styles.paymentPopup}`}

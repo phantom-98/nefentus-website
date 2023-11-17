@@ -9,7 +9,6 @@ import Notification from "../../../assets/icon/notification.svg";
 import LightMode from "../../../assets/icon/lightMode.svg";
 import DarkMode from "../../../assets/icon/darkMode.svg";
 import InvoiceIcon from "../../../assets/icon/invoice.svg";
-import Wallet from "../../../assets/icon/wallet.svg";
 
 import styles from "./topNavigation.module.css";
 import { useEffect, useState } from "react";
@@ -77,13 +76,6 @@ const TopNavigation = () => {
                 <Link to="/dashboard/invoices" className={styles.profileItem}>
                   <img src={InvoiceIcon} alt="" />
                   <p>Invoice</p>
-                </Link>
-                <Link
-                  to="/dashboard/choiceWallets"
-                  className={styles.profileItem}
-                >
-                  <img src={Wallet} alt="" />
-                  <p>Wallets</p>
                 </Link>
                 <Link
                   to="/dashboard/identification"

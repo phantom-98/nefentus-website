@@ -16,9 +16,10 @@ import WalletConnection from "../../components/walletConnection/walletConnection
 
 const WalletSetting = () => {
   const BackandAPI = new backendAPI();
-  const [activeToggle, setActiveToggle] = useState(false);
-  const [loaded, setLoaded] = useState(false);
   const [data, setData] = useState(null);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [activeWallet, setActiveWallet] = useState(null);
+  const [index, setIndex] = useState();
   const [connectStatus, setConnectStatus] = useState({
     "Wallet Connect": "disconnected",
     Metamask: "disconnected",
@@ -29,20 +30,6 @@ const WalletSetting = () => {
       try {
         const data = await BackandAPI.getWalletAddresses();
         setData(data);
-
-        if (data.length > 0) {
-          const lastObject = data[data.length - 1];
-
-          if (lastObject.internal === true) {
-            setActiveToggle(false);
-            console.log("false");
-          } else {
-            setActiveToggle(true);
-            console.log("true");
-          }
-        }
-
-        setLoaded(true);
       } catch (error) {
         console.error("Error fetching wallet addresses:", error);
       }
@@ -63,80 +50,110 @@ const WalletSetting = () => {
     },
   ];
 
+  const handleWalletClick = (wallet, index) => {
+    setActiveWallet(wallet);
+    setIndex(index);
+    setDropdownVisible(false);
+  };
+
+  const handleMouseEnter = () => {
+    setDropdownVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setDropdownVisible(false);
+  };
+
   return (
-    <Card className={styles.card}>
-      <div className={styles.wrapper}>
-        <div>
-          <div className={styles.title}>
-            Wallet to receive funds Description
-          </div>
-          <div className={styles.description}>
-            Choose the wallet that receives funds when creating an invoice or
-            selling product
+    <>
+      <Card className={styles.card}>
+        <div onMouseLeave={handleMouseLeave} className={styles.wrapper}>
+          <div>
+            <div className={styles.title}>
+              Wallet to receive funds Description
+            </div>
+            <div className={styles.description}>
+              Choose the wallet that receives funds when creating an invoice or
+              selling product
+            </div>
           </div>
         </div>
-      </div>
-      {data ? (
-        <>
-          <div
-            style={{ display: "flex", width: "100%", justifyContent: "center" }}
-          >
+        {data ? (
+          <div style={{ position: "relative", width: 200 }}>
+            <div onMouseEnter={handleMouseEnter}>
+              {activeWallet ? (
+                <ThirdwebProvider
+                  clientId="639eea2ebcabed7eab90b56aceeed08b"
+                  supportedWallets={[activeWallet.connect]}
+                >
+                  <WalletConnection
+                    name={activeWallet.name}
+                    icon={activeWallet.icon}
+                    connectStatus={connectStatus}
+                    setConnectStatus={setConnectStatus}
+                    config={activeWallet.config}
+                    index={index}
+                  />
+                </ThirdwebProvider>
+              ) : (
+                <div style={{ paddingTop: 20, paddingLeft: 15 }}>
+                  <span>Choice wallet</span>
+                </div>
+              )}
+            </div>
             <div
               style={{
-                display: "flex",
-                width: "40%",
-                justifyContent: "space-between",
+                position: "absolute",
+                width: 200,
+                zIndex: 5,
+                top: "40px",
+                left: "10px",
               }}
+              onMouseLeave={handleMouseLeave}
             >
-              {wallets.map((wallet, index) => (
-                <div key={index}>
-                  <ThirdwebProvider
-                    clientId="639eea2ebcabed7eab90b56aceeed08b"
-                    supportedWallets={[wallet.connect]}
-                  >
-                    {loaded && (
-                      <WalletConnection
-                        name={wallet.name}
-                        icon={wallet.icon}
-                        connectStatus={connectStatus}
-                        setConnectStatus={setConnectStatus}
-                        config={wallet.connect}
-                        activeToggle={activeToggle}
-                      />
-                    )}
-                  </ThirdwebProvider>
+              {dropdownVisible && (
+                <div>
+                  <Card>
+                    {wallets.map((wallet, index) => (
+                      <div
+                        key={index}
+                        style={{ display: "flex", flexDirection: "row" }}
+                        onClick={() => handleWalletClick(wallet, index)}
+                      >
+                        <div>
+                          <img
+                            src={wallet.icon}
+                            style={{ width: "50px", height: "30px" }}
+                            alt=""
+                          />
+                        </div>
+                        <div>
+                          <p>{wallet.name}</p>
+                          <span>{wallet.connectStatus}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </Card>
                 </div>
-              ))}
+              )}
             </div>
           </div>
+        ) : (
           <div
-            style={{ display: "flex", width: "100%", justifyContent: "center" }}
+            style={{
+              display: "flex",
+              width: "100%",
+              height: 200,
+              paddingTop: 50,
+              justifyContent: "center",
+              fontSize: 20,
+            }}
           >
-            <div
-              onClick={() => setActiveToggle((prev) => !prev)}
-              className={`${activeToggle ? styles.activeToggle : ""} ${
-                styles.toggle
-              }`}
-            >
-              <div className={`${styles.toggleCircle}`}></div>
-            </div>
+            <p>You didn't connected the wallet</p>
           </div>
-        </>
-      ) : (
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            height: 200,
-            paddingTop: 50,
-            justifyContent: "center",
-            fontSize: 20,
-          }}
-        >
-          <p>You can't connected the wallet</p>
-        </div>
-      )}
-    </Card>
+        )}
+      </Card>
+    </>
   );
 };
 

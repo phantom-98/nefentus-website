@@ -15,7 +15,7 @@ const WalletConnection = ({
   icon,
   connectStatus,
   setConnectStatus,
-  activeToggle,
+  index,
 }) => {
   const backend_API = new backendAPI();
 
@@ -63,36 +63,35 @@ const WalletConnection = ({
   }
 
   useEffect(() => {
-    if (activeToggle == true) {
-      if (name == "MetaMask") {
-        wallet.connect(wallet.config, { chainId: 1 });
-      }
+    if (index === 0) {
       if (name == "WalletConnect") {
+        wallet.connect(wallet.config, { chainId: 1 });
+      } else {
         wallet.disconnect();
       }
     }
-    if (activeToggle == false) {
-      if (name == "WalletConnect") {
-        wallet.connect(wallet.config, { chainId: 1 });
-      }
+
+    if (index === 1) {
       if (name == "MetaMask") {
+        wallet.connect(wallet.config, { chainId: 1 });
+      } else {
         wallet.disconnect();
       }
     }
-  }, [activeToggle]);
+  }, [index, name]);
 
   return (
     <div className={styles.walletWrap}>
       <div className={styles.walletInfoWrap}>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ paddingTop: 5 }}>
+        <div>
+          <div style={{ display: "flex" }}>
             <img
               src={icon}
-              style={{ width: "30px", height: "50px" }}
+              style={{ width: "50px", height: "30px" }}
               alt={`${name}`}
             />
+            <p style={{ paddingTop: 1, paddingLeft: 5 }}>{name}</p>
           </div>
-          <p style={{ fontSize: 15 }}>{name}</p>
           {wallet.address && (
             <div className={styles.walletAddressTitle}>
               Wallet address:{" "}
