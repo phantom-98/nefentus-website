@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import PaymentCards from "../components/paymentCards/paymentCards";
 import Prices from "../components/prices/prices";
+import Reward from "../components/reward/reward";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -39,13 +40,14 @@ const Home = () => {
             <div className="gradient"> {t("home.heroTitleGradient")}</div>
           </>
         }
-        description={t("home.heroDescription")}
+        description={<>{t("home.heroDescription")}</>}
         button={
           <>
             <p>{t("home.heroButton")}</p>
           </>
         }
-        button2={t("home.heroButton2")}
+        home
+        // button2={t("home.heroButton2")}
         image={Main}
         full
         // video={HomeHeroVideo}
@@ -70,7 +72,7 @@ const Home = () => {
 
       {/* <Help /> */}
 
-      <PaymentCards />
+      {/* <PaymentCards /> */}
     </>
   );
 };

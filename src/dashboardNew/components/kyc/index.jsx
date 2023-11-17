@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import backendAPI from "../../../api/backendAPI";
 import adminDashboardApi from "../../../api/adminDashboardApi";
 import TableSearch from "../tableSearch/tableSearch";
+import Popup from "../popup/popup";
 
 const KYC_TYPE = {
   FULL_NAME: "FULL_NAME",
@@ -122,6 +123,8 @@ const KycBody = () => {
   useEffect(() => {
     fetchFYC();
   }, []);
+
+  console.log(data);
 
   return (
     <div style={{ marginBottom: "5rem" }}>
@@ -234,7 +237,7 @@ const Table = ({ data, setData }) => {
 
       <div className={styles.modalWrapper}>
         {checkModal && (
-          <ModalOverlay>
+          <Popup show={true}>
             <div className={styles.modal}>
               <h4>Check verification</h4>
 
@@ -286,13 +289,13 @@ const Table = ({ data, setData }) => {
                 </Button>
               </div>
             </div>
-          </ModalOverlay>
+          </Popup>
         )}
       </div>
 
       <div className={styles.modalWrapper}>
         {feedbackModal && (
-          <ModalOverlay>
+          <Popup show={true}>
             <div className={styles.modal}>
               <h4>Leave a reason</h4>
 
@@ -323,7 +326,7 @@ const Table = ({ data, setData }) => {
                 </Button>
               </div>
             </div>
-          </ModalOverlay>
+          </Popup>
         )}
       </div>
     </div>

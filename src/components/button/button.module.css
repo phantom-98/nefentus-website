@@ -1,7 +1,7 @@
 .button {
   color: var(--black-color);
   font-size: 1.4rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   width: max-content;
   cursor: pointer;
   overflow: hidden;

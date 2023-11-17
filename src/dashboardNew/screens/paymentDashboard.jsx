@@ -25,7 +25,7 @@ const PaymentDashboard = () => {
     let newInvoices = await vendorAPI.getInvoices();
     // Reverse the array
     newInvoices = newInvoices.reverse();
-    console.log(newInvoices);
+    console.log(newInvoices, "newInvoices");
 
     if (newInvoices) {
       const newInvoiceData = newInvoices.map((item) => invoiceToArray(item));
@@ -38,12 +38,9 @@ const PaymentDashboard = () => {
       new Date(invoice.createdAt).toLocaleString(),
       parseFloat(invoice.price).toFixed(2),
       <TableStatus color="green">Open</TableStatus>,
-      <TableQR link={`${window.location.origin}/pay/${invoice.link}`} />,
-      <TableAction
-        button="Disable"
-        button2="Delete"
-        onClick2={() => deleteInvoice(invoice.link)}
-      />,
+      <TableQR data={invoice} link={process.env.VITE_REACT_APP_QR_CODE_LINK} />,
+      // <TableQR link={`${window.location.origin}/pay/${invoice.link}`} />,
+      <TableAction deleteUser={() => deleteInvoice(invoice.link)} />,
     ];
   }
 
