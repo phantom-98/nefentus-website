@@ -177,7 +177,14 @@ export const QRPopup = ({ show, setShow, data, onClick }) => {
             ["Company:", `${company}`],
             ["Address:", `${address}`],
             ["Tax number:", `${taxNumber}`],
-            ["Link:", <CopyValue value={link} onCopy={() => {}} />],
+            [
+              "Link:",
+              <CopyValue
+                value={`${window.location.origin}/pay/${link}`}
+                onCopy={() => {}}
+                link
+              />,
+            ],
           ]}
           colSizes={[1, 3]}
         />

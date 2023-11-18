@@ -313,6 +313,26 @@ function App() {
                     </ScreenLayout>
                   }
                 />
+                <Route
+                  path="/product/:productLink"
+                  element={
+                    <>
+                      <Navigation />
+                      <Product />
+                      <Footer />
+                    </>
+                  }
+                />
+                <Route
+                  path="/pay/:payLink"
+                  element={
+                    <>
+                      <Navigation />
+                      <Pay />
+                      <Footer />
+                    </>
+                  }
+                />
               </Routes>
             </ScrollToTop>
           </Suspense>

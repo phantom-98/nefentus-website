@@ -309,14 +309,14 @@ const LoginBox = () => {
 
         <div>
           <h2>
-            <span className="gradient">{t("login.titleP1") + "*"}</span>
+            <span className="gradient">{t("login.titleP1")}</span>
           </h2>
           <p>{t("login.description")}</p>
 
           <p>
             {t("login.info")}
             <u>
-              <Link to="/signUp">{t("login.infoButton") + "*"}</Link>
+              <Link to="/signUp">{t("login.infoButton")}</Link>
             </u>
           </p>
         </div>
@@ -351,13 +351,13 @@ const LoginBox = () => {
               <Input
                 register={register}
                 name={"email"}
-                label={t("signUp.emailLabel")}
+                label={t("signUp.emailLabel") + "*"}
                 placeholder={t("signUp.emailPlaceholder")}
               />
               <Input
                 register={register}
                 name={"password"}
-                label={t("signUp.passwordLabel")}
+                label={t("signUp.passwordLabel") + "*"}
                 placeholder={t("signUp.passwordPlaceholder")}
                 secure
               />
