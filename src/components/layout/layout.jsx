@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import backendAPI from "../../api/backendAPI";
 import Error from "../error/error";
+import Input from "../input/input";
 
 const Layout = ({
   heading,
@@ -103,11 +104,10 @@ const Layout = ({
             <div className={styles.inputHero}>
               <div className={styles.inputWrapper}>
                 <Error error={errorMessage} />
-                <input
-                  type="text"
+                <Input
                   placeholder="Email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  setState={(newEmail) => setEmail(newEmail)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleEnterEmail();
                   }}
