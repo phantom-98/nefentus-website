@@ -38,8 +38,6 @@ const WalletConnection = ({
     }
   }, [connectStatus, name]);
 
-  console.log(wallet);
-
   useEffect(() => {
     if (wallet.status === "connected") {
       if (name === "Wallet Connect") {
@@ -94,7 +92,7 @@ const WalletConnection = ({
             />
             <div style={{ display: "flex", flexDirection: "column" }}>
               <p style={{ paddingTop: 1, paddingLeft: 5 }}>{name}</p>
-              {wallet.address && (
+              {wallet.status == "connected" && (
                 <p style={{ color: "green", paddingLeft: 5 }}>Connected</p>
               )}
             </div>

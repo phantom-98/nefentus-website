@@ -24,21 +24,6 @@ const WalletSetting = () => {
     "Wallet Connect": "disconnected",
     Metamask: "disconnected",
   });
-  // const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    const getWalletAddresses = async () => {
-      try {
-        const data = await BackandAPI.getWalletAddresses();
-        setData(data);
-
-        // setLoaded(true);
-      } catch (error) {
-        console.error("Error fetching wallet addresses:", error);
-      }
-    };
-    getWalletAddresses();
-  }, []);
 
   const wallets = [
     {
@@ -52,6 +37,29 @@ const WalletSetting = () => {
       name: metamaskWallet().meta.name,
     },
   ];
+
+  useEffect(() => {
+    const getWalletAddresses = async () => {
+      try {
+        const data = await BackandAPI.getWalletAddresses();
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching wallet addresses:", error);
+      }
+    };
+    getWalletAddresses();
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      const lastObject = data[data.length - 1];
+      if (lastObject.internal === true) {
+        setActiveWallet(wallets[0]);
+      } else {
+        setActiveWallet(wallets[1]);
+      }
+    }
+  }, [data]);
 
   const handleWalletClick = (wallet, index) => {
     setActiveWallet(wallet);
@@ -117,29 +125,31 @@ const WalletSetting = () => {
               {dropdownVisible && (
                 <div>
                   <Card>
-                    {wallets.map((wallet, index) => (
-                      <div
-                        key={index}
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          paddingTop: 5,
-                        }}
-                        onClick={() => handleWalletClick(wallet, index)}
-                      >
-                        <div>
-                          <img
-                            src={wallet.icon}
-                            style={{ width: "50px", height: "30px" }}
-                            alt=""
-                          />
+                    {wallets.map((wallet, index) => {
+                      return (
+                        <div
+                          key={index}
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            paddingTop: 5,
+                          }}
+                          onClick={() => handleWalletClick(wallet, index)}
+                        >
+                          <div>
+                            <img
+                              src={wallet.icon}
+                              style={{ width: "50px", height: "30px" }}
+                              alt=""
+                            />
+                          </div>
+                          <div style={{ paddingTop: 8 }}>
+                            <p>{wallet.name}</p>
+                            <span>{wallet.connectStatus}</span>
+                          </div>
                         </div>
-                        <div style={{ paddingTop: 8 }}>
-                          <p>{wallet.name}</p>
-                          <span>{wallet.connectStatus}</span>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </Card>
                 </div>
               )}
