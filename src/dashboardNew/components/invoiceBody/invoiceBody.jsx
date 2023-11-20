@@ -81,13 +81,6 @@ const InvoicesBody = () => {
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "end", paddingTop: 20 }}>
-          <Button
-            color="gray"
-            style={{ width: 100, marginRight: 10 }}
-            onClick={() => setVatNumber("")}
-          >
-            Reset
-          </Button>
           <Button style={{ width: 100 }} onClick={handleConfirm}>
             <p style={{ fontSize: "1rem" }}>Confirm</p>
           </Button>

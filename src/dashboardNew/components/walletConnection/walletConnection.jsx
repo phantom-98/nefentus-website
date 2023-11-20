@@ -96,6 +96,26 @@ const WalletConnection = ({
                 <p style={{ color: "green", paddingLeft: 5 }}>Connected</p>
               )}
             </div>
+            {wallet.address && (
+              <div className={styles.walletAddressTitle}>
+                Wallet address:{" "}
+                <span className={styles.walletAddress}>
+                  {`${wallet.address.substring(
+                    0,
+                    5,
+                  )}...${wallet.address.substring(wallet.address.length - 5)}`}
+                </span>
+              </div>
+            )}
+            {wallet.address && (
+              <div className={styles.walletBalanceTitle}>
+                Wallet balance:{" "}
+                <span className={styles.walletBalance}>
+                  {wallet?.balance?.data?.displayValue.slice(0, 5)}{" "}
+                  {wallet?.balance?.data?.symbol}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

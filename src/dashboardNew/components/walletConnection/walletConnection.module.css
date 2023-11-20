@@ -35,6 +35,8 @@
 .walletBalanceTitle {
   font-size: 1.4rem;
   width: 22rem;
+  padding-left: 20px;
+  padding-top: 5px;
 }
 
 .buttonWrap {
