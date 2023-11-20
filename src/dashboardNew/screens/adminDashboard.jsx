@@ -484,6 +484,7 @@ const AdminDashboard = ({ type }) => {
           </div>
         </Popup>
       </>
+      <SignupByEmail />
     </div>
   );
 };

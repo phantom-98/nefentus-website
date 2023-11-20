@@ -19,10 +19,17 @@ const Input = ({
   register,
   name,
   style,
+  onKeyDown,
 }) => {
   const handleChange = (e) => {
     if (setState) {
       setState(e.target.value);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (onKeyDown) {
+      onKeyDown(e);
     }
   };
 
@@ -48,6 +55,7 @@ const Input = ({
         value={value}
         style={style}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         disabled={disabled}
       />
     </div>

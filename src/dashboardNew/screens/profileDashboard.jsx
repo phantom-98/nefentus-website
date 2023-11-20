@@ -3,6 +3,7 @@ import ProfileSettings from "../containers/profileSettings/profileSettings";
 import { useNavigate } from "react-router-dom";
 import backendAPI from "../../api/backendAPI";
 import { dashboardLink } from "../../utils";
+import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 
 const ProfileDashboard = () => {
   const [requireKyc, setRequireKyc] = useState(
@@ -41,6 +42,7 @@ const ProfileDashboard = () => {
   return (
     <div>
       <ProfileSettings />
+      <SignupByEmail />
     </div>
   );
 };

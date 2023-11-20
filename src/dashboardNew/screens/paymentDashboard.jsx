@@ -8,7 +8,8 @@ import TableQR from "../components/tableQR/tableQR";
 import TableSearch from "../components/tableSearch/tableSearch";
 import TableStatus from "../components/tableStatus/tableStatus";
 import vendorDashboardApi from "../../api/vendorDashboardApi";
-import { useTranslation } from "react-i18next";
+
+const label = ["Created At", "Price ($)", "Status", "QR Code", "Actions"];
 
 const PaymentDashboard = () => {
   const [invoiceData, setInvoiceData] = useState([]);
@@ -71,6 +72,7 @@ const PaymentDashboard = () => {
         <PaymentForm setLoadingData={setIsLoadingInvoiceData} />
         <Table grid="1fr 1fr 1fr 1fr 1fr" label={label} data={invoiceData} />
       </ThirdwebProvider>
+      <SignupByEmail />
     </div>
   );
 };

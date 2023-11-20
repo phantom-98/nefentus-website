@@ -4,8 +4,6 @@ import CryptoCard from "../components/cryptoCard/cryptoCard";
 import EarningCards from "../components/earningCards/earningCards";
 import IncomeCard from "../components/incomeCard/incomeCard";
 import ProfileCard from "../components/profileCard/profileCard";
-import { useTranslation } from "react-i18next";
-import { useMemo } from "react";
 
 const labels = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "00:00"];
 
@@ -44,6 +42,7 @@ const MainDashboard = () => {
         <IncomeCard data={chartData} />
         <CryptoCard />
       </ThirdwebProvider>
+      <SignupByEmail />
     </div>
   );
 };

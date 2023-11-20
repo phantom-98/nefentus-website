@@ -26,7 +26,7 @@ import Input, { Options } from "../../../components/input/input";
 import Popup from "../popup/popup";
 
 const CryptoCard = () => {
-  const [activeToggle, setActiveToggle] = useState(true);
+  const [activeToggle, setActiveToggle] = useState(false);
   let internalWalletAddress = useInternalWallet();
   const metamask = {
     connect: useConnect(),
