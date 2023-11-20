@@ -8,6 +8,7 @@ import TableQR from "../components/tableQR/tableQR";
 import TableSearch from "../components/tableSearch/tableSearch";
 import TableStatus from "../components/tableStatus/tableStatus";
 import vendorDashboardApi from "../../api/vendorDashboardApi";
+import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 
 const label = ["Created At", "Price ($)", "Status", "QR Code", "Actions"];
 

@@ -31,25 +31,6 @@ const roleColors = {
 };
 
 const labels = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "00:00"];
-
-// const chartData = {
-//   labels,
-//   datasets: [
-//     {
-//       label: "Last 24h",
-//       data: [1, 2, 3, 4, 5, 6, 7],
-//       borderColor: "#0784B5",
-//       backgroundColor: "#0784B5",
-//     },
-//     {
-//       label: "Previous 24h",
-//       data: [12, 18, 9, 5, 3, 15, 20],
-//       borderColor: "rgba(255, 255, 255,0.2)",
-//       backgroundColor: "rgba(255, 255, 255,0.2)",
-//     },
-//   ],
-// };
-
 const AdminDashboard = ({ type }) => {
   const [cardInfo, setCardInfo] = useState([]);
   const [graphData, setGraphData] = useState([]);

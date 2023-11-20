@@ -27,7 +27,6 @@ import Tabs from "../../components/tabs/index";
 import CropDialog, {
   dataURLtoFile,
 } from "../../components/cropDialog/cropDialog";
-import { useTranslation } from "react-i18next";
 import ModalOverlay from "../modal/modalOverlay";
 import UrlLink from "../../assets/icon/copyClipboardWhite.svg";
 import { useTranslation } from "react-i18next";

@@ -7,24 +7,6 @@ import styles from "./language.module.css";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
-//
-// let list = [
-//   {
-//     label: "English",
-//     flag: USA,
-//     code: "en",
-//   },
-//   {
-//     label: "Deutsch",
-//     flag: DE,
-//     code: "de",
-//   },
-//   {
-//     label: "Ukrainian",
-//     flag: UK,
-//     code: "uk",
-//   },
-// ];
 
 const LanguageBox = () => {
   const { pathname } = useLocation();

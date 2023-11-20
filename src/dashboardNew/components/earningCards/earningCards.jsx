@@ -4,7 +4,7 @@ import Positive from "../../../assets/icon/positive.svg";
 import Negative from "../../../assets/icon/negative.svg";
 
 import styles from "./earningCards.module.css";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import { useTranslation } from "react-i18next";
 

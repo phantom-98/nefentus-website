@@ -64,7 +64,7 @@ const Payment = () => {
         image={WhyImage}
         button={t("payment.whyButton")}
       />
-      {/*<DataCards />*/}
+      <DataCards />
 
       <PaymentCards />
     </div>
