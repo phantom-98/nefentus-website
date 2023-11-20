@@ -27,7 +27,7 @@ import { useMemo } from "react";
 // ];
 
 const LanguageBox = () => {
-  const query = useLocation();
+  const { pathname } = useLocation();
 
   const { t, i18n } = useTranslation();
   const { language } = i18n;
@@ -54,6 +54,7 @@ const LanguageBox = () => {
 
   const handleTrans = (code) => {
     i18n.changeLanguage(code);
+    pathname.includes("dashboard/admin") && window.location.reload();
   };
 
   return (

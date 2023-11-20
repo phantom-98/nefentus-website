@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../button/button";
 
 import Arrow from "../../assets/icon/arrow.svg";
-import separateText from "../../func/separate";
+import { separateText } from "../../func/separate";
 import Reward from "../reward/reward";
 
 const About = () => {

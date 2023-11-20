@@ -557,7 +557,8 @@
     "withdraw": "Withdraw",
     "enable": "Enable",
     "disable": "Disable",
-    "upload": "Upload"
+    "upload": "Upload",
+    "of": "of"
   },
   "countries": {
     "Afghanistan": "Afghanistan",

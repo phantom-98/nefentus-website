@@ -6,7 +6,7 @@ import Linkedin from "../../assets/icon/linkedin.svg";
 import Youtube from "../../assets/icon/youtube.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import separateText from "../../func/separate";
+import { separateText } from "../../func/separate";
 import { reformatFooterInfo } from "../../utils";
 
 const content = [

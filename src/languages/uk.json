@@ -528,7 +528,8 @@
     "withdraw": "Вивести",
     "enable": "Увімкнути",
     "disable": "Вимкнути",
-    "upload": "Завантажити"
+    "upload": "Завантажити",
+    "of": "з"
   },
   "countries": {
     "Afghanistan": "Афганістан",

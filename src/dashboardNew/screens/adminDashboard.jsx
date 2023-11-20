@@ -19,17 +19,6 @@ import styles from "./admin.module.css";
 import TablePagination from "../../components/tablePagination";
 import Popup from "../components/popup/popup";
 
-const label = [
-  "Name",
-  "Roles",
-  "Email",
-  "Status",
-  "Incomes",
-  "Join on",
-  "Earnings",
-  "Action",
-];
-
 const colSizes = [2, 1, 2, 1, 1, 2, 1, 2];
 
 const roleColors = {

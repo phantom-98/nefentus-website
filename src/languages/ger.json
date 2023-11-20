@@ -503,7 +503,8 @@
     "withdraw": "Abheben",
     "enable": "Aktivieren",
     "disable": "Deaktivieren",
-    "upload": "Hochladen"
+    "upload": "Hochladen",
+    "of": "von"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
