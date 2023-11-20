@@ -124,8 +124,6 @@ const KycBody = () => {
     fetchFYC();
   }, []);
 
-  console.log(data);
-
   return (
     <div style={{ marginBottom: "5rem" }}>
       <div className={styles.top}>
@@ -205,6 +203,7 @@ const Table = ({ data, setData }) => {
                       </li>
                     ) : index === 2 ? (
                       <li
+                        style={{ cursor: "pointer" }}
                         onClick={() => {
                           setCheckModal(true);
                           setSelectedId(items[0].id);
@@ -237,10 +236,8 @@ const Table = ({ data, setData }) => {
 
       <div className={styles.modalWrapper}>
         {checkModal && (
-          <Popup show={true}>
+          <Popup show={true} title="Check verification">
             <div className={styles.modal}>
-              <h4>Check verification</h4>
-
               <div className={styles.lines}>
                 {data
                   .find((item) => {
@@ -282,12 +279,11 @@ const Table = ({ data, setData }) => {
                     </div>
                   ))}
               </div>
-
-              <div style={{ paddingTop: 10 }}>
-                <Button onClick={() => setCheckModal(false)} color="gray">
-                  Close
-                </Button>
-              </div>
+            </div>
+            <div style={{ paddingTop: 20 }}>
+              <Button onClick={() => setCheckModal(false)} color="gray">
+                Close
+              </Button>
             </div>
           </Popup>
         )}
@@ -295,13 +291,9 @@ const Table = ({ data, setData }) => {
 
       <div className={styles.modalWrapper}>
         {feedbackModal && (
-          <Popup show={true}>
+          <Popup show={true} title="Leave a reason">
             <div className={styles.modal}>
-              <h4>Leave a reason</h4>
-
               <div className={styles.message}>
-                <p>Message</p>
-
                 <textarea
                   onChange={(e) => setDeclineReason(e.target.value)}
                   name=""

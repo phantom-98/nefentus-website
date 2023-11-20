@@ -25,6 +25,7 @@
 
 .rowLeft {
   font-size: 1.2rem;
+  display: flex;
 }
 
 .rowLeft span {

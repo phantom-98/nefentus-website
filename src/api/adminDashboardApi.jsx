@@ -158,7 +158,6 @@ export default class adminDashboardApi {
 
   async acceptKYC(id) {
     try {
-      console.log(id);
       const url = `${this.baseURL}/accept_kyc/${id}`;
       const options = {
         method: "PATCH",

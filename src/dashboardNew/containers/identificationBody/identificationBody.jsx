@@ -3,6 +3,7 @@ import Button from "../../components/button/button";
 import Card from "../../components/card/card";
 import SettingsTitle from "../../components/settings/settingsTitle";
 import backend_API from "../../../api/backendAPI";
+import Correct from "../../../assets/icon/correct.svg";
 
 import styles from "./identificationBody.module.css";
 import { EditPopup } from "../../components/settings/settingsItem";
@@ -144,10 +145,12 @@ const IdentificationBody = () => {
       if (item.id in transformedResults) {
         item.rejectReason = transformedResults[item.id].rejectReason;
         item.url = transformedResults[item.id].url;
+        item.verify = transformedResults[item.id].verify;
       }
       if (item.id in transformedResultsText) {
         item.rejectReason = transformedResultsText[item.id].rejectReason;
         item.url = transformedResultsText[item.id].url;
+        item.verify = transformedResultsText[item.id].verify;
       }
 
       return item;
@@ -318,6 +321,7 @@ const IdentificationBody = () => {
                     setGetText={setGetText}
                     rejectReason={item.rejectReason}
                     text={item.url}
+                    verify={item.verify}
                   />
                 );
               }
@@ -328,6 +332,7 @@ const IdentificationBody = () => {
                     label={item.label}
                     rejectReason={item.rejectReason}
                     file={item.url}
+                    verify={item.verify}
                     getData={getData}
                     setGetData={setGetData}
                   />
@@ -387,6 +392,7 @@ const IdentificationBody = () => {
                         label={item.label}
                         rejectReason={item.rejectReason}
                         file={item.url}
+                        verify={item.verify}
                         getData={getData}
                         setGetData={setGetData}
                       />
@@ -431,6 +437,7 @@ const IdentificationBody = () => {
                         label={item.label}
                         rejectReason={item.rejectReason}
                         file={item.url}
+                        verify={item.verify}
                         getData={getData}
                         setGetData={setGetData}
                       />
@@ -452,7 +459,15 @@ const IdentificationBody = () => {
 
 export default IdentificationBody;
 
-const AddText = ({ label, id, getText, setGetText, rejectReason, text }) => {
+const AddText = ({
+  label,
+  id,
+  getText,
+  setGetText,
+  rejectReason,
+  text,
+  verify,
+}) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
 
@@ -471,7 +486,11 @@ const AddText = ({ label, id, getText, setGetText, rejectReason, text }) => {
       <div className={`${styles.row} ${styles.formItem}`}>
         <div className={styles.rowLeft}>
           <span>{label}</span>
-          {text ? (
+          {verify ? (
+            <div style={{ paddingLeft: 10 }}>
+              <img src={Correct} alt="" />
+            </div>
+          ) : text ? (
             rejectReason !== null ? (
               <span style={{ paddingLeft: 20, color: "red" }}>
                 {rejectReason}
@@ -518,7 +537,15 @@ const AddText = ({ label, id, getText, setGetText, rejectReason, text }) => {
   );
 };
 
-const AddFile = ({ label, id, rejectReason, file, getData, setGetData }) => {
+const AddFile = ({
+  label,
+  id,
+  rejectReason,
+  file,
+  getData,
+  setGetData,
+  verify,
+}) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
   const [imageURL, setImageURL] = useState(null);
@@ -550,7 +577,11 @@ const AddFile = ({ label, id, rejectReason, file, getData, setGetData }) => {
       <div className={`${styles.row} ${styles.formItem}`}>
         <div className={styles.rowLeft}>
           <span>{label}</span>
-          {file ? (
+          {verify ? (
+            <div style={{ paddingLeft: 10 }}>
+              <img src={Correct} alt="" />
+            </div>
+          ) : file ? (
             rejectReason !== null ? (
               <span style={{ paddingLeft: 20, color: "red" }}>
                 {rejectReason}
@@ -566,7 +597,9 @@ const AddFile = ({ label, id, rejectReason, file, getData, setGetData }) => {
         </div>
 
         <div className={`${styles.rowRight} ${styles.rightUpload}`}>
-          {file ? (
+          {verify ? (
+            <div></div>
+          ) : file ? (
             <img
               style={{ borderRadius: 5, width: "50px", height: "50px" }}
               src={file}
@@ -579,6 +612,7 @@ const AddFile = ({ label, id, rejectReason, file, getData, setGetData }) => {
           ) : (
             <div></div>
           )}
+
           {file ? (
             <Button color="gray">
               <span style={{ color: "grey" }}>Upload</span>
