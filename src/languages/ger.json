@@ -382,6 +382,10 @@
       "Broker": "Broker",
       "Affiliate": "Affiliate"
     },
+    "charts": {
+      "last24h": "Letzte 24 Stunden",
+      "previous24h": "Vorherige 24 Stunden"
+    },
     "tableHeaders": {
       "firstName": "Vorname",
       "name": "Name",

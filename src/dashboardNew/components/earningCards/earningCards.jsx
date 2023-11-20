@@ -4,7 +4,7 @@ import Positive from "../../../assets/icon/positive.svg";
 import Negative from "../../../assets/icon/negative.svg";
 
 import styles from "./earningCards.module.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import { useTranslation } from "react-i18next";
 
@@ -12,17 +12,16 @@ const EarningCards = () => {
   const [cardInfo, setCardInfo] = useState([]);
   const dashboardApi = new vendorDashboardApi();
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { language } = i18n;
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [language]);
 
   const fetchData = async () => {
     const getPromises = [dashboardApi.getTotalIncome()];
     const [sales] = await Promise.allSettled(getPromises);
-
-    console.log(sales, "qweqweqwe");
 
     const cardsContent = [
       {

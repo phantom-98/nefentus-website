@@ -407,6 +407,10 @@
       "Broker": "Брокер",
       "Affiliate": "Партнер"
     },
+    "charts": {
+      "last24h": "Останні 24 години",
+      "previous24h": "Попередні 24 години"
+    },
     "tableHeaders": {
       "firstName": "Ім'я",
       "name": "Ім'я",

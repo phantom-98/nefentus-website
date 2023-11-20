@@ -427,6 +427,10 @@
     "hideBalance": "Hide Zero Balance Assets",
     "send": "Send",
     "receive": "Receive",
+    "charts": {
+      "last24h": "Last 24h",
+      "previous24h": "Previous 24h"
+    },
     "roles": {
       "Vendor": "Vendor",
       "Admin": "Admin",
