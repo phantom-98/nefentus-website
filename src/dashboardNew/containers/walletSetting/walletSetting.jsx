@@ -13,6 +13,7 @@ import {
 import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../../assets/logo/logo.svg";
 import WalletConnection from "../../components/walletConnection/walletConnection";
+import SettingsTitle from "../../components/settings/settingsTitle";
 
 const WalletSetting = () => {
   const BackandAPI = new backendAPI();
@@ -53,9 +54,10 @@ const WalletSetting = () => {
   useEffect(() => {
     if (data) {
       const lastObject = data[data.length - 1];
-      if (lastObject.internal === true) {
+      if (lastObject?.internal === true) {
         setActiveWallet(wallets[0]);
-      } else {
+      }
+      if (lastObject?.internal === false) {
         setActiveWallet(wallets[1]);
       }
     }
@@ -78,17 +80,11 @@ const WalletSetting = () => {
   return (
     <>
       <Card className={styles.card}>
-        <div onMouseLeave={handleMouseLeave} className={styles.wrapper}>
-          <div>
-            <div className={styles.title}>
-              Wallet to receive funds Description
-            </div>
-            <div className={styles.description}>
-              Choose the wallet that receives funds when creating an invoice or
-              selling product
-            </div>
-          </div>
-        </div>
+        <SettingsTitle
+          title="Wallet to receive funds Description"
+          description="Choose the wallet that receives funds when creating an invoice or selling product"
+        />
+        <div onMouseLeave={handleMouseLeave}></div>
         {data ? (
           <div style={{ position: "relative", width: 200 }}>
             <div onMouseEnter={handleMouseEnter}>
@@ -165,6 +161,7 @@ const WalletSetting = () => {
               justifyContent: "center",
               fontSize: 20,
             }}
+            className={styles.wrapper}
           >
             <p>You didn't connected the wallet</p>
           </div>
