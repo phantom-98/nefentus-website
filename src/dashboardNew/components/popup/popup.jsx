@@ -170,7 +170,7 @@ export const QRPopup = ({ show, setShow, data, onClick }) => {
 
         <div className={styles.title}>{t("payments.scan")}</div>
         <div className={styles.description}>
-          To confirm you need to scan QR code
+          {t("payments.scanDescription")}
         </div>
 
         <Table
@@ -202,8 +202,8 @@ export const QRPopup = ({ show, setShow, data, onClick }) => {
         />
 
         <div className={styles.paymentButtons}>
-          <Button onClick={() => setShow(false)}>Close</Button>
-          <div onClick={onClick}>Download invoice</div>
+          <Button onClick={() => setShow(false)}>{t("general.close")}</Button>
+          <div onClick={onClick}>{t("payments.downloadInvoice")}</div>
         </div>
       </Card>
     </div>,

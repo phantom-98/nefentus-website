@@ -18,7 +18,9 @@ const SettingsTitle = ({
         <div className={styles.description}>{description}</div>
       </div>
 
-      {identification && <div className={styles.level}>Level: X</div>}
+      {identification && (
+        <div className={styles.level}>{t("identification.level")}: X</div>
+      )}
       {product && (
         <div>
           <Button onClick={onCreate}>{t("products.createNewProduct")}</Button>

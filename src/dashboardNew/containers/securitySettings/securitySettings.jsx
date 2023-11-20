@@ -6,42 +6,42 @@ import SettingsTitle from "../../components/settings/settingsTitle";
 import styles from "./securitySettings.module.css";
 import SecurityItem from "../../components/settings/securityItem";
 import { useTranslation } from "react-i18next";
-
-const data = [
-  {
-    label: "Login Password",
-    description: "Login password is used to log in to your account.",
-    type: "password",
-    flow: "password",
-  },
-  {
-    label: "Authenticator App",
-    description:
-      "Setup Multi-Factor-Authentication using Google Authenticator, Authy, Lastpass or similar.",
-    value: JSON.parse(localStorage.getItem("hasTotp")),
-    type: "button",
-    flow: "totp",
-  },
-  {
-    label: "One-time passwords via email",
-    description:
-      "Setup Multi-Factor-Authentication based on one-time password sent via email.",
-    value: JSON.parse(localStorage.getItem("hasOtp")),
-    type: "button",
-    flow: "otp",
-  },
-  {
-    label: "Anti-Phishing Code",
-    description:
-      "Protect your account from phishing attempts and ensure that your notification emails are from Nefentus only.",
-    value: localStorage.getItem("antiPhishingCode"),
-    type: "phishingCode",
-    flow: "phishingCode",
-  },
-];
+import { useMemo } from "react";
 
 const SecuritySettings = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { language } = i18n;
+  const data = useMemo(() => {
+    return [
+      {
+        label: t("security.items.loginLabel"),
+        description: t("security.items.loginDescription"),
+        type: "password",
+        flow: "password",
+      },
+      {
+        label: t("security.items.labelAuthentication"),
+        description: t("security.items.descriptionAuthentication"),
+        value: JSON.parse(localStorage.getItem("hasTotp")),
+        type: "button",
+        flow: "totp",
+      },
+      {
+        label: t("security.items.labelPassword"),
+        description: t("security.items.descriptionPassword"),
+        value: JSON.parse(localStorage.getItem("hasOtp")),
+        type: "button",
+        flow: "otp",
+      },
+      {
+        label: t("security.items.labelCode"),
+        description: t("security.items.descriptionCode"),
+        value: localStorage.getItem("antiPhishingCode"),
+        type: "phishingCode",
+        flow: "phishingCode",
+      },
+    ];
+  }, [language]);
 
   return (
     <Card className={styles.card}>
@@ -51,7 +51,7 @@ const SecuritySettings = () => {
       />
 
       {data.map((item) => (
-        <SettingsItem data={item} />
+        <SecurityItem data={item} />
       ))}
     </Card>
   );

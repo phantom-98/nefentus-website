@@ -80,6 +80,8 @@ const SettingsItem = ({ data, setIsSaveData }) => {
     setIsSaveData(true);
   };
 
+  console.log(data.type);
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -125,6 +127,7 @@ const SettingsItem = ({ data, setIsSaveData }) => {
         </div>
         <EditPopup
           show={show}
+          label={data.label}
           value={data.popup === "language" ? label : data.value}
           setValue={(editValue) => handleData(editValue)}
           setShow={setShow}
@@ -173,7 +176,15 @@ export const EnableType = ({ value }) => {
   );
 };
 
-export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
+export const EditPopup = ({
+  show,
+  setShow,
+  value,
+  setValue,
+  type,
+  popup,
+  label,
+}) => {
   const [inputValue, setInputValue] = useState(value);
   const { t } = useTranslation();
 
@@ -193,7 +204,9 @@ export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
   return (
     <Popup
       show={show}
-      title={t("settingsItem.title")}
+      cancelTitle={t("general.cancel")}
+      confirmTitle={t("general.confirm")}
+      title={label}
       onConfirm={handleConfirmClick}
       onClose={() => setShow(false)}
     >

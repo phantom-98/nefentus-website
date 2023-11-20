@@ -99,7 +99,7 @@ const IdentificationBody = () => {
               <span>{t("identification.accountLimit.transactionLimits")}</span>
             </div>
             <div className={styles.rowRight}>
-              {t("identification.accountLimit.unlimited")}
+              {t("identification.unlimited")}
             </div>
           </div>
         </div>
@@ -208,7 +208,7 @@ const AddFile = ({ label }) => {
         <div className={`${styles.rowRight} ${styles.rightUpload}`}>
           <p className={styles.lvl}>{value}</p>
           <Button onClick={handleAddFile} color="gray">
-            Upload
+            {t("general.upload")}
           </Button>
         </div>
       </div>

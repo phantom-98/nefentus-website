@@ -554,7 +554,10 @@
     "update": "Update",
     "open": "Open",
     "confirm": "Confirm",
-    "withdraw": "Withdraw"
+    "withdraw": "Withdraw",
+    "enable": "Enable",
+    "disable": "Disable",
+    "upload": "Upload"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -891,6 +894,8 @@
     },
     "createProductModal": {
       "imageLabel": "Product image",
+      "createProduct": "Create Product",
+      "updateProduct": "Update Product",
       "attach": "Add attachment",
       "nameLabel": "Name",
       "namePlaceholder": "Enter name",
@@ -922,6 +927,7 @@
     "taxNumber": "Tax number",
     "createInvoice": "Create Invoice",
     "scan": "Scan QR Code",
+    "scanDescription": "To confirm you need to scan QR code",
     "downloadInvoice": "Download invoice",
     "table": {
       "created": "Created at",
@@ -985,10 +991,22 @@
   "socialTitle": "Follow us on:",
   "socialDescription": " Go to the top\n of the page",
   "security": {
+    "items": {
+      "loginLabel": "Login Password",
+      "loginDescription": "Login password is used to log in to your account.",
+      "labelAuthentication": "Authenticator App",
+      "descriptionAuthentication": "Setup Multi-Factor-Authentication using Google Authenticator, Authy, Lastpass or similar.",
+      "labelPassword": "One-time passwords via email",
+      "descriptionPassword": "Setup Multi-Factor-Authentication based on one-time password sent via email.",
+      "labelCode": "Anti-Phishing Code",
+      "descriptionCode": "Protect your account from phishing attempts and ensure that your notification emails are from Nefentus only."
+    },
     "settings": {
       "title": "Security",
       "description": "Be safe and set multiple way to secure your account"
     },
+    "antiPhishingCodeTitle": "Enter Anti-Phishing code:",
+    "antiPhishingCodePlaceholder": "Enter anti-phishing code",
     "actions": {
       "edit": "Edit",
       "enable": "Enable",
@@ -998,6 +1016,15 @@
     },
     "scanModal": {
       "title": "Scan QR-code or paste code"
+    },
+    "passwords": {
+      "title": "Change Password",
+      "labelCurrent": "Current Password",
+      "placeholderCurrent": "Enter your password",
+      "labelNew": "New Password",
+      "placeholderNew": "Enter new password",
+      "labelConfirm": "Confirm Password",
+      "placeholderConfirm": "Confirm new password"
     },
     "authentication": "Authentication",
     "enterCode": "Enter verification code:"

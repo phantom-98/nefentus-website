@@ -74,7 +74,9 @@ const Languages = () => {
               onClick={() => handleTrans(item.code)}
             >
               <img src={item.flag} alt="language flag" />
-              <p className="standard">{item.label}</p>
+              <span className={styles.label}>
+                <p className="standard">{item.label}</p>
+              </span>
             </div>
           ))}
         </div>

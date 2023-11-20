@@ -43,7 +43,7 @@ const PaymentDashboard = () => {
     return [
       new Date(invoice.createdAt).toLocaleString(),
       parseFloat(invoice.price).toFixed(2),
-      <TableStatus color="green">Open</TableStatus>,
+      <TableStatus color="green">{t("general.open")}</TableStatus>,
       <TableQR data={invoice} link={process.env.VITE_REACT_APP_QR_CODE_LINK} />,
       // <TableQR link={`${window.location.origin}/pay/${invoice.link}`} />,
       <TableAction deleteUser={() => deleteInvoice(invoice.link)} />,

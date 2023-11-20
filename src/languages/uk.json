@@ -525,7 +525,10 @@
     "update": "Оновити",
     "open": "Відкрити",
     "confirm": "Підтвердити",
-    "withdraw": "Вивести"
+    "withdraw": "Вивести",
+    "enable": "Увімкнути",
+    "disable": "Вимкнути",
+    "upload": "Завантажити"
   },
   "countries": {
     "Afghanistan": "Афганістан",
@@ -861,6 +864,8 @@
       "priceAsFloat": "Ціна має бути числом!"
     },
     "createProductModal": {
+      "createProduct": "Створити Продукт",
+      "updateProduct": "Оновити Продукт",
       "imageLabel": "Картинка продукту",
       "attach": "Додайте вкладення",
       "nameLabel": "Ім'я",
@@ -893,6 +898,7 @@
     "taxNumber": "Податковий номер",
     "createInvoice": "Створити інвойс",
     "scan": "Сканувати QR-код",
+    "scanDescription": "Для підтвердження вам потрібно відсканувати QR-код",
     "downloadInvoice": "Завантажити рахунок-фактуру",
     "table": {
       "created": "Створено",
@@ -932,16 +938,37 @@
     "connectError": "Підключення гаманця недоступне!"
   },
   "security": {
+    "items": {
+      "loginLabel": "Пароль для входу",
+      "loginDescription": "Пароль для входу використовується для входу в ваш акаунт.",
+      "labelAuthentication": "Додаток для аутентифікації",
+      "descriptionAuthentication": "Налаштування багатофакторної аутентифікації за допомогою Google Authenticator, Authy, Lastpass або подібних.",
+      "labelPassword": "Одноразові паролі через електронну пошту",
+      "descriptionPassword": "Налаштування багатофакторної аутентифікації на основі одноразового пароля, відправленого на електронну пошту.",
+      "labelCode": "Код проти фішингу",
+      "descriptionCode": "Захистіть свій акаунт від спроб фішингу та переконайтеся, що ваші сповіщення електронною поштою надходять тільки від Nefentus."
+    },
     "settings": {
       "title": "Безпека",
       "description": "Будьте в безпеці та встановіть кілька способів захисту свого облікового запису"
     },
+    "antiPhishingCodeTitle": "Введіть анти-фішинговий код:",
+    "antiPhishingCodePlaceholder": "Введіть анти-фішинговий код",
     "actions": {
       "edit": "Редагувати",
       "enable": "Увімкнути",
       "change": "Змінити",
       "close": "Закрити",
       "verify": "Перевірити"
+    },
+    "passwords": {
+      "title": "Змінити Пароль",
+      "labelCurrent": "Поточний Пароль",
+      "placeholderCurrent": "Введіть свій пароль",
+      "labelNew": "Новий Пароль",
+      "placeholderNew": "Введіть новий пароль",
+      "labelConfirm": "Підтвердіть Пароль",
+      "placeholderConfirm": "Підтвердіть новий пароль"
     },
     "scanModal": {
       "title": "Скануйте QR-код або вставте код"
