@@ -14,6 +14,8 @@ import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../../assets/logo/logo.svg";
 import WalletConnection from "../../components/walletConnection/walletConnection";
 import SettingsTitle from "../../components/settings/settingsTitle";
+import internal from "stream";
+import useInternalWallet from "../../../hooks/internalWallet";
 
 const WalletSetting = () => {
   const BackandAPI = new backendAPI();
@@ -25,6 +27,8 @@ const WalletSetting = () => {
     "Wallet Connect": "disconnected",
     Metamask: "disconnected",
   });
+
+  let internalWalletAddress = useInternalWallet();
 
   const wallets = [
     {
@@ -51,18 +55,6 @@ const WalletSetting = () => {
     getWalletAddresses();
   }, []);
 
-  useEffect(() => {
-    if (data) {
-      const lastObject = data[data.length - 1];
-      if (lastObject?.internal === true) {
-        setActiveWallet(wallets[0]);
-      }
-      if (lastObject?.internal === false) {
-        setActiveWallet(wallets[1]);
-      }
-    }
-  }, [data]);
-
   const handleWalletClick = (wallet, index) => {
     setActiveWallet(wallet);
     setIndex(index);
@@ -85,87 +77,74 @@ const WalletSetting = () => {
           description="Choose the wallet that receives funds when creating an invoice or selling product"
         />
         <div onMouseLeave={handleMouseLeave}></div>
-        {data ? (
-          <div style={{ position: "relative", width: 200 }}>
-            <div onMouseEnter={handleMouseEnter}>
-              {activeWallet ? (
-                <ThirdwebProvider
-                  clientId="639eea2ebcabed7eab90b56aceeed08b"
-                  supportedWallets={[activeWallet.connect]}
-                >
-                  <WalletConnection
-                    name={activeWallet.name}
-                    icon={activeWallet.icon}
-                    connectStatus={connectStatus}
-                    setConnectStatus={setConnectStatus}
-                    config={activeWallet.connect}
-                    index={index}
-                  />
-                </ThirdwebProvider>
-              ) : (
-                <div style={{ paddingTop: 20, paddingLeft: 15 }}>
-                  <span>Choice wallet</span>
-                </div>
-              )}
-            </div>
-            <div
-              style={{
-                position: "absolute",
-                width: 200,
-                zIndex: 5,
-                top: "40px",
-                left: "10px",
-              }}
-              onMouseLeave={handleMouseLeave}
-            >
-              {dropdownVisible && (
-                <div>
-                  <Card>
-                    {wallets.map((wallet, index) => {
-                      return (
-                        <div
-                          key={index}
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            paddingTop: 5,
-                          }}
-                          onClick={() => handleWalletClick(wallet, index)}
-                        >
-                          <div>
-                            <img
-                              src={wallet.icon}
-                              style={{ width: "50px", height: "30px" }}
-                              alt=""
-                            />
-                          </div>
-                          <div style={{ paddingTop: 8 }}>
-                            <p>{wallet.name}</p>
-                            <span>{wallet.connectStatus}</span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </Card>
-                </div>
-              )}
-            </div>
+        <div style={{ position: "relative", width: 600 }}>
+          <div onMouseEnter={handleMouseEnter}>
+            {activeWallet ? (
+              <ThirdwebProvider
+                clientId="639eea2ebcabed7eab90b56aceeed08b"
+                supportedWallets={[activeWallet.connect]}
+              >
+                <WalletConnection
+                  name={activeWallet.name}
+                  icon={activeWallet.icon}
+                  connectStatus={connectStatus}
+                  setConnectStatus={setConnectStatus}
+                  config={activeWallet.connect}
+                  index={index}
+                />
+              </ThirdwebProvider>
+            ) : (
+              <div
+                style={{ paddingTop: 20, paddingLeft: 10, fontSize: "1.4rem" }}
+              >
+                <span>Wallet:</span>
+                <span style={{ paddingLeft: 10 }}>{internalWalletAddress}</span>
+              </div>
+            )}
           </div>
-        ) : (
           <div
             style={{
-              display: "flex",
-              width: "100%",
-              height: 200,
-              paddingTop: 50,
-              justifyContent: "center",
-              fontSize: 20,
+              position: "absolute",
+              width: 200,
+              zIndex: 5,
+              top: "40px",
+              left: "10px",
             }}
-            className={styles.wrapper}
+            onMouseLeave={handleMouseLeave}
           >
-            <p>You didn't connected the wallet</p>
+            {dropdownVisible && (
+              <div>
+                <Card>
+                  {wallets.map((wallet, index) => {
+                    return (
+                      <div
+                        key={index}
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          paddingTop: 5,
+                        }}
+                        onClick={() => handleWalletClick(wallet, index)}
+                      >
+                        <div>
+                          <img
+                            src={wallet.icon}
+                            style={{ width: "50px", height: "30px" }}
+                            alt=""
+                          />
+                        </div>
+                        <div style={{ paddingTop: 8 }}>
+                          <p>{wallet.name}</p>
+                          <span>{wallet.connectStatus}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </Card>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </Card>
     </>
   );

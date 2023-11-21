@@ -34,7 +34,6 @@ const IdentificationBody = () => {
             identification
           />
         </div>
-
         <div className={styles.box}>
           <div className={styles.boxTitle}>Verification Levels</div>
 
