@@ -35,6 +35,14 @@ const data = [
     type: "phishingCode",
     flow: "phishingCode",
   },
+  {
+    label: "Seed phrases",
+    description:
+      "Protect your account from phishing attempts and ensure that your notification emails are from Nefentus only.",
+    value: false,
+    type: "button",
+    flow: "seed",
+  },
 ];
 
 const SecuritySettings = () => {

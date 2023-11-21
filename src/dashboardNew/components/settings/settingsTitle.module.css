@@ -6,7 +6,44 @@
   justify-content: space-between;
   flex-direction: column;
 }
+.seedPhrasesModalWrapper {
+  display: flex;
+  min-height: 300px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.seedPhrasesInputWrapper {
+  width: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  margin: 20px 0;
+}
 
+.inputSeedPhrase {
+  border-radius: 5px;
+  margin: 5px 0;
+  height: 30px;
+  padding-left: 5px;
+  background: transparent;
+  width: 85px;
+  color: white;
+}
+
+.seedPhrase {
+  border-radius: 5px;
+  margin: 5px 0;
+  height: 30px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100px;
+  font-size: 12px;
+  padding: 5px;
+}
 .input {
   background-color: transparent;
   outline: 0;

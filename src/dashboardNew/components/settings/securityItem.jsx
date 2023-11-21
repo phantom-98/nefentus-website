@@ -10,6 +10,20 @@ import { OneTimeCodeInput, RawInput } from "../../../dashboard/input/input";
 import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 import { useNavigate } from "react-router-dom";
 import Popup from "../popup/popup";
+const seedPhrases = [
+  "horizon",
+  "mystery",
+  "sunrise",
+  "eclipse",
+  "ocean",
+  "galaxy",
+  "mountain",
+  "serenity",
+  "voyage",
+  "forest",
+  "canvas",
+  "whisper",
+];
 
 const SecurityItem = ({ data }) => {
   const [isTotp, setIsTotp] = useState(
@@ -39,6 +53,9 @@ const SecurityItem = ({ data }) => {
   const [phishingCodeValue, setPhishingCodeValue] = useState(
     localStorage.getItem("antiPhishingCode"),
   );
+  const [addSeedPhrases, setAddSeedPhrases] = useState(false);
+  const [checkedSeedPhrases, setCheckedSeedPhrases] = useState([]);
+  const [seedStatus, setSeedStatus] = useState(false);
 
   const backendAPI = new backend_API();
   const navigate = useNavigate();
@@ -168,7 +185,6 @@ const SecurityItem = ({ data }) => {
     const requestData = {
       code: phishingCode,
     };
-
     const response2 = await backendAPI.setPhishingCode(requestData);
     if (response2 === "Success") {
       setPhishingCodeValue(requestData.code);
@@ -186,6 +202,31 @@ const SecurityItem = ({ data }) => {
     setShow(false);
   };
 
+  const comparePhrases = () => {
+    const completedSeedPhrases = checkedSeedPhrases.filter(
+      (phrase) => !!phrase,
+    );
+    if (seedPhrases.length !== completedSeedPhrases.length) {
+      return;
+    }
+    setSeedStatus(true);
+    setAddSeedPhrases(false);
+  };
+
+  const handleCloseSeedModal = () => {
+    setAddSeedPhrases(false);
+    setCheckedSeedPhrases([]);
+  };
+  const checkPhrase = (value, index) => {
+    const copyPhrases = [...checkedSeedPhrases];
+    if (value === seedPhrases[index]) {
+      copyPhrases[index] = value;
+      setCheckedSeedPhrases(copyPhrases);
+      return;
+    }
+    copyPhrases[index] = false;
+    setCheckedSeedPhrases(copyPhrases);
+  };
   return (
     <>
       <div className={styles.wrapper}>
@@ -196,7 +237,7 @@ const SecurityItem = ({ data }) => {
           </div>
           <div className={styles.right}>
             {data.type === "button" ? (
-              <EnableType value={status} />
+              <EnableType value={data.flow === "seed" ? seedStatus : status} />
             ) : (
               <PasswordIcon
                 type={data.flow}
@@ -214,10 +255,21 @@ const SecurityItem = ({ data }) => {
                 ? handleTotpSecretKey
                 : data.flow === "password"
                 ? () => setOpenChangePassword(true)
+                : data.flow === "seed"
+                ? () => {
+                    setSeedStatus(false);
+                    setAddSeedPhrases("step1");
+                  }
                 : () => setShow(true)
             }
           >
-            {data.type === "button" ? (status ? "Disable" : "Enable") : "Edit"}
+            {data.type === "button"
+              ? data.flow === "seed" && seedStatus
+                ? "Disabled"
+                : status
+                ? "Disable"
+                : "Enable"
+              : "Edit"}
           </Button>
         </div>
       </div>
@@ -399,6 +451,76 @@ const SecurityItem = ({ data }) => {
           )}
         </ModalOverlay>
       )}
+      <Popup
+        show={addSeedPhrases}
+        onClose={handleCloseSeedModal}
+        confirmTitle={addSeedPhrases === "step1" ? "Continue" : "Confirm"}
+        cancelTitle={"Close"}
+        onConfirm={
+          addSeedPhrases === "step1"
+            ? () => setAddSeedPhrases("step2")
+            : comparePhrases
+        }
+      >
+        <div className={styles.seedPhrasesModalWrapper}>
+          <p style={{ fontSize: "32px" }}>
+            {addSeedPhrases === "step1" ? "Seed Phrase" : "Verify Seed Phrase"}
+          </p>
+          <p style={{ fontSize: "15px" }}>
+            {addSeedPhrases === "step1"
+              ? "Remember this phrase"
+              : "EnterSeedPhrase"}
+          </p>
+
+          {addSeedPhrases === "step2" ? (
+            <div className={styles.seedPhrasesInputWrapper}>
+              {seedPhrases.map((phrase, index) => (
+                <div
+                  style={{
+                    display: "flex",
+                    width: 100,
+                    justifyContent: "space-between",
+                    alignItems: "end",
+                    fontSize: "12px",
+                  }}
+                >
+                  <label>{index + 1}.</label>
+                  <input
+                    style={{
+                      background:
+                        checkedSeedPhrases[index] === phrase
+                          ? "silver"
+                          : "transparent",
+                    }}
+                    onKeyDown={(e) => {
+                      e.code === "Enter" && checkPhrase(e.target.value, index);
+                    }}
+                    onBlur={(e) => checkPhrase(e.target.value, index)}
+                    className={styles.inputSeedPhrase}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            ""
+          )}
+          <div className={styles.seedPhrasesInputWrapper}>
+            {seedPhrases.map((phrase, index) => (
+              <p
+                style={{
+                  background:
+                    checkedSeedPhrases[index] === phrase
+                      ? "transparent"
+                      : "silver",
+                }}
+                className={styles.seedPhrase}
+              >
+                {checkedSeedPhrases[index] === phrase ? "" : phrase}
+              </p>
+            ))}
+          </div>
+        </div>
+      </Popup>
 
       <Popup
         show={show}
