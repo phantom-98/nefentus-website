@@ -822,7 +822,6 @@ export default class backendAPI {
 
   async getByKYC(type, userId) {
     try {
-      // const userId = localStorage.getItem("userId");
       const url = `${this.baseURL}/auth/${userId}/kyc-image-url?type=${type}`;
       const options = {
         method: "GET",
@@ -843,7 +842,6 @@ export default class backendAPI {
 
   async getByKYCText(type, userId) {
     try {
-      // const userId = localStorage.getItem("userId");
       const url = `${this.baseURL}/auth/${userId}/kyc-text-url?type=${type}`;
       const options = {
         method: "GET",

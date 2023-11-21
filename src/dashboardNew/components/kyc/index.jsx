@@ -98,6 +98,12 @@ const KycBody = () => {
               item.file === null ||
               item.file === undefined ||
               item.verify === true,
+          ) &&
+          transformedResultsText.every(
+            (item) =>
+              item.file === null ||
+              item.file === undefined ||
+              item.verify === true,
           )
         )
           return;

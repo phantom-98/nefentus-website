@@ -19,8 +19,6 @@ const EarningCards = () => {
     const getPromises = [dashboardApi.getTotalIncome()];
     const [sales] = await Promise.allSettled(getPromises);
 
-    console.log(sales, "qweqweqwe");
-
     const cardsContent = [
       {
         title: "Sales: Total",

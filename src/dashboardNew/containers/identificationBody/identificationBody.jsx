@@ -108,6 +108,7 @@ const IdentificationBody = () => {
   const [uploadingFiles, setUploadingFiles] = useState(KYCContent);
   const [getData, setGetData] = useState();
   const [getText, setGetText] = useState("");
+  const [declineResponse, setDeclineResponse] = useState(null);
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -146,23 +147,25 @@ const IdentificationBody = () => {
         item.rejectReason = transformedResults[item.id].rejectReason;
         item.url = transformedResults[item.id].url;
         item.verify = transformedResults[item.id].verify;
+
+        if (transformedResults[item.id].rejectReason != null) {
+          setDeclineResponse(transformedResults[item.id].rejectReason);
+        }
       }
       if (item.id in transformedResultsText) {
         item.rejectReason = transformedResultsText[item.id].rejectReason;
         item.url = transformedResultsText[item.id].url;
         item.verify = transformedResultsText[item.id].verify;
+
+        if (transformedResultsText[item.id].rejectReason != null) {
+          setDeclineResponse(transformedResultsText[item.id].rejectReason);
+        }
       }
 
       return item;
     });
 
     setUploadingFiles(filteredArray);
-
-    if (arrayWithResults) {
-      console.log("Successfuly got data!");
-    } else {
-      console.log("error don't got data!");
-    }
   };
 
   useEffect(() => {
@@ -208,7 +211,7 @@ const IdentificationBody = () => {
     }
 
     setInfoMessage("Data successfuly upload!");
-
+    setDeclineResponse(null);
     fetchFYC();
   };
 
@@ -308,7 +311,14 @@ const IdentificationBody = () => {
 
           <div className={styles.uploadItem}>
             <div className={`${styles.row} ${styles.rowItem}`}>
-              <div className={styles.rowLeft}>Level 1:</div>
+              <div className={styles.rowLeft}>
+                Level 1:{" "}
+                {level === 0 ? (
+                  <p style={{ color: "red", paddingLeft: 10 }}>
+                    {declineResponse ? declineResponse : null}
+                  </p>
+                ) : null}
+              </div>
             </div>
 
             {KYCContent.map((item) => {
@@ -319,7 +329,7 @@ const IdentificationBody = () => {
                     label={item.label}
                     getText={getText}
                     setGetText={setGetText}
-                    rejectReason={item.rejectReason}
+                    declineResponse={declineResponse}
                     text={item.url}
                     verify={item.verify}
                   />
@@ -330,7 +340,7 @@ const IdentificationBody = () => {
                   <AddFile
                     id={item.id}
                     label={item.label}
-                    rejectReason={item.rejectReason}
+                    declineResponse={declineResponse}
                     file={item.url}
                     verify={item.verify}
                     getData={getData}
@@ -347,7 +357,12 @@ const IdentificationBody = () => {
                 className={styles.rowLeft}
                 style={level > 0 ? { color: "white" } : { color: "grey" }}
               >
-                Level 2:
+                Level 2:{" "}
+                {level === 1 ? (
+                  <p style={{ color: "red", paddingLeft: 10 }}>
+                    {declineResponse ? declineResponse : null}
+                  </p>
+                ) : null}
               </div>
             </div>
             {level < 1 ? (
@@ -390,7 +405,7 @@ const IdentificationBody = () => {
                       <AddFile
                         id={item.id}
                         label={item.label}
-                        rejectReason={item.rejectReason}
+                        declineResponse={declineResponse}
                         file={item.url}
                         verify={item.verify}
                         getData={getData}
@@ -409,7 +424,12 @@ const IdentificationBody = () => {
                 className={styles.rowLeft}
                 style={level > 1 ? { color: "white" } : { color: "grey" }}
               >
-                Level 3:
+                Level 3:{" "}
+                {level === 2 ? (
+                  <p style={{ color: "red", paddingLeft: 10 }}>
+                    {declineResponse ? declineResponse : null}
+                  </p>
+                ) : null}
               </div>
             </div>
             {level < 2 ? (
@@ -435,7 +455,7 @@ const IdentificationBody = () => {
                       <AddFile
                         id={item.id}
                         label={item.label}
-                        rejectReason={item.rejectReason}
+                        declineResponse={declineResponse}
                         file={item.url}
                         verify={item.verify}
                         getData={getData}
@@ -464,14 +484,15 @@ const AddText = ({
   id,
   getText,
   setGetText,
-  rejectReason,
   text,
   verify,
+  declineResponse,
 }) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
 
   const updateValue = value.slice(0, 40);
+
   const uploadValue = text?.slice(0, 40);
 
   useEffect(() => {
@@ -491,30 +512,45 @@ const AddText = ({
               <img src={Correct} alt="" />
             </div>
           ) : text ? (
-            rejectReason !== null ? (
-              <span style={{ paddingLeft: 20, color: "red" }}>
-                {rejectReason}
+            <>
+              <span style={{ paddingLeft: 20, color: "gray" }}>
+                {declineResponse !== null ? null : "Currently being checked"}
               </span>
-            ) : (
-              <>
-                <span style={{ paddingLeft: 20, color: "gray" }}>
-                  Currently being checked
-                </span>
-              </>
-            )
+            </>
           ) : null}
         </div>
         <div className={`${styles.rowRight} ${styles.rightUpload}`}>
           <p className={styles.lvl}>
-            {uploadValue
-              ? uploadValue.length > 39
-                ? uploadValue + "..."
-                : uploadValue
-              : updateValue.length > 39
-              ? updateValue + "..."
-              : updateValue}
+            {verify ? (
+              <div></div>
+            ) : declineResponse != null ? (
+              updateValue ? (
+                updateValue.length > 39 ? (
+                  updateValue + "..."
+                ) : (
+                  updateValue
+                )
+              ) : (
+                updateValue
+              )
+            ) : uploadValue ? (
+              uploadValue.length > 39 ? (
+                uploadValue + "..."
+              ) : (
+                uploadValue
+              )
+            ) : updateValue.length > 39 ? (
+              updateValue + "..."
+            ) : (
+              updateValue
+            )}
           </p>
-          {text ? (
+
+          {declineResponse != null ? (
+            <Button onClick={() => setShow(true)} color="gray">
+              Add
+            </Button>
+          ) : text ? (
             <Button color="gray">
               <span style={{ color: "grey" }}>Add</span>
             </Button>
@@ -540,11 +576,11 @@ const AddText = ({
 const AddFile = ({
   label,
   id,
-  rejectReason,
   file,
   getData,
   setGetData,
   verify,
+  declineResponse,
 }) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
@@ -582,23 +618,31 @@ const AddFile = ({
               <img src={Correct} alt="" />
             </div>
           ) : file ? (
-            rejectReason !== null ? (
-              <span style={{ paddingLeft: 20, color: "red" }}>
-                {rejectReason}
+            <>
+              <span style={{ paddingLeft: 20, color: "gray" }}>
+                {declineResponse !== null ? null : "Currently being checked"}
               </span>
-            ) : (
-              <>
-                <span style={{ paddingLeft: 20, color: "gray" }}>
-                  Currently being checked
-                </span>
-              </>
-            )
+            </>
           ) : null}
         </div>
 
         <div className={`${styles.rowRight} ${styles.rightUpload}`}>
           {verify ? (
             <div></div>
+          ) : declineResponse != null ? (
+            imageURL ? (
+              <img
+                style={{ borderRadius: 5, width: "50px", height: "50px" }}
+                src={imageURL}
+              />
+            ) : file ? (
+              <img
+                style={{ borderRadius: 5, width: "50px", height: "50px" }}
+                src={file}
+              />
+            ) : (
+              <div></div>
+            )
           ) : file ? (
             <img
               style={{ borderRadius: 5, width: "50px", height: "50px" }}
@@ -612,8 +656,11 @@ const AddFile = ({
           ) : (
             <div></div>
           )}
-
-          {file ? (
+          {declineResponse != null ? (
+            <Button onClick={() => handleAddFile()} color="gray">
+              Upload
+            </Button>
+          ) : file ? (
             <Button color="gray">
               <span style={{ color: "grey" }}>Upload</span>
             </Button>

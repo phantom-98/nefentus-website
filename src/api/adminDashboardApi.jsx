@@ -178,7 +178,6 @@ export default class adminDashboardApi {
   }
 
   async declineKYC(id, declineReason) {
-    console.log(declineReason);
     try {
       const url = `${this.baseURL}/decline_kyc/${id}`;
       const options = {
