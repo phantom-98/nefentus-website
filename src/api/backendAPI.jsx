@@ -518,6 +518,8 @@ export default class backendAPI {
         localStorage.setItem("appNotifications", data.appNotifications);
         localStorage.setItem("notificationLanguage", data.notificationLanguage);
         localStorage.setItem("enableInvoicing", data.enableInvoicing);
+        localStorage.setItem("vatNumber", data.vatNumber);
+        localStorage.setItem("sendInvoice", data.sendInvoice);
       }
 
       ReactGA.event({
