@@ -545,8 +545,11 @@ const AddText = ({
               updateValue
             )}
           </p>
-
-          {declineResponse != null ? (
+          {verify ? (
+            <Button color="gray">
+              <span style={{ color: "grey" }}>Add</span>
+            </Button>
+          ) : declineResponse != null ? (
             <Button onClick={() => setShow(true)} color="gray">
               Add
             </Button>
@@ -656,7 +659,11 @@ const AddFile = ({
           ) : (
             <div></div>
           )}
-          {declineResponse != null ? (
+          {verify ? (
+            <Button color="gray">
+              <span style={{ color: "grey" }}>Upload</span>
+            </Button>
+          ) : declineResponse != null ? (
             <Button onClick={() => handleAddFile()} color="gray">
               Upload
             </Button>
