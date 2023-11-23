@@ -216,264 +216,272 @@ const IdentificationBody = () => {
   };
 
   return (
-    <Card className={styles.card}>
+    <>
       <MessageComponent />
-      <div className={styles.top}>
-        <div className={styles.titleHeader}>
-          <SettingsTitle
-            title="Identification"
-            description="Get your identity verified to buy and trade"
-            identification
-          />
-        </div>
+      <Card className={styles.card}>
+        <div className={styles.top}>
+          <div className={styles.titleHeader}>
+            <SettingsTitle
+              title="Identification"
+              description="Get your identity verified to buy and trade"
+              identification
+            />
+          </div>
 
-        <div className={styles.box}>
-          <div className={styles.boxTitle}>Verification Levels</div>
+          <div className={styles.box}>
+            <div className={styles.boxTitle}>Verification Levels</div>
 
-          <div className={styles.row}>
-            <div className={styles.rowLeft}>
-              Level 1:{" "}
-              <span>
-                Personal Information, Government Issued ID and Facial
-                Recognition
-              </span>
-            </div>
-            <div
-              className={styles.rowRight}
-              style={{ color: level > 0 ? "#16C172" : "#F24236" }}
-            >
-              <span>{level > 0 ? "Verified" : "Unverified"}</span>
-            </div>
-          </div>
-          <div className={styles.row}>
-            <div className={styles.rowLeft}>
-              Level 2: <span> Proof of Address & Proof of Company</span>
-            </div>
-            <div
-              className={styles.rowRight}
-              style={{ color: level > 1 ? "#16C172" : "#F24236" }}
-            >
-              <span>{level > 1 ? "Verified" : "Unverified"}</span>
-            </div>
-          </div>
-          <div className={styles.row}>
-            <div className={styles.rowLeft}>
-              Level 3: <span> Enhanced Diligence</span>
-            </div>
-            <div
-              className={styles.rowRight}
-              style={{ color: level > 2 ? "#16C172" : "#F24236" }}
-            >
-              <span>{level > 2 ? "Verified" : "Unverified"}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.box}>
-          <div className={styles.boxTitle}>Account Limit</div>
-
-          <div className={styles.row}>
-            <div className={styles.rowLeft}>
-              <span>Sales volume</span>
-            </div>
-            <div className={styles.rowRight}>
-              {level < 1
-                ? "10 000$"
-                : level < 2
-                ? "1 000 000$"
-                : level < 3
-                ? "10 000 000$"
-                : "Unlimited"}
-            </div>
-          </div>
-          <div className={styles.row}>
-            <div className={styles.rowLeft}>
-              <span>Crypto Deposit</span>
-            </div>
-            <div className={styles.rowRight}>Unlimited</div>
-          </div>
-          <div className={styles.row}>
-            <div className={styles.rowLeft}>
-              <span>Crypto Withdrawal Limit</span>
-            </div>
-            <div className={styles.rowRight}>Unlimited</div>
-          </div>
-          <div className={styles.row}>
-            <div className={styles.rowLeft}>
-              <span>P2P Transaction</span>
-            </div>
-            <div className={styles.rowRight}>Unlimited</div>
-          </div>
-        </div>
-
-        <div className={styles.uploadBox}>
-          <div className={styles.boxTitle}>Get verified</div>
-
-          <div className={styles.uploadItem}>
-            <div className={`${styles.row} ${styles.rowItem}`}>
+            <div className={styles.row}>
               <div className={styles.rowLeft}>
                 Level 1:{" "}
-                {level === 0 ? (
-                  <p style={{ color: "red", paddingLeft: 10 }}>
-                    {declineResponse ? declineResponse : null}
-                  </p>
-                ) : null}
+                <span>
+                  Personal Information, Government Issued ID and Facial
+                  Recognition
+                </span>
+              </div>
+              <div
+                className={styles.rowRight}
+                style={{ color: level > 0 ? "#16C172" : "#F24236" }}
+              >
+                <span>{level > 0 ? "Verified" : "Unverified"}</span>
               </div>
             </div>
-
-            {KYCContent.map((item) => {
-              if (item.type == "text") {
-                return (
-                  <AddText
-                    id={item.id}
-                    label={item.label}
-                    getText={getText}
-                    setGetText={setGetText}
-                    declineResponse={declineResponse}
-                    text={item.url}
-                    verify={item.verify}
-                  />
-                );
-              }
-              if (item.type == "photo" && item.level === 0) {
-                return (
-                  <AddFile
-                    id={item.id}
-                    label={item.label}
-                    declineResponse={declineResponse}
-                    file={item.url}
-                    verify={item.verify}
-                    getData={getData}
-                    setGetData={setGetData}
-                  />
-                );
-              }
-            })}
+            <div className={styles.row}>
+              <div className={styles.rowLeft}>
+                Level 2: <span> Proof of Address & Proof of Company</span>
+              </div>
+              <div
+                className={styles.rowRight}
+                style={{ color: level > 1 ? "#16C172" : "#F24236" }}
+              >
+                <span>{level > 1 ? "Verified" : "Unverified"}</span>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.rowLeft}>
+                Level 3: <span> Enhanced Diligence</span>
+              </div>
+              <div
+                className={styles.rowRight}
+                style={{ color: level > 2 ? "#16C172" : "#F24236" }}
+              >
+                <span>{level > 2 ? "Verified" : "Unverified"}</span>
+              </div>
+            </div>
           </div>
 
-          <div className={styles.uploadItem}>
-            <div className={`${styles.row} ${styles.rowItem}`}>
-              <div
-                className={styles.rowLeft}
-                style={level > 0 ? { color: "white" } : { color: "grey" }}
-              >
-                Level 2:{" "}
-                {level === 1 ? (
-                  <p style={{ color: "red", paddingLeft: 10 }}>
-                    {declineResponse ? declineResponse : null}
-                  </p>
-                ) : null}
+          <div className={styles.box}>
+            <div className={styles.boxTitle}>Account Limit</div>
+
+            <div className={styles.row}>
+              <div className={styles.rowLeft}>
+                <span>Sales volume</span>
+              </div>
+              <div className={styles.rowRight}>
+                {level < 1
+                  ? "10 000$"
+                  : level < 2
+                  ? "1 000 000$"
+                  : level < 3
+                  ? "10 000 000$"
+                  : "Unlimited"}
               </div>
             </div>
-            {level < 1 ? (
-              <div className={`${styles.row} ${styles.formItem}`}>
+            <div className={styles.row}>
+              <div className={styles.rowLeft}>
+                <span>Crypto Deposit</span>
+              </div>
+              <div className={styles.rowRight}>Unlimited</div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.rowLeft}>
+                <span>Crypto Withdrawal Limit</span>
+              </div>
+              <div className={styles.rowRight}>Unlimited</div>
+            </div>
+            <div className={styles.row}>
+              <div className={styles.rowLeft}>
+                <span>P2P Transaction</span>
+              </div>
+              <div className={styles.rowRight}>Unlimited</div>
+            </div>
+          </div>
+
+          <div className={styles.uploadBox}>
+            <div className={styles.boxTitle}>Get verified</div>
+
+            <div className={styles.uploadItem}>
+              <div className={`${styles.row} ${styles.rowItem}`}>
                 <div className={styles.rowLeft}>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span>Proof of Address</span>
-                    <span style={{ paddingTop: 20 }}>Proof of Company</span>
+                  Level 1:{" "}
+                  {level === 0 ? (
+                    <p style={{ color: "red", paddingLeft: 10 }}>
+                      {declineResponse ? declineResponse : null}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+
+              {KYCContent.map((item) => {
+                if (item.type == "text") {
+                  return (
+                    <AddText
+                      id={item.id}
+                      label={item.label}
+                      getText={getText}
+                      setGetText={setGetText}
+                      declineResponse={declineResponse}
+                      text={item.url}
+                      verify={item.verify}
+                    />
+                  );
+                }
+                if (item.type == "photo" && item.level === 0) {
+                  return (
+                    <AddFile
+                      id={item.id}
+                      label={item.label}
+                      declineResponse={declineResponse}
+                      file={item.url}
+                      verify={item.verify}
+                      getData={getData}
+                      setGetData={setGetData}
+                    />
+                  );
+                }
+              })}
+            </div>
+
+            <div className={styles.uploadItem}>
+              <div className={`${styles.row} ${styles.rowItem}`}>
+                <div
+                  className={styles.rowLeft}
+                  style={level > 0 ? { color: "white" } : { color: "grey" }}
+                >
+                  Level 2:{" "}
+                  {level === 1 ? (
+                    <p style={{ color: "red", paddingLeft: 10 }}>
+                      {declineResponse ? declineResponse : null}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+              {level < 1 ? (
+                <div className={`${styles.row} ${styles.formItem}`}>
+                  <div className={styles.rowLeft}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <span>Proof of Address</span>
+                      <span style={{ paddingTop: 20 }}>Proof of Company</span>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      height: 77,
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Button color="gray">
+                      <span
+                        style={
+                          level > 0 ? { color: "white" } : { color: "grey" }
+                        }
+                      >
+                        Upload
+                      </span>
+                    </Button>
+                    <Button color="gray">
+                      <span
+                        style={
+                          level > 0 ? { color: "white" } : { color: "grey" }
+                        }
+                      >
+                        Upload
+                      </span>
+                    </Button>
                   </div>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 77,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Button color="gray">
-                    <span
-                      style={level > 0 ? { color: "white" } : { color: "grey" }}
-                    >
-                      Upload
-                    </span>
-                  </Button>
-                  <Button color="gray">
-                    <span
-                      style={level > 0 ? { color: "white" } : { color: "grey" }}
-                    >
-                      Upload
-                    </span>
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <>
-                {uploadingFiles.map((item) => {
-                  if (item.level === 1) {
-                    return (
-                      <AddFile
-                        id={item.id}
-                        label={item.label}
-                        declineResponse={declineResponse}
-                        file={item.url}
-                        verify={item.verify}
-                        getData={getData}
-                        setGetData={setGetData}
-                      />
-                    );
-                  }
-                })}
-              </>
-            )}
-          </div>
-
-          <div className={styles.uploadItem}>
-            <div className={`${styles.row} ${styles.rowItem}`}>
-              <div
-                className={styles.rowLeft}
-                style={level > 1 ? { color: "white" } : { color: "grey" }}
-              >
-                Level 3:{" "}
-                {level === 2 ? (
-                  <p style={{ color: "red", paddingLeft: 10 }}>
-                    {declineResponse ? declineResponse : null}
-                  </p>
-                ) : null}
-              </div>
+              ) : (
+                <>
+                  {uploadingFiles.map((item) => {
+                    if (item.level === 1) {
+                      return (
+                        <AddFile
+                          id={item.id}
+                          label={item.label}
+                          declineResponse={declineResponse}
+                          file={item.url}
+                          verify={item.verify}
+                          getData={getData}
+                          setGetData={setGetData}
+                        />
+                      );
+                    }
+                  })}
+                </>
+              )}
             </div>
-            {level < 2 ? (
-              <div className={`${styles.row} ${styles.formItem}`}>
-                <div className={styles.rowLeft}>
-                  <span>Enhanced Diligence</span>
-                </div>
-                <div>
-                  <Button color="gray">
-                    <span
-                      style={level > 1 ? { color: "white" } : { color: "grey" }}
-                    >
-                      Upload
-                    </span>
-                  </Button>
+
+            <div className={styles.uploadItem}>
+              <div className={`${styles.row} ${styles.rowItem}`}>
+                <div
+                  className={styles.rowLeft}
+                  style={level > 1 ? { color: "white" } : { color: "grey" }}
+                >
+                  Level 3:{" "}
+                  {level === 2 ? (
+                    <p style={{ color: "red", paddingLeft: 10 }}>
+                      {declineResponse ? declineResponse : null}
+                    </p>
+                  ) : null}
                 </div>
               </div>
-            ) : (
-              <>
-                {KYCContent.map((item) => {
-                  if (item.level === 2) {
-                    return (
-                      <AddFile
-                        id={item.id}
-                        label={item.label}
-                        declineResponse={declineResponse}
-                        file={item.url}
-                        verify={item.verify}
-                        getData={getData}
-                        setGetData={setGetData}
-                      />
-                    );
-                  }
-                })}
-              </>
-            )}
-          </div>
+              {level < 2 ? (
+                <div className={`${styles.row} ${styles.formItem}`}>
+                  <div className={styles.rowLeft}>
+                    <span>Enhanced Diligence</span>
+                  </div>
+                  <div>
+                    <Button color="gray">
+                      <span
+                        style={
+                          level > 1 ? { color: "white" } : { color: "grey" }
+                        }
+                      >
+                        Upload
+                      </span>
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {KYCContent.map((item) => {
+                    if (item.level === 2) {
+                      return (
+                        <AddFile
+                          id={item.id}
+                          label={item.label}
+                          declineResponse={declineResponse}
+                          file={item.url}
+                          verify={item.verify}
+                          getData={getData}
+                          setGetData={setGetData}
+                        />
+                      );
+                    }
+                  })}
+                </>
+              )}
+            </div>
 
-          <div className={styles.button}>
-            <Button onClick={handleUpload}>Confirm</Button>
+            <div className={styles.button}>
+              <Button onClick={handleUpload}>Confirm</Button>
+            </div>
           </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </>
   );
 };
 
@@ -531,7 +539,7 @@ const AddText = ({
                   updateValue
                 )
               ) : (
-                updateValue
+                text
               )
             ) : uploadValue ? (
               uploadValue.length > 39 ? (

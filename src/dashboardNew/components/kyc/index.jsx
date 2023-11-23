@@ -1,11 +1,5 @@
 import styles from "./kyc.module.css";
-import Header from "../../../dashboard/header/header";
-
-import Search from "../../../assets/icon/search.svg";
 import Correct from "../../../assets/icon/correct.svg";
-
-import ModalOverlay from "../../../dashboard/modal/modalOverlay";
-
 import Download from "../../../assets/icon/download.svg";
 import Button from "../../components/button/button";
 import { useEffect, useState } from "react";
@@ -287,7 +281,7 @@ const Table = ({ data, setData }) => {
               </div>
             </div>
             <div style={{ paddingTop: 20 }}>
-              <Button onClick={() => setCheckModal(false)} color="gray">
+              <Button onClick={() => setCheckModal(false)} color="light">
                 Close
               </Button>
             </div>
@@ -306,18 +300,13 @@ const Table = ({ data, setData }) => {
                   id=""
                   cols="30"
                   rows="10"
-                  placeholder="Some message..."
                 ></textarea>
               </div>
 
               <div className={styles.buttons}>
-                <div
-                  className={styles.button}
-                  onClick={() => setFeedbackModal(false)}
-                  style={{ fontSize: "15px" }}
-                >
-                  Cancel
-                </div>
+                <Button onClick={() => setFeedbackModal(false)} color="light">
+                  Close
+                </Button>
 
                 <Button onClick={() => declineKYC(selectedId)} color="white">
                   Confirm
