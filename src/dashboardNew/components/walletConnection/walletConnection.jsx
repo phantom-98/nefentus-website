@@ -8,6 +8,8 @@ import {
 } from "@thirdweb-dev/react";
 import styles from "./walletConnection.module.css";
 import backendAPI from "../../../api/backendAPI";
+import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
+import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
 
 const WalletConnection = ({
   name,
@@ -16,6 +18,7 @@ const WalletConnection = ({
   connectStatus,
   setConnectStatus,
   index,
+  walletAddress,
 }) => {
   const backend_API = new backendAPI();
 
@@ -52,13 +55,17 @@ const WalletConnection = ({
         });
       }
 
-      registerWallet(wallet.address);
+      registerWallet(wallet.address, name);
     }
   }, [wallet.status, name, setConnectStatus, wallet.address]);
 
-  async function registerWallet(address) {
-    if (address) {
-      const result = await backend_API.registerWalletAddress(address);
+  async function registerWallet(address, name) {
+    if (address && name) {
+      const ConnectedWallet = {
+        address: address,
+        name: name,
+      };
+      const result = await backend_API.registerWalletAddress(ConnectedWallet);
     }
   }
 
@@ -80,18 +87,45 @@ const WalletConnection = ({
     }
   }, [index, name]);
 
+  useEffect(() => {
+    if (walletAddress) {
+      wallet.connect({ walletAddress });
+    }
+  }, [walletAddress]);
+
   return (
     <div className={styles.walletWrap}>
       <div className={styles.walletInfoWrap}>
         <div>
           <div style={{ display: "flex" }}>
-            <img
-              src={icon}
-              style={{ width: "50px", height: "30px" }}
-              alt={`${name}`}
-            />
+            {walletAddress ? (
+              name == "MetaMask" ? (
+                <img
+                  src={MetaMaskLogo}
+                  style={{ width: "50px", height: "30px" }}
+                  alt={`${name}`}
+                />
+              ) : name == "WalletConnect" ? (
+                <img
+                  src={WalletConnectLogo}
+                  style={{ width: "50px", height: "30px" }}
+                  alt={`${name}`}
+                />
+              ) : (
+                <div></div>
+              )
+            ) : (
+              <img
+                src={icon}
+                style={{ width: "50px", height: "30px" }}
+                alt={`${name}`}
+              />
+            )}
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <p style={{ paddingTop: 1, paddingLeft: 5 }}>{name}</p>
+              <p style={{ paddingTop: 1, paddingLeft: 5 }}>
+                {name ? name : null}
+              </p>
+
               {wallet.status == "connected" && (
                 <p style={{ color: "green", paddingLeft: 5 }}>Connected</p>
               )}

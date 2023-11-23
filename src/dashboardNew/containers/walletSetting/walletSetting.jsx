@@ -11,10 +11,9 @@ import {
 } from "@thirdweb-dev/react";
 
 import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
-import WalletConnectLogo from "../../../assets/logo/logo.svg";
+import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
+import NefentusLogo from "../../../assets/logo/logo.svg";
 import WalletConnection from "../../components/walletConnection/walletConnection";
-import SettingsTitle from "../../components/settings/settingsTitle";
-import internal from "stream";
 import useInternalWallet from "../../../hooks/internalWallet";
 
 const WalletSetting = () => {
@@ -27,8 +26,11 @@ const WalletSetting = () => {
     "Wallet Connect": "disconnected",
     Metamask: "disconnected",
   });
+  const [walletAddress, setWalletAddress] = useState(null);
 
-  let internalWalletAddress = useInternalWallet();
+  const CLIENT_ID = "639eea2ebcabed7eab90b56aceeed08b";
+
+  const internalWalletAddress = useInternalWallet();
 
   const wallets = [
     {
@@ -48,6 +50,15 @@ const WalletSetting = () => {
       try {
         const data = await BackandAPI.getWalletAddresses();
         setData(data);
+        if (data) {
+          const lastObject = data[data.length - 1];
+          if (lastObject?.name == "WalletConnect") {
+            setActiveWallet(wallets[0]);
+          }
+          if (lastObject?.name == "MetaMask") {
+            setActiveWallet(wallets[1]);
+          }
+        }
       } catch (error) {
         console.error("Error fetching wallet addresses:", error);
       }
@@ -59,6 +70,7 @@ const WalletSetting = () => {
     setActiveWallet(wallet);
     setIndex(index);
     setDropdownVisible(false);
+    setWalletAddress(null);
   };
 
   const handleMouseEnter = () => {
@@ -70,18 +82,39 @@ const WalletSetting = () => {
   };
 
   return (
-    <>
-      <Card className={styles.card}>
-        <SettingsTitle
-          title="Wallet to receive funds Description"
-          description="Choose the wallet that receives funds when creating an invoice or selling product"
-        />
-        <div onMouseLeave={handleMouseLeave}></div>
-        <div style={{ position: "relative", width: 600 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+      }}
+    >
+      <div className={styles.left}>
+        <span className={styles.title}>
+          Wallet to receive funds Description
+        </span>
+        <span className={styles.description}>
+          Choose the wallet that receives funds when creating an invoice or
+          selling product
+        </span>
+      </div>
+      <div onMouseLeave={handleMouseLeave}>
+        <div style={{ position: "relative" }}>
           <div onMouseEnter={handleMouseEnter}>
-            {activeWallet ? (
+            {walletAddress ? (
               <ThirdwebProvider
-                clientId="639eea2ebcabed7eab90b56aceeed08b"
+                clientId={CLIENT_ID}
+                // supportedWallets={[activeWallet.connect]}
+              >
+                <WalletConnection
+                  ChoiceWallet={walletAddress}
+                  walletAddress={walletAddress.address}
+                  name={walletAddress.name}
+                />
+              </ThirdwebProvider>
+            ) : activeWallet ? (
+              <ThirdwebProvider
+                clientId={CLIENT_ID}
                 supportedWallets={[activeWallet.connect]}
               >
                 <WalletConnection
@@ -95,26 +128,78 @@ const WalletSetting = () => {
               </ThirdwebProvider>
             ) : (
               <div
-                style={{ paddingTop: 20, paddingLeft: 10, fontSize: "1.4rem" }}
+                style={{
+                  paddingTop: 20,
+                  paddingLeft: 10,
+                  display: "flex",
+                  flexDirection: "row",
+                }}
               >
-                <span>Wallet:</span>
-                <span style={{ paddingLeft: 10 }}>{internalWalletAddress}</span>
+                <div>
+                  <img
+                    src={NefentusLogo}
+                    style={{ width: "50px", height: "30px" }}
+                    alt=""
+                  />
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <span>Nefentus</span>
+                  <p style={{ color: "green" }}>connected</p>
+                </div>
+
+                <div style={{ display: "flex", paddingTop: 2 }}>
+                  <span style={{ paddingLeft: 10, fontSize: "1.4rem" }}>
+                    Wallet:
+                  </span>
+                  <span style={{ paddingLeft: 10, fontSize: "1.4rem" }}>
+                    {internalWalletAddress || "Not available"}
+                  </span>
+                </div>
               </div>
             )}
           </div>
           <div
             style={{
               position: "absolute",
-              width: 200,
+              width: 400,
               zIndex: 5,
-              top: "40px",
-              left: "10px",
+              top: "55px",
+              right: "20px",
             }}
-            onMouseLeave={handleMouseLeave}
           >
             {dropdownVisible && (
               <div>
                 <Card>
+                  {data ? (
+                    <div style={{ paddingBottom: 20 }}>
+                      <p>Actual wallets</p>
+                      {data.map((address, i) => {
+                        if (address.internal == false) {
+                          return (
+                            <div
+                              key={i}
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                paddingTop: 5,
+                              }}
+                              onClick={() => setWalletAddress(address)}
+                            >
+                              <div style={{ paddingTop: 8, display: "flex" }}>
+                                <p>
+                                  {address.name ? address.name : "Nefentus"}:
+                                </p>
+                                <p style={{ paddingLeft: 10 }}>
+                                  {address.address}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        }
+                      })}
+                    </div>
+                  ) : null}
                   {wallets.map((wallet, index) => {
                     return (
                       <div
@@ -126,7 +211,7 @@ const WalletSetting = () => {
                         }}
                         onClick={() => handleWalletClick(wallet, index)}
                       >
-                        <div>
+                        <div style={{ width: 55 }}>
                           <img
                             src={wallet.icon}
                             style={{ width: "50px", height: "30px" }}
@@ -145,8 +230,8 @@ const WalletSetting = () => {
             )}
           </div>
         </div>
-      </Card>
-    </>
+      </div>
+    </div>
   );
 };
 

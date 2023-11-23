@@ -1,14 +1,15 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MessageComponent from "../../../components/message";
 import backend_API from "../../../api/backendAPI";
 import { MessageContext } from "../../../context/message/index";
 import styles from "./settings.module.css";
-import CheckBox from "../../../assets/icon/whiteCheckmark.svg";
 import Card from "../card/card";
 import WalletSetting from "../../containers/walletSetting/walletSetting";
 import Button from "../button/button";
 import { EditPopup } from "../settings/settingsItem";
 import SettingsTitle from "../settings/settingsTitle";
+import Fail from "../../../assets/icon/fail.svg";
+import Correct from "../../../assets/icon/correct.svg";
 
 const InvoicesBody = () => {
   const [vatNumber, setVatNumber] = useState(localStorage.getItem("vatNumber"));
@@ -35,6 +36,10 @@ const InvoicesBody = () => {
     setErrorMessage(null);
   };
 
+  useEffect(() => {
+    handleConfirm();
+  }, [vatNumber, sendInvoice]);
+
   return (
     <div className={styles.tabContent}>
       <MessageComponent />
@@ -55,12 +60,9 @@ const InvoicesBody = () => {
           <div style={{ paddingTop: 5 }}>
             <span style={{ fontSize: "1.6rem" }}>VAT Number</span>
           </div>
+          <div className={styles.value}>{vatNumber ? vatNumber : " "}</div>
           <div>
-            <Button
-              color="gray"
-              style={{ width: 100, marginRight: 10 }}
-              onClick={() => setShowPopup(true)}
-            >
+            <Button color="gray" onClick={() => setShowPopup(true)}>
               Add
             </Button>
           </div>
@@ -72,25 +74,40 @@ const InvoicesBody = () => {
           setValue={setVatNumber}
         />
         <div className={styles.input}>
-          <p style={{ fontSize: "1.6rem" }}>Send invoices</p>
-          <div
-            onClick={() => setSendInvoice((prev) => !prev)}
-            className={styles.checkBox}
-          >
-            {sendInvoice && <img src={CheckBox} alt="checkbox" />}
+          <div>
+            <p style={{ fontSize: "1.6rem" }}>Send invoices</p>
+          </div>
+          <div>
+            <EnableType value={sendInvoice} />
+          </div>
+          <div>
+            <Button
+              color="gray"
+              onClick={() => {
+                setSendInvoice((prev) => !prev);
+              }}
+            >
+              Enable
+            </Button>
           </div>
         </div>
-        <div style={{ display: "flex", justifyContent: "end", paddingTop: 20 }}>
-          <Button style={{ width: 100 }} onClick={handleConfirm}>
-            <p style={{ fontSize: "1rem" }}>Confirm</p>
-          </Button>
+        <div style={{ paddingTop: 20 }}>
+          <WalletSetting />
         </div>
       </Card>
-      <div>
-        <WalletSetting />
-      </div>
+      <div></div>
     </div>
   );
 };
 
 export default InvoicesBody;
+
+export const EnableType = ({ value }) => {
+  return (
+    <div className={styles.enableWrapper}>
+      <img className={styles.enableIcon} src={value ? Correct : Fail} alt="" />
+
+      <div className={styles.text}>{value ? "On" : "Off"}</div>
+    </div>
+  );
+};

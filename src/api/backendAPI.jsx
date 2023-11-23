@@ -1111,19 +1111,21 @@ export default class backendAPI {
     }
   }
 
-  async registerWalletAddress(address) {
+  async registerWalletAddress(ConnectedWallet) {
     try {
-      const url = `${this.baseURL}/wallet/address/${address}`;
+      const url = `${this.baseURL}/wallet/address`;
       let headers = {};
       if (this.token) {
         headers = {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
         };
       }
 
       const options = {
-        method: "GET",
+        method: "POST",
         headers: headers,
+        body: JSON.stringify(ConnectedWallet),
       };
       const response = await fetch(url, options);
       if (!response.ok) {
