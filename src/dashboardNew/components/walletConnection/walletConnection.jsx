@@ -111,31 +111,31 @@ const WalletConnection = ({
             <div className={styles.walletAddressTitle}>
               <span> Wallet address: </span>
             </div>
-
-            {walletAddress ? (
-              name == "MetaMask" ? (
-                <img
-                  src={MetaMaskLogo}
-                  style={{ width: "50px", height: "30px" }}
-                  alt={`${name}`}
-                />
-              ) : name == "WalletConnect" ? (
-                <img
-                  src={WalletConnectLogo}
-                  style={{ width: "50px", height: "30px" }}
-                  alt={`${name}`}
-                />
+            <div style={{ paddingLeft: 5 }}>
+              {walletAddress ? (
+                name == "MetaMask" ? (
+                  <img
+                    src={MetaMaskLogo}
+                    style={{ width: "50px", height: "30px" }}
+                    alt={`${name}`}
+                  />
+                ) : name == "WalletConnect" ? (
+                  <img
+                    src={WalletConnectLogo}
+                    style={{ width: "30px", height: "30px" }}
+                    alt={`${name}`}
+                  />
+                ) : (
+                  <div></div>
+                )
               ) : (
-                <div></div>
-              )
-            ) : (
-              <img
-                src={icon}
-                style={{ width: "50px", height: "30px" }}
-                alt={`${name}`}
-              />
-            )}
-
+                <img
+                  src={icon}
+                  style={{ width: "30px", height: "30px" }}
+                  alt={`${name}`}
+                />
+              )}
+            </div>
             {wallet.address && (
               <div>
                 <div className={styles.walletAddress}>

@@ -215,7 +215,7 @@ const WalletSetting = () => {
           <div
             style={{
               position: "absolute",
-              width: 400,
+              width: 450,
               zIndex: 5,
               top: "55px",
               right: "20px",
@@ -235,7 +235,7 @@ const WalletSetting = () => {
                             style={{
                               display: "flex",
                               flexDirection: "row",
-                              paddingTop: 5,
+                              paddingTop: 4,
                             }}
                             onClick={() => getWalletAddress(address)}
                           >
@@ -244,7 +244,7 @@ const WalletSetting = () => {
                                 <div>
                                   <img
                                     src={WalletConnectLogo}
-                                    style={{ width: "50px", height: "30px" }}
+                                    style={{ width: "10px", height: "10px" }}
                                     alt=""
                                   />
                                 </div>
@@ -291,7 +291,7 @@ const WalletSetting = () => {
                         <div style={{ width: 55 }}>
                           <img
                             src={wallet.icon}
-                            style={{ width: "50px", height: "30px" }}
+                            style={{ width: "30px", height: "30px" }}
                             alt=""
                           />
                         </div>
