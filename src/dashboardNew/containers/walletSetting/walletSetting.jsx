@@ -183,14 +183,6 @@ const WalletSetting = () => {
                   flexDirection: "row",
                 }}
               >
-                <div>
-                  <img
-                    src={NefentusLogo}
-                    style={{ width: "50px", height: "30px" }}
-                    alt=""
-                  />
-                </div>
-
                 <div style={{ display: "flex", paddingTop: 2 }}>
                   <div
                     style={{
