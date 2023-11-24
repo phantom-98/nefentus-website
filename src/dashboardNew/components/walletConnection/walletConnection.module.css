@@ -34,7 +34,7 @@
 .walletAddressTitle,
 .walletBalanceTitle {
   font-size: 1.4rem;
-  width: 22rem;
+  /* width: 22rem; */
   padding-left: 20px;
   padding-top: 5px;
 }
@@ -47,6 +47,8 @@
 
 .walletAddress,
 .walletBalance {
+  font-size: 1.4rem;
+  padding-top: 5px;
   color: var(--gray-color);
 }
 
