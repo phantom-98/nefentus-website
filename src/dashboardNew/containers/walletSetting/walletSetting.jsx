@@ -119,11 +119,6 @@ const WalletSetting = () => {
                     flexDirection: "row",
                   }}
                 >
-                  {/* <div style={{ display: "flex", flexDirection: "column" }}>
-                  <span>Nefentus</span>
-                  <p style={{ color: "green" }}>connected</p>
-                </div> */}
-
                   <div style={{ display: "flex", paddingTop: 2 }}>
                     <div
                       style={{
@@ -158,9 +153,10 @@ const WalletSetting = () => {
                   // supportedWallets={[activeWallet.connect]}
                 >
                   <WalletConnection
-                    ChoiceWallet={walletAddress}
                     walletAddress={walletAddress.address}
                     name={walletAddress.name}
+                    walletConnect={walletConnect}
+                    metamaskWallet={metamaskWallet}
                   />
                 </ThirdwebProvider>
               )
@@ -187,12 +183,6 @@ const WalletSetting = () => {
                   flexDirection: "row",
                 }}
               >
-                {/* 
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <span>Nefentus</span>
-                  <p style={{ color: "green" }}>connected</p>
-                </div> */}
-
                 <div>
                   <img
                     src={NefentusLogo}
@@ -202,12 +192,31 @@ const WalletSetting = () => {
                 </div>
 
                 <div style={{ display: "flex", paddingTop: 2 }}>
-                  <span style={{ paddingLeft: 10, fontSize: "1.4rem" }}>
+                  <div
+                    style={{
+                      paddingLeft: 10,
+                      paddingTop: 5,
+                      fontSize: "1.4rem",
+                    }}
+                  >
                     Wallet:
-                  </span>
-                  <span style={{ paddingLeft: 10, fontSize: "1.4rem" }}>
+                  </div>
+                  <div>
+                    <img
+                      src={NefentusLogo}
+                      style={{ width: "50px", height: "30px" }}
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    style={{
+                      paddingLeft: 5,
+                      paddingTop: 5,
+                      fontSize: "1.4rem",
+                    }}
+                  >
                     {internalWalletAddress || "Not available"}
-                  </span>
+                  </div>
                 </div>
               </div>
             )}

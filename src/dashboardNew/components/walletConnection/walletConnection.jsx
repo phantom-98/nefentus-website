@@ -19,6 +19,8 @@ const WalletConnection = ({
   setConnectStatus,
   index,
   walletAddress,
+  walletConnect,
+  metamaskWallet,
 }) => {
   const backend_API = new backendAPI();
 
@@ -57,7 +59,7 @@ const WalletConnection = ({
 
       registerWallet(wallet.address, name);
     }
-  }, [wallet.status, name, setConnectStatus, wallet.address]);
+  }, [wallet.address]);
 
   async function registerWallet(address, name) {
     if (address && name) {
@@ -89,7 +91,17 @@ const WalletConnection = ({
 
   useEffect(() => {
     if (walletAddress) {
-      wallet.connect({ walletAddress });
+      if (name == "WalletConnect") {
+        wallet.connect(walletConnect());
+      } else {
+        wallet.disconnect();
+      }
+
+      if (name == "MetaMask") {
+        wallet.connect(metamaskWallet());
+      } else {
+        wallet.disconnect();
+      }
     }
   }, [walletAddress]);
 
@@ -98,16 +110,6 @@ const WalletConnection = ({
       <div className={styles.walletInfoWrap}>
         <div>
           <div style={{ display: "flex" }}>
-            {/* <div style={{ display: "flex", flexDirection: "column" }}>
-              <p style={{ paddingTop: 1, paddingLeft: 5 }}>
-                {name ? name : null}
-              </p>
-
-              {wallet.status == "connected" && (
-                <p style={{ color: "green", paddingLeft: 5 }}>Connected</p>
-              )}
-            </div> */}
-
             <div className={styles.walletAddressTitle}>
               <span> Wallet address: </span>
             </div>
