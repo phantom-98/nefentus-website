@@ -67,7 +67,9 @@ const WalletConnection = ({
         address: address,
         name: name,
       };
-      const result = await backend_API.registerWalletAddress(ConnectedWallet);
+      if (name !== null) {
+        const result = await backend_API.registerWalletAddress(ConnectedWallet);
+      }
     }
   }
 
@@ -110,9 +112,6 @@ const WalletConnection = ({
       <div className={styles.walletInfoWrap}>
         <div>
           <div style={{ display: "flex" }}>
-            <div className={styles.walletAddressTitle}>
-              <span> Wallet address: </span>
-            </div>
             <div style={{ paddingLeft: 5 }}>
               {walletAddress ? (
                 name == "MetaMask" ? (
@@ -143,8 +142,8 @@ const WalletConnection = ({
                 <div className={styles.walletAddress}>
                   {`${wallet.address.substring(
                     0,
-                    5,
-                  )}...${wallet.address.substring(wallet.address.length - 5)}`}
+                    10,
+                  )}...${wallet.address.substring(wallet.address.length - 10)}`}
                 </div>
               </div>
             )}

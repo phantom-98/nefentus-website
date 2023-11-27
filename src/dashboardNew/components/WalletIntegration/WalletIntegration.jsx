@@ -30,9 +30,8 @@ const WalletIntegration = ({
 
   useEffect(() => {
     if (
-      (name === "Metamask" &&
-        connectStatus["Wallet Connect"] === "connected") ||
-      (name === "Wallet Connect" && connectStatus["Metamask"] === "connected")
+      (name === "MetaMask" && connectStatus["WalletConnect"] === "connected") ||
+      (name === "WalletConnect" && connectStatus["MetaMask"] === "connected")
     ) {
       wallet.disconnect();
     }
@@ -40,15 +39,15 @@ const WalletIntegration = ({
 
   useEffect(() => {
     if (wallet.status === "connected") {
-      if (name === "Wallet Connect") {
+      if (name === "WalletConnect") {
         setConnectStatus({
-          "Wallet Connect": "connected",
+          WalletConnect: "connected",
           Metamask: "disconnected",
         });
-      } else if (name === "Metamask") {
+      } else if (name === "MetaMask") {
         setConnectStatus({
           Metamask: "connected",
-          "Wallet Connect": "disconnected",
+          WalletConnect: "disconnected",
         });
       }
 
@@ -58,7 +57,13 @@ const WalletIntegration = ({
 
   async function registerWallet(address) {
     if (address) {
-      const result = await backend_API.registerWalletAddress(address);
+      const ConnectedWallet = {
+        address: address,
+        name: name,
+      };
+      if (name !== null) {
+        const result = await backend_API.registerWalletAddress(ConnectedWallet);
+      }
     }
   }
 
@@ -71,7 +76,7 @@ const WalletIntegration = ({
         <div className={styles.walletTitle}>{name}</div>
         {wallet.address && (
           <div className={styles.walletAddressTitle}>
-            Wallet address:{" "}
+            Wallet address:
             <span className={styles.walletAddress}>
               {`${wallet.address.substring(0, 5)}...${wallet.address.substring(
                 wallet.address.length - 5,

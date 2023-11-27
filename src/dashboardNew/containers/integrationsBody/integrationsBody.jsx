@@ -16,12 +16,12 @@ const IntegrationsBody = () => {
     {
       connect: walletConnect(),
       icon: WalletConnectLogo,
-      name: "Wallet Connect",
+      name: "WalletConnect",
     },
     {
       connect: metamaskWallet(),
       icon: MetaMaskLogo,
-      name: "Metamask",
+      name: "MetaMask",
     },
   ];
 
