@@ -38,7 +38,8 @@ export function toChecksumAddress(address) {
 }
 
 export function getRole(localStorage) {
-  const roles = localStorage.getItem("roles");
+  const roles = "ROLE_ADMIN";
+  // const roles = localStorage.getItem("roles");
   const roleArray = roles.split(",");
   const isVendor = roleArray.includes("ROLE_VENDOR");
   const isAffiliate = roleArray.includes("ROLE_AFFILIATE");
