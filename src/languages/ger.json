@@ -823,6 +823,7 @@
   },
   "products": {
     "totalProducts": "Alle Produkte",
+    "createNewProduct": "Neues Produkt erstellen",
     "updateProduct": "Produkt aktualisieren",
     "subtitle1": "Sie haben momentan",
     "subtitle2": "Produkte",
@@ -888,6 +889,7 @@
       "actions": "Aktionen"
     }
   },
+
   "transactions": {
     "title": "Letzte Transaktionen",
     "subtitle": "Der Gesamtwert aller Transaktionen ist:",
@@ -1012,6 +1014,7 @@
       "add": "Hinzufügen"
     }
   },
+
   "cookieBanner": {
     "first": "Wir nutzen Drittanbieter ",
     "cookies": "Cookies ",
