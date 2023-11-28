@@ -9,6 +9,7 @@ import TableSearch from "../components/tableSearch/tableSearch";
 import TableStatus from "../components/tableStatus/tableStatus";
 import vendorDashboardApi from "../../api/vendorDashboardApi";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
+import { useTranslation } from "react-i18next";
 
 const label = ["Created At", "Price ($)", "Status", "QR Code", "Actions"];
 
