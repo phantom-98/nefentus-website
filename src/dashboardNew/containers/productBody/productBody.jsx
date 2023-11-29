@@ -189,6 +189,7 @@ const ProductBody = () => {
       <div>
         <Popup
           show={openModal}
+          title={t("products.createProductModal.createProduct")}
           onClose={() => {
             clearMessages();
             setOpenModal(false);
@@ -201,11 +202,11 @@ const ProductBody = () => {
           }
         >
           <div className={styles.modal}>
-            <h4>
+            {/* <h4>
               {openModal === "add"
                 ? t("products.createProductModal.createProduct")
                 : t("products.createProductModal.updateProduct")}
-            </h4>
+            </h4> */}
             <MessageComponent />
             <div className={styles.modalInputs}>
               <Attachment
