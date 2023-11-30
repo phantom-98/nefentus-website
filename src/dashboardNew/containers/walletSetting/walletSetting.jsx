@@ -100,11 +100,11 @@ const WalletSetting = () => {
   };
 
   const truncateWalletAddress = (address, symbolCount) => {
-    if (!address || address.length <= 10) {
+    if (!address || address.length <= 5) {
       return address;
     }
 
-    const start = address.substring(0, symbolCount);
+    const start = address.substring(0, symbolCount + 2);
     const end = address.substring(address.length - symbolCount);
     return `${start}...${end}`;
   };
@@ -252,7 +252,9 @@ const WalletSetting = () => {
                   <div>
                     {data ? (
                       <div style={{ paddingBottom: 20 }}>
-                        <p>Actual wallets</p>
+                        <span className={styles.dialogSubtitle}>
+                          Connected wallets
+                        </span>
 
                         {data.map((address, i) => {
                           return (
@@ -281,7 +283,7 @@ const WalletSetting = () => {
                                   <div>
                                     <img
                                       src={WalletConnectLogo}
-                                      style={{ width: "10px", height: "10px" }}
+                                      style={{ width: "14px", height: "14px" }}
                                       alt=""
                                     />
                                   </div>
@@ -289,7 +291,7 @@ const WalletSetting = () => {
                                   <div>
                                     <img
                                       src={MetaMaskLogo}
-                                      style={{ width: "10px", height: "10px" }}
+                                      style={{ width: "14px", height: "14px" }}
                                       alt=""
                                     />
                                   </div>
@@ -297,7 +299,7 @@ const WalletSetting = () => {
                                   <div>
                                     <img
                                       src={NefentusLogo}
-                                      style={{ width: "10px", height: "10px" }}
+                                      style={{ width: "14px", height: "14px" }}
                                       alt=""
                                     />
                                   </div>
@@ -309,12 +311,13 @@ const WalletSetting = () => {
                                   paddingBottom: 4,
                                   display: "flex",
                                 }}
+                                className={styles.dialogDescription}
                               >
                                 <p>
                                   {address.name ? address.name : "Nefentus"}:
                                 </p>
                                 <p style={{ paddingLeft: 10, paddingRight: 5 }}>
-                                  {truncateWalletAddress(address.address, 12)}
+                                  {truncateWalletAddress(address.address, 4)}
                                 </p>
                               </div>
                             </div>
@@ -322,44 +325,53 @@ const WalletSetting = () => {
                         })}
                       </div>
                     ) : null}
-                    {wallets.map((wallet, index) => {
-                      return (
-                        <div
-                          key={index}
-                          style={
-                            index === isActivePopup
-                              ? {
-                                  display: "flex",
-                                  flexDirection: "row",
-                                  width: "100%",
-                                  paddingTop: 5,
-                                  backgroundColor: "rgba(255, 255, 255, 0.08)",
-                                  opacity: 1,
-                                  borderRadius: 5,
-                                }
-                              : {
-                                  display: "flex",
-                                  flexDirection: "row",
-                                  width: "100%",
-                                  paddingTop: 5,
-                                }
-                          }
-                          onClick={() => handleWalletClick(wallet, index)}
-                        >
-                          <div style={{ width: 55, paddingLeft: 10 }}>
-                            <img
-                              src={wallet.icon}
-                              style={{ width: "30px", height: "30px" }}
-                              alt=""
-                            />
+                    <div>
+                      <span className={styles.dialogSubtitle}>
+                        Connect new wallets
+                      </span>
+                      {wallets.map((wallet, index) => {
+                        return (
+                          <div
+                            key={index}
+                            style={
+                              index === isActivePopup
+                                ? {
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    width: "100%",
+                                    paddingTop: 5,
+                                    backgroundColor:
+                                      "rgba(255, 255, 255, 0.08)",
+                                    opacity: 1,
+                                    borderRadius: 5,
+                                  }
+                                : {
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    width: "100%",
+                                    paddingTop: 5,
+                                  }
+                            }
+                            onClick={() => handleWalletClick(wallet, index)}
+                          >
+                            <div style={{ width: 55, paddingLeft: 10 }}>
+                              <img
+                                src={wallet.icon}
+                                style={{ width: "30px", height: "30px" }}
+                                alt=""
+                              />
+                            </div>
+                            <div
+                              style={{ paddingTop: 7 }}
+                              className={styles.dialogDescription}
+                            >
+                              <p>{wallet.name}</p>
+                              <span>{wallet.connectStatus}</span>
+                            </div>
                           </div>
-                          <div style={{ paddingTop: 8 }}>
-                            <p>{wallet.name}</p>
-                            <span>{wallet.connectStatus}</span>
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </Popup>

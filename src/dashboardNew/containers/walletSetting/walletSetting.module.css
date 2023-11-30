@@ -53,3 +53,11 @@
   font-size: 1.4rem;
   padding-top: 3px;
 }
+
+.dialogSubtitle {
+  font-size: 1.6rem;
+}
+
+.dialogDescription {
+  font-size: 1.2rem;
+}
