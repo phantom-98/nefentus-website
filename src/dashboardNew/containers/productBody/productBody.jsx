@@ -201,13 +201,13 @@ const ProductBody = () => {
             openModal === "add" ? t("general.add") : t("general.update")
           }
         >
+          <MessageComponent />
           <div className={styles.modal}>
             {/* <h4>
               {openModal === "add"
                 ? t("products.createProductModal.createProduct")
                 : t("products.createProductModal.updateProduct")}
             </h4> */}
-            <MessageComponent />
             <div className={styles.modalInputs}>
               <Attachment
                 label={t("products.createProductModal.imageLabel")}
