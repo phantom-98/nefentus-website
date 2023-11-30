@@ -57,10 +57,12 @@ const InvoicesBody = () => {
             paddingTop: 20,
           }}
         >
-          <div style={{ paddingTop: 5 }}>
+          <div style={{ paddingTop: 5 }} className={styles.left}>
             <span style={{ fontSize: "1.6rem" }}>VAT Number</span>
           </div>
-          <div className={styles.value}>{vatNumber ? vatNumber : " "}</div>
+          <div className={styles.right}>
+            <span className={styles.value}>{vatNumber ? vatNumber : " "}</span>
+          </div>
           <div>
             <Button color="gray" onClick={() => setShowPopup(true)}>
               Add
@@ -74,10 +76,10 @@ const InvoicesBody = () => {
           setValue={setVatNumber}
         />
         <div className={styles.input}>
-          <div>
+          <div className={styles.left}>
             <p style={{ fontSize: "1.6rem" }}>Send invoices</p>
           </div>
-          <div>
+          <div className={styles.right}>
             <EnableType value={sendInvoice} />
           </div>
           <div>

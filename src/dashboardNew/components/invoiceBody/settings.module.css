@@ -44,3 +44,23 @@
   align-items: center;
   gap: 1rem;
 }
+
+.enableIcon {
+  height: 2rem;
+}
+
+.text {
+  opacity: 0.6;
+  font-size: 1.4rem;
+  padding-top: 3px;
+}
+
+.left {
+  width: 45rem;
+}
+
+.right {
+  display: flex;
+  align-items: flex-start;
+  width: 30%;
+}

@@ -126,13 +126,12 @@ const WalletSetting = () => {
           selling product
         </span>
       </div>
-      <div>
+      <div className={styles.right}>
         {walletAddress ? (
           walletAddress.name == null ? (
             <div
               style={{
                 paddingTop: 20,
-                paddingLeft: 10,
                 display: "flex",
                 flexDirection: "row",
               }}
@@ -145,15 +144,9 @@ const WalletSetting = () => {
                     alt=""
                   />
                 </div>
-                <div
-                  style={{
-                    paddingLeft: 5,
-                    paddingTop: 5,
-                    fontSize: "1.4rem",
-                  }}
-                >
+                <span className={styles.text}>
                   {internalWalletAddress || "Not available"}
-                </div>
+                </span>
               </div>
             </div>
           ) : showLoadingWallet ? (
