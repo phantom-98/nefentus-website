@@ -1,4 +1,5 @@
 import IdentificationBody from "../containers/identificationBody/identificationBody";
+import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 
 const IdentificationDashboard = () => {
   return (
