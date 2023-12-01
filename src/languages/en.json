@@ -1006,11 +1006,11 @@
       "labelPassword": "One-time passwords via email",
       "descriptionPassword": "Setup Multi-Factor-Authentication based on one-time password sent via email.",
       "labelCode": "Anti-Phishing Code",
-      "descriptionCode": "Protect your account from phishing attempts and ensure that your notification emails are from Nefentus only."
+      "descriptionCode": "Protect your account from phishing attempts. The anti-phishing code is added to every email received from Nefentus. If you see this code, the email is from Nefentus."
     },
     "settings": {
       "title": "Security",
-      "description": "Be safe and set multiple way to secure your account"
+      "description": "Secure your account by setting additional security settings"
     },
     "antiPhishingCodeTitle": "Enter Anti-Phishing code:",
     "antiPhishingCodePlaceholder": "Enter anti-phishing code",

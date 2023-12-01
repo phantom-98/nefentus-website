@@ -923,16 +923,16 @@
     "items": {
       "loginLabel": "Login-Passwort",
       "loginDescription": "Das Login-Passwort wird verwendet, um sich in Ihrem Konto anzumelden.",
-      "labelAuthentication": "Authentifikator-App",
+      "labelAuthentication": "Authentikator-App",
       "descriptionAuthentication": "Richten Sie die Multi-Faktor-Authentifizierung mit Google Authenticator, Authy, Lastpass oder Ähnlichem ein.",
       "labelPassword": "Einmal-Passwörter per E-Mail",
       "descriptionPassword": "Richten Sie die Multi-Faktor-Authentifizierung basierend auf Einmal-Passwörtern ein, die per E-Mail gesendet werden.",
-      "labelCode": "Anti-Phishing-Code",
-      "descriptionCode": "Schützen Sie Ihr Konto vor Phishing-Versuchen und stellen Sie sicher, dass Ihre Benachrichtigungs-E-Mails nur von Nefentus stammen."
+      "labelCode": "Anti-Phishing Code",
+      "descriptionCode": "Schützen Sie Ihr Konto vor Phishing-Versuchen. Der Code wird in jeder Email von Nefentus eingefügt. Wenn Sie den Code in einer Email sehen, ist diese von Nefentus."
     },
     "settings": {
       "title": "Sicherheit",
-      "description": "Seien Sie sicher und richten Sie mehrere Möglichkeiten ein, um Ihr Konto zu sichern"
+      "description": "Sichern Sie Ihr Konto mit zusätzlichen Sicherheitsmaßnahmen"
     },
     "antiPhishingCodeTitle": "Anti-Phishing-Code eingeben:",
     "antiPhishingCodePlaceholder": "Anti-Phishing-Code eingeben",
