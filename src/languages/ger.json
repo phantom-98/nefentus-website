@@ -342,7 +342,7 @@
     "contentLabel2": "Aktion",
     "content": [
       {
-        "text": "Heim",
+        "text": "Home",
         "link": "/"
       },
       {
@@ -363,12 +363,18 @@
       }
     ],
     "content2": [
-      { "text": "Play Store", "link": "/" },
+      {
+        "text": "Play Store",
+        "link": "/"
+      },
       {
         "text": "Anmelden",
         "link": "/link"
       },
-      { "text": "App Store", "link": "/" },
+      {
+        "text": "App Store",
+        "link": "/"
+      },
       {
         "text": "Anmeldung",
         "link": "/signup"

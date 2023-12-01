@@ -425,12 +425,18 @@
       }
     ],
     "content2": [
-      { "text": "Play Store", "link": "/" },
+      {
+        "text": "Play Store",
+        "link": "/"
+      },
       {
         "text": "Sign In",
         "link": "/link"
       },
-      { "text": "App Store", "link": "/" },
+      {
+        "text": "App Store",
+        "link": "/"
+      },
       {
         "text": "Sign Up",
         "link": "/signup"
