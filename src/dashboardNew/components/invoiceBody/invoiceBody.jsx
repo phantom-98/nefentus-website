@@ -5,6 +5,7 @@ import { MessageContext } from "../../../context/message/index";
 import styles from "./settings.module.css";
 import Card from "../card/card";
 import WalletSetting from "../../containers/walletSetting/walletSetting";
+import StablecoinSetting from "../../containers/stablecoinSetting/stablecoinSetting";
 import Button from "../button/button";
 import { EditPopup } from "../settings/settingsItem";
 import SettingsTitle from "../settings/settingsTitle";
@@ -95,6 +96,9 @@ const InvoicesBody = () => {
         </div>
         <div style={{ paddingTop: 20 }}>
           <WalletSetting />
+        </div>
+        <div style={{ paddingTop: 20 }}>
+          <StablecoinSetting />
         </div>
       </Card>
       <div></div>
