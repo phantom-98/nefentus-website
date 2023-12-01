@@ -1152,6 +1152,31 @@ export default class backendAPI {
     }
   }
 
+  async getFees(userId) {
+    try {
+      const url = `${this.baseURL}/hierarchy/${userId}`;
+      let headers = {};
+      if (this.token) {
+        headers = {
+          Authorization: `Bearer ${this.token}`,
+        };
+      }
+
+      const options = {
+        method: "GET",
+        headers: headers,
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async setTransactionInfo(transactionInfo, buyerAddress, productOrInvoiceId) {
     try {
       const url = `${this.baseURL}/transaction`;

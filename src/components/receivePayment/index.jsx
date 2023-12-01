@@ -83,14 +83,18 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
 
     // Currently not used because it is always paid in Ethereum
     const currency = currencies[currencyIdx];
+    const currencyAddress = currency.address;
     const stablecoinAddress = currencies[1].address;
     const quantity = 1;
 
     if (providerSource === "metamask") {
       const web3API = new web3Api(providerSource);
 
-      const hierarchy = await backend_API.getHierarchy(userId);
-      console.log(hierarchy);
+      const [hierarchy, fees] = await Promise.all([
+        backend_API.getHierarchy(userId),
+        backend_API.getFees(userId),
+      ]);
+      console.log(fees);
 
       const transactionInfo = await web3API.callDepositContract(
         nullToZeroAddress(hierarchy.sellerAddress),
@@ -98,8 +102,11 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
         nullToZeroAddress(hierarchy.brokerAddress),
         nullToZeroAddress(hierarchy.seniorBrokerAddress),
         nullToZeroAddress(hierarchy.leaderAddress),
+        currencyAddress,
         stablecoinAddress,
         priceUSD,
+        fees?.serviceFee,
+        fees?.remainingFeeFree,
       );
 
       if (transactionInfo) {
@@ -124,7 +131,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
       }
     } else if (providerSource === "internal") {
       const ret = await backend_API.makePayment(
-        null,
+        currencyAddress,
         priceUSD,
         quantity,
         password,

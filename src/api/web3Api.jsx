@@ -190,8 +190,11 @@ export class web3Api {
     brokerAddress,
     seniorBrokerAddress,
     leaderAddress,
+    currencyAddress,
     stablecoinAddress,
     price,
+    serviceFee,
+    feeFree,
   ) {
     // Get min amount out
     const uniswap = new uniswapApi();
@@ -219,18 +222,37 @@ export class web3Api {
     );
 
     const timestampSent = Date.now();
-    const txRequest = await contract.deposit(
-      sellerAddress,
-      affiliateAddress,
-      brokerAddress,
-      seniorBrokerAddress,
-      leaderAddress,
-      stablecoinAddress,
-      minAmountOut,
-      POOL_FEES,
-      { value: amountInInt },
-    );
-
+    let txRequest;
+    if (currencyAddress === null) {
+      txRequest = await contract.deposit(
+        sellerAddress,
+        affiliateAddress,
+        brokerAddress,
+        seniorBrokerAddress,
+        leaderAddress,
+        stablecoinAddress,
+        minAmountOut,
+        POOL_FEES,
+        serviceFee,
+        feeFree,
+        { value: amountInInt },
+      );
+    } else {
+      txRequest = await contract.depositToken(
+        sellerAddress,
+        affiliateAddress,
+        brokerAddress,
+        seniorBrokerAddress,
+        leaderAddress,
+        currencyAddress,
+        stablecoinAddress,
+        amountInInt,
+        minAmountOut,
+        POOL_FEES,
+        serviceFee,
+        feeFree,
+      );
+    }
     const txReceipt = await txRequest.wait();
 
     const timestampMined = Date.now();
@@ -250,8 +272,10 @@ export class web3Api {
       toChecksumAddress(seniorBrokerAddress),
     );
     info.leaderAddress = zeroAddressToNull(toChecksumAddress(leaderAddress));
-    info.currencyAddress = null;
+    info.currencyAddress = currencyAddress;
     info.stablecoinAddress = toChecksumAddress(stablecoinAddress);
+    this.serviceFee = serviceFee;
+    this.feeFree = feeFree;
     info.transactionHash = txReceipt.transactionHash;
     return info;
   }

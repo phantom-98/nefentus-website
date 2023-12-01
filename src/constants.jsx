@@ -20,12 +20,16 @@ export const ROLE_TO_NAME = {
   admin: "Admin",
 };
 
+export const currencyToWrapped = {
+  ETH: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+};
+
 export const currencies = [
   {
     icon: Ethereum,
     name: "Ethereum",
     abbr: "ETH",
-    address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    address: null,
     decimals: 18,
   },
   {
