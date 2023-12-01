@@ -269,7 +269,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/dashboar/security"
+                  path="/dashboard/security"
                   element={
                     <ScreenLayout>
                       <SecuritySettings />
