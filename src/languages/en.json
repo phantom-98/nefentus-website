@@ -1,7 +1,7 @@
 {
   "navigation": {
     "home": "Home",
-    "solutions": "Payment",
+    "solutions": "Solutions",
     "payment": "Payment",
     "paymentDescription": "Experience the future of finance with modern invoicing and payment processes.",
     "payroll": "Payroll",
@@ -10,7 +10,7 @@
     "affiliate": "Affiliate",
     "login": "Log in",
     "signUp": "Sign up",
-    "menu": "Registration",
+    "menu": "Menu",
     "profile": "Profile",
     "dashboard": "Dashboard",
     "security": "Security",
@@ -24,6 +24,8 @@
     "heroButton": "Join Now - It's free!",
     "heroButton2": "Download App",
     "heroAvailable": "Available on:",
+    "connectWith": "Or sign in with",
+    "appDownload": "Download the mobile application",
     "latestPrice": "Latest Price",
     "priceChange": "Price change last 24h",
     "cardSubtitle": "Step into the Future of Payments",
