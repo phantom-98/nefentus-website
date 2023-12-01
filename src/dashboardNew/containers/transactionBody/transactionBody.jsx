@@ -51,7 +51,7 @@ const TransactionBody = () => {
 
   function orderToArray(order) {
     return [
-      order.product ? order.product.name : "Custom payment",
+      order.product ? order.product.name : t("payment.customPayment"),
       `#${order.id}`,
       order.invoice?.user?.email,
       `${order.totalPrice}`,
