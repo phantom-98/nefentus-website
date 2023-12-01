@@ -55,18 +55,14 @@ const StablecoinSetting = () => {
       <div className={styles.right}>
         <div
           style={{
-            paddingTop: 20,
+            paddingTop: 10,
             display: "flex",
             flexDirection: "row",
           }}
         >
           <div style={{ display: "flex", paddingTop: 2 }}>
             <div>
-              <img
-                src={stableCoin.icon}
-                style={{ width: "50px", height: "30px" }}
-                alt=""
-              />
+              <img src={stableCoin.icon} style={{ width: "2rem" }} alt="" />
             </div>
             <span className={styles.text}>
               {stableCoin.name || "Not available"}

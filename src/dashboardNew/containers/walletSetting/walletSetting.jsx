@@ -138,11 +138,7 @@ const WalletSetting = () => {
             >
               <div style={{ display: "flex", paddingTop: 2 }}>
                 <div>
-                  <img
-                    src={NefentusLogo}
-                    style={{ width: "50px", height: "30px" }}
-                    alt=""
-                  />
+                  <img src={NefentusLogo} style={{ width: "2rem" }} alt="" />
                 </div>
                 <span className={styles.text}>
                   {internalWalletAddress || "Not available"}

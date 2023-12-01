@@ -51,7 +51,8 @@
 .text {
   opacity: 0.6;
   font-size: 1.4rem;
-  padding-top: 3px;
+  padding-left: 10px;
+  padding-top: 1px;
 }
 
 .dialogSubtitle {

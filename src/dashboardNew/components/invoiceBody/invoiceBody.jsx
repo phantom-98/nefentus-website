@@ -94,7 +94,13 @@ const InvoicesBody = () => {
             </Button>
           </div>
         </div>
-        <div style={{ paddingTop: 20 }}>
+        <div
+          style={{
+            paddingTop: 20,
+            borderBottom: "solid 1px rgba(255,255,255,0.1)",
+            paddingBottom: 20,
+          }}
+        >
           <WalletSetting />
         </div>
         <div style={{ paddingTop: 20 }}>
