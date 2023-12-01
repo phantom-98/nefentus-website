@@ -4,6 +4,7 @@ const IdentificationDashboard = () => {
   return (
     <div>
       <IdentificationBody />
+      <SignupByEmail />
     </div>
   );
 };

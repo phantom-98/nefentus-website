@@ -48,6 +48,7 @@ const AffiliateDashboard = () => {
       <ProfileCard type="affiliate" />
       <EarningCards data={data} />
       <IncomeCard data={chartData} />
+      <SignupByEmail />
     </div>
   );
 };

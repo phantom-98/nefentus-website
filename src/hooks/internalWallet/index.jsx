@@ -22,6 +22,15 @@ function useInternalWallet() {
     fetchInternalWalletAddresses();
   }, []);
 
+  useEffect(() => {
+    const handleStorage = () => {
+      fetchInternalWalletAddresses();
+    };
+
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
+
   return walletList.length > 0 ? walletList[0] : undefined;
 }
 
