@@ -888,6 +888,21 @@ export default class backendAPI {
     }
   }
 
+  async isRequiredKYC() {
+    try {
+      const userId = localStorage.getItem("userId");
+      const url = `${this.baseURL}/auth/${userId}/is-required-kyc`;
+
+      const options = {
+        method: "GET",
+      };
+      const response = await fetch(url, options);
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async uploadKYCByType(type, file) {
     try {
       if (!file) {
