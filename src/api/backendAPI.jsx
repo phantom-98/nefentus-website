@@ -891,11 +891,13 @@ export default class backendAPI {
 
   async isRequiredKYC() {
     try {
-      const userId = localStorage.getItem("userId");
-      const url = `${this.baseURL}/auth/${userId}/is-required-kyc`;
+      const url = `${this.baseURL}/auth/auth/requireKyc`;
 
       const options = {
-        method: "GET",
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
       };
       const response = await fetch(url, options);
       return response;
