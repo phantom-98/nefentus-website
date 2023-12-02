@@ -493,7 +493,7 @@ export const SelectPopup = ({
       onClose={() => setSelectDialogOpen(false)}
     >
       <SearchOptions
-        label={t("signUp.option1Label") + "*"}
+        // label={t("signUp.option1Label") + "*"}
         value={CountryOption}
         setValue={setCountryOption}
         options={country_list}

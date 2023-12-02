@@ -128,3 +128,8 @@
   pointer-events: none;
   opacity: 0;
 }
+
+.select {
+  padding: 1rem 2rem !important;
+  gap: 0.5rem !important;
+}
