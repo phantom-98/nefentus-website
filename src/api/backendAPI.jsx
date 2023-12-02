@@ -84,7 +84,7 @@ export default class backendAPI {
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
         localStorage.setItem("hasTotp", data.hasTotp);
-        localStorage.setItem("requireKyc", data.requireKyc);
+        // localStorage.setItem("requireKyc", data.requireKyc);
         localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
@@ -152,7 +152,7 @@ export default class backendAPI {
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
         localStorage.setItem("hasTotp", data.hasTotp);
-        localStorage.setItem("requireKyc", data.requireKyc);
+        // localStorage.setItem("requireKyc", data.requireKyc);
         localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
@@ -452,7 +452,7 @@ export default class backendAPI {
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
         localStorage.setItem("hasTotp", data.hasTotp);
-        localStorage.setItem("requireKyc", data.requireKyc);
+        // localStorage.setItem("requireKyc", data.requireKyc);
         localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
@@ -607,7 +607,7 @@ export default class backendAPI {
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
         localStorage.setItem("hasTotp", data.hasTotp);
-        localStorage.setItem("requireKyc", data.requireKyc);
+        // localStorage.setItem("requireKyc", data.requireKyc);
         localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
@@ -667,7 +667,7 @@ export default class backendAPI {
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
         localStorage.setItem("hasTotp", data.hasTotp);
-        localStorage.setItem("requireKyc", data.requireKyc);
+        // localStorage.setItem("requireKyc", data.requireKyc);
         localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
