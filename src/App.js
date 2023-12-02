@@ -261,7 +261,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/dashboar/invoices"
+                  path="/dashboard/invoices"
                   element={
                     <ScreenLayout>
                       <Invoices />
