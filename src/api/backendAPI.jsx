@@ -316,6 +316,7 @@ export default class backendAPI {
       localStorage.setItem("lastName", data.lastName);
       localStorage.setItem("business", data.business);
       localStorage.setItem("phoneNumber", data.phoneNumber);
+      localStorage.setItem("country", data.country);
       localStorage.setItem("username", data.username);
       localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
       localStorage.setItem("marketingUpdates", data.marketingUpdates);
