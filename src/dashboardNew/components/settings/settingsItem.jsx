@@ -13,7 +13,6 @@ import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
 import Options from "../options/options";
-import { useTranslation } from "react-i18next";
 
 const langOptions = [
   { value: "en", label: "English" },
@@ -216,7 +215,7 @@ export const EditPopup = ({
   setValue,
   type,
   popup,
-  id,
+  label,
 }) => {
   const [inputValue, setInputValue] = useState(value);
   const { t } = useTranslation();

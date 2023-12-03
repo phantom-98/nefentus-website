@@ -334,181 +334,180 @@ const IdentificationBody = () => {
                 {t("identification.unlimited")}
               </div>
             </div>
-
-            <div className={styles.uploadBox}>
-              <div className={styles.boxTitle}>
-                {t("identification.verification.title")}
-              </div>
-
-              <div className={styles.uploadItem}>
-                <div className={`${styles.row} ${styles.rowItem}`}>
-                  <div className={styles.rowLeft}>
-                    {t("identification.level").concat("1:")}
-                    {level === 0 ? (
-                      <p style={{ color: "red", paddingLeft: 10 }}>
-                        {declineResponse ? declineResponse : null}
-                      </p>
-                    ) : null}
-                  </div>
-                </div>
-
-                {KYCContent.map((item) => {
-                  if (item.type == "text") {
-                    return (
-                      <AddText
-                        id={item.id}
-                        label={item.label}
-                        getText={getText}
-                        setGetText={setGetText}
-                        declineResponse={declineResponse}
-                        text={item.url}
-                        verify={item.verify}
-                      />
-                    );
-                  }
-                  if (item.type == "photo" && item.level === 0) {
-                    return (
-                      <AddFile
-                        id={item.id}
-                        label={item.label}
-                        declineResponse={declineResponse}
-                        file={item.url}
-                        verify={item.verify}
-                        getData={getData}
-                        setGetData={setGetData}
-                      />
-                    );
-                  }
-                })}
-              </div>
-              <div className={styles.uploadItem}>
-                <div className={`${styles.row} ${styles.rowItem}`}>
-                  <div
-                    className={styles.rowLeft}
-                    style={level > 0 ? { color: "white" } : { color: "grey" }}
-                  >
-                    {t("identification.level").concat("2:")}
-                    {level === 1 ? (
-                      <p style={{ color: "red", paddingLeft: 10 }}>
-                        {declineResponse ? declineResponse : null}
-                      </p>
-                    ) : null}
-                  </div>
-                </div>
-                {level < 1 ? (
-                  <div className={`${styles.row} ${styles.formItem}`}>
-                    <div className={styles.rowLeft}>
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <span>
-                          {t("identification.verification.proofAddress")}
-                        </span>
-                        <span style={{ paddingTop: 20 }}>
-                          {t("identification.verification.proofCompany")}
-                        </span>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        height: 77,
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Button color="gray">
-                        <span
-                          style={
-                            level > 0 ? { color: "white" } : { color: "grey" }
-                          }
-                        >
-                          {t("general.upload")}
-                        </span>
-                      </Button>
-                      <Button color="gray">
-                        <span
-                          style={
-                            level > 0 ? { color: "white" } : { color: "grey" }
-                          }
-                        >
-                          {t("general.upload")}
-                        </span>
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    {uploadingFiles.map((item) => {
-                      if (item.level === 1) {
-                        return (
-                          <AddFile
-                            id={item.id}
-                            label={item.label}
-                            declineResponse={declineResponse}
-                            file={item.url}
-                            verify={item.verify}
-                            getData={getData}
-                            setGetData={setGetData}
-                          />
-                        );
-                      }
-                    })}
-                  </>
-                )}
-              </div>
-
-              <div className={styles.uploadItem}>
-                <div className={`${styles.row} ${styles.rowItem}`}>
-                  <div
-                    className={styles.rowLeft}
-                    style={level > 1 ? { color: "white" } : { color: "grey" }}
-                  >
-                    {t("identification.level").concat("3:")}
-                    {level === 2 ? (
-                      <p style={{ color: "red", paddingLeft: 10 }}>
-                        {declineResponse ? declineResponse : null}
-                      </p>
-                    ) : null}
-                  </div>
-                </div>
-                {level < 2 ? (
-                  <div className={`${styles.row} ${styles.formItem}`}>
-                    <div className={styles.rowLeft}>
-                      <span>{t("identification.verification.enhanced")}</span>
-                    </div>
-                    <div>
-                      <Button color="gray">
-                        <span
-                          style={
-                            level > 1 ? { color: "white" } : { color: "grey" }
-                          }
-                        >
-                          {t("general.upload")}
-                        </span>
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    {KYCContent.map((item) => {
-                      if (item.level === 2) {
-                        return (
-                          <AddFile
-                            id={item.id}
-                            label={item.label}
-                            declineResponse={declineResponse}
-                            file={item.url}
-                            verify={item.verify}
-                            getData={getData}
-                            setGetData={setGetData}
-                          />
-                        );
-                      }
-                    })}
-                  </>
-                )}
-              </div>
-              <AddFile label="Enhanced Diligence" />
+          </div>
+          <div className={styles.uploadBox}>
+            <div className={styles.boxTitle}>
+              {t("identification.verification.title")}
             </div>
+
+            <div className={styles.uploadItem}>
+              <div className={`${styles.row} ${styles.rowItem}`}>
+                <div className={styles.rowLeft}>
+                  {t("identification.level").concat("1:")}
+                  {level === 0 ? (
+                    <p style={{ color: "red", paddingLeft: 10 }}>
+                      {declineResponse ? declineResponse : null}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+
+              {KYCContent.map((item) => {
+                if (item.type == "text") {
+                  return (
+                    <AddText
+                      id={item.id}
+                      label={item.label}
+                      getText={getText}
+                      setGetText={setGetText}
+                      declineResponse={declineResponse}
+                      text={item.url}
+                      verify={item.verify}
+                    />
+                  );
+                }
+                if (item.type == "photo" && item.level === 0) {
+                  return (
+                    <AddFile
+                      id={item.id}
+                      label={item.label}
+                      declineResponse={declineResponse}
+                      file={item.url}
+                      verify={item.verify}
+                      getData={getData}
+                      setGetData={setGetData}
+                    />
+                  );
+                }
+              })}
+            </div>
+            <div className={styles.uploadItem}>
+              <div className={`${styles.row} ${styles.rowItem}`}>
+                <div
+                  className={styles.rowLeft}
+                  style={level > 0 ? { color: "white" } : { color: "grey" }}
+                >
+                  {t("identification.level").concat("2:")}
+                  {level === 1 ? (
+                    <p style={{ color: "red", paddingLeft: 10 }}>
+                      {declineResponse ? declineResponse : null}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+              {level < 1 ? (
+                <div className={`${styles.row} ${styles.formItem}`}>
+                  <div className={styles.rowLeft}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <span>
+                        {t("identification.verification.proofAddress")}
+                      </span>
+                      <span style={{ paddingTop: 20 }}>
+                        {t("identification.verification.proofCompany")}
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      height: 77,
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Button color="gray">
+                      <span
+                        style={
+                          level > 0 ? { color: "white" } : { color: "grey" }
+                        }
+                      >
+                        {t("general.upload")}
+                      </span>
+                    </Button>
+                    <Button color="gray">
+                      <span
+                        style={
+                          level > 0 ? { color: "white" } : { color: "grey" }
+                        }
+                      >
+                        {t("general.upload")}
+                      </span>
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {uploadingFiles.map((item) => {
+                    if (item.level === 1) {
+                      return (
+                        <AddFile
+                          id={item.id}
+                          label={item.label}
+                          declineResponse={declineResponse}
+                          file={item.url}
+                          verify={item.verify}
+                          getData={getData}
+                          setGetData={setGetData}
+                        />
+                      );
+                    }
+                  })}
+                </>
+              )}
+            </div>
+
+            <div className={styles.uploadItem}>
+              <div className={`${styles.row} ${styles.rowItem}`}>
+                <div
+                  className={styles.rowLeft}
+                  style={level > 1 ? { color: "white" } : { color: "grey" }}
+                >
+                  {t("identification.level").concat("3:")}
+                  {level === 2 ? (
+                    <p style={{ color: "red", paddingLeft: 10 }}>
+                      {declineResponse ? declineResponse : null}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+              {level < 2 ? (
+                <div className={`${styles.row} ${styles.formItem}`}>
+                  <div className={styles.rowLeft}>
+                    <span>{t("identification.verification.enhanced")}</span>
+                  </div>
+                  <div>
+                    <Button color="gray">
+                      <span
+                        style={
+                          level > 1 ? { color: "white" } : { color: "grey" }
+                        }
+                      >
+                        {t("general.upload")}
+                      </span>
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {KYCContent.map((item) => {
+                    if (item.level === 2) {
+                      return (
+                        <AddFile
+                          id={item.id}
+                          label={item.label}
+                          declineResponse={declineResponse}
+                          file={item.url}
+                          verify={item.verify}
+                          getData={getData}
+                          setGetData={setGetData}
+                        />
+                      );
+                    }
+                  })}
+                </>
+              )}
+            </div>
+            {/* <AddFile label="Enhanced Diligence" /> */}
 
             <div className={styles.button}>
               <Button>{t("identification.verification.confirm")}</Button>

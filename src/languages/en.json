@@ -404,7 +404,19 @@
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
     "terms": "Terms and Condition",
-    "contact": "Contact us"
+    "contact": "Contact us",
+    "contentLabel1": "contentLavel1",
+    "content2": "content2",
+    "contentLabel2": "contentLavel2",
+    "socialTitle": "socialTitle",
+    "socialDescription": "socialDescription"
+  },
+  "reward": {
+    "title1": "title1",
+    "subtitle": "subtitle",
+    "gradient": "gradient",
+    "title2": "title2",
+    "button": "button"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -1019,6 +1031,7 @@
       "edit": "Edit",
       "enable": "Enable",
       "change": "Change",
+      "select": "Select",
       "close": "Close",
       "verify": "Verify"
     },
