@@ -27,7 +27,7 @@ const About = () => {
                 {t("home.aboutCard1TitleGradient")}
               </div>
             </h3>
-            <p className="standard">{t("home.aboutCard1Description")}</p>
+            <p className="standard mb-2">{t("home.aboutCard1Description")}</p>
 
             <div className={styles.button}>
               <Button link="/" color="white">
@@ -60,7 +60,10 @@ const About = () => {
                 <br />
                 {t("home.aboutCard2TitleP2")}
               </h3>
-              <p className="standard"> {t("home.aboutCard2Description")}</p>
+              <p className="standard mb-2">
+                {" "}
+                {t("home.aboutCard2Description")}
+              </p>
 
               <div className={styles.button}>
                 <Button link="/" color="white">
@@ -88,7 +91,7 @@ const About = () => {
                 <br />
                 {separateText(t("home.aboutCard3TitleP2"))}
               </h3>
-              <p className="standard">{t("home.aboutCard3Description")}</p>
+              <p className="standard mb-2">{t("home.aboutCard3Description")}</p>
 
               <div className={styles.button}>
                 <Button link="/" color="white">

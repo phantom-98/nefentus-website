@@ -66,7 +66,7 @@ const WalletBody = () => {
   async function registerWallet() {
     const result = await backend_API.registerWalletAddress(metamask.address);
   }
-
+  console.log(metamask);
   console.log(metamask.address);
   console.log(balances);
   console.log(prices);

@@ -1,6 +1,8 @@
 import Button from "../button/button";
 import styles from "./settingsTitle.module.css";
 import { useTranslation } from "react-i18next";
+import backend_API from "../../../api/backendAPI";
+import { useEffect, useState } from "react";
 
 const SettingsTitle = ({
   title,
@@ -10,6 +12,20 @@ const SettingsTitle = ({
   onCreate,
 }) => {
   const { t } = useTranslation();
+  const [level, setLevel] = useState(null);
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const getLevel = async () => {
+      const BackendAPI = new backend_API();
+      const { data } = await BackendAPI.getKYCLevel(userId);
+      if (data) {
+        setLevel(data.kycLevel);
+      }
+    };
+
+    getLevel();
+  }, [userId]);
 
   return (
     <div className={styles.wrapper}>
@@ -19,7 +35,9 @@ const SettingsTitle = ({
       </div>
 
       {identification && (
-        <div className={styles.level}>{t("identification.level")}: X</div>
+        <div className={styles.level}>
+          {t("identification.level")}: {level}
+        </div>
       )}
       {product && (
         <div>

@@ -17,6 +17,7 @@ const ProfileSettings = () => {
   const [phoneNumber, setPhoneNumber] = useState(
     localStorage.getItem("phoneNumber"),
   );
+  const [country, setCountry] = useState(localStorage.getItem("country"));
   const [email, setEmail] = useState(localStorage.getItem("email"));
   const [imageName, setImageName] = useState(null);
   const [marketingUpdates, setMarketingUpdates] = useState(
@@ -50,6 +51,7 @@ const ProfileSettings = () => {
       lastName: lastName,
       phoneNumber: phoneNumber,
       email: email,
+      country: country,
       business: business || "",
       marketingUpdates,
       emailNotifications,
@@ -93,7 +95,6 @@ const ProfileSettings = () => {
   };
 
   useEffect(() => {
-    console.log("hello");
     if (isSaveData) {
       if (!imageChanged) updateUser();
       else uploadAvatar();
@@ -135,6 +136,13 @@ const ProfileSettings = () => {
       value: phoneNumber,
       setValue: setPhoneNumber,
       type: "edit",
+    },
+    {
+      label: `${t("profile.country").concat("*")}`,
+      description: "",
+      value: country,
+      setValue: setCountry,
+      type: "select",
     },
     {
       label: `${t("profile.avatar")}`,

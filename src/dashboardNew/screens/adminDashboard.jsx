@@ -18,6 +18,7 @@ import Input, { Options } from "../../components/input/input";
 import styles from "./admin.module.css";
 import TablePagination from "../../components/tablePagination";
 import Popup from "../components/popup/popup";
+import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 
 const colSizes = [2, 1, 2, 1, 1, 2, 1, 2];
 

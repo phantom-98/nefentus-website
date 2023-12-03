@@ -9,7 +9,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const UserProfile = ({ web, logOut }) => {
+const UserProfile = ({ web, logOut, requireKYC }) => {
   const [profileImage, setProfileImage] = useState(
     localStorage.getItem("profile_pic"),
   );
