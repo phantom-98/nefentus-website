@@ -78,6 +78,7 @@ const KYCContent = [
     label: "Proof of company",
     type: "photo",
     level: 1,
+    notRequired: true,
   },
   {
     id: KYC_TYPE_FILE.ENHANCED_DILIGENCE,
@@ -144,9 +145,15 @@ const IdentificationBody = () => {
 
     const filteredArray = KYCContent.map((item) => {
       if (item.id in transformedResults) {
-        item.rejectReason = transformedResults[item.id].rejectReason;
-        item.url = transformedResults[item.id].url;
-        item.verify = transformedResults[item.id].verify;
+        if (item.notRequired) {
+          item.verify = true;
+          item.url = "notRequired";
+          item.rejectReason = "notRequired";
+        } else {
+          item.rejectReason = transformedResults[item.id].rejectReason;
+          item.url = transformedResults[item.id].url;
+          item.verify = transformedResults[item.id].verify;
+        }
 
         if (transformedResults[item.id].rejectReason != null) {
           setDeclineResponse(transformedResults[item.id].rejectReason);
@@ -625,9 +632,11 @@ const AddFile = ({
         <div className={styles.rowLeft}>
           <span>{label}</span>
           {verify ? (
-            <div style={{ paddingLeft: 10 }}>
-              <img src={Correct} alt="" />
-            </div>
+            file != "notRequired" && (
+              <div style={{ paddingLeft: 10 }}>
+                <img src={Correct} alt="" />
+              </div>
+            )
           ) : file ? (
             <>
               <span style={{ paddingLeft: 20, color: "gray" }}>
