@@ -8,16 +8,11 @@ import TableStatus from "../components/tableStatus/tableStatus";
 import adminDashboardApi from "../../api/adminDashboardApi";
 import { formatUSDBalance } from "../../utils";
 import moment from "moment";
-
+import UserModal from "../../dashboardNew/components/userModal";
 import { MessageContext } from "../../context/message";
 import { useNavigate } from "react-router-dom";
 import { ROLE_TO_NAME } from "../../constants";
-import MessageComponent from "../../components/message";
-import ModalOverlay from "../../dashboard/modal/modalOverlay";
-import Input, { Options } from "../../components/input/input";
-import Button from "../components/button/button";
 import styles from "./admin.module.css";
-import imputStyles from "../../components/input/input.module.css";
 import TablePagination from "../../components/tablePagination";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 
@@ -193,6 +188,7 @@ const AdminDashboard = ({ type }) => {
       const dataUsers = await adminApi.getUsers();
 
       dataUsers.reverse();
+      setUsers(dataUsers);
       updateUsers(dataUsers);
     }
   };
@@ -329,27 +325,33 @@ const AdminDashboard = ({ type }) => {
   };
 
   const findUser = () => {
-    const filteredData = users.filter((item) => {
+    const filteredData = users?.filter((item) => {
       return (
-        getDataInput.toLowerCase().includes(item.email.toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item.firstName.toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item.lastName.toLowerCase()) ||
-        getDataInput.includes(String(item.createdAt).toLowerCase()) ||
+        getDataInput.toLowerCase().includes(item?.email?.toLowerCase()) ||
+        getDataInput.toLowerCase().includes(item?.firstName?.toLowerCase()) ||
+        getDataInput.toLowerCase().includes(item?.lastName?.toLowerCase()) ||
+        getDataInput.includes(String(item?.createdAt)?.toLowerCase()) ||
         getDataInput
           .toLowerCase()
-          .includes(String(item.income).toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item.roles[0]?.toLowerCase())
+          .includes(String(item?.income)?.toLowerCase()) ||
+        getDataInput.toLowerCase().includes(item?.roles[0]?.toLowerCase())
       );
     });
     setGetFilteredUser(filteredData);
-    // setGetDataInput("");
-    updateUsers(filteredData.length > 0 ? filteredData : users);
+    updateUsers(filteredData?.length > 0 ? filteredData : users);
   };
 
   const paginatedData = tableData.filter((item, index) => {
     if (index >= dataPage * 10 && index < dataPage * 10 + 10) return true;
     return false;
   });
+
+  const closeModal = () => {
+    clearMessages();
+    clearAddUserFields();
+    setOpenModal(false);
+    updateUsersTable(getFilteredUser);
+  };
 
   return (
     <div>
@@ -388,108 +390,24 @@ const AdminDashboard = ({ type }) => {
         </div>
       </div>
       <>
-        {openModal && (
-          <ModalOverlay>
-            <div className={styles.modal}>
-              <MessageComponent />
-
-              <h4>Edit User</h4>
-
-              <div className={styles.modalInputs}>
-                <Input
-                  dashboard
-                  label="First name*"
-                  placeholder={"Enter first name"}
-                  value={firstName}
-                  setState={setFirstName}
-                  style={{ height: 35 }}
-                />
-                <Input
-                  dashboard
-                  label="Last name*"
-                  placeholder={"Enter last name"}
-                  value={lastName}
-                  setState={setLastName}
-                  style={{ height: 35 }}
-                />
-                <Input
-                  dashboard
-                  label="Email*"
-                  placeholder={"Enter email"}
-                  value={email}
-                  setState={setEmail}
-                  disabled={editEmailAddress !== null}
-                  style={{ height: 35 }}
-                />
-
-                {type === "admin" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={[
-                      "Vendor",
-                      "Affiliate",
-                      "Broker",
-                      "Senior Broker",
-                      "Leader",
-                    ]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-                {type === "leader" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate", "Broker", "Senior Broker"]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-                {type === "seniorbroker" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate", "Broker"]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-                {type === "broker" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate"]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-              </div>
-              <div className={styles.modalButtons}>
-                <div
-                  className={styles.button}
-                  style={{ fontSize: 13 }}
-                  onClick={() => {
-                    clearMessages();
-                    clearAddUserFields();
-                    setOpenModal(false);
-                    updateUsersTable(getFilteredUser);
-                  }}
-                >
-                  Cancel
-                </div>
-                <Button
-                  onClick={() => {
-                    changeUser();
-                  }}
-                  color="white"
-                >
-                  Edit User
-                </Button>
-              </div>
-            </div>
-          </ModalOverlay>
-        )}
+        <div className={styles.modalWrapper}>
+          {openModal && (
+            <UserModal
+              type={type}
+              clearFields={closeModal}
+              addUser={changeUser}
+              operationType={"update"}
+              firstName={firstName}
+              setFirstName={setFirstName}
+              lastName={lastName}
+              setLastName={setLastName}
+              email={email}
+              setEmail={setEmail}
+              role={role}
+              setRole={setRole}
+            />
+          )}
+        </div>
       </>
       <SignupByEmail />
     </div>

@@ -25,6 +25,9 @@ const TableSearch = ({
             type="text"
             onChange={(e) => setGetDataInput(e.target.value)}
             value={getDataInput}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") findUser();
+            }}
           />
         </div>
         <Button onClick={findUser}>Search</Button>
