@@ -1,4 +1,6 @@
 import { useContext, useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/button/button";
 import Card from "../../components/card/card";
 import SettingsTitle from "../../components/settings/settingsTitle";
@@ -107,8 +109,8 @@ const IdentificationBody = () => {
   const BackendAPI = new backend_API();
   const adminApi = new adminDashboardApi("admin");
   const [uploadingFiles, setUploadingFiles] = useState(KYCContent);
-  const [getData, setGetData] = useState();
-  const [getText, setGetText] = useState("");
+  const [getData, setGetData] = useState([]);
+  const [getText, setGetText] = useState([]);
   const [declineResponse, setDeclineResponse] = useState(null);
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
@@ -188,7 +190,27 @@ const IdentificationBody = () => {
     fetchFYC();
   }, [userId]);
 
+  const checkUploadingData = () => {
+    let res = false;
+    KYCContent.forEach((item) => {
+      if (
+        item.level == level &&
+        item.notRequired == undefined &&
+        !(item in getData || item in getText)
+      ) {
+        res = true;
+        console.log(item.label);
+        toast.error(item.label + " field is required!", {
+          position: toast.POSITION.TOP_CENTER,
+          autoClose: 5000,
+          theme: "colored",
+        });
+      }
+    });
+    return res;
+  };
   const handleUpload = async () => {
+    if (checkUploadingData()) return;
     if (getData) {
       const arrayWithResults = await Promise.allSettled(
         Object.keys(getData).map((type) =>
@@ -225,6 +247,7 @@ const IdentificationBody = () => {
   return (
     <>
       <MessageComponent />
+      <ToastContainer />
       <Card className={styles.card}>
         <div className={styles.top}>
           <div className={styles.titleHeader}>
