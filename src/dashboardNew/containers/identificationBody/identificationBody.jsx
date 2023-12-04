@@ -79,6 +79,7 @@ const KYCContent = [
     label: "identification.verification.proofCompany",
     type: "photo",
     level: 1,
+    notRequired: true,
   },
   {
     id: KYC_TYPE_FILE.ENHANCED_DILIGENCE,
@@ -353,11 +354,12 @@ const IdentificationBody = () => {
               </div>
 
               {KYCContent.map((item) => {
+                const star = item.notRequired ? "" : "*";
                 if (item.type == "text") {
                   return (
                     <AddText
                       id={item.id}
-                      label={t(item.label)}
+                      label={t(item.label).concat(star)}
                       getText={getText}
                       setGetText={setGetText}
                       declineResponse={declineResponse}
@@ -370,7 +372,7 @@ const IdentificationBody = () => {
                   return (
                     <AddFile
                       id={item.id}
-                      label={t(item.label)}
+                      label={t(item.label).concat(star)}
                       declineResponse={declineResponse}
                       file={item.url}
                       verify={item.verify}
@@ -400,7 +402,9 @@ const IdentificationBody = () => {
                   <div className={styles.rowLeft}>
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <span>
-                        {t("identification.verification.proofAddress")}
+                        {t("identification.verification.proofAddress").concat(
+                          "*",
+                        )}
                       </span>
                       <span style={{ paddingTop: 20 }}>
                         {t("identification.verification.proofCompany")}
@@ -438,11 +442,12 @@ const IdentificationBody = () => {
               ) : (
                 <>
                   {uploadingFiles.map((item) => {
+                    const star = item.notRequired ? "" : "*";
                     if (item.level === 1) {
                       return (
                         <AddFile
                           id={item.id}
-                          label={t(item.label)}
+                          label={t(item.label).concat(star)}
                           declineResponse={declineResponse}
                           file={item.url}
                           verify={item.verify}
@@ -473,7 +478,9 @@ const IdentificationBody = () => {
               {level < 2 ? (
                 <div className={`${styles.row} ${styles.formItem}`}>
                   <div className={styles.rowLeft}>
-                    <span>{t("identification.verification.enhanced")}</span>
+                    <span>
+                      {t("identification.verification.enhanced").concat("*")}
+                    </span>
                   </div>
                   <div>
                     <Button color="gray">
@@ -490,11 +497,12 @@ const IdentificationBody = () => {
               ) : (
                 <>
                   {KYCContent.map((item) => {
+                    const star = item.notRequired ? "" : "*";
                     if (item.level === 2) {
                       return (
                         <AddFile
                           id={item.id}
-                          label={t(item.label)}
+                          label={t(item.label).concat(star)}
                           declineResponse={declineResponse}
                           file={item.url}
                           verify={item.verify}
