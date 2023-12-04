@@ -1059,6 +1059,7 @@
     "businessDescription": "If you are a business, please enter your business name here.",
     "email": "Email",
     "phoneNumber": "Phone number",
+    "country": "Country",
     "avatar": "Avatar",
     "avatarDescription": "Select an avatar to personalize your account.",
     "marketingUpdates": "Marketing updates",
