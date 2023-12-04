@@ -239,7 +239,7 @@ const IdentificationBody = () => {
 
             <div className={styles.row}>
               <div className={styles.rowLeft}>
-                {t("identification.level").concat("1 :")}{" "}
+                {t("identification.level").concat(" 1: ")}{" "}
                 <span>{t("identification.level1Description")}</span>
               </div>
               <div
@@ -255,7 +255,7 @@ const IdentificationBody = () => {
             </div>
             <div className={styles.row}>
               <div className={styles.rowLeft}>
-                {t("identification.level").concat("2 :")}
+                {t("identification.level").concat(" 2: ")}
                 <span> {t("identification.level2Description")}</span>
               </div>
               <div
@@ -271,7 +271,7 @@ const IdentificationBody = () => {
             </div>
             <div className={styles.row}>
               <div className={styles.rowLeft}>
-                {t("identification.level").concat("3 :")}
+                {t("identification.level").concat(" 3: ")}
                 <span> {t("identification.level3Description")}</span>
               </div>
               <div
@@ -344,7 +344,7 @@ const IdentificationBody = () => {
             <div className={styles.uploadItem}>
               <div className={`${styles.row} ${styles.rowItem}`}>
                 <div className={styles.rowLeft}>
-                  {t("identification.level").concat("1:")}
+                  {t("identification.level").concat(" 1: ")}
                   {level === 0 ? (
                     <p style={{ color: "red", paddingLeft: 10 }}>
                       {declineResponse ? declineResponse : null}
@@ -389,7 +389,7 @@ const IdentificationBody = () => {
                   className={styles.rowLeft}
                   style={level > 0 ? { color: "white" } : { color: "grey" }}
                 >
-                  {t("identification.level").concat("2:")}
+                  {t("identification.level").concat(" 2: ")}
                   {level === 1 ? (
                     <p style={{ color: "red", paddingLeft: 10 }}>
                       {declineResponse ? declineResponse : null}
@@ -467,7 +467,7 @@ const IdentificationBody = () => {
                   className={styles.rowLeft}
                   style={level > 1 ? { color: "white" } : { color: "grey" }}
                 >
-                  {t("identification.level").concat("3:")}
+                  {t("identification.level").concat(" 3: ")}
                   {level === 2 ? (
                     <p style={{ color: "red", paddingLeft: 10 }}>
                       {declineResponse ? declineResponse : null}
