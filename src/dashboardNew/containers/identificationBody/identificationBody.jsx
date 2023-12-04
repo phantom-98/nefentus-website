@@ -40,49 +40,49 @@ const KYC_TYPE_TEXT = {
 const KYCContent = [
   {
     id: KYC_TYPE_TEXT.FULL_NAME,
-    label: "Full Name",
+    label: "identification.verification.fullName",
     type: "text",
     level: 0,
   },
   {
     id: KYC_TYPE_TEXT.ADRESS,
-    label: "Adress",
+    label: "identification.verification.address",
     type: "text",
     level: 0,
   },
   {
     id: KYC_TYPE_TEXT.CITY_AND_ZIP_CODE,
-    label: "City and zip code",
+    label: "identification.verification.city",
     type: "text",
     level: 0,
   },
   {
     id: KYC_TYPE_FILE.GOVERNMENT_ISSUES_ID,
-    label: "Government issues id",
+    label: "identification.verification.issueId",
     type: "photo",
     level: 0,
   },
   {
     id: KYC_TYPE_FILE.PICTURE_WIDTH_ID_IN_HAND,
-    label: "Picture width in hand",
+    label: "identification.verification.picture",
     type: "photo",
     level: 0,
   },
   {
     id: KYC_TYPE_FILE.PROOF_OF_ADRESS,
-    label: "Proof of adress",
+    label: "identification.verification.proofAddress",
     type: "photo",
     level: 1,
   },
   {
     id: KYC_TYPE_FILE.PROOF_OF_COMPANY,
-    label: "Proof of company",
+    label: "identification.verification.proofCompany",
     type: "photo",
     level: 1,
   },
   {
     id: KYC_TYPE_FILE.ENHANCED_DILIGENCE,
-    label: "Enhanced diligence",
+    label: "identification.verification.enhanced",
     type: "photo",
     level: 2,
   },
@@ -357,7 +357,7 @@ const IdentificationBody = () => {
                   return (
                     <AddText
                       id={item.id}
-                      label={item.label}
+                      label={t(item.label)}
                       getText={getText}
                       setGetText={setGetText}
                       declineResponse={declineResponse}
@@ -370,7 +370,7 @@ const IdentificationBody = () => {
                   return (
                     <AddFile
                       id={item.id}
-                      label={item.label}
+                      label={t(item.label)}
                       declineResponse={declineResponse}
                       file={item.url}
                       verify={item.verify}
@@ -442,7 +442,7 @@ const IdentificationBody = () => {
                       return (
                         <AddFile
                           id={item.id}
-                          label={item.label}
+                          label={t(item.label)}
                           declineResponse={declineResponse}
                           file={item.url}
                           verify={item.verify}
@@ -494,7 +494,7 @@ const IdentificationBody = () => {
                       return (
                         <AddFile
                           id={item.id}
-                          label={item.label}
+                          label={t(item.label)}
                           declineResponse={declineResponse}
                           file={item.url}
                           verify={item.verify}
