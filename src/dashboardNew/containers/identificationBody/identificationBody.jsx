@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/button/button";
 import Card from "../../components/card/card";
 import SettingsTitle from "../../components/settings/settingsTitle";
@@ -199,12 +199,12 @@ const IdentificationBody = () => {
         !(item in getData || item in getText)
       ) {
         res = true;
-        console.log(item.label);
-        toast.error(item.label + " field is required!", {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 5000,
-          theme: "colored",
-        });
+        setErrorMessage(item.label + " is required!");
+        // toast.error(item.label + " field is required!", {
+        //   position: toast.POSITION.TOP_CENTER,
+        //   autoClose: 5000,
+        //   theme: "colored",
+        // });
       }
     });
     return res;
@@ -247,7 +247,7 @@ const IdentificationBody = () => {
   return (
     <>
       <MessageComponent />
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Card className={styles.card}>
         <div className={styles.top}>
           <div className={styles.titleHeader}>
