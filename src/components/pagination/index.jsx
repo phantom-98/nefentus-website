@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Options } from "../input/input";
 
-const Pagination = ({ renderItems, data, setDataPage }) => {
+const Pagination = ({ renderItems, data, setDataPage, setDataSize }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
 
@@ -22,6 +22,7 @@ const Pagination = ({ renderItems, data, setDataPage }) => {
   }
   useEffect(() => {
     setDataPage(currentPage);
+    setDataSize(pageSize);
   }, [currentPage, pageSize]);
 
   useEffect(() => {
@@ -66,12 +67,12 @@ const Pagination = ({ renderItems, data, setDataPage }) => {
           </li>
         </ul>
       </nav>
-      {/* 
+
       <Options
         options={[10, 20, 50, 100]}
         value={pageSize}
         setValue={updatePageSize}
-      /> */}
+      />
     </div>
   );
 };

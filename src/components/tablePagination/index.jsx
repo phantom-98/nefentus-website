@@ -11,6 +11,7 @@ const TablePagination = ({
   striped,
   className,
   setDataPage,
+  setDataSize,
 }) => {
   const [pageData, setPageData] = useState([]);
 
@@ -33,6 +34,7 @@ const TablePagination = ({
 
       <Pagination
         setDataPage={setDataPage}
+        setDataSize={setDataSize}
         renderItems={renderItems}
         data={data}
       />

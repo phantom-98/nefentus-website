@@ -75,6 +75,7 @@ const AdminDashboard = ({ type }) => {
   const [users, setUsers] = useState();
   const [getDataInput, setGetDataInput] = useState("");
   const [dataPage, setDataPage] = useState(1);
+  const [dataSize, setDataSize] = useState(10);
   const [getFilteredUser, setGetFilteredUser] = useState();
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
@@ -342,10 +343,10 @@ const AdminDashboard = ({ type }) => {
   };
 
   const paginatedData = tableData.filter((item, index) => {
-    if (index >= dataPage * 10 && index < dataPage * 10 + 10) return true;
+    if (index >= dataPage * dataSize && index < dataPage * dataSize + dataSize)
+      return true;
     return false;
   });
-
   const closeModal = () => {
     clearMessages();
     clearAddUserFields();
@@ -383,6 +384,7 @@ const AdminDashboard = ({ type }) => {
             <TablePagination
               data={tableData}
               setDataPage={setDataPage}
+              setDataSize={setDataSize}
               colSizes={colSizes}
               striped
             />
