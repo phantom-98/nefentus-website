@@ -14,6 +14,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const [role, setRole] = useState("Select Role");
   const [openModal, setOpenModal] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
+  const userRole = localStorage.getItem("roles");
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -57,7 +58,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
       setErrorMessage("Password is required");
       return;
     }
-    if (role === "") {
+    if (role === "" && userRole !== "ROLE_AFFILIATE") {
       setErrorMessage("Role is required");
       return;
     }
@@ -68,7 +69,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
         firstName,
         lastName,
         editEmailAddress,
-        role,
+        userRole === "ROLE_AFFILIATE" ? "Vendor" : role,
       );
       if (resp) {
         setInfoMessage("User updated successfully!");
@@ -82,7 +83,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
         lastName,
         email,
         password,
-        role,
+        userRole === "ROLE_AFFILIATE" ? "Vendor" : role,
       );
       if (resp) {
         if (resp.ok) {
