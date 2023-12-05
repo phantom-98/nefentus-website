@@ -19,14 +19,14 @@ import useInternalWallet from "../../../hooks/internalWallet";
 import Button from "../../components/button/button";
 import Popup from "../../components/popup/popup";
 
-const WalletSetting = () => {
+const WalletSetting = ({ value, setValue }) => {
   const BackandAPI = new backendAPI();
   const [data, setData] = useState(null);
   const [activeWallet, setActiveWallet] = useState(null);
   const [index, setIndex] = useState(null);
   const [connectStatus, setConnectStatus] = useState({
-    "Wallet Connect": "disconnected",
-    Metamask: "disconnected",
+    WalletConnect: "Disconnected",
+    MetaMask: "Disconnected",
   });
   const [walletAddress, setWalletAddress] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
@@ -43,12 +43,12 @@ const WalletSetting = () => {
     {
       connect: walletConnect(),
       icon: WalletConnectLogo,
-      name: walletConnect().meta.name,
+      type: walletConnect().meta.name,
     },
     {
       connect: metamaskWallet(),
       icon: MetaMaskLogo,
-      name: metamaskWallet().meta.name,
+      type: metamaskWallet().meta.name,
     },
   ];
 
@@ -59,10 +59,10 @@ const WalletSetting = () => {
         setData(dataFromBackend);
         if (dataFromBackend) {
           const lastObject = dataFromBackend[dataFromBackend.length - 1];
-          if (lastObject?.name == "WalletConnect") {
+          if (lastObject?.type == "WalletConnect") {
             setActiveWallet(wallets[0]);
           }
-          if (lastObject?.name == "MetaMask") {
+          if (lastObject?.type == "MetaMask") {
             setActiveWallet(wallets[1]);
           }
         }
@@ -77,9 +77,22 @@ const WalletSetting = () => {
   }, []);
 
   useEffect(() => {
-    const localWallet = JSON.parse(localStorage.getItem("selected wallet"));
-    setWalletAddress(localWallet);
-  }, [data]);
+    if (!value) return;
+    console.log(value);
+    const list = value.split("--");
+    if (list.length != 2) return;
+    switch (list[0].toLowerCase()) {
+      case "metamask":
+        setWalletAddress({ type: "MetaMask", address: list[1] });
+        break;
+      case "walletconnect":
+        setWalletAddress({ type: "WalletConnect", address: list[1] });
+        break;
+      default:
+        setWalletAddress({ address: list[1] });
+        break;
+    }
+  }, [value]);
 
   const handleWalletClick = (wallet, index) => {
     setIsActiveWalletAdress(false);
@@ -95,7 +108,6 @@ const WalletSetting = () => {
     setIsActivePopup(false);
     setWalletAddress(address);
     setIsActiveWalletAdress(i);
-    localStorage.setItem("selected wallet", JSON.stringify(address));
     setForConfirm(false);
   };
 
@@ -128,7 +140,7 @@ const WalletSetting = () => {
       </div>
       <div className={styles.right}>
         {walletAddress ? (
-          walletAddress.name == null ? (
+          walletAddress.type == null ? (
             <div
               style={{
                 paddingTop: 20,
@@ -141,7 +153,7 @@ const WalletSetting = () => {
                   <img src={NefentusLogo} style={{ width: "2rem" }} alt="" />
                 </div>
                 <span className={styles.text}>
-                  {internalWalletAddress || "Not available"}
+                  {walletAddress.address || "Not available"}
                 </span>
               </div>
             </div>
@@ -152,7 +164,7 @@ const WalletSetting = () => {
             >
               <WalletConnection
                 walletAddress={walletAddress.address}
-                name={walletAddress.name}
+                name={walletAddress.type}
                 walletConnect={walletConnect}
                 metamaskWallet={metamaskWallet}
               />
@@ -165,7 +177,7 @@ const WalletSetting = () => {
               >
                 <WalletConnection
                   walletAddress={walletAddress.address}
-                  name={walletAddress.name}
+                  name={walletAddress.type}
                   walletConnect={walletConnect}
                   metamaskWallet={metamaskWallet}
                 />
@@ -179,7 +191,7 @@ const WalletSetting = () => {
               supportedWallets={[activeWallet.connect]}
             >
               <WalletConnection
-                name={activeWallet.name}
+                name={activeWallet.type}
                 icon={activeWallet.icon}
                 connectStatus={connectStatus}
                 setConnectStatus={setConnectStatus}
@@ -197,17 +209,17 @@ const WalletSetting = () => {
               }}
             >
               <div style={{ display: "flex", paddingTop: 2 }}>
-                <div
+                {/* <div
                   style={{
                     paddingLeft: 10,
                     paddingTop: 5,
                     fontSize: "1.4rem",
                   }}
-                ></div>
+                ></div> */}
                 <div>
                   <img
                     src={NefentusLogo}
-                    style={{ width: "50px", height: "30px" }}
+                    style={{ width: "30px", height: "30px" }}
                     alt=""
                   />
                 </div>
@@ -241,6 +253,10 @@ const WalletSetting = () => {
                     setForConfirm(true),
                     setIsActivePopup(false),
                     setIsActiveWalletAdress(false);
+                  if (walletAddress) {
+                    setValue(walletAddress.type + "--" + walletAddress.address);
+                  } else
+                    setValue(wallets[index].type + "--" + activeWallet.address);
                 }}
                 onClose={() => setShowPopup(false)}
               >
@@ -275,7 +291,7 @@ const WalletSetting = () => {
                               onClick={() => getWalletAddress(address, i)}
                             >
                               <div style={{ padding: 5 }}>
-                                {address.name == "WalletConnect" ? (
+                                {address.type == "WalletConnect" ? (
                                   <div>
                                     <img
                                       src={WalletConnectLogo}
@@ -283,7 +299,7 @@ const WalletSetting = () => {
                                       alt=""
                                     />
                                   </div>
-                                ) : address.name == "MetaMask" ? (
+                                ) : address.type == "MetaMask" ? (
                                   <div>
                                     <img
                                       src={MetaMaskLogo}
@@ -310,7 +326,7 @@ const WalletSetting = () => {
                                 className={styles.dialogDescription}
                               >
                                 <p>
-                                  {address.name ? address.name : "Nefentus"}:
+                                  {address.type ? address.type : "Nefentus"}:
                                 </p>
                                 <p style={{ paddingLeft: 10, paddingRight: 5 }}>
                                   {truncateWalletAddress(address.address, 4)}
@@ -323,7 +339,7 @@ const WalletSetting = () => {
                     ) : null}
                     <div>
                       <span className={styles.dialogSubtitle}>
-                        Connect new wallets
+                        Connect new wallet
                       </span>
                       {wallets.map((wallet, index) => {
                         return (
@@ -358,11 +374,15 @@ const WalletSetting = () => {
                               />
                             </div>
                             <div
-                              style={{ paddingTop: 7 }}
+                              style={{ marginTop: -4 }}
                               className={styles.dialogDescription}
                             >
-                              <p>{wallet.name}</p>
-                              <span>{wallet.connectStatus}</span>
+                              <p>{wallet.type}</p>
+                              <span
+                                style={{ fontSize: "0.9rem", opacity: "0.6" }}
+                              >
+                                {connectStatus[wallet.type]}
+                              </span>
                             </div>
                           </div>
                         );
@@ -372,206 +392,7 @@ const WalletSetting = () => {
                 </div>
               </Popup>
             </div>
-            {/* {walletAddress ? (
-              walletAddress.name == null ? (
-                <div
-                  style={{
-                    paddingTop: 20,
-                    paddingLeft: 10,
-                    display: "flex",
-                    flexDirection: "row",
-                  }}
-                >
-                  <div style={{ display: "flex", paddingTop: 2 }}>
-                    <div
-                      style={{
-                        paddingLeft: 10,
-                        paddingTop: 5,
-                        fontSize: "1.4rem",
-                      }}
-                    >
-                      Wallet:
-                    </div>
-                    <div>
-                      <img
-                        src={NefentusLogo}
-                        style={{ width: "50px", height: "30px" }}
-                        alt=""
-                      />
-                    </div>
-                    <div
-                      style={{
-                        paddingLeft: 5,
-                        paddingTop: 5,
-                        fontSize: "1.4rem",
-                      }}
-                    >
-                      {internalWalletAddress || "Not available"}
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <ThirdwebProvider
-                  clientId={CLIENT_ID}
-                  // supportedWallets={[activeWallet.connect]}
-                >
-                  <WalletConnection
-                    walletAddress={walletAddress.address}
-                    name={walletAddress.name}
-                    walletConnect={walletConnect}
-                    metamaskWallet={metamaskWallet}
-                  />
-                </ThirdwebProvider>
-              )
-            ) : activeWallet ? (
-              <ThirdwebProvider
-                clientId={CLIENT_ID}
-                supportedWallets={[activeWallet.connect]}
-              >
-                <WalletConnection
-                  name={activeWallet.name}
-                  icon={activeWallet.icon}
-                  connectStatus={connectStatus}
-                  setConnectStatus={setConnectStatus}
-                  config={activeWallet.connect}
-                  index={index}
-                />
-              </ThirdwebProvider>
-            ) : (
-              <div
-                style={{
-                  paddingTop: 20,
-                  paddingLeft: 10,
-                  display: "flex",
-                  flexDirection: "row",
-                }}
-              >
-
-
-                <div style={{ display: "flex", paddingTop: 2 }}>
-                  <div
-                    style={{
-                      paddingLeft: 10,
-                      paddingTop: 5,
-                      fontSize: "1.4rem",
-                    }}
-                  >
-                    Wallet:
-                  </div>
-                  <div>
-                    <img
-                      src={NefentusLogo}
-                      style={{ width: "50px", height: "30px" }}
-                      alt=""
-                    />
-                  </div>
-                  <div
-                    style={{
-                      paddingLeft: 5,
-                      paddingTop: 5,
-                      fontSize: "1.4rem",
-                    }}
-                  >
-                    {internalWalletAddress || "Not available"}
-                  </div>
-                </div>
-              </div>
-            )} */}
           </div>
-          {/* <div
-            style={{
-              position: "absolute",
-              width: 450,
-              zIndex: 5,
-              top: "55px",
-              right: "20px",
-            }}
-          >
-            {dropdownVisible && (
-              <div>
-                <Card>
-                  {data ? (
-                    <div style={{ paddingBottom: 20 }}>
-                      <p>Actual wallets</p>
-
-                      {data.map((address, i) => {
-                        return (
-                          <div
-                            key={i}
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              paddingTop: 4,
-                            }}
-                            onClick={() => getWalletAddress(address)}
-                          >
-                            <div style={{ paddingTop: 10, paddingRight: 5 }}>
-                              {address.name == "WalletConnect" ? (
-                                <div>
-                                  <img
-                                    src={WalletConnectLogo}
-                                    style={{ width: "10px", height: "10px" }}
-                                    alt=""
-                                  />
-                                </div>
-                              ) : address.name == "MetaMask" ? (
-                                <div>
-                                  <img
-                                    src={MetaMaskLogo}
-                                    style={{ width: "10px", height: "10px" }}
-                                    alt=""
-                                  />
-                                </div>
-                              ) : (
-                                <div>
-                                  <img
-                                    src={NefentusLogo}
-                                    style={{ width: "10px", height: "10px" }}
-                                    alt=""
-                                  />
-                                </div>
-                              )}
-                            </div>
-                            <div style={{ paddingTop: 8, display: "flex" }}>
-                              <p>{address.name ? address.name : "Nefentus"}:</p>
-                              <p style={{ paddingLeft: 10 }}>
-                                {address.address}
-                              </p>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  ) : null}
-                  {wallets.map((wallet, index) => {
-                    return (
-                      <div
-                        key={index}
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          paddingTop: 5,
-                        }}
-                        onClick={() => handleWalletClick(wallet, index)}
-                      >
-                        <div style={{ width: 55 }}>
-                          <img
-                            src={wallet.icon}
-                            style={{ width: "30px", height: "30px" }}
-                            alt=""
-                          />
-                        </div>
-                        <div style={{ paddingTop: 8 }}>
-                          <p>{wallet.name}</p>
-                          <span>{wallet.connectStatus}</span>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </Card>
-              </div>
-            )}
-          </div> */}
         </div>
       </div>
     </div>

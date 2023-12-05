@@ -170,6 +170,26 @@ export default class backendAPI {
     }
   }
 
+  async getInvoiceSettings() {
+    try {
+      const url = `${this.baseURL}/auth/get-invoice-settings`;
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response;
+    } catch (error) {
+      return null;
+    }
+  }
+
   async updateInvoiceSettings(settings) {
     try {
       const url = `${this.baseURL}/auth/update-invoice-settings`;
@@ -185,10 +205,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      const data = await response.json();
-      console.log(data);
-      localStorage.setItem("vatNumber", data.vatNumber);
-      localStorage.setItem("sendInvoice", JSON.stringify(data.sendInvoice));
+
       return response;
     } catch (error) {
       return null; // or return some default value
@@ -1113,7 +1130,7 @@ export default class backendAPI {
 
   async registerWalletAddress(ConnectedWallet) {
     try {
-      const url = `${this.baseURL}/wallet/address`;
+      const url = `${this.baseURL}/wallet/address?address=${ConnectedWallet.address}&name=${ConnectedWallet.name}`;
       let headers = {};
       if (this.token) {
         headers = {
@@ -1123,9 +1140,8 @@ export default class backendAPI {
       }
 
       const options = {
-        method: "POST",
+        method: "GET",
         headers: headers,
-        body: JSON.stringify(ConnectedWallet),
       };
       const response = await fetch(url, options);
       if (!response.ok) {

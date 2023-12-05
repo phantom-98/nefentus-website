@@ -10,7 +10,7 @@ import USDTLogo from "../../../assets/logo/usdt.svg";
 import Button from "../../components/button/button";
 import Popup from "../../components/popup/popup";
 
-const StablecoinSetting = () => {
+const StablecoinSetting = ({ value, setValue }) => {
   const coins = [
     {
       icon: USDCLogo,
@@ -25,13 +25,15 @@ const StablecoinSetting = () => {
   const [isActivePopup, setIsActivePopup] = useState(false);
 
   const [showPopup, setShowPopup] = useState(false);
-  const [stableCoin, setStableCoin] = useState(
-    JSON.parse(
-      localStorage.getItem("selectedCoin") || JSON.stringify(coins[0]),
-    ),
-  );
+  const [stableCoin, setStableCoin] = useState({});
 
-  // const CLIENT_ID = "639eea2ebcabed7eab90b56aceeed08b";
+  useEffect(() => {
+    if (coins[0].name == value) {
+      setStableCoin(coins[0]);
+    } else {
+      setStableCoin(coins[1]);
+    }
+  }, [value]);
 
   const handleCoinClick = (coin, index) => {
     setIsActivePopup(index);
@@ -82,12 +84,9 @@ const StablecoinSetting = () => {
               <Popup
                 show={showPopup}
                 onConfirm={() => {
-                  setShowPopup(false),
-                    setIsActivePopup(false),
-                    localStorage.setItem(
-                      "selectedCoin",
-                      JSON.stringify(stableCoin),
-                    );
+                  setValue(stableCoin.name);
+                  setShowPopup(false);
+                  setIsActivePopup(false);
                 }}
                 onClose={() => setShowPopup(false)}
               >

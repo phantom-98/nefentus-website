@@ -11,22 +11,27 @@ import { EditPopup } from "../settings/settingsItem";
 import SettingsTitle from "../settings/settingsTitle";
 import Fail from "../../../assets/icon/fail.svg";
 import Correct from "../../../assets/icon/correct.svg";
+import { get } from "react-hook-form";
+import Popup from "../popup/popup";
 
 const InvoicesBody = () => {
-  const [vatNumber, setVatNumber] = useState(localStorage.getItem("vatNumber"));
-  const [sendInvoice, setSendInvoice] = useState(
-    JSON.parse(localStorage.getItem("sendInvoice")),
-  );
+  const [vatNumber, setVatNumber] = useState();
+  const [enableInvoicing, setEnableInvoicing] = useState();
+  const [walletAddress, setWalletAddress] = useState();
+  const [stablecoin, setStablecoin] = useState();
   const [showPopup, setShowPopup] = useState(false);
-
+  const [changed, setchanged] = useState(false);
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
+  // const [settings, setSettings] = useState({});
 
   const backendAPI = new backend_API();
 
-  const handleConfirm = async () => {
+  const updateSettings = async () => {
     const response = await backendAPI.updateInvoiceSettings({
-      sendInvoice,
+      enableInvoicing,
       vatNumber,
+      stablecoin,
+      walletAddress,
     });
     if (response == null) {
       setErrorMessage("Failed to update");
@@ -35,11 +40,27 @@ const InvoicesBody = () => {
       setInfoMessage("Successfully updated!");
     }
     setErrorMessage(null);
+    setchanged(false);
+  };
+
+  const loadSettings = async () => {
+    const invoice = await backendAPI.getInvoiceSettings();
+    const res = await invoice.json();
+    setStablecoin(res["stablecoin"]);
+    setVatNumber(res["vatNumber"]);
+    setWalletAddress(res["walletAddress"]);
+    setEnableInvoicing(res["enableInvoicing"]);
   };
 
   useEffect(() => {
-    handleConfirm();
-  }, [vatNumber, sendInvoice]);
+    loadSettings();
+  }, []);
+
+  useEffect(() => {
+    if (changed) {
+      updateSettings();
+    }
+  }, [changed]);
 
   return (
     <div className={styles.tabContent}>
@@ -62,7 +83,7 @@ const InvoicesBody = () => {
             <span style={{ fontSize: "1.6rem" }}>VAT Number</span>
           </div>
           <div className={styles.right}>
-            <span className={styles.value}>{vatNumber ? vatNumber : " "}</span>
+            <span className={styles.value}>{vatNumber || " "}</span>
           </div>
           <div>
             <Button color="gray" onClick={() => setShowPopup(true)}>
@@ -74,20 +95,24 @@ const InvoicesBody = () => {
           show={showPopup}
           setShow={setShowPopup}
           value={vatNumber}
-          setValue={setVatNumber}
+          setValue={(v) => {
+            setVatNumber(v);
+            setchanged(true);
+          }}
         />
         <div className={styles.input}>
           <div className={styles.left}>
-            <p style={{ fontSize: "1.6rem" }}>Send invoices</p>
+            <p style={{ fontSize: "1.6rem" }}>Enable invoice</p>
           </div>
           <div className={styles.right}>
-            <EnableType value={sendInvoice} />
+            <EnableType value={enableInvoicing} />
           </div>
           <div>
             <Button
               color="gray"
               onClick={() => {
-                setSendInvoice((prev) => !prev);
+                setEnableInvoicing((prev) => !prev);
+                setchanged(true);
               }}
             >
               Enable
@@ -101,10 +126,22 @@ const InvoicesBody = () => {
             paddingBottom: 20,
           }}
         >
-          <WalletSetting />
+          <WalletSetting
+            value={walletAddress}
+            setValue={(w) => {
+              setWalletAddress(w);
+              setchanged(true);
+            }}
+          />
         </div>
         <div style={{ paddingTop: 20 }}>
-          <StablecoinSetting />
+          <StablecoinSetting
+            value={stablecoin}
+            setValue={(c) => {
+              setStablecoin(c);
+              setchanged(true);
+            }}
+          />
         </div>
       </Card>
       <div></div>

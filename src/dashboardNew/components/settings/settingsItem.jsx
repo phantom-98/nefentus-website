@@ -170,7 +170,15 @@ export const EnableType = ({ value }) => {
   );
 };
 
-export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
+export const EditPopup = ({
+  title = "Change Value",
+  show,
+  setShow,
+  value,
+  setValue,
+  type,
+  popup,
+}) => {
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
@@ -189,7 +197,7 @@ export const EditPopup = ({ show, setShow, value, setValue, type, popup }) => {
   return (
     <Popup
       show={show}
-      title="Change Value"
+      title={title}
       onConfirm={handleConfirmClick}
       onClose={() => setShow(false)}
     >
