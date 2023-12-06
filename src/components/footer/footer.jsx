@@ -40,8 +40,8 @@ const Footer = () => {
                   <p className={styles.contentLabel}>
                     {t("footer.contentLabel1")}
                   </p>
-                  {footerContent.map((item) => (
-                    <Link to={item.link}>
+                  {footerContent.map((item, index) => (
+                    <Link key={index} to={item.link}>
                       <p>{item.text}</p>
                     </Link>
                   ))}
@@ -50,8 +50,8 @@ const Footer = () => {
                   <p className={styles.contentLabel}>
                     {t("footer.contentLabel2")}
                   </p>
-                  {footerContent2.map((item) => (
-                    <Link to={item.link}>
+                  {footerContent2.map((item, index) => (
+                    <Link key={index} to={item.link}>
                       <p>{item.text}</p>
                     </Link>
                   ))}

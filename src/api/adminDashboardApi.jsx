@@ -158,7 +158,6 @@ export default class adminDashboardApi {
 
   async acceptKYC(id) {
     try {
-      console.log(id);
       const url = `${this.baseURL}/accept_kyc/${id}`;
       const options = {
         method: "PATCH",
@@ -178,9 +177,8 @@ export default class adminDashboardApi {
     }
   }
 
-  async declineKYC(id) {
+  async declineKYC(id, declineReason) {
     try {
-      console.log(id);
       const url = `${this.baseURL}/decline_kyc/${id}`;
       const options = {
         method: "PATCH",
@@ -188,6 +186,9 @@ export default class adminDashboardApi {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
         },
+        body: JSON.stringify({
+          declineReason: declineReason,
+        }),
       };
       const response = await fetch(url, options);
       if (!response.ok) {

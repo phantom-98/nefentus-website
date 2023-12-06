@@ -21,6 +21,8 @@ const TopNavigation = () => {
 
   const [openLanguage, setOpenLanguage] = useState(false);
 
+  const [kyc, setKyc] = useState(false);
+
   const [height, setHeight] = useState(0);
   const backendAPI = new backend_API();
   const navigate = useNavigate();
@@ -48,13 +50,20 @@ const TopNavigation = () => {
     }
   };
 
+  useEffect(() => {
+    backendAPI
+      .isRequiredKYC()
+      .then((res) => res.json())
+      .then((data) => setKyc(data));
+  }, []);
+
   return (
     <>
       <div className={styles.container}>
         <img className={styles.logo} src={Logo} alt="" />
         <img className={styles.logo2} src={Logo2} alt="" />
         <div className={styles.rightSide}>
-          <UserProfile logOut={logOut} />
+          <UserProfile logOut={logOut} requireKYC={kyc} />
 
           <div>
             <img src={Notification} alt="" />

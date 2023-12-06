@@ -17,6 +17,9 @@ import RingLoader from "react-spinners/RingLoader";
 
 import { Player } from "@lottiefiles/react-lottie-player";
 import LoadingAnimation from "./assets/logo/loadingAnimation.json";
+import Invoices from "./pages/invoices";
+import { KYC } from "./dashboard/settings/components/KYC";
+import Kyc from "./dashboardNew/components/kyc";
 
 const MainDashboard = React.lazy(() =>
   import("./dashboardNew/screens/mainDashboard"),
@@ -258,6 +261,14 @@ function App() {
                   }
                 />
                 <Route
+                  path="/dashboard/invoices"
+                  element={
+                    <ScreenLayout>
+                      <Invoices />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
                   path="/dashboard/security"
                   element={
                     <ScreenLayout>
@@ -286,6 +297,30 @@ function App() {
                   element={
                     <ScreenLayout>
                       <PaymentDashboard />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboard/admin"
+                  element={
+                    <ScreenLayout>
+                      <AdminDashboard type={"admin"} />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboard/kyc"
+                  element={
+                    <ScreenLayout>
+                      <Kyc />
+                    </ScreenLayout>
+                  }
+                />
+                <Route
+                  path="/dashboard/partner"
+                  element={
+                    <ScreenLayout>
+                      <AdminDashboard type="partner" />
                     </ScreenLayout>
                   }
                 />

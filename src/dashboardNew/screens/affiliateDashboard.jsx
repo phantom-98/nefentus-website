@@ -3,6 +3,7 @@ import CryptoCard from "../components/cryptoCard/cryptoCard";
 import EarningCards from "../components/earningCards/earningCards";
 import IncomeCard from "../components/incomeCard/incomeCard";
 import ProfileCard from "../components/profileCard/profileCard";
+import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 
 const data = [
   {
