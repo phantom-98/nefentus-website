@@ -43,6 +43,8 @@ const CryptoCard = () => {
   const { balances, fetchBalances } = useBalances(metamask);
   const { prices, fetchPrices } = usePrices(metamask);
 
+  const currencyList = currencies();
+
   useEffect(() => {
     fetchPrices();
     fetchBalances();
@@ -58,8 +60,8 @@ const CryptoCard = () => {
 
   useEffect(() => {
     const data = balances[1].map((balance, index) => ({
-      ...currencies[index],
-      middleName: "Ethereum",
+      ...currencyList[index],
+      middleName: currencyList[index] === "ETH" ? "Ethereum" : "BSC",
       middleInfo: "Network",
       price: prices[index],
       value: balance,
@@ -193,7 +195,9 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
 };
 
 const SendModal = ({ show, setShow }) => {
-  const [withdrawCurrency, setWithdrawCurrency] = useState(currencies[0].abbr);
+  const [withdrawCurrency, setWithdrawCurrency] = useState(
+    currencies()[0].abbr,
+  );
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawAddress, setWithdrawAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -220,7 +224,7 @@ const SendModal = ({ show, setShow }) => {
       return;
     }
 
-    const sendCurrency = currencies.find(
+    const sendCurrency = currencies().find(
       (currency) => currency.abbr === withdrawCurrency,
     );
     if (!sendCurrency) {
@@ -282,7 +286,7 @@ const SendModal = ({ show, setShow }) => {
           label="Currency options"
           placeholder="Select Currency Option"
           value={withdrawCurrency}
-          options={currencies.map((item) => item.abbr)}
+          options={currencies().map((item) => item.abbr)}
           setValue={setWithdrawCurrency}
         />
 

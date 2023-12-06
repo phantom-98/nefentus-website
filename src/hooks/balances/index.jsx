@@ -8,7 +8,7 @@ function useBalances(metamask) {
   let internalWalletAddress = useInternalWallet();
 
   function initBalances() {
-    return currencies.map((currency) => undefined);
+    return currencies().map((currency) => undefined);
   }
 
   async function fetchBalances() {
@@ -28,7 +28,7 @@ function useBalances(metamask) {
   }
 
   async function fetchBalanceForWallet(web3API, walletAddress) {
-    const currency_addresses = currencies.map((currency) => currency.address);
+    const currency_addresses = currencies().map((currency) => currency.address);
     const balances_list = await Promise.all(
       currency_addresses.map((address) =>
         web3API.getBalanceToken(address, walletAddress),

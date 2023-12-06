@@ -90,7 +90,7 @@ const BalanceCard = () => {
       <div className={styles.left}>
         <div className={styles.label}>Balance</div>
         <div className={styles.value}>${parseFloat(total).toFixed(2)}</div>
-        <div className={styles.subtitle}>{currencies.length} Crypto</div>
+        <div className={styles.subtitle}>{currencies().length} Crypto</div>
       </div>
 
       {total !== 0 && (

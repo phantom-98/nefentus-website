@@ -1,6 +1,11 @@
 import { ethers } from "ethers";
 import { BigNumber } from "@ethersproject/bignumber";
-import { contractDeposits, currencies } from "../constants";
+import {
+  contractDeposits,
+  providerURL,
+  blockchainToWrapped,
+  blockchainToUSDC,
+} from "../constants";
 import IUniswapV3PoolABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
 import IUniswapV3FactoryABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json";
 import ERC20_ABI from "../assets/abi/ERC20_ABI.json";
@@ -9,20 +14,17 @@ import { zeroAddressToNull, toChecksumAddress } from "../utils";
 const FACTORY_CONTRACT_ADDRESS = "0x1F98431c8aD98523631AE4a59f267346ea31F984";
 const USDC_CONTRACT_ADDRESS = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
 const POOL_FEES = "500";
-const THIRDWEB_CLIENT_ID = "639eea2ebcabed7eab90b56aceeed08b";
-
-const thirdwebProvider = new ethers.providers.JsonRpcProvider(
-  "https://ethereum.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID,
-);
 
 export class uniswapApi {
-  WETH_CONTRACT_ADDRESS = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+  constructor(type, blockchain) {
+    this.blockchain = blockchain;
 
-  constructor(type) {
     if (type === "metamask") {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
     } else {
-      this.provider = thirdwebProvider;
+      this.provider = new ethers.providers.JsonRpcProvider(
+        providerURL(blockchain),
+      );
     }
 
     this.FactoryContract = new ethers.Contract(
@@ -91,7 +93,7 @@ export class uniswapApi {
 
     const poolAddress = await this.FactoryContract.getPool(
       tokenAddress,
-      USDC_CONTRACT_ADDRESS,
+      blockchainToUSDC[this.blockchain],
       POOL_FEES,
     );
     const poolContract = new ethers.Contract(
@@ -106,14 +108,14 @@ export class uniswapApi {
     if (decimalsToken0 === null || decimalsToken1 === null) {
       [decimalsToken0, decimalsToken1] = await Promise.all([
         this.getDecimals(tokenAddress),
-        this.getDecimals(USDC_CONTRACT_ADDRESS),
+        this.getDecimals(blockchainToUSDC[this.blockchain]),
       ]);
     }
 
     const price = this.calculatePoolPrice(
       sqrtPriceX96,
       tokenAddress,
-      USDC_CONTRACT_ADDRESS,
+      blockchainToUSDC[this.blockchain],
       decimalsToken0,
       decimalsToken1,
     );
@@ -122,11 +124,15 @@ export class uniswapApi {
 }
 
 export class web3Api {
-  constructor(type) {
+  constructor(type, blockchain) {
+    this.blockchain = blockchain;
+
     if (type === "metamask") {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
     } else {
-      this.provider = thirdwebProvider;
+      this.provider = new ethers.providers.JsonRpcProvider(
+        providerURL(blockchain),
+      );
     }
   }
 

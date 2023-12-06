@@ -81,10 +81,10 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
       return;
     }
 
-    // Currently not used because it is always paid in Ethereum
-    const currency = currencies[currencyIdx];
+    const currency = currencies()[currencyIdx];
     const currencyAddress = currency.address;
-    const stablecoinAddress = currencies[1].address;
+    // Get stablecoin from backend
+    const stablecoinAddress = currencies()[1].address;
     const quantity = 1;
 
     if (providerSource === "metamask") {
@@ -207,7 +207,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
                     <div className={styles.tabContent}>
                       {metamask.status === "connected" && (
                         <div className={styles.table}>
-                          {currencies.map((currency, idx) => (
+                          {currencies().map((currency, idx) => (
                             <CryptoLine
                               key={currency.abbr}
                               currency={currency}
@@ -270,7 +270,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
                       )}
                       {internalWalletAddress && (
                         <div className={styles.table}>
-                          {currencies.map((currency, idx) => (
+                          {currencies().map((currency, idx) => (
                             <CryptoLine
                               key={currency.abbr}
                               currency={currency}
@@ -297,7 +297,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
       {internalPayIdx >= 0 && (
         <Modal
           price={priceUSD}
-          currencyAbbr={currencies[internalPayIdx].abbr}
+          currencyAbbr={currencies()[internalPayIdx].abbr}
           onClose={() => setInternalPayIdx(-1)}
           onPay={() => handleBuy("internal", internalPayIdx)}
           password={password}

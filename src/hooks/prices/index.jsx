@@ -6,7 +6,7 @@ function useBalances(metamask) {
   const [prices, setPrices] = useState([initPrices(), initPrices()]);
 
   function initPrices() {
-    return currencies.map((currency) => undefined);
+    return currencies().map((currency) => undefined);
   }
 
   async function fetchPrices() {
@@ -16,7 +16,7 @@ function useBalances(metamask) {
     }
     const uniswapAPi = new uniswapApi(providerSource);
 
-    const addressesAndDecimals = currencies.map((currency) => [
+    const addressesAndDecimals = currencies().map((currency) => [
       currency.address ? currency.address : uniswapAPi.WETH_CONTRACT_ADDRESS,
       currency.decimals,
     ]);

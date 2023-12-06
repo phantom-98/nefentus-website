@@ -7,6 +7,7 @@ import Tether from "./assets/icon/crypto/tether.svg";
 import USDC from "./assets/icon/crypto/usdc.svg";
 import Ripple from "./assets/icon/crypto/xrp.svg";
 import DAI from "./assets/icon/crypto/dai.svg";
+import Doge from "./assets/icon/crypto/doge.svg";
 import SwapAndDistribute1 from "./assets/abi/SwapAndDistribute1.json";
 import SwapAndDistribute2 from "./assets/abi/SwapAndDistribute2.json";
 
@@ -20,85 +21,264 @@ export const ROLE_TO_NAME = {
   admin: "Admin",
 };
 
-export const currencyToWrapped = {
-  ETH: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+export const blockchainToWrapped = (blockchain) => {
+  if (blockchain === "ETH") {
+    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+      return {
+        address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        decimals: 18,
+      };
+    } else {
+      return {
+        address: "0xb16F35c0Ae2912430DAc15764477E179D9B9EbEa",
+        decimals: 18,
+      };
+    }
+  } else if (blockchain == "BNB") {
+    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+      return {
+        address: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+        decimals: 18,
+      };
+    } else {
+      return {
+        address: "0xae13d989dac2f0debff460ac112a837c89baa7cd",
+        decimals: 18,
+      };
+    }
+  }
 };
 
-export const currencies = [
-  {
-    icon: Ethereum,
-    name: "Ethereum",
-    abbr: "ETH",
-    address: null,
-    decimals: 18,
-  },
-  {
-    icon: Tether,
-    name: "Tether",
-    abbr: "USDT",
-    address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
-    decimals: 6,
-  },
-  {
-    icon: USDC,
-    name: "USD Coin",
-    abbr: "USDC",
-    address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-    decimals: 6,
-  },
-  {
-    icon: Bitcoin,
-    name: "Bitcoin",
-    abbr: "BTC",
-    address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
-    decimals: 8,
-  },
-  // {
-  //   icon: Binance,
-  //   name: "Binance Coin",
-  //   abbr: "BNB",
-  //   address: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-  //   decimals: 18,
-  // },
-  // {
-  //   icon: Ripple,
-  //   name: "Ripple",
-  //   abbr: "XRP",
-  //   address: "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
-  //   decimals: 18,
-  // },
-  {
-    icon: DAI,
-    name: "DAI",
-    abbr: "DAI",
-    address: "0x6b175474e89094c44da98b954eedeac495271d0f",
-    decimals: 18,
-  },
-  // {
-  //   icon: Polygon,
-  //   name: "Polygon",
-  //   abbr: "MATIC",
-  //   address: "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
-  //   decimals: 18,
-  // },
-];
+export const blockchainToUSDC = (blockchain) => {
+  if (blockchain === "ETH") {
+    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+      return {
+        address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        decimals: 6,
+      };
+    } else {
+      return {
+        address: "0x0f1a713859fB1d1afAc99Fe2D20CAf639560EC83",
+        decimals: 6,
+      };
+    }
+  } else if (blockchain == "BNB") {
+    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+      return {
+        address: "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+        decimals: 18,
+      };
+    } else {
+      return {
+        address: "0x64544969ed7ebf5f083679233325356ebe738930",
+        decimals: 18,
+      };
+    }
+  }
+};
+
+export const currencies = () => {
+  if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+    // MAINNET
+    return [
+      {
+        blockchain: "ETH",
+        icon: Ethereum,
+        name: "Ethereum",
+        abbr: "ETH",
+        address: null,
+        decimals: 18,
+      },
+      {
+        blockchain: "ETH",
+        icon: Tether,
+        name: "Tether",
+        abbr: "USDT",
+        address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        decimals: 6,
+      },
+      {
+        blockchain: "ETH",
+        icon: USDC,
+        name: "USD Coin",
+        abbr: "USDC",
+        address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        decimals: 6,
+      },
+      /*
+			{
+				icon: Bitcoin,
+				name: "Bitcoin",
+				abbr: "BTC",
+				address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+				decimals: 8,
+			},
+			*/
+      {
+        blockchain: "BNB",
+        icon: Binance,
+        name: "Binance Coin",
+        abbr: "BNB",
+        address: null,
+        decimals: 18,
+      },
+      {
+        blockchain: "BNB",
+        icon: Ripple,
+        name: "Ripple",
+        abbr: "XRP",
+        address: "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
+        decimals: 18,
+      },
+      {
+        blockchain: "ETH",
+        icon: DAI,
+        name: "DAI",
+        abbr: "DAI",
+        address: "0x6b175474e89094c44da98b954eedeac495271d0f",
+        decimals: 18,
+      },
+      {
+        blockchain: "BNB",
+        icon: Doge,
+        name: "Dogecoin",
+        abbr: "DOGE",
+        address: "0xba2ae424d960c26247dd6c32edc70b295c744c43",
+        decimals: 8,
+      },
+      // {
+      //   icon: Polygon,
+      //   name: "Polygon",
+      //   abbr: "MATIC",
+      //   address: "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
+      //   decimals: 18,
+      // },
+    ];
+  } else {
+    // TESTNET
+    return [
+      {
+        blockchain: "ETH",
+        icon: Ethereum,
+        name: "Ethereum",
+        abbr: "ETH",
+        address: null,
+        decimals: 18,
+      },
+      {
+        blockchain: "ETH",
+        icon: Tether,
+        name: "Tether",
+        abbr: "USDT",
+        address: "0x7169D38820dfd117C3FA1f22a697dBA58d90BA06",
+        decimals: 6,
+      },
+      {
+        blockchain: "ETH",
+        icon: USDC,
+        name: "USD Coin",
+        abbr: "USDC",
+        address: "0x0f1a713859fB1d1afAc99Fe2D20CAf639560EC83",
+        decimals: 6,
+      },
+      /*
+			{
+				icon: Bitcoin,
+				name: "Bitcoin",
+				abbr: "BTC",
+				address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+				decimals: 8,
+			},
+			*/
+      {
+        blockchain: "BNB",
+        icon: Binance,
+        name: "Binance Coin",
+        abbr: "BNB",
+        address: null,
+        decimals: 18,
+      },
+      /*
+			// There is no real XRP on the testnet
+			{
+				blockchain: "BNB",
+			  icon: Ripple,
+			  name: "Ripple",
+			  abbr: "XRP",
+			  address: "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
+			  decimals: 18,
+			},
+			*/
+      {
+        blockchain: "ETH",
+        icon: DAI,
+        name: "DAI",
+        abbr: "DAI",
+        address: "0x53844F9577C2334e541Aec7Df7174ECe5dF1fCf0",
+        decimals: 18,
+      },
+      {
+        blockchain: "BNB",
+        icon: Doge,
+        name: "Dogecoin",
+        abbr: "DOGE",
+        address: "0xebef27461fe0c88bd5d6829de7226d68fce021c1",
+        decimals: 8,
+      },
+      // {
+      //   icon: Polygon,
+      //   name: "Polygon",
+      //   abbr: "MATIC",
+      //   address: "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
+      //   decimals: 18,
+      // },
+    ];
+  }
+};
 
 export const ownerAddress = "0xBE011f8F08d05feCc83abeabb6C38b987B9bdD45";
 
 export const transactionLimit = 10000;
 
-export const contractDeposits = [
-  {
-    id: 1,
-    address: "0xC5a70e940925cBF02F093C8Fb20a7202D7afE2C4",
-    abi: SwapAndDistribute1,
-  },
-  {
-    id: 2,
-    address: "0xd577766dd079c123ce677b8a27f9a01e5f4c9905",
-    abi: SwapAndDistribute2,
-  },
-];
+export const contractDeposits = () => {
+  if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+    // MAINNET
+    return {
+      id: 2, // Not used right now!
+      address: "0xd577766dd079c123ce677b8a27f9a01e5f4c9905",
+      abi: SwapAndDistribute2,
+    };
+  } else {
+    // TESTNET
+    return {
+      id: 1,
+      address: "0xabcdefg",
+      abi: SwapAndDistribute1,
+    };
+  }
+};
+
+const THIRDWEB_CLIENT_ID = "639eea2ebcabed7eab90b56aceeed08b";
+
+export const providerURL = (blockchain) => {
+  if (blockchain === "ETH") {
+    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+      // MAINNET
+      return "https://ethereum.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
+    } else {
+      // TESTNET
+      return "https://ethereum.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
+    }
+  } else if (blockchain === "BNB") {
+    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+      // MAINNET
+      return "https://binance.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
+    } else {
+      // TESTNET
+      return "https://binance-testnet.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
+    }
+  }
+};
 
 export const coinList = [
   {

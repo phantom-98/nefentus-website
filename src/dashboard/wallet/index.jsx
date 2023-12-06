@@ -149,7 +149,9 @@ const Balances = ({
   walletAddress,
   fetchBalances,
 }) => {
-  const [withdrawCurrency, setWithdrawCurrency] = useState(currencies[0].abbr);
+  const [withdrawCurrency, setWithdrawCurrency] = useState(
+    currencies()[0].abbr,
+  );
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawAddress, setWithdrawAddress] = useState("");
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
@@ -164,7 +166,7 @@ const Balances = ({
 
   function calculateTotalBalanceUSD() {
     let totalBalanceUSD = 0.0;
-    for (let i = 0; i < currencies.length; i++) {
+    for (let i = 0; i < currencies().length; i++) {
       let balanceUSD = 0.0;
       if (balances[i]) {
         const balanceToken = balances[i];
@@ -193,7 +195,7 @@ const Balances = ({
       setErrorMessage(t("messages.validation.password"));
       return;
     }
-    const sendCurrency = currencies.find(
+    const sendCurrency = currencies().find(
       (currency) => currency.abbr === withdrawCurrency,
     );
     if (!sendCurrency) {
@@ -303,7 +305,7 @@ const Balances = ({
           </div>
 
           <div className={styles.table}>
-            {currencies.map((currency, idx) => (
+            {currencies().map((currency, idx) => (
               <CryptoLine
                 key={currency.abbr}
                 currency={currency}
@@ -321,7 +323,7 @@ const Balances = ({
             <Options
               label="Currency options"
               value={withdrawCurrency}
-              options={currencies.map((item) => item.abbr)}
+              options={currencies().map((item) => item.abbr)}
               setValue={setWithdrawCurrency}
               dashboard
             />
