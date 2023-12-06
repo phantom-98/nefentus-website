@@ -1,32 +1,59 @@
 import { useState } from "react";
 import Card from "../card/card";
 
-import styles from "./profileCard.module.css";
+import Clipboard from "../../../assets/icon/clipboard.svg";
 
-const ProfileCard = () => {
-  const [profileImage, setProfileImage] = useState(
-    "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3161&q=80",
-  );
+import styles from "./profileCard.module.css";
+import useInternalWallet from "../../../hooks/internalWallet";
+
+import ProfileImg from "../../../assets/icon/user.svg";
+
+const ProfileCard = ({ type }) => {
+  const [firstName] = useState(localStorage.getItem("firstName"));
+  const [lastName] = useState(localStorage.getItem("lastName"));
+  const [email] = useState(localStorage.getItem("email"));
+  const [profileImage] = useState(localStorage.getItem("profile_pic"));
+  let internalWalletAddress = useInternalWallet();
 
   return (
     <Card className={styles.profileCard}>
       <div className={styles.profileWrapper}>
         <div className={styles.profileImage}>
-          <img src={profileImage} alt="" />
+          <img
+            src={profileImage !== "null" ? profileImage : ProfileImg}
+            alt=""
+          />
         </div>
         <div>
-          <p className={styles.main}>Erin Vaccaro</p>
-          <p className={styles.subtitle}>erin.vaccaro@gmail.com</p>
+          <p className={styles.main}>{`${firstName} ${lastName}`}</p>
+          <p className={styles.subtitle}>{email}</p>
         </div>
       </div>
-      <div>
-        <p className={styles.main}>Wallet:</p>
-        <p className={styles.subtitle}>0x5A1B3D9fC8bEeD74008</p>
-      </div>
-      <div>
-        <p className={styles.main}>Plan:</p>
-        <p className={styles.subtitle}>Enterprise</p>
-      </div>
+
+      {type === "affiliate" ? (
+        <>
+          <div>
+            <p className={styles.main}>Affiliate link:</p>
+            <div className={styles.link}>
+              <img src={Clipboard} alt="" />
+              <p className={styles.subtitle}>
+                https://nefentus.com/affiliate=ccc738232
+              </p>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div>
+            <p className={styles.main}>Wallet:</p>
+            <p className={styles.subtitle}>{internalWalletAddress}</p>
+          </div>
+          <div>
+            <p className={styles.main}>Plan:</p>
+            <p className={styles.subtitle}>Enterprise</p>
+          </div>
+        </>
+      )}
     </Card>
   );
 };

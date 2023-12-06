@@ -35,18 +35,6 @@
   opacity: 0.6;
 }
 
-.profileImage {
-  height: 2.5rem;
-  width: 2.5rem;
-  border-radius: 50%;
-}
-
-.profileImage img {
-  object-fit: cover;
-  height: 100% !important;
-  width: 100% !important;
-}
-
 .mobMenu {
   display: none;
 }
@@ -101,6 +89,7 @@
   transition: 0.5s ease-out;
 }
 
+/*  */
 @media (max-width: 900px) {
   .rightSide {
     gap: 0rem;

@@ -34,6 +34,21 @@
   opacity: 0.6;
 }
 
+.link {
+  display: flex;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.link img {
+  width: 0.8rem;
+  opacity: 0.6;
+}
+
+.link .subtitle {
+  transform: translateY(2px);
+}
+
 @media (max-width: 900px) {
   .profileCard {
     flex-direction: column;

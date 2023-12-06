@@ -1,19 +1,27 @@
 import styles from "./layout.module.css";
 import Button from "./../button/button";
 
-import Android from "../../assets/icon/android2.svg";
+import Google from "../../assets/icon/google.svg";
 import Apple from "../../assets/icon/apple2.svg";
 import Chevron from "../../assets/icon/chevron.svg";
+
+import Mega from "../../assets/icon/mega.svg";
+
+import QR from "../../assets/icon/qrcode.svg";
 
 import Dummy from "../../assets/image/dummy.webp";
 
 import Checkmark from "../../assets/icon/singleCheckmark.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import backendAPI from "../../api/backendAPI";
+import Error from "../error/error";
+import Input from "../input/input";
 
 const Layout = ({
   heading,
+  home,
   title,
   load = false,
   description,
@@ -29,10 +37,14 @@ const Layout = ({
   children,
 }) => {
   const { t } = useTranslation();
+  const backend_API = new backendAPI();
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const content = t("affiliate.affiliateList", { returnObjects: true });
 
   const videoRef = useRef(null);
+  const [email, setEmail] = useState("");
 
   const handleLoad = (event) => {
     if (videoRef.current) {
@@ -49,11 +61,21 @@ const Layout = ({
     }
   };
 
+  const handleEnterEmail = async () => {
+    const result = await backend_API.registerByEmail(email);
+
+    if (result) {
+      navigate("/dashboard");
+    } else {
+      setErrorMessage("Email already exists");
+    }
+  };
+
   return (
     <div
-      className={`${styles.layout} ${heading ? styles.hero : ""} ${
+      className={`container ${styles.layout} ${heading ? styles.hero : ""} ${
         heading || load ? "load hero" : ""
-      } container`}
+      }`}
     >
       <div
         className={heading || load ? "" : "scroll"}
@@ -66,7 +88,60 @@ const Layout = ({
         {title && <h3>{title}</h3>}
 
         {description && (
-          <p className={`standard ${styles.description}`}>{description}</p>
+          <div className={styles.descriptionWrapper}>
+            {home && <img src={Mega} alt="" />}
+            <p
+              style={{ fontSize: home ? "1.2rem" : "" }}
+              className={`standard ${styles.description}`}
+            >
+              {description}
+            </p>
+          </div>
+        )}
+
+        {home && (
+          <>
+            <div className={styles.inputHero}>
+              <div className={styles.inputWrapper}>
+                <Error error={errorMessage} />
+                <Input
+                  placeholder="Email"
+                  value={email}
+                  setState={(newEmail) => setEmail(newEmail)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleEnterEmail();
+                  }}
+                />
+              </div>
+              {button && (
+                <Button onClick={() => handleEnterEmail()}>{button}</Button>
+              )}
+            </div>
+            <div className={styles.connectWrapper}>
+              <div className={styles.connect}>
+                <p>{t("home.connectWith")}</p>
+
+                <div className={styles.iconWrapper}>
+                  <div className={styles.iconBox}>
+                    <img src={Google} alt="" />
+                  </div>
+                  <div className={styles.iconBox}>
+                    <img src={Apple} alt="" />
+                  </div>
+                </div>
+              </div>
+
+              <div className={`${styles.connect} ${styles.connect2}`}>
+                <p>{t("home.appDownload")}</p>
+
+                <div className={styles.iconWrapper}>
+                  <div className={styles.iconBox}>
+                    <img src={QR} alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
         )}
 
         {list && (
@@ -90,36 +165,11 @@ const Layout = ({
           </div>
         )}
 
-        <div className={styles.buttonWrapper}>
-          {button && <Button link="/signup">{button}</Button>}
-          {button2 && (
-            <div className={styles.button}>
-              <p>{button2}</p>
-              <div className={styles.imgWrapper}>
-                <img src={Chevron} alt="chevron arrow" />
-
-                <div className={styles.buttonLine}></div>
-              </div>
-            </div>
-          )}
-
-          {store && (
-            <div className={styles.store}>
-              <p className="standard">{t("home.heroAvailable")}</p>
-
-              <div className={styles.buttonWrapperMob}>
-                <Button link="/" color="white">
-                  <img src={Android} alt="android logo" />
-                  <span>Play Store</span>
-                </Button>
-                <Button link="/" color="white">
-                  <img src={Apple} alt="apple logo" />
-                  <span>App Store</span>
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
+        {!home && button && (
+          <div className={styles.buttonWrapper}>
+            <Button link="/signup">{button}</Button>
+          </div>
+        )}
       </div>
       {!video && !children && (
         <img
@@ -151,7 +201,11 @@ const Layout = ({
       {children && (
         <div
           className={`${
-            heading || load ? "" : reverse ? "slide-right" : "slide-left"
+            heading || load
+              ? "load hero"
+              : reverse
+              ? "slide-right"
+              : "slide-left"
           } ${full ? styles.full : ""}`}
           style={{ order: reverse ? 1 : 2 }}
         >

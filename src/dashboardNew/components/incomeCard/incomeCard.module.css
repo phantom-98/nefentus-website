@@ -1,7 +1,13 @@
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
 .label {
   font-size: 1.6rem;
 }
 
 .chart {
-  height: 25rem;
+  min-height: 25rem;
+  height: 100%;
 }

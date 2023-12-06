@@ -26,13 +26,15 @@ const Prices = () => {
     };
     getPrices();
   }, []);
+
   return (
     prices && (
       <div className={`card ${styles.priceCard}`}>
+        <h2>{t("home.latestPrices")}</h2>
         <div className={styles.container}>
-          {prices?.map((price) => {
+          {prices?.map((price, index) => {
             return (
-              <div className={styles.price_box}>
+              <div className={styles.price_box} key={index}>
                 <div className={styles.main_info}>
                   <img
                     src={price.icon}

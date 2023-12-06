@@ -1,0 +1,147 @@
+.popup {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: rgba(16, 16, 16, 0.3);
+}
+
+.popupBox {
+  width: max-content;
+  max-height: 86vh;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  overflow-y: auto;
+}
+
+.popupBox .title {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  width: 100%;
+}
+
+.buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+.verifyPopup > .popupBox,
+.paymentPopup > .popupBox {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.verifyPopup img,
+.paymentPopup img {
+  margin-bottom: 1.5rem;
+}
+
+.close {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  cursor: pointer;
+}
+
+.verifyPopup .title {
+  margin-bottom: 0.5rem;
+}
+
+.paymentPopup .title {
+  font-size: 2rem;
+  margin-bottom: 0;
+}
+
+.paymentPopup .description {
+  width: 100%;
+  text-align: left;
+}
+
+.description {
+  width: 40rem;
+  text-align: center;
+  font-size: 1.4rem;
+  opacity: 0.6;
+}
+
+.paymentPopup .description {
+  font-size: 1.2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.body {
+  padding: 2rem 0;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+}
+
+.body .row,
+.linkRow {
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.row p:first-child,
+.linkRow p:first-child {
+  opacity: 0.6;
+}
+
+.linkRow {
+  width: 100%;
+  padding: 2rem 0;
+  margin-bottom: 1rem;
+}
+
+.linkRow div:last-child {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.linkRow img {
+  width: 0.8rem;
+  margin-bottom: 0;
+}
+
+.linkRow div:last-child p {
+  transform: translateY(2px);
+}
+
+.resend {
+  font-size: 1.2rem;
+  margin-top: 2rem;
+}
+
+.paymentButtons {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 650px) {
+  .description {
+    width: initial;
+  }
+
+  .popupBox {
+    width: 90%;
+  }
+}

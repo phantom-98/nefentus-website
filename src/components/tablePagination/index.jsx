@@ -10,6 +10,7 @@ const TablePagination = ({
   colHighlighted,
   striped,
   className,
+  setDataPage,
 }) => {
   const [pageData, setPageData] = useState([]);
 
@@ -20,7 +21,7 @@ const TablePagination = ({
 
   return (
     <>
-      <Table
+      {/* <Table
         headers={headers}
         data={pageData}
         colSizes={colSizes}
@@ -28,9 +29,13 @@ const TablePagination = ({
         colHighlighted={colHighlighted}
         striped={striped}
         className={className}
-      />
+      /> */}
 
-      <Pagination renderItems={renderItems} data={data} />
+      <Pagination
+        setDataPage={setDataPage}
+        renderItems={renderItems}
+        data={data}
+      />
     </>
   );
 };

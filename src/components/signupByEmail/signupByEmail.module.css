@@ -1,0 +1,146 @@
+.errormessagecontainer {
+  background-color: #ffcccc;
+  color: red;
+  border: 1px solid red;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.messagecontainer {
+  background-color: #ccffcc;
+  color: green;
+  border: 1px solid green;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 5rem 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.closeWrapper {
+  position: absolute;
+  top: 2rem;
+  right: 10rem;
+}
+
+.closeWrapper > div > a > div {
+  padding: 1rem 3rem;
+}
+
+.left h2 {
+  margin-bottom: 1rem;
+}
+
+.left p:nth-child(2) {
+  font-size: 1.6rem;
+  opacity: 0.8;
+  max-width: 50rem;
+  line-height: 140%;
+  margin-bottom: 2rem;
+}
+
+.left p:nth-child(3) {
+  font-size: 1.2rem;
+  opacity: 0.42;
+}
+
+.left img {
+  margin-bottom: 2.5rem;
+  height: 3rem;
+}
+
+.right {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+
+  justify-content: center;
+
+  gap: 2rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.button {
+  width: max-content !important;
+
+  justify-content: center;
+  display: flex;
+}
+
+.right > p {
+  font-size: 1.2rem;
+  /* text-align: center; */
+  opacity: 0.42;
+  font-weight: 400;
+}
+
+.right > p > b {
+  font-weight: 500;
+}
+
+.buttonWrapper {
+  margin-top: 1rem;
+  width: 20rem;
+}
+
+.formAgreement {
+  font-size: 1rem !important;
+}
+
+@media (max-width: 1200px) {
+  .signup {
+    padding: 5rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .signup {
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+    padding: 5rem 3rem;
+    gap: 5rem;
+    /* padding-top: 10rem; */
+  }
+
+  .closeWrapper {
+    display: none;
+  }
+
+  .left {
+    border: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+  }
+
+  .right {
+    height: max-content;
+    border-radius: 2.5rem 2.5rem 0 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 550px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

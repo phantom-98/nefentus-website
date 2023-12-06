@@ -2,7 +2,7 @@ import styles from "./input.module.css";
 import Delete from "../../assets/icon/delete.svg";
 
 import AttachmentImage from "../../assets/icon/attachment.svg";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Input = ({
   label,
@@ -25,12 +25,6 @@ const Input = ({
         <div className={styles["radio-group"]}>
           {options.map((option) => (
             <div key={option.value} className={styles["radio"]}>
-              {console.log(
-                "checked",
-                value,
-                option.value,
-                value === option.value,
-              )}
               <input
                 type="radio"
                 id={`${label} - ${option.name}`}
@@ -151,22 +145,110 @@ export const Attachment = ({ label, onUpload, onDelete, value }) => {
   );
 };
 
-export const Authentificator = ({ handleClick, placeholder, connected }) => {
+export const Switcher = ({ title, checked, setChecked }) => {
   return (
-    <div className={styles.input}>
-      <p>Authentificator</p>
-
-      <div
-        className={styles.attachment}
-        style={{ color: connected ? "#fff" : "#c4c4c4" }}
-        onClick={handleClick}
-      >
-        {placeholder}
-
-        <div className={styles.status}>
-          {connected ? "Connected" : "Not connected"}
-        </div>
+    <div className={`${styles.input} ${styles.inputAuthentificator} `}>
+      <p>{title}</p>
+      <div className={styles.inputSwitcher}>
+        <label className={styles.switch}>
+          <input
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+            type="checkbox"
+          />
+          <span className={`${styles.slider} ${styles.round}`}></span>
+        </label>
       </div>
+    </div>
+  );
+};
+
+export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag, request }) => {
+  const inputRefs = Array(6)
+    .fill()
+    .map(() => useRef(null));
+  const [code, setCode] = useState(Array(6).fill(""));
+
+  useEffect(() => {
+    if (resetCodeFlag) {
+      setCode(Array(6).fill(""));
+      inputRefs[0].current.focus();
+    }
+  }, [resetCodeFlag]);
+
+  const handleCodeChange = (e, index) => {
+    const value = e.target.value;
+
+    if (!/^[0-9]*$/.test(value)) {
+      return;
+    }
+
+    let newCode = [...code];
+    newCode[index] = value;
+    setCode(newCode);
+
+    if (index < 6 - 1 && value !== "") {
+      inputRefs[index + 1].current.focus();
+    }
+
+    if (value === "" && index > 0) {
+      inputRefs[index].current.focus();
+    }
+
+    if (newCode[index + 1] && newCode[index - 1] && value === "") {
+      inputRefs[index].current.focus();
+    }
+
+    if (index === 0 && value.length === 6) {
+      setCode(value.split(""));
+      newCode = value.split("");
+    }
+
+    if (!newCode.includes("")) {
+      setOTPCode(newCode.join(""));
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && index > 0 && code[index] === "") {
+      inputRefs[index - 1].current.focus();
+    }
+  };
+
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      request();
+    }
+  };
+
+  return (
+    <div className={styles.OTPInputWrap}>
+      {code.map((value, index) =>
+        index === 0 ? (
+          <input
+            className={styles.OTPInput}
+            key={index}
+            type="text"
+            value={value}
+            ref={inputRefs[index]}
+            onChange={(e) => handleCodeChange(e, index)}
+            onKeyDown={(e) => handleKeyDown(e, index)}
+            onKeyPress={handleEnterKeyPress}
+          />
+        ) : (
+          <input
+            className={styles.OTPInput}
+            key={index}
+            type="text"
+            value={value}
+            ref={inputRefs[index]}
+            onChange={(e) => handleCodeChange(e, index)}
+            onKeyDown={(e) => handleKeyDown(e, index)}
+            maxLength={1}
+            onKeyPress={handleEnterKeyPress}
+          />
+        ),
+      )}
     </div>
   );
 };

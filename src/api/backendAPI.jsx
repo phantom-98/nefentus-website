@@ -55,6 +55,129 @@ export default class backendAPI {
     }
   }
 
+  async registerByEmail(email) {
+    try {
+      const url = `${this.baseURL}/auth/register/email`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      } else {
+        const data = await response.json();
+        setCookie("token", data.jwtToken);
+        localStorage.setItem("token", data.jwtToken);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("contactEmail", data.contactEmail);
+        localStorage.setItem("affiliateLink", data.affiliateLink);
+        localStorage.setItem("firstName", data.firstName);
+        localStorage.setItem("lastName", data.lastName);
+        localStorage.setItem("business", data.business);
+        localStorage.setItem("phoneNumber", data.phoneNumber);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("profile_pic", data.profileImage);
+        localStorage.setItem("roles", data.roles);
+        localStorage.setItem("country", data.country);
+        localStorage.setItem("hasTotp", data.hasTotp);
+        // localStorage.setItem("requireKyc", data.requireKyc);
+        localStorage.setItem("hasOtp", data.hasOtp);
+        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+        localStorage.setItem("marketingUpdates", data.marketingUpdates);
+        localStorage.setItem("emailNotifications", data.emailNotifications);
+        localStorage.setItem("appNotifications", data.appNotifications);
+        localStorage.setItem("notificationLanguage", data.notificationLanguage);
+        localStorage.setItem("enableInvoicing", data.enableInvoicing);
+
+        ReactGA.event({
+          category: "User",
+          action: "login",
+          label: data.email,
+        });
+
+        return data;
+      }
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async updateUserByEmail(updateRequest) {
+    try {
+      const url = `${this.baseURL}/auth/update/email`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateRequest),
+      };
+      const response = await fetch(url, options);
+
+      if (!response.ok) {
+        if (response.status === 500) {
+          throw new Error("Internal Server Error");
+        }
+
+        return response.text().then((error) => {
+          try {
+            const errorData = JSON.parse(error);
+            const valueArray = Object.values(errorData);
+            throw new Error(valueArray[0]);
+          } catch (e) {
+            if (e instanceof SyntaxError) {
+              throw new Error(error);
+            } else {
+              throw e;
+            }
+          }
+        });
+      } else {
+        const data = await response.json();
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("contactEmail", data.contactEmail);
+        localStorage.setItem("affiliateLink", data.affiliateLink);
+        localStorage.setItem("firstName", data.firstName);
+        localStorage.setItem("lastName", data.lastName);
+        localStorage.setItem("business", data.business);
+        localStorage.setItem("phoneNumber", data.phoneNumber);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("profile_pic", data.profileImage);
+        localStorage.setItem("roles", data.roles);
+        localStorage.setItem("country", data.country);
+        localStorage.setItem("hasTotp", data.hasTotp);
+        // localStorage.setItem("requireKyc", data.requireKyc);
+        localStorage.setItem("hasOtp", data.hasOtp);
+        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+        localStorage.setItem("marketingUpdates", data.marketingUpdates);
+        localStorage.setItem("emailNotifications", data.emailNotifications);
+        localStorage.setItem("appNotifications", data.appNotifications);
+        localStorage.setItem("notificationLanguage", data.notificationLanguage);
+        localStorage.setItem("enableInvoicing", data.enableInvoicing);
+
+        window.dispatchEvent(new Event("storage"));
+
+        ReactGA.event({
+          category: "User",
+          action: "login",
+          label: data.email,
+        });
+
+        return data;
+      }
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async forgotPassword(email) {
     try {
       const url = `${this.baseURL}/auth/forgot-password`;
@@ -193,11 +316,194 @@ export default class backendAPI {
       localStorage.setItem("lastName", data.lastName);
       localStorage.setItem("business", data.business);
       localStorage.setItem("phoneNumber", data.phoneNumber);
+      localStorage.setItem("country", data.country);
       localStorage.setItem("username", data.username);
       localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+      localStorage.setItem("marketingUpdates", data.marketingUpdates);
+      localStorage.setItem("emailNotifications", data.emailNotifications);
+      localStorage.setItem("appNotifications", data.appNotifications);
+      localStorage.setItem("notificationLanguage", data.notificationLanguage);
+      localStorage.setItem("enableInvoicing", data.enableInvoicing);
       return response;
     } catch (error) {
       return null; // or return some default value
+    }
+  }
+
+  async setPhishingCode(code) {
+    try {
+      const url = `${this.baseURL}/auth/setup/antiPhishingCode`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(code),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      return response.text();
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async updateFirstName(firstName) {
+    try {
+      const url = `${this.baseURL}/auth/update/first-name`;
+      const options = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify({ firstName }),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data);
+      localStorage.setItem("firstName", firstName);
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async updateLastName(lastName) {
+    try {
+      const url = `${this.baseURL}/auth/update/last-name`;
+      const options = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify({ lastName }),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data);
+      localStorage.setItem("lastName", lastName);
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async getTotpToken(data) {
+    try {
+      const url = `${this.baseURL}/auth/setup/getTotpToken`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(data),
+      };
+      return (await fetch(url, options)).text();
+    } catch (e) {
+      throw new Error("Network response was not ok");
+    }
+  }
+
+  async verifyTotpToken(email, code, checkbox) {
+    try {
+      const url = `${this.baseURL}/auth/verify/totp`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          token: code,
+          rememberMe: checkbox,
+        }),
+      };
+      const response = await fetch(url, options);
+
+      // if (!response.ok) {
+      //   throw new Error("Network response was not ok");
+      // }
+
+      if (response.ok) {
+        const data = await response.json();
+        setCookie("token", data.jwtToken);
+        localStorage.setItem("token", data.jwtToken);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("contactEmail", data.contactEmail);
+        localStorage.setItem("affiliateLink", data.affiliateLink);
+        localStorage.setItem("firstName", data.firstName);
+        localStorage.setItem("lastName", data.lastName);
+        localStorage.setItem("business", data.business);
+        localStorage.setItem("phoneNumber", data.phoneNumber);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("profile_pic", data.profileImage);
+        localStorage.setItem("roles", data.roles);
+        localStorage.setItem("country", data.country);
+        localStorage.setItem("hasTotp", data.hasTotp);
+        // localStorage.setItem("requireKyc", data.requireKyc);
+        localStorage.setItem("hasOtp", data.hasOtp);
+        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+
+        ReactGA.event({
+          category: "User",
+          action: "login",
+          label: data.email,
+        });
+      }
+
+      return response;
+    } catch (e) {
+      console.log(e, "responseresponse");
+
+      return e;
+    }
+  }
+
+  async setupTotp(data) {
+    try {
+      const url = `${this.baseURL}/auth/setup/totp`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(data),
+      };
+      return await fetch(url, options);
+    } catch (e) {
+      throw new Error("Network response was not ok");
+    }
+  }
+
+  async setupOtp(data) {
+    try {
+      const url = `${this.baseURL}/auth/setup/otp`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(data),
+      };
+      return await fetch(url, options);
+    } catch (e) {
+      throw new Error("Network response was not ok");
     }
   }
 
@@ -287,7 +593,7 @@ export default class backendAPI {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      if (!data.requireOtp) {
+      if (!data.hasOtp) {
         setCookie("token", data.jwtToken);
         localStorage.setItem("token", data.jwtToken);
         localStorage.setItem("email", data.email);
@@ -301,11 +607,16 @@ export default class backendAPI {
         localStorage.setItem("profile_pic", data.profileImage);
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
-        localStorage.setItem("isMfa", data.isMfa);
-        localStorage.setItem("requireKyc", data.requireKyc);
-        localStorage.setItem("requireOtp", data.requireOtp);
+        localStorage.setItem("hasTotp", data.hasTotp);
+        // localStorage.setItem("requireKyc", data.requireKyc);
+        localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+        localStorage.setItem("marketingUpdates", data.marketingUpdates);
+        localStorage.setItem("emailNotifications", data.emailNotifications);
+        localStorage.setItem("appNotifications", data.appNotifications);
+        localStorage.setItem("notificationLanguage", data.notificationLanguage);
+        localStorage.setItem("enableInvoicing", data.enableInvoicing);
       }
 
       ReactGA.event({
@@ -338,31 +649,41 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      const data = await response.json();
-      setCookie("token", data.jwtToken);
-      localStorage.setItem("token", data.jwtToken);
-      localStorage.setItem("email", data.email);
-      localStorage.setItem("contactEmail", data.contactEmail);
-      localStorage.setItem("affiliateLink", data.affiliateLink);
-      localStorage.setItem("firstName", data.firstName);
-      localStorage.setItem("lastName", data.lastName);
-      localStorage.setItem("business", data.business);
-      localStorage.setItem("phoneNumber", data.phoneNumber);
-      localStorage.setItem("username", data.username);
-      localStorage.setItem("profile_pic", data.profileImage);
-      localStorage.setItem("roles", data.roles);
-      localStorage.setItem("country", data.country);
-      localStorage.setItem("isMfa", data.isMfa);
-      localStorage.setItem("requireKyc", data.requireKyc);
-      localStorage.setItem("requireOtp", data.requireOtp);
-      localStorage.setItem("userId", data.userId);
-      localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
 
-      ReactGA.event({
-        category: "User",
-        action: "login",
-        label: data.email,
-      });
+      const data = await response.json();
+      const step = data.hasOtp !== data.hasTotp;
+
+      if (step) {
+        setCookie("token", data.jwtToken);
+        localStorage.setItem("token", data.jwtToken);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("contactEmail", data.contactEmail);
+        localStorage.setItem("affiliateLink", data.affiliateLink);
+        localStorage.setItem("firstName", data.firstName);
+        localStorage.setItem("lastName", data.lastName);
+        localStorage.setItem("business", data.business);
+        localStorage.setItem("phoneNumber", data.phoneNumber);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("profile_pic", data.profileImage);
+        localStorage.setItem("roles", data.roles);
+        localStorage.setItem("country", data.country);
+        localStorage.setItem("hasTotp", data.hasTotp);
+        // localStorage.setItem("requireKyc", data.requireKyc);
+        localStorage.setItem("hasOtp", data.hasOtp);
+        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+        localStorage.setItem("marketingUpdates", data.marketingUpdates);
+        localStorage.setItem("emailNotifications", data.emailNotifications);
+        localStorage.setItem("appNotifications", data.appNotifications);
+        localStorage.setItem("notificationLanguage", data.notificationLanguage);
+        localStorage.setItem("enableInvoicing", data.enableInvoicing);
+
+        ReactGA.event({
+          category: "User",
+          action: "login",
+          label: data.email,
+        });
+      }
 
       return response;
     } catch (error) {
@@ -568,6 +889,21 @@ export default class backendAPI {
     }
   }
 
+  async isRequiredKYC() {
+    try {
+      const userId = localStorage.getItem("userId");
+      const url = `${this.baseURL}/auth/${userId}/is-required-kyc`;
+
+      const options = {
+        method: "GET",
+      };
+      const response = await fetch(url, options);
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async uploadKYCByType(type, file) {
     try {
       if (!file) {
@@ -577,6 +913,34 @@ export default class backendAPI {
       const userId = localStorage.getItem("userId");
       const url = `${this.baseURL}/auth/${userId}/upload_kyc?type=${type}`;
       formData.append("file", file);
+
+      const options = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: formData,
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async uploadKYCByText(type, content) {
+    try {
+      if (!content) {
+        return null;
+      }
+      const formData = new FormData();
+      const userId = localStorage.getItem("userId");
+      const url = `${this.baseURL}/auth/${userId}/upload_kyc_text?type=${type}`;
+      formData.append("content", content);
       const options = {
         method: "POST",
         headers: {
@@ -597,8 +961,27 @@ export default class backendAPI {
 
   async getByKYC(type, userId) {
     try {
-      // const userId = localStorage.getItem("userId");
       const url = `${this.baseURL}/auth/${userId}/kyc-image-url?type=${type}`;
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return { [type]: data };
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async getByKYCText(type, userId) {
+    try {
+      const url = `${this.baseURL}/auth/${userId}/kyc-text-url?type=${type}`;
       const options = {
         method: "GET",
         headers: {
@@ -632,9 +1015,12 @@ export default class backendAPI {
       const data = await response.json();
       return data;
     } catch (error) {
+      console.log(error);
+
       return null; // or return some default value
     }
   }
+
   async deleteProfileImage() {
     try {
       const url = `${this.baseURL}/auth/deleteImage`;
@@ -658,27 +1044,6 @@ export default class backendAPI {
     }
   }
 
-  async getByKYC(type) {
-    try {
-      const userId = localStorage.getItem("userId");
-      const url = `${this.baseURL}/auth/${userId}/kyc-image-url?type=${type}`;
-      const options = {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      };
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      return { [type]: data };
-    } catch (error) {
-      return null; // or return some default value
-    }
-  }
-
   async getWalletAddresses() {
     try {
       const url = `${this.baseURL}/wallet/addresses`;
@@ -693,6 +1058,7 @@ export default class backendAPI {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
+      console.log(data);
       return data;
     } catch (error) {
       return null; // or return some default value

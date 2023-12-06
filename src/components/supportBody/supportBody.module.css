@@ -104,7 +104,7 @@
 }
 
 .active {
-  background-color: var(--white-color) !important;
+  background: var(--white-color) !important;
   color: var(--black-color) !important;
 }
 

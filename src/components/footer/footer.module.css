@@ -1,159 +1,189 @@
 .footer {
   border-radius: 0 !important;
-  background-color: var(--black-color);
 }
 
-.top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.footerContainer {
+  display: grid;
+  grid-template-columns: 1fr max-content;
   padding-top: 4rem;
   padding-bottom: 4rem;
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.content {
-  gap: 4rem;
-  position: relative;
-  top: 3px;
-  align-items: center;
+.leftBox {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
-.top img {
+.left {
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 10rem;
+}
+
+.left img {
   height: 3rem;
 }
 
-.content .label {
+.content {
+  display: flex;
+  width: 100%;
+}
+
+.linkWrapper {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: max-content;
+  gap: 3rem;
+}
+
+.linkBox {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  grid-template-rows: max-content;
+  gap: 2rem;
+}
+
+.linkBox p {
+  font-size: 1.4rem;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: 0.5s ease-out;
+}
+
+.linkBox p:hover {
+  opacity: 1;
+}
+
+.linkBox .contentLabel {
   font-size: 1.8rem;
-  font-weight: 500;
-  margin-bottom: 3rem;
+  font-weight: 600;
+  opacity: 1;
+  pointer-events: none;
 }
 
-.buttonWrapper img {
-  height: 2rem;
-  /* background-color: white; */
-  /* padding: 2rem; */
+.linkBox:nth-child(1) {
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.buttonWrapper > div > a > div {
-  padding: 1rem 1.5rem !important;
-  font-size: 1.4rem;
+.socialBox {
+  background-color: rgba(255, 255, 255, 0.04);
+  padding: 2rem 0 0 2rem;
 }
 
-.buttonWrapper p {
-  position: relative;
-  top: 2px;
+.socialBox h3 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
 }
 
-.footer ul {
-  display: flex;
-  flex-wrap: wrap;
-  align-self: center;
-  justify-content: center;
-  column-gap: 3rem;
-  row-gap: 1.5rem;
-}
-
-.footer ul li {
-  list-style-type: none;
-  font-size: 1.4rem;
-  color: fff;
-  transition: 0.25s ease-out;
-}
-
-.footer ul li:hover {
-  opacity: 0.6;
-}
-
-.bottomList li {
-  opacity: 0.6;
-}
-
-.bottomList li:hover {
-  opacity: 1 !important;
-}
-
-.copyright {
-  display: flex;
-  justify-content: space-between;
-  padding: 3rem 0;
-}
-
-.copyright p {
-  font-size: 1.4rem;
-  color: #fff;
-  opacity: 0.6;
-  font-weight: 500;
-}
-
-.footer .icons {
-  margin-left: 2.5rem;
+.icons {
   display: flex;
   align-items: center;
   gap: 2rem;
 }
 
-.buttonWrapper {
-  margin-left: 2rem;
-}
-
-.footer .icons img {
+.icons img {
+  opacity: 0.6;
   height: 1.6rem;
+  cursor: pointer;
+  transition: 0.5s ease-out;
 }
 
-.footer .icons > a > img {
-  position: relative;
-  top: 2px;
+.icons img:hover {
+  opacity: 1;
+}
+
+.boxBottom {
+  margin-top: 10rem;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.boxBottom p {
+  line-height: 140%;
+  opacity: 0.8;
+}
+
+.arrowWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7rem;
+  width: 7rem;
+  cursor: pointer;
+}
+
+.arrowWrapper svg path,
+.arrowWrapper svg rect {
+  transition: 0.5s ease-out;
+}
+.arrowWrapper:hover svg path {
+  fill: rgb(7, 132, 181);
+}
+
+.arrowWrapper:hover svg rect {
+  stroke: rgb(7, 132, 181);
+}
+
+.copyright {
+  opacity: 0.4;
+  line-height: 140%;
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+.copyrightMob {
+  display: none;
 }
 
 @media (max-width: 900px) {
-  .top {
+  .footerContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
     flex-direction: column;
-    align-items: center;
-    gap: 5rem;
+    gap: 4rem;
+    align-items: flex-start;
   }
 
-  .top img {
-    width: auto !important;
-  }
-
-  .footer ul {
-    width: 70%;
-  }
-
-  .content {
-    flex-direction: column;
-
-    gap: 0rem;
-  }
-
-  .content .label {
+  .linkWrapper {
+    grid-template-columns: 1fr;
     margin-bottom: 2rem;
+  }
+
+  .linkBox:nth-child(1) {
+    border: 0;
   }
 
   .copyright {
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    text-align: center;
+    display: none;
   }
 
-  .copyright p,
-  .copyright li {
-    font-size: 1.2rem !important;
+  .socialBox h3 {
   }
 
-  .footer .icons {
-    margin-left: 0rem;
-
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+  .icons {
+    gap: 3rem;
   }
 
-  .buttonWrapper {
-    margin-left: 0rem;
+  .socialBox img {
+    height: 2rem;
+  }
+
+  .boxBottom {
+    margin-top: 5rem;
+    justify-content: space-between;
+  }
+
+  .copyrightMob {
+    display: initial !important;
+    margin-top: 4rem;
   }
 }

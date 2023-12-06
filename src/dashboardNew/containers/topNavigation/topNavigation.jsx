@@ -1,6 +1,6 @@
 import Logo from "../../../assets/logo/logo.svg";
 import Logo2 from "../../../assets/logo/logo2.svg";
-import User from "../../../assets/icon/user.svg";
+
 import Notification from "../../../assets/icon/notification.svg";
 import LightMode from "../../../assets/icon/lightMode.svg";
 import DarkMode from "../../../assets/icon/darkMode.svg";
@@ -9,15 +9,23 @@ import styles from "./topNavigation.module.css";
 import { useEffect, useState } from "react";
 import SideNavigation from "../sideNavigation/sideNavigation";
 import LanguageBox from "../../components/language/language";
+import { Link, useNavigate } from "react-router-dom";
+
+import backend_API from "../../../api/backendAPI";
+import UserProfile from "../../../components/userProfile/userProfile";
 
 const TopNavigation = () => {
   const [lightMode, setLightMode] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
+
   const [openMenu, setOpenMenu] = useState(false);
 
   const [openLanguage, setOpenLanguage] = useState(false);
 
+  const [kyc, setKyc] = useState(false);
+
   const [height, setHeight] = useState(0);
+  const backendAPI = new backend_API();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (window.innerHeight >= 900) return;
@@ -33,15 +41,29 @@ const TopNavigation = () => {
     return () => window.removeEventListener("resize", changeHeight);
   });
 
+  const logOut = async () => {
+    try {
+      const data = await backendAPI.signout();
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    backendAPI
+      .isRequiredKYC()
+      .then((res) => res.json())
+      .then((data) => setKyc(data));
+  }, []);
+
   return (
     <>
       <div className={styles.container}>
         <img className={styles.logo} src={Logo} alt="" />
         <img className={styles.logo2} src={Logo2} alt="" />
         <div className={styles.rightSide}>
-          <div className={styles.profileImage}>
-            <img src={profileImage ? profileImage : User} alt="Profile" />
-          </div>
+          <UserProfile logOut={logOut} requireKYC={kyc} />
 
           <div>
             <img src={Notification} alt="" />

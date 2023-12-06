@@ -1,7 +1,7 @@
 .button {
   color: var(--black-color);
   font-size: 1.4rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   width: max-content;
   cursor: pointer;
   overflow: hidden;
@@ -29,7 +29,7 @@
 }
 
 .button div {
-  padding: 1.4rem 3rem;
+  padding: 1.4rem 5rem;
   width: 100%;
   text-align: center;
   font-weight: 400;
