@@ -15,10 +15,11 @@
 # misc
 .DS_Store
 .env.local
-#.env.development.local
+.env.development.local
 .env.test.local
 .env.production.local
-package-lock.json
+.env.staging
+.env
 
 .idea
 npm-debug.log*
