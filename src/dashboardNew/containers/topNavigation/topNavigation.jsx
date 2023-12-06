@@ -26,6 +26,8 @@ const TopNavigation = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openLanguage, setOpenLanguage] = useState(false);
 
+  const [kyc, setKyc] = useState(false);
+
   const [height, setHeight] = useState(0);
   const backendAPI = new backend_API();
   const navigate = useNavigate();
@@ -53,44 +55,20 @@ const TopNavigation = () => {
     }
   };
 
+  useEffect(() => {
+    backendAPI
+      .isRequiredKYC()
+      .then((res) => res.json())
+      .then((data) => setKyc(data));
+  }, []);
+
   return (
     <>
       <div className={styles.container}>
         <img className={styles.logo} src={Logo} alt="" />
         <img className={styles.logo2} src={Logo2} alt="" />
         <div className={styles.rightSide}>
-          <div className={styles.profileWrapper}>
-            <div className={styles.profileImage}>
-              <img src={profileImage ? profileImage : User} alt="Profile" />
-            </div>
-            <div className={`${styles.profileDropdown}`}>
-              <div className={`${styles.profileBody} card`}>
-                <Link to="/dashboard/profile" className={styles.profileItem}>
-                  <img src={User2} alt="" />
-                  <p>Profile</p>
-                </Link>
-                <Link to="/dashboard/security" className={styles.profileItem}>
-                  <img src={Security} alt="" />
-                  <p>Security</p>
-                </Link>
-                <Link to="/dashboard/invoices" className={styles.profileItem}>
-                  <img src={InvoiceIcon} alt="" />
-                  <p>Invoice</p>
-                </Link>
-                <Link
-                  to="/dashboard/identification"
-                  className={styles.profileItem}
-                >
-                  <img src={Identification} alt="" />
-                  <p>Identification</p>
-                </Link>
-                <div className={styles.profileItem} onClick={() => logOut()}>
-                  <img src={Logout} alt="" />
-                  <p>Log Out</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <UserProfile logOut={logOut} requireKYC={kyc} />
 
           <div>
             <img src={Notification} alt="" />

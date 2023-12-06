@@ -8,7 +8,7 @@ import Logout from "../../assets/icon/logout.svg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const UserProfile = ({ web, logOut }) => {
+const UserProfile = ({ web, logOut, requireKYC }) => {
   const [profileImage, setProfileImage] = useState(
     localStorage.getItem("profile_pic"),
   );
@@ -16,7 +16,7 @@ const UserProfile = ({ web, logOut }) => {
   return (
     <div className={styles.profileWrapper}>
       <div className={styles.profileImage}>
-        {profileImage ? (
+        {profileImage !== "null" ? (
           <img src={profileImage} alt="Profile" />
         ) : (
           <svg
@@ -54,13 +54,15 @@ const UserProfile = ({ web, logOut }) => {
             <img src={Security} alt="" />
             <p>Security</p>
           </Link>
-          <Link to="/dashboard/identification" className={styles.profileItem}>
-            <img src={Identification} alt="" />
-            <p>Identification</p>
-          </Link>
+          {requireKYC && (
+            <Link to="/dashboard/identification" className={styles.profileItem}>
+              <img src={Identification} alt="" />
+              <p>Identification</p>
+            </Link>
+          )}
           <Link onClick={logOut} to="/" className={styles.profileItem}>
             <img src={Logout} alt="" />
-            <p>Log Out</p>
+            <p>Log out</p>
           </Link>
         </div>
       </div>

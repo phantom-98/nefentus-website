@@ -208,13 +208,9 @@ export class web3Api {
     // Amount in USD stablecoin
     const minAmountOut = price * 0.98 * 10 ** stablecoinDecimals;
 
-    console.log("priceConvert: " + priceConvert);
-    console.log("amountIn: " + amountIn);
-    console.log("amountInInt: " + amountInInt);
-    console.log("minAmountOut: " + minAmountOut);
-
     // Deposit contract
-    const contractInfo = contractDeposits[contractDeposits.length - 1];
+    const contractInfo =
+      contractDeposits.blockchain[contractDeposits.length - 1];
     const signer = this.provider.getSigner();
     const contract = new ethers.Contract(
       contractInfo.address,
@@ -234,9 +230,8 @@ export class web3Api {
       POOL_FEES,
       { value: amountInInt },
     );
-    console.log(txRequest);
+
     const txReceipt = await txRequest.wait();
-    console.log(txReceipt);
 
     const timestampMined = Date.now();
     // const transaction = await this.provider.getTransaction(txReceipt.transactionHash);
@@ -285,7 +280,6 @@ export class web3Api {
     // Amounts distributed
     for (const event of receipt.events) {
       if (event.event === "Distributed") {
-        console.log(event);
         const values = event.args.map((arg) => bigNumberArgToBigInt(arg));
         // 	event Distributed(uint seller, uint affiliate, uint broker, uint leader, uint owner);
         info = {

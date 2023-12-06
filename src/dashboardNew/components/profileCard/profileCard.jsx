@@ -19,7 +19,10 @@ const ProfileCard = ({ type }) => {
     <Card className={styles.profileCard}>
       <div className={styles.profileWrapper}>
         <div className={styles.profileImage}>
-          <img src={profileImage ? profileImage : ProfileImg} alt="" />
+          <img
+            src={profileImage !== "null" ? profileImage : ProfileImg}
+            alt=""
+          />
         </div>
         <div>
           <p className={styles.main}>{`${firstName} ${lastName}`}</p>

@@ -19,6 +19,7 @@ import Button from "../components/button/button";
 import styles from "./admin.module.css";
 import imputStyles from "../../components/input/input.module.css";
 import TablePagination from "../../components/tablePagination";
+import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 
 const label = [
   "Name",
@@ -490,6 +491,7 @@ const AdminDashboard = ({ type }) => {
           </ModalOverlay>
         )}
       </>
+      <SignupByEmail />
     </div>
   );
 };

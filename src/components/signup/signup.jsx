@@ -462,12 +462,7 @@ const Signup = () => {
       lastName: z
         .string()
         .min(1, { message: t("messages.validation.lastName") }),
-      telNr: z
-        .string()
-        .min(1, { message: t("messages.validation.phoneNumber") })
-        .refine(isMobilePhone, {
-          message: t("messages.validation.validPhoneNumber"),
-        }),
+      telNr: z.string(),
       email: z
         .string()
         .min(1, { message: t("messages.validation.email") })
@@ -571,7 +566,6 @@ const Signup = () => {
             errorMessage ||
             errors.firstName?.message ||
             errors.lastName?.message ||
-            errors.telNr?.message ||
             errors.email?.message ||
             errors.password?.message ||
             errors.confirmPassword?.message

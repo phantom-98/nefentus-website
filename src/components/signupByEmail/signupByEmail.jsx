@@ -1,262 +1,28 @@
+import Logo from "../../assets/logo/logo2.svg";
 import Button from "../button/button";
-import styles from "./settingsTitle.module.css";
-
-import Fail from "../../../assets/icon/fail.svg";
-import Correct from "../../../assets/icon/correct.svg";
-import ProfileImage from "../../../assets/icon/user.svg";
-
-import { useEffect, useState } from "react";
+import Input, { Options, SearchOptions } from "../input/input";
+import styles from "./signupByEmail.module.css";
+import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import Popup from "../popup/popup";
-import { SearchOptions } from "../../../components/input/input";
-import CropDialog, {
-  dataURLtoFile,
-} from "../../../components/cropDialog/cropDialog";
-import Options from "../options/options";
+import ReCAPTCHA from "react-google-recaptcha";
+import backendAPI from "../../api/backendAPI";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import isMobilePhone from "../../func/isMobilePhone";
+import Error from "../error/error";
+import Popup from "../../dashboardNew/components/popup/popup";
 
-const langOptions = [
-  { value: "en", label: "English" },
-  { value: "uk", label: "Ukrainian" },
-  { value: "de", label: "German" },
-];
-
-const SettingsItem = ({ data, setIsSaveData }) => {
-  const [show, setShow] = useState(false);
-  const [cropDialogOpen, setCropDialogOpen] = useState(false);
-  const [selectDialogOpen, setSelectDialogOpen] = useState(false);
-  const [label, setLabel] = useState(null);
-
-  useEffect(() => {
-    if (data.popup === "language") {
-      const labelOption = langOptions.find(
-        (option) => option.value === data.value,
-      );
-      if (labelOption?.label) {
-        setLabel(labelOption?.label);
-      }
-    }
-  }, []);
-
-  const handleEdit = () => {
-    setShow(true);
-  };
-
-  const handleSelect = () => {
-    setSelectDialogOpen(true);
-  };
-
-  const handleChangeImage = () => {
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.accept = "image/*";
-    fileInput.click();
-
-    fileInput.addEventListener("change", (e) => {
-      const selectedFile = e.target.files[0];
-      if (selectedFile) {
-        const imageURL = URL.createObjectURL(selectedFile);
-
-        data.setValue(imageURL);
-        setCropDialogOpen(true);
-        data.setFile(selectedFile);
-        data.setImageChanged(true);
-      }
-    });
-  };
-
-  const handleEnable = () => {
-    data.setValue((prev) => !prev);
-    setIsSaveData(true);
-  };
-
-  const handleData = (dataValue) => {
-    if (data.popup === "language") {
-      const labelOption = langOptions.find(
-        (option) => option.label === dataValue,
-      );
-      if (labelOption?.value) {
-        data.setValue(labelOption?.value);
-        setLabel(dataValue);
-      }
-    } else {
-      data.setValue(dataValue);
-    }
-    setIsSaveData(true);
-  };
-
-  return (
-    <>
-      <div className={styles.wrapper}>
-        <div className={styles.itemWrapper}>
-          <div className={styles.left}>
-            <div className={styles.label}>{data.label}</div>
-            <div className={styles.description}>{data.description}</div>
-          </div>
-          <div className={styles.right}>
-            {data.type === "edit" ? (
-              <EditType
-                value={data.popup === "language" ? label : data.value}
-                type={data.type}
-              />
-            ) : data.type === "image" ? (
-              <ImageType value={data.value} />
-            ) : data.type === "enable" ? (
-              <EnableType value={data.value} />
-            ) : data.type === "select" ? (
-              <SelectType value={data.value} />
-            ) : (
-              ""
-            )}
-          </div>
-          <Button
-            color="gray"
-            onClick={
-              data.type === "edit"
-                ? () => handleEdit()
-                : data.type === "image"
-                ? () => handleChangeImage()
-                : data.type === "enable"
-                ? () => handleEnable()
-                : data.type === "select"
-                ? () => handleSelect()
-                : ""
-            }
-          >
-            {data.type === "edit"
-              ? "Edit"
-              : data.type === "image"
-              ? "Change"
-              : data.type === "enable"
-              ? "Enable"
-              : data.type === "select"
-              ? "Select"
-              : ""}
-          </Button>
-          {data.type === "edit" && (
-            <EditPopup
-              show={show}
-              value={data.popup === "language" ? label : data.value}
-              setValue={(editValue) => handleData(editValue)}
-              setShow={setShow}
-              type={data.type}
-              popup={data.popup}
-            />
-          )}
-          {data.type === "select" && (
-            <SelectPopup
-              selectDialogOpen={selectDialogOpen}
-              setSelectDialogOpen={setSelectDialogOpen}
-              value={data.value}
-              setValue={(selectedValue) => handleData(selectedValue)}
-            />
-          )}
-        </div>
-      </div>
-
-      {data.type === "image" && (
-        <CropDialog
-          open={cropDialogOpen}
-          file={data.file}
-          aspect={1}
-          onClose={() => setCropDialogOpen(false)}
-          onSave={(croppedImageData) => {
-            setCropDialogOpen(false);
-            data.setFile(dataURLtoFile(croppedImageData, data.file.name));
-            data.setValue(croppedImageData);
-            setIsSaveData(true);
-          }}
-        />
-      )}
-    </>
-  );
-};
-
-export default SettingsItem;
-
-const EditType = ({ value, type }) => {
-  return <div className={styles.value}>{type === "password" ? "" : value}</div>;
-};
-
-const ImageType = ({ value }) => {
-  return (
-    <div className={styles.imageWrapper}>
-      <img src={value ? value : ProfileImage} alt="" />
-    </div>
-  );
-};
-
-export const EnableType = ({ value }) => {
-  return (
-    <div className={styles.enableWrapper}>
-      <img className={styles.enableIcon} src={value ? Correct : Fail} alt="" />
-
-      <div className={styles.text}>{value ? "On" : "Off"}</div>
-    </div>
-  );
-};
-
-export const EditPopup = ({
-  title = "Change Value",
-  show,
-  setShow,
-  value,
-  setValue,
-  type,
-  popup,
-  id,
-}) => {
-  const [inputValue, setInputValue] = useState(value);
-
-  useEffect(() => {
-    setInputValue(value);
-  }, [value]);
-
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleConfirmClick = () => {
-    setValue(inputValue);
-    setShow(false);
-  };
-
-  return (
-    <Popup
-      show={show}
-      title={title}
-      onConfirm={handleConfirmClick}
-      onClose={() => setShow(false)}
-    >
-      {popup === "language" ? (
-        <Options
-          options={langOptions.map((op) => op.label)}
-          value={value}
-          setValue={setValue}
-        />
-      ) : (
-        <input
-          value={inputValue}
-          type={type}
-          className={styles.input}
-          onChange={handleChange}
-        />
-      )}
-    </Popup>
-  );
-};
-
-export const SelectType = ({ value }) => {
-  return <div className={styles.value}> {value} </div>;
-};
-
-export const SelectPopup = ({
-  selectDialogOpen,
-  setSelectDialogOpen,
-  value,
-  setValue,
-  id,
-}) => {
+const SignupByEmail = () => {
+  const recaptchaRef = useRef();
   const { t } = useTranslation();
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [CountryOption, setCountryOption] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const api = new backendAPI();
+
   const country_list = [
     { value: "Afghanistan", display: t("countries.Afghanistan") },
     { value: "Albania", display: t("countries.Albania") },
@@ -481,25 +247,173 @@ export const SelectPopup = ({
     return country1.display.localeCompare(country2.display);
   });
 
-  const [CountryOption, setCountryOption] = useState(value);
+  useEffect(() => {
+    if (localStorage.getItem("firstName") === "") setShowModal(true);
+  }, []);
+
+  const schema = z
+    .object({
+      firstName: z.string().min(1, { message: "Please enter your first name" }),
+      lastName: z.string().min(1, { message: "Please enter your last name" }),
+      telNr: z.string(),
+      password: z
+        .string()
+        .min(1, { message: "Please enter your password" })
+        .min(8, { message: "Password must be at least 8 characters" })
+        .refine(
+          (value) =>
+            /^(?:(?=.*[a-z])(?=.*[A-Z])(?=.*\d)|(?=.*[a-z])(?=.*[A-Z])(?=.*[.\$\/@!%&*_,#*-+;`])|(?=.*[a-z])(?=.*\d)(?=.*[.\$\/@!%&*_,#*-+;`])|(?=.*[A-Z])(?=.*\d)(?=.*[.\$\/@!%&*_,#*-+;`])|(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.\$\/@!%&*_,#*-+;`])).*$/.test(
+              value,
+            ),
+          {
+            message:
+              "Password must include characters from 3 of the following 4 groups: uppercase letters, lowercase letters, numbers, and special characters",
+          },
+        ),
+      confirmPassword: z
+        .string()
+        .nonempty({ message: "Confirm your password" }),
+    })
+    .refine(
+      (schemaData) => schemaData.password === schemaData.confirmPassword,
+      {
+        message: "Passwords must match",
+        path: ["confirmPassword"],
+      },
+    );
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema), mode: "onSubmit" });
+
+  const resetForm = () => {
+    reset();
+    setCountryOption(t("signUp.option1Placeholder"));
+  };
+
+  async function submitForm(data) {
+    if (CountryOption === t("signUp.option1Placeholder")) {
+      setErrorMessage("Please choose a country");
+      return;
+    }
+
+    const captchaValue = recaptchaRef.current.getValue();
+
+    if (!captchaValue) {
+      setErrorMessage("Please verify the reCAPTCHA!");
+    } else {
+      const requestData = {
+        ...data,
+        email: localStorage.getItem("email"),
+        roles: ["Affiliate"],
+        country: CountryOption,
+        affiliateLink: localStorage.getItem("affiliateJoined"),
+      };
+
+      const response = await api
+        .updateUserByEmail(requestData)
+        .then(() => {
+          setMessage("Please confirm your email address to proceed.");
+          setShowModal(false);
+          resetForm();
+        })
+        .catch((error) => {
+          setErrorMessage(error.message);
+        });
+    }
+  }
 
   return (
     <Popup
-      show={selectDialogOpen}
-      title="Select Country"
-      onConfirm={() => {
-        setValue(CountryOption);
-        setSelectDialogOpen(false);
-      }}
-      onClose={() => setSelectDialogOpen(false)}
+      show={showModal}
+      onConfirm={handleSubmit(submitForm)}
+      confirmTitle="Update"
     >
-      <SearchOptions
-        label={t("signUp.option1Label") + "*"}
-        value={CountryOption}
-        setValue={setCountryOption}
-        options={country_list}
-        placeholder={t("signUp.option1Placeholder")}
-      />
+      <form onSubmit={handleSubmit(submitForm)}>
+        <Error
+          error={
+            errorMessage ||
+            errors.firstName?.message ||
+            errors.lastName?.message ||
+            errors.email?.message ||
+            errors.password?.message ||
+            errors.confirmPassword?.message
+          }
+        />
+        {message && (
+          <div className={styles.messagecontainer}>
+            <p>{message}</p>
+          </div>
+        )}
+
+        <div className={styles.row}>
+          <Input
+            label={t("signUp.firstNameLabel") + "*"}
+            placeholder={t("signUp.firstNamePlaceholder")}
+            register={register}
+            name={"firstName"}
+          />
+
+          <Input
+            label={t("signUp.lastNameLabel") + "*"}
+            placeholder={t("signUp.lastNamePlaceholder")}
+            register={register}
+            name={"lastName"}
+          />
+
+          <Input
+            label={t("signUp.telefonLabel")}
+            placeholder="(979) 268-4143"
+            register={register}
+            name={"telNr"}
+          />
+          <Input
+            label={t("signUp.emailLabel") + "*"}
+            placeholder={t("signUp.emailPlaceholder")}
+            disabled={true}
+            value={localStorage.getItem("email")}
+          />
+          <Input
+            label={t("signUp.passwordLabel") + "*"}
+            placeholder={t("signUp.passwordPlaceholder")}
+            register={register}
+            name={"password"}
+            secure
+          />
+          <Input
+            label={t("signUp.confirmPasswordLabel") + "*"}
+            placeholder={t("signUp.confirmPasswordPlaceholder")}
+            register={register}
+            name={"confirmPassword"}
+            secure
+          />
+          <SearchOptions
+            label={t("signUp.option1Label") + "*"}
+            value={CountryOption}
+            setValue={setCountryOption}
+            options={country_list}
+            placeholder={t("signUp.option1Placeholder")}
+          />
+        </div>
+
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={process.env.VITE_REACT_APP_RECAPTCHA_SITE_KEY}
+          theme="dark"
+          style={{ marginTop: "2rem" }}
+        />
+
+        {/* <div className={styles.buttonWrapper}>
+          <Button className={styles.button} type="submit">
+            Update
+          </Button>
+        </div> */}
+      </form>
     </Popup>
   );
 };
+
+export default SignupByEmail;

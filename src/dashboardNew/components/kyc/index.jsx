@@ -1,19 +1,19 @@
 import styles from "./kyc.module.css";
 import Header from "../../../dashboard/header/header";
-
 import Search from "../../../assets/icon/search.svg";
 import Correct from "../../../assets/icon/correct.svg";
-
-import ModalOverlay from "../../../dashboard/modal/modalOverlay";
-
 import Download from "../../../assets/icon/download.svg";
 import Button from "../../../components/button/button";
 import { useEffect, useState } from "react";
 import backendAPI from "../../../api/backendAPI";
 import adminDashboardApi from "../../../api/adminDashboardApi";
 import TableSearch from "../tableSearch/tableSearch";
+import Popup from "../popup/popup";
 
 const KYC_TYPE = {
+  FULL_NAME: "FULL_NAME",
+  ADRESS: "ADRESS",
+  CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
   GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
   PICTURE_WIDTH_ID_IN_HAND: "PICTURE_WIDTH_ID_IN_HAND",
   PROOF_OF_ADRESS: "PROOF_OF_ADRESS",
@@ -21,9 +21,23 @@ const KYC_TYPE = {
   ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
 };
 
+const KYC_TYPE_FILE = {
+  GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
+  PICTURE_WIDTH_ID_IN_HAND: "PICTURE_WIDTH_ID_IN_HAND",
+  PROOF_OF_ADRESS: "PROOF_OF_ADRESS",
+  PROOF_OF_COMPANY: "PROOF_OF_COMPANY",
+  ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
+};
+
+const KYC_TYPE_TEXT = {
+  FULL_NAME: "FULL_NAME",
+  ADRESS: "ADRESS",
+  CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
+};
+
 const KycBody = () => {
   const [data, setData] = useState([]);
-  const backendapi = new backendAPI();
+  const BackendAPI = new backendAPI();
   const adminApi = new adminDashboardApi("admin");
 
   const fetchFYC = async () => {
@@ -32,25 +46,56 @@ const KycBody = () => {
     const arrayWithResults = await Promise.all(
       users.map(async (user) => {
         const userId = user.id;
-        const level = await backendapi.getKYCLevel(userId);
-        const userKYCData = await Promise.all(
-          Object.values(KYC_TYPE).map((type) =>
-            backendapi.getByKYC(type, userId),
+
+        const level = await BackendAPI.getKYCLevel(userId);
+
+        const userKYCDataFile = await Promise.all(
+          Object.values(KYC_TYPE_FILE).map((type) =>
+            BackendAPI.getByKYC(type, userId),
           ),
         );
 
-        const transformedResults = userKYCData.map((item) => {
+        const userKYCDataText = await Promise.all(
+          Object.values(KYC_TYPE_TEXT).map((type) =>
+            BackendAPI.getByKYCText(type, userId),
+          ),
+        );
+
+        const transformedResults = userKYCDataFile.map((item) => {
           const key = Object.keys(item)[0];
           const fileType = key.replace(/_/g, " ").toLowerCase();
           return {
             type: fileType.charAt(0).toUpperCase() + fileType.slice(1),
             file: item[key].data.url,
             verify: item[key].data.verify,
+            typeData: "photo",
           };
         });
 
+        const transformedResultsText = userKYCDataText.map((item) => {
+          const key = Object.keys(item)[0];
+          const fileType = key.replace(/_/g, " ").toLowerCase();
+          return {
+            type: fileType.charAt(0).toUpperCase() + fileType.slice(1),
+            file: item[key].data.url,
+            verify: item[key].data.verify,
+            typeData: "text",
+          };
+        });
+
+        const combinedResults = [
+          ...transformedResultsText,
+          ...transformedResults,
+        ];
+
         if (
           transformedResults.every(
+            (item) =>
+              item.file === null ||
+              item.file === undefined ||
+              item.verify === true,
+          ) &&
+          transformedResultsText.every(
             (item) =>
               item.file === null ||
               item.file === undefined ||
@@ -66,7 +111,7 @@ const KycBody = () => {
             id: user.id,
           },
           user.email,
-          transformedResults,
+          combinedResults,
           user.tel,
           user.business,
           level.data.kycLevel,
@@ -160,6 +205,7 @@ const Table = ({ data, setData }) => {
                       </li>
                     ) : index === 2 ? (
                       <li
+                        style={{ cursor: "pointer" }}
                         onClick={() => {
                           setCheckModal(true);
                           setSelectedId(items[0].id);
@@ -192,10 +238,8 @@ const Table = ({ data, setData }) => {
 
       <div className={styles.modalWrapper}>
         {checkModal && (
-          <ModalOverlay>
+          <Popup show={true} title="Check verification">
             <div className={styles.modal}>
-              <h4>Check verification</h4>
-
               <div className={styles.lines}>
                 {data
                   .find((item) => {
@@ -214,74 +258,64 @@ const Table = ({ data, setData }) => {
                   .map((item, index) => (
                     <div>
                       {index === 0 && <h5 className={styles.level}>Level 1</h5>}
-                      {index === 3 && <h5 className={styles.level}>Level 2</h5>}
-                      {index === 4 && <h5 className={styles.level}>Level 3</h5>}
+                      {index === 5 && <h5 className={styles.level}>Level 2</h5>}
+                      {index === 7 && <h5 className={styles.level}>Level 3</h5>}
                       <div className={styles.line} key={index}>
                         <div className={styles.row}>
-                          <p>
-                            {item.type === "Adress"
-                              ? "Proof of adress"
-                              : item.type === "Utility bill"
-                              ? "Due deligence"
-                              : item.type}
-                          </p>
+                          <p>{item.type}</p>
                           {item.verify && <img src={Correct} alt="" />}
                         </div>
 
-                        {item.file && (
-                          <a href={item.file} download>
-                            <img src={Download} alt="" />
-                          </a>
+                        {item.typeData == "photo" ? (
+                          item.file ? (
+                            <a href={item.file} download>
+                              <img src={Download} alt="" />
+                            </a>
+                          ) : (
+                            <div></div>
+                          )
+                        ) : (
+                          <p>{item.file}</p>
                         )}
                       </div>
                     </div>
                   ))}
               </div>
-
-              <div className={styles.checkButton} style={{ paddingTop: 10 }}>
-                <Button onClick={() => setCheckModal(false)} color="white">
-                  Close
-                </Button>
-              </div>
             </div>
-          </ModalOverlay>
+            <div style={{ paddingTop: 20 }}>
+              <Button onClick={() => setCheckModal(false)} color="light">
+                Close
+              </Button>
+            </div>
+          </Popup>
         )}
       </div>
 
       <div className={styles.modalWrapper}>
         {feedbackModal && (
-          <ModalOverlay>
+          <Popup show={true} title="Leave a reason">
             <div className={styles.modal}>
-              <h4>Leave a reason</h4>
-
               <div className={styles.message}>
-                <p>Message</p>
-
                 <textarea
                   onChange={(e) => setDeclineReason(e.target.value)}
                   name=""
                   id=""
                   cols="30"
                   rows="10"
-                  placeholder="Some message..."
                 ></textarea>
               </div>
 
               <div className={styles.buttons}>
-                <div
-                  className={styles.button}
-                  onClick={() => setFeedbackModal(false)}
-                  style={{ fontSize: "15px" }}
-                >
-                  Cancel
-                </div>
+                <Button onClick={() => setFeedbackModal(false)} color="light">
+                  Close
+                </Button>
 
                 <Button onClick={() => declineKYC(selectedId)} color="white">
                   Confirm
                 </Button>
               </div>
             </div>
-          </ModalOverlay>
+          </Popup>
         )}
       </div>
     </div>

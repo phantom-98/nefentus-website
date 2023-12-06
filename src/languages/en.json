@@ -21,6 +21,7 @@
     "heroAvailable": "Available on:",
     "connectWith": "Or Login With",
     "appDownload": "Download Mobile App",
+    "latestPrices": "Latest Prices",
     "priceChange": "Price change in 24h",
     "cardSubtitle": "Step into the Future of Payments",
     "cardTitleP1": "Stay Competitive with Modern",
@@ -425,12 +426,18 @@
       }
     ],
     "content2": [
-      { "text": "Play Store", "link": "/" },
+      {
+        "text": "Play Store",
+        "link": "/"
+      },
       {
         "text": "Sign In",
         "link": "/link"
       },
-      { "text": "App Store", "link": "/" },
+      {
+        "text": "App Store",
+        "link": "/"
+      },
       {
         "text": "Sign Up",
         "link": "/signup"

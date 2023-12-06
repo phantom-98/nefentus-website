@@ -115,7 +115,7 @@
 }
 
 .modal {
-  width: 100%;
+  width: 350px;
 }
 
 .modal h4 {
@@ -131,17 +131,17 @@
 }
 
 .modal .line {
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  font-size: 1.4rem;
+  color: gray;
+  font-size: 1.2rem;
 }
 
 .modal .level {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   margin-bottom: 1.2rem;
 }
 
@@ -173,9 +173,9 @@
   border-radius: 1rem;
 
   padding: 1.6rem 2rem;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 
-  font-family: Euclid;
+  font-family: "Axiforma", sans-serif;
   color: white;
   height: 20rem;
   resize: none;

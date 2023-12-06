@@ -25,6 +25,7 @@
 
 .rowLeft {
   font-size: 1.2rem;
+  display: flex;
 }
 
 .rowLeft span {
@@ -40,7 +41,7 @@
 }
 
 .rightUpload {
-  width: 35rem;
+  width: 40rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
