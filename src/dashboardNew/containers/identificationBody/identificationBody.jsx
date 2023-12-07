@@ -147,7 +147,14 @@ const IdentificationBody = () => {
 
     const filteredArray = KYCContent.map((item) => {
       if (item.id in transformedResults) {
-        if (item.notRequired && level == 2) {
+        if (
+          item.notRequired &&
+          (level == 2 ||
+            ((!transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].rejectReason ||
+              transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].rejectReason ==
+                "") &&
+              transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].url))
+        ) {
           item.verify = true;
           item.url = "notRequired";
           item.rejectReason = "notRequired";
