@@ -47,7 +47,7 @@ const KYCContent = [
   },
   {
     id: KYC_TYPE_TEXT.ADRESS,
-    label: "Adress",
+    label: "Address",
     type: "text",
     level: 0,
   },
@@ -59,13 +59,13 @@ const KYCContent = [
   },
   {
     id: KYC_TYPE_FILE.GOVERNMENT_ISSUES_ID,
-    label: "Government issues id",
+    label: "Government issued ID",
     type: "photo",
     level: 0,
   },
   {
     id: KYC_TYPE_FILE.PICTURE_WIDTH_ID_IN_HAND,
-    label: "Picture width in hand",
+    label: "Picture with ID clearly visible",
     type: "photo",
     level: 0,
   },
@@ -147,7 +147,7 @@ const IdentificationBody = () => {
 
     const filteredArray = KYCContent.map((item) => {
       if (item.id in transformedResults) {
-        if (item.notRequired) {
+        if (item.notRequired && level == 2) {
           item.verify = true;
           item.url = "notRequired";
           item.rejectReason = "notRequired";
@@ -192,25 +192,40 @@ const IdentificationBody = () => {
 
   const checkUploadingData = () => {
     let res = false;
-    KYCContent.forEach((item) => {
+    for (let i = 0; i < KYCContent.length; i++) {
+      const item = KYCContent[i];
       if (
         item.level == level &&
         item.notRequired == undefined &&
-        !(item in getData || item in getText)
+        !item.verify &&
+        !item.url &&
+        !(getData[item.id] || getText[item.id])
       ) {
         res = true;
         setErrorMessage(item.label + " is required!");
-        // toast.error(item.label + " field is required!", {
-        //   position: toast.POSITION.TOP_CENTER,
-        //   autoClose: 5000,
-        //   theme: "colored",
-        // });
+        break;
       }
-    });
+    }
+    // KYCContent.forEach((item) => {
+    //   if (
+    //     item.level == level &&
+    //     item.notRequired == undefined &&
+    //     !(item in getData || item in getText)
+    //   ) {
+    //     res = true;
+    //     toast.error(item.label + " field is required!", {
+    //       position: toast.POSITION.TOP_CENTER,
+    //       autoClose: 5000,
+    //       theme: "colored",
+    //     });
+    //   }
+    // });
+
     return res;
   };
   const handleUpload = async () => {
     if (checkUploadingData()) return;
+
     if (getData) {
       const arrayWithResults = await Promise.allSettled(
         Object.keys(getData).map((type) =>
@@ -534,10 +549,8 @@ const AddText = ({
   const uploadValue = text?.slice(0, 40);
 
   useEffect(() => {
-    if (value) {
-      const updatedFiles = { ...getText, [id]: value };
-      setGetText(updatedFiles);
-    }
+    const updatedTexts = { ...getText, [id]: value };
+    setGetText(updatedTexts);
   }, [value]);
 
   return (
@@ -552,7 +565,9 @@ const AddText = ({
           ) : text ? (
             <>
               <span style={{ paddingLeft: 20, color: "gray" }}>
-                {declineResponse !== null ? null : "Currently being checked"}
+                {declineResponse && declineResponse != ""
+                  ? declineResponse
+                  : "Currently being checked"}
               </span>
             </>
           ) : null}
@@ -587,7 +602,7 @@ const AddText = ({
             <Button color="gray">
               <span style={{ color: "grey" }}>Add</span>
             </Button>
-          ) : declineResponse != null ? (
+          ) : declineResponse && declineResponse != "" ? (
             <Button onClick={() => setShow(true)} color="gray">
               Add
             </Button>
@@ -663,7 +678,9 @@ const AddFile = ({
           ) : file ? (
             <>
               <span style={{ paddingLeft: 20, color: "gray" }}>
-                {declineResponse !== null ? null : "Currently being checked"}
+                {declineResponse && declineResponse != ""
+                  ? declineResponse
+                  : "Currently being checked"}
               </span>
             </>
           ) : null}
@@ -703,7 +720,7 @@ const AddFile = ({
             <Button color="gray">
               <span style={{ color: "grey" }}>Upload</span>
             </Button>
-          ) : declineResponse != null ? (
+          ) : declineResponse && declineResponse != "" ? (
             <Button onClick={() => handleAddFile()} color="gray">
               Upload
             </Button>
