@@ -12,6 +12,8 @@ const TablePagination = ({
   className,
   setDataPage,
   setDataSize,
+  searchTrigger,
+  dataPage,
 }) => {
   const [pageData, setPageData] = useState([]);
 
@@ -36,7 +38,9 @@ const TablePagination = ({
         setDataPage={setDataPage}
         setDataSize={setDataSize}
         renderItems={renderItems}
+        searchTrigger={searchTrigger}
         data={data}
+        dataPage={dataPage}
       />
     </>
   );

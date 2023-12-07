@@ -77,6 +77,7 @@ const AdminDashboard = ({ type }) => {
   const [dataPage, setDataPage] = useState(1);
   const [dataSize, setDataSize] = useState(10);
   const [getFilteredUser, setGetFilteredUser] = useState();
+  const [searchTrigger, setSearchTrigger] = useState(false);
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -313,8 +314,8 @@ const AdminDashboard = ({ type }) => {
           deleteUser={() => deleteUser(user.email)}
         />,
       ]);
-
       setTableData(newDataUsers);
+      setSearchTrigger(false);
     }
   }
 
@@ -325,21 +326,35 @@ const AdminDashboard = ({ type }) => {
     setRole("");
   };
 
+  useEffect(() => {
+    if (searchTrigger)
+      updateUsers(getFilteredUser?.length > 0 ? getFilteredUser : users);
+  }, [searchTrigger]);
+
   const findUser = () => {
     const filteredData = users?.filter((item) => {
       return (
-        getDataInput.toLowerCase().includes(item?.email?.toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item?.firstName?.toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item?.lastName?.toLowerCase()) ||
-        getDataInput.includes(String(item?.createdAt)?.toLowerCase()) ||
-        getDataInput
-          .toLowerCase()
-          .includes(String(item?.income)?.toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item?.roles[0]?.toLowerCase())
+        item?.email
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        item?.firstName
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        item?.lastName
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        String(item?.createdAt)?.toLowerCase().includes(getDataInput.trim()) ||
+        String(item?.income)
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        item?.roles[0]
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase())
       );
     });
     setGetFilteredUser(filteredData);
-    updateUsers(filteredData?.length > 0 ? filteredData : users);
+    setDataPage(0);
+    setSearchTrigger(true);
   };
 
   const paginatedData = tableData.filter((item, index) => {
@@ -347,6 +362,7 @@ const AdminDashboard = ({ type }) => {
       return true;
     return false;
   });
+
   const closeModal = () => {
     clearMessages();
     clearAddUserFields();
@@ -386,6 +402,8 @@ const AdminDashboard = ({ type }) => {
               setDataPage={setDataPage}
               setDataSize={setDataSize}
               colSizes={colSizes}
+              searchTrigger={searchTrigger}
+              dataPage={dataPage}
               striped
             />
           </>

@@ -3,7 +3,13 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Options } from "../input/input";
 
-const Pagination = ({ renderItems, data, setDataPage, setDataSize }) => {
+const Pagination = ({
+  renderItems,
+  data,
+  setDataPage,
+  setDataSize,
+  searchTrigger,
+}) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
 
@@ -24,6 +30,12 @@ const Pagination = ({ renderItems, data, setDataPage, setDataSize }) => {
     setDataPage(currentPage);
     setDataSize(pageSize);
   }, [currentPage, pageSize]);
+
+  useEffect(() => {
+    if (searchTrigger) {
+      setCurrentPage(0);
+    }
+  }, [searchTrigger]);
 
   useEffect(() => {
     renderItems(currentPage * pageSize, (currentPage + 1) * pageSize);
