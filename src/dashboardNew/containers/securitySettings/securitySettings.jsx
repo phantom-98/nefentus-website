@@ -38,7 +38,7 @@ const data = [
   {
     label: "Seed phrases",
     description:
-      "Protect your account from phishing attempts and ensure that your notification emails are from Nefentus only.",
+      "A sequence of words that allows you to regain access to your crypto funds if you ever lose your crypto wallet.",
     value: false,
     type: "button",
     flow: "seed",
