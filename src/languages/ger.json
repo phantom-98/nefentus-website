@@ -941,6 +941,7 @@
       "edit": "Bearbeiten",
       "enable": "Aktivieren",
       "change": "Ändern",
+      "select": "Wählen",
       "close": "Schließen",
       "verify": "Verifizieren"
     },
@@ -970,6 +971,11 @@
     "phoneNumber": "Telefonnummer",
     "country": "Land",
     "avatar": "Benutzerbild",
+    "action": {
+      "selectCountry": "Land auswählen",
+      "turnOff": "Abschalten",
+      "turnOn": "Anmachen"
+    },
     "avatarDescription": "Wählen Sie einen Avatar aus, um Ihr Konto zu personalisieren.",
     "marketingUpdates": "Marketing-Updates",
     "marketingUpdatesDescription": "Erhalten Sie Marketing-Updates per E-Mail, Push-Benachrichtigungen (in der mobilen App) und Benachrichtigungen (in der Webanwendung).",

@@ -3,7 +3,7 @@ import styles from "./input.module.css";
 import dropDown from "../../assets/icon/dropdown.svg";
 import AttachmentImage from "../../assets/icon/attachment.svg";
 import Delete from "../../assets/icon/delete.svg";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const Input = ({
@@ -253,12 +253,17 @@ export const SearchOptions = ({
   label = "",
   dashboard,
   placeholder = "",
+  className = "",
 }) => {
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(value);
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
   const { t } = useTranslation();
 
   const filteredOptions = options.filter((item) =>
-    item.display.toLowerCase().includes(value.toLowerCase()),
+    item.display.toLowerCase().includes(selected.toLowerCase()),
   );
 
   return (
@@ -276,7 +281,7 @@ export const SearchOptions = ({
       <div
         className={`option ${styles.input} ${
           dashboard ? styles.dashboardInput : ""
-        }`}
+        } ${styles[className]}`}
         onClick={() => setOpen((prev) => !prev)}
       >
         <input
@@ -287,15 +292,24 @@ export const SearchOptions = ({
           onFocus={() => setOpen(true)}
           type="text"
           placeholder={placeholder}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          className={styles.searchInput}
+          value={selected}
+          onChange={(e) => {
+            setSelected(e.target.value);
+            setValue(e.target.value);
+          }}
+          className={`option ${styles.searchInput}`}
         />{" "}
         <img src={dropDown} alt="" />
         {open && (
           <div className={`card ${styles.body}`}>
             {filteredOptions.map((item) => (
-              <p onClick={() => setValue(item.value)} key={item.value}>
+              <p
+                onClick={() => {
+                  setSelected(item.value);
+                  setValue(item.value);
+                }}
+                key={item.value}
+              >
                 {item.display}
               </p>
             ))}

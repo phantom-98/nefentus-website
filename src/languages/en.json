@@ -1061,6 +1061,11 @@
     "phoneNumber": "Phone number",
     "country": "Country",
     "avatar": "Avatar",
+    "action": {
+      "selectCountry": "Select Country",
+      "turnOff": "Off",
+      "turnOn": "On"
+    },
     "avatarDescription": "Select an avatar to personalize your account.",
     "marketingUpdates": "Marketing updates",
     "marketingUpdatesDescription": "Receive marketing updates via email, push notifications (in the mobile app) and inbox notifications (in the web application).",
