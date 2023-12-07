@@ -44,6 +44,10 @@ const UserProfile = ({ web, logOut, requireKYC }) => {
             <img src={User2} alt="" />
             <p>Profile</p>
           </Link>
+          <Link to="/dashboard/invoices" className={styles.profileItem}>
+            <img src={User2} alt="" />
+            <p>Invoice</p>
+          </Link>
           {web && (
             <Link to="/dashboard/" className={styles.profileItem}>
               <img src={Dashboard} alt="" />
