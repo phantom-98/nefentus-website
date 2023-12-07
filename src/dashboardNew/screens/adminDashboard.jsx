@@ -8,7 +8,7 @@ import TableStatus from "../components/tableStatus/tableStatus";
 import adminDashboardApi from "../../api/adminDashboardApi";
 import { formatUSDBalance } from "../../utils";
 import moment from "moment";
-
+import UserModal from "../../dashboardNew/components/userModal";
 import { MessageContext } from "../../context/message";
 import { useNavigate } from "react-router-dom";
 import { ROLE_TO_NAME } from "../../constants";
@@ -61,7 +61,9 @@ const AdminDashboard = ({ type }) => {
   const [users, setUsers] = useState();
   const [getDataInput, setGetDataInput] = useState("");
   const [dataPage, setDataPage] = useState(1);
+  const [dataSize, setDataSize] = useState(10);
   const [getFilteredUser, setGetFilteredUser] = useState();
+  const [searchTrigger, setSearchTrigger] = useState(false);
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -174,6 +176,7 @@ const AdminDashboard = ({ type }) => {
       const dataUsers = await adminApi.getUsers();
 
       dataUsers.reverse();
+      setUsers(dataUsers);
       updateUsers(dataUsers);
     }
   };
@@ -304,8 +307,8 @@ const AdminDashboard = ({ type }) => {
           deleteUser={() => deleteUser(user.email)}
         />,
       ]);
-
       setTableData(newDataUsers);
+      setSearchTrigger(false);
     }
   }
 
@@ -316,28 +319,49 @@ const AdminDashboard = ({ type }) => {
     setRole("");
   };
 
+  useEffect(() => {
+    if (searchTrigger)
+      updateUsers(getFilteredUser?.length > 0 ? getFilteredUser : users);
+  }, [searchTrigger]);
+
   const findUser = () => {
-    const filteredData = users.filter((item) => {
+    const filteredData = users?.filter((item) => {
       return (
-        getDataInput.toLowerCase().includes(item.email.toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item.firstName.toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item.lastName.toLowerCase()) ||
-        getDataInput.includes(String(item.createdAt).toLowerCase()) ||
-        getDataInput
-          .toLowerCase()
-          .includes(String(item.income).toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item.roles[0]?.toLowerCase())
+        item?.email
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        item?.firstName
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        item?.lastName
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        String(item?.createdAt)?.toLowerCase().includes(getDataInput.trim()) ||
+        String(item?.income)
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        item?.roles[0]
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase())
       );
     });
     setGetFilteredUser(filteredData);
-    // setGetDataInput("");
-    updateUsers(filteredData.length > 0 ? filteredData : users);
+    setDataPage(0);
+    setSearchTrigger(true);
   };
 
   const paginatedData = tableData.filter((item, index) => {
-    if (index >= dataPage * 10 && index < dataPage * 10 + 10) return true;
+    if (index >= dataPage * dataSize && index < dataPage * dataSize + dataSize)
+      return true;
     return false;
   });
+
+  const closeModal = () => {
+    clearMessages();
+    clearAddUserFields();
+    setOpenModal(false);
+    updateUsersTable(getFilteredUser);
+  };
 
   return (
     <div>
@@ -369,102 +393,34 @@ const AdminDashboard = ({ type }) => {
             <TablePagination
               data={tableData}
               setDataPage={setDataPage}
+              setDataSize={setDataSize}
               colSizes={colSizes}
+              searchTrigger={searchTrigger}
+              dataPage={dataPage}
               striped
             />
           </>
         </div>
       </div>
       <>
-        <Popup
-          show={openModal}
-          onClose={() => {
-            clearMessages();
-            clearAddUserFields();
-            setOpenModal(false);
-            updateUsersTable(getFilteredUser);
-          }}
-          onConfirm={changeUser}
-          cancelTitle={t("general.cancel")}
-          confirmTitle={t("dashboard.modal.titleEdit")}
-        >
-          <div className={styles.modal}>
-            <MessageComponent />
-
-            <h4>{t("dashboard.modal.titleEdit")}</h4>
-
-            <div className={styles.modalInputs}>
-              <Input
-                dashboard
-                label={t("dashboard.modal.firstName").concat("*")}
-                placeholder={t("dashboard.modal.firstNamePlaceholder")}
-                value={firstName}
-                setState={setFirstName}
-                style={{ height: 35 }}
-              />
-              <Input
-                dashboard
-                label={t("dashboard.modal.lastName").concat("*")}
-                placeholder={t("dashboard.modal.lastNamePlaceholder")}
-                value={lastName}
-                setState={setLastName}
-                style={{ height: 35 }}
-              />
-              <Input
-                dashboard
-                label={t("dashboard.roles.modal.email").concat("*")}
-                placeholder={t("dashboard.modal.emailPlaceholder")}
-                value={email}
-                setState={setEmail}
-                disabled={editEmailAddress !== null}
-                style={{ height: 35 }}
-              />
-
-              {type === "admin" && (
-                <Options
-                  label={t("dashboard.modal.role").concat("*")}
-                  value={role}
-                  options={[
-                    "Vendor",
-                    "Affiliate",
-                    "Broker",
-                    "Senior Broker",
-                    "Leader",
-                  ]}
-                  dashboard
-                  setValue={setRole}
-                />
-              )}
-              {type === "leader" && (
-                <Options
-                  label={t("dashboard.modal.role").concat("*")}
-                  value={role}
-                  options={["Vendor", "Affiliate", "Broker", "Senior Broker"]}
-                  dashboard
-                  setValue={setRole}
-                />
-              )}
-              {type === "seniorbroker" && (
-                <Options
-                  label={t("dashboard.modal.role").concat("*")}
-                  value={role}
-                  options={["Vendor", "Affiliate", "Broker"]}
-                  dashboard
-                  setValue={setRole}
-                />
-              )}
-              {type === "broker" && (
-                <Options
-                  label={t("dashboard.modal.role").concat("*")}
-                  value={role}
-                  options={["Vendor", "Affiliate"]}
-                  dashboard
-                  setValue={setRole}
-                />
-              )}
-            </div>
-          </div>
-        </Popup>
+        <div className={styles.modalWrapper}>
+          {openModal && (
+            <UserModal
+              type={type}
+              clearFields={closeModal}
+              addUser={changeUser}
+              operationType={"update"}
+              firstName={firstName}
+              setFirstName={setFirstName}
+              lastName={lastName}
+              setLastName={setLastName}
+              email={email}
+              setEmail={setEmail}
+              role={role}
+              setRole={setRole}
+            />
+          )}
+        </div>
       </>
       <SignupByEmail />
     </div>

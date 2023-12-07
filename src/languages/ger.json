@@ -970,11 +970,11 @@
     "email": "Email",
     "phoneNumber": "Telefonnummer",
     "country": "Land",
-    "avatar": "Benutzerbild",
+    "avatar": "Profilbild",
     "action": {
       "selectCountry": "Land auswählen",
-      "turnOff": "Abschalten",
-      "turnOn": "Anmachen"
+      "turnOff": "Aus",
+      "turnOn": "An"
     },
     "avatarDescription": "Wählen Sie einen Avatar aus, um Ihr Konto zu personalisieren.",
     "marketingUpdates": "Marketing-Updates",

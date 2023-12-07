@@ -12,9 +12,9 @@
   font-family: "Axiforma", sans-serif;
 }
 
-.inputWrapper .input:focus {
-  /* border: 1px solid red !important; */
-}
+/* .inputWrapper .input:focus {
+  border: 1px solid red !important; 
+} */
 
 .inputWrapper input::placeholder,
 .textareaWrapper textarea::placeholder,
@@ -106,6 +106,10 @@
 
 .dashboardLabel {
   font-size: 1.6rem !important;
+}
+
+.passwordLabel {
+  font-size: 1.4rem !important;
 }
 
 .dashboardInput,
