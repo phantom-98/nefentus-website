@@ -180,7 +180,7 @@ export default class backendAPI {
 
   async forgotPassword(email) {
     try {
-      const url = `${this.baseURL}/auth/forgot-password`;
+      const url = `${this.baseURL}/forgot-password`;
       const options = {
         method: "POST",
         headers: {
