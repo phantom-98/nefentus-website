@@ -5,6 +5,7 @@ import imputStyles from "../../../components/input/input.module.css";
 import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 import MessageComponent from "../../../components/message";
 import Input, { Options } from "../../../components/input/input";
+import { useTranslation } from "react-i18next";
 import styles from "./userModel.module.css";
 
 const UserModal = ({
@@ -26,6 +27,7 @@ const UserModal = ({
   const [showPassword, setShowPassword] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
   const combinedClassNames = `${imputStyles.input} ${imputStyles.dashboardInput}`;
+  const { t } = useTranslation();
 
   return (
     <ModalOverlay>
