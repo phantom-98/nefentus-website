@@ -11,6 +11,7 @@ import { EditPopup } from "../settings/settingsItem";
 import SettingsTitle from "../settings/settingsTitle";
 import Fail from "../../../assets/icon/fail.svg";
 import Correct from "../../../assets/icon/correct.svg";
+import { useTranslation } from "react-i18next";
 import { get } from "react-hook-form";
 import Popup from "../popup/popup";
 
@@ -23,6 +24,7 @@ const InvoicesBody = () => {
   const [changed, setchanged] = useState(false);
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
   // const [settings, setSettings] = useState({});
+  const { t } = useTranslation();
 
   const backendAPI = new backend_API();
 
@@ -67,8 +69,8 @@ const InvoicesBody = () => {
       <MessageComponent />
       <Card className={styles.card}>
         <SettingsTitle
-          title="Invoice"
-          description="Enter your VAT number and confirm if you want to receive invoices."
+          title={t("invoice.title")}
+          description={t("invoice.description")}
         />
 
         <div
@@ -80,14 +82,14 @@ const InvoicesBody = () => {
           }}
         >
           <div style={{ paddingTop: 5 }} className={styles.left}>
-            <span style={{ fontSize: "1.6rem" }}>VAT Number</span>
+            <span style={{ fontSize: "1.6rem" }}>{t("invoice.vatNumber")}</span>
           </div>
           <div className={styles.right}>
             <span className={styles.value}>{vatNumber || " "}</span>
           </div>
           <div>
             <Button color="gray" onClick={() => setShowPopup(true)}>
-              Add
+              {t("invoice.action.add")}
             </Button>
           </div>
         </div>
@@ -102,7 +104,7 @@ const InvoicesBody = () => {
         />
         <div className={styles.input}>
           <div className={styles.left}>
-            <p style={{ fontSize: "1.6rem" }}>Enable invoice</p>
+            <p style={{ fontSize: "1.6rem" }}>{t("invoice.enableInvoicing")}</p>
           </div>
           <div className={styles.right}>
             <EnableType value={enableInvoicing} />
@@ -115,7 +117,9 @@ const InvoicesBody = () => {
                 setchanged(true);
               }}
             >
-              Enable
+              {enableInvoicing
+                ? t("invoice.action.disable")
+                : t("invoice.action.enable")}
             </Button>
           </div>
         </div>
@@ -152,11 +156,14 @@ const InvoicesBody = () => {
 export default InvoicesBody;
 
 export const EnableType = ({ value }) => {
+  const { t } = useTranslation();
   return (
     <div className={styles.enableWrapper}>
       <img className={styles.enableIcon} src={value ? Correct : Fail} alt="" />
 
-      <div className={styles.text}>{value ? "On" : "Off"}</div>
+      <div className={styles.text}>
+        {value ? t("invoice.action.turnOn") : t("invoice.action.turnOff")}
+      </div>
     </div>
   );
 };

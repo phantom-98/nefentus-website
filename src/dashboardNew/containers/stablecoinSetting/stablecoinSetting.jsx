@@ -9,8 +9,10 @@ import USDTLogo from "../../../assets/logo/usdt.svg";
 
 import Button from "../../components/button/button";
 import Popup from "../../components/popup/popup";
+import { useTranslation } from "react-i18next";
 
 const StablecoinSetting = ({ value, setValue }) => {
+  const { t } = useTranslation();
   const coins = [
     {
       icon: USDCLogo,
@@ -49,9 +51,9 @@ const StablecoinSetting = ({ value, setValue }) => {
       }}
     >
       <div className={styles.left}>
-        <span className={styles.title}>Stablecoin</span>
+        <span className={styles.title}>{t("invoice.stablecoin")}</span>
         <span className={styles.description}>
-          Choose the stablecoin that should be converted to.
+          {t("invoice.stablecoinDescription")}
         </span>
       </div>
       <div className={styles.right}>
@@ -77,12 +79,14 @@ const StablecoinSetting = ({ value, setValue }) => {
           <div>
             <div>
               <Button color="gray" onClick={() => setShowPopup(true)}>
-                Select
+                {t("invoice.action.select")}
               </Button>
             </div>
             <div>
               <Popup
                 show={showPopup}
+                cancelTitle={t("general.cancel")}
+                confirmTitle={t("general.confirm")}
                 onConfirm={() => {
                   setValue(stableCoin.name);
                   setShowPopup(false);
@@ -91,7 +95,9 @@ const StablecoinSetting = ({ value, setValue }) => {
                 onClose={() => setShowPopup(false)}
               >
                 <div>
-                  <div className={styles.dialogSubtitle}>Select Stablecoin</div>
+                  <div className={styles.dialogSubtitle}>
+                    {t("invoice.action.selectCoin")}
+                  </div>
                   {coins.map((coin, index) => {
                     return (
                       <div

@@ -18,15 +18,17 @@ import WalletConnection from "../../components/walletConnection/walletConnection
 import useInternalWallet from "../../../hooks/internalWallet";
 import Button from "../../components/button/button";
 import Popup from "../../components/popup/popup";
+import { useTranslation } from "react-i18next";
 
 const WalletSetting = ({ value, setValue }) => {
+  const { t } = useTranslation();
   const BackandAPI = new backendAPI();
   const [data, setData] = useState(null);
   const [activeWallet, setActiveWallet] = useState(null);
   const [index, setIndex] = useState(null);
   const [connectStatus, setConnectStatus] = useState({
-    WalletConnect: "Disconnected",
-    MetaMask: "Disconnected",
+    WalletConnect: t("invoice.action.disconnected"),
+    MetaMask: t("invoice.action.disconnected"),
   });
   const [walletAddress, setWalletAddress] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
@@ -130,12 +132,9 @@ const WalletSetting = ({ value, setValue }) => {
       }}
     >
       <div className={styles.left}>
-        <span className={styles.title}>
-          Wallet to receive funds Description
-        </span>
+        <span className={styles.title}>{t("invoice.walletAddress")}</span>
         <span className={styles.description}>
-          Choose the wallet that receives funds when creating an invoice or
-          selling product
+          {t("invoice.walletDescription")}
         </span>
       </div>
       <div className={styles.right}>
@@ -242,12 +241,14 @@ const WalletSetting = ({ value, setValue }) => {
           <div>
             <div>
               <Button color="gray" onClick={() => setShowPopup(true)}>
-                Select
+                {t("invoice.action.select")}
               </Button>
             </div>
             <div>
               <Popup
                 show={showPopup}
+                cancelTitle={t("general.cancel")}
+                confirmTitle={t("general.confirm")}
                 onConfirm={() => {
                   setShowPopup(false),
                     setForConfirm(true),
@@ -265,7 +266,7 @@ const WalletSetting = ({ value, setValue }) => {
                     {data ? (
                       <div style={{ paddingBottom: 20 }}>
                         <span className={styles.dialogSubtitle}>
-                          Connected wallets
+                          {t("invoice.action.connectedWallets")}
                         </span>
 
                         {data.map((address, i) => {
@@ -339,7 +340,7 @@ const WalletSetting = ({ value, setValue }) => {
                     ) : null}
                     <div>
                       <span className={styles.dialogSubtitle}>
-                        Connect new wallet
+                        {t("invoice.action.connectWallet")}
                       </span>
                       {wallets.map((wallet, index) => {
                         return (
