@@ -273,7 +273,7 @@ const SettingsItem = ({ data, setIsSaveData }) => {
         setLabel(labelOption?.label);
       }
     }
-  }, []);
+  }, [data]);
 
   const handleEdit = () => {
     setShow(true);
