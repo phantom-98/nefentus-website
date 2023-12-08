@@ -7,12 +7,13 @@ import Identification from "../../assets/icon/identification.svg";
 import Logout from "../../assets/icon/logout.svg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const UserProfile = ({ web, logOut, requireKYC }) => {
   const [profileImage, setProfileImage] = useState(
     localStorage.getItem("profile_pic"),
   );
-
+  const { t } = useTranslation();
   return (
     <div className={styles.profileWrapper}>
       <div className={styles.profileImage}>
@@ -42,7 +43,7 @@ const UserProfile = ({ web, logOut, requireKYC }) => {
         <div className={`${styles.profileBody} card`}>
           <Link to="/dashboard/profile" className={styles.profileItem}>
             <img src={User2} alt="" />
-            <p>Profile</p>
+            <p>{t("navigation.profile")}</p>
           </Link>
           <Link to="/dashboard/invoices" className={styles.profileItem}>
             <img src={User2} alt="" />
@@ -51,22 +52,20 @@ const UserProfile = ({ web, logOut, requireKYC }) => {
           {web && (
             <Link to="/dashboard/" className={styles.profileItem}>
               <img src={Dashboard} alt="" />
-              <p>Dashboard</p>
+              <p>{t("navigation.dashboard")}</p>
             </Link>
           )}
           <Link to="/dashboard/security" className={styles.profileItem}>
             <img src={Security} alt="" />
-            <p>Security</p>
+            <p>{t("navigation.security")}</p>
           </Link>
-          {requireKYC && (
-            <Link to="/dashboard/identification" className={styles.profileItem}>
-              <img src={Identification} alt="" />
-              <p>Identification</p>
-            </Link>
-          )}
+          <Link to="/dashboard/identification" className={styles.profileItem}>
+            <img src={Identification} alt="" />
+            <p>{t("navigation.identification")}</p>
+          </Link>
           <Link onClick={logOut} to="/" className={styles.profileItem}>
             <img src={Logout} alt="" />
-            <p>Log out</p>
+            <p>{t("navigation.logOut")}</p>
           </Link>
         </div>
       </div>

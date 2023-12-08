@@ -3,7 +3,7 @@
 .attachment {
   width: 100%;
   background-color: #101010;
-  border: 1px solid rgba(255, 255, 255, 0);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1rem;
   font-size: 1.4rem;
   padding: 1.75rem 2rem;
@@ -12,9 +12,9 @@
   font-family: "Axiforma", sans-serif;
 }
 
-.inputWrapper .input:focus {
-  /* border: 1px solid red !important; */
-}
+/* .inputWrapper .input:focus {
+  border: 1px solid red !important; 
+} */
 
 .inputWrapper input::placeholder,
 .textareaWrapper textarea::placeholder,
@@ -58,6 +58,11 @@
   font-size: 1.4rem;
 }
 
+.countryOption {
+  font-size: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1rem;
+}
 .option {
   cursor: pointer;
 }
@@ -101,6 +106,10 @@
 
 .dashboardLabel {
   font-size: 1.6rem !important;
+}
+
+.passwordLabel {
+  font-size: 1.4rem !important;
 }
 
 .dashboardInput,

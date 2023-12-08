@@ -38,7 +38,7 @@ const TransactionsBody = () => {
   function orderToArray(order) {
     return [
       new Date(order.updatedAt).toLocaleString(),
-      order.product !== null ? order.product.name : "Custom payment",
+      order.product !== null ? order.product.name : t("payment.customPayment"),
       order.totalPrice,
       order.quantity,
       order.currency,

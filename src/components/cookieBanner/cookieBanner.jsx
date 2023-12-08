@@ -4,6 +4,7 @@ import Cookie from "../../assets/icon/cookie.svg";
 
 import styles from "./cookie.module.css";
 import setCookie from "../setCookie/setCookie";
+import { useTranslation } from "react-i18next";
 
 const CookieBanner = ({ close }) => {
   const accept = () => {
@@ -11,6 +12,7 @@ const CookieBanner = ({ close }) => {
     close();
   };
 
+  const { t } = useTranslation();
   const decline = () => {
     setCookie("acceptCookie", false);
     close();
@@ -22,18 +24,19 @@ const CookieBanner = ({ close }) => {
         <img src={Cookie} alt="cookie" />
 
         <p className={styles.text}>
-          We use third-party <Link to="/privacy">cookies</Link> in order to{" "}
-          <br />
-          personalize your site experience.
+          {t("cookieBanner.first")}
+          <Link to="/privacy">{t("cookieBanner.cookies")}</Link>
+          {t("cookieBanner.second")} <br />
+          {t("cookieBanner.last")}
         </p>
       </div>
 
       <div className={styles.buttons}>
         <div className={`${styles.button} ${styles.button1}`} onClick={decline}>
-          Decline
+          {t("cookieBanner.decline")}
         </div>
         <div className={`${styles.button} ${styles.button2}`} onClick={accept}>
-          Accept
+          {t("cookieBanner.accept")}
         </div>
       </div>
     </div>

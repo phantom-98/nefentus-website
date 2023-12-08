@@ -5,13 +5,12 @@ import ProductCard from "../../components/productCard/productCard";
 import SettingsTitle from "../../components/settings/settingsTitle";
 import styles from "./productBody.module.css";
 import { MessageContext } from "../../../context/message";
-import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 import MessageComponent from "../../../components/message";
-import Input, { Attachment, Textarea } from "../../../components/input/input";
+import Input, { Textarea, Attachment } from "../../../components/input/input";
 import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
-import Button from "../../components/button/button";
+import { useTranslation } from "react-i18next";
 import Popup from "../../components/popup/popup";
 
 const ProductBody = () => {
@@ -26,6 +25,8 @@ const ProductBody = () => {
   const [openModal, setOpenModal] = useState(false);
   const [productId, setProductId] = useState(null);
   const [load, setLoad] = useState(false);
+
+  const { t } = useTranslation();
 
   const dashboardApi = new vendorDashboardApi();
 
@@ -59,21 +60,21 @@ const ProductBody = () => {
 
   const addOrUpdateProduct = async () => {
     if (!name) {
-      setErrorMessage("Name is required!");
+      setErrorMessage(t("products.error.name"));
       return;
     }
     if (!description) {
-      setErrorMessage("Description is required!");
+      setErrorMessage(t("products.error.description"));
       return;
     }
     if (!price) {
-      setErrorMessage("Price is required!");
+      setErrorMessage(t("products.error.price"));
       return;
     }
     let priceAsFloat = null;
     priceAsFloat = parseFloat(price);
     if (!priceAsFloat) {
-      setErrorMessage("Price must be a number!");
+      setErrorMessage(t("products.error.priceAsFloat"));
     }
 
     // Set stock to -1 if not given
@@ -105,11 +106,13 @@ const ProductBody = () => {
     }
 
     if (resp1 && resp2) {
-      if (productId !== null) setInfoMessage("Product updated successfully!");
-      else setInfoMessage("Product added successfully!");
+      if (productId !== null)
+        setInfoMessage(t("products.createProductModal.updatedSuccessfully"));
+      else setInfoMessage(t("products.createProductModal.addedSuccessfully"));
     } else {
-      if (productId !== null) setErrorMessage("Could not update the product!");
-      else setErrorMessage("Could not add a new product!");
+      if (productId !== null)
+        setErrorMessage(t("products.createProductModal.updateError"));
+      else setErrorMessage(t("products.createProductModal.addError"));
     }
 
     loadProducts();
@@ -119,9 +122,9 @@ const ProductBody = () => {
   const deleteProduct = async (productId) => {
     const resp = await dashboardApi.deleteProduct(productId);
     if (resp) {
-      setInfoMessage("Product deleted successfully!");
+      setInfoMessage(t("products.createProductModal.deletedSuccessfully"));
     } else {
-      setErrorMessage("Could not delete the product!");
+      setErrorMessage(t("products.createProductModal.deletedError"));
     }
     loadProducts();
   };
@@ -161,8 +164,10 @@ const ProductBody = () => {
       <Card>
         <div className={styles.titleHeader}>
           <SettingsTitle
-            title="Total Products"
-            description="You’ve added 3 new product this month"
+            title={t("products.totalProducts")}
+            description={t("products.subtitle1")
+              .concat(` ${products.length.toString()} `)
+              .concat(t("products.subtitle2"))}
             product
             onCreate={handleProductClick}
           />
@@ -182,138 +187,76 @@ const ProductBody = () => {
       </Card>
 
       <div>
-        {/* {openModal !== false && (
-          <ModalOverlay>
-            <div className={styles.modal}>
-              <h4>{openModal === "add" ? "Create" : "Update"} Product</h4>
-
-              <MessageComponent />
-
-              <div className={styles.modalInputs}>
-                <Attachment
-                  label="Product image"
-                  onUpload={(file) => {
-                    setImage(file);
-                    setImageChanged(true);
-                    setCropDialogOpen(true);
-                  }}
-                  onDelete={() => {
-                    setImage(null);
-                    setImageChanged(true);
-                  }}
-                  value={image}
-                  dashboard
-                />
-                <Input
-                  dashboard
-                  label="Name*"
-                  placeholder="Enter name"
-                  value={name}
-                  setState={setName}
-                />
-                <Textarea
-                  dashboard
-                  label="Description*"
-                  placeholder="Enter description"
-                  value={description}
-                  setState={setDescription}
-                  rows={2}
-                />
-                <Input
-                  dashboard
-                  label="Price*"
-                  placeholder="Enter price"
-                  value={price}
-                  setState={setPrice}
-                  number
-                />
-                <Input
-                  dashboard
-                  label="Stock"
-                  placeholder="Enter stock if limited stock"
-                  value={stock}
-                  setState={setStock}
-                  number
-                />
-              </div>
-
-              <div className={styles.buttons}>
-                <Button
-                  color="light"
-                  onClick={() => {
-                    clearMessages();
-                    setOpenModal(false);
-                    setProductId(null);
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button onClick={addOrUpdateProduct}>
-                  {openModal === "add" ? "Add" : "Update"} Product
-                </Button>
-              </div>
-            </div>
-          </ModalOverlay>
-        )} */}
-
         <Popup
           show={openModal}
-          title={`${openModal === "add" ? "Create" : "Update"} Product`}
-          onConfirm={addOrUpdateProduct}
+          title={t("products.createProductModal.createProduct")}
           onClose={() => {
             clearMessages();
             setOpenModal(false);
             setProductId(null);
           }}
+          onConfirm={() => addOrUpdateProduct()}
+          cancelTitle={t("general.cancel")}
+          confirmTitle={
+            openModal === "add" ? t("general.add") : t("general.update")
+          }
         >
           <MessageComponent />
-
-          <div className={styles.modalInputs}>
-            <Attachment
-              label="Product image"
-              onUpload={(file) => {
-                setImage(file);
-                setImageChanged(true);
-                setCropDialogOpen(true);
-              }}
-              onDelete={() => {
-                setImage(null);
-                setImageChanged(true);
-              }}
-              value={image}
-              dashboard
-            />
-            <Input
-              dashboard
-              label="Name*"
-              placeholder="Enter name"
-              value={name}
-              setState={setName}
-            />
-            <Textarea
-              dashboard
-              label="Description*"
-              placeholder="Enter description"
-              value={description}
-              setState={setDescription}
-              rows={2}
-            />
-            <Input
-              dashboard
-              label="Price*"
-              placeholder="Enter price"
-              value={price}
-              setState={setPrice}
-              number
-            />
-            <Input
-              dashboard
-              label="Stock"
-              placeholder="Enter stock if limited stock"
-              value={stock}
-              setState={setStock}
-              number
-            />
+          <div className={styles.modal}>
+            {/* <h4>
+              {openModal === "add"
+                ? t("products.createProductModal.createProduct")
+                : t("products.createProductModal.updateProduct")}
+            </h4> */}
+            <div className={styles.modalInputs}>
+              <Attachment
+                label={t("products.createProductModal.imageLabel")}
+                onUpload={(file) => {
+                  setImage(file);
+                  setImageChanged(true);
+                  setCropDialogOpen(true);
+                }}
+                onDelete={() => {
+                  setImage(null);
+                  setImageChanged(true);
+                }}
+                value={image}
+                dashboard
+              />
+              <Input
+                dashboard
+                label={t("products.createProductModal.nameLabel") + "*"}
+                placeholder={t("products.createProductModal.namePlaceholder")}
+                value={name}
+                setState={setName}
+              />
+              <Textarea
+                dashboard
+                label={t("products.createProductModal.descriptionLabel") + "*"}
+                placeholder={t(
+                  "products.createProductModal.descriptionPlaceholder",
+                )}
+                value={description}
+                setState={setDescription}
+                rows={2}
+              />
+              <Input
+                dashboard
+                label={t("products.createProductModal.priceLabel") + "*"}
+                placeholder={t("products.createProductModal.pricePlaceholder")}
+                value={price}
+                setState={setPrice}
+                number
+              />
+              <Input
+                dashboard
+                label={t("products.createProductModal.stockLabel")}
+                placeholder={t("products.createProductModal.stockPlaceholder")}
+                value={stock}
+                setState={setStock}
+                number
+              />
+            </div>
           </div>
         </Popup>
       </div>

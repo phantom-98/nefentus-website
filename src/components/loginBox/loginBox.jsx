@@ -277,7 +277,6 @@ const LoginBox = () => {
         setErrorMessage("Failed to Confirm");
         return;
       }
-      console.log(response, "response");
       navigateDashboard();
     } catch (error) {
       setErrorMessage(t("messages.error.login"));

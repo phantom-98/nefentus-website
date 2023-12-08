@@ -1,7 +1,8 @@
+import Button from "../button/button";
 import Card from "../card/card";
 import styles from "./cryptoCard.module.css";
 
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import useInternalWallet from "../../../hooks/internalWallet";
 import {
   metamaskWallet,
@@ -15,14 +16,13 @@ import usePrices from "../../../hooks/prices";
 import backendAPI from "../../../api/backendAPI";
 import { currencies } from "../../../constants";
 import { formatTokenBalance, formatUSDBalance } from "../../../utils";
+import { useTranslation } from "react-i18next";
 import { MessageContext } from "../../../context/message";
-import ModalOverlay from "../../../dashboard/modal/modalOverlay";
 import MessageComponent from "../../../components/message";
 import TopInfo from "../../../dashboard/topInfo/topInfo";
 import CopyValue from "../../../dashboard/copyValue";
 import inputStyles from "../../../components/input/input.module.css";
 import Input, { Options } from "../../../components/input/input";
-import Button from "../button/button";
 import Popup from "../popup/popup";
 
 const CryptoCard = () => {
@@ -35,6 +35,8 @@ const CryptoCard = () => {
     address: useAddress(),
     status: useConnectionStatus(),
   };
+
+  const { t } = useTranslation();
   const backend_API = new backendAPI();
   const [cryptList, setCryptList] = useState([]);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
@@ -71,11 +73,11 @@ const CryptoCard = () => {
   return (
     <Card>
       <div className={styles.top}>
-        <div className={styles.label}>Crypto Market</div>
+        <div className={styles.label}>{t("dashboard.cryptoMarket")}</div>
 
         <div className={styles.buttonWrapper}>
           <div className={styles.btn}>
-            <p>Hide Zero Balance Assets</p>
+            <p>{t("dashboard.hideBalance")}</p>
 
             <div
               onClick={() => setActiveToggle((prev) => !prev)}
@@ -88,9 +90,12 @@ const CryptoCard = () => {
           </div>
           <div className={styles.buttons}>
             <Button color="light" onClick={() => setOpenReceiveModal(true)}>
-              Receive
+              {t("dashboard.receive")}
             </Button>
-            <Button onClick={() => setOpenWithdrawModal(true)}>Send</Button>
+            <Button onClick={() => setOpenWithdrawModal(true)}>
+              {" "}
+              {t("dashboard.send")}
+            </Button>
           </div>
         </div>
       </div>
@@ -157,6 +162,7 @@ const CryptoItem = ({ data }) => {
 
 const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
   const { setInfoMessage, clearMessages } = useContext(MessageContext);
+  const { t } = useTranslation();
 
   return (
     <Popup
@@ -165,25 +171,25 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
         setOpenReceiveModal(false);
         clearMessages();
       }}
-      confirmTitle="Close"
+      confirmTitle={t("dashboard.cryptoCard.close")}
     >
       <MessageComponent />
       <TopInfo
-        title={"Receive funds"}
-        description={
-          "Receive funds by sending cryptocurrency to the address below."
-        }
+        title={t("dashboard.cryptoCard.receiveModal.title")}
+        description={t("dashboard.cryptoCard.receiveModal.description")}
       />
       <div className={styles.modalInputs}>
         <div>
           <div className={inputStyles.inputWrapper}>
             <p className={`${inputStyles.label} ${inputStyles.dashboardLabel}`}>
-              Wallet address
+              {t("dashboard.cryptoCard.wallet")}
             </p>
 
             <CopyValue
               value={walletAddress}
-              onCopy={() => setInfoMessage("Wallet address copied!")}
+              onCopy={() =>
+                setInfoMessage(t("dashboard.cryptoCard.walletCopied"))
+              }
             />
           </div>
         </div>
@@ -199,6 +205,7 @@ const SendModal = ({ show, setShow }) => {
   const [password, setPassword] = useState("");
   const [isWithdrawing, setIsWithdrawing] = useState(false);
 
+  const { t } = useTranslation();
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
 
@@ -206,17 +213,17 @@ const SendModal = ({ show, setShow }) => {
     if (isWithdrawing) return;
 
     if (withdrawAmount === "") {
-      setErrorMessage("Please enter an amount to withdraw.");
+      setErrorMessage(t("dashboard.cryptoCard.sendModal.amountError"));
       return;
     }
 
     if (withdrawAddress === "") {
-      setErrorMessage("Please enter an address to withdraw to.");
+      setErrorMessage(t("dashboard.cryptoCard.sendModal.addressError"));
       return;
     }
 
     if (password === "") {
-      setErrorMessage("Please enter your password.");
+      setErrorMessage(t("dashboard.cryptoCard.sendModal.passwordError"));
       return;
     }
 
@@ -224,7 +231,7 @@ const SendModal = ({ show, setShow }) => {
       (currency) => currency.abbr === withdrawCurrency,
     );
     if (!sendCurrency) {
-      setErrorMessage("Please select a correct currency to withdraw.");
+      setErrorMessage(t("dashboard.cryptoCard.sendModal.correctCurrencyError"));
       return;
     }
 
@@ -233,14 +240,14 @@ const SendModal = ({ show, setShow }) => {
     const passwordCorrect = await backend_Api.checkPassword(password);
     console.log("passwordCorrect: " + passwordCorrect);
     if (!passwordCorrect) {
-      setErrorMessage("You did not provide the correct password!");
+      setErrorMessage(t("dashboard.cryptoCard.sendModal.correctPasswordError"));
       return;
     }
 
     //Before withdraw
     setPassword("");
     setIsWithdrawing(true);
-    setInfoMessage("Withdrawing...");
+    setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawing"));
 
     // Withdraw
     const tokenAddress = sendCurrency.address;
@@ -252,18 +259,18 @@ const SendModal = ({ show, setShow }) => {
       password,
     );
     if (ret) {
-      setInfoMessage("Withdrawal successful!");
+      setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawSuccess"));
       fetchBalances();
     } else {
-      setErrorMessage("Withdrawal failed!");
+      setErrorMessage(t("dashboard.cryptoCard.sendModal.withdrawFailed"));
     }
   };
 
   return (
     <Popup
       show={show}
-      cancelTitle="Close"
-      confirmTitle="Withdraw"
+      cancelTitle={t("general.close")}
+      confirmTitle={t("general.withdraw")}
       onClose={() => {
         setShow(false);
         clearMessages();
@@ -272,15 +279,15 @@ const SendModal = ({ show, setShow }) => {
     >
       <MessageComponent />
       <TopInfo
-        title={"Withdraw funds"}
-        description={"You requested to withdraw funds from your account."}
+        title={t("dashboard.cryptoCard.sendModal.title")}
+        description={t("dashboard.cryptoCard.sendModal.description")}
       />
 
       <div className={styles.modalInputs}>
         <Options
           dashboard
-          label="Currency options"
-          placeholder="Select Currency Option"
+          label={t("dashboard.cryptoCard.sendModal.currencyLabel")}
+          placeholder={t("dashboard.cryptoCard.sendModal.currencyPlaceholder")}
           value={withdrawCurrency}
           options={currencies.map((item) => item.abbr)}
           setValue={setWithdrawCurrency}
@@ -288,24 +295,24 @@ const SendModal = ({ show, setShow }) => {
 
         <Input
           dashboard
-          label="Amount"
-          placeholder="Enter amount"
+          label={t("dashboard.cryptoCard.sendModal.amountLabel")}
+          placeholder={t("dashboard.cryptoCard.sendModal.amountLabel")}
           value={withdrawAmount}
           setState={setWithdrawAmount}
         />
 
         <Input
           dashboard
-          label="Address"
-          placeholder="Enter address"
+          label={t("dashboard.cryptoCard.sendModal.addressLabel")}
+          placeholder={t("dashboard.cryptoCard.sendModal.addressLabel")}
           value={withdrawAddress}
           setState={setWithdrawAddress}
         />
 
         <Input
           dashboard
-          label="Password"
-          placeholder="Enter password"
+          label={t("dashboard.cryptoCard.sendModal.passwordLabel")}
+          placeholder={t("dashboard.cryptoCard.sendModal.passwordLabel")}
           value={password}
           setState={setPassword}
           secure
