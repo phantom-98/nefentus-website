@@ -60,8 +60,6 @@ const ProfileSettings = () => {
       enableInvoicing,
     };
 
-    const { t } = useTranslation();
-
     const response = await backendAPI.update(requestData);
     if (response == null) {
       setErrorMessage(t("messages.error.updateData"));
