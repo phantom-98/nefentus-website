@@ -246,7 +246,8 @@
   "reset-password": {
     "title": "Reset Password",
     "button": "Reset",
-    "info": "Don't want to reset your password? Login instead.",
+    "info": "Don't want to reset your password?",
+    "infoLinkText": "Login instead",
     "button-label-confirm": "Confirm password"
   },
   "signUp": {

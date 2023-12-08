@@ -183,8 +183,9 @@
   },
   "reset-password": {
     "title": "Passwort zurücksetzen",
-    "button": "zurücksetzen",
-    "info": "Sie möchten Ihr Passwort nicht zurücksetzen? Stattdessen anmelden.",
+    "button": "Zurücksetzen",
+    "info": "Sie möchten Ihr Passwort nicht zurücksetzen?",
+    "infoLinkText": "Stattdessen nmelden",
     "button-label-confirm": "Bestätigen Sie das Passwort"
   },
   "signUp": {
