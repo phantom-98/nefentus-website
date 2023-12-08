@@ -365,7 +365,9 @@ const SettingsItem = ({ data, setIsSaveData }) => {
               : data.type === "image"
               ? `${t("security.actions.change")}`
               : data.type === "enable"
-              ? `${t("security.actions.enable")}`
+              ? data.value
+                ? `${t("security.actions.disable")}`
+                : `${t("security.actions.enable")}`
               : data.type === "select"
               ? `${t("security.actions.select")}`
               : ""}

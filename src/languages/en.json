@@ -1030,6 +1030,7 @@
     "actions": {
       "edit": "Edit",
       "enable": "Enable",
+      "disable": "Disable",
       "change": "Change",
       "select": "Select",
       "close": "Close",

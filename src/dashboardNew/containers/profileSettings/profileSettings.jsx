@@ -32,9 +32,7 @@ const ProfileSettings = () => {
   const [notificationLanguage, setNotificationLanguage] = useState(
     localStorage.getItem("notificationLanguage"),
   );
-  const [enableInvoicing, setEnableInvoicing] = useState(
-    localStorage.getItem("enableInvoicing") === "true",
-  );
+
   const [isSaveData, setIsSaveData] = useState(false);
   const [file, setFile] = useState(null);
   const [imageChanged, setImageChanged] = useState(false);
@@ -57,10 +55,7 @@ const ProfileSettings = () => {
       emailNotifications,
       appNotifications,
       notificationLanguage,
-      enableInvoicing,
     };
-
-    const { t } = useTranslation();
 
     const response = await backendAPI.update(requestData);
     if (response == null) {
@@ -184,13 +179,6 @@ const ProfileSettings = () => {
       popup: "language",
       type: "edit",
     },
-    {
-      label: `${t("profile.enableInvoicing")}`,
-      description: `${t("profile.enableInvoicingDescription")}`,
-      value: enableInvoicing,
-      setValue: setEnableInvoicing,
-      type: "enable",
-    },
   ];
 
   useEffect(() => {
@@ -208,16 +196,6 @@ const ProfileSettings = () => {
       {data.map((item) => (
         <SettingsItem data={item} setIsSaveData={setIsSaveData} />
       ))}
-
-      {/*
-      <div
-        className={styles.button}
-        style={{ display: "flex", justifyContent: "flex-end" }}
-      >
-        <Button color="light">Cancel</Button>
-        <Button>Save Changes</Button>
-      </div>
-	  */}
     </Card>
   );
 };
