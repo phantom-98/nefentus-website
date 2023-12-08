@@ -58,9 +58,15 @@ const WalletSetting = ({ value, setValue }) => {
     const getWalletAddresses = async () => {
       try {
         const dataFromBackend = await BackandAPI.getWalletAddresses();
-        setData(dataFromBackend);
-        if (dataFromBackend) {
-          const lastObject = dataFromBackend[dataFromBackend.length - 1];
+        let filteredData = [];
+        dataFromBackend.forEach((item) => {
+          !filteredData.find((f) => f.address == item.address) &&
+            filteredData.push(item);
+        });
+
+        setData(filteredData);
+        if (filteredData) {
+          const lastObject = filteredData[filteredData.length - 1];
           if (lastObject?.type == "WalletConnect") {
             setActiveWallet(wallets[0]);
           }
