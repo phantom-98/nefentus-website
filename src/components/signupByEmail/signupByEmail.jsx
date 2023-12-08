@@ -3,24 +3,30 @@ import Button from "../button/button";
 import Input, { Options, SearchOptions } from "../input/input";
 import styles from "./signupByEmail.module.css";
 import { Link } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import ReCAPTCHA from "react-google-recaptcha";
 import backendAPI from "../../api/backendAPI";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import MessageComponent from "../message";
+import { MessageContext } from "../../context/message";
 import { z } from "zod";
 import isMobilePhone from "../../func/isMobilePhone";
-import Error from "../error/error";
 import Popup from "../../dashboardNew/components/popup/popup";
 
 const SignupByEmail = () => {
   const recaptchaRef = useRef();
   const { t } = useTranslation();
-  const [errorMessage, setErrorMessage] = useState(null);
+  const { setErrorMessage } = useContext(MessageContext);
   const [message, setMessage] = useState(null);
   const [CountryOption, setCountryOption] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState(false);
   const api = new backendAPI();
 
   const country_list = [
@@ -295,45 +301,71 @@ const SignupByEmail = () => {
   };
 
   async function submitForm(data) {
-    if (CountryOption === t("signUp.option1Placeholder")) {
-      setErrorMessage("Please choose a country");
+    if (firstName === "") {
+      setErrorMessage(t("messages.error.firstNameRequired"));
+      return;
+    }
+    if (lastName === "") {
+      setErrorMessage(t("messages.error.lastNameRequired"));
+      return;
+    }
+    if (!localStorage.getItem("email")) {
+      setErrorMessage(t("messages.error.emailRequired"));
+      return;
+    }
+    if (password === "") {
+      setErrorMessage(t("messages.error.passwordRequired"));
+      return;
+    }
+    if (confirmPassword === "") {
+      setErrorMessage(t("messages.error.confirmPasswordRequired"));
+      return;
+    }
+
+    if (phoneNumber === "") {
+      setErrorMessage(t("messages.error.phoneNumberRequired"));
+      return;
+    }
+    if (CountryOption === "") {
+      setErrorMessage(t("messages.error.country"));
       return;
     }
 
     const captchaValue = recaptchaRef.current.getValue();
-
     if (!captchaValue) {
-      setErrorMessage("Please verify the reCAPTCHA!");
-    } else {
-      const requestData = {
-        ...data,
-        email: localStorage.getItem("email"),
-        roles: ["Affiliate"],
-        country: CountryOption,
-        affiliateLink: localStorage.getItem("affiliateJoined"),
-      };
-
-      const response = await api
-        .updateUserByEmail(requestData)
-        .then(() => {
-          setMessage("Please confirm your email address to proceed.");
-          setShowModal(false);
-          resetForm();
-        })
-        .catch((error) => {
-          setErrorMessage(error.message);
-        });
+      setErrorMessage(t("messages.error.reCAPTCHA"));
+      return;
     }
+
+    const requestData = {
+      ...data,
+      email: localStorage.getItem("email"),
+      roles: ["Affiliate"],
+      country: CountryOption,
+      affiliateLink: localStorage.getItem("affiliateJoined"),
+    };
+
+    const response = await api
+      .updateUserByEmail(requestData)
+      .then(() => {
+        setMessage("Please confirm your email address to proceed.");
+        setShowModal(false);
+        resetForm();
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
   }
 
   return (
     <Popup
       show={showModal}
-      onConfirm={handleSubmit(submitForm)}
+      onConfirm={() => handleSubmit(submitForm)()}
       confirmTitle="Update"
     >
       <form onSubmit={handleSubmit(submitForm)}>
-        <Error
+        <MessageComponent />
+        {/* <Error
           error={
             errorMessage ||
             errors.firstName?.message ||
@@ -342,7 +374,7 @@ const SignupByEmail = () => {
             errors.password?.message ||
             errors.confirmPassword?.message
           }
-        />
+        /> */}
         {message && (
           <div className={styles.messagecontainer}>
             <p>{message}</p>
@@ -355,6 +387,8 @@ const SignupByEmail = () => {
             placeholder={t("signUp.firstNamePlaceholder")}
             register={register}
             name={"firstName"}
+            value={firstName}
+            setState={setFirstName}
           />
 
           <Input
@@ -362,6 +396,8 @@ const SignupByEmail = () => {
             placeholder={t("signUp.lastNamePlaceholder")}
             register={register}
             name={"lastName"}
+            value={lastName}
+            setState={setLastName}
           />
 
           <Input
@@ -369,6 +405,8 @@ const SignupByEmail = () => {
             placeholder="(979) 268-4143"
             register={register}
             name={"telNr"}
+            value={phoneNumber}
+            setState={setPhoneNumber}
           />
           <Input
             label={t("signUp.emailLabel") + "*"}
@@ -381,6 +419,8 @@ const SignupByEmail = () => {
             placeholder={t("signUp.passwordPlaceholder")}
             register={register}
             name={"password"}
+            value={password}
+            setState={setPassword}
             secure
           />
           <Input
@@ -388,6 +428,8 @@ const SignupByEmail = () => {
             placeholder={t("signUp.confirmPasswordPlaceholder")}
             register={register}
             name={"confirmPassword"}
+            value={confirmPassword}
+            setState={setConfirmPassword}
             secure
           />
           <SearchOptions

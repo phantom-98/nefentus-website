@@ -765,6 +765,8 @@
       "lastNameRequired": "Nachname ist erforderlich.",
       "emailRequired": "E-Mail ist erforderlich.",
       "passwordRequired": "Kennwort ist erforderlich.",
+      "confirmPasswordRequired": "Zur Bestätigung ist ein Passwort erforderlich",
+      "phoneNumberRequired": "Telefonnummer ist erforderlich",
       "roleRequired": "Rolle ist erforderlich.",
       "passwordCorrect": "Sie haben nicht das richtige Passwort eingegeben!",
       "currencyCorrect": "Bitte wählen Sie eine korrekte Währung für die Abhebung.",

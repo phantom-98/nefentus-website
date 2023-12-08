@@ -833,6 +833,8 @@
       "lastNameRequired": "Last name is required.",
       "emailRequired": "Email is required.",
       "passwordRequired": "Password is required.",
+      "confirmPasswordRequired": "Confirm password is required",
+      "phoneNumberRequired": "Phone Number is required",
       "roleRequired": "Role is required.",
       "passwordCorrect": "You did not provide the correct password!",
       "currencyCorrect": "Please select a correct currency to withdraw.",

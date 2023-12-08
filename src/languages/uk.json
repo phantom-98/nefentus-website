@@ -832,6 +832,8 @@
       "lastNameRequired": "Потрібно вказати прізвище.",
       "emailRequired": "Обов'язкова електронна адреса.",
       "passwordRequired": "Потрібен пароль.",
+      "confirmPasswordRequired": "Потрібно підтвердити пароль",
+      "phoneNumberRequired": "Номер телефону потрібен",
       "roleRequired": "Потрібно вказати роль",
       "passwordCorrect": "Ви не вказали правильний пароль!",
       "currencyCorrect": "Будь ласка, оберіть правильну валюту для зняття коштів.",
