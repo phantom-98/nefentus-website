@@ -573,6 +573,7 @@
     "update": "Update",
     "open": "Open",
     "confirm": "Confirm",
+    "continue": "Continue",
     "withdraw": "Withdraw",
     "enable": "Enable",
     "disable": "Disable",
@@ -1019,7 +1020,12 @@
       "labelPassword": "One-time passwords via email",
       "descriptionPassword": "Setup Multi-Factor-Authentication based on one-time password sent via email.",
       "labelCode": "Anti-Phishing Code",
-      "descriptionCode": "Protect your account from phishing attempts. The anti-phishing code is added to every email received from Nefentus. If you see this code, the email is from Nefentus."
+      "descriptionCode": "Protect your account from phishing attempts. The anti-phishing code is added to every email received from Nefentus. If you see this code, the email is from Nefentus.",
+      "seedPhrase": "Seed Phrases",
+      "seedDescription": "A sequence of words that allows you to regain access to your crypto funds if you ever lose your crypto wallet.",
+      "rememberSeed": "Remember this phrase",
+      "verifySeed": "Verify Seed Phrase",
+      "enterSeed": "Enter Seed Phrase"
     },
     "settings": {
       "title": "Security",

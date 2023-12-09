@@ -505,6 +505,7 @@
     "update": "Aktualisieren",
     "open": "Öffen",
     "confirm": "Bestätigen",
+    "continue": "Weitermachen",
     "withdraw": "Abheben",
     "enable": "Aktivieren",
     "disable": "Deaktivieren",
@@ -929,7 +930,12 @@
       "labelPassword": "Einmal-Passwörter per E-Mail",
       "descriptionPassword": "Richten Sie die Multi-Faktor-Authentifizierung basierend auf Einmal-Passwörtern ein, die per E-Mail gesendet werden.",
       "labelCode": "Anti-Phishing Code",
-      "descriptionCode": "Schützen Sie Ihr Konto vor Phishing-Versuchen. Der Code wird in jeder Email von Nefentus eingefügt. Wenn Sie den Code in einer Email sehen, ist diese von Nefentus."
+      "descriptionCode": "Schützen Sie Ihr Konto vor Phishing-Versuchen. Der Code wird in jeder Email von Nefentus eingefügt. Wenn Sie den Code in einer Email sehen, ist diese von Nefentus.",
+      "seedPhrase": "Samenphrase",
+      "seedDescription": "Eine Wortfolge, die es Ihnen ermöglicht, wieder Zugriff auf Ihre Kryptogelder zu erhalten, falls Sie Ihr Krypto-Wallet jemals verlieren.",
+      "rememberSeed": "Merken Sie sich diesen Satz",
+      "verifySeed": "Überprüfen Sie die Samenphrase",
+      "enterSeed": "Geben Sie die Samenphrase ein"
     },
     "settings": {
       "title": "Sicherheit",

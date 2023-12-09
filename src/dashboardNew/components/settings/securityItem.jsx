@@ -268,7 +268,7 @@ const SecurityItem = ({ data }) => {
           >
             {data.type === "button"
               ? data.flow === "seed" && seedStatus
-                ? "Disabled"
+                ? t("general.notActive")
                 : status
                 ? t("general.disable")
                 : t("general.enable")
@@ -394,8 +394,12 @@ const SecurityItem = ({ data }) => {
       <Popup
         show={addSeedPhrases}
         onClose={handleCloseSeedModal}
-        confirmTitle={addSeedPhrases === "step1" ? "Continue" : "Confirm"}
-        cancelTitle={"Close"}
+        confirmTitle={
+          addSeedPhrases === "step1"
+            ? t("general.continue")
+            : t("general.confirm")
+        }
+        cancelTitle={t("general.close")}
         onConfirm={
           addSeedPhrases === "step1"
             ? () => setAddSeedPhrases("step2")
@@ -404,12 +408,14 @@ const SecurityItem = ({ data }) => {
       >
         <div className={styles.seedPhrasesModalWrapper}>
           <p style={{ fontSize: "32px" }}>
-            {addSeedPhrases === "step1" ? "Seed Phrase" : "Verify Seed Phrase"}
+            {addSeedPhrases === "step1"
+              ? t("security.items.seedPhrase")
+              : t("security.items.verifySeed")}
           </p>
           <p style={{ fontSize: "15px" }}>
             {addSeedPhrases === "step1"
-              ? "Remember this phrase"
-              : "EnterSeedPhrase"}
+              ? t("security.items.rememberSeed")
+              : t("security.items.enterSeed")}
           </p>
 
           {addSeedPhrases === "step2" ? (

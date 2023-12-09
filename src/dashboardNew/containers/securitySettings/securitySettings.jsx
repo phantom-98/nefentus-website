@@ -40,6 +40,13 @@ const SecuritySettings = () => {
         type: "phishingCode",
         flow: "phishingCode",
       },
+      {
+        label: t("security.items.seedPhrase"),
+        description: t("security.items.seedDescription"),
+        value: false,
+        type: "button",
+        flow: "seed",
+      },
     ];
   }, [language]);
 
