@@ -10,6 +10,7 @@ import Clipboard from "../../../assets/icon/clipboard.svg";
 import Checkmark from "../../../assets/icon/checkmark.svg";
 import Table from "../../../components/table";
 import CopyValue from "../../../dashboard/copyValue";
+import { useTranslation } from "react-i18next";
 
 const Popup = ({
   show,
@@ -96,6 +97,8 @@ export const PaymentPopup = ({
 }) => {
   const dashboardElement = document.getElementById("dashboard");
 
+  const { t } = useTranslation();
+
   return ReactDOM.createPortal(
     <div
       className={`${styles.popup} ${styles.paymentPopup}`}
@@ -112,19 +115,19 @@ export const PaymentPopup = ({
 
         <div className={styles.body}>
           <div className={styles.row}>
-            <p>Name:</p>
+            <p>{t("dashboard.modal.name")}:</p>
             <p>{name}</p>
           </div>
           <div className={styles.row}>
-            <p>Email:</p>
+            <p>{t("dashboard.modal.email")}:</p>
             <p>{email}</p>
           </div>
           <div className={styles.row}>
-            <p>Company:</p>
+            <p>{t("dashboard.modal.company")}:</p>
             <p>{company}</p>
           </div>
           <div className={styles.row}>
-            <p>Address:</p>
+            <p>{t("dashboard.modal.address")}:</p>
             <p>{address}</p>
           </div>
         </div>
@@ -139,8 +142,8 @@ export const PaymentPopup = ({
         </div>
 
         <div className={styles.paymentButtons}>
-          <Button onClick={onClick}>Scan QR Code</Button>
-          <div>Download invoice</div>
+          <Button onClick={onClick}>{t("payments.scan")}</Button>
+          <div>{t("payments.downloadInvoice")}</div>
         </div>
       </Card>
     </div>,
@@ -151,6 +154,7 @@ export const PaymentPopup = ({
 export const QRPopup = ({ show, setShow, data, onClick }) => {
   const dashboardElement = document.getElementById("dashboard");
   const { name, email, price, company, address, taxNumber, link } = data;
+  const { t } = useTranslation();
 
   console.log(data, "datadatadata");
 
@@ -164,19 +168,19 @@ export const QRPopup = ({ show, setShow, data, onClick }) => {
           <img src={Close} alt="" onClick={() => setShow(false)} />
         </div>
 
-        <div className={styles.title}>Scan QR Code</div>
+        <div className={styles.title}>{t("payments.scan")}</div>
         <div className={styles.description}>
-          To confirm you need to scan QR code
+          {t("payments.scanDescription")}
         </div>
 
         <Table
           data={[
-            ["Amount:", `${price} USD`],
-            ["Email:", `${email}`],
-            ["Name:", `${name}`],
-            ["Company:", `${company}`],
-            ["Address:", `${address}`],
-            ["Tax number:", `${taxNumber}`],
+            [`${t("dashboard.modal.address")}:`, `${price} USD`],
+            [`${t("dashboard.modal.email")}:`, `${email}`],
+            [`${t("dashboard.modal.name")}:`, `${name}`],
+            [`${t("dashboard.modal.company")}:`, `${company}`],
+            [`${t("dashboard.modal.address")}:`, `${address}`],
+            [`${t("dashboard.modal.taxNumber")}:`, `${taxNumber}`],
             [
               "Link:",
               <CopyValue
@@ -198,8 +202,8 @@ export const QRPopup = ({ show, setShow, data, onClick }) => {
         />
 
         <div className={styles.paymentButtons}>
-          <Button onClick={() => setShow(false)}>Close</Button>
-          <div onClick={onClick}>Download invoice</div>
+          <Button onClick={() => setShow(false)}>{t("general.close")}</Button>
+          <div onClick={onClick}>{t("payments.downloadInvoice")}</div>
         </div>
       </Card>
     </div>,

@@ -2,10 +2,19 @@ import styles from "./pagination.module.css";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Options } from "../input/input";
+import { useTranslation } from "react-i18next";
 
-const Pagination = ({ renderItems, data, setDataPage }) => {
+const Pagination = ({
+  renderItems,
+  data,
+  setDataPage,
+  setDataSize,
+  searchTrigger,
+}) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+
+  const { t } = useTranslation();
 
   const length = data.length;
   const numPages = Math.ceil(length / pageSize);
@@ -22,7 +31,14 @@ const Pagination = ({ renderItems, data, setDataPage }) => {
   }
   useEffect(() => {
     setDataPage(currentPage);
+    setDataSize(pageSize);
   }, [currentPage, pageSize]);
+
+  useEffect(() => {
+    if (searchTrigger) {
+      setCurrentPage(0);
+    }
+  }, [searchTrigger]);
 
   useEffect(() => {
     renderItems(currentPage * pageSize, (currentPage + 1) * pageSize);
@@ -45,8 +61,8 @@ const Pagination = ({ renderItems, data, setDataPage }) => {
             ‹
           </li>
           <li>
-            <PageInput value={currentPage + 1} updatePage={updatePage} /> of{" "}
-            {numPages}
+            <PageInput value={currentPage + 1} updatePage={updatePage} />{" "}
+            {t("general.of")} {numPages}
           </li>
           <li
             onClick={() => updatePage(currentPage + 1)}
@@ -66,12 +82,11 @@ const Pagination = ({ renderItems, data, setDataPage }) => {
           </li>
         </ul>
       </nav>
-      {/* 
       <Options
         options={[10, 20, 50, 100]}
         value={pageSize}
         setValue={updatePageSize}
-      /> */}
+      />
     </div>
   );
 };

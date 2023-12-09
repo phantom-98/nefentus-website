@@ -12,9 +12,9 @@ import QR from "../../assets/icon/qrcode.svg";
 import Dummy from "../../assets/image/dummy.webp";
 
 import Checkmark from "../../assets/icon/singleCheckmark.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import backendAPI from "../../api/backendAPI";
 import Error from "../error/error";
 import Input from "../input/input";
