@@ -391,28 +391,6 @@ const SecurityItem = ({ data }) => {
         )}
       </Popup>
 
-              <div className={styles.buttons}>
-                <Button
-                  color="light"
-                  onClick={() => {
-                    handleClose();
-                  }}
-                >
-                  Close
-                </Button>
-
-                <Button
-                  onClick={() => {
-                    handleConfirmCode();
-                  }}
-                >
-                  Confirm
-                </Button>
-              </div>
-            </>
-          )}
-        </ModalOverlay>
-      )}
       <Popup
         show={addSeedPhrases}
         onClose={handleCloseSeedModal}
