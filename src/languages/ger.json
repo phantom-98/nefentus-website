@@ -1032,7 +1032,7 @@
       "transactionLimits": "P2P-Transaktionslimits"
     },
     "verification": {
-      "title": "Verifiziert werden",
+      "title": "Verifizierung",
       "fullName": "Vollständiger Name",
       "address": "Adresse",
       "city": "Stadt und Postleitzahl",
