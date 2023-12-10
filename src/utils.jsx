@@ -66,13 +66,16 @@ export function getRole(localStorage) {
 export function dashboardLink(localStorage) {
   let role = getRole(localStorage);
   if (
-    role === "vendor" ||
     role === "affiliate" ||
     role === "broker" ||
     role === "seniorbroker" ||
     role === "leader"
   ) {
     role = "partner";
+  } else if (role === "admin") {
+    role = "admin";
+  } else if (role === "vendor") {
+    return "/dashboard";
   }
   return "/dashboard/" + role;
 }
