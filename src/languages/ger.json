@@ -992,10 +992,10 @@
   "invoice": {
     "title": "Rechnung",
     "description": "Geben Sie Ihre Mehrwertsteuernummer ein und bestätigen Sie, ob Sie Rechnungen erhalten möchten.",
-    "vatNumber": "Umsatzsteuer-Identifikationsnummer",
-    "enableInvoicing": "Freigabe der Rechnungsstellung",
-    "walletAddress": "Brieftasche zum Empfang von Geldern Beschreibung",
-    "walletDescription": "Wählen Sie die Brieftasche, die beim Erstellen einer Rechnung oder beim Verkauf eines Produkts Geld erhält.",
+    "vatNumber": "Umsatzsteuernummer",
+    "enableInvoicing": "Rechnungen aktivieren",
+    "walletAddress": "Wallet zum Empfangen von Zahlungen",
+    "walletDescription": "Wählen Sie die Wallet, die beim Erstellen einer Rechnung oder beim Verkauf eines Produkts Zahlungen erhält.",
     "stablecoin": "Stablecoin",
     "stablecoinDescription": "Wählen Sie den Stablecoin, in den umgewandelt werden soll.",
     "action": {

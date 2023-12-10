@@ -1084,7 +1084,7 @@
     "description": "Enter your VAT number and confirm if you want to receive invoices.",
     "vatNumber": "VAT Number",
     "enableInvoicing": "Enable invoicing",
-    "walletAddress": "Wallet to receive funds Description",
+    "walletAddress": "Wallet to receive funds",
     "walletDescription": "Choose the wallet that receives funds when creating an invoice or selling product.",
     "stablecoin": "Stablecoin",
     "stablecoinDescription": "Choose the stablecoin that should be converted to.",
