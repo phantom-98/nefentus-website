@@ -64,12 +64,15 @@ const Layout = ({
   };
 
   const handleEnterEmail = async () => {
-    const result = await backend_API.registerByEmail(email);
-
-    if (result) {
-      navigate("/dashboard");
+    if (email) {
+      const result = await backend_API.registerByEmail(email);
+      if (result) {
+        navigate("/dashboard");
+      } else {
+        setErrorMessage("Email already exists");
+      }
     } else {
-      setErrorMessage("Email already exists");
+      setErrorMessage("Please enter a valid email address");
     }
   };
 

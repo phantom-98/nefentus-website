@@ -21,7 +21,7 @@ const SignupByEmail = () => {
   const { setErrorMessage } = useContext(MessageContext);
   const [message, setMessage] = useState(null);
   const [CountryOption, setCountryOption] = useState("");
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -365,16 +365,6 @@ const SignupByEmail = () => {
     >
       <form onSubmit={handleSubmit(submitForm)}>
         <MessageComponent />
-        {/* <Error
-          error={
-            errorMessage ||
-            errors.firstName?.message ||
-            errors.lastName?.message ||
-            errors.email?.message ||
-            errors.password?.message ||
-            errors.confirmPassword?.message
-          }
-        /> */}
         {message && (
           <div className={styles.messagecontainer}>
             <p>{message}</p>
