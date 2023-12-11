@@ -330,6 +330,27 @@ export default class backendAPI {
     }
   }
 
+  async getSecuritySettings() {
+    try {
+      const url = `${this.baseURL}/auth/getUserSecurity`;
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (e) {
+      throw new Error("Network response was not ok");
+    }
+  }
+
   async setPhishingCode(code) {
     try {
       const url = `${this.baseURL}/auth/setup/antiPhishingCode`;
