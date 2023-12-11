@@ -71,7 +71,7 @@ const Layout = ({
         setErrorMessage("Email already exists");
       }
     } else {
-      setErrorMessage("Please enter a valid email address");
+      setErrorMessage(t("messages.validation.email"));
     }
   };
 
