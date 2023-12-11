@@ -1,4 +1,6 @@
 import { useContext, useEffect, useState } from "react";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/button/button";
 import Card from "../../components/card/card";
 import SettingsTitle from "../../components/settings/settingsTitle";
@@ -110,8 +112,8 @@ const IdentificationBody = () => {
   const BackendAPI = new backend_API();
   const adminApi = new adminDashboardApi("admin");
   const [uploadingFiles, setUploadingFiles] = useState(KYCContent);
-  const [getData, setGetData] = useState();
-  const [getText, setGetText] = useState("");
+  const [getData, setGetData] = useState([]);
+  const [getText, setGetText] = useState([]);
   const [declineResponse, setDeclineResponse] = useState(null);
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
@@ -148,9 +150,22 @@ const IdentificationBody = () => {
 
     const filteredArray = KYCContent.map((item) => {
       if (item.id in transformedResults) {
-        item.rejectReason = transformedResults[item.id].rejectReason;
-        item.url = transformedResults[item.id].url;
-        item.verify = transformedResults[item.id].verify;
+        if (
+          item.notRequired &&
+          (level == 2 ||
+            ((!transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].rejectReason ||
+              transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].rejectReason ==
+                "") &&
+              transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].url))
+        ) {
+          item.verify = true;
+          item.url = "notRequired";
+          item.rejectReason = "notRequired";
+        } else {
+          item.rejectReason = transformedResults[item.id].rejectReason;
+          item.url = transformedResults[item.id].url;
+          item.verify = transformedResults[item.id].verify;
+        }
 
         if (transformedResults[item.id].rejectReason != null) {
           setDeclineResponse(transformedResults[item.id].rejectReason);
@@ -185,7 +200,42 @@ const IdentificationBody = () => {
     fetchFYC();
   }, [userId]);
 
+  const checkUploadingData = () => {
+    let res = false;
+    for (let i = 0; i < KYCContent.length; i++) {
+      const item = KYCContent[i];
+      if (
+        item.level == level &&
+        item.notRequired == undefined &&
+        !item.verify &&
+        !item.url &&
+        !(getData[item.id] || getText[item.id])
+      ) {
+        res = true;
+        setErrorMessage(item.label + " is required!");
+        break;
+      }
+    }
+    // KYCContent.forEach((item) => {
+    //   if (
+    //     item.level == level &&
+    //     item.notRequired == undefined &&
+    //     !(item in getData || item in getText)
+    //   ) {
+    //     res = true;
+    //     toast.error(item.label + " field is required!", {
+    //       position: toast.POSITION.TOP_CENTER,
+    //       autoClose: 5000,
+    //       theme: "colored",
+    //     });
+    //   }
+    // });
+
+    return res;
+  };
   const handleUpload = async () => {
+    if (checkUploadingData()) return;
+
     if (getData) {
       const arrayWithResults = await Promise.allSettled(
         Object.keys(getData).map((type) =>
@@ -222,6 +272,7 @@ const IdentificationBody = () => {
   return (
     <>
       <MessageComponent />
+      {/* <ToastContainer /> */}
       <Card className={styles.card}>
         <div className={styles.top}>
           <div className={styles.titleHeader}>
@@ -547,10 +598,8 @@ const AddText = ({
   const uploadValue = text?.slice(0, 40);
 
   useEffect(() => {
-    if (value) {
-      const updatedFiles = { ...getText, [id]: value };
-      setGetText(updatedFiles);
-    }
+    const updatedTexts = { ...getText, [id]: value };
+    setGetText(updatedTexts);
   }, [value]);
 
   return (
@@ -565,7 +614,9 @@ const AddText = ({
           ) : text ? (
             <>
               <span style={{ paddingLeft: 20, color: "gray" }}>
-                {declineResponse !== null ? null : "Currently being checked"}
+                {declineResponse && declineResponse != ""
+                  ? declineResponse
+                  : "Currently being checked"}
               </span>
             </>
           ) : null}
@@ -602,7 +653,7 @@ const AddText = ({
                 {t("identification.verification.add")}
               </span>
             </Button>
-          ) : declineResponse != null ? (
+          ) : declineResponse && declineResponse != "" ? (
             <Button onClick={() => setShow(true)} color="gray">
               {t("identification.verification.add")}
             </Button>
@@ -673,13 +724,17 @@ const AddFile = ({
         <div className={styles.rowLeft}>
           <span>{label}</span>
           {verify ? (
-            <div style={{ paddingLeft: 10 }}>
-              <img src={Correct} alt="" />
-            </div>
+            file != "notRequired" && (
+              <div style={{ paddingLeft: 10 }}>
+                <img src={Correct} alt="" />
+              </div>
+            )
           ) : file ? (
             <>
               <span style={{ paddingLeft: 20, color: "gray" }}>
-                {declineResponse !== null ? null : "Currently being checked"}
+                {declineResponse && declineResponse != ""
+                  ? declineResponse
+                  : "Currently being checked"}
               </span>
             </>
           ) : null}
@@ -719,7 +774,7 @@ const AddFile = ({
             <Button color="gray">
               <span style={{ color: "grey" }}>{t("general.upload")}</span>
             </Button>
-          ) : declineResponse != null ? (
+          ) : declineResponse && declineResponse != "" ? (
             <Button onClick={() => handleAddFile()} color="gray">
               {t("general.upload")}
             </Button>

@@ -8,6 +8,7 @@
     "signUp": "Registrierung",
     "menu": "Registrierung",
     "profile": "Profil",
+    "invoice": "Rechnung",
     "dashboard": "Dashboard",
     "security": "Sicherheit",
     "identification": "Identifikation",
@@ -441,7 +442,7 @@
         "amountError": "Bitte geben Sie einen Betrag zum Abheben ein.",
         "addressError": "Bitte geben Sie eine Adresse für die Abhebung ein.",
         "passwordError": "Bitte geben Sie Ihr Passwort ein.",
-        "currencyError": "Please select a correct currency to withdraw.",
+        "currencyError": "Bitte wählen Sie für die Auszahlung die korrekte Währung aus.",
         "correctCurrencyError": "Bitte wählen Sie die richtige Währung zum Abheben aus.",
         "correctPasswordError": "Sie haben das falsche Passwort eingegeben!",
         "withdrawing": "Abheben...",
@@ -994,6 +995,29 @@
     "enableInvoicing": "Rechnungsstellung aktivieren",
     "enableInvoicingDescription": "Erhalten Sie Rechnungen für jedes verkaufte Produkt für Ihre Buchhaltung."
   },
+  "invoice": {
+    "title": "Rechnung",
+    "description": "Geben Sie Ihre Mehrwertsteuernummer ein und bestätigen Sie, ob Sie Rechnungen erhalten möchten.",
+    "vatNumber": "Umsatzsteuernummer",
+    "enableInvoicing": "Rechnungen aktivieren",
+    "walletAddress": "Wallet zum Empfangen von Zahlungen",
+    "walletDescription": "Wählen Sie die Wallet, die beim Erstellen einer Rechnung oder beim Verkauf eines Produkts Zahlungen erhält.",
+    "stablecoin": "Stablecoin",
+    "stablecoinDescription": "Wählen Sie den Stablecoin, in den umgewandelt werden soll.",
+    "action": {
+      "add": "Hinzufügen",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren",
+      "select": "Wählen",
+      "turnOff": "Aus",
+      "turnOn": "An",
+      "connectedWallets": "Verbundene Geldbörsen",
+      "connectWallet": "Neues Geldbörsen verbinden",
+      "connected": "In Verbindung gebracht",
+      "disconnected": "Getrennt",
+      "selectCoin": "Wählen Sie Stablecoin"
+    }
+  },
   "identification": {
     "title": "Identifikation",
     "description": "Lassen Sie Ihre Identität überprüfen, um zu verkaufen und zu handeln",
@@ -1014,7 +1038,7 @@
       "transactionLimits": "P2P-Transaktionslimits"
     },
     "verification": {
-      "title": "Verifiziert werden",
+      "title": "Verifizierung",
       "fullName": "Vollständiger Name",
       "address": "Adresse",
       "city": "Stadt und Postleitzahl",

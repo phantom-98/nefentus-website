@@ -12,6 +12,7 @@
     "signUp": "Sign up",
     "menu": "Menu",
     "profile": "Profile",
+    "invoice": "Invoice",
     "dashboard": "Dashboard",
     "security": "Security",
     "identification": "Identification",
@@ -1083,6 +1084,29 @@
     "notificationLanguageDescription": "Select your preferred language for email, app push and on-site inbox notifications.",
     "enableInvoicing": "Enable invoicing",
     "enableInvoicingDescription": "Receive invoices for each product sold for your accounting."
+  },
+  "invoice": {
+    "title": "Invoice",
+    "description": "Enter your VAT number and confirm if you want to receive invoices.",
+    "vatNumber": "VAT Number",
+    "enableInvoicing": "Enable invoicing",
+    "walletAddress": "Wallet to receive funds",
+    "walletDescription": "Choose the wallet that receives funds when creating an invoice or selling product.",
+    "stablecoin": "Stablecoin",
+    "stablecoinDescription": "Choose the stablecoin that should be converted to.",
+    "action": {
+      "add": "Add",
+      "enable": "Enable",
+      "disable": "Disable",
+      "select": "Select",
+      "turnOff": "Off",
+      "turnOn": "On",
+      "connectedWallets": "Connected Wallets",
+      "connectWallet": "Connect new Wallet",
+      "connected": "Connected",
+      "disconnected": "Disconnected",
+      "selectCoin": "Select Stablecoin"
+    }
   },
   "identification": {
     "title": "Identification",

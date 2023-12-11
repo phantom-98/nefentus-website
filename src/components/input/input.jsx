@@ -280,8 +280,8 @@ export const SearchOptions = ({
 
       <div
         className={`option ${styles.input} ${
-          dashboard ? styles.dashboardInput : ""
-        } ${styles[className]}`}
+          dashboard ? styles.dashboardInput : styles.select
+        }`}
         onClick={() => setOpen((prev) => !prev)}
       >
         <input
@@ -301,7 +301,7 @@ export const SearchOptions = ({
         />{" "}
         <img src={dropDown} alt="" />
         {open && (
-          <div className={`card ${styles.body}`}>
+          <div className={`card ${styles.body} ${styles.select}`}>
             {filteredOptions.map((item) => (
               <p
                 onClick={() => {

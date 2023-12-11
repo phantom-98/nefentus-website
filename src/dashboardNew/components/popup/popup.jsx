@@ -156,8 +156,6 @@ export const QRPopup = ({ show, setShow, data, onClick }) => {
   const { name, email, price, company, address, taxNumber, link } = data;
   const { t } = useTranslation();
 
-  console.log(data, "datadatadata");
-
   return ReactDOM.createPortal(
     <div
       className={`${styles.popup} ${styles.paymentPopup}`}
