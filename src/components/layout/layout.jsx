@@ -41,7 +41,6 @@ const Layout = ({
   const { t } = useTranslation();
   const backend_API = new backendAPI();
   const navigate = useNavigate();
-  // const [errorMessage, setErrorMessage] = useState(null);
 
   const content = t("affiliate.affiliateList", { returnObjects: true });
   const { setErrorMessage } = useContext(MessageContext);
