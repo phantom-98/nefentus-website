@@ -44,9 +44,9 @@
   width: 120px;
 }
 
-.paginationWrapper > div > div > div {
+/* .paginationWrapper > div > div > div {
   transform: translateY(-32%) !important;
-}
+} */
 
 .paginationWrapper > div > div {
   font-size: 1.6rem !important;
