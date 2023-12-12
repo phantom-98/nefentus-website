@@ -401,8 +401,8 @@
       "actions": "Aktionen"
     },
     "modal": {
-      "create_user": "Erstellen Benutzer/Benutzerin",
-      "edit_user": "Bearbeiten Benutzer/Benutzerin",
+      "create_user": "Benutzer hinzufügen",
+      "edit_user": "Benutzer bearbeiten",
       "titleCreate": "Benutzer hinzufügen",
       "titleEdit": "Benutzer bearbeiten",
       "firstName": "Vorname",
