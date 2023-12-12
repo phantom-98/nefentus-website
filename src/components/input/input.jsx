@@ -97,7 +97,7 @@ export const Options = ({
           <div
             style={{
               position: "relative",
-              bottom: 10,
+              bottom: 0,
             }}
           >
             {value}

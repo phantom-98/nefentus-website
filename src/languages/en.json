@@ -468,6 +468,8 @@
       "actions": "Actions"
     },
     "modal": {
+      "create_user": "Create User",
+      "edit_user": "Edit User",
       "titleCreate": "Add User",
       "titleEdit": "Edit User",
       "titleNewUser": "Create User",

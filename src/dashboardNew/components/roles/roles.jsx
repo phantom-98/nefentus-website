@@ -176,6 +176,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
         <div className={styles.modalWrapper}>
           {openModal && (
             <UserModal
+              openModal={openModal}
               type={type}
               clearFields={closeModal}
               addUser={addUser}

@@ -69,7 +69,7 @@
 
 .option .input {
   position: relative;
-  /* height: 33px; */
+  min-height: 48px;
 }
 
 .body {
