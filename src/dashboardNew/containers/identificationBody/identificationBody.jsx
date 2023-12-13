@@ -569,7 +569,9 @@ const IdentificationBody = () => {
             {/* <AddFile label="Enhanced Diligence" /> */}
 
             <div className={styles.button}>
-              <Button>{t("identification.verification.confirm")}</Button>
+              <Button onClick={handleUpload}>
+                {t("identification.verification.confirm")}
+              </Button>
             </div>
           </div>
         </div>
@@ -615,7 +617,7 @@ const AddText = ({
             <>
               <span style={{ paddingLeft: 20, color: "gray" }}>
                 {declineResponse && declineResponse != ""
-                  ? declineResponse
+                  ? ""
                   : "Currently being checked"}
               </span>
             </>
@@ -733,7 +735,7 @@ const AddFile = ({
             <>
               <span style={{ paddingLeft: 20, color: "gray" }}>
                 {declineResponse && declineResponse != ""
-                  ? declineResponse
+                  ? ""
                   : "Currently being checked"}
               </span>
             </>
