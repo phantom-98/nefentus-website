@@ -121,8 +121,8 @@ const PaymentForm = ({ setLoadingData }) => {
         <PaymentPopup
           show={showPopup}
           setShow={setShowPopup}
-          price={`$${amount}`}
-          tax={`Tax Number ${taxNumber}`}
+          price={amount}
+          tax={taxNumber}
           name={name}
           email={email}
           company={company}
@@ -134,14 +134,13 @@ const PaymentForm = ({ setLoadingData }) => {
         <QRPopup
           show={showPopup}
           setShow={setShowPopup}
-          data={{
-            amount,
-            email,
-            name,
-            company,
-            address,
-            taxNumber,
-          }}
+          price={amount}
+          taxNumber={taxNumber}
+          name={name}
+          email={email}
+          company={company}
+          address={address}
+          link={qrValue}
         />
       )}
     </>

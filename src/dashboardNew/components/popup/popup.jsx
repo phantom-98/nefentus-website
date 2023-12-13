@@ -3,6 +3,7 @@ import Card from "../card/card";
 
 import styles from "./popup.module.css";
 import ReactDOM from "react-dom";
+import QRCode from "react-qr-code";
 import Close from "../../../assets/icon/close.svg";
 import Verify from "../../../assets/icon/verify.svg";
 import Clipboard from "../../../assets/icon/clipboard.svg";
@@ -110,31 +111,36 @@ export const PaymentPopup = ({
         </div>
 
         <img src={Checkmark} style={{ width: "5rem" }} alt="" />
-        <div className={styles.title}>{price}</div>
-        <div className={styles.description}>{tax}</div>
+        <div className={styles.title}>{`$${price}`}</div>
+        <div className={styles.description}>
+          {t("payments.vatNumber").concat(` ${tax}`)}
+        </div>
 
         <div className={styles.body}>
           <div className={styles.row}>
-            <p>{t("dashboard.modal.name")}:</p>
+            <p>{t("payments.name")}:</p>
             <p>{name}</p>
           </div>
           <div className={styles.row}>
-            <p>{t("dashboard.modal.email")}:</p>
+            <p>{t("payments.email")}:</p>
             <p>{email}</p>
           </div>
           <div className={styles.row}>
-            <p>{t("dashboard.modal.company")}:</p>
+            <p>{t("payments.company")}:</p>
             <p>{company}</p>
           </div>
           <div className={styles.row}>
-            <p>{t("dashboard.modal.address")}:</p>
+            <p>{t("payments.address")}:</p>
             <p>{address}</p>
           </div>
         </div>
 
         <div className={styles.linkRow}>
           <p>Link:</p>
-          <div>
+          <div
+            style={{ marginLeft: "16px" }}
+            onClick={() => navigator.clipboard.writeText(link)}
+          >
             <img src={Clipboard} alt="" />
 
             <p>{link}</p>
@@ -151,9 +157,20 @@ export const PaymentPopup = ({
   );
 };
 
-export const QRPopup = ({ show, setShow, data, onClick }) => {
+export const QRPopup = ({
+  show,
+  setShow,
+  price,
+  taxNumber,
+  name,
+  email,
+  company,
+  address,
+  link,
+  onClick,
+}) => {
   const dashboardElement = document.getElementById("dashboard");
-  const { name, email, price, company, address, taxNumber, link } = data;
+  // const { name, email, price, company, address, taxNumber, link } = data;
   const { t } = useTranslation();
 
   return ReactDOM.createPortal(
@@ -173,32 +190,25 @@ export const QRPopup = ({ show, setShow, data, onClick }) => {
 
         <Table
           data={[
-            [`${t("dashboard.modal.address")}:`, `${price} USD`],
-            [`${t("dashboard.modal.email")}:`, `${email}`],
-            [`${t("dashboard.modal.name")}:`, `${name}`],
-            [`${t("dashboard.modal.company")}:`, `${company}`],
-            [`${t("dashboard.modal.address")}:`, `${address}`],
-            [`${t("dashboard.modal.taxNumber")}:`, `${taxNumber}`],
-            [
-              "Link:",
-              <CopyValue
-                value={`${window.location.origin}/pay/${link}`}
-                onCopy={() => {}}
-                link
-              />,
-            ],
+            [`${t("payments.amount")}:`, `${price} USD`],
+            [`${t("payments.email")}:`, `${email}`],
+            [`${t("payments.name")}:`, `${name}`],
+            [`${t("payments.company")}:`, `${company}`],
+            [`${t("payments.address")}:`, `${address}`],
+            [`${t("payments.taxNumber")}:`, `${taxNumber}`],
+            ["Link: ", <CopyValue value={link} onCopy={() => {}} link />],
           ]}
           colSizes={[1, 3]}
         />
 
-        <img
+        {/* <img
           src={
             "https://cdn.britannica.com/17/155017-050-9AC96FC8/Example-QR-code.jpg"
           }
           style={{ width: "20rem", margin: "2rem 0 3rem 0" }}
           alt=""
-        />
-
+        /> */}
+        {link && <QRCode value={link} size={256} />}
         <div className={styles.paymentButtons}>
           <Button onClick={() => setShow(false)}>{t("general.close")}</Button>
           <div onClick={onClick}>{t("payments.downloadInvoice")}</div>
