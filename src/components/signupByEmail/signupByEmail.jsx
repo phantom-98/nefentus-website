@@ -1,5 +1,4 @@
 import Logo from "../../assets/logo/logo2.svg";
-import Button from "../button/button";
 import Input, { Options, SearchOptions } from "../input/input";
 import styles from "./signupByEmail.module.css";
 import { Link } from "react-router-dom";
@@ -28,6 +27,50 @@ const SignupByEmail = () => {
   const [password, setPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(false);
   const api = new backendAPI();
+
+  const schema = z
+    .object({
+      firstName: z
+        .string()
+        .min(1, { message: t("messages.error.firstNameRequired") }),
+      lastName: z
+        .string()
+        .min(1, { message: t("messages.error.lastNameRequired") }),
+      telNr: z
+        .string()
+        .min(1, { message: t("messages.error.phoneNumberRequired") }),
+      password: z
+        .string()
+        .min(1, { message: t("messages.error.emptyPassword") })
+        .min(8, { message: t("messages.error.lengthPassword") })
+        .refine(
+          (value) =>
+            /^(?:(?=.*[a-z])(?=.*[A-Z])(?=.*\d)|(?=.*[a-z])(?=.*[A-Z])(?=.*[.\$\/@!%&*_,#*-+;`])|(?=.*[a-z])(?=.*\d)(?=.*[.\$\/@!%&*_,#*-+;`])|(?=.*[A-Z])(?=.*\d)(?=.*[.\$\/@!%&*_,#*-+;`])|(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.\$\/@!%&*_,#*-+;`])).*$/.test(
+              value,
+            ),
+          {
+            message:
+              "Password must include characters from 3 of the following 4 groups: uppercase letters, lowercase letters, numbers, and special characters",
+          },
+        ),
+      confirmPassword: z
+        .string()
+        .nonempty({ message: "Confirm your password" }),
+    })
+    .refine(
+      (schemaData) => schemaData.password === schemaData.confirmPassword,
+      {
+        message: t("messages.error.matchPassword"),
+        path: ["confirmPassword"],
+      },
+    );
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema), mode: "onSubmit" });
 
   const country_list = [
     { value: "Afghanistan", display: t("countries.Afghanistan") },
@@ -257,75 +300,22 @@ const SignupByEmail = () => {
     if (localStorage.getItem("firstName") === "") setShowModal(true);
   }, []);
 
-  const schema = z
-    .object({
-      firstName: z.string().min(1, { message: "Please enter your first name" }),
-      lastName: z.string().min(1, { message: "Please enter your last name" }),
-      telNr: z.string(),
-      password: z
-        .string()
-        .min(1, { message: "Please enter your password" })
-        .min(8, { message: "Password must be at least 8 characters" })
-        .refine(
-          (value) =>
-            /^(?:(?=.*[a-z])(?=.*[A-Z])(?=.*\d)|(?=.*[a-z])(?=.*[A-Z])(?=.*[.\$\/@!%&*_,#*-+;`])|(?=.*[a-z])(?=.*\d)(?=.*[.\$\/@!%&*_,#*-+;`])|(?=.*[A-Z])(?=.*\d)(?=.*[.\$\/@!%&*_,#*-+;`])|(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.\$\/@!%&*_,#*-+;`])).*$/.test(
-              value,
-            ),
-          {
-            message:
-              "Password must include characters from 3 of the following 4 groups: uppercase letters, lowercase letters, numbers, and special characters",
-          },
-        ),
-      confirmPassword: z
-        .string()
-        .nonempty({ message: "Confirm your password" }),
-    })
-    .refine(
-      (schemaData) => schemaData.password === schemaData.confirmPassword,
-      {
-        message: "Passwords must match",
-        path: ["confirmPassword"],
-      },
-    );
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({ resolver: zodResolver(schema), mode: "onSubmit" });
+  useEffect(() => {
+    if (Object.keys(errors)?.length)
+      setErrorMessage(errors[Object.keys(errors)[0]].message);
+  }, [errors]);
 
   const resetForm = () => {
     reset();
     setCountryOption(t("signUp.option1Placeholder"));
   };
 
-  async function submitForm(data) {
-    if (firstName === "") {
-      setErrorMessage(t("messages.error.firstNameRequired"));
-      return;
-    }
-    if (lastName === "") {
-      setErrorMessage(t("messages.error.lastNameRequired"));
-      return;
-    }
+  const onSubmit = async (data) => {
     if (!localStorage.getItem("email")) {
       setErrorMessage(t("messages.error.emailRequired"));
       return;
     }
-    if (password === "") {
-      setErrorMessage(t("messages.error.passwordRequired"));
-      return;
-    }
-    if (confirmPassword === "") {
-      setErrorMessage(t("messages.error.confirmPasswordRequired"));
-      return;
-    }
 
-    if (phoneNumber === "") {
-      setErrorMessage(t("messages.error.phoneNumberRequired"));
-      return;
-    }
     if (CountryOption === "") {
       setErrorMessage(t("messages.error.country"));
       return;
@@ -355,15 +345,15 @@ const SignupByEmail = () => {
       .catch((error) => {
         setErrorMessage(error.message);
       });
-  }
+  };
 
   return (
     <Popup
       show={showModal}
-      onConfirm={() => handleSubmit(submitForm)()}
-      confirmTitle="Update"
+      onConfirm={handleSubmit(onSubmit)}
+      confirmTitle={t("signUp.updateButton")}
     >
-      <form onSubmit={handleSubmit(submitForm)}>
+      <form>
         <MessageComponent />
         {message && (
           <div className={styles.messagecontainer}>
@@ -437,12 +427,6 @@ const SignupByEmail = () => {
           theme="dark"
           style={{ marginTop: "2rem" }}
         />
-
-        {/* <div className={styles.buttonWrapper}>
-          <Button className={styles.button} type="submit">
-            Update
-          </Button>
-        </div> */}
       </form>
     </Popup>
   );

@@ -279,7 +279,8 @@
     "option1": "Vendor",
     "option2": "Affiliate",
     "formButton": "Create Account",
-    "formInfo": "By signing up, you agree to out Privacy Policy and Terms of Service."
+    "formInfo": "By signing up, you agree to out Privacy Policy and Terms of Service.",
+    "updateButton": "Update"
   },
   "login": {
     "titleP1": "Welcome Back",
@@ -869,7 +870,10 @@
       "addUser": "Could not add user!",
       "updateProduct": "Could not update the product!",
       "addProduct": "Could not add a new product!",
-      "deleteProduct": "Could not delete the product!"
+      "deleteProduct": "Could not delete the product!",
+      "emptyPassword": "Please enter your password",
+      "lengthPassword": "Password must be at least 8 characters",
+      "matchPassword": "Passwords must match"
     },
     "info": {
       "email": "Email sent to reset password!",
