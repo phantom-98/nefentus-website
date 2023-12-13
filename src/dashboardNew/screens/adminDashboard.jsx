@@ -8,29 +8,17 @@ import TableStatus from "../components/tableStatus/tableStatus";
 import adminDashboardApi from "../../api/adminDashboardApi";
 import { formatUSDBalance } from "../../utils";
 import moment from "moment";
-
+import UserModal from "../../dashboardNew/components/userModal";
 import { MessageContext } from "../../context/message";
 import { useNavigate } from "react-router-dom";
 import { ROLE_TO_NAME } from "../../constants";
+import { useTranslation } from "react-i18next";
 import MessageComponent from "../../components/message";
-import ModalOverlay from "../../dashboard/modal/modalOverlay";
 import Input, { Options } from "../../components/input/input";
-import Button from "../components/button/button";
 import styles from "./admin.module.css";
-import imputStyles from "../../components/input/input.module.css";
 import TablePagination from "../../components/tablePagination";
+import Popup from "../components/popup/popup";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
-
-const label = [
-  "Name",
-  "Roles",
-  "Email",
-  "Status",
-  "Incomes",
-  "Join on",
-  "Earnings",
-  "Action",
-];
 
 const colSizes = [2, 1, 2, 1, 1, 2, 1, 2];
 
@@ -44,25 +32,6 @@ const roleColors = {
 };
 
 const labels = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "00:00"];
-
-// const chartData = {
-//   labels,
-//   datasets: [
-//     {
-//       label: "Last 24h",
-//       data: [1, 2, 3, 4, 5, 6, 7],
-//       borderColor: "#0784B5",
-//       backgroundColor: "#0784B5",
-//     },
-//     {
-//       label: "Previous 24h",
-//       data: [12, 18, 9, 5, 3, 15, 20],
-//       borderColor: "rgba(255, 255, 255,0.2)",
-//       backgroundColor: "rgba(255, 255, 255,0.2)",
-//     },
-//   ],
-// };
-
 const AdminDashboard = ({ type }) => {
   const [cardInfo, setCardInfo] = useState([]);
   const [graphData, setGraphData] = useState([]);
@@ -70,6 +39,18 @@ const AdminDashboard = ({ type }) => {
   const [tableData, setTableData] = useState([]);
   const [isReloadData, setIsReloadData] = useState(false);
   const [totalRegUserCnt, setTotalRegUserCnt] = useState(0);
+  const { t } = useTranslation();
+
+  const label = [
+    t("dashboard.tableHeaders.name"),
+    t("dashboard.tableHeaders.roles"),
+    t("dashboard.tableHeaders.email"),
+    t("dashboard.tableHeaders.status"),
+    t("dashboard.tableHeaders.income"),
+    t("dashboard.tableHeaders.joinedOn"),
+    t("dashboard.tableHeaders.earnings"),
+    t("dashboard.tableHeaders.actions"),
+  ];
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -80,7 +61,9 @@ const AdminDashboard = ({ type }) => {
   const [users, setUsers] = useState();
   const [getDataInput, setGetDataInput] = useState("");
   const [dataPage, setDataPage] = useState(1);
+  const [dataSize, setDataSize] = useState(10);
   const [getFilteredUser, setGetFilteredUser] = useState();
+  const [searchTrigger, setSearchTrigger] = useState(false);
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -131,19 +114,19 @@ const AdminDashboard = ({ type }) => {
 
       const cardsContent = [
         {
-          title: "Total Income",
+          title: t("dashboard.admin.cardsContent.totalIncome"),
           amount: `${parseFloat(dataInc?.value?.number).toFixed(2)}$`,
           percentage: dataInc?.value?.percentage,
           isMonetary: true,
         },
         {
-          title: "Clicks",
+          title: t("dashboard.admin.cardsContent.clicks"),
           amount: dataClick?.value?.number,
           percentage: dataClick?.value?.percentage,
           isMonetary: false,
         },
         {
-          title: "Registrations",
+          title: t("dashboard.admin.cardsContent.registrations"),
           amount: dataReg?.value?.number,
           percentage: dataReg?.value?.percentage,
           isMonetary: false,
@@ -156,7 +139,7 @@ const AdminDashboard = ({ type }) => {
         type === "broker"
       ) {
         cardsContent[1] = {
-          title: "Orders",
+          title: t("dashboard.admin.cardsContent.orders"),
           amount: dataOrders?.value?.number,
           percentage: dataOrders?.value?.percentage,
           isMonetary: false,
@@ -193,6 +176,7 @@ const AdminDashboard = ({ type }) => {
       const dataUsers = await adminApi.getUsers();
 
       dataUsers.reverse();
+      setUsers(dataUsers);
       updateUsers(dataUsers);
     }
   };
@@ -241,19 +225,19 @@ const AdminDashboard = ({ type }) => {
 
   const changeUser = async () => {
     if (firstName === "") {
-      setErrorMessage("First name is required");
+      setErrorMessage(t("messages.error.firstNameRequired"));
       return;
     }
     if (lastName === "") {
-      setErrorMessage("Last name is required");
+      setErrorMessage(t("messages.error.lastNameRequired"));
       return;
     }
     if (email === "" && editEmailAddress === null) {
-      setErrorMessage("Email is required");
+      setErrorMessage(t("messages.error.emailRequired"));
       return;
     }
     if (role === "") {
-      setErrorMessage("Role is required");
+      setErrorMessage(t("messages.error.roleRequired"));
       return;
     }
 
@@ -266,10 +250,10 @@ const AdminDashboard = ({ type }) => {
         role,
       );
       if (resp) {
-        setInfoMessage("User updated successfully!");
+        setInfoMessage(t("messages.success.updateUser"));
         updateUsersTable(dataUsers);
       } else {
-        setErrorMessage("Could not update user!");
+        setErrorMessage(t("messages.error.updateUser"));
       }
     } else {
       // Add
@@ -279,15 +263,15 @@ const AdminDashboard = ({ type }) => {
           setOpenModal(false);
           fetchAdminData();
           clearAddUserFields();
-          setInfoMessage("User added successfully!");
+          setInfoMessage(t("messages.success.addUser"));
           return;
         } else if (resp.status === 409) {
-          setErrorMessage("User already exists!");
+          setErrorMessage(t("messages.error.userExist"));
           return;
         }
       }
 
-      setErrorMessage("Could not add user!");
+      setErrorMessage(t("messages.error.addUser"));
     }
   };
 
@@ -296,28 +280,35 @@ const AdminDashboard = ({ type }) => {
       const newDataUsers = dataUsers?.map((user) => [
         `${user.firstName} ${user.lastName}`,
         user.roles
-          .map((role) => ROLE_TO_NAME[role.replace(" ", "")])
+          .map((role) =>
+            t(
+              `dashboard.roles.${ROLE_TO_NAME[role.replace(" ", "")].replaceAll(
+                " ",
+                "",
+              )}`,
+            ),
+          )
           .join(", "),
         user.email,
         user.activated ? (
-          <TableStatus color="green">Enabled</TableStatus>
+          <TableStatus color="green">{t("general.active")}</TableStatus>
         ) : (
-          <TableStatus color="red">Disabled</TableStatus>
+          <TableStatus color="red">{t("general.notActive")}</TableStatus>
         ),
         formatUSDBalance(user.income),
         moment(user.createdAt).format("MMM D YYYY, HH:mm:ss"),
         `$${user.income}`,
         <TableAction
-          button={user.activated ? "Disable" : "Enable"}
-          onClick={() =>
-            updateStatusUser(user.email, user.activated, dataUsers)
+          button={
+            user.activated ? t("general.deactivate") : t("general.activate")
           }
+          onClick={() => updateStatusUser(user.email, user.activated)}
           editUser={() => editUser(user)}
           deleteUser={() => deleteUser(user.email)}
         />,
       ]);
-
       setTableData(newDataUsers);
+      setSearchTrigger(false);
     }
   }
 
@@ -328,28 +319,49 @@ const AdminDashboard = ({ type }) => {
     setRole("");
   };
 
+  useEffect(() => {
+    if (searchTrigger)
+      updateUsers(getFilteredUser?.length > 0 ? getFilteredUser : users);
+  }, [searchTrigger]);
+
   const findUser = () => {
-    const filteredData = users.filter((item) => {
+    const filteredData = users?.filter((item) => {
       return (
-        getDataInput.toLowerCase().includes(item.email.toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item.firstName.toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item.lastName.toLowerCase()) ||
-        getDataInput.includes(String(item.createdAt).toLowerCase()) ||
-        getDataInput
-          .toLowerCase()
-          .includes(String(item.income).toLowerCase()) ||
-        getDataInput.toLowerCase().includes(item.roles[0]?.toLowerCase())
+        item?.email
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        item?.firstName
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        item?.lastName
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        String(item?.createdAt)?.toLowerCase().includes(getDataInput.trim()) ||
+        String(item?.income)
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        item?.roles[0]
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase())
       );
     });
     setGetFilteredUser(filteredData);
-    // setGetDataInput("");
-    updateUsers(filteredData.length > 0 ? filteredData : users);
+    setDataPage(0);
+    setSearchTrigger(true);
   };
 
   const paginatedData = tableData.filter((item, index) => {
-    if (index >= dataPage * 10 && index < dataPage * 10 + 10) return true;
+    if (index >= dataPage * dataSize && index < dataPage * dataSize + dataSize)
+      return true;
     return false;
   });
+
+  const closeModal = () => {
+    clearMessages();
+    clearAddUserFields();
+    setOpenModal(false);
+    updateUsersTable(getFilteredUser);
+  };
 
   return (
     <div>
@@ -364,7 +376,7 @@ const AdminDashboard = ({ type }) => {
       <div>
         <div>
           <TableSearch
-            title="User Management"
+            title={t("dashboard.userManagement")}
             users={tableData}
             setFiltered={tableData}
             setGetDataInput={setGetDataInput}
@@ -381,115 +393,34 @@ const AdminDashboard = ({ type }) => {
             <TablePagination
               data={tableData}
               setDataPage={setDataPage}
+              setDataSize={setDataSize}
               colSizes={colSizes}
+              searchTrigger={searchTrigger}
+              dataPage={dataPage}
               striped
             />
           </>
         </div>
       </div>
       <>
-        {openModal && (
-          <ModalOverlay>
-            <div className={styles.modal}>
-              <MessageComponent />
-
-              <h4>Edit User</h4>
-
-              <div className={styles.modalInputs}>
-                <Input
-                  dashboard
-                  label="First name*"
-                  placeholder={"Enter first name"}
-                  value={firstName}
-                  setState={setFirstName}
-                  style={{ height: 35 }}
-                />
-                <Input
-                  dashboard
-                  label="Last name*"
-                  placeholder={"Enter last name"}
-                  value={lastName}
-                  setState={setLastName}
-                  style={{ height: 35 }}
-                />
-                <Input
-                  dashboard
-                  label="Email*"
-                  placeholder={"Enter email"}
-                  value={email}
-                  setState={setEmail}
-                  disabled={editEmailAddress !== null}
-                  style={{ height: 35 }}
-                />
-
-                {type === "admin" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={[
-                      "Vendor",
-                      "Affiliate",
-                      "Broker",
-                      "Senior Broker",
-                      "Leader",
-                    ]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-                {type === "leader" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate", "Broker", "Senior Broker"]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-                {type === "seniorbroker" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate", "Broker"]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-                {type === "broker" && (
-                  <Options
-                    label="Role*"
-                    value={role}
-                    options={["Vendor", "Affiliate"]}
-                    dashboard
-                    setValue={setRole}
-                  />
-                )}
-              </div>
-              <div className={styles.modalButtons}>
-                <div
-                  className={styles.button}
-                  style={{ fontSize: 13 }}
-                  onClick={() => {
-                    clearMessages();
-                    clearAddUserFields();
-                    setOpenModal(false);
-                    updateUsersTable(getFilteredUser);
-                  }}
-                >
-                  Cancel
-                </div>
-                <Button
-                  onClick={() => {
-                    changeUser();
-                  }}
-                  color="white"
-                >
-                  Edit User
-                </Button>
-              </div>
-            </div>
-          </ModalOverlay>
-        )}
+        <div className={styles.modalWrapper}>
+          {openModal && (
+            <UserModal
+              type={type}
+              clearFields={closeModal}
+              addUser={changeUser}
+              operationType={"update"}
+              firstName={firstName}
+              setFirstName={setFirstName}
+              lastName={lastName}
+              setLastName={setLastName}
+              email={email}
+              setEmail={setEmail}
+              role={role}
+              setRole={setRole}
+            />
+          )}
+        </div>
       </>
       <SignupByEmail />
     </div>

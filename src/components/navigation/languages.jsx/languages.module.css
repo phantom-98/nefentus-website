@@ -45,7 +45,9 @@
 .item {
   display: flex;
 }
-
+.label {
+  margin-top: 2px;
+}
 .item p {
   pointer-events: none !important;
 }

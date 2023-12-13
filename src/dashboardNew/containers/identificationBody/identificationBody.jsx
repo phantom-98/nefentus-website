@@ -1,4 +1,6 @@
 import { useContext, useEffect, useState } from "react";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import Button from "../../components/button/button";
 import Card from "../../components/card/card";
 import SettingsTitle from "../../components/settings/settingsTitle";
@@ -7,6 +9,7 @@ import Correct from "../../../assets/icon/correct.svg";
 
 import styles from "./identificationBody.module.css";
 import { EditPopup } from "../../components/settings/settingsItem";
+import { useTranslation } from "react-i18next";
 import adminDashboardApi from "../../../api/adminDashboardApi";
 import MessageComponent from "../../../components/message";
 import { MessageContext } from "../../../context/message";
@@ -39,49 +42,50 @@ const KYC_TYPE_TEXT = {
 const KYCContent = [
   {
     id: KYC_TYPE_TEXT.FULL_NAME,
-    label: "Full Name",
+    label: "identification.verification.fullName",
     type: "text",
     level: 0,
   },
   {
     id: KYC_TYPE_TEXT.ADRESS,
-    label: "Adress",
+    label: "identification.verification.address",
     type: "text",
     level: 0,
   },
   {
     id: KYC_TYPE_TEXT.CITY_AND_ZIP_CODE,
-    label: "City and zip code",
+    label: "identification.verification.city",
     type: "text",
     level: 0,
   },
   {
     id: KYC_TYPE_FILE.GOVERNMENT_ISSUES_ID,
-    label: "Government issues id",
+    label: "identification.verification.issueId",
     type: "photo",
     level: 0,
   },
   {
     id: KYC_TYPE_FILE.PICTURE_WIDTH_ID_IN_HAND,
-    label: "Picture width in hand",
+    label: "identification.verification.picture",
     type: "photo",
     level: 0,
   },
   {
     id: KYC_TYPE_FILE.PROOF_OF_ADRESS,
-    label: "Proof of adress",
+    label: "identification.verification.proofAddress",
     type: "photo",
     level: 1,
   },
   {
     id: KYC_TYPE_FILE.PROOF_OF_COMPANY,
-    label: "Proof of company",
+    label: "identification.verification.proofCompany",
     type: "photo",
     level: 1,
+    notRequired: true,
   },
   {
     id: KYC_TYPE_FILE.ENHANCED_DILIGENCE,
-    label: "Enhanced diligence",
+    label: "identification.verification.enhanced",
     type: "photo",
     level: 2,
   },
@@ -102,12 +106,14 @@ const INITIAL_TEXT = {
 };
 
 const IdentificationBody = () => {
+  const { t } = useTranslation();
+
   const [level, setLevel] = useState(null);
   const BackendAPI = new backend_API();
   const adminApi = new adminDashboardApi("admin");
   const [uploadingFiles, setUploadingFiles] = useState(KYCContent);
-  const [getData, setGetData] = useState();
-  const [getText, setGetText] = useState("");
+  const [getData, setGetData] = useState([]);
+  const [getText, setGetText] = useState([]);
   const [declineResponse, setDeclineResponse] = useState(null);
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
@@ -144,9 +150,22 @@ const IdentificationBody = () => {
 
     const filteredArray = KYCContent.map((item) => {
       if (item.id in transformedResults) {
-        item.rejectReason = transformedResults[item.id].rejectReason;
-        item.url = transformedResults[item.id].url;
-        item.verify = transformedResults[item.id].verify;
+        if (
+          item.notRequired &&
+          (level == 2 ||
+            ((!transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].rejectReason ||
+              transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].rejectReason ==
+                "") &&
+              transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].url))
+        ) {
+          item.verify = true;
+          item.url = "notRequired";
+          item.rejectReason = "notRequired";
+        } else {
+          item.rejectReason = transformedResults[item.id].rejectReason;
+          item.url = transformedResults[item.id].url;
+          item.verify = transformedResults[item.id].verify;
+        }
 
         if (transformedResults[item.id].rejectReason != null) {
           setDeclineResponse(transformedResults[item.id].rejectReason);
@@ -181,7 +200,42 @@ const IdentificationBody = () => {
     fetchFYC();
   }, [userId]);
 
+  const checkUploadingData = () => {
+    let res = false;
+    for (let i = 0; i < KYCContent.length; i++) {
+      const item = KYCContent[i];
+      if (
+        item.level == level &&
+        item.notRequired == undefined &&
+        !item.verify &&
+        !item.url &&
+        !(getData[item.id] || getText[item.id])
+      ) {
+        res = true;
+        setErrorMessage(item.label + " is required!");
+        break;
+      }
+    }
+    // KYCContent.forEach((item) => {
+    //   if (
+    //     item.level == level &&
+    //     item.notRequired == undefined &&
+    //     !(item in getData || item in getText)
+    //   ) {
+    //     res = true;
+    //     toast.error(item.label + " field is required!", {
+    //       position: toast.POSITION.TOP_CENTER,
+    //       autoClose: 5000,
+    //       theme: "colored",
+    //     });
+    //   }
+    // });
+
+    return res;
+  };
   const handleUpload = async () => {
+    if (checkUploadingData()) return;
+
     if (getData) {
       const arrayWithResults = await Promise.allSettled(
         Object.keys(getData).map((type) =>
@@ -218,64 +272,81 @@ const IdentificationBody = () => {
   return (
     <>
       <MessageComponent />
+      {/* <ToastContainer /> */}
       <Card className={styles.card}>
         <div className={styles.top}>
           <div className={styles.titleHeader}>
             <SettingsTitle
-              title="Identification"
-              description="Get your identity verified to buy and trade"
+              title={t("identification.title")}
+              description={t("identification.description")}
               identification
             />
           </div>
 
           <div className={styles.box}>
-            <div className={styles.boxTitle}>Verification Levels</div>
+            <div className={styles.boxTitle}>
+              {t("identification.verificationLevels")}
+            </div>
 
             <div className={styles.row}>
               <div className={styles.rowLeft}>
-                Level 1:{" "}
-                <span>
-                  Personal Information, Government Issued ID and Facial
-                  Recognition
-                </span>
+                {t("identification.level").concat(" 1: ")}{" "}
+                <span>{t("identification.level1Description")}</span>
               </div>
               <div
                 className={styles.rowRight}
                 style={{ color: level > 0 ? "#16C172" : "#F24236" }}
               >
-                <span>{level > 0 ? "Verified" : "Unverified"}</span>
+                <span>
+                  {level > 0
+                    ? t("identification.verified")
+                    : t("identification.unverified")}
+                </span>
               </div>
             </div>
             <div className={styles.row}>
               <div className={styles.rowLeft}>
-                Level 2: <span> Proof of Address & Proof of Company</span>
+                {t("identification.level").concat(" 2: ")}
+                <span> {t("identification.level2Description")}</span>
               </div>
               <div
                 className={styles.rowRight}
                 style={{ color: level > 1 ? "#16C172" : "#F24236" }}
               >
-                <span>{level > 1 ? "Verified" : "Unverified"}</span>
+                <span>
+                  {level > 1
+                    ? t("identification.verified")
+                    : t("identification.unverified")}
+                </span>
               </div>
             </div>
             <div className={styles.row}>
               <div className={styles.rowLeft}>
-                Level 3: <span> Enhanced Diligence</span>
+                {t("identification.level").concat(" 3: ")}
+                <span> {t("identification.level3Description")}</span>
               </div>
               <div
                 className={styles.rowRight}
                 style={{ color: level > 2 ? "#16C172" : "#F24236" }}
               >
-                <span>{level > 2 ? "Verified" : "Unverified"}</span>
+                <span>
+                  {level > 2
+                    ? t("identification.verified")
+                    : t("identification.unverified")}
+                </span>
               </div>
             </div>
           </div>
 
           <div className={styles.box}>
-            <div className={styles.boxTitle}>Account Limit</div>
+            <div className={styles.boxTitle}>
+              {" "}
+              {t("identification.accountLimit.title")}
+            </div>
 
             <div className={styles.row}>
               <div className={styles.rowLeft}>
-                <span>Sales volume</span>
+                <span>{t("identification.accountLimit.fiatDeposit")}</span>
               </div>
               <div className={styles.rowRight}>
                 {level < 1
@@ -284,36 +355,47 @@ const IdentificationBody = () => {
                   ? "1 000 000$"
                   : level < 3
                   ? "10 000 000$"
-                  : "Unlimited"}
+                  : t("identification.unlimited")}
               </div>
             </div>
             <div className={styles.row}>
               <div className={styles.rowLeft}>
-                <span>Crypto Deposit</span>
+                <span>
+                  {t("identification.accountLimit.cryptoDepositLimit")}
+                </span>
               </div>
-              <div className={styles.rowRight}>Unlimited</div>
+              <div className={styles.rowRight}>
+                {t("identification.unlimited")}
+              </div>
             </div>
             <div className={styles.row}>
               <div className={styles.rowLeft}>
-                <span>Crypto Withdrawal Limit</span>
+                <span>{t("identification.accountLimit.cryptoWithdrawal")}</span>
               </div>
-              <div className={styles.rowRight}>Unlimited</div>
+              <div className={styles.rowRight}>
+                {t("identification.unlimited")}
+              </div>
             </div>
             <div className={styles.row}>
               <div className={styles.rowLeft}>
-                <span>P2P Transaction</span>
+                <span>
+                  {t("identification.accountLimit.transactionLimits")}
+                </span>
               </div>
-              <div className={styles.rowRight}>Unlimited</div>
+              <div className={styles.rowRight}>
+                {t("identification.unlimited")}
+              </div>
             </div>
           </div>
-
           <div className={styles.uploadBox}>
-            <div className={styles.boxTitle}>Get verified</div>
+            <div className={styles.boxTitle}>
+              {t("identification.verification.title")}
+            </div>
 
             <div className={styles.uploadItem}>
               <div className={`${styles.row} ${styles.rowItem}`}>
                 <div className={styles.rowLeft}>
-                  Level 1:{" "}
+                  {t("identification.level").concat(" 1: ")}
                   {level === 0 ? (
                     <p style={{ color: "red", paddingLeft: 10 }}>
                       {declineResponse ? declineResponse : null}
@@ -323,11 +405,12 @@ const IdentificationBody = () => {
               </div>
 
               {KYCContent.map((item) => {
+                const star = item.notRequired ? "" : "*";
                 if (item.type == "text") {
                   return (
                     <AddText
                       id={item.id}
-                      label={item.label}
+                      label={t(item.label).concat(star)}
                       getText={getText}
                       setGetText={setGetText}
                       declineResponse={declineResponse}
@@ -340,7 +423,7 @@ const IdentificationBody = () => {
                   return (
                     <AddFile
                       id={item.id}
-                      label={item.label}
+                      label={t(item.label).concat(star)}
                       declineResponse={declineResponse}
                       file={item.url}
                       verify={item.verify}
@@ -351,14 +434,13 @@ const IdentificationBody = () => {
                 }
               })}
             </div>
-
             <div className={styles.uploadItem}>
               <div className={`${styles.row} ${styles.rowItem}`}>
                 <div
                   className={styles.rowLeft}
                   style={level > 0 ? { color: "white" } : { color: "grey" }}
                 >
-                  Level 2:{" "}
+                  {t("identification.level").concat(" 2: ")}
                   {level === 1 ? (
                     <p style={{ color: "red", paddingLeft: 10 }}>
                       {declineResponse ? declineResponse : null}
@@ -370,8 +452,14 @@ const IdentificationBody = () => {
                 <div className={`${styles.row} ${styles.formItem}`}>
                   <div className={styles.rowLeft}>
                     <div style={{ display: "flex", flexDirection: "column" }}>
-                      <span>Proof of Address</span>
-                      <span style={{ paddingTop: 20 }}>Proof of Company</span>
+                      <span>
+                        {t("identification.verification.proofAddress").concat(
+                          "*",
+                        )}
+                      </span>
+                      <span style={{ paddingTop: 20 }}>
+                        {t("identification.verification.proofCompany")}
+                      </span>
                     </div>
                   </div>
                   <div
@@ -388,7 +476,7 @@ const IdentificationBody = () => {
                           level > 0 ? { color: "white" } : { color: "grey" }
                         }
                       >
-                        Upload
+                        {t("general.upload")}
                       </span>
                     </Button>
                     <Button color="gray">
@@ -397,7 +485,7 @@ const IdentificationBody = () => {
                           level > 0 ? { color: "white" } : { color: "grey" }
                         }
                       >
-                        Upload
+                        {t("general.upload")}
                       </span>
                     </Button>
                   </div>
@@ -405,11 +493,12 @@ const IdentificationBody = () => {
               ) : (
                 <>
                   {uploadingFiles.map((item) => {
+                    const star = item.notRequired ? "" : "*";
                     if (item.level === 1) {
                       return (
                         <AddFile
                           id={item.id}
-                          label={item.label}
+                          label={t(item.label).concat(star)}
                           declineResponse={declineResponse}
                           file={item.url}
                           verify={item.verify}
@@ -429,7 +518,7 @@ const IdentificationBody = () => {
                   className={styles.rowLeft}
                   style={level > 1 ? { color: "white" } : { color: "grey" }}
                 >
-                  Level 3:{" "}
+                  {t("identification.level").concat(" 3: ")}
                   {level === 2 ? (
                     <p style={{ color: "red", paddingLeft: 10 }}>
                       {declineResponse ? declineResponse : null}
@@ -440,7 +529,9 @@ const IdentificationBody = () => {
               {level < 2 ? (
                 <div className={`${styles.row} ${styles.formItem}`}>
                   <div className={styles.rowLeft}>
-                    <span>Enhanced Diligence</span>
+                    <span>
+                      {t("identification.verification.enhanced").concat("*")}
+                    </span>
                   </div>
                   <div>
                     <Button color="gray">
@@ -449,7 +540,7 @@ const IdentificationBody = () => {
                           level > 1 ? { color: "white" } : { color: "grey" }
                         }
                       >
-                        Upload
+                        {t("general.upload")}
                       </span>
                     </Button>
                   </div>
@@ -457,11 +548,12 @@ const IdentificationBody = () => {
               ) : (
                 <>
                   {KYCContent.map((item) => {
+                    const star = item.notRequired ? "" : "*";
                     if (item.level === 2) {
                       return (
                         <AddFile
                           id={item.id}
-                          label={item.label}
+                          label={t(item.label).concat(star)}
                           declineResponse={declineResponse}
                           file={item.url}
                           verify={item.verify}
@@ -474,9 +566,10 @@ const IdentificationBody = () => {
                 </>
               )}
             </div>
+            {/* <AddFile label="Enhanced Diligence" /> */}
 
             <div className={styles.button}>
-              <Button onClick={handleUpload}>Confirm</Button>
+              <Button>{t("identification.verification.confirm")}</Button>
             </div>
           </div>
         </div>
@@ -498,16 +591,15 @@ const AddText = ({
 }) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
+  const { t } = useTranslation();
 
   const updateValue = value.slice(0, 40);
 
   const uploadValue = text?.slice(0, 40);
 
   useEffect(() => {
-    if (value) {
-      const updatedFiles = { ...getText, [id]: value };
-      setGetText(updatedFiles);
-    }
+    const updatedTexts = { ...getText, [id]: value };
+    setGetText(updatedTexts);
   }, [value]);
 
   return (
@@ -522,7 +614,9 @@ const AddText = ({
           ) : text ? (
             <>
               <span style={{ paddingLeft: 20, color: "gray" }}>
-                {declineResponse !== null ? null : "Currently being checked"}
+                {declineResponse && declineResponse != ""
+                  ? declineResponse
+                  : "Currently being checked"}
               </span>
             </>
           ) : null}
@@ -555,19 +649,23 @@ const AddText = ({
           </p>
           {verify ? (
             <Button color="gray">
-              <span style={{ color: "grey" }}>Add</span>
+              <span style={{ color: "grey" }}>
+                {t("identification.verification.add")}
+              </span>
             </Button>
-          ) : declineResponse != null ? (
+          ) : declineResponse && declineResponse != "" ? (
             <Button onClick={() => setShow(true)} color="gray">
-              Add
+              {t("identification.verification.add")}
             </Button>
           ) : text ? (
             <Button color="gray">
-              <span style={{ color: "grey" }}>Add</span>
+              <span style={{ color: "grey" }}>
+                {t("identification.verification.add")}
+              </span>
             </Button>
           ) : (
             <Button onClick={() => setShow(true)} color="gray">
-              Add
+              {t("identification.verification.add")}
             </Button>
           )}
         </div>
@@ -595,6 +693,7 @@ const AddFile = ({
 }) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
+  const { t } = useTranslation();
   const [imageURL, setImageURL] = useState(null);
 
   const updateValue = value.slice(0, 40);
@@ -625,13 +724,17 @@ const AddFile = ({
         <div className={styles.rowLeft}>
           <span>{label}</span>
           {verify ? (
-            <div style={{ paddingLeft: 10 }}>
-              <img src={Correct} alt="" />
-            </div>
+            file != "notRequired" && (
+              <div style={{ paddingLeft: 10 }}>
+                <img src={Correct} alt="" />
+              </div>
+            )
           ) : file ? (
             <>
               <span style={{ paddingLeft: 20, color: "gray" }}>
-                {declineResponse !== null ? null : "Currently being checked"}
+                {declineResponse && declineResponse != ""
+                  ? declineResponse
+                  : "Currently being checked"}
               </span>
             </>
           ) : null}
@@ -669,19 +772,19 @@ const AddFile = ({
           )}
           {verify ? (
             <Button color="gray">
-              <span style={{ color: "grey" }}>Upload</span>
+              <span style={{ color: "grey" }}>{t("general.upload")}</span>
             </Button>
-          ) : declineResponse != null ? (
+          ) : declineResponse && declineResponse != "" ? (
             <Button onClick={() => handleAddFile()} color="gray">
-              Upload
+              {t("general.upload")}
             </Button>
           ) : file ? (
             <Button color="gray">
-              <span style={{ color: "grey" }}>Upload</span>
+              <span style={{ color: "grey" }}>{t("general.upload")}</span>
             </Button>
           ) : (
             <Button onClick={handleAddFile} color="gray">
-              Upload
+              {t("general.upload")}
             </Button>
           )}
         </div>

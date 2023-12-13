@@ -6,7 +6,13 @@
     "affiliate": "Affiliateprogramm",
     "login": "Login",
     "signUp": "Registrierung",
-    "menu": "Registrierung"
+    "menu": "Registrierung",
+    "profile": "Profil",
+    "invoice": "Rechnung",
+    "dashboard": "Dashboard",
+    "security": "Sicherheit",
+    "identification": "Identifikation",
+    "logOut": "Ausloggen"
   },
   "home": {
     "heroTitle": "Akzeptieren Sie Krypto Zahlungen",
@@ -17,7 +23,7 @@
     "heroAvailable": "Verfügbar für:",
     "connectWith": "Oder Login mit",
     "appDownload": "Mobile App herunterladen",
-    "latestPrices": "Aktuelle Preise",
+    "latestPrice": "Letzter Preis",
     "priceChange": "Preisveränderung der letzten 24h",
     "cardSubtitle": "Ihr Schritt zu einem modernen Zahlungsverkehr",
     "cardTitleP1": "Mit moderner Zahlungsverarbeitung",
@@ -64,6 +70,7 @@
     "helpCard2Button": "Jetzt informieren"
   },
   "payment": {
+    "customPayment": "Benutzerdefinierte Zahlung",
     "heroHeadingGradient": "Der neue Weg",
     "heroHeading": "mit Krypto Währungen zu bezahlen",
     "heroDescription": "Erleben Sie die Zukunft des Bezahlens, indem Sie Ihre Rechnungs- und Zahlungsprozesse mit unseren fortschrittlichen Automatisierungstools und sicheren kryptobasierten Checkouts revolutionieren, Ihr Finanzmanagement vereinfachen und das Umsatzpotenzial maximieren.",
@@ -339,54 +346,7 @@
   "footer": {
     "copyright": "© 2023 Nefentus. Alle Rechte vorbehalten.",
     "downloadButton": "JETZT RUNTERLADEN",
-    "contentLabel1": "Übersicht",
-    "contentLabel2": "Aktion",
-    "content": [
-      {
-        "text": "Home",
-        "link": "/"
-      },
-      {
-        "text": "Zahlung",
-        "link": "/payment"
-      },
-      {
-        "text": "Ressourcen",
-        "link": "/support"
-      },
-      {
-        "text": "Affiliate",
-        "link": "/affiliate"
-      },
-      {
-        "text": "Datenschutzrichtlinie",
-        "link": "/privacy"
-      }
-    ],
-    "content2": [
-      {
-        "text": "Play Store",
-        "link": "/"
-      },
-      {
-        "text": "Anmelden",
-        "link": "/link"
-      },
-      {
-        "text": "App Store",
-        "link": "/"
-      },
-      {
-        "text": "Anmeldung",
-        "link": "/signup"
-      },
-      {
-        "text": "Impressum",
-        "link": "/imprint"
-      }
-    ],
-    "socialTitle": "Folge uns auf:",
-    "socialDescription": "Gehen Sie zum Anfang\n der Seite",
+    "content": ["Startseite", "Unsere Solution", "Resourcen", "Affiliate"],
     "privacy": "Datenschutzerklärung",
     "imprint": "Impressum",
     "terms": "Bedingungen und Konditionen",
@@ -408,6 +368,14 @@
     "cardsDays": "in den letzten 30 Tagen",
     "total": "Gesamt",
     "KYCRequests": "KYC-Anfragen",
+    "wallet": "Wallet",
+    "plan": "Plan",
+    "enterprise": "Unternehmen",
+    "balance": "Saldo",
+    "cryptoMarket": "Krypto-Markt",
+    "hideBalance": "Währungen mit Null-Saldo ausblenden",
+    "send": "Senden",
+    "receive": "Empfangen",
     "roles": {
       "Vendor": "Verkäufer",
       "Admin": "Administrator",
@@ -416,28 +384,88 @@
       "Broker": "Broker",
       "Affiliate": "Affiliate"
     },
+    "charts": {
+      "last24h": "Letzte 24 Stunden",
+      "previous24h": "Vorherige 24 Stunden"
+    },
     "tableHeaders": {
       "firstName": "Vorname",
+      "name": "Name",
       "lastName": "Nachname",
       "email": "E-Mail",
       "roles": "Rollen",
       "status": "Status",
       "income ": "Einkommen ($)",
       "joinedOn": "Beigetreten am",
+      "earnings": "Ergebnis",
       "actions": "Aktionen"
     },
     "modal": {
       "titleCreate": "Benutzer hinzufügen",
       "titleEdit": "Benutzer bearbeiten",
-      "firstName": "Vorname*",
+      "firstName": "Vorname",
       "firstNamePlaceholder": "Geben Sie den Vornamen ein",
-      "lastName": "Nachname*",
+      "lastName": "Nachname",
       "lastNamePlaceholder": "Geben Sie den Nachnamen ein",
-      "email": "E-Mail*",
+      "email": "E-Mail",
       "emailPlaceholder": "Geben Sie die E-Mail-Adresse ein",
-      "password": "Passwort*",
+      "password": "Passwort",
       "passwordPlaceholder": "Geben Sie das Passwort ein",
-      "role": "Rolle*"
+      "role": "Rolle",
+      "name": "Name",
+      "company": "Firma",
+      "address": "Adresse"
+    },
+    "earningCards": {
+      "first": "Verkäufe: Insgesamt",
+      "second": "Verkäufe: Letzte 24 Stunden",
+      "third": "Verkäufe: Letzte 30 Tage",
+      "progress": "im Vergleich zu den letzten 30 Tagen"
+    },
+    "incomeTitle": "Einkommen 24 Stunden",
+    "cryptoCard": {
+      "receiveModal": {
+        "title": "Geld empfangen",
+        "description": "Erhalten Sie Geld, indem Sie Kryptowährung an die unten stehende Adresse senden."
+      },
+      "sendModal": {
+        "title": "Gelder abheben",
+        "description": "Sie haben eine Abhebung von Ihrem Konto angefordert.",
+        "currencyLabel": "Währungsoptionen",
+        "currencyPlaceholder": "Währungsoption wählen",
+        "amountLabel": "Betrag",
+        "amountPlaceholder": "Betrag eingeben",
+        "addressLabel": "Adresse",
+        "addressPlaceholder": "Adresse eingeben",
+        "passwordLabel": "Passwort",
+        "passwordPlaceholder": "Passwort eingeben",
+        "amountError": "Bitte geben Sie einen Betrag zum Abheben ein.",
+        "addressError": "Bitte geben Sie eine Adresse für die Abhebung ein.",
+        "passwordError": "Bitte geben Sie Ihr Passwort ein.",
+        "currencyError": "Bitte wählen Sie für die Auszahlung die korrekte Währung aus.",
+        "correctCurrencyError": "Bitte wählen Sie die richtige Währung zum Abheben aus.",
+        "correctPasswordError": "Sie haben das falsche Passwort eingegeben!",
+        "withdrawing": "Abheben...",
+        "withdrawSuccess": "Auszahlung erfolgreich!",
+        "withdrawFailed": "Auszahlung fehlgeschlagen!"
+      },
+      "wallet": "Wallet-Adresse",
+      "walletCopied": "Wallet-Adresse kopiert!",
+      "close": "Schließen"
+    },
+    "integrations": {
+      "connect": "Mit Wallet verbinden",
+      "connecting": "Verbinden...",
+      "disconnect": "Trennen",
+      "don'tConnect": "Connect Wallet ist nicht verfügbar!"
+    },
+    "admin": {
+      "cardsContent": {
+        "totalIncome": "Gesamteinkommen",
+        "clicks": "Klicks",
+        "registrations": "Registrierungen",
+        "orders": "Bestellungen"
+      }
     }
   },
   "graph": {
@@ -460,8 +488,8 @@
   },
   "general": {
     "search": "Suche",
-    "active": "aktiv",
-    "notActive": "inaktiv",
+    "active": "Aktiv",
+    "notActive": "Inaktiv",
     "deactivate": "Deaktivieren",
     "activate": "Aktivieren",
     "edit": "Bearbeiten",
@@ -469,7 +497,20 @@
     "cancel": "Abbrechen",
     "create": "Erstellen",
     "settings": "Einstellungen",
-    "logOut": "Ausloggen"
+    "logOut": "Ausloggen",
+    "receive": "Empfangen",
+    "send": "Senden",
+    "referral": "Referral",
+    "close": "Schließen",
+    "add": "Hinzufügen",
+    "update": "Aktualisieren",
+    "open": "Öffen",
+    "confirm": "Bestätigen",
+    "withdraw": "Abheben",
+    "enable": "Aktivieren",
+    "disable": "Deaktivieren",
+    "upload": "Hochladen",
+    "of": "von"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -768,5 +809,268 @@
       "paymentLink": "Zahlungslink in die Zwischenablage kopiert!",
       "affiliateLink": "Affiliatelink in die Zwischenablage kopiert"
     }
-  }
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "products": "Produkte",
+    "payments": "Zahlungen",
+    "defiCard": "DeFi Card",
+    "transactions": "Transaktionen",
+    "converter": "Konvertierung",
+    "integration": "Integration",
+    "soon": "Demnächst",
+    "referral": "Referral Dashboard",
+    "vendorDashboard": "Anbieter-Dashboard",
+    "notification": "Benachrichtigung"
+  },
+  "products": {
+    "totalProducts": "Alle Produkte",
+    "createNewProduct": "Neues Produkt erstellen",
+    "updateProduct": "Produkt aktualisieren",
+    "subtitle1": "Sie haben momentan",
+    "subtitle2": "Produkte",
+    "editProduct": "Produkt bearbeiten",
+    "description": "Sie haben diesen Monat drei neue Produkte hinzugefügt",
+    "stock": "Auf Lager",
+    "unlimited": "Unbegrenzt",
+    "price": "Preis",
+    "notAvailable": " ist nicht verfügbar!",
+    "connecting": "Verbinden...",
+    "topInfoTitle": "Produkt kaufen",
+    "connect": "Verbinden mit ",
+    "login": "Einloggen in ",
+    "topInfoDescription": "Sie können dieses Produkt mit MetaMask oder Nefentus Wallet kaufen, falls Sie ein Nefentus-Konto haben.",
+    "error": {
+      "name": "Name ist erforderlich!",
+      "description": "Beschreibung ist erforderlich!",
+      "price": "Preis ist erforderlich!",
+      "priceAsFloat": "Preis muss eine Zahl sein!"
+    },
+    "createProductModal": {
+      "createNewProduct": "Neues Produkt erstellen",
+      "createProduct": "Produkt erstellen",
+      "imageLabel": "Produktbild",
+      "attach": "Anhang hinzufügen",
+      "nameLabel": "Name",
+      "namePlaceholder": "Name eingeben",
+      "descriptionLabel": "Beschreibung",
+      "descriptionPlaceholder": "Beschreibung eingeben",
+      "priceLabel": "Preis",
+      "pricePlaceholder": "Preis eingeben",
+      "stockLabel": "Lagerbestand",
+      "stockPlaceholder": "Lagerbestand eingeben, wenn dieser begrenzt ist",
+      "add": "Hinzufügen",
+      "update": "Aktualisieren",
+      "cancel": "Stornieren",
+      "updatedSuccessfully": "Produkt erfolgreich aktualisiert!",
+      "addedSuccessfully": "Produkt erfolgreich hinzugefügt!",
+      "deletedSuccessfully": "Produkt erfolgreich gelöscht!",
+      "deletedError": "Das Produkt konnte nicht gelöscht werden!",
+      "updateError": "Das Produkt konnte nicht aktualisiert werden!",
+      "addError": "Ein neues Produkt konnte nicht hinzugefügt werden!"
+    }
+  },
+  "payments": {
+    "title": "Neue Rechnung erstellen",
+    "enterAmount": "Betrag in $ eingeben",
+    "amount": "Betrag",
+    "email": "E-Mail",
+    "name": "Name",
+    "company": "Firma",
+    "address": "Adresse",
+    "taxNumber": "Steuernummer",
+    "createInvoice": "Rechnung erstellen",
+    "scan": "QR-Code scannen",
+    "scanDescription": "Zur Bestätigung müssen Sie einen QR-Code scannen",
+    "downloadInvoice": "Rechnung herunterladen",
+    "table": {
+      "created": "Erstellt am",
+      "price": "Preis ($)",
+      "status": "Status",
+      "qr": "QR-Code",
+      "actions": "Aktionen"
+    }
+  },
+
+  "transactions": {
+    "title": "Letzte Transaktionen",
+    "subtitle": "Der Gesamtwert aller Transaktionen ist:",
+    "table": {
+      "product": "Produkt",
+      "order": "Bestellung",
+      "email": "E-Mail",
+      "amount": "Betrag",
+      "currency": "Währung",
+      "transaction": "Transaktion",
+      "date": "Datum",
+      "earnings": "Betrag ($)",
+      "action": "Aktion"
+    }
+  },
+  "converter": {
+    "wallet": "Wallet",
+    "from": "Von",
+    "balance": "Saldo",
+    "convert": "Konvertieren"
+  },
+  "integrations": {
+    "title": "Integrationen",
+    "subtitle": "Verwenden Sie Ihre externe Kryptowährungs-Wallet auf Nefentus",
+    "connect": "Wallet verbinden",
+    "connecting": "Verbinden...",
+    "disconnect": "Verbindung trennen",
+    "connectError": "Konnte Wallet nicht verbinden!"
+  },
+  "security": {
+    "items": {
+      "loginLabel": "Login-Passwort",
+      "loginDescription": "Das Login-Passwort wird verwendet, um sich in Ihrem Konto anzumelden.",
+      "labelAuthentication": "Authentikator-App",
+      "descriptionAuthentication": "Richten Sie die Multi-Faktor-Authentifizierung mit Google Authenticator, Authy, Lastpass oder Ähnlichem ein.",
+      "labelPassword": "Einmal-Passwörter per E-Mail",
+      "descriptionPassword": "Richten Sie die Multi-Faktor-Authentifizierung basierend auf Einmal-Passwörtern ein, die per E-Mail gesendet werden.",
+      "labelCode": "Anti-Phishing Code",
+      "descriptionCode": "Schützen Sie Ihr Konto vor Phishing-Versuchen. Der Code wird in jeder Email von Nefentus eingefügt. Wenn Sie den Code in einer Email sehen, ist diese von Nefentus."
+    },
+    "settings": {
+      "title": "Sicherheit",
+      "description": "Sichern Sie Ihr Konto mit zusätzlichen Sicherheitsmaßnahmen"
+    },
+    "antiPhishingCodeTitle": "Anti-Phishing-Code eingeben:",
+    "antiPhishingCodePlaceholder": "Anti-Phishing-Code eingeben",
+    "actions": {
+      "edit": "Bearbeiten",
+      "enable": "Aktivieren",
+      "change": "Ändern",
+      "select": "Wählen",
+      "close": "Schließen",
+      "verify": "Verifizieren"
+    },
+    "passwords": {
+      "title": "Passwort ändern",
+      "labelCurrent": "Aktuelles Passwort",
+      "placeholderCurrent": "Geben Sie Ihr Passwort ein",
+      "labelNew": "Neues Passwort",
+      "placeholderNew": "Neues Passwort eingeben",
+      "labelConfirm": "Passwort bestätigen",
+      "placeholderConfirm": "Neues Passwort bestätigen"
+    },
+    "scanModal": {
+      "title": "QR-Code scannen oder Code einfügen"
+    },
+    "authentication": "Authentifizierung",
+    "enterCode": "Verifizierungscode eingeben:"
+  },
+  "profile": {
+    "title": "Benutzerprofil",
+    "description": "Aktualisieren Sie Ihre persönlichen Daten und Benachrichtigungseinstellungen",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "business": "Firma",
+    "businessDescription": "Wenn Sie ein Unternehmen sind, geben Sie hier bitte Ihren Firmennamen ein.",
+    "email": "Email",
+    "phoneNumber": "Telefonnummer",
+    "country": "Land",
+    "avatar": "Profilbild",
+    "action": {
+      "selectCountry": "Land auswählen",
+      "turnOff": "Aus",
+      "turnOn": "An"
+    },
+    "avatarDescription": "Wählen Sie einen Avatar aus, um Ihr Konto zu personalisieren.",
+    "marketingUpdates": "Marketing-Updates",
+    "marketingUpdatesDescription": "Erhalten Sie Marketing-Updates per E-Mail, Push-Benachrichtigungen (in der mobilen App) und Benachrichtigungen (in der Webanwendung).",
+    "emailNotifications": "E-Mail Benachrichtigungen",
+    "emailNotificationsDescription": "Erhalten Sie Benachrichtigungen per E-Mail",
+    "appNotifications": "App-Benachrichtigungen",
+    "appNotificationsDescription": "Erhalten Sie Benachrichtigungen über Push-Benachrichtigungen (in der mobilen App).",
+    "notificationLanguage": "Benachrichtigungssprache",
+    "notificationLanguageDescription": "Wählen Sie Ihre bevorzugte Sprache für E-Mail-, App-Push- und Benachrichtigungen auf der Webseite.",
+    "enableInvoicing": "Rechnungsstellung aktivieren",
+    "enableInvoicingDescription": "Erhalten Sie Rechnungen für jedes verkaufte Produkt für Ihre Buchhaltung."
+  },
+  "invoice": {
+    "title": "Rechnung",
+    "description": "Geben Sie Ihre Mehrwertsteuernummer ein und bestätigen Sie, ob Sie Rechnungen erhalten möchten.",
+    "vatNumber": "Umsatzsteuernummer",
+    "enableInvoicing": "Rechnungen aktivieren",
+    "walletAddress": "Wallet zum Empfangen von Zahlungen",
+    "walletDescription": "Wählen Sie die Wallet, die beim Erstellen einer Rechnung oder beim Verkauf eines Produkts Zahlungen erhält.",
+    "stablecoin": "Stablecoin",
+    "stablecoinDescription": "Wählen Sie den Stablecoin, in den umgewandelt werden soll.",
+    "action": {
+      "add": "Hinzufügen",
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren",
+      "select": "Wählen",
+      "turnOff": "Aus",
+      "turnOn": "An",
+      "connectedWallets": "Verbundene Geldbörsen",
+      "connectWallet": "Neues Geldbörsen verbinden",
+      "connected": "In Verbindung gebracht",
+      "disconnected": "Getrennt",
+      "selectCoin": "Wählen Sie Stablecoin"
+    }
+  },
+  "identification": {
+    "title": "Identifikation",
+    "description": "Lassen Sie Ihre Identität überprüfen, um zu verkaufen und zu handeln",
+    "verified": "Verifiziert",
+    "unverified": "Unverifiziert",
+    "unlimited": "Ohne Limit",
+    "verificationLevels": "Verifizierungsstufen",
+    "level": "Level",
+    "level1Description": "Persönliche Daten, offizieller Pass oder Personalausweis, und Bild",
+    "level2Description": "Adressnachweis und Firmennachweis (wenn zutreffend)",
+    "level3Description": "Erhöhte Sorgfalt",
+    "accountLimit": {
+      "title": "Kontolimit",
+      "fiatDeposit": "Kontolimit",
+      "cryptoDepositLimit": "Krypto-Einzahlungslimit",
+      "daily": "Täglich",
+      "cryptoWithdrawal": "Krypto-Auszahlungslimit",
+      "transactionLimits": "P2P-Transaktionslimits"
+    },
+    "verification": {
+      "title": "Verifizierung",
+      "fullName": "Vollständiger Name",
+      "address": "Adresse",
+      "city": "Stadt und Postleitzahl",
+      "issueId": "Von den Behörden ausgestellter Pass oder Personalausweis",
+      "picture": "Bild mit Pass oder Personalausweis in der Hand",
+      "proofAddress": "Nachweis der Adresse",
+      "proofCompany": "Nachweis einer Firma",
+      "enhanced": "Erhöhte Sorgfalt",
+      "confirm": "Bestätigen",
+      "upload": "Hochladen",
+      "add": "Hinzufügen"
+    }
+  },
+
+  "cookieBanner": {
+    "first": "Wir nutzen Drittanbieter ",
+    "cookies": "Cookies ",
+    "second": "um zu ",
+    "last": "personalisieren Sie Ihr Website-Erlebnis.",
+    "decline": "Ablehnen",
+    "accept": "Akzeptieren"
+  },
+  "settingsItem": {
+    "title": "Wert ändern"
+  },
+  "kyc": {
+    "modalTitle": "Überprüfen Sie die Verifizierung",
+    "feedbackModal": "Hinterlassen Sie einen Grund"
+  },
+  "languages": {
+    "english": "Englisch",
+    "deutsch": "Deutsch",
+    "ukrainian": "Ukrainisch"
+  },
+  "cancel": "Stornieren",
+  "confirm": "Bestätigen",
+  "close": "Schließen",
+  "add": "Hinzufügen",
+  "create": "Erstellen",
+  "update": "Aktualisieren"
 }

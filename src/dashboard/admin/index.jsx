@@ -5,7 +5,7 @@ import Graph from "../graph/graph";
 import Header from "../header/header";
 import TopInfo from "../topInfo/topInfo";
 import styles from "./admin.module.css";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import ModalOverlay from "../modal/modalOverlay";
 import adminDashboardApi from "../../api/adminDashboardApi";
 import { useNavigate } from "react-router-dom";
@@ -591,7 +591,7 @@ const AdminBody = ({ type }) => {
 
                 {type === "admin" && (
                   <Options
-                    label={t("dashboard.modal.role")}
+                    label={t("dashboard.modal.role").concat("*")}
                     value={
                       role
                         ? t(`dashboard.roles.${role.replaceAll(" ", "")}`)
@@ -616,7 +616,7 @@ const AdminBody = ({ type }) => {
                 )}
                 {type === "leader" && (
                   <Options
-                    label={t("dashboard.modal.role")}
+                    label={t("dashboard.modal.role").concat("*")}
                     value={
                       role
                         ? t(`dashboard.roles.${role.replaceAll(" ", "")}`)
@@ -640,7 +640,7 @@ const AdminBody = ({ type }) => {
                 )}
                 {type === "seniorbroker" && (
                   <Options
-                    label={t("dashboard.modal.role")}
+                    label={t("dashboard.modal.role").concat("*")}
                     value={
                       role
                         ? t(`dashboard.roles.${role.replaceAll(" ", "")}`)
@@ -660,7 +660,7 @@ const AdminBody = ({ type }) => {
                 )}
                 {type === "broker" && (
                   <Options
-                    label={t("dashboard.modal.role")}
+                    label={t("dashboard.modal.role").concat("*")}
                     value={
                       role
                         ? t(`dashboard.roles.${role.replaceAll(" ", "")}`)

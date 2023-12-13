@@ -8,7 +8,7 @@ import Card from "./card/card";
 
 import styles from "./grow.module.css";
 import { useTranslation } from "react-i18next";
-import separateText from "../../func/separate";
+import { separateText } from "../../func/separate";
 
 const content = [
   {

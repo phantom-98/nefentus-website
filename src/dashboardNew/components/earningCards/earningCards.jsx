@@ -6,14 +6,18 @@ import Negative from "../../../assets/icon/negative.svg";
 import styles from "./earningCards.module.css";
 import { useEffect, useState } from "react";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
+import { useTranslation } from "react-i18next";
 
 const EarningCards = () => {
   const [cardInfo, setCardInfo] = useState([]);
   const dashboardApi = new vendorDashboardApi();
 
+  const { t, i18n } = useTranslation();
+  const { language } = i18n;
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [language]);
 
   const fetchData = async () => {
     const getPromises = [dashboardApi.getTotalIncome()];
@@ -21,21 +25,21 @@ const EarningCards = () => {
 
     const cardsContent = [
       {
-        title: "Sales: Total",
+        title: t("dashboard.earningCards.first"),
         value: `$${parseFloat(sales?.value?.total?.number).toFixed(2)}`,
         percentage: sales?.value?.total?.percentage
           ? parseFloat(sales?.value?.total?.percentage).toFixed(2)
           : 0,
       },
       {
-        title: "Sales: Last 24 hours",
+        title: t("dashboard.earningCards.second"),
         value: `$${parseFloat(sales?.value?.last24Hours?.number).toFixed(2)}`,
         percentage: sales?.value?.last24Hours?.percentage
           ? parseFloat(sales?.value?.last24Hours?.percentage).toFixed(2)
           : 0,
       },
       {
-        title: "Sales: Last 30 days",
+        title: t("dashboard.earningCards.third"),
         value: `$${parseFloat(sales?.value?.last30Days?.number).toFixed(2)}`,
         percentage: sales?.value?.last30Days?.percentage
           ? parseFloat(sales?.value?.last30Days?.percentage).toFixed(2)
@@ -58,6 +62,8 @@ const EarningCards = () => {
 export default EarningCards;
 
 const SingleCard = ({ data }) => {
+  const { t } = useTranslation();
+
   return (
     <Card>
       <div className={styles.label}>{data.title}</div>
@@ -70,7 +76,9 @@ const SingleCard = ({ data }) => {
           >
             {data.percentage}%
           </div>
-          <div className={styles.rest}>vs last 30 days</div>
+          <div className={styles.rest}>
+            {t("dashboard.earningCards.progress")}
+          </div>
         </div>
       </div>
     </Card>

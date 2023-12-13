@@ -8,6 +8,7 @@ import {
 } from "@thirdweb-dev/react";
 import Button from "../../components/button/button";
 import styles from "./walletIntegrations.module.css";
+import { useTranslation } from "react-i18next";
 import backendAPI from "../../../api/backendAPI";
 
 const WalletIntegration = ({
@@ -28,11 +29,12 @@ const WalletIntegration = ({
     balance: useBalance(),
   };
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (
-      (name === "Metamask" &&
-        connectStatus["Wallet Connect"] === "connected") ||
-      (name === "Wallet Connect" && connectStatus["Metamask"] === "connected")
+      (name === "MetaMask" && connectStatus["WalletConnect"] === "connected") ||
+      (name === "WalletConnect" && connectStatus["MetaMask"] === "connected")
     ) {
       wallet.disconnect();
     }
@@ -40,15 +42,15 @@ const WalletIntegration = ({
 
   useEffect(() => {
     if (wallet.status === "connected") {
-      if (name === "Wallet Connect") {
+      if (name === "WalletConnect") {
         setConnectStatus({
-          "Wallet Connect": "connected",
+          WalletConnect: "connected",
           Metamask: "disconnected",
         });
-      } else if (name === "Metamask") {
+      } else if (name === "MetaMask") {
         setConnectStatus({
           Metamask: "connected",
-          "Wallet Connect": "disconnected",
+          WalletConnect: "disconnected",
         });
       }
 
@@ -58,7 +60,13 @@ const WalletIntegration = ({
 
   async function registerWallet(address) {
     if (address) {
-      const result = await backend_API.registerWalletAddress(address);
+      const ConnectedWallet = {
+        address: address,
+        name: name,
+      };
+      if (name !== null) {
+        const result = await backend_API.registerWalletAddress(ConnectedWallet);
+      }
     }
   }
 
@@ -71,7 +79,7 @@ const WalletIntegration = ({
         <div className={styles.walletTitle}>{name}</div>
         {wallet.address && (
           <div className={styles.walletAddressTitle}>
-            Wallet address:{" "}
+            Wallet address:
             <span className={styles.walletAddress}>
               {`${wallet.address.substring(0, 5)}...${wallet.address.substring(
                 wallet.address.length - 5,
@@ -96,18 +104,18 @@ const WalletIntegration = ({
               wallet.connect(wallet.config, { chainId: 1 });
             }}
           >
-            Connect to Wallet
+            {t("dashboard.integrations.connect")}
           </Button>
         )}
         {wallet.status === "unknown" && (
-          <Button disabled>Connect wallet is not available!</Button>
+          <Button disabled>{t("dashboard.integrations.don'tConnect")}</Button>
         )}
         {wallet.status === "connecting" && (
-          <Button disabled>Connecting...</Button>
+          <Button disabled>{t("dashboard.integrations.connecting")}</Button>
         )}
         {wallet.status === "connected" && (
           <Button color={"green"} onClick={() => wallet.disconnect()}>
-            Disconnect
+            {t("dashboard.integrations.disconnect")}
           </Button>
         )}
       </div>

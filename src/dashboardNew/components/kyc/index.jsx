@@ -1,7 +1,9 @@
 import styles from "./kyc.module.css";
+import Header from "../../../dashboard/header/header";
+import Search from "../../../assets/icon/search.svg";
 import Correct from "../../../assets/icon/correct.svg";
 import Download from "../../../assets/icon/download.svg";
-import Button from "../../components/button/button";
+import Button from "../../../components/button/button";
 import { useEffect, useState } from "react";
 import backendAPI from "../../../api/backendAPI";
 import adminDashboardApi from "../../../api/adminDashboardApi";

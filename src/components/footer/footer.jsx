@@ -1,6 +1,4 @@
 import styles from "./footer.module.css";
-
-import LogoIcon from "../../assets/logo/logo.svg";
 import Logo from "../../assets/logo/logo2.svg";
 
 import Instagram from "../../assets/icon/instagram.svg";
@@ -8,8 +6,8 @@ import Linkedin from "../../assets/icon/linkedin.svg";
 import Youtube from "../../assets/icon/youtube.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Button from "../button/button";
-import separateText from "../../func/separate";
+import { separateText } from "../../func/separate";
+import { reformatFooterInfo } from "../../utils";
 
 const content = [
   { link: "/" },
@@ -21,8 +19,16 @@ const content = [
 const Footer = () => {
   const { t } = useTranslation();
 
-  const footerContent = t("footer.content", { returnObjects: true });
-  const footerContent2 = t("footer.content2", { returnObjects: true });
+  const footerContentTranslation = t("footer.content", { returnObjects: true });
+
+  const footerContent = reformatFooterInfo(footerContentTranslation, content);
+  const footerContentTranslation2 = t("footer.content2", {
+    returnObjects: true,
+  });
+
+  const footerContent2 = reformatFooterInfo(footerContentTranslation2, content);
+  console.log(footerContent, "footerContent2");
+  console.log(footerContent2, "footerContent2");
 
   const handleScroll = () => {
     window.scrollTo(0, 0);
