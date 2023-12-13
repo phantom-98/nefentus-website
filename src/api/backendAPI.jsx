@@ -293,6 +293,27 @@ export default class backendAPI {
     }
   }
 
+  async getProfile() {
+    try {
+      const url = `${this.baseURL}/auth/getUserProfile`;
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async getInvoiceSettings() {
     try {
       const url = `${this.baseURL}/auth/get-invoice-settings`;

@@ -11,30 +11,18 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const ProfileSettings = () => {
-  const [firstName, setFirstName] = useState(localStorage.getItem("firstName"));
-  const [lastName, setLastName] = useState(localStorage.getItem("lastName"));
-  const [business, setBusiness] = useState(localStorage.getItem("business"));
-  const [phoneNumber, setPhoneNumber] = useState(
-    localStorage.getItem("phoneNumber"),
-  );
-  const [country, setCountry] = useState(localStorage.getItem("country"));
-  const [email, setEmail] = useState(localStorage.getItem("email"));
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [business, setBusiness] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [country, setCountry] = useState("");
+  const [email, setEmail] = useState("");
   const [imageName, setImageName] = useState(null);
-  const [marketingUpdates, setMarketingUpdates] = useState(
-    localStorage.getItem("marketingUpdates") === "true",
-  );
-  const [emailNotifications, setEmailNotifications] = useState(
-    localStorage.getItem("emailNotifications") === "true",
-  );
-  const [appNotifications, setAppNotifications] = useState(
-    localStorage.getItem("appNotifications") === "true",
-  );
-  const [notificationLanguage, setNotificationLanguage] = useState(
-    localStorage.getItem("notificationLanguage"),
-  );
-  const [enableInvoicing, setEnableInvoicing] = useState(
-    localStorage.getItem("enableInvoicing") === "true",
-  );
+  const [marketingUpdates, setMarketingUpdates] = useState("");
+  const [emailNotifications, setEmailNotifications] = useState("");
+  const [appNotifications, setAppNotifications] = useState("");
+  const [notificationLanguage, setNotificationLanguage] = useState("");
+
   const [isSaveData, setIsSaveData] = useState(false);
   const [file, setFile] = useState(null);
   const [imageChanged, setImageChanged] = useState(false);
@@ -44,6 +32,24 @@ const ProfileSettings = () => {
 
   const backendAPI = new backend_API();
   const navigate = useNavigate();
+
+  const fetchProfile = async () => {
+    const data = await backendAPI.getProfile();
+    setFirstName(data["firstName"]);
+    setLastName(data["lastName"]);
+    setBusiness(data["business"]);
+    setPhoneNumber(data["phoneNumber"]);
+    setCountry(data["country"]);
+    setEmail(data["email"]);
+    setImageName(data["imgData"]);
+    setMarketingUpdates(data["marketingUpdates"]);
+    setEmailNotifications(data["emailNotifications"]);
+    setAppNotifications(data["appNotifications"]);
+    setNotificationLanguage(data["notificationLanguage"]);
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   const updateUser = async () => {
     const requestData = {
@@ -57,7 +63,6 @@ const ProfileSettings = () => {
       emailNotifications,
       appNotifications,
       notificationLanguage,
-      enableInvoicing,
     };
 
     const response = await backendAPI.update(requestData);
@@ -182,13 +187,6 @@ const ProfileSettings = () => {
       popup: "language",
       type: "edit",
     },
-    {
-      label: `${t("profile.enableInvoicing")}`,
-      description: `${t("profile.enableInvoicingDescription")}`,
-      value: enableInvoicing,
-      setValue: setEnableInvoicing,
-      type: "enable",
-    },
   ];
 
   useEffect(() => {
@@ -206,16 +204,6 @@ const ProfileSettings = () => {
       {data.map((item) => (
         <SettingsItem data={item} setIsSaveData={setIsSaveData} />
       ))}
-
-      {/*
-      <div
-        className={styles.button}
-        style={{ display: "flex", justifyContent: "flex-end" }}
-      >
-        <Button color="light">Cancel</Button>
-        <Button>Save Changes</Button>
-      </div>
-	  */}
     </Card>
   );
 };

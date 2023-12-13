@@ -947,6 +947,7 @@
     "actions": {
       "edit": "Bearbeiten",
       "enable": "Aktivieren",
+      "disable": "Deaktivieren",
       "change": "Ändern",
       "select": "Wählen",
       "close": "Schließen",
