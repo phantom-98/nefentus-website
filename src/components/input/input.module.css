@@ -36,15 +36,6 @@
   position: relative;
 }
 
-.input img {
-  position: absolute;
-
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-  right: 2rem;
-}
-
 .searchInput {
   color: var(--white-color);
   background-color: transparent;
@@ -69,7 +60,12 @@
 
 .option .input {
   position: relative;
-  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem;
 }
 
 .body {

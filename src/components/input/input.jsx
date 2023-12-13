@@ -100,7 +100,7 @@ export const Options = ({
               bottom: 0,
             }}
           >
-            {value}
+            {value ? value : "Select an Option"}
           </div>
         }{" "}
         <img src={dropDown} alt="dropdown" />
