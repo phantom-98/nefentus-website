@@ -448,6 +448,7 @@ export const EnableType = ({ value }) => {
 };
 
 export const EditPopup = ({
+  title = "Change Value",
   show,
   setShow,
   value,

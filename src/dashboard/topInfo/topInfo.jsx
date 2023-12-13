@@ -5,7 +5,7 @@ const TopInfo = ({ title, description, children }) => {
   return (
     <div className={styles.top}>
       <div>
-        <h4>{title}</h4>
+        <p>{title}</p>
 
         <p>{description}</p>
       </div>
