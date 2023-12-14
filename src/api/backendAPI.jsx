@@ -244,55 +244,6 @@ export default class backendAPI {
     }
   }
 
-  async changePasswordDashboard(pass, oldpass) {
-    try {
-      const request = {
-        newPassword: pass,
-        oldPassword: oldpass,
-      };
-      const url = `${this.baseURL}/auth/reset-password-email`;
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-        body: JSON.stringify(request),
-      };
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response;
-    } catch (error) {
-      return null; // or return some default value
-    }
-  }
-
-  async changePasswordConfirmDashboard(token) {
-    try {
-      const request = {
-        token: token,
-      };
-      const url = `${this.baseURL}/auth/reset-password-auth`;
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-        body: JSON.stringify(request),
-      };
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response;
-    } catch (error) {
-      return null; // or return some default value
-    }
-  }
-
   async getProfile() {
     try {
       const url = `${this.baseURL}/auth/getUserProfile`;
