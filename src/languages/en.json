@@ -280,7 +280,8 @@
     "option1": "Vendor",
     "option2": "Affiliate",
     "formButton": "Create Account",
-    "formInfo": "By signing up, you agree to out Privacy Policy and Terms of Service."
+    "formInfo": "By signing up, you agree to out Privacy Policy and Terms of Service.",
+    "selectLabel": "Select an Option"
   },
   "login": {
     "titleP1": "Welcome Back",

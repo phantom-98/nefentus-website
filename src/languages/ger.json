@@ -218,7 +218,8 @@
     "option1": "Vendor",
     "option2": "Affiliate",
     "formButton": "Erstellen Sie Ihren Account",
-    "formInfo": "Mit der Anmeldung erklären Sie sich mit unseren Datenschutzbestimmungen und Nutzungsbedingungen einverstanden.."
+    "formInfo": "Mit der Anmeldung erklären Sie sich mit unseren Datenschutzbestimmungen und Nutzungsbedingungen einverstanden..",
+    "selectLabel": "Wähle eine Option"
   },
   "login": {
     "titleP1": "Willkommen",
@@ -379,9 +380,9 @@
     "roles": {
       "Vendor": "Verkäufer",
       "Admin": "Administrator",
-      "Leader": "Leader",
-      "SeniorBroker": "Senior Broker",
-      "Broker": "Broker",
+      "Leader": "Führer/Führerin",
+      "SeniorBroker": "Leitender Makler",
+      "Broker": "Makler",
       "Affiliate": "Affiliate"
     },
     "charts": {

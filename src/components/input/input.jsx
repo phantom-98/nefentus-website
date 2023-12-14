@@ -100,7 +100,7 @@ export const Options = ({
               bottom: 0,
             }}
           >
-            {value ? value : "Select an Option"}
+            {value ? value : t("signUp.selectLabel")}
           </div>
         }{" "}
         <img src={dropDown} alt="dropdown" />

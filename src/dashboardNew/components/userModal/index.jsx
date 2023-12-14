@@ -106,11 +106,11 @@ const UserModal = ({
               label={t("dashboard.modal.role").concat("*")}
               value={role}
               options={[
-                "Vendor",
-                "Affiliate",
-                "Broker",
-                "Senior Broker",
-                "Leader",
+                t("dashboard.roles.Vendor"),
+                t("dashboard.roles.Affiliate"),
+                t("dashboard.roles.Broker"),
+                t("dashboard.roles.SeniorBroker"),
+                t("dashboard.roles.Leader"),
               ]}
               dashboard
               setValue={setRole}
@@ -120,7 +120,12 @@ const UserModal = ({
             <Options
               label={t("dashboard.modal.role").concat("*")}
               value={role}
-              options={["Vendor", "Affiliate", "Broker", "Senior Broker"]}
+              options={[
+                t("dashboard.roles.Vendor"),
+                t("dashboard.roles.Affiliate"),
+                t("dashboard.roles.Broker"),
+                t("dashboard.roles.SeniorBroker"),
+              ]}
               dashboard
               setValue={setRole}
             />
@@ -129,16 +134,23 @@ const UserModal = ({
             <Options
               label={t("dashboard.modal.role").concat("*")}
               value={role}
-              options={["Vendor", "Affiliate", "Broker"]}
+              options={[
+                t("dashboard.roles.Vendor"),
+                t("dashboard.roles.Affiliate"),
+                t("dashboard.roles.Broker"),
+              ]}
               dashboard
               setValue={setRole}
             />
           )}
-          {type === "broker" && (
+          {type === t("dashboard.roles.Broker") && (
             <Options
               label={t("dashboard.modal.role").concat("*")}
               value={role}
-              options={["Vendor", "Affiliate"]}
+              options={[
+                t("dashboard.roles.Vendor"),
+                t("dashboard.roles.Affiliate"),
+              ]}
               dashboard
               setValue={setRole}
             />
