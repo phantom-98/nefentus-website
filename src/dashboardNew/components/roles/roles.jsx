@@ -15,6 +15,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const [role, setRole] = useState("Select Role");
   const [openModal, setOpenModal] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
+  const userRole = localStorage.getItem("roles");
   const { t } = useTranslation();
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -58,7 +59,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
       setErrorMessage(t("messages.error.passwordRequired"));
       return;
     }
-    if (role === "") {
+    if (role === "" && userRole !== "ROLE_AFFILIATE") {
       setErrorMessage(t("messages.error.roleRequired"));
       return;
     }
