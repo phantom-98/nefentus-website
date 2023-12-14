@@ -212,7 +212,7 @@ const IdentificationBody = () => {
         !(getData[item.id] || getText[item.id])
       ) {
         res = true;
-        setErrorMessage(item.label + " is required!");
+        setErrorMessage(item.label + t("identification.fieldRequired"));
         break;
       }
     }
@@ -263,8 +263,7 @@ const IdentificationBody = () => {
         console.log("error upload text!");
       }
     }
-
-    setInfoMessage("Data successfuly upload!");
+    setInfoMessage(t("identification.uploadSuccess"));
     setDeclineResponse(null);
     fetchFYC();
   };
@@ -618,7 +617,7 @@ const AddText = ({
               <span style={{ paddingLeft: 20, color: "gray" }}>
                 {declineResponse && declineResponse != ""
                   ? ""
-                  : "Currently being checked"}
+                  : t("identification.beingChecked")}
               </span>
             </>
           ) : null}
@@ -736,7 +735,7 @@ const AddFile = ({
               <span style={{ paddingLeft: 20, color: "gray" }}>
                 {declineResponse && declineResponse != ""
                   ? ""
-                  : "Currently being checked"}
+                  : t("identification.beingChecked")}
               </span>
             </>
           ) : null}
