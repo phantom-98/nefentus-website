@@ -281,6 +281,7 @@
     "option2": "Affiliate",
     "formButton": "Create Account",
     "formInfo": "By signing up, you agree to out Privacy Policy and Terms of Service.",
+    "selectLabel": "Select an Option",
     "updateButton": "Update"
   },
   "login": {
@@ -469,6 +470,8 @@
       "actions": "Actions"
     },
     "modal": {
+      "create_user": "Create User",
+      "edit_user": "Edit User",
       "titleCreate": "Add User",
       "titleEdit": "Edit User",
       "titleNewUser": "Create User",

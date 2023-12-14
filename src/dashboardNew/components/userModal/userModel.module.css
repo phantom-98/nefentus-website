@@ -60,6 +60,7 @@
 }
 
 .iconEye {
+  display: flex;
   position: absolute;
   top: 50%;
   right: 8px;
@@ -98,7 +99,7 @@
   width: 50rem;
 }
 .modal {
-  width: 100%;
+  width: 50rem;
 }
 
 .modal h4 {
@@ -123,7 +124,7 @@
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 }
 
 .modalButtons {

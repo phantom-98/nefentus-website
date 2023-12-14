@@ -219,6 +219,7 @@
     "option2": "Affiliate",
     "formButton": "Erstellen Sie Ihren Account",
     "formInfo": "Mit der Anmeldung erklären Sie sich mit unseren Datenschutzbestimmungen und Nutzungsbedingungen einverstanden..",
+    "selectLabel": "Wählen Sie eine Option",
     "updateButton": "Aktualisieren"
   },
   "login": {
@@ -402,6 +403,8 @@
       "actions": "Aktionen"
     },
     "modal": {
+      "create_user": "Benutzer hinzufügen",
+      "edit_user": "Benutzer bearbeiten",
       "titleCreate": "Benutzer hinzufügen",
       "titleEdit": "Benutzer bearbeiten",
       "firstName": "Vorname",
