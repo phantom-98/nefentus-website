@@ -380,9 +380,9 @@
     "roles": {
       "Vendor": "Verkäufer",
       "Admin": "Administrator",
-      "Leader": "Führer/Führerin",
-      "SeniorBroker": "Leitender Makler",
-      "Broker": "Makler",
+      "Leader": "Leader",
+      "SeniorBroker": "Senior Broker",
+      "Broker": "Broker",
       "Affiliate": "Affiliate"
     },
     "charts": {
