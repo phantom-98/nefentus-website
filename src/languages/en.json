@@ -956,6 +956,13 @@
       "status": "Status",
       "qr": "QR code",
       "actions": "Actions"
+    },
+    "price": "Price",
+    "seller": "Seller",
+    "buyer": "Buyer",
+    "pay": {
+      "title": "Invoice",
+      "description": "Pay an invoice"
     }
   },
   "transactions": {

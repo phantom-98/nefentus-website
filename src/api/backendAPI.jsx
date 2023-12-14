@@ -1341,29 +1341,4 @@ export default class backendAPI {
       return null; // or return some default value
     }
   }
-
-  async updateInvoiceSettings(settings) {
-    try {
-      const url = `${this.baseURL}/auth/update-invoice-settings`;
-      const options = {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-        body: JSON.stringify(settings),
-      };
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      console.log(data);
-      localStorage.setItem("vatNumber", data.vatNumber);
-      localStorage.setItem("sendInvoice", JSON.stringify(data.sendInvoice));
-      return response;
-    } catch (error) {
-      return null; // or return some default value
-    }
-  }
 }

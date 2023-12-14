@@ -889,6 +889,13 @@
       "status": "Status",
       "qr": "QR-Code",
       "actions": "Aktionen"
+    },
+    "price": "Preis",
+    "seller": "Verkäufer",
+    "buyer": "Käufer",
+    "pay": {
+      "title": "Rechnung",
+      "description": "Eine Rechnung bezahlen"
     }
   },
 
