@@ -50,17 +50,17 @@ const PayBody = ({ invoice }) => {
               <div className={styles.columns}>
                 <p className={styles.price}>
                   <span>{t("payments.price")}:</span>
+                  <span></span>
+                </p>
+                <p className={styles.price}>
+                  <span>{t("payments.name")}:</span>{" "}
                   <span>
                     {invoice.user?.firstName} {invoice.user?.lastName}
                   </span>
                 </p>
                 <p className={styles.price}>
-                  <span>{t("payments.name")}:</span>{" "}
-                  <span>{invoice.user?.email}</span>
-                </p>
-                <p className={styles.price}>
                   <span>{t("payments.email")}:</span>{" "}
-                  <span>{invoice.user?.tel}</span>
+                  <span>{invoice.user?.email}</span>
                 </p>
                 <p className={styles.price}>
                   <span>{t("payments.company")}:</span>{" "}
@@ -68,7 +68,7 @@ const PayBody = ({ invoice }) => {
                 </p>
                 <p className={styles.price}>
                   <span>{t("payments.address")}:</span>{" "}
-                  <span>{invoice.user?.country}</span>
+                  <span>{invoice.user?.address}</span>
                 </p>
               </div>
             </div>
