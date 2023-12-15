@@ -1123,6 +1123,9 @@
     "level1Description": "Personal Information, Government Issued ID and Facial\n Recognition",
     "level2Description": "Proof of Address & Proof of Company (if applicable)",
     "level3Description": " Enhanced Diligence",
+    "beingChecked": "Currently being checked",
+    "uploadSuccess": "Data successfuly upload!",
+    "fieldRequired": " is required!",
     "accountLimit": {
       "title": "Account Limit",
       "fiatDeposit": "Fiat-Einzahlungs- und Auszahlungslimits",
