@@ -580,7 +580,8 @@
     "enable": "Enable",
     "disable": "Disable",
     "upload": "Upload",
-    "of": "of"
+    "of": "of",
+    "show": "Show"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -1032,7 +1033,9 @@
       "seedDescription": "A sequence of words that allows you to regain access to your crypto funds if you ever lose your crypto wallet.",
       "rememberSeed": "Remember this phrase",
       "verifySeed": "Verify Seed Phrase",
-      "enterSeed": "Enter Seed Phrase"
+      "enterSeed": "Enter Seed Phrase",
+      "recover": "Recover wallet",
+      "recoverDescription": "Recover your wallet using seed phrase."
     },
     "settings": {
       "title": "Security",

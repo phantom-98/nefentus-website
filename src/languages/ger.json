@@ -512,7 +512,8 @@
     "enable": "Aktivieren",
     "disable": "Deaktivieren",
     "upload": "Hochladen",
-    "of": "von"
+    "of": "von",
+    "show": "Anzeigen"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -942,7 +943,9 @@
       "seedDescription": "Eine Wortfolge, die es Ihnen ermöglicht, wieder Zugriff auf Ihre Kryptogelder zu erhalten, falls Sie den Zugriff auf Ihr Krypto-Wallet verlieren.",
       "rememberSeed": "Bewahren Sie den Wiederherstellungsschlüssel sicher auf! Sie werden gleich dazu aufgefordert ihn zu wiederholen.",
       "verifySeed": "Überprüfen Sie den Wiederherstellungsschlüssel",
-      "enterSeed": "Geben Sie den Wiederherstellungsschlüssel ein"
+      "enterSeed": "Geben Sie den Wiederherstellungsschlüssel ein",
+      "recover": "Brieftasche wiederherstellen",
+      "recoverDescription": "Stellen Sie Ihre Brieftasche mit der Seed-Phrase wieder her."
     },
     "settings": {
       "title": "Sicherheit",

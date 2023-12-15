@@ -269,6 +269,31 @@ export default class backendAPI {
     }
   }
 
+  async changePasswordWithOldOne(newPassword, oldPassword) {
+    try {
+      const request = {
+        newPassword,
+        oldPassword,
+      };
+      const url = `${this.baseURL}/auth/change-password`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(request),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async changePasswordConfirmDashboard(token) {
     try {
       const request = {
@@ -307,8 +332,8 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      const data = await response.json();
-      return data;
+      // const data = await response.json();
+      return response;
     } catch (error) {
       return null; // or return some default value
     }
@@ -484,20 +509,20 @@ export default class backendAPI {
     }
   }
 
-  async getTotpToken(data) {
+  async getTotpToken() {
     try {
       const url = `${this.baseURL}/auth/setup/getTotpToken`;
       const options = {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-        body: JSON.stringify(data),
       };
-      return (await fetch(url, options)).text();
+      const response = await fetch(url, options);
+      return response;
     } catch (e) {
-      throw new Error("Network response was not ok");
+      return null;
     }
   }
 

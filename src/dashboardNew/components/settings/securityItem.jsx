@@ -27,32 +27,32 @@ const seedPhrases = [
 ];
 
 const SecurityItem = ({ data }) => {
-  const [isTotp, setIsTotp] = useState();
-  const [isOtp, setIsOtp] = useState();
-  // const [status, setStatus] = useState(data.value);
+  // const [isTotp, setIsTotp] = useState();
+  // const [isOtp, setIsOtp] = useState();
+  const [status, setStatus] = useState();
   const email = useRef(localStorage.getItem("email"));
-  const [reset, setReset] = useState(false);
+  // const [reset, setReset] = useState(false);
 
-  const [copied, setCopied] = useState(false);
-  const [verify, setVerify] = useState(false);
-  const [code, setCode] = useState("");
+  // const [copied, setCopied] = useState(false);
+  // const [verify, setVerify] = useState(false);
+  // const [code, setCode] = useState("");
   const [show, setShow] = useState(false);
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
-  const [secretToken, setSecretToken] = useState("");
+  // const [secretToken, setSecretToken] = useState("");
 
-  const [openBox, setOpenBox] = useState(false);
-  const [openChangePassword, setOpenChangePassword] = useState(false);
+  // const [openBox, setOpenBox] = useState(false);
+  // const [openChangePassword, setOpenChangePassword] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [verificationCode, setVerificationCode] = useState(null);
-  const [phishingCode, setPhishingCode] = useState(data.value);
-  const [phishingCodeValue, setPhishingCodeValue] = useState();
+  // const [verificationCode, setVerificationCode] = useState(null);
+  // const [phishingCode, setPhishingCode] = useState(data.value);
+  // const [phishingCodeValue, setPhishingCodeValue] = useState();
   const [addSeedPhrases, setAddSeedPhrases] = useState(false);
   const [checkedSeedPhrases, setCheckedSeedPhrases] = useState([]);
-  const [seedStatus, setSeedStatus] = useState(false);
+  // const [seedStatus, setSeedStatus] = useState(false);
 
   const { t } = useTranslation();
   const backendAPI = new backend_API();
@@ -61,35 +61,46 @@ const SecurityItem = ({ data }) => {
   // useEffect(() => {
   //   if (data.flow === "otp") {
   //     setStatus(isOtp);
-  //   }
-  //   if (data.flow === "totp") {
+  //   } else if (data.flow === "totp") {
   //     setStatus(isTotp);
+  //   } else if (data.flow === "phishingCode"){
+  //     setStatus(phishingCode)
   //   }
-  // }, [isOtp, isTotp, phishingCodeValue.current]);
+  // }, [data]);
+  useEffect(() => {
+    setStatus(data.value);
+  }, [data]);
 
   const handleOtp = async () => {
-    const response = await backendAPI.setupOtp({ active: !isOtp });
-
-    setIsOtp(!isOtp);
-
+    const response = await backendAPI.setupOtp({ active: !status });
     if (response.status === 200) {
-      console.log(response.status, "status");
-      console.log(isOtp, "statusOtp");
-      localStorage.setItem("hasOtp", (!isOtp).toString());
+      setStatus(!status);
+    }
+  };
+  const handleTotp = async () => {
+    const response = await backendAPI.setupTotp({ active: !status });
+    if (response.status === 200) {
+      setStatus(!status);
     }
   };
   const handleTotpSecretKey = async () => {
-    setIsTotp(!isTotp);
-    if (!isTotp) {
-      setOpen(true);
-      const response = await backendAPI.getTotpToken();
-      setSecretToken(response);
+    if (!status) {
+      backendAPI
+        .getTotpToken()
+        .then((data) => console.log(data, "data"))
+        .then((res) => {
+          console.log(res, "res");
+        });
+
+      // setSecretToken(response);
+      setShow(true);
     } else {
       await backendAPI.setupTotp({
         active: false,
       });
     }
   };
+
   const handleTotpVerify = async (email, token, rememberMe) => {
     const response = await backendAPI.verifyTotpToken(email, token, rememberMe);
     console.log(response, "response");
@@ -100,7 +111,7 @@ const SecurityItem = ({ data }) => {
 
       if (response2 == null) {
       } else {
-        setOpen(false);
+        setShow(false);
         setVerify(false);
       }
     }
@@ -144,26 +155,15 @@ const SecurityItem = ({ data }) => {
       return;
     }
 
-    const response = await backendAPI.changePasswordDashboard(
+    const response = await backendAPI.changePasswordWithOldOne(
       newPassword,
       currentPassword,
     );
     if (response == null) {
       return;
     }
-    setOpenBox(false);
-  };
-
-  const handleConfirmCode = async () => {
-    const response =
-      await backendAPI.changePasswordConfirmDashboard(verificationCode);
-    if (response == null) {
-      return;
-    }
+    setShow(false);
     resetValues();
-    setVerificationCode("");
-    setOpenBox(false);
-    setOpenChangePassword(false);
   };
 
   const resetValues = () => {
@@ -172,21 +172,15 @@ const SecurityItem = ({ data }) => {
     setNewPassword("");
   };
 
-  const handleClose = () => {
-    setOpenBox(false);
-    setVerificationCode("");
-    setOpenChangePassword(false);
-  };
-
   const handleConfirmPhishingCode = async () => {
     const requestData = {
-      code: phishingCode,
+      code: status,
     };
     const response2 = await backendAPI.setPhishingCode(requestData);
-    if (response2 === "Success") {
-      setPhishingCodeValue(requestData.code);
-      localStorage.setItem("antiPhishingCode", requestData.code);
-    }
+    // if (response2 === "Success") {
+    //   setPhishingCodeValue(requestData.code);
+    //   localStorage.setItem("antiPhishingCode", requestData.code);
+    // }
 
     if (response2 == null) {
       await backendAPI.signout();
@@ -206,7 +200,7 @@ const SecurityItem = ({ data }) => {
     if (seedPhrases.length !== completedSeedPhrases.length) {
       return;
     }
-    setSeedStatus(true);
+    setStatus(true);
     setAddSeedPhrases(false);
   };
 
@@ -234,12 +228,9 @@ const SecurityItem = ({ data }) => {
           </div>
           <div className={styles.right}>
             {data.type === "button" ? (
-              <EnableType value={data.flow === "seed" ? seedStatus : status} />
+              <EnableType value={status} />
             ) : (
-              <PasswordIcon
-                type={data.flow}
-                value={phishingCodeValue ? phishingCodeValue : data?.value}
-              />
+              <PasswordIcon type={data.flow} value={status} />
             )}
           </div>
 
@@ -249,20 +240,25 @@ const SecurityItem = ({ data }) => {
               data.flow === "otp"
                 ? handleOtp
                 : data.flow === "totp"
-                ? handleTotpSecretKey
+                ? handleTotp //handleTotpSecretKey
                 : data.flow === "password"
-                ? () => setOpenChangePassword(true)
+                ? () => setShow(true)
                 : data.flow === "seed"
                 ? () => {
-                    setSeedStatus(false);
-                    setAddSeedPhrases("step1");
+                    status ? setStatus(false) : setAddSeedPhrases("step1");
+                  }
+                : data.flow === "recover"
+                ? () => {
+                    status ? setStatus(false) : setAddSeedPhrases("step2");
                   }
                 : () => setShow(true)
             }
           >
             {data.type === "button"
-              ? data.flow === "seed" && seedStatus
-                ? t("general.notActive")
+              ? data.flow === "seed"
+                ? t("general.show")
+                : data.flow === "recover"
+                ? "Recover"
                 : status
                 ? t("general.disable")
                 : t("general.enable")
@@ -271,97 +267,181 @@ const SecurityItem = ({ data }) => {
         </div>
       </div>
 
-      <Popup
-        show={open && secretToken}
-        onClose={() => {
-          setOpen(!open);
-          setIsTotp(!isTotp);
-        }}
-        onConfirm={() => handleTotpVerify(email.current, code, false)}
-        cancelTitle={t("security.actions.close")}
-        confirmTitle={t("security.actions.verify")}
-      >
-        <div className={styles.modalTitle}>
-          {"TOTP ".concat(t("security.authentication"))}
-        </div>
+      {/* {data.flow === "totp" && (
+        <Popup
+          show={show && secretToken}
+          onClose={() => {
+            setShow(false);
+            // setIsTotp(!isTotp);
+          }}
+          onConfirm={() => handleTotpVerify(email.current, code, false)}
+          cancelTitle={t("security.actions.close")}
+          confirmTitle={t("security.actions.verify")}
+        >
+          <div className={styles.modalTitle}>
+            {"TOTP ".concat(t("security.authentication"))}
+          </div>
 
-        {!verify ? (
-          <div>
-            <div className={styles.modalSubtitle}>
-              {" "}
-              {t("security.scanModal.title")}
-            </div>
-            <div className={styles.QRCode}>
-              <QRCode
-                size={256}
-                style={{
-                  height: "auto",
-                  maxWidth: "100%",
-                  width: "100%",
-                  borderRadius: "2rem",
-                  border: "white 1rem solid",
-                }}
-                value={`otpauth://totp/Nefentus?secret=${secretToken}&issuer=${email.current}`}
-                viewBox={`0 0 256 256`}
-              />
-            </div>
-            <div className={styles.copyLink}>
-              {copied && (
-                <div className={styles.tooltip}>Link copied to clipboard!</div>
-              )}
-              <div
-                className={styles.linkBox}
-                onClick={() => {
-                  navigator.clipboard.writeText(secretToken);
-                  setCopied(true);
-                }}
-              >
-                <p id="affiliate-link" className={styles.url}>
-                  {secretToken?.slice(0, 15) + "..."}
-                </p>
-                <img src={UrlLink} alt="url icon" />
+          {!verify ? (
+            <div>
+              <div className={styles.modalSubtitle}>
+                {" "}
+                {t("security.scanModal.title")}
+              </div>
+              <div className={styles.QRCode}>
+                <QRCode
+                  size={256}
+                  style={{
+                    height: "auto",
+                    maxWidth: "100%",
+                    width: "100%",
+                    borderRadius: "2rem",
+                    border: "white 1rem solid",
+                  }}
+                  value={`otpauth://totp/Nefentus?secret=${secretToken}&issuer=${email.current}`}
+                  viewBox={`0 0 256 256`}
+                />
+              </div>
+              <div className={styles.copyLink}>
+                {copied && (
+                  <div className={styles.tooltip}>Link copied to clipboard!</div>
+                )}
+                <div
+                  className={styles.linkBox}
+                  onClick={() => {
+                    navigator.clipboard.writeText(secretToken);
+                    setCopied(true);
+                  }}
+                >
+                  <p id="affiliate-link" className={styles.url}>
+                    {secretToken?.slice(0, 15) + "..."}
+                  </p>
+                  <img src={UrlLink} alt="url icon" />
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div>
-            <div className={styles.modalSubtitle}>
-              {" "}
-              Enter code from Authenticator
+          ) : (
+            <div>
+              <div className={styles.modalSubtitle}>
+                {" "}
+                Enter code from Authenticator
+              </div>
+              <MessageComponent />
+
+              <OneTimeCodeInput
+                setOTPCode={setCode}
+                resetCodeFlag={reset}
+                request={() => {
+                  handleTotpVerify(email.current, code, false);
+                }}
+              />
             </div>
-            <MessageComponent />
+          )}
+        </Popup>
+      )} */}
 
-            <OneTimeCodeInput
-              setOTPCode={setCode}
-              resetCodeFlag={reset}
-              request={() => {
-                handleTotpVerify(email.current, code, false);
-              }}
-            />
-          </div>
-        )}
-      </Popup>
+      {data.flow === "seed" ||
+        (data.flow === "recover" && (
+          <Popup
+            show={addSeedPhrases}
+            onClose={handleCloseSeedModal}
+            confirmTitle={
+              addSeedPhrases === "step1"
+                ? t("general.continue")
+                : t("general.confirm")
+            }
+            cancelTitle={t("general.close")}
+            onConfirm={
+              addSeedPhrases === "step1"
+                ? () => setAddSeedPhrases("step2")
+                : comparePhrases
+            }
+          >
+            <div className={styles.seedPhrasesModalWrapper}>
+              <p style={{ fontSize: "32px" }}>
+                {addSeedPhrases === "step1"
+                  ? t("security.items.seedPhrase")
+                  : t("security.items.verifySeed")}
+              </p>
+              <p style={{ fontSize: "15px" }}>
+                {addSeedPhrases === "step1"
+                  ? t("security.items.rememberSeed")
+                  : t("security.items.enterSeed")}
+              </p>
 
-      <Popup
-        show={openChangePassword}
-        onClose={!openBox ? () => setOpenChangePassword(false) : handleClose}
-        onConfirm={handleConfirm}
-        cancelTitle={t("security.actions.close")}
-        confirmTitle={t("security.actions.verify")}
-      >
-        {!openBox ? (
+              {addSeedPhrases === "step2" ? (
+                <div className={styles.seedPhrasesInputWrapper}>
+                  {seedPhrases.map((phrase, index) => (
+                    <div
+                      style={{
+                        display: "flex",
+                        width: 100,
+                        justifyContent: "space-between",
+                        alignItems: "end",
+                        fontSize: "12px",
+                      }}
+                    >
+                      <label>{index + 1}.</label>
+                      <input
+                        style={{
+                          background:
+                            checkedSeedPhrases[index] === phrase
+                              ? "silver"
+                              : "transparent",
+                        }}
+                        onKeyDown={(e) => {
+                          e.code === "Enter" &&
+                            checkPhrase(e.target.value, index);
+                        }}
+                        onBlur={(e) => checkPhrase(e.target.value, index)}
+                        className={styles.inputSeedPhrase}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className={styles.seedPhrasesInputWrapper}>
+                  {seedPhrases.map((phrase, index) => (
+                    <p
+                      style={{
+                        background:
+                          checkedSeedPhrases[index] === phrase
+                            ? "transparent"
+                            : "silver",
+                      }}
+                      className={styles.seedPhrase}
+                    >
+                      {checkedSeedPhrases[index] === phrase ? "" : phrase}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
+          </Popup>
+        ))}
+
+      {data.flow === "password" && (
+        <Popup
+          show={show}
+          onClose={() => {
+            setShow(false);
+            resetValues();
+          }}
+          onConfirm={handleConfirm}
+          cancelTitle={t("security.actions.close")}
+          confirmTitle={t("security.actions.verify")}
+        >
           <>
             <div className={styles.modalTitle}>
               {t("security.passwords.title")}
             </div>
             {passwordContent.map((item, index) => (
-              <div key={index} className={styles.inputItem}>
+              <div className={styles.inputItem}>
                 <div className={styles.modalSubtitle}>{item.label}</div>
                 <input
                   className={styles.input}
                   type={item.type}
-                  name=""
-                  id=""
+                  id={index}
                   value={item.value}
                   placeholder={item.placeholder}
                   onChange={(e) => {
@@ -372,115 +452,30 @@ const SecurityItem = ({ data }) => {
               </div>
             ))}
           </>
-        ) : (
-          <>
-            <div className={styles.modalTitle}>{t("security.enterCode")}</div>
+        </Popup>
+      )}
 
-            <RawInput
-              value={verificationCode}
-              setState={setVerificationCode}
-              type="text"
+      {data.flow === "phishingCode" && (
+        <Popup
+          show={show}
+          title={t("security.antiPhishingCodeTitle")}
+          onConfirm={handleConfirmPhishingCode}
+          onClose={() => setShow(false)}
+          cancelTitle={t("general.cancel")}
+          confirmTitle={t("general.confirm")}
+        >
+          <>
+            <input
+              className={styles.input}
+              value={status}
+              placeholder={t("security.antiPhishingCodePlaceholder")}
+              onChange={(e) => {
+                setStatus(e.target.value);
+              }}
             />
           </>
-        )}
-      </Popup>
-
-      <Popup
-        show={addSeedPhrases}
-        onClose={handleCloseSeedModal}
-        confirmTitle={
-          addSeedPhrases === "step1"
-            ? t("general.continue")
-            : t("general.confirm")
-        }
-        cancelTitle={t("general.close")}
-        onConfirm={
-          addSeedPhrases === "step1"
-            ? () => setAddSeedPhrases("step2")
-            : comparePhrases
-        }
-      >
-        <div className={styles.seedPhrasesModalWrapper}>
-          <p style={{ fontSize: "32px" }}>
-            {addSeedPhrases === "step1"
-              ? t("security.items.seedPhrase")
-              : t("security.items.verifySeed")}
-          </p>
-          <p style={{ fontSize: "15px" }}>
-            {addSeedPhrases === "step1"
-              ? t("security.items.rememberSeed")
-              : t("security.items.enterSeed")}
-          </p>
-
-          {addSeedPhrases === "step2" ? (
-            <div className={styles.seedPhrasesInputWrapper}>
-              {seedPhrases.map((phrase, index) => (
-                <div
-                  style={{
-                    display: "flex",
-                    width: 100,
-                    justifyContent: "space-between",
-                    alignItems: "end",
-                    fontSize: "12px",
-                  }}
-                >
-                  <label>{index + 1}.</label>
-                  <input
-                    style={{
-                      background:
-                        checkedSeedPhrases[index] === phrase
-                          ? "silver"
-                          : "transparent",
-                    }}
-                    onKeyDown={(e) => {
-                      e.code === "Enter" && checkPhrase(e.target.value, index);
-                    }}
-                    onBlur={(e) => checkPhrase(e.target.value, index)}
-                    className={styles.inputSeedPhrase}
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            ""
-          )}
-          <div className={styles.seedPhrasesInputWrapper}>
-            {seedPhrases.map((phrase, index) => (
-              <p
-                style={{
-                  background:
-                    checkedSeedPhrases[index] === phrase
-                      ? "transparent"
-                      : "silver",
-                }}
-                className={styles.seedPhrase}
-              >
-                {checkedSeedPhrases[index] === phrase ? "" : phrase}
-              </p>
-            ))}
-          </div>
-        </div>
-      </Popup>
-
-      <Popup
-        show={show}
-        title={t("security.antiPhishingCodeTitle")}
-        onConfirm={handleConfirmPhishingCode}
-        onClose={() => setShow(false)}
-        cancelTitle={t("general.cancel")}
-        confirmTitle={t("general.confirm")}
-      >
-        <>
-          <input
-            className={styles.input}
-            value={phishingCode === "null" ? "" : phishingCode}
-            placeholder={t("security.antiPhishingCodePlaceholder")}
-            onChange={(e) => {
-              setPhishingCode(e.target.value);
-            }}
-          />
-        </>
-      </Popup>
+        </Popup>
+      )}
     </>
   );
 };

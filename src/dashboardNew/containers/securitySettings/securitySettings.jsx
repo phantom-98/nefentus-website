@@ -53,11 +53,18 @@ const SecuritySettings = () => {
       type: "button",
       flow: "seed",
     },
+    {
+      label: t("security.items.recover"),
+      description: t("security.items.recoverDescription"),
+      value: false,
+      type: "button",
+      flow: "recover",
+    },
   ];
 
   const fetchSettings = async () => {
     const data = await new backendAPI().getSecuritySettings();
-    console.log(data);
+
     setHasTotp(data["hasTotp"]);
     setHasOtp(data["hasOtp"]);
     setAntiPhishingCode(data["antiPhishingCode"]);
