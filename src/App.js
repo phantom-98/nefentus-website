@@ -17,7 +17,8 @@ import RingLoader from "react-spinners/RingLoader";
 
 import { Player } from "@lottiefiles/react-lottie-player";
 import LoadingAnimation from "./assets/logo/loadingAnimation.json";
-import Invoices from "./pages/invoices";
+import WalletSetting from "./dashboardNew/containers/walletSetting/walletSetting";
+import InvoicesBody from "./dashboardNew/components/invoiceBody/invoiceBody";
 import { KYC } from "./dashboard/settings/components/KYC";
 import Kyc from "./dashboardNew/components/kyc";
 
@@ -264,7 +265,7 @@ function App() {
                   path="/dashboard/invoices"
                   element={
                     <ScreenLayout>
-                      <Invoices />
+                      <InvoicesBody />
                     </ScreenLayout>
                   }
                 />

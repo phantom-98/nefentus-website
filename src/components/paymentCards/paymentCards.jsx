@@ -5,7 +5,7 @@ import Button from "./../button/button";
 
 import Checkmark from "../../assets/icon/whiteCheckmark.svg";
 import { useTranslation } from "react-i18next";
-import separateText from "../../func/separate";
+import { separateText } from "../../func/separate";
 
 const PaymentCards = () => {
   const { t } = useTranslation();

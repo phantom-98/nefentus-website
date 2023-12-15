@@ -38,14 +38,15 @@ export function toChecksumAddress(address) {
 }
 
 export function getRole(localStorage) {
+  // const roles = "ROLE_ADMIN";
   const roles = localStorage.getItem("roles");
-  const roleArray = roles.split(",");
-  const isVendor = roleArray.includes("ROLE_VENDOR");
-  const isAffiliate = roleArray.includes("ROLE_AFFILIATE");
-  const isBroker = roleArray.includes("ROLE_BROKER");
-  const isSeniorBroker = roleArray.includes("ROLE_SENIOR_BROKER");
-  const isLeader = roleArray.includes("ROLE_LEADER");
-  const isAdmin = roleArray.includes("ROLE_ADMIN");
+  const roleArray = roles?.split(",");
+  const isVendor = roleArray?.includes("ROLE_VENDOR");
+  const isAffiliate = roleArray?.includes("ROLE_AFFILIATE");
+  const isBroker = roleArray?.includes("ROLE_BROKER");
+  const isSeniorBroker = roleArray?.includes("ROLE_SENIOR_BROKER");
+  const isLeader = roleArray?.includes("ROLE_LEADER");
+  const isAdmin = roleArray?.includes("ROLE_ADMIN");
 
   if (isAdmin) {
     return "admin";
@@ -65,13 +66,16 @@ export function getRole(localStorage) {
 export function dashboardLink(localStorage) {
   let role = getRole(localStorage);
   if (
-    role === "vendor" ||
     role === "affiliate" ||
     role === "broker" ||
     role === "seniorbroker" ||
     role === "leader"
   ) {
     role = "partner";
+  } else if (role === "admin") {
+    role = "admin";
+  } else if (role === "vendor") {
+    return "/dashboard";
   }
   return "/dashboard/" + role;
 }
@@ -97,4 +101,14 @@ export const decryptData = (password) => {
   } catch (error) {
     console.error("Decryption failed. Please check your input.");
   }
+};
+
+export const reformatFooterInfo = (pages, links) => {
+  let result = [];
+
+  for (let i = 0; i < pages.length; i++) {
+    result[i] = { text: pages[i], link: links[i] };
+  }
+  console.log(result, "resultresult");
+  return result;
 };

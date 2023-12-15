@@ -1,0 +1,66 @@
+.input {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  align-items: center;
+}
+
+.input p {
+  font-size: 1.1rem;
+}
+
+.checkBox {
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.3rem;
+  transform: translateY(0.2rem);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.checkBox img {
+  height: 0.7rem;
+}
+
+.button {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.value {
+  font-size: 1.4rem;
+  opacity: 0.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.enableWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.enableIcon {
+  height: 2rem;
+}
+
+.text {
+  opacity: 0.6;
+  font-size: 1.4rem;
+  padding-top: 3px;
+}
+
+.left {
+  width: 45rem;
+}
+
+.right {
+  display: flex;
+  align-items: flex-start;
+  width: 30%;
+}

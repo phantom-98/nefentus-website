@@ -3,7 +3,7 @@ import styles from "./input.module.css";
 import dropDown from "../../assets/icon/dropdown.svg";
 import AttachmentImage from "../../assets/icon/attachment.svg";
 import Delete from "../../assets/icon/delete.svg";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const Input = ({
@@ -93,7 +93,17 @@ export const Options = ({
         }`}
         onClick={() => setOpen((prev) => !prev)}
       >
-        {value} <img src={dropDown} alt="dropdown" />
+        {
+          <div
+            style={{
+              position: "relative",
+              bottom: 0,
+            }}
+          >
+            {value ? value : t("signUp.selectLabel")}
+          </div>
+        }{" "}
+        <img src={dropDown} alt="dropdown" />
         {open && (
           <div className={`card ${styles.body}`}>
             {options.length > 0 ? (
@@ -173,6 +183,8 @@ export const Textarea = ({
 export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
   const inputRef = useRef(null);
 
+  const { t } = useTranslation();
+
   const [text, setText] = useState(value ? value : false);
 
   const handleClick = () => {
@@ -212,7 +224,7 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
       <div className={styles.attachment}>
         <img src={AttachmentImage} alt="Attachment" onClick={handleClick} />
         <p style={{ color: text ? "#fff" : "#c4c4c4" }} onClick={handleClick}>
-          {text ? text : "Add attachment"}
+          {text ? text : t("products.createProductModal.attach")}
         </p>
         <img
           src={Delete}
@@ -241,12 +253,17 @@ export const SearchOptions = ({
   label = "",
   dashboard,
   placeholder = "",
+  className = "",
 }) => {
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(value);
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
   const { t } = useTranslation();
 
   const filteredOptions = options.filter((item) =>
-    item.display.toLowerCase().includes(value.toLowerCase()),
+    item.display.toLowerCase().includes(selected.toLowerCase()),
   );
 
   return (
@@ -263,7 +280,7 @@ export const SearchOptions = ({
 
       <div
         className={`option ${styles.input} ${
-          dashboard ? styles.dashboardInput : ""
+          dashboard ? styles.dashboardInput : styles.select
         }`}
         onClick={() => setOpen((prev) => !prev)}
       >
@@ -275,15 +292,24 @@ export const SearchOptions = ({
           onFocus={() => setOpen(true)}
           type="text"
           placeholder={placeholder}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          className={styles.searchInput}
+          value={selected}
+          onChange={(e) => {
+            setSelected(e.target.value);
+            setValue(e.target.value);
+          }}
+          className={`option ${styles.searchInput}`}
         />{" "}
         <img src={dropDown} alt="" />
         {open && (
-          <div className={`card ${styles.body}`}>
+          <div className={`card ${styles.body} ${styles.select}`}>
             {filteredOptions.map((item) => (
-              <p onClick={() => setValue(item.value)} key={item.value}>
+              <p
+                onClick={() => {
+                  setSelected(item.value);
+                  setValue(item.value);
+                }}
+                key={item.value}
+              >
                 {item.display}
               </p>
             ))}

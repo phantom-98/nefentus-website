@@ -3,7 +3,7 @@
 .attachment {
   width: 100%;
   background-color: #101010;
-  border: 1px solid rgba(255, 255, 255, 0);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1rem;
   font-size: 1.4rem;
   padding: 1.75rem 2rem;
@@ -12,9 +12,9 @@
   font-family: "Axiforma", sans-serif;
 }
 
-.inputWrapper .input:focus {
-  /* border: 1px solid red !important; */
-}
+/* .inputWrapper .input:focus {
+  border: 1px solid red !important; 
+} */
 
 .inputWrapper input::placeholder,
 .textareaWrapper textarea::placeholder,
@@ -36,15 +36,6 @@
   position: relative;
 }
 
-.input img {
-  position: absolute;
-
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-  right: 2rem;
-}
-
 .searchInput {
   color: var(--white-color);
   background-color: transparent;
@@ -58,13 +49,23 @@
   font-size: 1.4rem;
 }
 
+.countryOption {
+  font-size: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1rem;
+}
 .option {
   cursor: pointer;
 }
 
 .option .input {
   position: relative;
-  /* height: 33px; */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem;
 }
 
 .body {
@@ -103,6 +104,10 @@
   font-size: 1.6rem !important;
 }
 
+.passwordLabel {
+  font-size: 1.4rem !important;
+}
+
 .dashboardInput,
 .dashboardTextarea,
 .attachment {
@@ -127,4 +132,9 @@
   position: absolute;
   pointer-events: none;
   opacity: 0;
+}
+
+.select {
+  padding: 1rem 2rem !important;
+  gap: 0.5rem !important;
 }

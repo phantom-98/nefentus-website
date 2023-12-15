@@ -268,7 +268,6 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
       const data = await response.json();
       return data;
     } catch (error) {
@@ -315,8 +314,9 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      console.log(response);
       const data = await response.text();
+      console.log(data);
+
       return data;
     } catch (error) {
       console.log(error);

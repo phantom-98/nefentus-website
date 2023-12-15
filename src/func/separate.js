@@ -1,4 +1,4 @@
-const separateText = (string) => {
+export const separateText = (string) => {
   let list = string.split("\n");
 
   let renderList = [];
@@ -13,5 +13,3 @@ const separateText = (string) => {
 
   return renderList;
 };
-
-export default separateText;

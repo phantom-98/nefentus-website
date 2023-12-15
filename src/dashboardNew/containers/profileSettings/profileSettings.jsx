@@ -8,40 +8,48 @@ import styles from "./profileSettings.module.css";
 import backend_API from "../../../api/backendAPI";
 import { MessageContext } from "../../../context/message";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ProfileSettings = () => {
-  const [firstName, setFirstName] = useState(localStorage.getItem("firstName"));
-  const [lastName, setLastName] = useState(localStorage.getItem("lastName"));
-  const [business, setBusiness] = useState(localStorage.getItem("business"));
-  const [phoneNumber, setPhoneNumber] = useState(
-    localStorage.getItem("phoneNumber"),
-  );
-  const [country, setCountry] = useState(localStorage.getItem("country"));
-  const [email, setEmail] = useState(localStorage.getItem("email"));
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [business, setBusiness] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [country, setCountry] = useState("");
+  const [email, setEmail] = useState("");
   const [imageName, setImageName] = useState(null);
-  const [marketingUpdates, setMarketingUpdates] = useState(
-    localStorage.getItem("marketingUpdates") === "true",
-  );
-  const [emailNotifications, setEmailNotifications] = useState(
-    localStorage.getItem("emailNotifications") === "true",
-  );
-  const [appNotifications, setAppNotifications] = useState(
-    localStorage.getItem("appNotifications") === "true",
-  );
-  const [notificationLanguage, setNotificationLanguage] = useState(
-    localStorage.getItem("notificationLanguage"),
-  );
-  const [enableInvoicing, setEnableInvoicing] = useState(
-    localStorage.getItem("enableInvoicing") === "true",
-  );
+  const [marketingUpdates, setMarketingUpdates] = useState("");
+  const [emailNotifications, setEmailNotifications] = useState("");
+  const [appNotifications, setAppNotifications] = useState("");
+  const [notificationLanguage, setNotificationLanguage] = useState("");
+
   const [isSaveData, setIsSaveData] = useState(false);
   const [file, setFile] = useState(null);
   const [imageChanged, setImageChanged] = useState(false);
+  const { t } = useTranslation();
 
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
 
   const backendAPI = new backend_API();
   const navigate = useNavigate();
+
+  const fetchProfile = async () => {
+    const data = await backendAPI.getProfile();
+    setFirstName(data["firstName"]);
+    setLastName(data["lastName"]);
+    setBusiness(data["business"]);
+    setPhoneNumber(data["phoneNumber"]);
+    setCountry(data["country"]);
+    setEmail(data["email"]);
+    setImageName(data["imgData"]);
+    setMarketingUpdates(data["marketingUpdates"]);
+    setEmailNotifications(data["emailNotifications"]);
+    setAppNotifications(data["appNotifications"]);
+    setNotificationLanguage(data["notificationLanguage"]);
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   const updateUser = async () => {
     const requestData = {
@@ -55,12 +63,11 @@ const ProfileSettings = () => {
       emailNotifications,
       appNotifications,
       notificationLanguage,
-      enableInvoicing,
     };
 
     const response = await backendAPI.update(requestData);
     if (response == null) {
-      setErrorMessage("Error on updating data");
+      setErrorMessage(t("messages.error.updateData"));
       await backendAPI.signout();
       setTimeout(() => {
         navigate("/");
@@ -68,7 +75,7 @@ const ProfileSettings = () => {
     }
 
     if (response !== null) {
-      setInfoMessage("Settings updated successfully!");
+      setInfoMessage(t("messages.success.updateSettings"));
     }
 
     setIsSaveData(false);
@@ -83,7 +90,7 @@ const ProfileSettings = () => {
         resp2 = await backendAPI.deleteProfileImage(file);
       }
       if (resp2 == null) {
-        setErrorMessage("Error on uploading the profile picture");
+        setErrorMessage(t("messages.error.uploadPicture"));
       }
       setImageChanged(false);
       setIsSaveData(false);
@@ -99,51 +106,50 @@ const ProfileSettings = () => {
 
   const data = [
     {
-      label: "First name*",
+      label: `${t("profile.firstName").concat("*")}`,
       description: "",
       value: firstName,
       setValue: setFirstName,
       type: "edit",
     },
     {
-      label: "Last name*",
+      label: `${t("profile.lastName").concat("*")}`,
       description: "",
       value: lastName,
       setValue: setLastName,
       type: "edit",
     },
     {
-      label: "Business",
-      description:
-        "If you are a business, please enter your business name here.",
+      label: `${t("profile.business").concat("*")}`,
+      description: `${t("profile.businessDescription")}`,
       value: business,
       setValue: setBusiness,
       type: "edit",
     },
     {
-      label: "Email*",
+      label: `${t("profile.email").concat("*")}`,
       description: "",
       value: email,
       setValue: setEmail,
       type: "edit",
     },
     {
-      label: "Phone number",
+      label: `${t("profile.phoneNumber").concat("*")}`,
       description: "",
       value: phoneNumber,
       setValue: setPhoneNumber,
       type: "edit",
     },
     {
-      label: "Country",
+      label: `${t("profile.country").concat("*")}`,
       description: "",
       value: country,
       setValue: setCountry,
       type: "select",
     },
     {
-      label: "Avatar",
-      description: "Select an avatar to personalize your account. ",
+      label: `${t("profile.avatar")}`,
+      description: `${t("profile.avatarDescription").concat("*")}`,
       value: imageName,
       setValue: setImageName,
       type: "image",
@@ -153,44 +159,33 @@ const ProfileSettings = () => {
       setImageChanged: setImageChanged,
     },
     {
-      label: "Marketing updates",
-      description:
-        "Receive marketing updates via email, push notifications (in the mobile app) and inbox notifications (in the web application).",
+      label: `${t("profile.marketingUpdates")}`,
+      description: `${t("profile.marketingUpdatesDescription")}`,
       value: marketingUpdates,
       setValue: setMarketingUpdates,
       type: "enable",
     },
     {
-      label: "Email notifications",
-      description: "Receive notifications via email.",
+      label: `${t("profile.emailNotifications")}`,
+      description: `${t("profile.emailNotificationsDescription")}`,
       value: emailNotifications,
       setValue: setEmailNotifications,
       type: "enable",
     },
     {
-      label: "App notifications",
-      description:
-        "Receive notifications via push notifications (in the mobile app).",
+      label: `${t("profile.appNotifications")}`,
+      description: `${t("profile.appNotificationsDescription")}`,
       value: appNotifications,
       setValue: setAppNotifications,
       type: "enable",
     },
     {
-      label: "Notification language",
-      description:
-        "Select your preferred language for email, app push and on-site inbox notifications.",
+      label: `${t("profile.notificationLanguage")}`,
+      description: `${t("profile.notificationLanguageDescription")}`,
       value: notificationLanguage,
       setValue: setNotificationLanguage,
       popup: "language",
       type: "edit",
-    },
-    {
-      label: "Enable invoicing",
-      description:
-        "Receive invoices for each product sold for your accounting. ",
-      value: enableInvoicing,
-      setValue: setEnableInvoicing,
-      type: "enable",
     },
   ];
 
@@ -202,23 +197,13 @@ const ProfileSettings = () => {
   return (
     <Card className={styles.card}>
       <SettingsTitle
-        title="User Profile"
-        description="Update your personal information and notification settings"
+        title={t("profile.title")}
+        description={t("profile.description")}
       />
 
       {data.map((item) => (
         <SettingsItem data={item} setIsSaveData={setIsSaveData} />
       ))}
-
-      {/*
-      <div
-        className={styles.button}
-        style={{ display: "flex", justifyContent: "flex-end" }}
-      >
-        <Button color="light">Cancel</Button>
-        <Button>Save Changes</Button>
-      </div>
-	  */}
     </Card>
   );
 };

@@ -10,6 +10,7 @@ const ProfileDashboard = () => {
     localStorage.getItem("requireKyc"),
   );
   const [counter, setCounter] = useState(0);
+  const [link, setLink] = useState(null);
   const navigate = useNavigate();
   const backendapi = new backendAPI();
 

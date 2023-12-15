@@ -25,7 +25,7 @@
   height: 100%;
 }
 
-.inputWrapper img {
+.inputWrapperSearch {
   width: 1.2rem;
   position: absolute;
   top: 50%;
@@ -43,6 +43,25 @@
   width: 25rem;
   max-width: 100%;
   padding: 1rem 1.5rem 1rem 3rem;
+}
+
+.inputCloseWrapper {
+  width: 20px;
+  height: 20px;
+  background-color: #faf9f6;
+  position: absolute;
+  top: 50%;
+  left: 22rem;
+  transform: translateY(-50%);
+  border-radius: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.inputClose {
+  width: 20px;
+  height: 20px;
+  padding: 5px;
 }
 
 @media (max-width: 900px) {

@@ -4,7 +4,7 @@ import Pros from "../../assets/icon/pros.svg";
 import Cons from "../../assets/icon/cons.svg";
 import { useTranslation } from "react-i18next";
 import HeadingCenter from "../headingCenter/headingCenter";
-import separateText from "../../func/separate";
+import { separateText } from "../../func/separate";
 
 const Compare = () => {
   const { t } = useTranslation();

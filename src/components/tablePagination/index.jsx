@@ -11,6 +11,9 @@ const TablePagination = ({
   striped,
   className,
   setDataPage,
+  setDataSize,
+  searchTrigger,
+  dataPage,
 }) => {
   const [pageData, setPageData] = useState([]);
 
@@ -33,8 +36,11 @@ const TablePagination = ({
 
       <Pagination
         setDataPage={setDataPage}
+        setDataSize={setDataSize}
         renderItems={renderItems}
+        searchTrigger={searchTrigger}
         data={data}
+        dataPage={dataPage}
       />
     </>
   );
