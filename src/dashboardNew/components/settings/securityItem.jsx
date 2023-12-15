@@ -200,10 +200,10 @@ const SecurityItem = ({ data }) => {
       (phrase) => !!phrase,
     );
     if (seedPhrases.length !== completedSeedPhrases.length) {
-      setErrorMessage("Seed phrase is not matched.");
+      setErrorMessage(t("security.items.seedErrorMessage"));
       return;
     }
-    setInfoMessage("Seed phrase is successfully matched.");
+    setInfoMessage(t("security.items.seedInfoMessage"));
     setStatus(true);
     setAddSeedPhrases(false);
   };
@@ -262,7 +262,7 @@ const SecurityItem = ({ data }) => {
               ? data.flow === "seed"
                 ? t("general.show")
                 : data.flow === "recover"
-                ? "Recover"
+                ? t("security.actions.recover")
                 : status
                 ? t("general.disable")
                 : t("general.enable")

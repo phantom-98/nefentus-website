@@ -962,7 +962,8 @@
       "change": "Ändern",
       "select": "Wählen",
       "close": "Schließen",
-      "verify": "Verifizieren"
+      "verify": "Verifizieren",
+      "recover": "Wiederherstellen"
     },
     "passwords": {
       "title": "Passwort ändern",

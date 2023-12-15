@@ -1052,7 +1052,8 @@
       "change": "Change",
       "select": "Select",
       "close": "Close",
-      "verify": "Verify"
+      "verify": "Verify",
+      "recover": "Recover"
     },
     "scanModal": {
       "title": "Scan QR-code or paste code"
