@@ -945,7 +945,9 @@
       "verifySeed": "Überprüfen Sie den Wiederherstellungsschlüssel",
       "enterSeed": "Geben Sie den Wiederherstellungsschlüssel ein",
       "recover": "Brieftasche wiederherstellen",
-      "recoverDescription": "Stellen Sie Ihre Brieftasche mit der Seed-Phrase wieder her."
+      "recoverDescription": "Stellen Sie Ihre Brieftasche mit der Seed-Phrase wieder her.",
+      "seedErrorMessage": "Die gesuchte Phrase wird nicht gefunden.",
+      "seedInfoMessage": "Die gesuchte Phrase wurde erfolgreich gefunden."
     },
     "settings": {
       "title": "Sicherheit",

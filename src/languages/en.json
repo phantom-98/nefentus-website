@@ -1035,7 +1035,9 @@
       "verifySeed": "Verify Seed Phrase",
       "enterSeed": "Enter Seed Phrase",
       "recover": "Recover wallet",
-      "recoverDescription": "Recover your wallet using seed phrase."
+      "recoverDescription": "Recover your wallet using seed phrase.",
+      "seedErrorMessage": "Seed phrase is not matched.",
+      "seedInfoMessage": "Seed phrase is successfully matched."
     },
     "settings": {
       "title": "Security",

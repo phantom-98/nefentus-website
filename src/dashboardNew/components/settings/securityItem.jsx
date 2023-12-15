@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import styles from "./settingsTitle.module.css";
 // import { EnableType } from "./settingsItem";
 import Button from "../button/button";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import Popup from "../popup/popup";
 import { useTranslation } from "react-i18next";
 import { EnableType } from "./settingsItem";
+import { MessageContext } from "../../../context/message";
 const seedPhrases = [
   "horizon",
   "mystery",
@@ -27,6 +28,7 @@ const seedPhrases = [
 ];
 
 const SecurityItem = ({ data }) => {
+  const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
   // const [isTotp, setIsTotp] = useState();
   // const [isOtp, setIsOtp] = useState();
   const [status, setStatus] = useState();
@@ -198,8 +200,10 @@ const SecurityItem = ({ data }) => {
       (phrase) => !!phrase,
     );
     if (seedPhrases.length !== completedSeedPhrases.length) {
+      setErrorMessage("Seed phrase is not matched.");
       return;
     }
+    setInfoMessage("Seed phrase is successfully matched.");
     setStatus(true);
     setAddSeedPhrases(false);
   };
@@ -340,85 +344,85 @@ const SecurityItem = ({ data }) => {
         </Popup>
       )} */}
 
-      {data.flow === "seed" ||
-        (data.flow === "recover" && (
-          <Popup
-            show={addSeedPhrases}
-            onClose={handleCloseSeedModal}
-            confirmTitle={
-              addSeedPhrases === "step1"
-                ? t("general.continue")
-                : t("general.confirm")
-            }
-            cancelTitle={t("general.close")}
-            onConfirm={
-              addSeedPhrases === "step1"
-                ? () => setAddSeedPhrases("step2")
-                : comparePhrases
-            }
-          >
-            <div className={styles.seedPhrasesModalWrapper}>
-              <p style={{ fontSize: "32px" }}>
-                {addSeedPhrases === "step1"
-                  ? t("security.items.seedPhrase")
-                  : t("security.items.verifySeed")}
-              </p>
-              <p style={{ fontSize: "15px" }}>
-                {addSeedPhrases === "step1"
-                  ? t("security.items.rememberSeed")
-                  : t("security.items.enterSeed")}
-              </p>
+      {(data.flow === "seed" || data.flow === "recover") && (
+        <Popup
+          show={addSeedPhrases}
+          onClose={handleCloseSeedModal}
+          confirmTitle={
+            addSeedPhrases === "step1"
+              ? t("general.continue")
+              : t("general.confirm")
+          }
+          cancelTitle={t("general.close")}
+          onConfirm={
+            addSeedPhrases === "step1"
+              ? () => setAddSeedPhrases("step2")
+              : comparePhrases
+          }
+        >
+          <MessageComponent />
+          <div className={styles.seedPhrasesModalWrapper}>
+            <p style={{ fontSize: "32px" }}>
+              {addSeedPhrases === "step1"
+                ? t("security.items.seedPhrase")
+                : t("security.items.verifySeed")}
+            </p>
+            <p style={{ fontSize: "15px" }}>
+              {addSeedPhrases === "step1"
+                ? t("security.items.rememberSeed")
+                : t("security.items.enterSeed")}
+            </p>
 
-              {addSeedPhrases === "step2" ? (
-                <div className={styles.seedPhrasesInputWrapper}>
-                  {seedPhrases.map((phrase, index) => (
-                    <div
-                      style={{
-                        display: "flex",
-                        width: 100,
-                        justifyContent: "space-between",
-                        alignItems: "end",
-                        fontSize: "12px",
-                      }}
-                    >
-                      <label>{index + 1}.</label>
-                      <input
-                        style={{
-                          background:
-                            checkedSeedPhrases[index] === phrase
-                              ? "silver"
-                              : "transparent",
-                        }}
-                        onKeyDown={(e) => {
-                          e.code === "Enter" &&
-                            checkPhrase(e.target.value, index);
-                        }}
-                        onBlur={(e) => checkPhrase(e.target.value, index)}
-                        className={styles.inputSeedPhrase}
-                      />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className={styles.seedPhrasesInputWrapper}>
-                  {seedPhrases.map((phrase, index) => (
-                    <p
+            {addSeedPhrases === "step2" ? (
+              <div className={styles.seedPhrasesInputWrapper}>
+                {seedPhrases.map((phrase, index) => (
+                  <div
+                    style={{
+                      display: "flex",
+                      width: 100,
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      fontSize: "14px",
+                    }}
+                  >
+                    <label>{index + 1}.</label>
+                    <input
                       style={{
                         background:
                           checkedSeedPhrases[index] === phrase
-                            ? "transparent"
-                            : "silver",
+                            ? "#333333"
+                            : "transparent",
                       }}
-                      className={styles.seedPhrase}
-                    >
-                      {checkedSeedPhrases[index] === phrase ? "" : phrase}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </div>
-          </Popup>
-        ))}
+                      onKeyDown={(e) => {
+                        e.code === "Enter" &&
+                          checkPhrase(e.target.value, index);
+                      }}
+                      onBlur={(e) => checkPhrase(e.target.value, index)}
+                      className={styles.inputSeedPhrase}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className={styles.seedPhrasesInputWrapper}>
+                {seedPhrases.map((phrase, index) => (
+                  <p
+                    style={{
+                      background:
+                        checkedSeedPhrases[index] === phrase
+                          ? "transparent"
+                          : "#333333",
+                    }}
+                    className={styles.seedPhrase}
+                  >
+                    {checkedSeedPhrases[index] === phrase ? "" : phrase}
+                  </p>
+                ))}
+              </div>
+            )}
+          </div>
+        </Popup>
+      )}
 
       {data.flow === "password" && (
         <Popup
