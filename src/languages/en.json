@@ -1029,15 +1029,15 @@
       "descriptionPassword": "Setup Multi-Factor-Authentication based on one-time password sent via email.",
       "labelCode": "Anti-Phishing Code",
       "descriptionCode": "Protect your account from phishing attempts. The anti-phishing code is added to every email received from Nefentus. If you see this code, the email is from Nefentus.",
-      "seedPhrase": "Seed Phrases",
+      "seedPhrase": "Seed Phrase",
       "seedDescription": "A sequence of words that allows you to regain access to your crypto funds if you ever lose your crypto wallet.",
-      "rememberSeed": "Remember this phrase",
-      "verifySeed": "Verify Seed Phrase",
-      "enterSeed": "Enter Seed Phrase",
+      "rememberSeed": "Remember this seed phrase! You will be asked to repeat it in a moment.",
+      "verifySeed": "Seed Phrase",
+      "enterSeed": "Enter seed phrase to verify that you have saved it.",
       "recover": "Recover wallet",
       "recoverDescription": "Recover your wallet using seed phrase.",
-      "seedErrorMessage": "Seed phrase is not matched.",
-      "seedInfoMessage": "Seed phrase is successfully matched."
+      "seedErrorMessage": "There was an error recovering your wallet with the seed phrase.",
+      "seedInfoMessage": "Your wallet was recovered successfully."
     },
     "settings": {
       "title": "Security",

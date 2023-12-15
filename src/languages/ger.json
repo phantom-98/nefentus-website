@@ -939,15 +939,15 @@
       "descriptionPassword": "Richten Sie die Multi-Faktor-Authentifizierung basierend auf Einmal-Passwörtern ein, die per E-Mail gesendet werden.",
       "labelCode": "Anti-Phishing Code",
       "descriptionCode": "Schützen Sie Ihr Konto vor Phishing-Versuchen. Der Code wird in jeder Email von Nefentus eingefügt. Wenn Sie den Code in einer Email sehen, ist diese von Nefentus.",
-      "seedPhrase": "Wiederherstellungsschlüssel",
+      "seedPhrase": "Sicherheitsschlüssel",
       "seedDescription": "Eine Wortfolge, die es Ihnen ermöglicht, wieder Zugriff auf Ihre Kryptogelder zu erhalten, falls Sie den Zugriff auf Ihr Krypto-Wallet verlieren.",
-      "rememberSeed": "Bewahren Sie den Wiederherstellungsschlüssel sicher auf! Sie werden gleich dazu aufgefordert ihn zu wiederholen.",
-      "verifySeed": "Überprüfen Sie den Wiederherstellungsschlüssel",
-      "enterSeed": "Geben Sie den Wiederherstellungsschlüssel ein",
-      "recover": "Brieftasche wiederherstellen",
-      "recoverDescription": "Stellen Sie Ihre Brieftasche mit der Seed-Phrase wieder her.",
-      "seedErrorMessage": "Die gesuchte Phrase wird nicht gefunden.",
-      "seedInfoMessage": "Die gesuchte Phrase wurde erfolgreich gefunden."
+      "rememberSeed": "Bewahren Sie den Sicherheitsschlüssel sicher auf! Sie werden gleich dazu aufgefordert ihn zu wiederholen.",
+      "verifySeed": "Sicherheitsschlüssel",
+      "enterSeed": "Geben Sie den Sicherheitsschlüssel ein. Dies dient dazu nachzuweisen, dass Sie ihn notiert/gespeichert haben.",
+      "recover": "Wallet wiederherstellen",
+      "recoverDescription": "Stellen Sie Ihre Wallet mit dem Sicherheitsschlüssel wieder her.",
+      "seedErrorMessage": "Es gab einen Fehler beim Wiederherstellen Ihrer Wallet.",
+      "seedInfoMessage": "Ihre Wallet wurde erfolgreich wiederhergestellt."
     },
     "settings": {
       "title": "Sicherheit",
