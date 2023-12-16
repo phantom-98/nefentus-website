@@ -406,17 +406,28 @@ const SecurityItem = ({ data }) => {
             ) : (
               <div className={styles.seedPhrasesInputWrapper}>
                 {seedPhrases.map((phrase, index) => (
-                  <p
+                  <div
                     style={{
-                      background:
-                        checkedSeedPhrases[index] === phrase
-                          ? "transparent"
-                          : "#333333",
+                      display: "flex",
+                      width: 100,
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      fontSize: "14px",
                     }}
-                    className={styles.seedPhrase}
                   >
-                    {checkedSeedPhrases[index] === phrase ? "" : phrase}
-                  </p>
+                    <label>{index + 1}.</label>
+                    <p
+                      style={{
+                        background:
+                          checkedSeedPhrases[index] === phrase
+                            ? "transparent"
+                            : "#333333",
+                      }}
+                      className={styles.seedPhrase}
+                    >
+                      {checkedSeedPhrases[index] === phrase ? "" : phrase}
+                    </p>
+                  </div>
                 ))}
               </div>
             )}
