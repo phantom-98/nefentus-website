@@ -186,12 +186,13 @@
   "forgot-password": {
     "title": "Passwort vergessen",
     "button": "E-Mail senden",
-    "info": "Sie kennen Ihre E-Mail nicht, bitte kontaktieren Sie den Support!"
+    "info": "Wenn Sie Ihre E-Mail nicht kennen, kontaktieren Sie bitte den Support!"
   },
   "reset-password": {
     "title": "Passwort zurücksetzen",
-    "button": "zurücksetzen",
-    "info": "Sie möchten Ihr Passwort nicht zurücksetzen? Stattdessen anmelden.",
+    "button": "Zurücksetzen",
+    "info": "Sie möchten Ihr Passwort nicht zurücksetzen?",
+    "infoLinkText": "Stattdessen nmelden",
     "button-label-confirm": "Bestätigen Sie das Passwort"
   },
   "signUp": {
@@ -219,6 +220,7 @@
     "option2": "Affiliate",
     "formButton": "Erstellen Sie Ihren Account",
     "formInfo": "Mit der Anmeldung erklären Sie sich mit unseren Datenschutzbestimmungen und Nutzungsbedingungen einverstanden..",
+    "selectLabel": "Wählen Sie eine Option",
     "updateButton": "Aktualisieren"
   },
   "login": {
@@ -402,6 +404,8 @@
       "actions": "Aktionen"
     },
     "modal": {
+      "create_user": "Benutzer hinzufügen",
+      "edit_user": "Benutzer bearbeiten",
       "titleCreate": "Benutzer hinzufügen",
       "titleEdit": "Benutzer bearbeiten",
       "firstName": "Vorname",
@@ -1042,6 +1046,9 @@
     "level1Description": "Persönliche Daten, offizieller Pass oder Personalausweis, und Bild",
     "level2Description": "Adressnachweis und Firmennachweis (wenn zutreffend)",
     "level3Description": "Erhöhte Sorgfalt",
+    "beingChecked": "Wird derzeit geprüft",
+    "uploadSuccess": "Daten erfolgreich hochgeladen!",
+    "fieldRequired": " ist erforderlich!",
     "accountLimit": {
       "title": "Kontolimit",
       "fiatDeposit": "Kontolimit",

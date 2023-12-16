@@ -97,10 +97,10 @@ export const Options = ({
           <div
             style={{
               position: "relative",
-              bottom: 10,
+              bottom: 0,
             }}
           >
-            {value}
+            {value ? value : t("signUp.selectLabel")}
           </div>
         }{" "}
         <img src={dropDown} alt="dropdown" />

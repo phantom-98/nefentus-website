@@ -180,13 +180,36 @@ export default class backendAPI {
 
   async forgotPassword(email) {
     try {
-      const url = `${this.baseURL}/auth/forgot-password`;
+      const url = `${this.baseURL}/forgot-password`;
       const options = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: email,
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async resetPassword(newPassword, token) {
+    try {
+      const url = `${this.baseURL}/auth/reset-password`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          newPassword,
+          token,
+        }),
       };
       const response = await fetch(url, options);
       if (!response.ok) {
@@ -208,56 +231,6 @@ export default class backendAPI {
           Authorization: `Bearer ${this.token}`,
         },
         body: newEmail,
-      };
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response;
-    } catch (error) {
-      return null; // or return some default value
-    }
-  }
-
-  async confirmEmail(code, newEmail) {
-    try {
-      const payload = {
-        token: code,
-        newEmail: newEmail,
-      };
-      const url = `${this.baseURL}/auth/confirm-email`;
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-        body: JSON.stringify(payload),
-      };
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response;
-    } catch (error) {
-      return null; // or return some default value
-    }
-  }
-
-  async changePasswordDashboard(pass, oldpass) {
-    try {
-      const request = {
-        newPassword: pass,
-        oldPassword: oldpass,
-      };
-      const url = `${this.baseURL}/auth/reset-password-email`;
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        },
-        body: JSON.stringify(request),
       };
       const response = await fetch(url, options);
       if (!response.ok) {
@@ -294,19 +267,20 @@ export default class backendAPI {
     }
   }
 
-  async changePasswordConfirmDashboard(token) {
+  async confirmEmail(code, newEmail) {
     try {
-      const request = {
-        token: token,
+      const payload = {
+        token: code,
+        newEmail: newEmail,
       };
-      const url = `${this.baseURL}/auth/reset-password-auth`;
+      const url = `${this.baseURL}/auth/confirm-email`;
       const options = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-        body: JSON.stringify(request),
+        body: JSON.stringify(payload),
       };
       const response = await fetch(url, options);
       if (!response.ok) {
