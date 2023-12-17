@@ -251,18 +251,42 @@ const SendModal = ({ show, setShow }) => {
 
     // Withdraw
     const tokenAddress = sendCurrency.address;
+    // TODO! How to determine the right wallet?
+    const walletAddres = "";
+    const isExternal = false;
+    if (isExternal) {
+      const web3API = new web3Api("metamask");
 
-    const ret = await backend_Api.send(
-      tokenAddress,
-      withdrawAmount,
-      withdrawAddress,
-      password,
-    );
-    if (ret) {
-      setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawSuccess"));
-      fetchBalances();
+      try {
+        const txReceipt = await web3API.send(
+          tokenAddress,
+          withdrawAmount,
+          withdrawAddress,
+        );
+        if (txReceipt.status === 1) {
+          setInfoMessage(t("messages.success.withdrawal"));
+          fetchBalances();
+        } else {
+          setErrorMessage(t("messages.error.withdraw"));
+        }
+      } catch (error) {
+        console.log(error);
+        setErrorMessage(t("messages.error.withdraw"));
+      }
     } else {
-      setErrorMessage(t("dashboard.cryptoCard.sendModal.withdrawFailed"));
+      const backend_Api = new backendAPI();
+      const ret = await backend_Api.send(
+        tokenAddress,
+        withdrawAmount,
+        withdrawAddress,
+        password,
+      );
+      if (ret) {
+        setInfoMessage(t("messages.success.withdrawal"));
+        fetchBalances();
+      } else {
+        setErrorMessage(t("messages.error.withdraw"));
+      }
     }
   };
 
