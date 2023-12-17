@@ -1,7 +1,7 @@
 .sectionWrapper {
   background-image: linear-gradient(
     176deg,
-    rgba(17, 17, 17, 1) 50%,
+    var(--background-color) 50%,
     rgba(21, 147, 192, 1) 100%
   );
   padding-bottom: 10rem;
@@ -68,7 +68,6 @@
 }
 
 .top p {
-  color: var(--gray-color);
   font-size: 1.2rem;
 }
 
@@ -84,13 +83,12 @@
   gap: 1rem;
 }
 
-.list img {
+.list svg {
   width: 1rem;
   padding-top: 0.6rem;
 }
 
 .lightCard .list p {
-  color: var(--gray-color);
 }
 
 .list p {

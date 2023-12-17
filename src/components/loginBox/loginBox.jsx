@@ -1,7 +1,6 @@
 import Input from "../input/input";
 import styles from "./loginBox.module.css";
 
-import Logo from "../../assets/logo/logo2.svg";
 import Button from "./../button/button";
 import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,7 +9,6 @@ import { dashboardLink, decryptData, encryptData } from "../../utils";
 
 import backend_API from "../../api/backendAPI";
 
-import CheckBox from "../../assets/icon/whiteCheckmark.svg";
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +17,8 @@ import Error from "../error/error";
 import setCookie from "../setCookie/setCookie";
 import ReCAPTCHA from "react-google-recaptcha";
 import { OneTimeCodeInput } from "../../dashboard/input/input";
+import { Checkmark } from "../../assets/icon/icons";
+import { NefentusLogo } from "../../assets/icon/logos/logos";
 
 const ConfirmMeEmail = ({
   email,
@@ -304,7 +304,7 @@ const LoginBox = () => {
         </Button>
       </div>
       <div className={styles.left}>
-        <img src={Logo} alt="nefentus logo" />
+        <NefentusLogo />
 
         <div>
           <h2>
@@ -370,7 +370,7 @@ const LoginBox = () => {
               <div className={styles.rememberInfo}>
                 <div onClick={() => setCheckBox((prev) => !prev)}>
                   <div className={styles.checkBox}>
-                    {checkBox && <img src={CheckBox} alt="checkbox" />}
+                    {checkBox && <Checkmark />}
                   </div>
                   <p>{t("login.remember")}</p>
                 </div>

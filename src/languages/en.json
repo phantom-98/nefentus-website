@@ -402,13 +402,14 @@
     "copyright": "© 2023 Nefentus. All rights reserved.",
     "downloadButton": "DOWNLOAD NOW",
     "content": ["Home", "Payment", "Resources", "Affiliate"],
+
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
     "terms": "Terms and Condition",
     "contact": "Contact us",
-    "contentLabel1": "contentLavel1",
+    "contentLabel1": "Overview",
     "content2": "content2",
-    "contentLabel2": "contentLavel2",
+    "contentLabel2": "Action",
     "socialTitle": "socialTitle",
     "socialDescription": "socialDescription"
   },

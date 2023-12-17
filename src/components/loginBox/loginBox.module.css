@@ -60,7 +60,7 @@
   padding: 5rem;
 }
 
-.login img {
+.login svg {
   height: 3rem;
 }
 
@@ -81,7 +81,7 @@
   opacity: 0.42;
 }
 
-.left img {
+.left svg {
   margin-bottom: 2.5rem;
   height: 3rem;
 }
@@ -128,11 +128,10 @@
   align-items: center;
   justify-content: center;
   border-radius: 0.3rem;
-  transform: translateY(0.2rem);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--gray-color);
 }
 
-.checkBox img {
+.checkBox svg {
   height: 0.7rem;
 }
 

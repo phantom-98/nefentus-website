@@ -8,7 +8,7 @@
 .blueBG {
   background: linear-gradient(
     176deg,
-    rgba(17, 17, 17, 1) 50%,
+    var(--background-color) 50%,
     rgba(21, 147, 192, 1) 100%
   );
   position: absolute;
@@ -46,7 +46,7 @@
 .baner {
   font-size: 1.6rem;
   line-height: 140%;
-  color: var(--gray-color);
+  opacity: 0.6;
 }
 
 .baner {
@@ -104,12 +104,12 @@
 }
 
 .active {
-  background: var(--white-color) !important;
-  color: var(--black-color) !important;
+  background: var(--text-color) !important;
+  color: var(--background-color) !important;
 }
 
 .card:hover {
-  background-color: rgba(255, 255, 255, 0.09);
+  background-color: var(--hover-color);
 }
 
 .card:hover p {

@@ -8,6 +8,7 @@ import backendAPI from "../api/backendAPI";
 import { Helmet } from "react-helmet";
 
 import Image1 from "../assets/image/paymentHome.webp";
+import Image1Light from "../assets/image/paymentHomeLight.webp";
 import Main from "../assets/image/main.svg";
 
 import { useTranslation } from "react-i18next";
@@ -15,8 +16,10 @@ import { useEffect } from "react";
 import PaymentCards from "../components/paymentCards/paymentCards";
 import Prices from "../components/prices/prices";
 import Reward from "../components/reward/reward";
+import { useTheme } from "../context/themeContext/themeContext";
 
 const Home = () => {
+  const { theme } = useTheme();
   const { t } = useTranslation();
   const api = new backendAPI();
   useEffect(() => {
@@ -63,7 +66,7 @@ const Home = () => {
         title={t("home.simplifyTitle")}
         description={t("home.simplifyDescription")}
         button={t("home.layoutButton")}
-        image={Image1}
+        image={theme === "dark" ? Image1 : Image1Light}
       />
 
       <About />

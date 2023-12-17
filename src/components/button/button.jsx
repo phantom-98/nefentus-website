@@ -29,20 +29,10 @@ const Button = ({
       ></div>
       {link ? (
         <Link to={link}>
-          <div
-            className={`${styles.buttonText} unselectable`}
-            style={{ color: "#fff" }}
-          >
-            {children}
-          </div>
+          <div className={`${styles.buttonText} unselectable`}>{children}</div>
         </Link>
       ) : (
-        <div
-          className={`${styles.buttonText} unselectable`}
-          style={{ color: "#fff" }}
-        >
-          {children}
-        </div>
+        <div className={`${styles.buttonText} unselectable`}>{children}</div>
       )}
     </button>
   );

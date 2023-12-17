@@ -1,59 +1,36 @@
 import HeadingCenter from "../headingCenter/headingCenter";
 import styles from "./cards.module.css";
 
-import Video1 from "../../assets/video/phone.mp4";
-import Video2 from "../../assets/video/chart.mp4";
-import Video3 from "../../assets/video/target.mp4";
+import Image1 from "../../assets/video/phone.gif";
+import Image2 from "../../assets/video/chart.gif";
+import Image3 from "../../assets/video/targetLight.gif";
+import Image4 from "../../assets/video/targetDark.gif";
+
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef } from "react";
 import { separateText } from "../../func/separate";
+import { useTheme } from "../../context/themeContext/themeContext";
 
 const list = [
   {
-    video: Video1,
+    image: Image1,
   },
   {
-    video: Video2,
+    image: Image2,
   },
   {
-    video: Video3,
+    image: Image3,
+    dark: Image4,
   },
 ];
 
 const Cards = () => {
+  const { theme } = useTheme();
   const { t } = useTranslation();
 
   const list2 = t("home.cardList", { returnObjects: true });
 
   const sectionRef = useRef(null);
-  const videoRefs = [useRef(null), useRef(null), useRef(null)];
-
-  const handleLoad = (videoRef) => {
-    if (window.innerWidth > 900) return;
-
-    if (videoRef.current) {
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {})
-          .catch((error) => {
-            console.log("Playback prevented by browser");
-          });
-      }
-    }
-  };
-
-  const handleEnter = (videoRef) => {
-    if (videoRef.current) {
-      videoRef.current.play();
-    }
-  };
-
-  const handleLeave = (videoRef) => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-    }
-  };
 
   useEffect(() => {
     const handleScroll = (scrollEvent) => {
@@ -102,17 +79,11 @@ const Cards = () => {
             // onMouseEnter={() => handleEnter(videoRefs[index])}
             // onMouseLeave={() => handleLeave(videoRefs[index])}
           >
-            <video
-              ref={videoRefs[index]}
-              className="cardVideo"
-              autoPlay
-              playsInline
-              muted
-              loop
-              onLoadedData={() => handleLoad(videoRefs[index])}
-            >
-              <source src={item.video} type="video/mp4" />
-            </video>
+            <img
+              src={item.dark && theme === "dark" ? item.dark : item.image}
+              alt=""
+            />
+
             <p>{separateText(list2[index].title)}</p>
             <p className="standard">{list2[index].description}</p>
           </div>

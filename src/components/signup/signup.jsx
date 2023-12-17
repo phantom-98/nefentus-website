@@ -1,4 +1,3 @@
-import Logo from "../../assets/logo/logo2.svg";
 import Button from "../button/button";
 import Input, { SearchOptions } from "../input/input";
 import styles from "./signup.module.css";
@@ -12,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import isMobilePhone from "../../func/isMobilePhone";
 import Error from "../error/error";
+import { NefentusLogo } from "../../assets/icon/logos/logos";
 
 const Signup = () => {
   const { t } = useTranslation();
@@ -541,7 +541,7 @@ const Signup = () => {
         </Button>
       </div>
       <div className={styles.left}>
-        <img src={Logo} alt="nefentus logo" />
+        <NefentusLogo />
 
         <div>
           <h2>
