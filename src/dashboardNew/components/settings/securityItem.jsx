@@ -231,7 +231,9 @@ const SecurityItem = ({ data }) => {
             <div className={styles.description}>{data.description}</div>
           </div>
           <div className={styles.right}>
-            {data.type === "button" ? (
+            {data.type === "button" &&
+            data.flow != "seed" &&
+            data.flow != "recover" ? (
               <EnableType value={status} />
             ) : (
               <PasswordIcon type={data.flow} value={status} />
