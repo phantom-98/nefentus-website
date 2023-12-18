@@ -35,22 +35,22 @@ const PaymentForm = ({ setLoadingData }) => {
       setErrorMessage(t("messages.validation.validEmail"));
       return;
     }
-    if (!name) {
-      setErrorMessage(t("messages.validation.nameValid"));
-      return;
-    }
-    if (!company) {
-      setErrorMessage(t("messages.validation.companyValid"));
-      return;
-    }
-    if (!address) {
-      setErrorMessage(t("messages.validation.addressValid"));
-      return;
-    }
-    if (!taxNumber) {
-      setErrorMessage(t("messages.validation.taxNumberValid"));
-      return;
-    }
+    // if (!name) {
+    //   setErrorMessage(t("messages.validation.nameValid"));
+    //   return;
+    // }
+    // if (!company) {
+    //   setErrorMessage(t("messages.validation.companyValid"));
+    //   return;
+    // }
+    // if (!address) {
+    //   setErrorMessage(t("messages.validation.addressValid"));
+    //   return;
+    // }
+    // if (!taxNumber) {
+    //   setErrorMessage(t("messages.validation.taxNumberValid"));
+    //   return;
+    // }
 
     const data = {
       amountUSD: amount,
@@ -81,7 +81,7 @@ const PaymentForm = ({ setLoadingData }) => {
 
         <div className={styles.row}>
           <Input
-            placeholder={t("payments.enterAmount")}
+            placeholder={t("payments.enterAmount").concat("*")}
             value={amount}
             setVaue={setAmount}
           />

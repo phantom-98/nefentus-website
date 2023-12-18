@@ -2,10 +2,31 @@ import styles from "./payBody.module.css";
 import ReceivePayment from "../receivePayment";
 import TopInfo from "../../dashboard/topInfo/topInfo";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import Popup from "../../dashboardNew/components/popup/popup";
+import Edit from "../../assets/icon/edit.svg";
 
 const PayBody = ({ invoice }) => {
-  console.log(invoice);
   const { t } = useTranslation();
+
+  const [isBuyer, setIsBuyer] = useState(false);
+  const [showName, setShowName] = useState(false);
+  const [name, setName] = useState();
+  const [showCompany, setShowCompany] = useState(false);
+  const [company, setCompany] = useState();
+  const [showAddress, setShowAddress] = useState(false);
+  const [address, setAddress] = useState();
+  const [showTax, setShowTax] = useState(false);
+  const [tax, setTax] = useState();
+
+  useEffect(() => {
+    setIsBuyer(localStorage.getItem("email") == invoice.email);
+    setName(invoice.name);
+    setCompany(invoice.company);
+    setAddress(invoice.address);
+    setTax(invoice.taxNumber);
+  }, [invoice]);
+
   return (
     <ReceivePayment
       priceUSD={invoice.price}
@@ -27,7 +48,19 @@ const PayBody = ({ invoice }) => {
                   <span>{invoice.price} USD</span>
                 </p>
                 <p className={styles.price}>
-                  <span>{t("payments.name")}:</span> <span>{invoice.name}</span>
+                  <span>{t("payments.name")}:</span>
+                  <span>
+                    {isBuyer && (
+                      <img
+                        className={styles.edit}
+                        src={Edit}
+                        onClick={() => {
+                          setShowName(true);
+                        }}
+                      />
+                    )}
+                    {name}
+                  </span>
                 </p>
                 <p className={styles.price}>
                   <span>{t("payments.email")}:</span>{" "}
@@ -35,15 +68,48 @@ const PayBody = ({ invoice }) => {
                 </p>
                 <p className={styles.price}>
                   <span>{t("payments.company")}:</span>{" "}
-                  <span>{invoice.company}</span>
+                  <span>
+                    {isBuyer && (
+                      <img
+                        className={styles.edit}
+                        src={Edit}
+                        onClick={() => {
+                          setShowCompany(true);
+                        }}
+                      />
+                    )}
+                    {company}
+                  </span>
                 </p>
                 <p className={styles.price}>
                   <span>{t("payments.address")}:</span>{" "}
-                  <span>{invoice.address}</span>
+                  <span>
+                    {isBuyer && (
+                      <img
+                        className={styles.edit}
+                        src={Edit}
+                        onClick={() => {
+                          setShowAddress(true);
+                        }}
+                      />
+                    )}
+                    {address}
+                  </span>
                 </p>
                 <p className={styles.price}>
                   <span>{t("payments.taxNumber")}:</span>{" "}
-                  <span>{invoice.taxNumber}</span>
+                  <span>
+                    {isBuyer && (
+                      <img
+                        className={styles.edit}
+                        src={Edit}
+                        onClick={() => {
+                          setShowTax(true);
+                        }}
+                      />
+                    )}
+                    {tax}
+                  </span>
                 </p>
               </div>
               <p className={styles.seller}>{t("payments.seller")}</p>
@@ -73,6 +139,38 @@ const PayBody = ({ invoice }) => {
               </div>
             </div>
           </div>
+          {isBuyer && (
+            <>
+              <EditPopup
+                title={t("payments.name")}
+                show={showName}
+                setShow={setShowName}
+                value={name}
+                setValue={setName}
+              />
+              <EditPopup
+                title={t("payments.company")}
+                show={showCompany}
+                setShow={setShowCompany}
+                value={company}
+                setValue={setCompany}
+              />
+              <EditPopup
+                title={t("payments.address")}
+                show={showAddress}
+                setShow={setShowAddress}
+                value={address}
+                setValue={setAddress}
+              />
+              <EditPopup
+                title={t("payments.taxNumber")}
+                show={showTax}
+                setShow={setShowTax}
+                value={tax}
+                setValue={setTax}
+              />
+            </>
+          )}
         </>
       }
     />
@@ -80,3 +178,33 @@ const PayBody = ({ invoice }) => {
 };
 
 export default PayBody;
+
+const EditPopup = ({ title, show, setShow, value, setValue }) => {
+  const [text, setText] = useState();
+  const [head, setHead] = useState();
+  useEffect(() => {
+    setText(value);
+    setHead(title);
+  }, [value, title]);
+
+  return (
+    <Popup
+      show={show}
+      onClose={() => {
+        setShow(false);
+        setText(value);
+      }}
+      onConfirm={() => {
+        setShow(false);
+        setValue(text);
+      }}
+      title={head}
+    >
+      <input
+        className={styles.input}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+    </Popup>
+  );
+};

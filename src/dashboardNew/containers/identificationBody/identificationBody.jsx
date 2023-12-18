@@ -569,7 +569,9 @@ const IdentificationBody = () => {
             {/* <AddFile label="Enhanced Diligence" /> */}
 
             <div className={styles.button}>
-              <Button>{t("identification.verification.confirm")}</Button>
+              <Button onClick={handleUpload}>
+                {t("identification.verification.confirm")}
+              </Button>
             </div>
           </div>
         </div>

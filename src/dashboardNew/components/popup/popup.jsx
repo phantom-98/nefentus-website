@@ -113,7 +113,7 @@ export const PaymentPopup = ({
         <img src={Checkmark} style={{ width: "5rem" }} alt="" />
         <div className={styles.title}>{`$${price}`}</div>
         <div className={styles.description}>
-          {t("payments.vatNumber").concat(` ${tax}`)}
+          {t("payments.taxNumber")} {tax}
         </div>
 
         <div className={styles.body}>
