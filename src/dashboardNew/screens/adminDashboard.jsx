@@ -406,6 +406,7 @@ const AdminDashboard = ({ type }) => {
         <div className={styles.modalWrapper}>
           {openModal && (
             <UserModal
+              openModal={openModal}
               type={type}
               clearFields={closeModal}
               addUser={changeUser}

@@ -2,13 +2,14 @@ import React from "react";
 import { useState } from "react";
 import Button from "../button/button";
 import imputStyles from "../../../components/input/input.module.css";
-import ModalOverlay from "../../../dashboard/modal/modalOverlay";
+import Popup from "../popup/popup";
 import MessageComponent from "../../../components/message";
 import Input, { Options } from "../../../components/input/input";
 import { useTranslation } from "react-i18next";
 import styles from "./userModel.module.css";
 
 const UserModal = ({
+  openModal,
   type,
   clearFields,
   addUser,
@@ -30,11 +31,15 @@ const UserModal = ({
   const { t } = useTranslation();
 
   return (
-    <ModalOverlay>
+    <Popup show={openModal}>
       <div className={styles.modal}>
         <MessageComponent />
 
-        <h4>{operationType !== "add" ? "Edit" : "Create"} User</h4>
+        <h4>
+          {operationType !== "add"
+            ? t("dashboard.modal.edit_user")
+            : t("dashboard.modal.create_user")}
+        </h4>
 
         <div className={styles.modalInputs}>
           <Input
@@ -82,9 +87,9 @@ const UserModal = ({
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    height="24"
+                    height="20"
                     viewBox="0 -960 960 960"
-                    width="24"
+                    width="20"
                   >
                     <path
                       style={{ fill: "white" }}
@@ -101,11 +106,11 @@ const UserModal = ({
               label={t("dashboard.modal.role").concat("*")}
               value={role}
               options={[
-                "Vendor",
-                "Affiliate",
-                "Broker",
-                "Senior Broker",
-                "Leader",
+                t("dashboard.roles.Vendor"),
+                t("dashboard.roles.Affiliate"),
+                t("dashboard.roles.Broker"),
+                t("dashboard.roles.SeniorBroker"),
+                t("dashboard.roles.Leader"),
               ]}
               dashboard
               setValue={setRole}
@@ -115,7 +120,12 @@ const UserModal = ({
             <Options
               label={t("dashboard.modal.role").concat("*")}
               value={role}
-              options={["Vendor", "Affiliate", "Broker", "Senior Broker"]}
+              options={[
+                t("dashboard.roles.Vendor"),
+                t("dashboard.roles.Affiliate"),
+                t("dashboard.roles.Broker"),
+                t("dashboard.roles.SeniorBroker"),
+              ]}
               dashboard
               setValue={setRole}
             />
@@ -124,16 +134,23 @@ const UserModal = ({
             <Options
               label={t("dashboard.modal.role").concat("*")}
               value={role}
-              options={["Vendor", "Affiliate", "Broker"]}
+              options={[
+                t("dashboard.roles.Vendor"),
+                t("dashboard.roles.Affiliate"),
+                t("dashboard.roles.Broker"),
+              ]}
               dashboard
               setValue={setRole}
             />
           )}
-          {type === "broker" && (
+          {type === t("dashboard.roles.Broker") && (
             <Options
               label={t("dashboard.modal.role").concat("*")}
               value={role}
-              options={["Vendor", "Affiliate"]}
+              options={[
+                t("dashboard.roles.Vendor"),
+                t("dashboard.roles.Affiliate"),
+              ]}
               dashboard
               setValue={setRole}
             />
@@ -153,7 +170,7 @@ const UserModal = ({
           </Button>
         </div>
       </div>
-    </ModalOverlay>
+    </Popup>
   );
 };
 

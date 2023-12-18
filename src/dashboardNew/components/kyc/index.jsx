@@ -3,7 +3,7 @@ import Header from "../../../dashboard/header/header";
 import Search from "../../../assets/icon/search.svg";
 import Correct from "../../../assets/icon/correct.svg";
 import Download from "../../../assets/icon/download.svg";
-import Button from "../../../components/button/button";
+import Button from "../../components/button/button";
 import { useEffect, useState } from "react";
 import backendAPI from "../../../api/backendAPI";
 import adminDashboardApi from "../../../api/adminDashboardApi";
@@ -306,13 +306,11 @@ const Table = ({ data, setData }) => {
               </div>
 
               <div className={styles.buttons}>
-                <Button onClick={() => setFeedbackModal(false)} color="light">
+                <Button onClick={() => setFeedbackModal(false)} color="gray">
                   Close
                 </Button>
 
-                <Button onClick={() => declineKYC(selectedId)} color="white">
-                  Confirm
-                </Button>
+                <Button onClick={() => declineKYC(selectedId)}>Confirm</Button>
               </div>
             </div>
           </Popup>

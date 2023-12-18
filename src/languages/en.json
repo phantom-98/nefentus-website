@@ -253,7 +253,8 @@
   "reset-password": {
     "title": "Reset Password",
     "button": "Reset",
-    "info": "Don't want to reset your password? Login instead.",
+    "info": "Don't want to reset your password?",
+    "infoLinkText": "Login instead",
     "button-label-confirm": "Confirm password"
   },
   "signUp": {
@@ -280,7 +281,9 @@
     "option1": "Vendor",
     "option2": "Affiliate",
     "formButton": "Create Account",
-    "formInfo": "By signing up, you agree to out Privacy Policy and Terms of Service."
+    "formInfo": "By signing up, you agree to out Privacy Policy and Terms of Service.",
+    "selectLabel": "Select an Option",
+    "updateButton": "Update"
   },
   "login": {
     "titleP1": "Welcome Back",
@@ -468,6 +471,8 @@
       "actions": "Actions"
     },
     "modal": {
+      "create_user": "Create User",
+      "edit_user": "Edit User",
       "titleCreate": "Add User",
       "titleEdit": "Edit User",
       "titleNewUser": "Create User",
@@ -834,6 +839,8 @@
       "lastNameRequired": "Last name is required.",
       "emailRequired": "Email is required.",
       "passwordRequired": "Password is required.",
+      "confirmPasswordRequired": "Confirm password is required",
+      "phoneNumberRequired": "Phone Number is required",
       "roleRequired": "Role is required.",
       "passwordCorrect": "You did not provide the correct password!",
       "currencyCorrect": "Please select a correct currency to withdraw.",
@@ -868,7 +875,10 @@
       "addUser": "Could not add user!",
       "updateProduct": "Could not update the product!",
       "addProduct": "Could not add a new product!",
-      "deleteProduct": "Could not delete the product!"
+      "deleteProduct": "Could not delete the product!",
+      "emptyPassword": "Please enter your password",
+      "lengthPassword": "Password must be at least 8 characters",
+      "matchPassword": "Passwords must match"
     },
     "info": {
       "email": "Email sent to reset password!",
@@ -1038,6 +1048,7 @@
     "actions": {
       "edit": "Edit",
       "enable": "Enable",
+      "disable": "Disable",
       "change": "Change",
       "select": "Select",
       "close": "Close",
@@ -1120,6 +1131,9 @@
     "level1Description": "Personal Information, Government Issued ID and Facial\n Recognition",
     "level2Description": "Proof of Address & Proof of Company (if applicable)",
     "level3Description": " Enhanced Diligence",
+    "beingChecked": "Currently being checked",
+    "uploadSuccess": "Data successfuly upload!",
+    "fieldRequired": " is required!",
     "accountLimit": {
       "title": "Account Limit",
       "fiatDeposit": "Fiat-Einzahlungs- und Auszahlungslimits",
