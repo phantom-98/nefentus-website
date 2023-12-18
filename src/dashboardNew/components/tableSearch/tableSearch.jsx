@@ -52,7 +52,9 @@ const TableSearch = ({
             <img className={styles.inputClose} src={Close} alt="" />
           </div>
         </div>
-        <Button onClick={findUser}>{t("general.search")}</Button>
+        <Button width="8rem" onClick={findUser}>
+          {t("general.search")}
+        </Button>
       </div>
     </div>
   );

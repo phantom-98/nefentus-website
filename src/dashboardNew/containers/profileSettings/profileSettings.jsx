@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import Button from "../../components/button/button";
 import Card from "../../components/card/card";
 import SettingsItem from "../../components/settings/settingsItem";
 import SettingsTitle from "../../components/settings/settingsTitle";
