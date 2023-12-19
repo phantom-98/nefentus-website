@@ -188,7 +188,7 @@ export const QRPopup = ({ show, setShow, data, onClick }) => {
               />,
             ],
           ]}
-          colSizes={[1, 3]}
+          colSizes={[1, 2]}
         />
 
         <img

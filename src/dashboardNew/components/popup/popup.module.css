@@ -9,7 +9,6 @@
 }
 
 .popupBox {
-  max-width: 900px;
   width: max-content;
   max-height: 86vh;
   position: relative;
