@@ -5,11 +5,14 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Popup from "../../dashboardNew/components/popup/popup";
 import Edit from "../../assets/icon/edit.svg";
+import vendorDashboardApi from "../../api/vendorDashboardApi";
+import backendAPI from "../../api/backendAPI";
 
 const PayBody = ({ invoice }) => {
   const { t } = useTranslation();
 
-  const [isBuyer, setIsBuyer] = useState(false);
+  const [showEmail, setShowEmail] = useState(false);
+  const [email, setEmail] = useState();
   const [showName, setShowName] = useState(false);
   const [name, setName] = useState();
   const [showCompany, setShowCompany] = useState(false);
@@ -18,14 +21,40 @@ const PayBody = ({ invoice }) => {
   const [address, setAddress] = useState();
   const [showTax, setShowTax] = useState(false);
   const [tax, setTax] = useState();
+  const [changed, setChanged] = useState(false);
+  const backend_API = new backendAPI();
 
   useEffect(() => {
-    setIsBuyer(localStorage.getItem("email") == invoice.email);
+    setEmail(invoice.email);
     setName(invoice.name);
     setCompany(invoice.company);
     setAddress(invoice.address);
     setTax(invoice.taxNumber);
   }, [invoice]);
+
+  const updateInvoiceData = async () => {
+    const req = {
+      amountUSD: invoice.price,
+      name,
+      email,
+      company,
+      address,
+      taxNumber: tax,
+    };
+    const data = await backend_API.updateInvoice(invoice.link, req);
+    if (data) {
+      console.log("success");
+    } else {
+      console.log("failed");
+    }
+    setChanged(false);
+  };
+
+  useEffect(() => {
+    if (changed) {
+      updateInvoiceData();
+    }
+  }, [changed]);
 
   return (
     <ReceivePayment
@@ -50,64 +79,65 @@ const PayBody = ({ invoice }) => {
                 <p className={styles.price}>
                   <span>{t("payments.name")}:</span>
                   <span>
-                    {isBuyer && (
-                      <img
-                        className={styles.edit}
-                        src={Edit}
-                        onClick={() => {
-                          setShowName(true);
-                        }}
-                      />
-                    )}
+                    <img
+                      className={styles.edit}
+                      src={Edit}
+                      onClick={() => {
+                        setShowName(true);
+                      }}
+                    />
                     {name}
                   </span>
                 </p>
                 <p className={styles.price}>
                   <span>{t("payments.email")}:</span>{" "}
-                  <span>{invoice.email}</span>
+                  <span>
+                    <img
+                      className={styles.edit}
+                      src={Edit}
+                      onClick={() => {
+                        setShowEmail(true);
+                      }}
+                    />
+                    {invoice.email}
+                  </span>
                 </p>
                 <p className={styles.price}>
                   <span>{t("payments.company")}:</span>{" "}
                   <span>
-                    {isBuyer && (
-                      <img
-                        className={styles.edit}
-                        src={Edit}
-                        onClick={() => {
-                          setShowCompany(true);
-                        }}
-                      />
-                    )}
+                    <img
+                      className={styles.edit}
+                      src={Edit}
+                      onClick={() => {
+                        setShowCompany(true);
+                      }}
+                    />
                     {company}
                   </span>
                 </p>
                 <p className={styles.price}>
                   <span>{t("payments.address")}:</span>{" "}
                   <span>
-                    {isBuyer && (
-                      <img
-                        className={styles.edit}
-                        src={Edit}
-                        onClick={() => {
-                          setShowAddress(true);
-                        }}
-                      />
-                    )}
+                    <img
+                      className={styles.edit}
+                      src={Edit}
+                      onClick={() => {
+                        setShowAddress(true);
+                      }}
+                    />
                     {address}
                   </span>
                 </p>
                 <p className={styles.price}>
                   <span>{t("payments.taxNumber")}:</span>{" "}
                   <span>
-                    {isBuyer && (
-                      <img
-                        className={styles.edit}
-                        src={Edit}
-                        onClick={() => {
-                          setShowTax(true);
-                        }}
-                      />
-                    )}
+                    <img
+                      className={styles.edit}
+                      src={Edit}
+                      onClick={() => {
+                        setShowTax(true);
+                      }}
+                    />
                     {tax}
                   </span>
                 </p>
@@ -131,38 +161,48 @@ const PayBody = ({ invoice }) => {
               </div>
             </div>
           </div>
-          {isBuyer && (
-            <>
-              <EditPopup
-                title={t("payments.name")}
-                show={showName}
-                setShow={setShowName}
-                value={name}
-                setValue={setName}
-              />
-              <EditPopup
-                title={t("payments.company")}
-                show={showCompany}
-                setShow={setShowCompany}
-                value={company}
-                setValue={setCompany}
-              />
-              <EditPopup
-                title={t("payments.address")}
-                show={showAddress}
-                setShow={setShowAddress}
-                value={address}
-                setValue={setAddress}
-              />
-              <EditPopup
-                title={t("payments.taxNumber")}
-                show={showTax}
-                setShow={setShowTax}
-                value={tax}
-                setValue={setTax}
-              />
-            </>
-          )}
+          <>
+            <EditPopup
+              title={t("payments.email")}
+              show={showEmail}
+              setShow={setShowEmail}
+              value={email}
+              setValue={setEmail}
+              setChanged={setChanged}
+            />
+            <EditPopup
+              title={t("payments.name")}
+              show={showName}
+              setShow={setShowName}
+              value={name}
+              setValue={setName}
+              setChanged={setChanged}
+            />
+            <EditPopup
+              title={t("payments.company")}
+              show={showCompany}
+              setShow={setShowCompany}
+              value={company}
+              setValue={setCompany}
+              setChanged={setChanged}
+            />
+            <EditPopup
+              title={t("payments.address")}
+              show={showAddress}
+              setShow={setShowAddress}
+              value={address}
+              setValue={setAddress}
+              setChanged={setChanged}
+            />
+            <EditPopup
+              title={t("payments.taxNumber")}
+              show={showTax}
+              setShow={setShowTax}
+              value={tax}
+              setValue={setTax}
+              setChanged={setChanged}
+            />
+          </>
         </>
       }
     />
@@ -171,7 +211,7 @@ const PayBody = ({ invoice }) => {
 
 export default PayBody;
 
-const EditPopup = ({ title, show, setShow, value, setValue }) => {
+const EditPopup = ({ title, show, setShow, value, setValue, setChanged }) => {
   const [text, setText] = useState();
   const [head, setHead] = useState();
   useEffect(() => {
@@ -189,6 +229,7 @@ const EditPopup = ({ title, show, setShow, value, setValue }) => {
       onConfirm={() => {
         setShow(false);
         setValue(text);
+        setChanged(true);
       }}
       title={head}
     >

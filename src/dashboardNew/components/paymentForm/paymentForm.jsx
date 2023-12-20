@@ -31,10 +31,10 @@ const PaymentForm = ({ setLoadingData }) => {
       setErrorMessage(t("messages.error.amountValid"));
       return;
     }
-    if (!email) {
-      setErrorMessage(t("messages.validation.validEmail"));
-      return;
-    }
+    // if (!email) {
+    //   setErrorMessage(t("messages.validation.validEmail"));
+    //   return;
+    // }
     // if (!name) {
     //   setErrorMessage(t("messages.validation.nameValid"));
     //   return;

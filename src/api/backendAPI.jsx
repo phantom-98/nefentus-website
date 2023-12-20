@@ -1265,6 +1265,30 @@ export default class backendAPI {
     }
   }
 
+  async updateInvoice(link, requestBody) {
+    try {
+      const url = `${this.baseURL}/invoice/${link}`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data);
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
   async makePayment(
     currencyAddress,
     amount,
