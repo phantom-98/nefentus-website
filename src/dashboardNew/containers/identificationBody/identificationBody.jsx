@@ -469,7 +469,7 @@ const IdentificationBody = () => {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Button color="gray">
+                    <Button color="gray" fontSize="1rem" width="10rem">
                       <span
                         style={
                           level > 0 ? { color: "white" } : { color: "grey" }
@@ -478,7 +478,7 @@ const IdentificationBody = () => {
                         {t("general.upload")}
                       </span>
                     </Button>
-                    <Button color="gray">
+                    <Button color="gray" fontSize="1rem" width="10rem">
                       <span
                         style={
                           level > 0 ? { color: "white" } : { color: "grey" }
@@ -533,7 +533,7 @@ const IdentificationBody = () => {
                     </span>
                   </div>
                   <div>
-                    <Button color="gray">
+                    <Button color="gray" fontSize="1rem" width="10rem">
                       <span
                         style={
                           level > 1 ? { color: "white" } : { color: "grey" }
@@ -568,7 +568,7 @@ const IdentificationBody = () => {
             {/* <AddFile label="Enhanced Diligence" /> */}
 
             <div className={styles.button}>
-              <Button onClick={handleUpload}>
+              <Button onClick={handleUpload} width="10rem">
                 {t("identification.verification.confirm")}
               </Button>
             </div>
@@ -649,23 +649,33 @@ const AddText = ({
             )}
           </p>
           {verify ? (
-            <Button color="gray">
+            <Button color="gray" fontSize="1rem" width="10rem">
               <span style={{ color: "grey" }}>
                 {t("identification.verification.add")}
               </span>
             </Button>
           ) : declineResponse && declineResponse != "" ? (
-            <Button onClick={() => setShow(true)} color="gray">
+            <Button
+              onClick={() => setShow(true)}
+              color="gray"
+              fontSize="1rem"
+              width="10rem"
+            >
               {t("identification.verification.add")}
             </Button>
           ) : text ? (
-            <Button color="gray">
+            <Button color="gray" fontSize="1rem" width="10rem">
               <span style={{ color: "grey" }}>
                 {t("identification.verification.add")}
               </span>
             </Button>
           ) : (
-            <Button onClick={() => setShow(true)} color="gray">
+            <Button
+              onClick={() => setShow(true)}
+              color="gray"
+              fontSize="1rem"
+              width="10rem"
+            >
               {t("identification.verification.add")}
             </Button>
           )}
@@ -772,19 +782,29 @@ const AddFile = ({
             <div></div>
           )}
           {verify ? (
-            <Button color="gray">
+            <Button color="gray" fontSize="1rem" width="10rem">
               <span style={{ color: "grey" }}>{t("general.upload")}</span>
             </Button>
           ) : declineResponse && declineResponse != "" ? (
-            <Button onClick={() => handleAddFile()} color="gray">
+            <Button
+              onClick={() => handleAddFile()}
+              color="gray"
+              fontSize="1rem"
+              width="10rem"
+            >
               {t("general.upload")}
             </Button>
           ) : file ? (
-            <Button color="gray">
+            <Button color="gray" fontSize="1rem" width="10rem">
               <span style={{ color: "grey" }}>{t("general.upload")}</span>
             </Button>
           ) : (
-            <Button onClick={handleAddFile} color="gray">
+            <Button
+              onClick={handleAddFile}
+              color="gray"
+              fontSize="1rem"
+              width="10rem"
+            >
               {t("general.upload")}
             </Button>
           )}
