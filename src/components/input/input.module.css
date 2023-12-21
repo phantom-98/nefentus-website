@@ -68,6 +68,12 @@
   border-radius: 0.5rem;
 }
 
+.walleField {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
 .body {
   position: absolute;
   left: 0;

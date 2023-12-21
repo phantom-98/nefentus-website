@@ -319,3 +319,50 @@ export const SearchOptions = ({
     </div>
   );
 };
+
+export const WalletField = ({
+  value,
+  icon,
+  label = "",
+  walletAddress,
+  dashboard,
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className={`${styles.inputWrapper} ${styles.option}`}>
+      {label && label.length > 0 && (
+        <p
+          className={`${styles.label} ${
+            dashboard ? styles.dashboardLabel : ""
+          }`}
+        >
+          {label.length > 0 ? label : t("signUp.optionLabel")}
+        </p>
+      )}
+
+      <div
+        className={`option ${styles.input} ${
+          dashboard ? styles.dashboardInput : ""
+        } ${styles.walleField}`}
+      >
+        {icon && <img src={icon} alt="dropdown" width={24} />}
+
+        <div
+          style={{
+            position: "relative",
+            bottom: 0,
+            lineHeight: "25px",
+          }}
+        >
+          {value ? value : t("messages.error.accountDisconnect")}
+        </div>
+        <div>
+          {walletAddress?.length
+            ? `${walletAddress.slice(0, 6)} .... ${walletAddress.slice(-4)}`
+            : ""}
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -1,9 +1,9 @@
 import styles from "./topInfo.module.css";
 import Button from "./../../components/button/button";
 
-const TopInfo = ({ title, description, children }) => {
+const TopInfo = ({ title, description, children, sendModal }) => {
   return (
-    <div className={styles.top}>
+    <div className={sendModal ? styles.sendModalTitle : styles.top}>
       <div>
         <p>{title}</p>
 

@@ -11,6 +11,7 @@ import {
   useConnectionStatus,
   useDisconnect,
   walletConnect,
+  useWallet,
 } from "@thirdweb-dev/react";
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
@@ -23,7 +24,7 @@ import MessageComponent from "../../../components/message";
 import TopInfo from "../../../dashboard/topInfo/topInfo";
 import CopyValue from "../../../dashboard/copyValue";
 import inputStyles from "../../../components/input/input.module.css";
-import Input, { Options } from "../../../components/input/input";
+import Input, { Options, WalletField } from "../../../components/input/input";
 import Popup from "../popup/popup";
 import { web3Api } from "../../../api/web3Api";
 import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
@@ -32,16 +33,8 @@ import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
 const CryptoCard = () => {
   let internalWalletAddress = useInternalWallet();
   const [activeToggle, setActiveToggle] = useState(false);
-  const [walletAddress, setWalletAddress] = useState(internalWalletAddress);
   const [isExternal, setIsExternal] = useState(false);
   const [activeWallet, setActiveWallet] = useState({});
-  const metamask = {
-    connect: useConnect(),
-    disconnect: useDisconnect(),
-    config: metamaskWallet(),
-    address: useAddress(),
-    status: useConnectionStatus(),
-  };
 
   const wallets = [
     {
@@ -50,6 +43,7 @@ const CryptoCard = () => {
       name: "WalletConnect",
       address: useAddress(),
       status: useConnectionStatus(),
+      walletDetail: useWallet(),
     },
     {
       connect: metamaskWallet(),
@@ -57,6 +51,7 @@ const CryptoCard = () => {
       name: "MetaMask",
       address: useAddress(),
       status: useConnectionStatus(),
+      walletDetail: useWallet(),
     },
   ];
 
@@ -70,25 +65,27 @@ const CryptoCard = () => {
   const { prices, fetchPrices } = usePrices(wallets[1]);
 
   useEffect(() => {
-    fetchPrices();
-    fetchBalances();
-    console.log(wallets);
-    wallets.map((wallet) => {
-      if (wallet.status === "connected" && wallet.address) {
-        // setWalletAddress(wallet.address)
-        setIsExternal(true);
-        setActiveWallet(wallet);
-        registerWallet(wallet);
-      }
-    });
-
-    async function registerWallet(wallet) {
-      const result = await backend_API.registerWalletAddress({
-        ...wallet,
-        name: wallet?.config?.meta?.name,
+    if (!Object.keys(activeWallet).length) {
+      fetchPrices();
+      fetchBalances();
+      console.log(wallets);
+      wallets.map((wallet) => {
+        if (
+          wallet?.status === "connected" &&
+          wallet?.address &&
+          wallet?.walletDetail?.walletId === wallet?.name?.toLocaleLowerCase()
+        ) {
+          setIsExternal(true);
+          setActiveWallet(wallet);
+          registerWallet(wallet);
+        }
       });
     }
   }, [wallets]);
+
+  const registerWallet = async (wallet) => {
+    const result = await backend_API.registerWalletAddress(wallet);
+  };
 
   useEffect(() => {
     const data = balances[1].map((balance, index) => ({
@@ -145,7 +142,7 @@ const CryptoCard = () => {
 
       <ReceiveModal
         show={openReceiveModal}
-        walletAddress={activeWallet?.address ?? ""}
+        walletAddress={activeWallet?.address ?? internalWalletAddress}
         setOpenReceiveModal={setOpenReceiveModal}
       />
 
@@ -339,12 +336,17 @@ const SendModal = ({ show, setShow, isExternal, wallet }) => {
       onConfirm={() => withdraw()}
     >
       <MessageComponent />
-      <TopInfo
-        title={t("dashboard.cryptoCard.sendModal.title")}
-        description={t("dashboard.cryptoCard.sendModal.description")}
-      />
+      <TopInfo sendModal title={t("dashboard.cryptoCard.sendModal.title")} />
 
       <div className={styles.modalInputs}>
+        <WalletField
+          value={wallet?.name}
+          label={t("dashboard.cryptoCard.sendModal.walletLabel")}
+          icon={wallet?.icon}
+          walletAddress={wallet?.address}
+          dashboard
+        />
+
         <Options
           dashboard
           label={t("dashboard.cryptoCard.sendModal.currencyLabel")}

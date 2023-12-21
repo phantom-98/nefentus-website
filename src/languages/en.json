@@ -502,8 +502,9 @@
         "description": "Receive funds by sending cryptocurrency to the address below."
       },
       "sendModal": {
-        "title": "Withdraw funds",
+        "title": "Withdraw Funds",
         "description": "You requested to withdraw funds from your account.",
+        "walletLabel": "Wallet",
         "currencyLabel": "Currency options",
         "currencyPlaceholder": "Select Currency Option",
         "amountLabel": "Amount",
@@ -878,7 +879,8 @@
       "deleteProduct": "Could not delete the product!",
       "emptyPassword": "Please enter your password",
       "lengthPassword": "Password must be at least 8 characters",
-      "matchPassword": "Passwords must match"
+      "matchPassword": "Passwords must match",
+      "accountDisconnect": "No Account Connected"
     },
     "info": {
       "email": "Email sent to reset password!",
