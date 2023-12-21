@@ -10,6 +10,7 @@ import {
   useConnect,
   useConnectionStatus,
   useDisconnect,
+  walletConnect,
 } from "@thirdweb-dev/react";
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
@@ -24,10 +25,16 @@ import CopyValue from "../../../dashboard/copyValue";
 import inputStyles from "../../../components/input/input.module.css";
 import Input, { Options } from "../../../components/input/input";
 import Popup from "../popup/popup";
+import { web3Api } from "../../../api/web3Api";
+import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
+import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
 
 const CryptoCard = () => {
-  const [activeToggle, setActiveToggle] = useState(false);
   let internalWalletAddress = useInternalWallet();
+  const [activeToggle, setActiveToggle] = useState(false);
+  const [walletAddress, setWalletAddress] = useState(internalWalletAddress);
+  const [isExternal, setIsExternal] = useState(false);
+  const [activeWallet, setActiveWallet] = useState({});
   const metamask = {
     connect: useConnect(),
     disconnect: useDisconnect(),
@@ -36,27 +43,52 @@ const CryptoCard = () => {
     status: useConnectionStatus(),
   };
 
+  const wallets = [
+    {
+      connect: walletConnect(),
+      icon: WalletConnectLogo,
+      name: "WalletConnect",
+      address: useAddress(),
+      status: useConnectionStatus(),
+    },
+    {
+      connect: metamaskWallet(),
+      icon: MetaMaskLogo,
+      name: "MetaMask",
+      address: useAddress(),
+      status: useConnectionStatus(),
+    },
+  ];
+
   const { t } = useTranslation();
   const backend_API = new backendAPI();
   const [cryptList, setCryptList] = useState([]);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
   const [openWithdrawModal, setOpenWithdrawModal] = useState(false);
 
-  const { balances, fetchBalances } = useBalances(metamask);
-  const { prices, fetchPrices } = usePrices(metamask);
+  const { balances, fetchBalances } = useBalances(wallets[1]);
+  const { prices, fetchPrices } = usePrices(wallets[1]);
 
   useEffect(() => {
     fetchPrices();
     fetchBalances();
+    console.log(wallets);
+    wallets.map((wallet) => {
+      if (wallet.status === "connected" && wallet.address) {
+        // setWalletAddress(wallet.address)
+        setIsExternal(true);
+        setActiveWallet(wallet);
+        registerWallet(wallet);
+      }
+    });
 
-    if (metamask.status === "connected" && metamask.address) {
-      registerWallet();
+    async function registerWallet(wallet) {
+      const result = await backend_API.registerWalletAddress({
+        ...wallet,
+        name: wallet?.config?.meta?.name,
+      });
     }
-
-    async function registerWallet() {
-      const result = await backend_API.registerWalletAddress(metamask.address);
-    }
-  }, [metamask.status, metamask.address]);
+  }, [wallets]);
 
   useEffect(() => {
     const data = balances[1].map((balance, index) => ({
@@ -113,11 +145,16 @@ const CryptoCard = () => {
 
       <ReceiveModal
         show={openReceiveModal}
-        walletAddress={internalWalletAddress}
+        walletAddress={activeWallet?.address ?? ""}
         setOpenReceiveModal={setOpenReceiveModal}
       />
 
-      <SendModal show={openWithdrawModal} setShow={setOpenWithdrawModal} />
+      <SendModal
+        show={openWithdrawModal}
+        setShow={setOpenWithdrawModal}
+        isExternal={isExternal}
+        wallet={activeWallet}
+      />
     </Card>
   );
 };
@@ -198,7 +235,7 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
   );
 };
 
-const SendModal = ({ show, setShow }) => {
+const SendModal = ({ show, setShow, isExternal, wallet }) => {
   const [withdrawCurrency, setWithdrawCurrency] = useState(currencies[0].abbr);
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawAddress, setWithdrawAddress] = useState("");
@@ -252,8 +289,8 @@ const SendModal = ({ show, setShow }) => {
     // Withdraw
     const tokenAddress = sendCurrency.address;
     // TODO! How to determine the right wallet?
-    const walletAddres = "";
-    const isExternal = false;
+    // const walletAddres = "";
+    // const isExternal = false;
     if (isExternal) {
       const web3API = new web3Api("metamask");
 
