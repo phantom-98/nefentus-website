@@ -78,7 +78,12 @@ const StablecoinSetting = ({ value, setValue }) => {
         <div style={{ position: "relative" }}>
           <div>
             <div>
-              <Button color="gray" onClick={() => setShowPopup(true)}>
+              <Button
+                color="gray"
+                fontSize="1rem"
+                width="8rem"
+                onClick={() => setShowPopup(true)}
+              >
                 {t("invoice.action.select")}
               </Button>
             </div>

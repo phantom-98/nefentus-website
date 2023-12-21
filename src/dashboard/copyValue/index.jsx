@@ -15,7 +15,7 @@ const CopyValue = ({ value, onCopy, inputStyle, link, buttonStyle }) => {
         className={`${inputStyles.input} ${inputStyles.dashboardInput}`}
         type="text"
         disabled={true}
-        style={inputStyle}
+        style={{ width: "max-content", ...inputStyle }}
       >
         {link ? (
           <a href={`${value}`} target="_blank">
@@ -28,7 +28,7 @@ const CopyValue = ({ value, onCopy, inputStyle, link, buttonStyle }) => {
       <Button
         color="light"
         onClick={handleClipboard}
-        style={{ padding: "0.5rem 1rem", width: "15%" }}
+        style={{ padding: "0.5rem 1rem", width: "max-content" }}
       >
         <img
           src={copyClipboard}

@@ -135,6 +135,7 @@
 }
 
 .select {
-  padding: 1rem 2rem !important;
+  font-size: 1.4rem;
+  padding: 1.75rem 2rem !important;
   gap: 0.5rem !important;
 }

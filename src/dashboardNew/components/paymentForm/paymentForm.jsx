@@ -113,7 +113,9 @@ const PaymentForm = ({ setLoadingData }) => {
         </div>
 
         <div className={styles.button}>
-          <Button onClick={createInvoice}>{t("payments.createInvoice")}</Button>
+          <Button width="14rem" onClick={createInvoice}>
+            {t("payments.createInvoice")}
+          </Button>
         </div>
       </Card>
 

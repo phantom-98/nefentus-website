@@ -165,7 +165,7 @@ const UserModal = ({
           >
             {t("general.cancel")}
           </div>
-          <Button onClick={addUser} color="white">
+          <Button onClick={addUser} color="white" width="10rem">
             {t("general.confirm")}
           </Button>
         </div>

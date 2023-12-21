@@ -198,7 +198,7 @@ export const QRPopup = ({
             [`${t("payments.taxNumber")}:`, `${taxNumber}`],
             ["Link: ", <CopyValue value={link} onCopy={() => {}} link />],
           ]}
-          colSizes={[1, 3]}
+          colSizes={[1, 2]}
         />
 
         {/* <img

@@ -41,7 +41,9 @@ const SettingsTitle = ({
       )}
       {product && (
         <div>
-          <Button onClick={onCreate}>{t("products.createNewProduct")}</Button>
+          <Button width="20rem" onClick={onCreate}>
+            {t("products.createNewProduct")}
+          </Button>
         </div>
       )}
     </div>
