@@ -99,7 +99,7 @@ const PayBody = ({ invoice }) => {
                         setShowEmail(true);
                       }}
                     />
-                    {invoice.email}
+                    {email}
                   </span>
                 </p>
                 <p className={styles.price}>
