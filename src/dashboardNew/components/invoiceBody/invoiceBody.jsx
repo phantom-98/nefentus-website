@@ -88,7 +88,12 @@ const InvoicesBody = () => {
             <span className={styles.value}>{vatNumber || " "}</span>
           </div>
           <div>
-            <Button color="gray" onClick={() => setShowPopup(true)}>
+            <Button
+              color="gray"
+              fontSize="1rem"
+              width="8rem"
+              onClick={() => setShowPopup(true)}
+            >
               {t("invoice.action.add")}
             </Button>
           </div>
@@ -112,6 +117,8 @@ const InvoicesBody = () => {
           <div>
             <Button
               color="gray"
+              fontSize="1rem"
+              width="8rem"
               onClick={() => {
                 setEnableInvoicing((prev) => !prev);
                 setchanged(true);
