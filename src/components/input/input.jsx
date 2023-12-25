@@ -366,3 +366,108 @@ export const WalletField = ({
     </div>
   );
 };
+
+export const OptionsWithImage = ({
+  value,
+  options = [],
+  setValue,
+  label = "",
+  dashboard,
+  icon,
+  walletAddress,
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const { t } = useTranslation();
+
+  return (
+    <div className={`${styles.inputWrapper} ${styles.option}`}>
+      {label && label.length > 0 && (
+        <p
+          className={`${styles.label} ${
+            dashboard ? styles.dashboardLabel : ""
+          }`}
+        >
+          {label.length > 0 ? label : t("signUp.optionLabel")}
+        </p>
+      )}
+
+      <div
+        className={`option ${styles.input} ${
+          dashboard ? styles.dashboardInput : ""
+        } ${styles.walleField} ${
+          options.length <= 1 ? styles.dropdownDisable : ""
+        }`}
+        // style={{cursor: options.length <= 1 && "not-allowed"}}
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        {icon && <img src={icon} alt="dropdown" width={24} />}
+
+        <div
+          style={{
+            position: "relative",
+            bottom: 0,
+            lineHeight: "25px",
+          }}
+        >
+          {value ? value : t("messages.error.accountDisconnect")}
+        </div>
+        <div>
+          {walletAddress?.length
+            ? `${walletAddress.slice(0, 6)} .... ${walletAddress.slice(-4)}`
+            : ""}
+        </div>
+        <img
+          src={dropDown}
+          alt="dropdown"
+          className={styles.walletDropdownIcon}
+        />
+        {open && options.length > 1 && (
+          <div className={`card ${styles.body}`}>
+            {options.length > 0 ? (
+              options.map((item) =>
+                item?.name ? (
+                  <p
+                    key={item.name}
+                    onClick={() => setValue(item)}
+                    className={styles.walletOptions}
+                  >
+                    <img src={item?.icon} alt="dropdown" width={24} />
+                    <div
+                      style={{
+                        position: "relative",
+                        bottom: 0,
+                        lineHeight: "25px",
+                      }}
+                    >
+                      {item.name}
+                    </div>
+                  </p>
+                ) : (
+                  <p key={item} onClick={() => setValue(item)}>
+                    {item}
+                  </p>
+                ),
+              )
+            ) : (
+              <>
+                <p key={"vendor"} onClick={() => setValue("Vendor")}>
+                  {t("signUp.option1")}
+                </p>
+                <p key={"affiliate"} onClick={() => setValue("Affiliate")}>
+                  {t("signUp.option2")}
+                </p>
+                <p
+                  key={"vendoraffiliate"}
+                  onClick={() => setValue("Vendor / Affiliate")}
+                >
+                  {t("signUp.option1")} / {t("signUp.option2")}
+                </p>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};

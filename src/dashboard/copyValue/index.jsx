@@ -3,14 +3,25 @@ import copyClipboard from "../../assets/icon/copyClipboard.svg";
 import inputStyles from "../../components/input/input.module.css";
 import Button from "../../dashboardNew/components/button/button";
 
-const CopyValue = ({ value, onCopy, inputStyle, link, buttonStyle }) => {
+const CopyValue = ({
+  value,
+  onCopy,
+  inputStyle,
+  link,
+  buttonStyle,
+  receiveModal,
+}) => {
   const handleClipboard = () => {
     navigator.clipboard.writeText(value);
     onCopy();
   };
 
   return (
-    <div className={styles.copyValueWrapper}>
+    <div
+      className={
+        receiveModal ? styles.receiveModalContainer : styles.copyValueWrapper
+      }
+    >
       <div
         className={`${inputStyles.input} ${inputStyles.dashboardInput}`}
         type="text"
@@ -26,9 +37,12 @@ const CopyValue = ({ value, onCopy, inputStyle, link, buttonStyle }) => {
         )}
       </div>
       <Button
-        color="light"
+        color={!receiveModal && "light"}
         onClick={handleClipboard}
-        style={{ padding: "0.5rem 1rem", width: "15%" }}
+        style={{
+          padding: receiveModal ? "0.5rem" : "0.5rem 1rem",
+          width: receiveModal ? "10%" : "15%",
+        }}
       >
         <img
           src={copyClipboard}

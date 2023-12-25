@@ -24,17 +24,23 @@ import MessageComponent from "../../../components/message";
 import TopInfo from "../../../dashboard/topInfo/topInfo";
 import CopyValue from "../../../dashboard/copyValue";
 import inputStyles from "../../../components/input/input.module.css";
-import Input, { Options, WalletField } from "../../../components/input/input";
+import Input, {
+  Options,
+  OptionsWithImage,
+  WalletField,
+} from "../../../components/input/input";
 import Popup from "../popup/popup";
 import { web3Api } from "../../../api/web3Api";
 import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
+import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
 
 const CryptoCard = () => {
   let internalWalletAddress = useInternalWallet();
   const [activeToggle, setActiveToggle] = useState(false);
   const [isExternal, setIsExternal] = useState(false);
   const [activeWallet, setActiveWallet] = useState({});
+  const [walletOptions, setWalletOptions] = useState([]);
 
   const wallets = [
     {
@@ -61,27 +67,52 @@ const CryptoCard = () => {
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
   const [openWithdrawModal, setOpenWithdrawModal] = useState(false);
 
-  const { balances, fetchBalances } = useBalances(wallets[1]);
-  const { prices, fetchPrices } = usePrices(wallets[1]);
+  const { balances, fetchBalances } = useBalances(activeWallet);
+  const { prices, fetchPrices } = usePrices(activeWallet);
 
   useEffect(() => {
-    if (!Object.keys(activeWallet).length) {
-      fetchPrices();
-      fetchBalances();
-      console.log(wallets);
+    fetchBalances();
+    fetchPrices();
+  }, [activeWallet]);
+
+  useEffect(() => {
+    if (!Object.keys(activeWallet).length && internalWalletAddress) {
+      fetchWallets();
+    }
+  }, [wallets]);
+
+  const fetchWallets = async () => {
+    if (
+      wallets.some(
+        (wal) =>
+          (wal.status == "connecting" || wal.status == "connected") &&
+          wal.address === undefined,
+      )
+    ) {
+      return;
+    } else {
+      let connectedWallets = [];
       wallets.map((wallet) => {
         if (
           wallet?.status === "connected" &&
           wallet?.address &&
           wallet?.walletDetail?.walletId === wallet?.name?.toLocaleLowerCase()
         ) {
-          setIsExternal(true);
-          setActiveWallet(wallet);
+          connectedWallets.push(wallet);
           registerWallet(wallet);
         }
       });
+
+      const internalWallet = {
+        name: "Internal Wallet",
+        address: internalWalletAddress,
+        icon: Ethereum,
+      };
+      connectedWallets.push(internalWallet);
+      setWalletOptions(connectedWallets);
+      setActiveWallet(internalWallet);
     }
-  }, [wallets]);
+  };
 
   const registerWallet = async (wallet) => {
     const result = await backend_API.registerWalletAddress(wallet);
@@ -151,6 +182,12 @@ const CryptoCard = () => {
         setShow={setOpenWithdrawModal}
         isExternal={isExternal}
         wallet={activeWallet}
+        walletOptions={walletOptions}
+        setWallet={(data) => {
+          if (data?.name == "ETH") setIsExternal(false);
+          else setIsExternal(true);
+          setActiveWallet(data);
+        }}
       />
     </Card>
   );
@@ -206,12 +243,16 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
         clearMessages();
       }}
       confirmTitle={t("dashboard.cryptoCard.close")}
+      title={t("dashboard.cryptoCard.receiveModal.title")}
     >
-      <MessageComponent />
-      <TopInfo
-        title={t("dashboard.cryptoCard.receiveModal.title")}
+      {/* <TopInfo
+        // title={t("dashboard.cryptoCard.receiveModal.title")}
         description={t("dashboard.cryptoCard.receiveModal.description")}
-      />
+      /> */}
+      <p className={styles.receiveModalDescription}>
+        {t("dashboard.cryptoCard.receiveModal.description")}
+      </p>
+      <MessageComponent />
       <div className={styles.modalInputs}>
         <div>
           <div className={inputStyles.inputWrapper}>
@@ -220,6 +261,8 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
             </p>
 
             <CopyValue
+              inputStyle={{ width: "78%" }}
+              receiveModal
               value={walletAddress}
               onCopy={() =>
                 setInfoMessage(t("dashboard.cryptoCard.walletCopied"))
@@ -232,7 +275,14 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
   );
 };
 
-const SendModal = ({ show, setShow, isExternal, wallet }) => {
+const SendModal = ({
+  show,
+  setShow,
+  isExternal,
+  wallet,
+  walletOptions,
+  setWallet,
+}) => {
   const [withdrawCurrency, setWithdrawCurrency] = useState(currencies[0].abbr);
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawAddress, setWithdrawAddress] = useState("");
@@ -334,17 +384,23 @@ const SendModal = ({ show, setShow, isExternal, wallet }) => {
         clearMessages();
       }}
       onConfirm={() => withdraw()}
+      title={t("dashboard.cryptoCard.sendModal.title")}
     >
       <MessageComponent />
-      <TopInfo sendModal title={t("dashboard.cryptoCard.sendModal.title")} />
+      {/* <TopInfo 
+       description={t("dashboard.cryptoCard.sendModal.description")}
+       /> */}
 
       <div className={styles.modalInputs}>
-        <WalletField
+        <OptionsWithImage
           value={wallet?.name}
           label={t("dashboard.cryptoCard.sendModal.walletLabel")}
           icon={wallet?.icon}
           walletAddress={wallet?.address}
           dashboard
+          wallet={wallet}
+          options={walletOptions}
+          setValue={setWallet}
         />
 
         <Options

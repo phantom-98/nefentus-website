@@ -196,3 +196,9 @@
   font-size: 1.6rem;
   border-radius: 1rem;
 }
+
+.receiveModalDescription {
+  font-size: 12px;
+  margin-bottom: 2rem;
+  margin-top: -1rem;
+}

@@ -144,3 +144,18 @@
   padding: 1rem 2rem !important;
   gap: 0.5rem !important;
 }
+
+.walletOptions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.walletDropdownIcon {
+  position: absolute;
+  right: 20px;
+}
+
+.dropdownDisable {
+  cursor: not-allowed;
+}
