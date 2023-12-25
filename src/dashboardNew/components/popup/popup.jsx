@@ -84,79 +84,6 @@ export const VerifyPopup = ({
   );
 };
 
-export const PaymentPopup = ({
-  price,
-  show,
-  setShow,
-  tax,
-  name,
-  email,
-  company,
-  address,
-  link,
-  onClick = () => {},
-}) => {
-  const dashboardElement = document.getElementById("dashboard");
-
-  const { t } = useTranslation();
-
-  return ReactDOM.createPortal(
-    <div
-      className={`${styles.popup} ${styles.paymentPopup}`}
-      style={{ display: show ? "initial" : "none" }}
-    >
-      <Card className={styles.popupBox}>
-        <div className={styles.close}>
-          <img src={Close} alt="" onClick={() => setShow(false)} />
-        </div>
-
-        <img src={Checkmark} style={{ width: "5rem" }} alt="" />
-        <div className={styles.title}>{`$${price}`}</div>
-        <div className={styles.description}>
-          {t("payments.taxNumber")} {tax}
-        </div>
-
-        <div className={styles.body}>
-          <div className={styles.row}>
-            <p>{t("payments.name")}:</p>
-            <p>{name}</p>
-          </div>
-          <div className={styles.row}>
-            <p>{t("payments.email")}:</p>
-            <p>{email}</p>
-          </div>
-          <div className={styles.row}>
-            <p>{t("payments.company")}:</p>
-            <p>{company}</p>
-          </div>
-          <div className={styles.row}>
-            <p>{t("payments.address")}:</p>
-            <p>{address}</p>
-          </div>
-        </div>
-
-        <div className={styles.linkRow}>
-          <p>Link:</p>
-          <div
-            style={{ marginLeft: "16px" }}
-            onClick={() => navigator.clipboard.writeText(link)}
-          >
-            <img src={Clipboard} alt="" />
-
-            <p>{link}</p>
-          </div>
-        </div>
-
-        <div className={styles.paymentButtons}>
-          <Button onClick={onClick}>{t("payments.scan")}</Button>
-          <div>{t("payments.downloadInvoice")}</div>
-        </div>
-      </Card>
-    </div>,
-    dashboardElement,
-  );
-};
-
 export const QRPopup = ({
   show,
   setShow,
@@ -200,15 +127,7 @@ export const QRPopup = ({
           ]}
           colSizes={[1, 2]}
         />
-
-        {/* <img
-          src={
-            "https://cdn.britannica.com/17/155017-050-9AC96FC8/Example-QR-code.jpg"
-          }
-          style={{ width: "20rem", margin: "2rem 0 3rem 0" }}
-          alt=""
-        /> */}
-        {link && <QRCode value={link} size={256} />}
+        {link && <QRCode value={link} size={256} style={{ margin: "20px" }} />}
         <div className={styles.paymentButtons}>
           <Button onClick={() => setShow(false)}>{t("general.close")}</Button>
           <div onClick={onClick}>{t("payments.downloadInvoice")}</div>

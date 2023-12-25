@@ -57,17 +57,14 @@
 .paymentPopup .title {
   font-size: 2rem;
   margin-bottom: 0;
-  text-align: center;
 }
 
 .paymentPopup .description {
   width: 100%;
-  text-align: center;
 }
 
 .description {
   width: 40rem;
-  text-align: center;
   font-size: 1.4rem;
   opacity: 0.6;
 }
