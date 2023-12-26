@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import Button from "../button/button";
 import styles from "./heroAff.module.css";
-import separateText from "../../func/separate";
+import { separateText } from "../../func/separate";
 
 const HeroAff = () => {
   const { t } = useTranslation();

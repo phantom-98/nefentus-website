@@ -170,8 +170,8 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
         <div className={`card ${styles.productBuy}`}>
           <div className={styles.body}>
             <TopInfo
-              title="Buy product"
-              description="You can buy this product using MetaMask or Nefentus Wallet, in case you have a Nefentus account."
+              title={t("products.topInfoTitle")}
+              description={t("products.topInfoDescription")}
             />
             <Tabs
               tabIds={["internal", "metamask"]}
@@ -229,7 +229,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
                               metamask.connect(metamask.config, { chainId: 1 })
                             }
                           >
-                            Connect to MetaMask
+                            {t("products.connect")}MetaMask
                           </Button>
                         </div>
                       )}
@@ -239,7 +239,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
                             className={styles.metamaskConnectButton}
                             disabled
                           >
-                            MetaMask is not available!
+                            MetaMask{t("products.notAvailable")}
                           </Button>
                         </div>
                       )}
@@ -249,7 +249,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
                             className={styles.metamaskConnectButton}
                             disabled
                           >
-                            Connecting...
+                            {t("products.connecting")}
                           </Button>
                         </div>
                       )}
@@ -264,7 +264,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
                             className={styles.nefentusLoginButton}
                             onClick={() => {}}
                           >
-                            Login to Nefentus
+                            {t("products.login")}Nefentus
                           </Button>
                         </div>
                       )}

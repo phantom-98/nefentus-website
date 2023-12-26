@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import ReceivePayment from "../receivePayment";
 import TopInfo from "../../dashboard/topInfo/topInfo";
 import backendAPI from "../../api/backendAPI";
+import { useTranslation } from "react-i18next";
 
 const ProductBody = ({ product }) => {
   const backend_API = new backendAPI();
   const [imageSource, setImageSource] = useState(null);
-
+  const { t } = useTranslation();
   async function fetchProductImage() {
     if (product.s3Key) {
       console.log("Fetch image");
@@ -36,14 +37,16 @@ const ProductBody = ({ product }) => {
                 title={product.name ? product.name : ""}
                 description={product.description}
               />
-
               <p className={styles.price}>
-                <span>Price:</span> <span>{product.price} USD</span>
+                <span>{t("products.price")}:</span>{" "}
+                <span>{product.price} USD</span>
               </p>
 
               <p className={styles.stock}>
-                <span>Stock:</span>{" "}
-                <span>{product.stock >= 0 ? product.stock : "Unlimited"}</span>
+                <span>{t("products.stock")}:</span>{" "}
+                <span>
+                  {product.stock >= 0 ? product.stock : t("products.unlimited")}
+                </span>
               </p>
             </div>
           </div>

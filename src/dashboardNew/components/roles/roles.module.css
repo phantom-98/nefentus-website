@@ -50,6 +50,28 @@
   justify-content: space-between;
 }
 
+.passwordWrapper {
+  position: relative;
+}
+
+.passwordContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.iconEye {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
 .left,
 .right {
   align-items: center;
@@ -91,6 +113,17 @@
   gap: 2rem;
 
   margin-bottom: 3rem;
+}
+
+.cancelButton {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  border-radius: 1rem;
 }
 
 .modalButtons {

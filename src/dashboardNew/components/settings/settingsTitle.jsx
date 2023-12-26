@@ -1,5 +1,6 @@
 import Button from "../button/button";
 import styles from "./settingsTitle.module.css";
+import { useTranslation } from "react-i18next";
 import backend_API from "../../../api/backendAPI";
 import { useEffect, useState } from "react";
 
@@ -10,6 +11,7 @@ const SettingsTitle = ({
   product,
   onCreate,
 }) => {
+  const { t } = useTranslation();
   const [level, setLevel] = useState(null);
   const userId = localStorage.getItem("userId");
 
@@ -32,10 +34,16 @@ const SettingsTitle = ({
         <div className={styles.description}>{description}</div>
       </div>
 
-      {identification && <div className={styles.level}>Level: {level}</div>}
+      {identification && (
+        <div className={styles.level}>
+          {t("identification.level")}: {level}
+        </div>
+      )}
       {product && (
         <div>
-          <Button onClick={onCreate}>Create New Product</Button>
+          <Button width="20rem" onClick={onCreate}>
+            {t("products.createNewProduct")}
+          </Button>
         </div>
       )}
     </div>

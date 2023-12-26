@@ -15,6 +15,7 @@ import {
 } from "@thirdweb-dev/react";
 import useBalances from "../../../hooks/balances";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -56,6 +57,8 @@ const options = {
 };
 
 const BalanceCard = () => {
+  const { t } = useTranslation();
+
   const [total, setTotal] = useState(0);
   const metamask = {
     connect: useConnect(),
@@ -88,7 +91,7 @@ const BalanceCard = () => {
   return (
     <Card className={styles.card}>
       <div className={styles.left}>
-        <div className={styles.label}>Balance</div>
+        <div className={styles.label}>{t("dashboard.balance")}</div>
         <div className={styles.value}>${parseFloat(total).toFixed(2)}</div>
         <div className={styles.subtitle}>{currencies().length} Crypto</div>
       </div>

@@ -10,20 +10,22 @@ import styles from "./integrationsBody.module.css";
 import WalletIntegration from "../../components/WalletIntegration/WalletIntegration";
 import SettingsTitle from "../../components/settings/settingsTitle";
 import Card from "../../components/card/card";
+import { useTranslation } from "react-i18next";
 
 const IntegrationsBody = () => {
   const wallets = [
     {
       connect: walletConnect(),
       icon: WalletConnectLogo,
-      name: "Wallet Connect",
+      name: "WalletConnect",
     },
     {
       connect: metamaskWallet(),
       icon: MetaMaskLogo,
-      name: "Metamask",
+      name: "MetaMask",
     },
   ];
+  const { t } = useTranslation();
 
   const [connectStatus, setConnectStatus] = useState({
     "Wallet Connect": "disconnected",
@@ -37,8 +39,8 @@ const IntegrationsBody = () => {
     <Card>
       <div className={styles.titleHeader}>
         <SettingsTitle
-          title="Integrations"
-          description="Use your external cryptocurrency wallet on Nefentus"
+          title={t("integrations.title")}
+          description={t("integrations.subtitle")}
         />
       </div>
 

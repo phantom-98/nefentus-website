@@ -116,7 +116,10 @@ const ResetPassword = () => {
             {t("reset-password.button")}
           </Button>
           <div className={styles.info}>
-            <p>{t("reset-password.info")}</p>
+            <p>
+              {t("reset-password.info")}{" "}
+              <a href="/login">{t("reset-password.infoLinkText")}</a>
+            </p>
           </div>
         </form>
       </div>

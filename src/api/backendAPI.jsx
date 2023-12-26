@@ -84,7 +84,7 @@ export default class backendAPI {
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
         localStorage.setItem("hasTotp", data.hasTotp);
-        localStorage.setItem("requireKyc", data.requireKyc);
+        // localStorage.setItem("requireKyc", data.requireKyc);
         localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
@@ -152,7 +152,7 @@ export default class backendAPI {
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
         localStorage.setItem("hasTotp", data.hasTotp);
-        localStorage.setItem("requireKyc", data.requireKyc);
+        // localStorage.setItem("requireKyc", data.requireKyc);
         localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
@@ -180,13 +180,36 @@ export default class backendAPI {
 
   async forgotPassword(email) {
     try {
-      const url = `${this.baseURL}/auth/forgot-password`;
+      const url = `${this.baseURL}/forgot-password`;
       const options = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: email,
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async resetPassword(newPassword, token) {
+    try {
+      const url = `${this.baseURL}/auth/reset-password`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          newPassword,
+          token,
+        }),
       };
       const response = await fetch(url, options);
       if (!response.ok) {
@@ -244,20 +267,36 @@ export default class backendAPI {
     }
   }
 
-  async changePasswordDashboard(pass, oldpass) {
+  async getProfile() {
     try {
-      const request = {
-        newPassword: pass,
-        oldPassword: oldpass,
-      };
-      const url = `${this.baseURL}/auth/reset-password-email`;
+      const url = `${this.baseURL}/auth/getUserProfile`;
       const options = {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-        body: JSON.stringify(request),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async getInvoiceSettings() {
+    try {
+      const url = `${this.baseURL}/auth/get-invoice-settings`;
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
       };
       const response = await fetch(url, options);
       if (!response.ok) {
@@ -265,28 +304,26 @@ export default class backendAPI {
       }
       return response;
     } catch (error) {
-      return null; // or return some default value
+      return null;
     }
   }
 
-  async changePasswordConfirmDashboard(token) {
+  async updateInvoiceSettings(settings) {
     try {
-      const request = {
-        token: token,
-      };
-      const url = `${this.baseURL}/auth/reset-password-auth`;
+      const url = `${this.baseURL}/auth/update-invoice-settings`;
       const options = {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
         },
-        body: JSON.stringify(request),
+        body: JSON.stringify(settings),
       };
       const response = await fetch(url, options);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+
       return response;
     } catch (error) {
       return null; // or return some default value
@@ -316,6 +353,7 @@ export default class backendAPI {
       localStorage.setItem("lastName", data.lastName);
       localStorage.setItem("business", data.business);
       localStorage.setItem("phoneNumber", data.phoneNumber);
+      localStorage.setItem("country", data.country);
       localStorage.setItem("username", data.username);
       localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
       localStorage.setItem("marketingUpdates", data.marketingUpdates);
@@ -452,7 +490,7 @@ export default class backendAPI {
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
         localStorage.setItem("hasTotp", data.hasTotp);
-        localStorage.setItem("requireKyc", data.requireKyc);
+        // localStorage.setItem("requireKyc", data.requireKyc);
         localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
@@ -607,7 +645,7 @@ export default class backendAPI {
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
         localStorage.setItem("hasTotp", data.hasTotp);
-        localStorage.setItem("requireKyc", data.requireKyc);
+        // localStorage.setItem("requireKyc", data.requireKyc);
         localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
@@ -616,6 +654,8 @@ export default class backendAPI {
         localStorage.setItem("appNotifications", data.appNotifications);
         localStorage.setItem("notificationLanguage", data.notificationLanguage);
         localStorage.setItem("enableInvoicing", data.enableInvoicing);
+        localStorage.setItem("vatNumber", data.vatNumber);
+        localStorage.setItem("sendInvoice", data.sendInvoice);
       }
 
       ReactGA.event({
@@ -667,7 +707,7 @@ export default class backendAPI {
         localStorage.setItem("roles", data.roles);
         localStorage.setItem("country", data.country);
         localStorage.setItem("hasTotp", data.hasTotp);
-        localStorage.setItem("requireKyc", data.requireKyc);
+        // localStorage.setItem("requireKyc", data.requireKyc);
         localStorage.setItem("hasOtp", data.hasOtp);
         localStorage.setItem("userId", data.userId);
         localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
@@ -888,6 +928,23 @@ export default class backendAPI {
     }
   }
 
+  async isRequiredKYC() {
+    try {
+      const url = `${this.baseURL}/auth/auth/requireKyc`;
+
+      const options = {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async uploadKYCByType(type, file) {
     try {
       if (!file) {
@@ -999,8 +1056,6 @@ export default class backendAPI {
       const data = await response.json();
       return data;
     } catch (error) {
-      console.log(error);
-
       return null; // or return some default value
     }
   }
@@ -1042,7 +1097,6 @@ export default class backendAPI {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      console.log(data);
       return data;
     } catch (error) {
       return null; // or return some default value
@@ -1282,12 +1336,13 @@ export default class backendAPI {
     }
   }
 
-  async registerWalletAddress(address) {
+  async registerWalletAddress(ConnectedWallet) {
     try {
-      const url = `${this.baseURL}/wallet/address/${address}`;
+      const url = `${this.baseURL}/wallet/address?address=${ConnectedWallet.address}&name=${ConnectedWallet.name}`;
       let headers = {};
       if (this.token) {
         headers = {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
         };
       }

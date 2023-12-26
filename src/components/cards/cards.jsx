@@ -6,7 +6,7 @@ import Video2 from "../../assets/video/chart.mp4";
 import Video3 from "../../assets/video/target.mp4";
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef } from "react";
-import separateText from "../../func/separate";
+import { separateText } from "../../func/separate";
 
 const list = [
   {

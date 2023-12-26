@@ -32,6 +32,7 @@ const PaymentBody = () => {
   const [successfulModal, setSuccessfulModal] = useState(false);
   const [qrModalOpen, setQRModalOpen] = useState(false);
   const [qrValue, setQRValue] = useState("");
+
   const { t } = useTranslation();
 
   const vendorAPI = new vendorDashboardApi();
