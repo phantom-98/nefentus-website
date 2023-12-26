@@ -22,7 +22,7 @@ const CopyValue = ({
         className={`${inputStyles.input} ${inputStyles.dashboardInput}`}
         type="text"
         disabled={true}
-        style={{ width: "max-content", ...inputStyle }}
+        style={{ width: receiveModal ? "100%" : "max-content", ...inputStyle }}
       >
         {link ? (
           <a href={`${value}`} target="_blank">
@@ -38,6 +38,8 @@ const CopyValue = ({
         className={styles.copyButton}
         style={{
           width: receiveModal ? "8%" : "15%",
+          padding: "0.5rem 1rem",
+          lineHeight: "normal",
         }}
       >
         <img
