@@ -22,7 +22,7 @@ const CopyValue = ({
         className={`${inputStyles.input} ${inputStyles.dashboardInput}`}
         type="text"
         disabled={true}
-        style={inputStyle}
+        style={{ width: "max-content", ...inputStyle }}
       >
         {link ? (
           <a href={`${value}`} target="_blank">
