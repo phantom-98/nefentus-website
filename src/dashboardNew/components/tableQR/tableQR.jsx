@@ -8,13 +8,24 @@ const TableQR = ({ link, data }) => {
 
   const requestDownload = async () => {
     const res = await new vendorDashboardApi().downloadInvoice(data.link);
-    console.log(res);
-    const element = document.createElement("a");
-    const file = new Blob([res], { type: "text/html" });
-    element.href = URL.createObjectURL(file);
-    element.download = "invoice.html";
-    document.body.appendChild(element); // Required for this to work in FireFox
-    element.click();
+
+    if (res) {
+      const element = document.createElement("a");
+      const invoice = new Blob([res.split("$$RGBSPLIT$$")[0]], {
+        type: "text/html",
+      });
+      element.href = URL.createObjectURL(invoice);
+      element.download = "invoice.html";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
+      const receipt = new Blob([res.split("$$RGBSPLIT$$")[1]], {
+        type: "text/html",
+      });
+      element.href = URL.createObjectURL(receipt);
+      element.download = "receipt.html";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
+    }
   };
 
   return (
