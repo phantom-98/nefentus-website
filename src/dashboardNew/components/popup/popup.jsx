@@ -94,7 +94,7 @@ export const QRPopup = ({
   company,
   address,
   link,
-  onClick,
+  onDownload,
 }) => {
   const dashboardElement = document.getElementById("dashboard");
   // const { name, email, price, company, address, taxNumber, link } = data;
@@ -130,7 +130,9 @@ export const QRPopup = ({
         {link && <QRCode value={link} size={256} style={{ margin: "20px" }} />}
         <div className={styles.paymentButtons}>
           <Button onClick={() => setShow(false)}>{t("general.close")}</Button>
-          <div onClick={onClick}>{t("payments.downloadInvoice")}</div>
+          {onDownload && (
+            <div onClick={onDownload}>{t("payments.downloadInvoice")}</div>
+          )}
         </div>
       </Card>
     </div>,

@@ -1,9 +1,22 @@
 import { useState } from "react";
 import QRCode from "react-qr-code";
 import { QRPopup } from "../popup/popup";
+import vendorDashboardApi from "../../../api/vendorDashboardApi";
 
 const TableQR = ({ link, data }) => {
   const [show, setShow] = useState(false);
+
+  const requestDownload = async () => {
+    const res = await new vendorDashboardApi().downloadInvoice(data.link);
+    console.log(res);
+    const element = document.createElement("a");
+    const file = new Blob([res], { type: "text/html" });
+    element.href = URL.createObjectURL(file);
+    element.download = "invoice.html";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  };
+
   return (
     <>
       <div
@@ -22,7 +35,7 @@ const TableQR = ({ link, data }) => {
         name={data.name}
         price={data.price}
         taxNumber={data.taxNumber}
-        onClick={() => {}}
+        onDownload={data.paidAt ? () => requestDownload() : null}
       />
     </>
   );
