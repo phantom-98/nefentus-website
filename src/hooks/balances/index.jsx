@@ -6,32 +6,30 @@ import { currencies } from "../../constants";
 function useBalances(metamask) {
   const [balances, setBalances] = useState([initBalances(), initBalances()]);
   let internalWalletAddress = useInternalWallet();
+  const web3API = new web3Api();
 
   function initBalances() {
     return currencies().map((currency) => undefined);
   }
 
   async function fetchBalances() {
-    let providerSource = "thirdweb";
-    if (metamask.status === "connected" && metamask.address) {
-      providerSource = "metamask";
-    }
-    const web3API = new web3Api(providerSource);
-
     const balancesEx = metamask.address
-      ? await fetchBalanceForWallet(web3API, metamask.address)
+      ? await fetchBalanceForWallet(metamask.address)
       : initBalances();
     const balancesIn = internalWalletAddress
-      ? await fetchBalanceForWallet(web3API, internalWalletAddress)
+      ? await fetchBalanceForWallet(internalWalletAddress)
       : initBalances();
     setBalances([balancesEx, balancesIn]);
   }
 
-  async function fetchBalanceForWallet(web3API, walletAddress) {
-    const currency_addresses = currencies().map((currency) => currency.address);
+  async function fetchBalanceForWallet(walletAddress) {
     const balances_list = await Promise.all(
-      currency_addresses.map((address) =>
-        web3API.getBalanceToken(address, walletAddress),
+      currencies().map((currency) =>
+        web3API.getBalanceToken(
+          currency.address,
+          walletAddress,
+          currency.blockchain,
+        ),
       ),
     );
     return balances_list;

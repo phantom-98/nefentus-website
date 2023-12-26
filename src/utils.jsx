@@ -98,3 +98,9 @@ export const decryptData = (password) => {
     console.error("Decryption failed. Please check your input.");
   }
 };
+
+export const findCurrency = (currencies, address) => {
+  return currencies.find(
+    (currency) => currency.address - toLowerCase() === address.toLowerCase(),
+  );
+};

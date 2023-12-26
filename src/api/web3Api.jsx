@@ -5,32 +5,22 @@ import {
   providerURL,
   blockchainToWrapped,
   blockchainToUSDC,
+  blockchainToFactoryAddress,
+  providerURL,
 } from "../constants";
 import IUniswapV3PoolABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
 import IUniswapV3FactoryABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json";
 import ERC20_ABI from "../assets/abi/ERC20_ABI.json";
-import { zeroAddressToNull, toChecksumAddress } from "../utils";
+import { zeroAddressToNull, toChecksumAddress, findCurrency } from "../utils";
 
-const FACTORY_CONTRACT_ADDRESS = "0x1F98431c8aD98523631AE4a59f267346ea31F984";
-const USDC_CONTRACT_ADDRESS = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
 const POOL_FEES = "500";
 
 export class uniswapApi {
-  constructor(type, blockchain) {
-    this.blockchain = blockchain;
-
-    if (type === "metamask") {
-      this.provider = new ethers.providers.Web3Provider(window.ethereum);
-    } else {
-      this.provider = new ethers.providers.JsonRpcProvider(
-        providerURL(blockchain),
-      );
-    }
-
+  constructor() {
     this.FactoryContract = new ethers.Contract(
-      FACTORY_CONTRACT_ADDRESS,
+      blockchainToFactoryAddress()[blockchain],
       IUniswapV3FactoryABI.abi,
-      this.provider,
+      providerURL(blockchain),
     );
   }
 
@@ -65,11 +55,11 @@ export class uniswapApi {
    * @param {*} tokenAddress The token address
    * @returns Number of decimals
    */
-  async getDecimals(tokenAddress) {
+  async getDecimals(tokenAddress, blockchain) {
     const tokenContract = new ethers.Contract(
       tokenAddress,
       ERC20_ABI,
-      this.provider,
+      providerURL(blockchain),
     );
     const digits = await tokenContract.decimals();
     return digits;
@@ -84,22 +74,25 @@ export class uniswapApi {
    */
   async getUSDCPriceForToken(
     tokenAddress,
+    blockchain,
     decimalsToken0 = null,
     decimalsToken1 = null,
   ) {
-    if (tokenAddress === USDC_CONTRACT_ADDRESS) {
+    if (
+      tokenAddress.toLowerCase() === blockchainToUSDC(blockchain).toLowerCase()
+    ) {
       return 1;
     }
 
     const poolAddress = await this.FactoryContract.getPool(
-      tokenAddress,
-      blockchainToUSDC[this.blockchain],
+      tokenAddress !== null ? tokenAddress : blockchainToWrapped()[blockchain],
+      blockchainToUSDC()[blockchain],
       POOL_FEES,
     );
     const poolContract = new ethers.Contract(
       poolAddress,
       IUniswapV3PoolABI.abi,
-      this.provider,
+      providerURL(blockchain),
     );
 
     const slot0 = await poolContract.slot0();
@@ -107,15 +100,15 @@ export class uniswapApi {
 
     if (decimalsToken0 === null || decimalsToken1 === null) {
       [decimalsToken0, decimalsToken1] = await Promise.all([
-        this.getDecimals(tokenAddress),
-        this.getDecimals(blockchainToUSDC[this.blockchain]),
+        this.getDecimals(tokenAddress, blockchain),
+        this.getDecimals(blockchainToUSDC[blockchain], blockchain),
       ]);
     }
 
     const price = this.calculatePoolPrice(
       sqrtPriceX96,
       tokenAddress,
-      blockchainToUSDC[this.blockchain],
+      blockchainToUSDC[blockchain],
       decimalsToken0,
       decimalsToken1,
     );
@@ -124,31 +117,20 @@ export class uniswapApi {
 }
 
 export class web3Api {
-  constructor(type, blockchain) {
-    this.blockchain = blockchain;
-
-    if (type === "metamask") {
-      this.provider = new ethers.providers.Web3Provider(window.ethereum);
-    } else {
-      this.provider = new ethers.providers.JsonRpcProvider(
-        providerURL(blockchain),
-      );
-    }
-  }
-
-  async getBalanceNative(walletAddress) {
-    const balance = await this.provider.getBalance(walletAddress);
+  async getBalanceNative(walletAddress, blockchain) {
+    const balance = await providerURL(blockchain).getBalance(walletAddress);
     const balanceInEth = ethers.utils.formatEther(balance);
     return balanceInEth;
   }
 
-  async getBalanceToken(tokenAddress, walletAddress) {
-    if (!tokenAddress) return await this.getBalanceNative(walletAddress);
+  async getBalanceToken(tokenAddress, walletAddress, blockchain) {
+    if (!tokenAddress)
+      return await this.getBalanceNative(walletAddress, blockchain);
 
     const tokenContract = new ethers.Contract(
       tokenAddress,
       ERC20_ABI,
-      this.provider,
+      providerURL(blockchain),
     );
     const [digits, balanceWei] = await Promise.all([
       tokenContract.decimals(),
@@ -161,13 +143,15 @@ export class web3Api {
 
   /* Send cryptocurrency (native token or token) */
 
-  async send(tokenAddress, amount, toAddress) {
-    if (!tokenAddress) return await this.sendNative(amount, toAddress);
-    else return await this.sendToken(tokenAddress, amount, toAddress);
+  async send(tokenAddress, blockchain, amount, toAddress) {
+    if (!tokenAddress)
+      return await this.sendNative(blockchain, amount, toAddress);
+    else
+      return await this.sendToken(tokenAddress, blockchain, amount, toAddress);
   }
 
-  async sendNative(amount, toAddress) {
-    const signer = this.provider.getSigner();
+  async sendNative(blockchain, amount, toAddress) {
+    const signer = providerURL(blockchain).getSigner();
     const transaction = {
       to: toAddress,
       value: ethers.utils.parseEther(amount),
@@ -177,8 +161,8 @@ export class web3Api {
     return txReceipt;
   }
 
-  async sendToken(tokenAddress, amount, toAddress) {
-    const signer = this.provider.getSigner();
+  async sendToken(tokenAddress, blockchain, amount, toAddress) {
+    const signer = providerURL(blockchain).getSigner();
     const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
     const decimals = await tokenContract.decimals();
     const txRequest = await tokenContract.transfer(
@@ -190,24 +174,29 @@ export class web3Api {
   }
 
   /* Call deposit smart contract */
+
   async callDepositContract(
     sellerAddress,
     affiliateAddress,
     brokerAddress,
     seniorBrokerAddress,
     leaderAddress,
-    currencyAddress,
+    currency,
     stablecoinAddress,
     price,
     serviceFee,
     feeFree,
   ) {
+    const currencyAddress = currency["address"];
+    const blockchain = currency["blockchain"];
+
     // Get min amount out
     const uniswap = new uniswapApi();
-    const decimalsIn = 18;
+    const decimalsIn = findCurrency(currencies(), currencyAddress)["decimals"];
     const stablecoinDecimals = await uniswap.getDecimals(stablecoinAddress);
     const priceConvert = await uniswap.getUSDCPriceForToken(
-      uniswap.WETH_CONTRACT_ADDRESS,
+      currencyAddress,
+      blockchain,
       decimalsIn,
       stablecoinDecimals,
     );
@@ -215,12 +204,11 @@ export class web3Api {
     const amountIn = price / priceConvert;
     const amountInInt = Math.ceil(amountIn * 10 ** decimalsIn);
     // Amount in USD stablecoin
-    const minAmountOut = price * 0.98 * 10 ** stablecoinDecimals;
+    const minAmountOut = price * 0.99 * 10 ** stablecoinDecimals;
 
     // Deposit contract
-    const contractInfo =
-      contractDeposits.blockchain[contractDeposits.length - 1];
-    const signer = this.provider.getSigner();
+    const contractInfo = contractDeposits()[blockchain];
+    const signer = providerURL(blockchain).getSigner();
     const contract = new ethers.Contract(
       contractInfo.address,
       contractInfo.abi,
@@ -279,6 +267,7 @@ export class web3Api {
     );
     info.leaderAddress = zeroAddressToNull(toChecksumAddress(leaderAddress));
     info.currencyAddress = currencyAddress;
+    info.blockchain = blockchain;
     info.stablecoinAddress = toChecksumAddress(stablecoinAddress);
     this.serviceFee = serviceFee;
     this.feeFree = feeFree;

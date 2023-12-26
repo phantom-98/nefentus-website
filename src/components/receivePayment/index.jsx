@@ -11,7 +11,7 @@ import { MessageContext } from "../../context/message";
 import NefentusLogo from "../../assets/logo/logo_n.png";
 import MetaMaskLogo from "../../assets/logo/MetaMask.svg";
 import backendAPI from "../../api/backendAPI";
-import { web3Api, uniswapApi } from "../../api/web3Api";
+import { web3Api } from "../../api/web3Api";
 import Button from "../../components/button/button";
 import useInternalWallet from "../../hooks/internalWallet";
 import {
@@ -88,7 +88,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
     const quantity = 1;
 
     if (providerSource === "metamask") {
-      const web3API = new web3Api(providerSource);
+      const web3API = new web3Api();
 
       const [hierarchy, fees] = await Promise.all([
         backend_API.getHierarchy(userId),
@@ -102,7 +102,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
         nullToZeroAddress(hierarchy.brokerAddress),
         nullToZeroAddress(hierarchy.seniorBrokerAddress),
         nullToZeroAddress(hierarchy.leaderAddress),
-        currencyAddress,
+        currency,
         stablecoinAddress,
         priceUSD,
         fees?.serviceFee,
