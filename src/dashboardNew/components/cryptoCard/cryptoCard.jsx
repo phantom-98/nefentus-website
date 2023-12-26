@@ -175,6 +175,13 @@ const CryptoCard = () => {
         show={openReceiveModal}
         walletAddress={activeWallet?.address ?? internalWalletAddress}
         setOpenReceiveModal={setOpenReceiveModal}
+        wallet={activeWallet}
+        walletOptions={walletOptions}
+        setWallet={(data) => {
+          if (data?.name == "ETH") setIsExternal(false);
+          else setIsExternal(true);
+          setActiveWallet(data);
+        }}
       />
 
       <SendModal
@@ -231,7 +238,14 @@ const CryptoItem = ({ data }) => {
   );
 };
 
-const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
+const ReceiveModal = ({
+  show,
+  walletAddress,
+  setOpenReceiveModal,
+  wallet,
+  walletOptions,
+  setWallet,
+}) => {
   const { setInfoMessage, clearMessages } = useContext(MessageContext);
   const { t } = useTranslation();
 
@@ -256,12 +270,21 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
       <div className={styles.modalInputs}>
         <div>
           <div className={inputStyles.inputWrapper}>
-            <p className={`${inputStyles.label} ${inputStyles.dashboardLabel}`}>
+            {/* <p className={`${inputStyles.label} ${inputStyles.dashboardLabel}`}>
               {t("dashboard.cryptoCard.wallet")}
-            </p>
+            </p> */}
+            <div style={{ marginBottom: "15px" }}>
+              <OptionsWithImage
+                label={t("dashboard.cryptoCard.sendModal.walletLabel")}
+                dashboard
+                wallet={wallet}
+                options={walletOptions}
+                setValue={setWallet}
+              />
+            </div>
 
             <CopyValue
-              inputStyle={{ width: "78%" }}
+              // inputStyle={{ width: "78%" }}
               receiveModal
               value={walletAddress}
               onCopy={() =>
@@ -393,10 +416,7 @@ const SendModal = ({
 
       <div className={styles.modalInputs}>
         <OptionsWithImage
-          value={wallet?.name}
           label={t("dashboard.cryptoCard.sendModal.walletLabel")}
-          icon={wallet?.icon}
-          walletAddress={wallet?.address}
           dashboard
           wallet={wallet}
           options={walletOptions}

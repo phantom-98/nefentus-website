@@ -198,7 +198,8 @@
 }
 
 .receiveModalDescription {
-  font-size: 12px;
+  font-size: 1.2rem;
   margin-bottom: 2rem;
   margin-top: -1rem;
+  color: rgba(255, 255, 255, 0.8);
 }

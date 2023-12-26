@@ -368,13 +368,11 @@ export const WalletField = ({
 };
 
 export const OptionsWithImage = ({
-  value,
   options = [],
   setValue,
   label = "",
   dashboard,
-  icon,
-  walletAddress,
+  wallet,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -401,7 +399,7 @@ export const OptionsWithImage = ({
         // style={{cursor: options.length <= 1 && "not-allowed"}}
         onClick={() => setOpen((prev) => !prev)}
       >
-        {icon && <img src={icon} alt="dropdown" width={24} />}
+        {wallet?.icon && <img src={wallet?.icon} alt="dropdown" width={24} />}
 
         <div
           style={{
@@ -410,11 +408,13 @@ export const OptionsWithImage = ({
             lineHeight: "25px",
           }}
         >
-          {value ? value : t("messages.error.accountDisconnect")}
+          {wallet?.name ? wallet?.name : t("messages.error.accountDisconnect")}
         </div>
         <div>
-          {walletAddress?.length
-            ? `${walletAddress.slice(0, 6)} .... ${walletAddress.slice(-4)}`
+          {wallet?.address?.length
+            ? `${wallet?.address?.slice(0, 6)} .... ${wallet?.address?.slice(
+                -4,
+              )}`
             : ""}
         </div>
         <img
@@ -441,6 +441,14 @@ export const OptionsWithImage = ({
                       }}
                     >
                       {item.name}
+                    </div>
+                    <div>
+                      {item?.address?.length
+                        ? `${item?.address?.slice(
+                            0,
+                            6,
+                          )} .... ${item?.address?.slice(-4)}`
+                        : ""}
                     </div>
                   </p>
                 ) : (

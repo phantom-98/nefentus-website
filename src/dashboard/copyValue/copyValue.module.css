@@ -1,6 +1,7 @@
 .copyValueWrapper {
   display: flex;
   gap: 1rem;
+  line-height: 25px;
 }
 
 .copyValueWrapper img {
@@ -29,4 +30,9 @@
 
 .clipboardButton div {
   padding: 0.5rem 0.9rem;
+}
+
+.copyButton {
+  padding: 0.5rem 1rem;
+  line-height: normal;
 }

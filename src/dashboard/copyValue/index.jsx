@@ -17,11 +17,7 @@ const CopyValue = ({
   };
 
   return (
-    <div
-      className={
-        receiveModal ? styles.receiveModalContainer : styles.copyValueWrapper
-      }
-    >
+    <div className={styles.copyValueWrapper}>
       <div
         className={`${inputStyles.input} ${inputStyles.dashboardInput}`}
         type="text"
@@ -33,15 +29,15 @@ const CopyValue = ({
             {value}
           </a>
         ) : (
-          <p style={{ overflowWrap: "anywhere" }}>{value}</p>
+          <p>{value}</p>
         )}
       </div>
       <Button
-        color={!receiveModal && "light"}
+        color={"light"}
         onClick={handleClipboard}
+        className={styles.copyButton}
         style={{
-          padding: receiveModal ? "0.5rem" : "0.5rem 1rem",
-          width: receiveModal ? "10%" : "15%",
+          width: receiveModal ? "8%" : "15%",
         }}
       >
         <img
