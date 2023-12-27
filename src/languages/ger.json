@@ -430,13 +430,13 @@
     "incomeTitle": "Einkommen 24 Stunden",
     "cryptoCard": {
       "receiveModal": {
-        "title": "Geld empfangen",
+        "title": "Kryptowährung empfangen",
         "description": "Erhalten Sie Geld, indem Sie Kryptowährung an die unten stehende Adresse senden."
       },
       "sendModal": {
-        "title": "Gelder abheben",
+        "title": "Kryptowährung abheben",
         "description": "Sie haben eine Abhebung von Ihrem Konto angefordert.",
-        "walletLabel": "Geldbörse",
+        "walletLabel": "Wallet",
         "currencyLabel": "Währungsoptionen",
         "currencyPlaceholder": "Währungsoption wählen",
         "amountLabel": "Betrag",

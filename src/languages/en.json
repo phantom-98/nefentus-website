@@ -502,7 +502,7 @@
         "description": "Receive funds by sending cryptocurrency to the address below."
       },
       "sendModal": {
-        "title": "Withdraw Funds",
+        "title": "Withdraw funds",
         "description": "You requested to withdraw funds from your account.",
         "walletLabel": "Wallet",
         "currencyLabel": "Currency options",
