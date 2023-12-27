@@ -192,7 +192,7 @@
     "title": "Passwort zurücksetzen",
     "button": "Zurücksetzen",
     "info": "Sie möchten Ihr Passwort nicht zurücksetzen?",
-    "infoLinkText": "Stattdessen nmelden",
+    "infoLinkText": "Stattdessen anmelden",
     "button-label-confirm": "Bestätigen Sie das Passwort"
   },
   "signUp": {
@@ -947,13 +947,13 @@
       "seedDescription": "Eine Wortfolge, die es Ihnen ermöglicht, wieder Zugriff auf Ihre Kryptogelder zu erhalten, falls Sie den Zugriff auf Ihr Krypto-Wallet verlieren.",
       "rememberSeed": "Bewahren Sie den Sicherheitsschlüssel sicher auf! Sie werden gleich dazu aufgefordert ihn zu wiederholen.",
       "verifySeed": "Sicherheitsschlüssel",
-      "enterSeed": "Geben Sie den Sicherheitsschlüssel ein. Dies dient dazu nachzuweisen, dass Sie ihn notiert/gespeichert haben.",
+      "enterSeed": "Geben Sie den Sicherheitsschlüssel ein. Dies dient dazu nachzuweisen, dass Sie ihn notiert/gespeichert haben. Bewahren Sie ihn sicher auf!",
       "recover": "Wallet wiederherstellen",
       "recoverDescription": "Stellen Sie Ihre Wallet mit dem Sicherheitsschlüssel wieder her.",
       "recoverErrorMessage": "Es gab einen Fehler beim Wiederherstellen Ihrer Wallet.",
       "recoverInfoMessage": "Ihre Wallet wurde erfolgreich wiederhergestellt.",
-      "seedErrorMessage": "Sicherheitsschlüssel wird nicht abgeglichen.",
-      "seedInfoMessage": "Gut. Sie sollten diese Sicherheitsschlüssel sicher und nicht digital aufbewahren."
+      "seedErrorMessage": "Der Sicherheitsschlüssel ist falsch. Bitte überprüfen Sie ihn.",
+      "seedInfoMessage": "Der Sicherheitsschlüssel ist richtig."
     },
     "settings": {
       "title": "Sicherheit",

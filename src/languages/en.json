@@ -1035,15 +1035,15 @@
       "descriptionCode": "Protect your account from phishing attempts. The anti-phishing code is added to every email received from Nefentus. If you see this code, the email is from Nefentus.",
       "seedPhrase": "Seed Phrase",
       "seedDescription": "A sequence of words that allows you to regain access to your crypto funds if you ever lose your crypto wallet.",
-      "rememberSeed": "Remember this seed phrase! You will be asked to repeat it in a moment.",
+      "rememberSeed": "Store the seed phrase safe! You will be asked to enter it again.",
       "verifySeed": "Seed Phrase",
-      "enterSeed": "Enter seed phrase to verify that you have saved it.",
+      "enterSeed": "Enter seed phrase to verify that you have saved it. You should store the seed phrase safe.",
       "recover": "Recover wallet",
       "recoverDescription": "Recover your wallet using seed phrase.",
       "recoverErrorMessage": "There was an error recovering your wallet with the seed phrase.",
       "recoverInfoMessage": "Your wallet was recovered successfully.",
-      "seedErrorMessage": "Seed phrase is not matched.",
-      "seedInfoMessage": "Good. You should keep this seed phrase safely and not digitally."
+      "seedErrorMessage": "Seed phrase is wrong. Try it again.",
+      "seedInfoMessage": "Seed phrase is correct."
     },
     "settings": {
       "title": "Security",
