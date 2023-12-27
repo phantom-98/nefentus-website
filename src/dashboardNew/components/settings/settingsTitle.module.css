@@ -32,6 +32,10 @@
   background: transparent;
   width: 85px;
   color: white;
+  text-align: center;
+}
+.inputSeedPhrase:focus {
+  text-align: left;
 }
 
 .seedPhrase {
@@ -43,6 +47,7 @@
   width: 85px;
   font-size: 12px;
   padding: 5px;
+  text-align: center;
 }
 .input {
   background-color: transparent;
