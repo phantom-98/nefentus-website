@@ -284,7 +284,6 @@ const ReceiveModal = ({
             </div>
 
             <CopyValue
-              // inputStyle={{ width: "78%" }}
               receiveModal
               value={walletAddress}
               onCopy={() =>

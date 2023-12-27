@@ -399,29 +399,29 @@ export const OptionsWithImage = ({
         // style={{cursor: options.length <= 1 && "not-allowed"}}
         onClick={() => setOpen((prev) => !prev)}
       >
-        {wallet?.icon && <img src={wallet?.icon} alt="dropdown" width={24} />}
+        <div className={`${styles.walleField}`}>
+          {wallet?.icon && <img src={wallet?.icon} alt="dropdown" width={24} />}
 
-        <div
-          style={{
-            position: "relative",
-            bottom: 0,
-            lineHeight: "25px",
-          }}
-        >
-          {wallet?.name ? wallet?.name : t("messages.error.accountDisconnect")}
+          <div
+            style={{
+              position: "relative",
+              bottom: 0,
+              lineHeight: "25px",
+            }}
+          >
+            {wallet?.name
+              ? wallet?.name
+              : t("messages.error.accountDisconnect")}
+          </div>
+          <div>
+            {wallet?.address?.length
+              ? `${wallet?.address?.slice(0, 6)} .... ${wallet?.address?.slice(
+                  -4,
+                )}`
+              : ""}
+          </div>
         </div>
-        <div>
-          {wallet?.address?.length
-            ? `${wallet?.address?.slice(0, 6)} .... ${wallet?.address?.slice(
-                -4,
-              )}`
-            : ""}
-        </div>
-        <img
-          src={dropDown}
-          alt="dropdown"
-          className={styles.walletDropdownIcon}
-        />
+        <img src={dropDown} alt="dropdown" />
         {open && options.length > 1 && (
           <div className={`card ${styles.body}`}>
             {options.length > 0 ? (
