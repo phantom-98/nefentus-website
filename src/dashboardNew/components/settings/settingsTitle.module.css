@@ -49,7 +49,8 @@
   outline: 0;
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 1rem 1rem;
-  width: 30rem;
+  width: 100%;
+  min-width: 30rem;
   color: white;
   appearance: none;
   border-radius: 0.5rem;

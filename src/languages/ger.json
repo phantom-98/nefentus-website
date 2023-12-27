@@ -953,7 +953,9 @@
       "recoverErrorMessage": "Es gab einen Fehler beim Wiederherstellen Ihrer Wallet.",
       "recoverInfoMessage": "Ihre Wallet wurde erfolgreich wiederhergestellt.",
       "seedErrorMessage": "Der Sicherheitsschlüssel ist falsch. Bitte überprüfen Sie ihn.",
-      "seedInfoMessage": "Der Sicherheitsschlüssel ist richtig."
+      "seedInfoMessage": "Der Sicherheitsschlüssel ist richtig.",
+      "askPassword": "Um Ihre Sicherheitsschlüssel zu sehen, geben Sie bitte zuerst Ihr Passwort ein.",
+      "newPassword": "Bitte geben Sie zuerst Ihr neues Passwort ein."
     },
     "settings": {
       "title": "Sicherheit",

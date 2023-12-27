@@ -1043,7 +1043,9 @@
       "recoverErrorMessage": "There was an error recovering your wallet with the seed phrase.",
       "recoverInfoMessage": "Your wallet was recovered successfully.",
       "seedErrorMessage": "Seed phrase is wrong. Try it again.",
-      "seedInfoMessage": "Seed phrase is correct."
+      "seedInfoMessage": "Seed phrase is correct.",
+      "askPassword": "To see your seed phrase, please enter your password first.",
+      "newPassword": "Please enter your new password first."
     },
     "settings": {
       "title": "Security",

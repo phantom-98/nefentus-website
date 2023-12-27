@@ -202,7 +202,13 @@ const SecurityItem = ({ data }) => {
   const getSeedPhrases = async () => {
     const seed = await backendAPI.getSeedPhrase(currentPassword);
     console.log(seed);
-    setSeedPhrases(seed.split(" "));
+    if (seed) {
+      setSeedPhrases(seed.split(" "));
+      setInput(false);
+      setAddSeedPhrases("step1");
+    } else {
+      setErrorMessage("password is wrong");
+    }
     setCurrentPassword("");
   };
   const handleCloseSeedModal = () => {
@@ -223,9 +229,11 @@ const SecurityItem = ({ data }) => {
     console.log(res);
     if (res) {
       setInfoMessage(t("security.items.recoverInfoMessage"));
+      setAddSeedPhrases(false);
     } else {
       setErrorMessage(t("security.items.recoverErrorMessage"));
     }
+    setCurrentPassword("");
   };
   return (
     <>
@@ -369,7 +377,6 @@ const SecurityItem = ({ data }) => {
             }
           >
             <div className={styles.seedPhrasesModalWrapper}>
-              <MessageComponent />
               <p style={{ fontSize: "32px" }}>
                 {addSeedPhrases === "step1"
                   ? t("security.items.seedPhrase")
@@ -445,8 +452,6 @@ const SecurityItem = ({ data }) => {
             show={input}
             onConfirm={() => {
               getSeedPhrases();
-              setInput(false);
-              setAddSeedPhrases("step1");
             }}
             onClose={() => {
               setCurrentPassword("");
@@ -456,6 +461,9 @@ const SecurityItem = ({ data }) => {
             <>
               <div className={styles.modalTitle}>
                 {t("security.passwords.labelCurrent")}
+                <div className={styles.description}>
+                  {t("security.items.askPassword")}
+                </div>
               </div>
               <div className={styles.inputItem}>
                 <input
@@ -528,6 +536,9 @@ const SecurityItem = ({ data }) => {
             <>
               <div className={styles.modalTitle}>
                 {t("security.passwords.labelCurrent")}
+                <div className={styles.description}>
+                  {t("security.items.newPassword")}
+                </div>
               </div>
               <div className={styles.inputItem}>
                 <input
