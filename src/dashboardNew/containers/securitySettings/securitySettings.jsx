@@ -8,6 +8,7 @@ import SecurityItem from "../../components/settings/securityItem";
 import { useTranslation } from "react-i18next";
 import { useEffect, useMemo, useState } from "react";
 import backendAPI from "../../../api/backendAPI";
+import MessageComponent from "../../../components/message";
 
 const SecuritySettings = () => {
   const { t, i18n } = useTranslation();
@@ -82,16 +83,19 @@ const SecuritySettings = () => {
   // }, [changed])
 
   return (
-    <Card className={styles.card}>
-      <SettingsTitle
-        title={t("security.settings.title")}
-        description={t("security.settings.description")}
-      />
+    <>
+      <MessageComponent />
+      <Card className={styles.card}>
+        <SettingsTitle
+          title={t("security.settings.title")}
+          description={t("security.settings.description")}
+        />
 
-      {data.map((item, i) => (
-        <SecurityItem data={item} key={i} />
-      ))}
-    </Card>
+        {data.map((item, i) => (
+          <SecurityItem data={item} key={i} />
+        ))}
+      </Card>
+    </>
   );
 };
 

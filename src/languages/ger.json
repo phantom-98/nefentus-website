@@ -950,8 +950,10 @@
       "enterSeed": "Geben Sie den Sicherheitsschlüssel ein. Dies dient dazu nachzuweisen, dass Sie ihn notiert/gespeichert haben.",
       "recover": "Wallet wiederherstellen",
       "recoverDescription": "Stellen Sie Ihre Wallet mit dem Sicherheitsschlüssel wieder her.",
-      "seedErrorMessage": "Es gab einen Fehler beim Wiederherstellen Ihrer Wallet.",
-      "seedInfoMessage": "Ihre Wallet wurde erfolgreich wiederhergestellt."
+      "recoverErrorMessage": "Es gab einen Fehler beim Wiederherstellen Ihrer Wallet.",
+      "recoverInfoMessage": "Ihre Wallet wurde erfolgreich wiederhergestellt.",
+      "seedErrorMessage": "Sicherheitsschlüssel wird nicht abgeglichen.",
+      "seedInfoMessage": "Gut. Sie sollten diese Sicherheitsschlüssel sicher und nicht digital aufbewahren."
     },
     "settings": {
       "title": "Sicherheit",

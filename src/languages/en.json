@@ -1040,8 +1040,10 @@
       "enterSeed": "Enter seed phrase to verify that you have saved it.",
       "recover": "Recover wallet",
       "recoverDescription": "Recover your wallet using seed phrase.",
-      "seedErrorMessage": "There was an error recovering your wallet with the seed phrase.",
-      "seedInfoMessage": "Your wallet was recovered successfully."
+      "recoverErrorMessage": "There was an error recovering your wallet with the seed phrase.",
+      "recoverInfoMessage": "Your wallet was recovered successfully.",
+      "seedErrorMessage": "Seed phrase is not matched.",
+      "seedInfoMessage": "Good. You should keep this seed phrase safely and not digitally."
     },
     "settings": {
       "title": "Security",

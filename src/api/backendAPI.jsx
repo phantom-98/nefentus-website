@@ -1382,4 +1382,66 @@ export default class backendAPI {
       return null; // or return some default value
     }
   }
+
+  async getSeedPhrase(password) {
+    try {
+      const url = `${this.baseURL}/wallet/seedPhrase`;
+      let headers = {};
+      if (this.token) {
+        headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        };
+      }
+
+      const body = {
+        password,
+      };
+
+      const options = {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.text();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async recoverWallet(seedPhrase, newPassword) {
+    try {
+      const url = `${this.baseURL}/wallet/recoverWallet`;
+      let headers = {};
+      if (this.token) {
+        headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        };
+      }
+
+      const body = {
+        token: seedPhrase,
+        newPassword,
+      };
+
+      const options = {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.text();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
 }
