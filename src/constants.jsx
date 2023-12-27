@@ -77,8 +77,9 @@ export const blockchainToUSDC = (blockchain) => {
     if (useMainnet()) {
       // See https://coinmarketcap.com/currencies/usd-coin/
       // https://pancakeswap.finance/swap?chain=bsc&outputCurrency=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d
+      // BUSD
       return {
-        address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+        address: "0x55d398326f99059fF775485246999027B3197955",
         decimals: 18,
       };
     } else {
@@ -169,9 +170,10 @@ export const currencies = () => {
         blockchain: "ETH",
         icon: DAI,
         abbr: "DAI",
-        address: "0x6b175474e89094c44da98b954eedeac495271d0f",
+        address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         decimals: 18,
       },
+      /*
       {
         name: "Dogecoin",
         blockchain: "BNB",
@@ -180,6 +182,7 @@ export const currencies = () => {
         address: "0xba2ae424d960c26247dd6c32edc70b295c744c43",
         decimals: 8,
       },
+			*/
       // {
       //   icon: Polygon,
       //   name: "Polygon",

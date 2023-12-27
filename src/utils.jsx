@@ -115,6 +115,6 @@ export const reformatFooterInfo = (pages, links) => {
 
 export const findCurrency = (currencies, address) => {
   return currencies.find(
-    (currency) => currency.address - toLowerCase() === address.toLowerCase(),
+    (currency) => currency.address?.toLowerCase() === address.toLowerCase(),
   );
 };

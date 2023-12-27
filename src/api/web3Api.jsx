@@ -37,9 +37,11 @@ export class uniswapApi {
     let buyOneOfToken0 = (sqrtPriceX96 / 2 ** 96) ** 2;
 
     if (parseInt(tokenAddress0) < parseInt(tokenAddress1)) {
+      console.log("Case 1: ", tokenAddress0, tokenAddress1);
       buyOneOfToken0 = buyOneOfToken0 * 10 ** (Decimal0 - Decimal1);
       return buyOneOfToken0;
     } else {
+      console.log("Case 2: ", tokenAddress0, tokenAddress1);
       buyOneOfToken0 = buyOneOfToken0 / 10 ** (Decimal0 - Decimal1);
       return 1 / buyOneOfToken0;
     }
@@ -63,6 +65,7 @@ export class uniswapApi {
   /**
    * Get the price of a token in USDC
    * @param {*} tokenAddress The token address
+   * @param {*} blockchain The blockchain
    * @param {*} decimalsToken0 The decimals of token0
    * @param {*} decimalsToken1 The decimals of token1
    * @returns The price of the token in USDC
@@ -73,22 +76,23 @@ export class uniswapApi {
     decimalsToken0 = null,
     decimalsToken1 = null,
   ) {
-    if (tokenAddress === null) tokenAddress = blockchainToWrapped(blockchain);
-
-    if (
-      tokenAddress.toLowerCase() === blockchainToUSDC(blockchain).toLowerCase()
-    ) {
+    // Check input
+    if (tokenAddress === null)
+      tokenAddress = blockchainToWrapped(blockchain).address;
+    const stablecoinAddress = blockchainToUSDC(blockchain).address;
+    if (tokenAddress.toLowerCase() === stablecoinAddress.toLowerCase()) {
       return 1;
     }
 
+    // Get pool contract
     const factoryContract = new ethers.Contract(
       blockchainToFactoryAddress(blockchain),
       IUniswapV3FactoryABI.abi,
       provider(providerURL(blockchain)),
     );
     const poolAddress = await factoryContract.getPool(
-      tokenAddress !== null ? tokenAddress : blockchainToWrapped(blockchain),
-      blockchainToUSDC(blockchain),
+      tokenAddress,
+      stablecoinAddress,
       POOL_FEES,
     );
     const poolContract = new ethers.Contract(
@@ -97,6 +101,7 @@ export class uniswapApi {
       provider(providerURL(blockchain)),
     );
 
+    // Get pool price
     const slot0 = await poolContract.slot0();
     const sqrtPriceX96 = slot0.sqrtPriceX96.toString();
 
@@ -110,7 +115,7 @@ export class uniswapApi {
     const price = this.calculatePoolPrice(
       sqrtPriceX96,
       tokenAddress,
-      blockchainToUSDC(blockchain),
+      blockchainToUSDC(blockchain).address,
       decimalsToken0,
       decimalsToken1,
     );
