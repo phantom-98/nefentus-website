@@ -6,7 +6,6 @@ import {
   blockchainToWrapped,
   blockchainToUSDC,
   blockchainToFactoryAddress,
-  providerURL,
 } from "../constants";
 import IUniswapV3PoolABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
 import IUniswapV3FactoryABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json";
@@ -15,15 +14,11 @@ import { zeroAddressToNull, toChecksumAddress, findCurrency } from "../utils";
 
 const POOL_FEES = "500";
 
-export class uniswapApi {
-  constructor() {
-    this.FactoryContract = new ethers.Contract(
-      blockchainToFactoryAddress()[blockchain],
-      IUniswapV3FactoryABI.abi,
-      providerURL(blockchain),
-    );
-  }
+const provider = (providerURL) => {
+  return new ethers.providers.JsonRpcProvider(providerURL);
+};
 
+export class uniswapApi {
   /**
    * Determine the price of the two tokens in the pool
    * See https://blog.uniswap.org/uniswap-v3-math-primer
@@ -59,7 +54,7 @@ export class uniswapApi {
     const tokenContract = new ethers.Contract(
       tokenAddress,
       ERC20_ABI,
-      providerURL(blockchain),
+      provider(providerURL(blockchain)),
     );
     const digits = await tokenContract.decimals();
     return digits;
@@ -78,21 +73,28 @@ export class uniswapApi {
     decimalsToken0 = null,
     decimalsToken1 = null,
   ) {
+    if (tokenAddress === null) tokenAddress = blockchainToWrapped(blockchain);
+
     if (
       tokenAddress.toLowerCase() === blockchainToUSDC(blockchain).toLowerCase()
     ) {
       return 1;
     }
 
-    const poolAddress = await this.FactoryContract.getPool(
-      tokenAddress !== null ? tokenAddress : blockchainToWrapped()[blockchain],
-      blockchainToUSDC()[blockchain],
+    const factoryContract = new ethers.Contract(
+      blockchainToFactoryAddress(blockchain),
+      IUniswapV3FactoryABI.abi,
+      provider(providerURL(blockchain)),
+    );
+    const poolAddress = await factoryContract.getPool(
+      tokenAddress !== null ? tokenAddress : blockchainToWrapped(blockchain),
+      blockchainToUSDC(blockchain),
       POOL_FEES,
     );
     const poolContract = new ethers.Contract(
       poolAddress,
       IUniswapV3PoolABI.abi,
-      providerURL(blockchain),
+      provider(providerURL(blockchain)),
     );
 
     const slot0 = await poolContract.slot0();
@@ -101,14 +103,14 @@ export class uniswapApi {
     if (decimalsToken0 === null || decimalsToken1 === null) {
       [decimalsToken0, decimalsToken1] = await Promise.all([
         this.getDecimals(tokenAddress, blockchain),
-        this.getDecimals(blockchainToUSDC[blockchain], blockchain),
+        this.getDecimals(blockchainToUSDC(blockchain), blockchain),
       ]);
     }
 
     const price = this.calculatePoolPrice(
       sqrtPriceX96,
       tokenAddress,
-      blockchainToUSDC[blockchain],
+      blockchainToUSDC(blockchain),
       decimalsToken0,
       decimalsToken1,
     );
@@ -118,7 +120,9 @@ export class uniswapApi {
 
 export class web3Api {
   async getBalanceNative(walletAddress, blockchain) {
-    const balance = await providerURL(blockchain).getBalance(walletAddress);
+    const balance = await provider(providerURL(blockchain)).getBalance(
+      walletAddress,
+    );
     const balanceInEth = ethers.utils.formatEther(balance);
     return balanceInEth;
   }
@@ -130,7 +134,7 @@ export class web3Api {
     const tokenContract = new ethers.Contract(
       tokenAddress,
       ERC20_ABI,
-      providerURL(blockchain),
+      provider(providerURL(blockchain)),
     );
     const [digits, balanceWei] = await Promise.all([
       tokenContract.decimals(),
@@ -207,8 +211,8 @@ export class web3Api {
     const minAmountOut = price * 0.99 * 10 ** stablecoinDecimals;
 
     // Deposit contract
-    const contractInfo = contractDeposits()[blockchain];
-    const signer = providerURL(blockchain).getSigner();
+    const contractInfo = contractDeposits(blockchain);
+    const signer = provider(providerURL(blockchain)).getSigner();
     const contract = new ethers.Contract(
       contractInfo.address,
       contractInfo.abi,

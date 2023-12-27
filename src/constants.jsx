@@ -270,28 +270,35 @@ export const ownerAddress = "0xBE011f8F08d05feCc83abeabb6C38b987B9bdD45";
 
 export const transactionLimit = 10000;
 
-export const contractDeposits = () => {
-  if (!process.env.VITE_REACT_APP_USE_TESTNET) {
-    // MAINNET
-    return {
-      ETH: {
+export const contractDeposits = (blockchain) => {
+  if (blockchain === "ETH") {
+    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+      return {
         id: 2, // Not used right now!
         address: "0xd577766dd079c123ce677b8a27f9a01e5f4c9905",
         abi: SwapAndDistribute2,
-      },
-      BNB: {
+      };
+    } else {
+      return {
+        id: 1,
+        address: "0xabcdefg",
+        abi: SwapAndDistribute1,
+      };
+    }
+  } else if (blockchain == "BNB") {
+    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+      return {
         id: 2, // Not used right now!
         address: "0xabcdeff",
         abi: SwapAndDistribute2,
-      },
-    };
-  } else {
-    // TESTNET
-    return {
-      id: 1,
-      address: "0xabcdefg",
-      abi: SwapAndDistribute1,
-    };
+      };
+    } else {
+      return {
+        id: 2, // Not used right now!
+        address: "0xabcdeff",
+        abi: SwapAndDistribute2,
+      };
+    }
   }
 };
 
