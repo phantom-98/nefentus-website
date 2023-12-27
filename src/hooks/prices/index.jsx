@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { uniswapApi } from "../../api/web3Api";
 import { currencies, blockchainToUSDC } from "../../constants";
 
-function useBalances(metamask) {
-  const [prices, setPrices] = useState([initPrices(), initPrices()]);
+function usePrices() {
+  const [prices, setPrices] = useState(initPrices());
   const uniswapAPi = new uniswapApi();
 
   function initPrices() {
@@ -31,4 +31,4 @@ function useBalances(metamask) {
   return { prices, fetchPrices };
 }
 
-export default useBalances;
+export default usePrices;

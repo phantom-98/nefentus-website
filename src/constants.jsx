@@ -22,9 +22,13 @@ export const ROLE_TO_NAME = {
   admin: "Admin",
 };
 
+const useMainnet = () => {
+  return process.env.VITE_REACT_APP_USE_TESTNET === "false";
+};
+
 export const blockchainToWrapped = (blockchain) => {
   if (blockchain === "ETH") {
-    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+    if (useMainnet()) {
       // See https://docs.uniswap.org/contracts/v3/reference/deployments
       return {
         address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -38,7 +42,7 @@ export const blockchainToWrapped = (blockchain) => {
       };
     }
   } else if (blockchain == "BNB") {
-    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+    if (useMainnet()) {
       // See https://docs.pancakeswap.finance/developers/smart-contracts/pancakeswap-exchange/v3-contracts
       return {
         address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
@@ -56,7 +60,7 @@ export const blockchainToWrapped = (blockchain) => {
 
 export const blockchainToUSDC = (blockchain) => {
   if (blockchain === "ETH") {
-    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+    if (useMainnet()) {
       // See https://developers.circle.com/stablecoins/docs/usdc-on-main-networks
       return findCurrency(
         currencies(),
@@ -70,7 +74,7 @@ export const blockchainToUSDC = (blockchain) => {
       };
     }
   } else if (blockchain == "BNB") {
-    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+    if (useMainnet()) {
       // See https://coinmarketcap.com/currencies/usd-coin/
       // https://pancakeswap.finance/swap?chain=bsc&outputCurrency=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d
       return {
@@ -89,7 +93,7 @@ export const blockchainToUSDC = (blockchain) => {
 
 export const blockchainToFactoryAddress = (blockchain) => {
   if (blockchain === "ETH") {
-    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+    if (useMainnet()) {
       // See https://docs.uniswap.org/contracts/v3/reference/deployments
       return "0x1F98431c8aD98523631AE4a59f267346ea31F984";
     } else {
@@ -97,7 +101,7 @@ export const blockchainToFactoryAddress = (blockchain) => {
       return "0x1F98431c8aD98523631AE4a59f267346ea31F984";
     }
   } else if (blockchain == "BNB") {
-    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+    if (useMainnet()) {
       // See https://docs.pancakeswap.finance/developers/smart-contracts/pancakeswap-exchange/v3-contracts
       return "0x0BFbCF9fa4f9C56B0F40a671Ad40E0805A091865";
     } else {
@@ -108,7 +112,7 @@ export const blockchainToFactoryAddress = (blockchain) => {
 };
 
 export const currencies = () => {
-  if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+  if (useMainnet()) {
     // MAINNET
     return [
       {
@@ -272,7 +276,7 @@ export const transactionLimit = 10000;
 
 export const contractDeposits = (blockchain) => {
   if (blockchain === "ETH") {
-    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+    if (useMainnet()) {
       return {
         id: 2, // Not used right now!
         address: "0xd577766dd079c123ce677b8a27f9a01e5f4c9905",
@@ -286,7 +290,7 @@ export const contractDeposits = (blockchain) => {
       };
     }
   } else if (blockchain == "BNB") {
-    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
+    if (useMainnet()) {
       return {
         id: 2, // Not used right now!
         address: "0xabcdeff",
@@ -306,20 +310,32 @@ const THIRDWEB_CLIENT_ID = "639eea2ebcabed7eab90b56aceeed08b";
 
 export const providerURL = (blockchain) => {
   if (blockchain === "ETH") {
-    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
-      // MAINNET
+    if (useMainnet()) {
       return "https://ethereum.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
     } else {
-      // TESTNET
       return "https://ethereum.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
     }
   } else if (blockchain === "BNB") {
-    if (!process.env.VITE_REACT_APP_USE_TESTNET) {
-      // MAINNET
+    if (useMainnet()) {
       return "https://binance.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
     } else {
-      // TESTNET
       return "https://binance-testnet.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
+    }
+  }
+};
+
+export const blockchainToName = (blockchain) => {
+  if (blockchain === "ETH") {
+    if (useMainnet()) {
+      return "Ethereum";
+    } else {
+      return "Görli Testnet";
+    }
+  } else if (blockchain === "BNB") {
+    if (useMainnet()) {
+      return "BNB Chain";
+    } else {
+      return "BNB Testnet";
     }
   }
 };

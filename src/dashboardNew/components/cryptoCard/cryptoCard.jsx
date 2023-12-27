@@ -14,7 +14,7 @@ import {
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
 import backendAPI from "../../../api/backendAPI";
-import { currencies } from "../../../constants";
+import { currencies, blockchainToName } from "../../../constants";
 import { formatTokenBalance, formatUSDBalance } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import { MessageContext } from "../../../context/message";
@@ -43,7 +43,7 @@ const CryptoCard = () => {
   const [openWithdrawModal, setOpenWithdrawModal] = useState(false);
 
   const { balances, fetchBalances } = useBalances(metamask);
-  const { prices, fetchPrices } = usePrices(metamask);
+  const { prices, fetchPrices } = usePrices();
 
   const currencyList = currencies();
 
@@ -61,14 +61,20 @@ const CryptoCard = () => {
   }, [metamask.status, metamask.address]);
 
   useEffect(() => {
-    const data = balances[1].map((balance, index) => ({
-      ...currencyList[index],
-      middleName: currencyList[index] === "ETH" ? "Ethereum" : "BSC",
+    console.log("balances: ");
+    console.log(balances);
+    console.log("prices: ");
+    console.log(prices);
+    const data = currencyList.map((currency, index) => ({
+      ...currency,
+      middleName: blockchainToName(currency.blockchain),
       middleInfo: "Network",
       price: prices[index],
-      value: balance,
+      value: balances[1][index],
     }));
 
+    console.log("data: ");
+    console.log(data);
     setCryptList(data);
   }, [prices, balances]);
 
