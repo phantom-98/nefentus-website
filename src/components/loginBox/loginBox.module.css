@@ -60,10 +60,6 @@
   padding: 5rem;
 }
 
-.login img {
-  height: 3rem;
-}
-
 .left h2 {
   margin-bottom: 1rem;
 }
@@ -165,7 +161,6 @@
 
 .login > div:last-child p {
   font-size: 1.2rem;
-  color: var(--white-color);
 }
 
 .info {
