@@ -1,9 +1,21 @@
 .copyValueWrapper {
   display: flex;
   gap: 1rem;
+  line-height: 25px;
 }
 
 .copyValueWrapper img {
+  margin-top: auto;
+  margin-bottom: auto;
+  height: max-content;
+}
+
+.receiveModalContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.receiveModalContainer img {
   margin-top: auto;
   margin-bottom: auto;
   height: max-content;

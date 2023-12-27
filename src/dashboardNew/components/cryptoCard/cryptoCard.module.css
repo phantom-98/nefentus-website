@@ -102,11 +102,40 @@
   padding-bottom: 0;
 }
 
+.walletInfoWrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.walletLogoWrap {
+  width: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.walletLogo {
+  height: 2rem;
+  margin-right: 0.3rem;
+  vertical-align: baseline;
+}
+
+.walletTitle {
+  font-size: 1.4rem;
+  width: 12rem;
+  white-space: nowrap;
+}
+
 @media (max-width: 900px) {
   .top {
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
+  }
+
+  .walletInfoWrap {
+    gap: 10px;
   }
 
   .buttonWrapper {
@@ -165,4 +194,11 @@
   justify-content: center;
   font-size: 1.6rem;
   border-radius: 1rem;
+}
+
+.receiveModalDescription {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  margin-top: -1rem;
+  color: rgba(255, 255, 255, 0.8);
 }

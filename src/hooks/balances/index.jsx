@@ -12,14 +12,11 @@ function useBalances(metamask) {
     return currencies().map((currency) => undefined);
   }
 
-  async function fetchBalances() {
-    const balancesEx = metamask.address
-      ? await fetchBalanceForWallet(metamask.address)
+  async function fetchBalances(address) {
+    const balances = address
+      ? await fetchBalanceForWallet(address)
       : initBalances();
-    const balancesIn = internalWalletAddress
-      ? await fetchBalanceForWallet(internalWalletAddress)
-      : initBalances();
-    setBalances([balancesEx, balancesIn]);
+    setBalances(balances);
   }
 
   async function fetchBalanceForWallet(walletAddress) {
@@ -37,7 +34,7 @@ function useBalances(metamask) {
 
   useEffect(() => {
     fetchBalances();
-  }, [internalWalletAddress]);
+  }, [internalWalletAddress, metamask]);
 
   return { balances, fetchBalances };
 }

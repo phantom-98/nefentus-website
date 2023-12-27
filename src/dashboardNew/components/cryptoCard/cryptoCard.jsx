@@ -10,6 +10,8 @@ import {
   useConnect,
   useConnectionStatus,
   useDisconnect,
+  walletConnect,
+  useWallet,
 } from "@thirdweb-dev/react";
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
@@ -22,43 +24,100 @@ import MessageComponent from "../../../components/message";
 import TopInfo from "../../../dashboard/topInfo/topInfo";
 import CopyValue from "../../../dashboard/copyValue";
 import inputStyles from "../../../components/input/input.module.css";
-import Input, { Options } from "../../../components/input/input";
+import Input, {
+  Options,
+  OptionsWithImage,
+  WalletField,
+} from "../../../components/input/input";
 import Popup from "../popup/popup";
+import { web3Api } from "../../../api/web3Api";
+import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
+import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
+import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
 
 const CryptoCard = () => {
   const [activeToggle, setActiveToggle] = useState(false);
-  let internalWalletAddress = useInternalWallet();
-  const metamask = {
-    connect: useConnect(),
-    disconnect: useDisconnect(),
-    config: metamaskWallet(),
-    address: useAddress(),
-    status: useConnectionStatus(),
-  };
-
-  const { t } = useTranslation();
-  const backend_API = new backendAPI();
+  const [isExternal, setIsExternal] = useState(false);
+  const [activeWallet, setActiveWallet] = useState({});
+  const [walletOptions, setWalletOptions] = useState([]);
   const [cryptList, setCryptList] = useState([]);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
   const [openWithdrawModal, setOpenWithdrawModal] = useState(false);
 
-  const { balances, fetchBalances } = useBalances(metamask);
+  const { balances, fetchBalances } = useBalances();
   const { prices, fetchPrices } = usePrices();
+  let internalWalletAddress = useInternalWallet();
 
+  const wallets = [
+    {
+      connect: walletConnect(),
+      icon: WalletConnectLogo,
+      name: "WalletConnect",
+      address: useAddress(),
+      status: useConnectionStatus(),
+      walletDetail: useWallet(),
+    },
+    {
+      connect: metamaskWallet(),
+      icon: MetaMaskLogo,
+      name: "MetaMask",
+      address: useAddress(),
+      status: useConnectionStatus(),
+      walletDetail: useWallet(),
+    },
+  ];
+
+  const { t } = useTranslation();
+  const backend_API = new backendAPI();
   const currencyList = currencies();
 
   useEffect(() => {
+    fetchBalances(activeWallet.address);
     fetchPrices();
-    fetchBalances();
+  }, [activeWallet]);
 
-    if (metamask.status === "connected" && metamask.address) {
-      registerWallet();
+  useEffect(() => {
+    if (!Object.keys(activeWallet).length && internalWalletAddress) {
+      fetchWallets();
     }
+  }, [wallets]);
 
-    async function registerWallet() {
-      const result = await backend_API.registerWalletAddress(metamask.address);
+  const fetchWallets = async () => {
+    if (
+      wallets.some(
+        (wal) =>
+          (wal.status == "connecting" || wal.status == "connected") &&
+          wal.address === undefined,
+      )
+    ) {
+      return;
+    } else {
+      let connectedWallets = [];
+      wallets.map((wallet) => {
+        if (
+          wallet?.status === "connected" &&
+          wallet?.address &&
+          wallet?.walletDetail?.walletId === wallet?.name?.toLocaleLowerCase()
+        ) {
+          connectedWallets.push(wallet);
+          registerWallet(wallet);
+        }
+      });
+
+      const internalWallet = {
+        name: "Internal Wallet",
+        address: internalWalletAddress,
+        icon: Ethereum,
+      };
+      connectedWallets.push(internalWallet);
+      setWalletOptions(connectedWallets);
+      setActiveWallet(internalWallet);
     }
-  }, [metamask.status, metamask.address]);
+  };
+
+  const registerWallet = async (wallet) => {
+    const result = await backend_API.registerWalletAddress(wallet);
+  };
 
   useEffect(() => {
     console.log("balances: ");
@@ -70,7 +129,7 @@ const CryptoCard = () => {
       middleName: blockchainToName(currency.blockchain),
       middleInfo: "Network",
       price: prices[index],
-      value: balances[1][index],
+      value: balances[index],
     }));
 
     console.log("data: ");
@@ -121,11 +180,29 @@ const CryptoCard = () => {
 
       <ReceiveModal
         show={openReceiveModal}
-        walletAddress={internalWalletAddress}
+        walletAddress={activeWallet?.address ?? internalWalletAddress}
         setOpenReceiveModal={setOpenReceiveModal}
+        wallet={activeWallet}
+        walletOptions={walletOptions}
+        setWallet={(data) => {
+          if (data?.name == "ETH") setIsExternal(false);
+          else setIsExternal(true);
+          setActiveWallet(data);
+        }}
       />
 
-      <SendModal show={openWithdrawModal} setShow={setOpenWithdrawModal} />
+      <SendModal
+        show={openWithdrawModal}
+        setShow={setOpenWithdrawModal}
+        isExternal={isExternal}
+        wallet={activeWallet}
+        walletOptions={walletOptions}
+        setWallet={(data) => {
+          if (data?.name == "ETH") setIsExternal(false);
+          else setIsExternal(true);
+          setActiveWallet(data);
+        }}
+      />
     </Card>
   );
 };
@@ -168,7 +245,14 @@ const CryptoItem = ({ data }) => {
   );
 };
 
-const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
+const ReceiveModal = ({
+  show,
+  walletAddress,
+  setOpenReceiveModal,
+  wallet,
+  walletOptions,
+  setWallet,
+}) => {
   const { setInfoMessage, clearMessages } = useContext(MessageContext);
   const { t } = useTranslation();
 
@@ -180,20 +264,34 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
         clearMessages();
       }}
       confirmTitle={t("dashboard.cryptoCard.close")}
+      title={t("dashboard.cryptoCard.receiveModal.title")}
     >
-      <MessageComponent />
-      <TopInfo
-        title={t("dashboard.cryptoCard.receiveModal.title")}
+      {/* <TopInfo
+        // title={t("dashboard.cryptoCard.receiveModal.title")}
         description={t("dashboard.cryptoCard.receiveModal.description")}
-      />
+      /> */}
+      <p className={styles.receiveModalDescription}>
+        {t("dashboard.cryptoCard.receiveModal.description")}
+      </p>
+      <MessageComponent />
       <div className={styles.modalInputs}>
         <div>
           <div className={inputStyles.inputWrapper}>
-            <p className={`${inputStyles.label} ${inputStyles.dashboardLabel}`}>
+            {/* <p className={`${inputStyles.label} ${inputStyles.dashboardLabel}`}>
               {t("dashboard.cryptoCard.wallet")}
-            </p>
+            </p> */}
+            <div style={{ marginBottom: "15px" }}>
+              <OptionsWithImage
+                label={t("dashboard.cryptoCard.sendModal.walletLabel")}
+                dashboard
+                wallet={wallet}
+                options={walletOptions}
+                setValue={setWallet}
+              />
+            </div>
 
             <CopyValue
+              receiveModal
               value={walletAddress}
               onCopy={() =>
                 setInfoMessage(t("dashboard.cryptoCard.walletCopied"))
@@ -206,7 +304,14 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
   );
 };
 
-const SendModal = ({ show, setShow }) => {
+const SendModal = ({
+  show,
+  setShow,
+  isExternal,
+  wallet,
+  walletOptions,
+  setWallet,
+}) => {
   const [withdrawCurrency, setWithdrawCurrency] = useState(
     currencies()[0].abbr,
   );
@@ -261,18 +366,42 @@ const SendModal = ({ show, setShow }) => {
 
     // Withdraw
     const tokenAddress = sendCurrency.address;
+    // TODO! How to determine the right wallet?
+    // const walletAddres = "";
+    // const isExternal = false;
+    if (isExternal) {
+      const web3API = new web3Api("metamask");
 
-    const ret = await backend_Api.send(
-      tokenAddress,
-      withdrawAmount,
-      withdrawAddress,
-      password,
-    );
-    if (ret) {
-      setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawSuccess"));
-      fetchBalances();
+      try {
+        const txReceipt = await web3API.send(
+          tokenAddress,
+          withdrawAmount,
+          withdrawAddress,
+        );
+        if (txReceipt.status === 1) {
+          setInfoMessage(t("messages.success.withdrawal"));
+          fetchBalances(wallet.address);
+        } else {
+          setErrorMessage(t("messages.error.withdraw"));
+        }
+      } catch (error) {
+        console.log(error);
+        setErrorMessage(t("messages.error.withdraw"));
+      }
     } else {
-      setErrorMessage(t("dashboard.cryptoCard.sendModal.withdrawFailed"));
+      const backend_Api = new backendAPI();
+      const ret = await backend_Api.send(
+        tokenAddress,
+        withdrawAmount,
+        withdrawAddress,
+        password,
+      );
+      if (ret) {
+        setInfoMessage(t("messages.success.withdrawal"));
+        fetchBalances(wallet.address);
+      } else {
+        setErrorMessage(t("messages.error.withdraw"));
+      }
     }
   };
 
@@ -286,14 +415,22 @@ const SendModal = ({ show, setShow }) => {
         clearMessages();
       }}
       onConfirm={() => withdraw()}
+      title={t("dashboard.cryptoCard.sendModal.title")}
     >
       <MessageComponent />
-      <TopInfo
-        title={t("dashboard.cryptoCard.sendModal.title")}
-        description={t("dashboard.cryptoCard.sendModal.description")}
-      />
+      {/* <TopInfo 
+       description={t("dashboard.cryptoCard.sendModal.description")}
+       /> */}
 
       <div className={styles.modalInputs}>
+        <OptionsWithImage
+          label={t("dashboard.cryptoCard.sendModal.walletLabel")}
+          dashboard
+          wallet={wallet}
+          options={walletOptions}
+          setValue={setWallet}
+        />
+
         <Options
           dashboard
           label={t("dashboard.cryptoCard.sendModal.currencyLabel")}
