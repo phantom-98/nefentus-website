@@ -13,32 +13,7 @@ import { useTranslation } from "react-i18next";
 import { EnableType, EditPopup } from "./settingsItem";
 import { MessageContext } from "../../../context/message";
 import { boolean } from "zod";
-const emptyArray = [
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-];
+const emptyArray = ["", "", "", "", "", "", "", "", "", "", "", ""];
 
 const SecurityItem = ({ data }) => {
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
