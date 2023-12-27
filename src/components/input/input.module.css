@@ -65,7 +65,14 @@
   gap: 20px;
   justify-content: space-between;
   padding: 0.5rem 2rem;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
+}
+
+.walleField {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start;
+  gap: 20px;
 }
 
 .body {
@@ -135,6 +142,22 @@
 }
 
 .select {
-  padding: 1rem 2rem !important;
+  font-size: 1.4rem;
+  padding: 1.75rem 2rem !important;
   gap: 0.5rem !important;
+}
+
+.walletOptions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.walletDropdownIcon {
+  position: absolute;
+  right: 20px;
+}
+
+.dropdownDisable {
+  cursor: not-allowed;
 }

@@ -3,7 +3,14 @@ import copyClipboard from "../../assets/icon/copyClipboard.svg";
 import inputStyles from "../../components/input/input.module.css";
 import Button from "../../dashboardNew/components/button/button";
 
-const CopyValue = ({ value, onCopy, inputStyle, link, buttonStyle }) => {
+const CopyValue = ({
+  value,
+  onCopy,
+  inputStyle,
+  link,
+  buttonStyle,
+  receiveModal,
+}) => {
   const handleClipboard = () => {
     navigator.clipboard.writeText(value);
     onCopy();
@@ -15,20 +22,25 @@ const CopyValue = ({ value, onCopy, inputStyle, link, buttonStyle }) => {
         className={`${inputStyles.input} ${inputStyles.dashboardInput}`}
         type="text"
         disabled={true}
-        style={inputStyle}
+        style={{ width: receiveModal ? "100%" : "max-content", ...inputStyle }}
       >
         {link ? (
           <a href={`${value}`} target="_blank">
             {value}
           </a>
         ) : (
-          <p style={{ overflowWrap: "anywhere" }}>{value}</p>
+          <p>{value}</p>
         )}
       </div>
       <Button
-        color="light"
+        color={"light"}
         onClick={handleClipboard}
-        style={{ padding: "0.5rem 1rem", width: "15%" }}
+        className={styles.copyButton}
+        style={{
+          width: receiveModal ? "8%" : "15%",
+          padding: "0.5rem 1rem",
+          lineHeight: "normal",
+        }}
       >
         <img
           src={copyClipboard}
