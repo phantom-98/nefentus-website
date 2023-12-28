@@ -82,6 +82,7 @@
 .description {
   font-size: 1.2rem;
   opacity: 0.6;
+  width: 100%;
 }
 
 .left {
@@ -198,6 +199,7 @@
 }
 
 .modalTitle {
+  width: 100%;
   font-size: 1.8rem;
   margin-bottom: 1rem;
 }

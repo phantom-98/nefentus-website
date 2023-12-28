@@ -383,12 +383,12 @@ const SecurityItem = ({ data }) => {
           >
             <MessageComponent />
             <div className={styles.seedPhrasesModalWrapper}>
-              <p style={{ fontSize: "32px" }}>
+              <p className={styles.modalTitle}>
                 {addSeedPhrases === "step1"
                   ? t("security.items.seedPhrase")
                   : t("security.items.verifySeed")}
               </p>
-              <p style={{ fontSize: "15px" }}>
+              <p className={styles.description}>
                 {addSeedPhrases === "step1"
                   ? t("security.items.rememberSeed")
                   : t("security.items.enterSeed")}
@@ -499,10 +499,10 @@ const SecurityItem = ({ data }) => {
           >
             <MessageComponent />
             <div className={styles.seedPhrasesModalWrapper}>
-              <p style={{ fontSize: "32px" }}>
+              <p className={styles.modalTitle}>
                 {t("security.items.verifySeed")}
               </p>
-              <p style={{ fontSize: "15px" }}>
+              <p className={styles.description}>
                 {t("security.items.enterSeed")}
               </p>
               <div className={styles.seedPhrasesInputWrapper}>
