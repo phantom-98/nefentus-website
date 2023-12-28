@@ -233,6 +233,7 @@ const SecurityItem = ({ data }) => {
       setInfoMessage(t("security.items.recoverInfoMessage"));
       setAddSeedPhrases(false);
       clearMessages();
+      setCheckedSeedPhrases(emptyArray);
     } else {
       setErrorMessage(t("security.items.recoverErrorMessage"));
     }
@@ -634,7 +635,7 @@ export default SecurityItem;
 const PasswordIcon = ({ type, value }) => {
   return (
     <div className={styles.value}>
-      {type === "password"
+      {type === "password" || type === "seed"
         ? "**********"
         : type === "phishingCode" && value !== "undefined" && value
         ? value
