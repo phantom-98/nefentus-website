@@ -83,6 +83,9 @@ export class uniswapApi {
     if (tokenAddress.toLowerCase() === stablecoinAddress.toLowerCase()) {
       return 1;
     }
+    console.log("tokenAddress: ", tokenAddress);
+    console.log("stablecoinAddress: ", stablecoinAddress);
+    console.log("blockchain: ", blockchain);
 
     // Get pool contract
     const factoryContract = new ethers.Contract(
@@ -95,6 +98,7 @@ export class uniswapApi {
       stablecoinAddress,
       POOL_FEES,
     );
+    console.log("poolAddress: ", poolAddress);
     const poolContract = new ethers.Contract(
       poolAddress,
       IUniswapV3PoolABI.abi,
@@ -108,14 +112,16 @@ export class uniswapApi {
     if (decimalsToken0 === null || decimalsToken1 === null) {
       [decimalsToken0, decimalsToken1] = await Promise.all([
         this.getDecimals(tokenAddress, blockchain),
-        this.getDecimals(blockchainToUSDC(blockchain), blockchain),
+        this.getDecimals(stablecoinAddress, blockchain),
       ]);
     }
+
+    console.log("sqrtPriceX96: ", sqrtPriceX96);
 
     const price = this.calculatePoolPrice(
       sqrtPriceX96,
       tokenAddress,
-      blockchainToUSDC(blockchain).address,
+      stablecoinAddress,
       decimalsToken0,
       decimalsToken1,
     );
@@ -129,6 +135,7 @@ export class web3Api {
       walletAddress,
     );
     const balanceInEth = ethers.utils.formatEther(balance);
+    console.log("balanceInEth: ", balanceInEth);
     return balanceInEth;
   }
 

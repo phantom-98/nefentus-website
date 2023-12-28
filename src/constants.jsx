@@ -85,7 +85,7 @@ export const blockchainToUSDC = (blockchain) => {
     } else {
       // See https://testnet.bscscan.com/token/0x64544969ed7EBf5f083679233325356EbE738930
       return {
-        address: "0x64544969ed7EBf5f083679233325356EbE738930",
+        address: "0xaB1a4d4f1D656d2450692D237fdD6C7f9146e814",
         decimals: 18,
       };
     }
@@ -207,7 +207,7 @@ export const currencies = () => {
         blockchain: "ETH",
         icon: Tether,
         abbr: "USDT",
-        address: "0x7169D38820dfd117C3FA1f22a697dBA58d90BA06",
+        address: "0xc2c527c0cacf457746bd31b2a698fe89de2b6d49",
         decimals: 6,
       },
       {
@@ -215,7 +215,7 @@ export const currencies = () => {
         blockchain: "ETH",
         icon: USDC,
         abbr: "USDC",
-        address: "0x0f1a713859fB1d1afAc99Fe2D20CAf639560EC83",
+        address: "0x07865c6e87b9f70255377e024ace6630c1eaa37f",
         decimals: 6,
       },
       /*
@@ -246,6 +246,7 @@ export const currencies = () => {
 			  decimals: 18,
 			},
 			*/
+      /*
       {
         name: "DAI",
         blockchain: "ETH",
@@ -262,6 +263,7 @@ export const currencies = () => {
         address: "0xebef27461fe0c88bd5d6829de7226d68fce021c1",
         decimals: 8,
       },
+			*/
       // {
       //   icon: Polygon,
       //   name: "Polygon",
@@ -316,13 +318,29 @@ export const providerURL = (blockchain) => {
     if (useMainnet()) {
       return "https://ethereum.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
     } else {
-      return "https://ethereum.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
+      return "https://goerli.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
     }
   } else if (blockchain === "BNB") {
     if (useMainnet()) {
       return "https://binance.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
     } else {
       return "https://binance-testnet.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
+    }
+  }
+};
+
+export const chainId = (blockchain) => {
+  if (blockchain === "ETH") {
+    if (useMainnet()) {
+      return 1;
+    } else {
+      return 5;
+    }
+  } else if (blockchain === "BNB") {
+    if (useMainnet()) {
+      return 56;
+    } else {
+      return 97;
     }
   }
 };
