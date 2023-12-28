@@ -459,6 +459,8 @@ const SecurityItem = ({ data }) => {
               setCurrentPassword("");
               setInput(false);
             }}
+            confirmTitle={t("general.confirm")}
+            cancelTitle={t("general.cancel")}
           >
             <>
               <div className={styles.modalTitle}>
@@ -534,6 +536,8 @@ const SecurityItem = ({ data }) => {
               setCurrentPassword("");
               setInput(false);
             }}
+            confirmTitle={t("general.confirm")}
+            cancelTitle={t("general.cancel")}
           >
             <>
               <div className={styles.modalTitle}>
