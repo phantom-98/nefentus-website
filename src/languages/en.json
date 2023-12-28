@@ -1047,7 +1047,7 @@
       "seedErrorMessage": "Seed phrase is wrong. Try it again.",
       "seedInfoMessage": "Seed phrase is correct.",
       "askPassword": "To see your seed phrase, please enter your password first.",
-      "newPassword": "Please enter your new password first."
+      "newPassword": "To recover your crypto wallet using your seed phrase, please enter your password first."
     },
     "settings": {
       "title": "Security",
