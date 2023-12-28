@@ -8,9 +8,7 @@
 }
 .seedPhrasesModalWrapper {
   display: flex;
-  min-height: 300px;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
 }
 .seedPhrasesInputWrapper {
