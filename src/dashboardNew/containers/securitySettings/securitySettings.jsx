@@ -82,7 +82,6 @@ const SecuritySettings = () => {
 
   return (
     <>
-      <MessageComponent />
       <Card className={styles.card}>
         <SettingsTitle
           title={t("security.settings.title")}

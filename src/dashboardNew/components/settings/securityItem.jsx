@@ -1,26 +1,22 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import styles from "./settingsTitle.module.css";
-// import { EnableType } from "./settingsItem";
 import Button from "../button/button";
 import backend_API from "../../../api/backendAPI";
-import QRCode from "react-qr-code";
-import UrlLink from "../../../assets/icon/copyClipboardWhite.svg";
 import MessageComponent from "../../../components/message";
-import { OneTimeCodeInput, RawInput } from "../../../dashboard/input/input";
 import { useNavigate } from "react-router-dom";
 import Popup from "../popup/popup";
 import { useTranslation } from "react-i18next";
-import { EnableType, EditPopup } from "./settingsItem";
+import { EnableType } from "./settingsItem";
 import { MessageContext } from "../../../context/message";
-import { boolean } from "zod";
+
 const emptyArray = ["", "", "", "", "", "", "", "", "", "", "", ""];
 
 const SecurityItem = ({ data }) => {
-  const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
+  const { setErrorMessage, setInfoMessage, clearMessages } =
+    useContext(MessageContext);
   // const [isTotp, setIsTotp] = useState();
   // const [isOtp, setIsOtp] = useState();
   const [status, setStatus] = useState();
-  const email = useRef(localStorage.getItem("email"));
   const [seedPhrases, setSeedPhrases] = useState([]);
   // const [reset, setReset] = useState(false);
 
@@ -104,6 +100,7 @@ const SecurityItem = ({ data }) => {
       if (response2 == null) {
       } else {
         setShow(false);
+        clearMessages();
         setVerify(false);
       }
     }
@@ -155,6 +152,7 @@ const SecurityItem = ({ data }) => {
       return;
     }
     setShow(false);
+    clearMessages();
     resetValues();
   };
 
@@ -183,6 +181,7 @@ const SecurityItem = ({ data }) => {
     }
 
     setShow(false);
+    clearMessages();
   };
 
   const comparePhrases = () => {
@@ -197,6 +196,7 @@ const SecurityItem = ({ data }) => {
     setInfoMessage(t("security.items.seedInfoMessage"));
     setCheckedSeedPhrases(emptyArray);
     setAddSeedPhrases(false);
+    clearMessages();
   };
 
   const getSeedPhrases = async () => {
@@ -204,14 +204,16 @@ const SecurityItem = ({ data }) => {
     if (seed) {
       setSeedPhrases(seed.split(" "));
       setInput(false);
+      clearMessages();
       setAddSeedPhrases("step1");
     } else {
-      setErrorMessage("password is wrong");
+      setErrorMessage(t("messages.error.passwordCorrect"));
     }
     setCurrentPassword("");
   };
   const handleCloseSeedModal = () => {
     setAddSeedPhrases(false);
+    clearMessages();
     setCurrentPassword("");
     setCheckedSeedPhrases(emptyArray);
   };
@@ -230,6 +232,7 @@ const SecurityItem = ({ data }) => {
     if (res) {
       setInfoMessage(t("security.items.recoverInfoMessage"));
       setAddSeedPhrases(false);
+      clearMessages();
     } else {
       setErrorMessage(t("security.items.recoverErrorMessage"));
     }
@@ -378,6 +381,7 @@ const SecurityItem = ({ data }) => {
                 : comparePhrases
             }
           >
+            <MessageComponent />
             <div className={styles.seedPhrasesModalWrapper}>
               <p style={{ fontSize: "32px" }}>
                 {addSeedPhrases === "step1"
@@ -458,11 +462,13 @@ const SecurityItem = ({ data }) => {
             onClose={() => {
               setCurrentPassword("");
               setInput(false);
+              clearMessages();
             }}
             confirmTitle={t("general.confirm")}
             cancelTitle={t("general.cancel")}
           >
             <>
+              <MessageComponent />
               <div className={styles.modalTitle}>
                 {t("security.passwords.labelCurrent")}
                 <div className={styles.description}>
@@ -491,6 +497,7 @@ const SecurityItem = ({ data }) => {
             cancelTitle={t("general.close")}
             onConfirm={handleRecoverWallet}
           >
+            <MessageComponent />
             <div className={styles.seedPhrasesModalWrapper}>
               <p style={{ fontSize: "32px" }}>
                 {t("security.items.verifySeed")}
@@ -530,16 +537,19 @@ const SecurityItem = ({ data }) => {
             show={input}
             onConfirm={() => {
               setInput(false);
+              clearMessages();
               setAddSeedPhrases("step2");
             }}
             onClose={() => {
               setCurrentPassword("");
               setInput(false);
+              clearMessages();
             }}
             confirmTitle={t("general.confirm")}
             cancelTitle={t("general.cancel")}
           >
             <>
+              <MessageComponent />
               <div className={styles.modalTitle}>
                 {t("security.passwords.labelCurrent")}
                 <div className={styles.description}>
