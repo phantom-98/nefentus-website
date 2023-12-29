@@ -345,6 +345,7 @@ const SendModal = ({
     const sendCurrency = currencies().find(
       (currency) => currency.abbr === withdrawCurrency,
     );
+    console.log(sendCurrency);
     if (!sendCurrency) {
       setErrorMessage(t("dashboard.cryptoCard.sendModal.correctCurrencyError"));
       return;

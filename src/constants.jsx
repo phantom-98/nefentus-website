@@ -85,7 +85,7 @@ export const blockchainToUSDC = (blockchain) => {
     } else {
       // See https://testnet.bscscan.com/token/0x64544969ed7EBf5f083679233325356EbE738930
       return {
-        address: "0xaB1a4d4f1D656d2450692D237fdD6C7f9146e814",
+        address: "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee",
         decimals: 18,
       };
     }
@@ -246,15 +246,15 @@ export const currencies = () => {
 			  decimals: 18,
 			},
 			*/
-      /*
       {
         name: "DAI",
         blockchain: "ETH",
         icon: DAI,
         abbr: "DAI",
-        address: "0x53844F9577C2334e541Aec7Df7174ECe5dF1fCf0",
+        address: "0xdc31ee1784292379fbb2964b3b9c4124d8f89c60",
         decimals: 18,
       },
+      /*
       {
         name: "Dogecoin",
         blockchain: "BNB",
