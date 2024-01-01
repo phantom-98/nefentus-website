@@ -71,9 +71,13 @@ const CryptoCard = () => {
   const backend_API = new backendAPI();
   const currencyList = currencies();
 
-  useEffect(() => {
+  const updateInfo = async () => {
     fetchBalances(activeWallet.address);
     fetchPrices();
+  };
+
+  useEffect(() => {
+    updateInfo();
   }, [activeWallet]);
 
   useEffect(() => {
@@ -202,6 +206,7 @@ const CryptoCard = () => {
           else setIsExternal(true);
           setActiveWallet(data);
         }}
+        onSuccess={updateInfo}
       />
     </Card>
   );
@@ -311,6 +316,7 @@ const SendModal = ({
   wallet,
   walletOptions,
   setWallet,
+  onSuccess,
 }) => {
   const [withdrawCurrency, setWithdrawCurrency] = useState(
     currencies()[0].abbr,
@@ -361,15 +367,11 @@ const SendModal = ({
     }
 
     //Before withdraw
-    setPassword("");
     setIsWithdrawing(true);
     setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawing"));
 
     // Withdraw
     const tokenAddress = sendCurrency.address;
-    // TODO! How to determine the right wallet?
-    // const walletAddres = "";
-    // const isExternal = false;
     if (isExternal) {
       const web3API = new web3Api("metamask");
 
@@ -393,17 +395,22 @@ const SendModal = ({
       const backend_Api = new backendAPI();
       const ret = await backend_Api.send(
         tokenAddress,
+        sendCurrency.blockchain,
         withdrawAmount,
+        wallet.address,
         withdrawAddress,
         password,
       );
       if (ret) {
         setInfoMessage(t("messages.success.withdrawal"));
-        fetchBalances(wallet.address);
+        if (onSuccess) onSuccess();
       } else {
         setErrorMessage(t("messages.error.withdraw"));
       }
     }
+
+    setPassword("");
+    setIsWithdrawing(false);
   };
 
   return (

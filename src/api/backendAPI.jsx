@@ -1103,12 +1103,21 @@ export default class backendAPI {
     }
   }
 
-  async send(tokenAddress, amount, toAddress, password) {
+  async send(
+    tokenAddress,
+    blockchain,
+    amount,
+    fromAddress,
+    toAddress,
+    password,
+  ) {
     try {
       const url = `${this.baseURL}/wallet/send`;
       const requestBody = {
         tokenAddress: tokenAddress,
+        blockchain: blockchain,
         amount: amount,
+        fromAddress: fromAddress,
         toAddress: toAddress,
         password: password,
       };

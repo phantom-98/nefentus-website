@@ -282,6 +282,7 @@ export class web3Api {
       toChecksumAddress(seniorBrokerAddress),
     );
     info.leaderAddress = zeroAddressToNull(toChecksumAddress(leaderAddress));
+    info.blockchain = blockchain;
     info.currencyAddress = currencyAddress;
     info.blockchain = blockchain;
     info.stablecoinAddress = toChecksumAddress(stablecoinAddress);
