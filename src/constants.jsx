@@ -1,3 +1,4 @@
+//import { Ethereum, Goerli, Binance, BinanceTestnet } from "@thirdweb-dev/chains";
 import Bitcoin from "./assets/icon/crypto/bitcoin.svg";
 import Polygon from "./assets/icon/crypto/polygon.svg";
 import Cardano from "./assets/icon/crypto/cardano.svg";
@@ -341,6 +342,22 @@ export const chainId = (blockchain) => {
       return 56;
     } else {
       return 97;
+    }
+  }
+};
+
+export const chainThirdweb = (blockchain) => {
+  if (blockchain === "ETH") {
+    if (useMainnet()) {
+      return Ethereum;
+    } else {
+      return Goerli;
+    }
+  } else if (blockchain === "BNB") {
+    if (useMainnet()) {
+      return Binance;
+    } else {
+      return BinanceTestnet;
     }
   }
 };

@@ -18,6 +18,14 @@ const provider = (providerURL) => {
   return new ethers.providers.JsonRpcProvider(providerURL);
 };
 
+const MMProvider = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  window.ethereum.enable();
+  await provider.send("eth_requestAccounts", []); // <- this promps user to connect metamask
+  console.log(provider);
+  return provider;
+};
+
 export class uniswapApi {
   /**
    * Determine the price of the two tokens in the pool
@@ -167,7 +175,7 @@ export class web3Api {
   }
 
   async sendNative(blockchain, amount, toAddress) {
-    const signer = providerURL(blockchain).getSigner();
+    const signer = MMProvider().getSigner();
     const transaction = {
       to: toAddress,
       value: ethers.utils.parseEther(amount),
@@ -178,7 +186,7 @@ export class web3Api {
   }
 
   async sendToken(tokenAddress, blockchain, amount, toAddress) {
-    const signer = providerURL(blockchain).getSigner();
+    const signer = MMProvider().getSigner();
     const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
     const decimals = await tokenContract.decimals();
     const txRequest = await tokenContract.transfer(

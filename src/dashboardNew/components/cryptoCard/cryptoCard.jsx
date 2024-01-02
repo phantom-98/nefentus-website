@@ -3,6 +3,7 @@ import Card from "../card/card";
 import styles from "./cryptoCard.module.css";
 
 import { useContext, useEffect, useState } from "react";
+import { useNetworkMismatch, useNetwork } from "@thirdweb-dev/react";
 import useInternalWallet from "../../../hooks/internalWallet";
 import {
   metamaskWallet,
@@ -16,7 +17,7 @@ import {
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
 import backendAPI from "../../../api/backendAPI";
-import { currencies, blockchainToName } from "../../../constants";
+import { currencies, blockchainToName, chainId } from "../../../constants";
 import { formatTokenBalance, formatUSDBalance } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import { MessageContext } from "../../../context/message";
@@ -330,6 +331,9 @@ const SendModal = ({
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
 
+  const isMismatched = useNetworkMismatch();
+  const [, switchNetwork] = useNetwork();
+
   const withdraw = async () => {
     if (isWithdrawing) return;
 
@@ -376,8 +380,11 @@ const SendModal = ({
       const web3API = new web3Api("metamask");
 
       try {
+        switchNetwork(chainId(sendCurrency.blockchain));
+
         const txReceipt = await web3API.send(
           tokenAddress,
+          sendCurrency.blockchain,
           withdrawAmount,
           withdrawAddress,
         );
