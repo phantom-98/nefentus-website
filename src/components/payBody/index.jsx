@@ -65,11 +65,14 @@ const PayBody = ({ invoice }) => {
         <>
           <div className={`card ${styles.payInfo}`}>
             <div className={styles.body}>
-              <TopInfo
-                title={t("payments.pay.title")}
-                description={t("payments.pay.description")}
-              />
-
+              <div className={styles.top}>
+                <div>
+                  <p className={styles.title}>{t("payments.pay.title")}</p>
+                  <p className={styles.description}>
+                    {t("payments.pay.description")}
+                  </p>
+                </div>
+              </div>
               <p className={styles.seller}>{t("payments.buyer")}</p>
               <div className={styles.columns}>
                 <p className={styles.price}>

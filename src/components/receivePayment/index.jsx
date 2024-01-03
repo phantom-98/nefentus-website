@@ -146,146 +146,147 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
     <div className={styles.container}>
       <MessageComponent />
 
-      <div className={styles.infoWrapper}>{info}</div>
+      <div className={styles.wrapper}>
+        <div className={styles.infoWrapper}>{info}</div>
 
-      {disabled && (
-        <div className={`card ${styles.productBuy}`}>
-          <div className={styles.body}>
-            <TopInfo
-              title="Buy product"
-              description="This product is currently unavailable."
-            />
+        {disabled && (
+          <div className={`${styles.productBuy}`}>
+            <div className={styles.body}>
+              <TopInfo
+                title="Buy product"
+                description="This product is currently unavailable."
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {!disabled && (
-        <div className={`card ${styles.productBuy}`}>
-          <div className={styles.body}>
-            <TopInfo
-              title={t("products.topInfoTitle")}
-              description={t("products.topInfoDescription")}
-            />
-            <Tabs
-              tabIds={["internal", "metamask"]}
-              initActiveTab={"internal"}
-              getHeader={(tabId) => {
-                if (tabId === "metamask") {
-                  return (
-                    <>
-                      <img
-                        src={MetaMaskLogo}
-                        className={styles.tabNavLogo}
-                        alt="MetaMask Wallet"
-                      />{" "}
-                      MetaMask
-                    </>
-                  );
-                } else if (tabId === "internal") {
-                  return (
-                    <>
-                      <img
-                        src={NefentusLogo}
-                        className={styles.tabNavLogo}
-                        alt="Nefentus Wallet"
-                      />{" "}
-                      Nefentus Wallet
-                    </>
-                  );
-                }
-              }}
-              getBody={(tabId) => {
-                if (tabId === "metamask") {
-                  return (
-                    <div className={styles.tabContent}>
-                      {metamask.status === "connected" && (
-                        <div className={styles.table}>
-                          {currencies.map((currency, idx) => (
-                            <CryptoLine
-                              key={currency.abbr}
-                              currency={currency}
-                              balance={balances[0][idx]}
-                              price={prices[idx]}
-                              priceProduct={priceUSD}
-                              onClick={() => {
-                                handleBuy("metamask", idx);
-                              }}
-                            />
-                          ))}
-                        </div>
-                      )}
-                      {metamask.status === "disconnected" && (
-                        <div className={styles.center}>
-                          <Button
-                            className={styles.metamaskConnectButton}
-                            onClick={() =>
-                              metamask.connect(metamask.config, { chainId: 1 })
-                            }
-                          >
-                            {t("products.connect")}MetaMask
-                          </Button>
-                        </div>
-                      )}
-                      {metamask.status === "unknown" && (
-                        <div className={styles.center}>
-                          <Button
-                            className={styles.metamaskConnectButton}
-                            disabled
-                          >
-                            MetaMask{t("products.notAvailable")}
-                          </Button>
-                        </div>
-                      )}
-                      {metamask.status === "connecting" && (
-                        <div className={styles.center}>
-                          <Button
-                            className={styles.metamaskConnectButton}
-                            disabled
-                          >
-                            {t("products.connecting")}
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  );
-                } else if (tabId === "internal") {
-                  return (
-                    <div className={styles.tabContent}>
-                      {!internalWalletAddress && (
-                        <div className={styles.center}>
-                          <Button
-                            className={styles.nefentusLoginButton}
-                            onClick={() => {}}
-                          >
-                            {t("products.login")}Nefentus
-                          </Button>
-                        </div>
-                      )}
-                      {internalWalletAddress && (
-                        <div className={styles.table}>
-                          {currencies.map((currency, idx) => (
-                            <CryptoLine
-                              key={currency.abbr}
-                              currency={currency}
-                              balance={balances[1][idx]}
-                              price={prices[idx]}
-                              priceProduct={priceUSD}
-                              onClick={() => {
-                                setInternalPayIdx(idx);
-                              }}
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  );
-                }
-              }}
-              beforeChangeTab={() => {}}
-            />
+        {!disabled && (
+          <div className={`${styles.productBuy}`}>
+            <div className={styles.body}>
+              <Tabs
+                tabIds={["internal", "metamask"]}
+                initActiveTab={"internal"}
+                getHeader={(tabId) => {
+                  if (tabId === "metamask") {
+                    return (
+                      <>
+                        <img
+                          src={MetaMaskLogo}
+                          className={styles.tabNavLogo}
+                          alt="MetaMask Wallet"
+                        />{" "}
+                        MetaMask
+                      </>
+                    );
+                  } else if (tabId === "internal") {
+                    return (
+                      <>
+                        <img
+                          src={NefentusLogo}
+                          className={styles.tabNavLogo}
+                          alt="Nefentus Wallet"
+                        />{" "}
+                        Nefentus Wallet
+                      </>
+                    );
+                  }
+                }}
+                getBody={(tabId) => {
+                  if (tabId === "metamask") {
+                    return (
+                      <div className={styles.tabContent}>
+                        {metamask.status === "connected" && (
+                          <div className={styles.table}>
+                            {currencies.map((currency, idx) => (
+                              <CryptoLine
+                                key={currency.abbr}
+                                currency={currency}
+                                balance={balances[0][idx]}
+                                price={prices[idx]}
+                                priceProduct={priceUSD}
+                                onClick={() => {
+                                  handleBuy("metamask", idx);
+                                }}
+                              />
+                            ))}
+                          </div>
+                        )}
+                        {metamask.status === "disconnected" && (
+                          <div className={styles.center}>
+                            <Button
+                              className={styles.metamaskConnectButton}
+                              onClick={() =>
+                                metamask.connect(metamask.config, {
+                                  chainId: 1,
+                                })
+                              }
+                            >
+                              {t("products.connect")}MetaMask
+                            </Button>
+                          </div>
+                        )}
+                        {metamask.status === "unknown" && (
+                          <div className={styles.center}>
+                            <Button
+                              className={styles.metamaskConnectButton}
+                              disabled
+                            >
+                              MetaMask{t("products.notAvailable")}
+                            </Button>
+                          </div>
+                        )}
+                        {metamask.status === "connecting" && (
+                          <div className={styles.center}>
+                            <Button
+                              className={styles.metamaskConnectButton}
+                              disabled
+                            >
+                              {t("products.connecting")}
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  } else if (tabId === "internal") {
+                    return (
+                      <div className={styles.tabContent}>
+                        {!internalWalletAddress && (
+                          <div className={styles.center}>
+                            <Button
+                              className={styles.nefentusLoginButton}
+                              onClick={() => {}}
+                            >
+                              {t("products.login")}Nefentus
+                            </Button>
+                          </div>
+                        )}
+                        {internalWalletAddress && (
+                          <div className={styles.table}>
+                            {currencies.map((currency, idx) => (
+                              <CryptoLine
+                                key={currency.abbr}
+                                currency={currency}
+                                balance={balances[1][idx]}
+                                price={prices[idx]}
+                                priceProduct={priceUSD}
+                                onClick={() => {
+                                  setInternalPayIdx(idx);
+                                }}
+                              />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+                }}
+                beforeChangeTab={() => {}}
+              />
+            </div>
+            <p>By clicking on button you agree to the Terms of Service</p>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {internalPayIdx >= 0 && (
         <Modal
