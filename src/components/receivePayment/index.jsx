@@ -28,7 +28,14 @@ import { formatTokenBalance, formatUSDBalance } from "../../utils";
 import { nullToZeroAddress } from "../../utils";
 import { useTranslation } from "react-i18next";
 
-const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
+const ReceivePayment = ({
+  priceUSD,
+  seller,
+  children,
+  info,
+  transInfoArg,
+  disabled,
+}) => {
   let internalWalletAddress = useInternalWallet();
   const { t } = useTranslation();
 
@@ -102,7 +109,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
       setErrorMessage(t("messages.error.invalidPrice"));
       return;
     }
-    if (!userId) {
+    if (!seller) {
       setErrorMessage(t("messages.error.invalidUserId"));
       return;
     }
@@ -115,7 +122,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
     if (providerSource === "metamask") {
       const web3API = new web3Api(providerSource);
 
-      const hierarchy = await backend_API.getHierarchy(userId);
+      const hierarchy = await backend_API.getHierarchy(seller.id);
       console.log(hierarchy);
 
       const transactionInfo = await web3API.callDepositContract(
@@ -173,7 +180,47 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
       <MessageComponent />
 
       <div className={styles.wrapper}>
-        <div className={styles.infoWrapper}>{info}</div>
+        <div className={styles.infoWrapper}>
+          {seller && (
+            <div className={styles.sellerWrapper}>
+              <p style={{ fontSize: "1.2rem", color: "#B1B1B1" }}>
+                Seller Info
+              </p>
+              <div className={styles.sellerContainer}>
+                <div className={styles.avatarWrapper}>
+                  {seller.s3Url && <img src={seller.s3Url} />}
+                  {!seller.s3Url && (
+                    <span style={{ fontSize: "1.4rem", marginTop: "0.3rem" }}>
+                      {seller.firstName[0]}
+                      {seller.lastName[0]}
+                    </span>
+                  )}
+                </div>
+                <div
+                  className={styles.sellerInfo}
+                  style={{ borderRight: "1px solid #313131" }}
+                >
+                  <p className={styles.sellerTitle}>{t("payments.name")}</p>
+                  <p className={styles.sellerValue}>
+                    {seller.firstName} {seller.lastName}
+                  </p>
+                </div>
+                <div
+                  className={styles.sellerInfo}
+                  style={{ borderRight: "1px solid #313131" }}
+                >
+                  <p className={styles.sellerTitle}>{t("payments.email")}</p>
+                  <p className={styles.sellerValue}>{seller.email}</p>
+                </div>
+                <div className={styles.sellerInfo}>
+                  <p className={styles.sellerTitle}>{t("payments.company")}</p>
+                  <p className={styles.sellerValue}>{seller.business}</p>
+                </div>
+              </div>
+            </div>
+          )}
+          {info}
+        </div>
 
         <div className={styles.productBuy}>
           <div className={styles.body}>
@@ -181,9 +228,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
               <p>Total in USDT</p>
               <p>${priceUSD}</p>
             </div>
-            <div style={{ borderBottom: "1px solid #313131" }}>
-              {/* {Children} */}
-            </div>
+            <div style={{ borderBottom: "1px solid #313131" }}>{children}</div>
             <div
               className={styles.walletWrapper}
               style={{ borderBottom: "1px solid #313131" }}

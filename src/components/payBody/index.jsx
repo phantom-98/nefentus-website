@@ -59,7 +59,7 @@ const PayBody = ({ invoice }) => {
   return (
     <ReceivePayment
       priceUSD={invoice.price}
-      userId={invoice.user ? invoice.user.id : null}
+      seller={invoice.user}
       transInfoArg={{ invoiceId: invoice.id }}
       info={
         <>
