@@ -118,7 +118,7 @@ const InvoicesBody = () => {
             <Button
               color="gray"
               fontSize="1rem"
-              width="8rem"
+              width="9.5rem"
               onClick={() => {
                 setEnableInvoicing((prev) => !prev);
                 setchanged(true);
