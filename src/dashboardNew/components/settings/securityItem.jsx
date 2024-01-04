@@ -260,7 +260,7 @@ const SecurityItem = ({ data }) => {
           <Button
             color="gray"
             fontSize="1rem"
-            width="9.5rem"
+            width="10rem"
             onClick={
               data.flow === "otp"
                 ? handleOtp
