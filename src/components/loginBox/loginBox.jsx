@@ -240,6 +240,10 @@ const LoginBox = () => {
           setOtp(response.hasOtp);
           setTotp(response.hasTotp);
           setEmail(response.email);
+        } else if (response.resetPassword) {
+          navigate("/dashboard/security", {
+            state: { recommendRecover: true },
+          });
         } else {
           navigateDashboard();
         }

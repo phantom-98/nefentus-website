@@ -11,7 +11,7 @@ import { MessageContext } from "../../../context/message";
 
 const emptyArray = ["", "", "", "", "", "", "", "", "", "", "", ""];
 
-const SecurityItem = ({ data }) => {
+const SecurityItem = ({ data, recover }) => {
   const { setErrorMessage, setInfoMessage, clearMessages } =
     useContext(MessageContext);
   // const [isTotp, setIsTotp] = useState();
@@ -25,6 +25,7 @@ const SecurityItem = ({ data }) => {
   // const [code, setCode] = useState("");
   const [show, setShow] = useState(false);
   const [input, setInput] = useState(false);
+  const [showRecommend, setShowRecommend] = useState(recover);
 
   // const [open, setOpen] = useState(false);
 
@@ -58,6 +59,10 @@ const SecurityItem = ({ data }) => {
   useEffect(() => {
     setStatus(data.value);
   }, [data]);
+  useEffect(() => {
+    if (recover) {
+    }
+  }, []);
 
   const handleOtp = async () => {
     const response = await backendAPI.setupOtp({ active: !status });
@@ -567,6 +572,29 @@ const SecurityItem = ({ data }) => {
               </div>
             </>
           </Popup>
+          {recover && (
+            <Popup
+              show={showRecommend}
+              onConfirm={() => {
+                setShowRecommend(false);
+                setInput(true);
+              }}
+              onClose={() => {
+                setShowRecommend(false);
+              }}
+              confirmTitle={t("general.confirm")}
+              cancelTitle={t("general.cancel")}
+            >
+              <>
+                <h1 style={{ fontSize: "1.8rem" }}>
+                  Recommend you to recover wallet
+                </h1>
+                <p style={{ fontSize: "1.2rem", opacity: "0.6" }}>
+                  We detected your password is changed!
+                </p>
+              </>
+            </Popup>
+          )}
         </>
       )}
 
