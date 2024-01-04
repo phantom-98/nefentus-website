@@ -1,15 +1,15 @@
 import styles from "./receivePayment.module.css";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, Children } from "react";
 import { Link } from "react-router-dom";
 import Input from "../../components/input/input";
 import Tabs from "../tabs";
 import TopInfo from "../../dashboard/topInfo/topInfo";
 import Table from "../../components/table";
 import MessageComponent from "../message";
-import ModalOverlay from "../../dashboard/modal/modalOverlay";
 import { MessageContext } from "../../context/message";
 import NefentusLogo from "../../assets/logo/logo_n.png";
 import MetaMaskLogo from "../../assets/logo/MetaMask.svg";
+import DropDownIcon from "../../assets/icon/dropdown.svg";
 import backendAPI from "../../api/backendAPI";
 import { web3Api, uniswapApi } from "../../api/web3Api";
 import Button from "../../components/button/button";
@@ -44,6 +44,32 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
   };
   console.log("MetaMask status: " + metamask.status);
   console.log("MetaMask address: " + metamask.address);
+
+  const wallets = [
+    {
+      type: "internal",
+      title: "Nefentus",
+      icon: NefentusLogo,
+      description: "0x2a88d2f22c228992cce2578ca",
+      alt: "Nefentus Wallet",
+    },
+    {
+      type: "metamask",
+      title: "MetaMask",
+      icon: MetaMaskLogo,
+      description: "0xcd258d58465e9859aa9cae9",
+      alt: "MetaMask Wallet",
+    },
+  ];
+  const [selectedWalletIndex, setSelectedWalletIndex] = useState(0);
+
+  const cryptos = currencies.map((currency) => {
+    return {
+      title: currency.abbr,
+      icon: currency.icon,
+    };
+  });
+  const [selectedCryptoIndex, setSelectedCryptoIndex] = useState(0);
 
   const { balances, fetchBalances } = useBalances(metamask);
   const { prices, fetchPrices } = usePrices(metamask);
@@ -149,18 +175,63 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
       <div className={styles.wrapper}>
         <div className={styles.infoWrapper}>{info}</div>
 
-        {disabled && (
-          <div className={`${styles.productBuy}`}>
-            <div className={styles.body}>
-              <TopInfo
-                title="Buy product"
-                description="This product is currently unavailable."
+        <div className={styles.productBuy}>
+          <div className={styles.body}>
+            <div className={styles.total}>
+              <p>Total in USDT</p>
+              <p>${priceUSD}</p>
+            </div>
+            <div style={{ borderBottom: "1px solid #313131" }}>
+              {/* {Children} */}
+            </div>
+            <div
+              className={styles.walletWrapper}
+              style={{ borderBottom: "1px solid #313131" }}
+            >
+              <div className={styles.chooseWallet}>
+                <p>Choose Wallet</p>
+                <svg
+                  width="19"
+                  height="19"
+                  viewBox="0 0 19 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="add">
+                    <path
+                      id="Vector"
+                      d="M14.5977 10.25H10.0977V14.75H8.59766V10.25H4.09766V8.75H8.59766V4.25H10.0977V8.75H14.5977V10.25Z"
+                      fill="#E9E9E9"
+                    />
+                  </g>
+                </svg>
+              </div>
+              <Select
+                data={wallets}
+                selectedIndex={selectedWalletIndex}
+                setSelectedIndex={setSelectedWalletIndex}
               />
             </div>
+            <div className={styles.paymentWrapper}>
+              <div style={{ width: "35%" }}>
+                <Select
+                  data={cryptos}
+                  selectedIndex={selectedCryptoIndex}
+                  setSelectedIndex={setSelectedCryptoIndex}
+                />
+              </div>
+              <Button style={{ width: "65%", height: "60px" }}>
+                Pay ${priceUSD}
+              </Button>
+            </div>
           </div>
-        )}
+          <p>
+            By clicking on button you agree to the{" "}
+            <a style={{ textDecoration: "underline" }}>Terms of Service</a>
+          </p>
+        </div>
 
-        {!disabled && (
+        {/* {!disabled && (
           <div className={`${styles.productBuy}`}>
             <div className={styles.body}>
               <Tabs
@@ -283,24 +354,15 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
                 beforeChangeTab={() => {}}
               />
             </div>
-            <p>By clicking on button you agree to the Terms of Service</p>
+            <p>By clicking on button you agree to the <a style={{textDecoration: "underline"}}>Terms of Service</a></p>
           </div>
-        )}
+        )} */}
       </div>
-
-      {internalPayIdx >= 0 && (
-        <Modal
-          price={priceUSD}
-          currencyAbbr={currencies[internalPayIdx].abbr}
-          onClose={() => setInternalPayIdx(-1)}
-          onPay={() => handleBuy("internal", internalPayIdx)}
-          password={password}
-          setPassword={setPassword}
-        />
-      )}
     </div>
   );
 };
+
+export default ReceivePayment;
 
 const CryptoLine = ({ balance, price, currency, priceProduct, onClick }) => {
   let balanceToken = "loading";
@@ -350,54 +412,61 @@ const CryptoLine = ({ balance, price, currency, priceProduct, onClick }) => {
   );
 };
 
-const Modal = ({
-  price,
-  currencyAbbr,
-  onClose,
-  onPay,
-  password,
-  setPassword,
-}) => {
+const Select = ({ data, selectedIndex, setSelectedIndex }) => {
+  const [open, setOpen] = useState(false);
   return (
-    <ModalOverlay>
-      <div className={styles.modal}>
-        <MessageComponent />
-
-        <TopInfo
-          title={"Password"}
-          description={`Type in your password to pay with your Nefentus wallet`}
+    <>
+      <div
+        className={`option ${styles.select}`}
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        <SelectOption
+          icon={data[selectedIndex].icon}
+          optionTitle={data[selectedIndex].title}
+          optionDescription={data[selectedIndex].description}
+          alt={data[selectedIndex].alt}
+          dropdown
         />
-
-        <Table
-          data={[
-            ["Amount:", `${price} USD`],
-            ["Currency:", currencyAbbr],
-          ]}
-          colSizes={[1, 3]}
-        />
-
-        <div className={styles.modalInputs}>
-          <Input
-            label={"Password"}
-            placeholder={"Enter password"}
-            dashboard
-            value={password}
-            setState={setPassword}
-            secure
-          />
-        </div>
-
-        <div className={styles.modalButtons}>
-          <Button onClick={onClose} color="black">
-            Close
-          </Button>
-          <Button onClick={onPay} color="white">
-            Pay
-          </Button>
-        </div>
+        {open && (
+          <div className={styles.selectBody}>
+            {data.map((item, index) => {
+              return (
+                <div key={index} onClick={() => setSelectedIndex(index)}>
+                  <SelectOption
+                    icon={item.icon}
+                    optionTitle={item.title}
+                    optionDescription={item.description}
+                    alt={item.alt}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
-    </ModalOverlay>
+    </>
   );
 };
 
-export default ReceivePayment;
+const SelectOption = ({
+  icon,
+  optionTitle,
+  optionDescription,
+  alt,
+  dropdown,
+}) => {
+  return (
+    <div className={styles.optionLineWrapper}>
+      <div className={styles.optionLine}>
+        <div className={styles.iconContainer}>
+          <img src={icon} className={styles.icon} alt={alt} />
+        </div>
+        <div className={styles.optionContainer}>
+          <p className={styles.optionTitle}> {optionTitle} </p>
+          <p className={styles.optionDescription}> {optionDescription} </p>
+        </div>
+      </div>
+      {dropdown && <img src={DropDownIcon} alt="dropdown" />}
+    </div>
+  );
+};

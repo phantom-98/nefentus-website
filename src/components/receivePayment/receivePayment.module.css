@@ -61,7 +61,7 @@
 }
 
 .productBuy {
-  border-radius: 0.5rem;
+  width: 38%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -173,4 +173,134 @@
 
 .modalButtons > div {
   width: 100%;
+}
+
+.body {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 6px;
+  border: 1px solid #313131;
+  background: #1f1f1f;
+}
+
+.optionLineWrapper {
+  display: flex;
+  height: 60px;
+  padding: 12px;
+  justify-content: space-between;
+  align-items: center;
+  /* align-self: stretch; */
+  border: 1px solid #313131;
+  /* border-radius: 1rem; */
+  background: #1f1f1f;
+}
+
+.optionLine {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  align-self: stretch;
+}
+
+.iconContainer {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 43px;
+  background: #313131;
+}
+
+.optionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: -1px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 64px;
+}
+
+.optionTitle {
+  color: #f6f6f6;
+}
+
+.optionDescription {
+  color: #b1b1b1;
+}
+
+.total {
+  display: flex;
+  padding: 18px 24px;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  border-bottom: 1px solid #313131;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.walletWrapper {
+  width: 100%;
+  display: flex;
+  padding: 18px 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  align-self: stretch;
+}
+
+.chooseWallet {
+  display: flex;
+  padding-right: 12px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.select {
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.option {
+  cursor: pointer;
+}
+
+.selectBody {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  bottom: 0;
+  transform: translateY(100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  z-index: 100;
+}
+
+.paymentWrapper {
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
 }
