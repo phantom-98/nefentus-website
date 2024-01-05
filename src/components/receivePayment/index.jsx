@@ -8,6 +8,7 @@ import MessageComponent from "../message";
 import { MessageContext } from "../../context/message";
 import NefentusLogo from "../../assets/logo/logo_n.png";
 import MetaMaskLogo from "../../assets/logo/MetaMask.svg";
+import WalletConnectLogo from "../../assets/logo/WalletConnect.svg";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
 import backendAPI from "../../api/backendAPI";
 import { web3Api, uniswapApi } from "../../api/web3Api";
@@ -56,14 +57,21 @@ const ReceivePayment = ({
       type: "internal",
       title: "Nefentus",
       icon: NefentusLogo,
-      description: "0x2a88d2f22c228992cce2578ca",
+      description: "",
       alt: "Nefentus Wallet",
     },
     {
       type: "metamask",
       title: "MetaMask",
       icon: MetaMaskLogo,
-      description: "0xcd258d58465e9859aa9cae9",
+      description: "",
+      alt: "MetaMask Wallet",
+    },
+    {
+      type: "walletconnect",
+      title: "WalletConnect",
+      icon: WalletConnectLogo,
+      description: "",
       alt: "MetaMask Wallet",
     },
   ];
