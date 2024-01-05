@@ -3,6 +3,7 @@ import ReceivePayment from "../receivePayment";
 import TopInfo from "../../dashboard/topInfo/topInfo";
 
 const PayBody = ({ invoice }) => {
+  console.log(invoice);
   return (
     <ReceivePayment
       priceUSD={invoice.price}

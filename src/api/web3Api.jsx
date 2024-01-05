@@ -18,12 +18,11 @@ const provider = (providerURL) => {
   return new ethers.providers.JsonRpcProvider(providerURL);
 };
 
-const MMProvider = async () => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  window.ethereum.enable();
-  await provider.send("eth_requestAccounts", []); // <- this promps user to connect metamask
-  console.log(provider);
-  return provider;
+const providerMetamask = () => {
+  const providerMM = new ethers.providers.Web3Provider(window.ethereum);
+  //window.ethereum.enable();
+  //await provider.send("eth_requestAccounts", []);
+  return providerMM;
 };
 
 export class uniswapApi {
@@ -175,7 +174,7 @@ export class web3Api {
   }
 
   async sendNative(blockchain, amount, toAddress) {
-    const signer = MMProvider().getSigner();
+    const signer = providerMetamask().getSigner();
     const transaction = {
       to: toAddress,
       value: ethers.utils.parseEther(amount),

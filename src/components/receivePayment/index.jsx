@@ -1,5 +1,5 @@
 import styles from "./receivePayment.module.css";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Input from "../../components/input/input";
 import Tabs from "../tabs";
@@ -10,23 +10,29 @@ import ModalOverlay from "../../dashboard/modal/modalOverlay";
 import { MessageContext } from "../../context/message";
 import NefentusLogo from "../../assets/logo/logo_n.png";
 import MetaMaskLogo from "../../assets/logo/MetaMask.svg";
+import WalletConnectLogo from "../../assets/logo/WalletConnect.svg";
 import backendAPI from "../../api/backendAPI";
 import { web3Api } from "../../api/web3Api";
 import Button from "../../components/button/button";
 import useInternalWallet from "../../hooks/internalWallet";
 import {
-  useConnect,
-  useDisconnect,
   metamaskWallet,
-  useConnectionStatus,
   useAddress,
+  useConnect,
+  useConnectionStatus,
+  useDisconnect,
+  walletConnect,
+  useWallet,
+  ThirdwebProvider,
+  useBalance,
 } from "@thirdweb-dev/react";
 import useBalances from "../../hooks/balances";
 import usePrices from "../../hooks/prices";
-import { currencies } from "../../constants";
+import { currencies, blockchainToUSDC, chainId } from "../../constants";
 import { formatTokenBalance, formatUSDBalance } from "../../utils";
 import { nullToZeroAddress } from "../../utils";
 import { useTranslation } from "react-i18next";
+import { OptionsWithImage } from "../../components/input/input";
 
 const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
   let internalWalletAddress = useInternalWallet();
@@ -34,43 +40,63 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
 
   const [password, setPassword] = useState("");
   const [internalPayIdx, setInternalPayIdx] = useState(-1); // Index of the currency to pay with (or -1 if not selected)
+  const [payCurrency, setPayCurrency] = useState("ETH");
 
-  const metamask = {
+  const wallets = [
+    {
+      connect: walletConnect(),
+      icon: WalletConnectLogo,
+      name: "WalletConnect",
+    },
+    {
+      connect: metamaskWallet(),
+      icon: MetaMaskLogo,
+      name: "MetaMask",
+    },
+  ];
+
+  const walletActions = {
     connect: useConnect(),
     disconnect: useDisconnect(),
-    config: metamaskWallet(),
     address: useAddress(),
     status: useConnectionStatus(),
+    balance: useBalance(),
   };
-  console.log("MetaMask status: " + metamask.status);
-  console.log("MetaMask address: " + metamask.address);
 
-  const { balances, fetchBalances } = useBalances(metamask);
-  const { prices, fetchPrices } = usePrices(metamask);
+  const { balances, fetchBalances } = useBalances();
+  const { prices, fetchPrices } = usePrices();
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
 
   const backend_API = new backendAPI();
 
+  /*
+	const updateInfo = async () => {
+    fetchBalances(activeWallet.address);
+    fetchPrices();
+  };
+
+  useEffect(() => {
+    updateInfo();
+  }, [activeWallet]);
+	*/
+
   useEffect(() => {
     clearMessages();
   }, []);
 
-  useEffect(() => {
-    fetchPrices();
-    fetchBalances();
-
-    if (metamask.status === "connected" && metamask.address) {
-      registerWallet();
-    }
-  }, [metamask.status, metamask.address]);
-
   async function registerWallet() {
-    const result = await backend_API.registerWalletAddress(metamask.address);
+    const result = await backend_API.registerWalletAddress(
+      activeWallet.address,
+    );
   }
 
-  async function handleBuy(providerSource, currencyIdx) {
+  function findCurrency() {
+    return currencies().find((currency) => currency.abbr === payCurrency);
+  }
+
+  async function handleBuy(currency, payWithExternalwallet) {
     // Checks
     if (!(priceUSD > 0.0)) {
       setErrorMessage(t("messages.error.invalidPrice"));
@@ -81,13 +107,12 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
       return;
     }
 
-    const currency = currencies()[currencyIdx];
     const currencyAddress = currency.address;
     // Get stablecoin from backend
-    const stablecoinAddress = currencies()[1].address;
+    const stablecoinAddress = blockchainToUSDC(currency.blockchain);
     const quantity = 1;
 
-    if (providerSource === "metamask") {
+    if (!payWithExternalwallet) {
       const web3API = new web3Api();
 
       const [hierarchy, fees] = await Promise.all([
@@ -129,7 +154,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
       } else {
         setErrorMessage(t("messages.error.transactionFailed"));
       }
-    } else if (providerSource === "internal") {
+    } else {
       const ret = await backend_API.makePayment(
         currencyAddress,
         priceUSD,
@@ -173,6 +198,41 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
               title={t("products.topInfoTitle")}
               description={t("products.topInfoDescription")}
             />
+            <OptionsWithImage
+              setValue={setPayCurrency}
+              wallet={payCurrency}
+              options={currencies().map((currency, idx) => {
+                return {
+                  name: currency.name,
+                  icon: currency.icon,
+                };
+              })}
+            />
+            <ThirdwebProvider
+              clientId="639eea2ebcabed7eab90b56aceeed08b"
+              supportedWallets={wallets.map((w) => metamaskWallet.config)}
+            >
+              <div className={styles.buttonWrap}>
+                <Button
+                  onClick={async () => {
+                    const currency = findCurrency();
+                    console.log(
+                      "Currency",
+                      currency,
+                      chainId(currency.blockchain),
+                    );
+                    const w = await walletActions.connect(metamaskWallet(), {
+                      chainId: chainId(currency.blockchain),
+                    });
+                    console.log("Connected to", w);
+                    handleBuy(currency, true);
+                  }}
+                >
+                  Pay
+                </Button>
+              </div>
+            </ThirdwebProvider>
+            {/*
             <Tabs
               tabIds={["internal", "metamask"]}
               initActiveTab={"internal"}
@@ -211,7 +271,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
                             <CryptoLine
                               key={currency.abbr}
                               currency={currency}
-                              balance={balances[0][idx]}
+                              balance={balances[idx]}
                               price={prices[idx]}
                               priceProduct={priceUSD}
                               onClick={() => {
@@ -274,7 +334,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
                             <CryptoLine
                               key={currency.abbr}
                               currency={currency}
-                              balance={balances[1][idx]}
+                              balance={balances[idx]}
                               price={prices[idx]}
                               priceProduct={priceUSD}
                               onClick={() => {
@@ -289,7 +349,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
                 }
               }}
               beforeChangeTab={() => {}}
-            />
+            />*/}
           </div>
         </div>
       )}

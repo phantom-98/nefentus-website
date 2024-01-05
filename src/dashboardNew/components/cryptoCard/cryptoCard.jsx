@@ -34,7 +34,7 @@ import Popup from "../popup/popup";
 import { web3Api } from "../../../api/web3Api";
 import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
-import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
+import NefentusLogo from "../../../assets/logo/logo_n.png";
 
 const CryptoCard = () => {
   const [activeToggle, setActiveToggle] = useState(false);
@@ -112,7 +112,7 @@ const CryptoCard = () => {
       const internalWallet = {
         name: "Internal Wallet",
         address: internalWalletAddress,
-        icon: Ethereum,
+        icon: NefentusLogo,
       };
       connectedWallets.push(internalWallet);
       setWalletOptions(connectedWallets);
@@ -125,10 +125,6 @@ const CryptoCard = () => {
   };
 
   useEffect(() => {
-    console.log("balances: ");
-    console.log(balances);
-    console.log("prices: ");
-    console.log(prices);
     const data = currencyList.map((currency, index) => ({
       ...currency,
       middleName: blockchainToName(currency.blockchain),
@@ -136,9 +132,6 @@ const CryptoCard = () => {
       price: prices[index],
       value: balances[index],
     }));
-
-    console.log("data: ");
-    console.log(data);
     setCryptList(data);
   }, [prices, balances]);
 
@@ -380,7 +373,7 @@ const SendModal = ({
       const web3API = new web3Api("metamask");
 
       try {
-        switchNetwork(chainId(sendCurrency.blockchain));
+        await switchNetwork(chainId(sendCurrency.blockchain));
 
         const txReceipt = await web3API.send(
           tokenAddress,
@@ -390,7 +383,7 @@ const SendModal = ({
         );
         if (txReceipt.status === 1) {
           setInfoMessage(t("messages.success.withdrawal"));
-          fetchBalances(wallet.address);
+          if (onSuccess) onSuccess();
         } else {
           setErrorMessage(t("messages.error.withdraw"));
         }
