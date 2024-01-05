@@ -486,7 +486,7 @@ const Select = ({ data, selectedIndex, setSelectedIndex }) => {
         <SelectOption
           icon={data[selectedIndex].icon}
           optionTitle={data[selectedIndex].title}
-          optionDescription={data[selectedIndex].description}
+          // optionDescription={data[selectedIndex].description}
           alt={data[selectedIndex].alt}
           dropdown
         />
@@ -498,7 +498,7 @@ const Select = ({ data, selectedIndex, setSelectedIndex }) => {
                   <SelectOption
                     icon={item.icon}
                     optionTitle={item.title}
-                    optionDescription={item.description}
+                    // optionDescription={item.description}
                     alt={item.alt}
                   />
                 </div>
