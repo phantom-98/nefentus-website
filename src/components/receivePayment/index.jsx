@@ -1,7 +1,6 @@
 import styles from "./receivePayment.module.css";
 import { useState, useEffect, useContext, Children } from "react";
 import { Link } from "react-router-dom";
-import Input from "../../components/input/input";
 import Tabs from "../tabs";
 import TopInfo from "../../dashboard/topInfo/topInfo";
 import Table from "../../components/table";
@@ -219,7 +218,15 @@ const ReceivePayment = ({
               </div>
             </div>
           )}
-          {info}
+          <div className={styles.payInfoWrapper}>
+            <div className={styles.payInfoHeader}>
+              <h1 className={styles.headerTitle}>Payment Details</h1>
+              <p className={styles.headerDescription}>
+                Complete remittance by providing your payment details
+              </p>
+            </div>
+            {info}
+          </div>
         </div>
 
         <div className={styles.productBuy}>
@@ -228,10 +235,21 @@ const ReceivePayment = ({
               <p>Total in USDT</p>
               <p>${priceUSD}</p>
             </div>
-            <div style={{ borderBottom: "1px solid #313131" }}>{children}</div>
+            {children ? (
+              children
+            ) : (
+              <div className={styles.crypto}>
+                <p className={styles.cryptoTitle}>Cryptocurrency amount</p>
+                <p className={styles.cryptoEqual}>≈</p>
+                <p className={styles.cryptoAmount}>0.0763 BTC</p>
+              </div>
+            )}
             <div
               className={styles.walletWrapper}
-              style={{ borderBottom: "1px solid #313131" }}
+              style={{
+                borderBottom: "1px solid #313131",
+                borderTop: "1px solid #313131",
+              }}
             >
               <div className={styles.chooseWallet}>
                 <p>Choose Wallet</p>
@@ -512,6 +530,132 @@ const SelectOption = ({
         </div>
       </div>
       {dropdown && <img src={DropDownIcon} alt="dropdown" />}
+    </div>
+  );
+};
+
+const Input = ({ label, placeholder, value, setValue, type }) => {
+  const handleChange = (e) => {
+    if (setValue) {
+      setValue(e.target.value);
+    }
+  };
+
+  return (
+    <div className={styles.inputWrapper}>
+      {label && <p className={styles.label}>{label}</p>}
+
+      <input
+        className={styles.input}
+        placeholder={placeholder}
+        type={type ? "password" : "text"}
+        value={value}
+        onChange={handleChange}
+      />
+    </div>
+  );
+};
+
+export const PaymentInfo = ({
+  fullName,
+  setFullName,
+  email,
+  setEmail,
+  address,
+  setAddress,
+  tax,
+  setTax,
+  business,
+  setBusiness,
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className={styles.payInfoBody}>
+      <div className={styles.row}>
+        <Input
+          placeholder={`e.g. John Doe`}
+          label={t("payments.name").concat("*")}
+          value={fullName}
+          setValue={setFullName}
+        />
+      </div>
+      <div className={styles.row}>
+        <Input
+          placeholder={`yourmail@mail.com`}
+          label={t("payments.email").concat("*")}
+          value={email}
+          setValue={setEmail}
+        />
+      </div>
+      <div className={styles.row}>
+        <Input
+          placeholder={`Country, City, Street`}
+          label={t("payments.address")}
+          value={address}
+          setValue={setAddress}
+        />
+      </div>
+      <div className={styles.row}>
+        <Input
+          placeholder={`Tax Number`}
+          label={t("payments.taxNumber")}
+          value={tax}
+          setValue={setTax}
+          type
+        />
+        <Input
+          placeholder={`e.g. Google`}
+          label={t("payments.company")}
+          value={business}
+          setValue={setBusiness}
+        />
+      </div>
+    </div>
+  );
+};
+
+export const ProductInfo = ({ productPic, price, amount, setAmount }) => {
+  return (
+    <div className={styles.productWrapper}>
+      <div className={styles.productImage}>
+        <p className={styles.productInfoTitle}>Product</p>
+        <img
+          className={styles.productImageWrapper}
+          src={productPic}
+          alt="Product Preview"
+        />
+        <div className={styles.productLandscape}>
+          <p style={{ fontSize: "16px", color: "#f6f6f6" }}>
+            Landscape design services
+          </p>
+          <div
+            style={{
+              display: "flex",
+              gap: "8px",
+              alignItems: "center",
+              fontSize: "14px",
+            }}
+          >
+            <p>Details</p>
+            <img src={DropDownIcon} />
+          </div>
+        </div>
+      </div>
+      <div className={styles.productInfo}>
+        <div className={styles.productPriceContainer}>
+          <p className={styles.productLabel}>Price</p>
+          <p className={styles.productValue}>${price}</p>
+        </div>
+        <div className={styles.productAmountContainer}>
+          <p className={styles.productLabel}>Amount</p>
+          <input
+            className={styles.productValue}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+        </div>
+      </div>
     </div>
   );
 };

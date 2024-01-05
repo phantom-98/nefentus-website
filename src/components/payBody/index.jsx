@@ -4,6 +4,7 @@ import TopInfo from "../../dashboard/topInfo/topInfo";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Popup from "../../dashboardNew/components/popup/popup";
+import { PaymentInfo } from "../receivePayment";
 import Edit from "../../assets/icon/edit.svg";
 import vendorDashboardApi from "../../api/vendorDashboardApi";
 import backendAPI from "../../api/backendAPI";
@@ -47,14 +48,11 @@ const PayBody = ({ invoice }) => {
     } else {
       console.log("failed");
     }
-    setChanged(false);
   };
 
   useEffect(() => {
-    if (changed) {
-      updateInvoiceData();
-    }
-  }, [changed]);
+    updateInvoiceData();
+  }, [name, email, company, address, tax]);
 
   return (
     <ReceivePayment
@@ -62,151 +60,18 @@ const PayBody = ({ invoice }) => {
       seller={invoice.user}
       transInfoArg={{ invoiceId: invoice.id }}
       info={
-        <>
-          <div className={`card ${styles.payInfo}`}>
-            <div className={styles.body}>
-              <div className={styles.top}>
-                <div>
-                  <p className={styles.title}>{t("payments.pay.title")}</p>
-                  <p className={styles.description}>
-                    {t("payments.pay.description")}
-                  </p>
-                </div>
-              </div>
-              <p className={styles.seller}>{t("payments.buyer")}</p>
-              <div className={styles.columns}>
-                <p className={styles.price}>
-                  <span>{t("payments.price")}:</span>{" "}
-                  <span>{invoice.price} USD</span>
-                </p>
-                <p className={styles.price}>
-                  <span>{t("payments.name")}:</span>
-                  <span>
-                    <img
-                      className={styles.edit}
-                      src={Edit}
-                      onClick={() => {
-                        setShowName(true);
-                      }}
-                    />
-                    {name}
-                  </span>
-                </p>
-                <p className={styles.price}>
-                  <span>{t("payments.email")}:</span>{" "}
-                  <span>
-                    <img
-                      className={styles.edit}
-                      src={Edit}
-                      onClick={() => {
-                        setShowEmail(true);
-                      }}
-                    />
-                    {email}
-                  </span>
-                </p>
-                <p className={styles.price}>
-                  <span>{t("payments.company")}:</span>{" "}
-                  <span>
-                    <img
-                      className={styles.edit}
-                      src={Edit}
-                      onClick={() => {
-                        setShowCompany(true);
-                      }}
-                    />
-                    {company}
-                  </span>
-                </p>
-                <p className={styles.price}>
-                  <span>{t("payments.address")}:</span>{" "}
-                  <span>
-                    <img
-                      className={styles.edit}
-                      src={Edit}
-                      onClick={() => {
-                        setShowAddress(true);
-                      }}
-                    />
-                    {address}
-                  </span>
-                </p>
-                <p className={styles.price}>
-                  <span>{t("payments.taxNumber")}:</span>{" "}
-                  <span>
-                    <img
-                      className={styles.edit}
-                      src={Edit}
-                      onClick={() => {
-                        setShowTax(true);
-                      }}
-                    />
-                    {tax}
-                  </span>
-                </p>
-              </div>
-              <p className={styles.seller}>{t("payments.seller")}</p>
-              <div className={styles.columns}>
-                <p className={styles.price}>
-                  <span>{t("payments.name")}:</span>{" "}
-                  <span>
-                    {invoice.user?.firstName} {invoice.user?.lastName}
-                  </span>
-                </p>
-                <p className={styles.price}>
-                  <span>{t("payments.email")}:</span>{" "}
-                  <span>{invoice.user?.email}</span>
-                </p>
-                <p className={styles.price}>
-                  <span>{t("payments.company")}:</span>{" "}
-                  <span>{invoice.user?.business}</span>
-                </p>
-              </div>
-            </div>
-          </div>
-          <>
-            <EditPopup
-              title={t("payments.email")}
-              show={showEmail}
-              setShow={setShowEmail}
-              value={email}
-              setValue={setEmail}
-              setChanged={setChanged}
-            />
-            <EditPopup
-              title={t("payments.name")}
-              show={showName}
-              setShow={setShowName}
-              value={name}
-              setValue={setName}
-              setChanged={setChanged}
-            />
-            <EditPopup
-              title={t("payments.company")}
-              show={showCompany}
-              setShow={setShowCompany}
-              value={company}
-              setValue={setCompany}
-              setChanged={setChanged}
-            />
-            <EditPopup
-              title={t("payments.address")}
-              show={showAddress}
-              setShow={setShowAddress}
-              value={address}
-              setValue={setAddress}
-              setChanged={setChanged}
-            />
-            <EditPopup
-              title={t("payments.taxNumber")}
-              show={showTax}
-              setShow={setShowTax}
-              value={tax}
-              setValue={setTax}
-              setChanged={setChanged}
-            />
-          </>
-        </>
+        <PaymentInfo
+          fullName={name}
+          setFullName={setName}
+          email={email}
+          setEmail={setEmail}
+          address={address}
+          setAddress={setAddress}
+          business={company}
+          setBusiness={setCompany}
+          tax={tax}
+          setTax={setTax}
+        />
       }
     />
   );
