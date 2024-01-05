@@ -32,7 +32,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 36px;
-  width: 50%;
+  width: max-content;
 }
 /* 
 .productInfo {
@@ -203,6 +203,9 @@
   border: 1px solid #313131;
   /* border-radius: 1rem; */
   background: #1f1f1f;
+}
+.optionLineWrapper:hover {
+  background: #272729;
 }
 
 .optionLine {
