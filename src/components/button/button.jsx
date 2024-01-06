@@ -9,6 +9,7 @@ const Button = ({
   link,
   onClick,
   style,
+  disabled,
 }) => {
   return (
     <button
@@ -17,14 +18,21 @@ const Button = ({
       type={type}
       style={{
         ...style,
-        border:
-          color === "white" ? "1px solid rgb(38, 38, 38)" : "1px solid #0784B5",
+        border: disabled
+          ? "#313131"
+          : color === "white"
+          ? "1px solid rgb(38, 38, 38)"
+          : "1px solid #0784B5",
       }}
     >
       <div
         className={styles.background}
         style={{
-          background: color === "white" ? "rgb(38, 38, 38)" : "#0784B5",
+          background: disabled
+            ? "#313131"
+            : color === "white"
+            ? "rgb(38, 38, 38)"
+            : "#0784B5",
         }}
       ></div>
       {link ? (

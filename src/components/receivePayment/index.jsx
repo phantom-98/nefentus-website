@@ -49,34 +49,36 @@ const ReceivePayment = ({
     address: useAddress(),
     status: useConnectionStatus(),
   };
-  console.log("MetaMask status: " + metamask.status);
-  console.log("MetaMask address: " + metamask.address);
+
+  const [cryptoAmount, setCryptoAmount] = useState("0 ETH");
+
+  const { balances, fetchBalances } = useBalances(metamask);
+  const { prices, fetchPrices } = usePrices(metamask);
+
+  const { setInfoMessage, setErrorMessage, clearMessages } =
+    useContext(MessageContext);
 
   const wallets = [
-    {
-      type: "internal",
-      title: "Nefentus",
-      icon: NefentusLogo,
-      description: "",
-      alt: "Nefentus Wallet",
-    },
     {
       type: "metamask",
       title: "MetaMask",
       icon: MetaMaskLogo,
-      description: "",
       alt: "MetaMask Wallet",
     },
     {
-      type: "walletconnect",
-      title: "WalletConnect",
-      icon: WalletConnectLogo,
-      description: "",
-      alt: "MetaMask Wallet",
+      type: "internal",
+      title: "Nefentus",
+      icon: NefentusLogo,
+      alt: "Nefentus Wallet",
     },
+    // {
+    //   type: "walletconnect",
+    //   title: "WalletConnect",
+    //   icon: WalletConnectLogo,
+    //   alt: "Wallet Connect",
+    // },
   ];
   const [selectedWalletIndex, setSelectedWalletIndex] = useState(0);
-
   const cryptos = currencies.map((currency) => {
     return {
       title: currency.abbr,
@@ -85,11 +87,7 @@ const ReceivePayment = ({
   });
   const [selectedCryptoIndex, setSelectedCryptoIndex] = useState(0);
 
-  const { balances, fetchBalances } = useBalances(metamask);
-  const { prices, fetchPrices } = usePrices(metamask);
-
-  const { setInfoMessage, setErrorMessage, clearMessages } =
-    useContext(MessageContext);
+  const [isDisable, setDisable] = useState(false);
 
   const backend_API = new backendAPI();
 
@@ -103,8 +101,62 @@ const ReceivePayment = ({
 
     if (metamask.status === "connected" && metamask.address) {
       registerWallet();
+      if (wallets[selectedWalletIndex].type == "metamask") {
+        setDisable(false);
+      }
     }
   }, [metamask.status, metamask.address]);
+
+  useEffect(() => {
+    const wallet = wallets[selectedWalletIndex];
+    if (wallet.type == "internal") {
+      if (internalWalletAddress) {
+        if (
+          balances[selectedWalletIndex][selectedCryptoIndex] *
+            prices[selectedCryptoIndex] <
+          priceUSD
+        )
+          setDisable(true);
+        else setDisable(false);
+      } else {
+        setDisable(true);
+      }
+    } else if (wallet.type == "metamask") {
+      if (metamask.status == "disconnected") {
+        metamask.connect(metamask.config, {
+          chainId: 1,
+        });
+        setDisable(true);
+      } else if (metamask.status == "unknown") {
+        setDisable(true);
+      } else if (metamask.status == "connecting") {
+        setDisable(true);
+      } else if (metamask.status == "connected") {
+        if (
+          balances[selectedWalletIndex][selectedCryptoIndex] *
+            prices[selectedCryptoIndex] <
+          priceUSD
+        )
+          setDisable(true);
+        else setDisable(false);
+      }
+    } else if (wallet.type == "walletconnect") {
+      setDisable(true);
+    }
+  }, [selectedWalletIndex, balances, prices]);
+
+  useEffect(() => {
+    const currency = currencies[selectedCryptoIndex];
+    const price = prices[selectedCryptoIndex];
+    console.log(currency, price, " --- crypto ---");
+    if (typeof price == "number") {
+      setCryptoAmount(
+        formatTokenBalance(priceUSD / price) + " " + currency.abbr,
+      );
+    } else {
+      setCryptoAmount("Loading...");
+    }
+  }, [selectedCryptoIndex, prices]);
 
   async function registerWallet() {
     const result = await backend_API.registerWalletAddress(metamask.address);
@@ -241,7 +293,7 @@ const ReceivePayment = ({
           <div className={styles.body}>
             <div className={styles.total}>
               <p>Total in USDT</p>
-              <p>${priceUSD}</p>
+              <p>${formatUSDBalance(priceUSD)}</p>
             </div>
             {children ? (
               children
@@ -249,7 +301,7 @@ const ReceivePayment = ({
               <div className={styles.crypto}>
                 <p className={styles.cryptoTitle}>Cryptocurrency amount</p>
                 <p className={styles.cryptoEqual}>≈</p>
-                <p className={styles.cryptoAmount}>0.0763 BTC</p>
+                <p className={styles.cryptoAmount}>{cryptoAmount}</p>
               </div>
             )}
             <div
@@ -291,8 +343,18 @@ const ReceivePayment = ({
                   setSelectedIndex={setSelectedCryptoIndex}
                 />
               </div>
-              <Button style={{ width: "65%", height: "60px" }}>
-                Pay ${priceUSD}
+              <Button
+                style={{ width: "65%", height: "60px" }}
+                disabled={isDisable}
+                onClick={() => {
+                  if (!isDisable)
+                    handleBuy(
+                      wallets[selectedWalletIndex].type,
+                      selectedCryptoIndex,
+                    );
+                }}
+              >
+                Pay ${formatUSDBalance(priceUSD)}
               </Button>
             </div>
           </div>
@@ -301,133 +363,6 @@ const ReceivePayment = ({
             <a style={{ textDecoration: "underline" }}>Terms of Service</a>
           </p>
         </div>
-
-        {/* {!disabled && (
-          <div className={`${styles.productBuy}`}>
-            <div className={styles.body}>
-              <Tabs
-                tabIds={["internal", "metamask"]}
-                initActiveTab={"internal"}
-                getHeader={(tabId) => {
-                  if (tabId === "metamask") {
-                    return (
-                      <>
-                        <img
-                          src={MetaMaskLogo}
-                          className={styles.tabNavLogo}
-                          alt="MetaMask Wallet"
-                        />{" "}
-                        MetaMask
-                      </>
-                    );
-                  } else if (tabId === "internal") {
-                    return (
-                      <>
-                        <img
-                          src={NefentusLogo}
-                          className={styles.tabNavLogo}
-                          alt="Nefentus Wallet"
-                        />{" "}
-                        Nefentus Wallet
-                      </>
-                    );
-                  }
-                }}
-                getBody={(tabId) => {
-                  if (tabId === "metamask") {
-                    return (
-                      <div className={styles.tabContent}>
-                        {metamask.status === "connected" && (
-                          <div className={styles.table}>
-                            {currencies.map((currency, idx) => (
-                              <CryptoLine
-                                key={currency.abbr}
-                                currency={currency}
-                                balance={balances[0][idx]}
-                                price={prices[idx]}
-                                priceProduct={priceUSD}
-                                onClick={() => {
-                                  handleBuy("metamask", idx);
-                                }}
-                              />
-                            ))}
-                          </div>
-                        )}
-                        {metamask.status === "disconnected" && (
-                          <div className={styles.center}>
-                            <Button
-                              className={styles.metamaskConnectButton}
-                              onClick={() =>
-                                metamask.connect(metamask.config, {
-                                  chainId: 1,
-                                })
-                              }
-                            >
-                              {t("products.connect")}MetaMask
-                            </Button>
-                          </div>
-                        )}
-                        {metamask.status === "unknown" && (
-                          <div className={styles.center}>
-                            <Button
-                              className={styles.metamaskConnectButton}
-                              disabled
-                            >
-                              MetaMask{t("products.notAvailable")}
-                            </Button>
-                          </div>
-                        )}
-                        {metamask.status === "connecting" && (
-                          <div className={styles.center}>
-                            <Button
-                              className={styles.metamaskConnectButton}
-                              disabled
-                            >
-                              {t("products.connecting")}
-                            </Button>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  } else if (tabId === "internal") {
-                    return (
-                      <div className={styles.tabContent}>
-                        {!internalWalletAddress && (
-                          <div className={styles.center}>
-                            <Button
-                              className={styles.nefentusLoginButton}
-                              onClick={() => {}}
-                            >
-                              {t("products.login")}Nefentus
-                            </Button>
-                          </div>
-                        )}
-                        {internalWalletAddress && (
-                          <div className={styles.table}>
-                            {currencies.map((currency, idx) => (
-                              <CryptoLine
-                                key={currency.abbr}
-                                currency={currency}
-                                balance={balances[1][idx]}
-                                price={prices[idx]}
-                                priceProduct={priceUSD}
-                                onClick={() => {
-                                  setInternalPayIdx(idx);
-                                }}
-                              />
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  }
-                }}
-                beforeChangeTab={() => {}}
-              />
-            </div>
-            <p>By clicking on button you agree to the <a style={{textDecoration: "underline"}}>Terms of Service</a></p>
-          </div>
-        )} */}
       </div>
     </div>
   );
@@ -494,7 +429,7 @@ const Select = ({ data, selectedIndex, setSelectedIndex }) => {
         <SelectOption
           icon={data[selectedIndex].icon}
           optionTitle={data[selectedIndex].title}
-          // optionDescription={data[selectedIndex].description}
+          optionDescription={data[selectedIndex].description}
           alt={data[selectedIndex].alt}
           dropdown
         />
@@ -506,7 +441,7 @@ const Select = ({ data, selectedIndex, setSelectedIndex }) => {
                   <SelectOption
                     icon={item.icon}
                     optionTitle={item.title}
-                    // optionDescription={item.description}
+                    optionDescription={item.description}
                     alt={item.alt}
                   />
                 </div>
