@@ -87,7 +87,7 @@ const ReceivePayment = ({
   });
   const [selectedCryptoIndex, setSelectedCryptoIndex] = useState(0);
 
-  const [isDisable, setDisable] = useState(false);
+  const [isDisable, setDisable] = useState(true);
 
   const backend_API = new backendAPI();
 
