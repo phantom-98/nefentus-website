@@ -102,7 +102,7 @@ const ReceivePayment = ({
     if (metamask.status === "connected" && metamask.address) {
       registerWallet();
       if (wallets[selectedWalletIndex].type == "metamask") {
-        setDisable(false);
+        setDisable(false || disabled);
       }
     }
   }, [metamask.status, metamask.address]);
@@ -117,7 +117,7 @@ const ReceivePayment = ({
           priceUSD
         )
           setDisable(true);
-        else setDisable(false);
+        else setDisable(false || disabled);
       } else {
         setDisable(true);
       }
@@ -138,7 +138,7 @@ const ReceivePayment = ({
           priceUSD
         )
           setDisable(true);
-        else setDisable(false);
+        else setDisable(false || disabled);
       }
     } else if (wallet.type == "walletconnect") {
       setDisable(true);
@@ -313,7 +313,7 @@ const ReceivePayment = ({
             >
               <div className={styles.chooseWallet}>
                 <p>Choose Wallet</p>
-                <svg
+                {/* <svg
                   width="19"
                   height="19"
                   viewBox="0 0 19 19"
@@ -327,7 +327,7 @@ const ReceivePayment = ({
                       fill="#E9E9E9"
                     />
                   </g>
-                </svg>
+                </svg> */}
               </div>
               <Select
                 data={wallets}
@@ -558,20 +558,25 @@ export const PaymentInfo = ({
   );
 };
 
-export const ProductInfo = ({ productPic, price, amount, setAmount }) => {
+export const ProductInfo = ({
+  productPic,
+  name,
+  description,
+  price,
+  amount,
+  setAmount,
+}) => {
   return (
     <div className={styles.productWrapper}>
       <div className={styles.productImage}>
-        <p className={styles.productInfoTitle}>Product</p>
+        <p className={styles.productInfoTitle}>{name}</p>
         <img
           className={styles.productImageWrapper}
           src={productPic}
           alt="Product Preview"
         />
-        <div className={styles.productLandscape}>
-          <p style={{ fontSize: "16px", color: "#f6f6f6" }}>
-            Landscape design services
-          </p>
+        <p style={{ fontSize: "16px", color: "#f6f6f6" }}>{description}</p>
+        {/* <div className={styles.productLandscape}>
           <div
             style={{
               display: "flex",
@@ -583,7 +588,7 @@ export const ProductInfo = ({ productPic, price, amount, setAmount }) => {
             <p>Details</p>
             <img src={DropDownIcon} />
           </div>
-        </div>
+        </div> */}
       </div>
       <div className={styles.productInfo}>
         <div className={styles.productPriceContainer}>
