@@ -587,10 +587,10 @@ const SecurityItem = ({ data, recover }) => {
             >
               <>
                 <h1 style={{ fontSize: "1.8rem" }}>
-                  Recommend you to recover wallet
+                  {t("security.recommendRecoverModal.title")}
                 </h1>
                 <p style={{ fontSize: "1.2rem", opacity: "0.6" }}>
-                  We detected your password is changed!
+                  {t("security.recommendRecoverModal.subtitle")}
                 </p>
               </>
             </Popup>
