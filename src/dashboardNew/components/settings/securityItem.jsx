@@ -589,7 +589,9 @@ const SecurityItem = ({ data, recover }) => {
                 <h1 style={{ fontSize: "1.8rem" }}>
                   {t("security.recommendRecoverModal.title")}
                 </h1>
-                <p style={{ fontSize: "1.2rem", opacity: "0.6" }}>
+                <p
+                  style={{ fontSize: "1.2rem", opacity: "0.6", width: "400px" }}
+                >
                   {t("security.recommendRecoverModal.subtitle")}
                 </p>
               </>
