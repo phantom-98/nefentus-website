@@ -6,6 +6,7 @@ import {
   blockchainToWrapped,
   blockchainToUSDC,
   blockchainToFactoryAddress,
+  currencies,
 } from "../constants";
 import IUniswapV3PoolABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
 import IUniswapV3FactoryABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json";
@@ -205,33 +206,30 @@ export class web3Api {
     seniorBrokerAddress,
     leaderAddress,
     currency,
-    stablecoinAddress,
+    stablecoin,
     price,
     serviceFee,
     feeFree,
   ) {
-    const currencyAddress = currency["address"];
     const blockchain = currency["blockchain"];
 
     // Get min amount out
     const uniswap = new uniswapApi();
-    const decimalsIn = findCurrency(currencies(), currencyAddress)["decimals"];
-    const stablecoinDecimals = await uniswap.getDecimals(stablecoinAddress);
     const priceConvert = await uniswap.getUSDCPriceForToken(
-      currencyAddress,
+      currency.address,
       blockchain,
-      decimalsIn,
-      stablecoinDecimals,
+      currency.decimals,
+      stablecoin.decimals,
     );
     // Amount in token
     const amountIn = price / priceConvert;
-    const amountInInt = Math.ceil(amountIn * 10 ** decimalsIn);
+    const amountInInt = Math.ceil(amountIn * 10 ** currency.decimals);
     // Amount in USD stablecoin
-    const minAmountOut = price * 0.99 * 10 ** stablecoinDecimals;
+    const minAmountOut = price * 0.99 * 10 ** stablecoin.decimals;
 
     // Deposit contract
     const contractInfo = contractDeposits(blockchain);
-    const signer = provider(providerURL(blockchain)).getSigner();
+    const signer = providerMetamask().getSigner();
     const contract = new ethers.Contract(
       contractInfo.address,
       contractInfo.abi,
@@ -240,14 +238,14 @@ export class web3Api {
 
     const timestampSent = Date.now();
     let txRequest;
-    if (currencyAddress === null) {
+    if (currency.address === null) {
       txRequest = await contract.deposit(
         sellerAddress,
         affiliateAddress,
         brokerAddress,
         seniorBrokerAddress,
         leaderAddress,
-        stablecoinAddress,
+        stablecoin.address,
         minAmountOut,
         POOL_FEES,
         serviceFee,
@@ -261,8 +259,8 @@ export class web3Api {
         brokerAddress,
         seniorBrokerAddress,
         leaderAddress,
-        currencyAddress,
-        stablecoinAddress,
+        currency.address,
+        stablecoin.address,
         amountInInt,
         minAmountOut,
         POOL_FEES,

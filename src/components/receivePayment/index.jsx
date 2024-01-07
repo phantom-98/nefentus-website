@@ -109,10 +109,10 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
 
     const currencyAddress = currency.address;
     // Get stablecoin from backend
-    const stablecoinAddress = blockchainToUSDC(currency.blockchain);
+    const stablecoin = blockchainToUSDC(currency.blockchain);
     const quantity = 1;
 
-    if (!payWithExternalwallet) {
+    if (payWithExternalwallet) {
       const web3API = new web3Api();
 
       const [hierarchy, fees] = await Promise.all([
@@ -128,7 +128,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
         nullToZeroAddress(hierarchy.seniorBrokerAddress),
         nullToZeroAddress(hierarchy.leaderAddress),
         currency,
-        stablecoinAddress,
+        stablecoin,
         priceUSD,
         fees?.serviceFee,
         fees?.remainingFeeFree,
