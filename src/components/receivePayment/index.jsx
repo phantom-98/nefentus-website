@@ -58,16 +58,28 @@ const ReceivePayment = ({
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
 
+  const formatWalletAddress = (address, symbolCount = 8) => {
+    if (!address || address.length <= symbolCount * 2 + 2) {
+      return address;
+    }
+
+    const start = address.substring(0, symbolCount + 2);
+    const end = address.substring(address.length - symbolCount);
+    return `${start}....${end}`;
+  };
+
   const wallets = [
     {
       type: "metamask",
       title: "MetaMask",
       icon: MetaMaskLogo,
+      description: formatWalletAddress(metamask.address),
       alt: "MetaMask Wallet",
     },
     {
       type: "internal",
       title: "Nefentus",
+      description: formatWalletAddress(internalWalletAddress),
       icon: NefentusLogo,
       alt: "Nefentus Wallet",
     },
@@ -150,8 +162,17 @@ const ReceivePayment = ({
     const price = prices[selectedCryptoIndex];
     console.log(currency, price, " --- crypto ---");
     if (typeof price == "number") {
+      const round = {
+        ETH: 5,
+        BTC: 6,
+        USDT: 2,
+        USDC: 2,
+        DAI: 2,
+      };
       setCryptoAmount(
-        formatTokenBalance(priceUSD / price) + " " + currency.abbr,
+        formatTokenBalance(priceUSD / price, round[currency.abbr]) +
+          " " +
+          currency.abbr,
       );
     } else {
       setCryptoAmount("Loading...");
@@ -243,11 +264,20 @@ const ReceivePayment = ({
           {seller && (
             <div className={styles.sellerWrapper}>
               <p style={{ fontSize: "1.2rem", color: "#B1B1B1" }}>
-                Seller Info
+                {t("payments.seller")}
               </p>
               <div className={styles.sellerContainer}>
                 <div className={styles.avatarWrapper}>
-                  {seller.s3Url && <img src={seller.s3Url} />}
+                  {seller.s3Url && (
+                    <img
+                      src={seller.s3Url}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  )}
                   {!seller.s3Url && (
                     <span style={{ fontSize: "1.4rem", marginTop: "0.3rem" }}>
                       {seller.firstName[0]}
@@ -280,9 +310,9 @@ const ReceivePayment = ({
           )}
           <div className={styles.payInfoWrapper}>
             <div className={styles.payInfoHeader}>
-              <h1 className={styles.headerTitle}>Payment Details</h1>
+              <h1 className={styles.headerTitle}>{t("payments.pay.title")}</h1>
               <p className={styles.headerDescription}>
-                Complete remittance by providing your payment details
+                {t("payments.pay.description")}
               </p>
             </div>
             {info}
@@ -292,14 +322,16 @@ const ReceivePayment = ({
         <div className={styles.productBuy}>
           <div className={styles.body}>
             <div className={styles.total}>
-              <p>Total in USDT</p>
+              <p>{t("payments.total")}</p>
               <p>${formatUSDBalance(priceUSD)}</p>
             </div>
             {children ? (
               children
             ) : (
               <div className={styles.crypto}>
-                <p className={styles.cryptoTitle}>Cryptocurrency amount</p>
+                <p className={styles.cryptoTitle}>
+                  {t("payments.cryptoAmount")}
+                </p>
                 <p className={styles.cryptoEqual}>≈</p>
                 <p className={styles.cryptoAmount}>{cryptoAmount}</p>
               </div>
@@ -312,22 +344,7 @@ const ReceivePayment = ({
               }}
             >
               <div className={styles.chooseWallet}>
-                <p>Choose Wallet</p>
-                {/* <svg
-                  width="19"
-                  height="19"
-                  viewBox="0 0 19 19"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g id="add">
-                    <path
-                      id="Vector"
-                      d="M14.5977 10.25H10.0977V14.75H8.59766V10.25H4.09766V8.75H8.59766V4.25H10.0977V8.75H14.5977V10.25Z"
-                      fill="#E9E9E9"
-                    />
-                  </g>
-                </svg> */}
+                <p>{t("payments.chooseWallet")}</p>
               </div>
               <Select
                 data={wallets}
@@ -354,13 +371,13 @@ const ReceivePayment = ({
                     );
                 }}
               >
-                Pay ${formatUSDBalance(priceUSD)}
+                {t("payments.payButton")} ${formatUSDBalance(priceUSD)}
               </Button>
             </div>
           </div>
           <p>
-            By clicking on button you agree to the{" "}
-            <a style={{ textDecoration: "underline" }}>Terms of Service</a>
+            {t("payments.agree")}{" "}
+            <a style={{ textDecoration: "underline" }}>{t("payments.terms")}</a>
           </p>
         </div>
       </div>
@@ -369,54 +386,6 @@ const ReceivePayment = ({
 };
 
 export default ReceivePayment;
-
-const CryptoLine = ({ balance, price, currency, priceProduct, onClick }) => {
-  let balanceToken = "loading";
-  let balanceUSD = "loading";
-  if (balance) {
-    balanceToken = balance;
-    if (price) {
-      balanceUSD = balance * price;
-    }
-  }
-
-  let buttonActive = false;
-  if (balanceUSD) {
-    // Currently, we can only pay in Ethereum
-    buttonActive = balanceUSD > priceProduct && currency.abbr === "ETH";
-  }
-
-  return (
-    <div className={styles.line}>
-      <div className={styles.lineLeft}>
-        <img src={currency.icon} className={styles.icon} alt="" />
-        <div>
-          <p className={styles.name}>{currency.name}</p>
-          <p className={styles.abbr}>{currency.abbr}</p>
-        </div>
-      </div>
-
-      <div className={styles.amounts}>
-        <p className={styles.dollar}>≈ {formatUSDBalance(balanceUSD)} USD</p>
-        <p className={styles.crypto}>
-          {formatTokenBalance(balanceToken, currency.decimals)} {currency.abbr}
-        </p>
-      </div>
-
-      <div className={styles.actions}>
-        {buttonActive && (
-          <Button
-            className={styles.buyButton}
-            onClick={onClick}
-            color={"white"}
-          >
-            Pay
-          </Button>
-        )}
-      </div>
-    </div>
-  );
-};
 
 const Select = ({ data, selectedIndex, setSelectedIndex }) => {
   const [open, setOpen] = useState(false);
@@ -469,7 +438,9 @@ const SelectOption = ({
         </div>
         <div className={styles.optionContainer}>
           <p className={styles.optionTitle}> {optionTitle} </p>
-          <p className={styles.optionDescription}> {optionDescription} </p>
+          {optionDescription && (
+            <p className={styles.optionDescription}> {optionDescription} </p>
+          )}
         </div>
       </div>
       {dropdown && <img src={DropDownIcon} alt="dropdown" />}
@@ -533,7 +504,7 @@ export const PaymentInfo = ({
       </div>
       <div className={styles.row}>
         <Input
-          placeholder={`Country, City, Street`}
+          placeholder={t("payments.addressHint")}
           label={t("payments.address")}
           value={address}
           setValue={setAddress}
@@ -541,7 +512,7 @@ export const PaymentInfo = ({
       </div>
       <div className={styles.row}>
         <Input
-          placeholder={`Tax Number`}
+          placeholder={t("payments.taxNumber")}
           label={t("payments.taxNumber")}
           value={tax}
           setValue={setTax}
@@ -566,6 +537,7 @@ export const ProductInfo = ({
   amount,
   setAmount,
 }) => {
+  const { t } = useTranslation();
   return (
     <div className={styles.productWrapper}>
       <div className={styles.productImage}>
@@ -576,27 +548,14 @@ export const ProductInfo = ({
           alt="Product Preview"
         />
         <p style={{ fontSize: "16px", color: "#f6f6f6" }}>{description}</p>
-        {/* <div className={styles.productLandscape}>
-          <div
-            style={{
-              display: "flex",
-              gap: "8px",
-              alignItems: "center",
-              fontSize: "14px",
-            }}
-          >
-            <p>Details</p>
-            <img src={DropDownIcon} />
-          </div>
-        </div> */}
       </div>
       <div className={styles.productInfo}>
         <div className={styles.productPriceContainer}>
-          <p className={styles.productLabel}>Price</p>
+          <p className={styles.productLabel}>{t("payments.price")}</p>
           <p className={styles.productValue}>${price}</p>
         </div>
         <div className={styles.productAmountContainer}>
-          <p className={styles.productLabel}>Amount</p>
+          <p className={styles.productLabel}>{t("payments.amount")}</p>
           <input
             className={styles.productValue}
             value={amount}

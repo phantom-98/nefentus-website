@@ -890,6 +890,7 @@
     "name": "Name",
     "company": "Firma",
     "address": "Adresse",
+    "addressHint": "Land, Stadt, Straße",
     "taxNumber": "Steuernummer",
     "createInvoice": "Rechnung erstellen",
     "scan": "QR-Code scannen",
@@ -903,11 +904,16 @@
       "actions": "Aktionen"
     },
     "price": "Preis",
-    "seller": "Verkäufer",
-    "buyer": "Käufer",
+    "seller": "Infos zum Verkäufer",
+    "total": "Gesamt in USDT",
+    "cryptoAmount": "Kryptowährungsbetrag",
+    "chooseWallet": "Brieftasche wählen",
+    "payButton": "Bezahlen",
+    "agree": "Durch Anklicken der Schaltfläche erklären Sie sich mit den",
+    "terms": "Bedingungen des Dienstes",
     "pay": {
-      "title": "Rechnung",
-      "description": "Eine Rechnung bezahlen"
+      "title": "Details zur Bezahlung",
+      "description": "Vervollständigen Sie die Überweisung durch Angabe Ihrer Zahlungsdaten"
     }
   },
 

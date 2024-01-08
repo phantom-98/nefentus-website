@@ -1,12 +1,15 @@
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 
-export function formatTokenBalance(x) {
+export function formatTokenBalance(x, round = 2) {
   const parsedFloat = parseFloat(x);
   if (isNaN(parsedFloat)) {
     return "loading";
   } else {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return x
+      .toFixed(round)
+      .toString()
+      .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
 }
 

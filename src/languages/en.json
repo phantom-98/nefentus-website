@@ -957,6 +957,7 @@
     "name": "Name",
     "company": "Company",
     "address": "Address",
+    "addressHint": "Country, City, Street",
     "taxNumber": "Tax number",
     "createInvoice": "Create Invoice",
     "scan": "Scan QR Code",
@@ -970,11 +971,16 @@
       "actions": "Actions"
     },
     "price": "Price",
-    "seller": "Seller",
-    "buyer": "Buyer",
+    "seller": "Seller Info",
+    "total": "Total in USDT",
+    "cryptoAmount": "Cryptocurrency amount",
+    "chooseWallet": "Choose Wallet",
+    "payButton": "Pay",
+    "agree": "By clicking on button you agree to the",
+    "terms": "Terms of Service",
     "pay": {
-      "title": "Invoice",
-      "description": "Pay an invoice"
+      "title": "Payment Details",
+      "description": "Complete remittance by providing your payment details"
     }
   },
   "transactions": {
