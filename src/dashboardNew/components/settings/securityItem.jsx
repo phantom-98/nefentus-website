@@ -265,7 +265,7 @@ const SecurityItem = ({ data, recover }) => {
           <Button
             color="gray"
             fontSize="1rem"
-            width="8rem"
+            width="10rem"
             onClick={
               data.flow === "otp"
                 ? handleOtp

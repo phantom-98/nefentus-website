@@ -249,7 +249,7 @@ const WalletSetting = ({ value, setValue }) => {
               <Button
                 color="gray"
                 fontSize="1rem"
-                width="8rem"
+                width="10rem"
                 onClick={() => setShowPopup(true)}
               >
                 {t("invoice.action.select")}
