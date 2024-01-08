@@ -404,23 +404,23 @@
   "footer": {
     "copyright": "© 2023 Nefentus. All rights reserved.",
     "downloadButton": "DOWNLOAD NOW",
-    "content": ["Home", "Payment", "Resources", "Affiliate"],
+    "content": ["Home", "Payment", "Resources", "Affiliate", "Privacy Policy"],
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
     "terms": "Terms and Condition",
     "contact": "Contact us",
-    "contentLabel1": "contentLavel1",
-    "content2": "content2",
-    "contentLabel2": "contentLavel2",
-    "socialTitle": "socialTitle",
-    "socialDescription": "socialDescription"
+    "contentLabel1": "Overview",
+    "content2": ["Play Store", "Sign In", "App Store", "Sign Up", "Imprint"],
+    "contentLabel2": "Action",
+    "socialTitle": "Follow us on:",
+    "socialDescription": " Go to the top\n of the page"
   },
   "reward": {
-    "title1": "title1",
-    "subtitle": "subtitle",
-    "gradient": "gradient",
-    "title2": "title2",
-    "button": "button"
+    "subtitle": "For every new user",
+    "title1": "Get up to",
+    "gradient": "50 USDT",
+    "title2": "in rewards",
+    "button": "Create Your Free Account Now"
   },
   "dashboard": {
     "title": "Dashboard",
