@@ -106,7 +106,7 @@ body {
 }
 
 .light .card {
-  border: 1px solid rgba(0, 0, 0, 0.01);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 
   background: #fff;
 
@@ -116,7 +116,8 @@ body {
 }
 
 .dark input,
-.dark textarea {
+.dark textarea,
+.dark .option {
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
 
   color: var(--white-color);
@@ -128,7 +129,8 @@ body {
 }
 
 .light input,
-.light textarea {
+.light textarea,
+.light .option {
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
 
   color: var(--black-color) !important;

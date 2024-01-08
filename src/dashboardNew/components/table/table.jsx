@@ -1,8 +1,13 @@
+import { useTheme } from "../../../context/themeContext/themeContext";
 import styles from "./table.module.css";
 
 const Table = ({ grid, label, data }) => {
+  const { theme } = useTheme();
+
   return (
-    <div className={`${styles.section} `}>
+    <div
+      className={`${styles.section}  ${theme !== "dark" ? styles.light : ""}`}
+    >
       <div className={`${styles.tableWrapper} `}>
         <div className={`${styles.table} `}>
           <TableRow data={label} grid={grid} label />

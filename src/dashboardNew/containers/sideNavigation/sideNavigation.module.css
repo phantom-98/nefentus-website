@@ -12,6 +12,16 @@
   position: relative;
 }
 
+.lightContainer {
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+
+  background: #fff;
+
+  box-shadow:
+    0px 18px 36px -18px rgba(0, 0, 0, 0.05),
+    0px 30px 45px -30px rgba(50, 50, 93, 0.05);
+}
+
 .item {
   display: flex;
   align-items: center;
@@ -38,6 +48,10 @@
   opacity: 1;
 }
 
+.lightContainer .active {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
 .item svg {
   fill: white;
   transition: 0.5s ease-out;
@@ -54,6 +68,10 @@
   border-radius: 0.2rem;
 }
 
+.lightContainer .soon {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
 .mobItems {
   display: none;
 }
@@ -63,6 +81,10 @@
   left: 1rem;
   bottom: 2rem;
   right: 1rem;
+}
+
+.lightContainer .notification {
+  filter: invert();
 }
 
 @media (max-width: 900px) {

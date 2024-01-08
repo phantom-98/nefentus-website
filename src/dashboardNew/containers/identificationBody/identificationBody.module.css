@@ -10,6 +10,11 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.light .box,
+.light .uploadItem {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
 .boxTitle {
   font-size: 1.6rem;
   margin-bottom: 2rem;

@@ -1,13 +1,16 @@
 import styles from "./userProfile.module.css";
 
 import Dashboard from "../../assets/icon/dashboard.svg";
-import User2 from "../../assets/icon/user2.svg";
-import Security from "../../assets/icon/security.svg";
-import Identification from "../../assets/icon/identification.svg";
-import Logout from "../../assets/icon/logout.svg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import {
+  Identification,
+  Invoice,
+  Logout,
+  Security,
+  User2,
+} from "../../assets/icon/icons";
 
 const UserProfile = ({ web, logOut, requireKYC }) => {
   const [profileImage, setProfileImage] = useState(
@@ -42,11 +45,11 @@ const UserProfile = ({ web, logOut, requireKYC }) => {
       <div className={`${styles.profileDropdown}`}>
         <div className={`${styles.profileBody} card`}>
           <Link to="/dashboard/profile" className={styles.profileItem}>
-            <img src={User2} alt="" />
+            <User2 />
             <p>{t("navigation.profile")}</p>
           </Link>
           <Link to="/dashboard/invoices" className={styles.profileItem}>
-            <img src={User2} alt="" />
+            <Invoice />
             <p>{t("navigation.invoice")}</p>
           </Link>
           {web && (
@@ -56,15 +59,15 @@ const UserProfile = ({ web, logOut, requireKYC }) => {
             </Link>
           )}
           <Link to="/dashboard/security" className={styles.profileItem}>
-            <img src={Security} alt="" />
+            <Security />
             <p>{t("navigation.security")}</p>
           </Link>
           <Link to="/dashboard/identification" className={styles.profileItem}>
-            <img src={Identification} alt="" />
+            <Identification />
             <p>{t("navigation.identification")}</p>
           </Link>
           <Link onClick={logOut} to="/" className={styles.profileItem}>
-            <img src={Logout} alt="" />
+            <Logout />
             <p>{t("navigation.logOut")}</p>
           </Link>
         </div>

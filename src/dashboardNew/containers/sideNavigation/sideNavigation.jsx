@@ -9,13 +9,14 @@ import Button from "../../components/button/button";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { dashboardLink } from "../../../utils";
+import { useTheme } from "../../../context/themeContext/themeContext";
+
 const SideNavigation = () => {
   const { t, i18n } = useTranslation();
   const { language } = i18n;
   const query = useLocation();
 
   const [active, setActive] = useState(0);
-  const [lightMode, setLightMode] = useState(false);
 
   const content = useMemo(() => {
     return [
@@ -171,8 +172,14 @@ const SideNavigation = () => {
     return true;
   };
 
+  const { theme, toggleTheme } = useTheme();
+
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        theme !== "dark" ? styles.lightContainer : ""
+      }`}
+    >
       {getFullSideBar(active) &&
         content.map((item, index) => (
           <Link
@@ -195,21 +202,18 @@ const SideNavigation = () => {
 
       <div className={styles.mobItems}>
         <div className={styles.item}>
-          <img src={Notification} alt="" />
+          <img src={Notification} className={styles.notification} alt="" />
           <p>{t("sidebar.notification")}</p>
         </div>
 
-        <div
-          className={styles.item}
-          onClick={() => setLightMode((prev) => !prev)}
-        >
-          {lightMode ? (
-            <img src={DarkMode} alt="" />
-          ) : (
-            <img src={LightMode} alt="" />
-          )}
+        <div className={styles.item} onClick={toggleTheme}>
+          <img
+            src={theme === "dark" ? DarkMode : LightMode}
+            className={styles.light}
+            alt=""
+          />
 
-          <p>{lightMode ? "Dark" : "Light"}</p>
+          <p>{theme === "dark" ? "Dark" : "Light"}</p>
         </div>
       </div>
 

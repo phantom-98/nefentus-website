@@ -14,6 +14,7 @@ import Correct from "../../../assets/icon/correct.svg";
 import { useTranslation } from "react-i18next";
 import { get } from "react-hook-form";
 import Popup from "../popup/popup";
+import { useTheme } from "../../../context/themeContext/themeContext";
 
 const InvoicesBody = () => {
   const [vatNumber, setVatNumber] = useState();
@@ -64,8 +65,12 @@ const InvoicesBody = () => {
     }
   }, [changed]);
 
+  const { theme } = useTheme();
+
   return (
-    <div className={styles.tabContent}>
+    <div
+      className={`${styles.tabContent} ${theme !== "dark" ? styles.light : ""}`}
+    >
       <MessageComponent />
       <Card className={styles.card}>
         <SettingsTitle
@@ -126,7 +131,10 @@ const InvoicesBody = () => {
         <div
           style={{
             paddingTop: 20,
-            borderBottom: "solid 1px rgba(255,255,255,0.1)",
+            borderBottom:
+              theme === "dark"
+                ? "solid 1px rgba(255,255,255,0.1)"
+                : "solid 1px rgba(0,0,0,0.1)",
             paddingBottom: 20,
           }}
         >
