@@ -905,15 +905,15 @@
     },
     "price": "Preis",
     "seller": "Infos zum Verkäufer",
-    "total": "Gesamt in USDT",
+    "total": "Gesamtbetrag",
     "cryptoAmount": "Kryptowährungsbetrag",
-    "chooseWallet": "Brieftasche wählen",
+    "chooseWallet": "Wallet auswählen",
     "payButton": "Bezahlen",
     "agree": "Durch Anklicken der Schaltfläche erklären Sie sich mit den",
     "terms": "Bedingungen des Dienstes",
     "pay": {
       "title": "Details zur Bezahlung",
-      "description": "Vervollständigen Sie die Überweisung durch Angabe Ihrer Zahlungsdaten"
+      "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein"
     }
   },
 
