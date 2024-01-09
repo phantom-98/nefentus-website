@@ -83,12 +83,12 @@ const ReceivePayment = ({
       icon: NefentusLogo,
       alt: "Nefentus Wallet",
     },
-    // {
-    //   type: "walletconnect",
-    //   title: "WalletConnect",
-    //   icon: WalletConnectLogo,
-    //   alt: "Wallet Connect",
-    // },
+    {
+      type: "walletconnect",
+      title: "WalletConnect",
+      icon: WalletConnectLogo,
+      alt: "Wallet Connect",
+    },
   ];
   const [selectedWalletIndex, setSelectedWalletIndex] = useState(0);
   const cryptos = currencies.map((currency) => {

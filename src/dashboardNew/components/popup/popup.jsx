@@ -130,7 +130,7 @@ export const QRPopup = ({
         {link && <QRCode value={link} size={256} style={{ margin: "20px" }} />}
         <div className={styles.paymentButtons}>
           <Button onClick={() => setShow(false)}>{t("general.close")}</Button>
-          {email.match("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") && (
+          {email && email.match("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") && (
             <div onClick={onDownload}>{t("payments.downloadInvoice")}</div>
           )}
         </div>

@@ -6,7 +6,7 @@ export function formatTokenBalance(x, round = 2) {
   if (isNaN(parsedFloat)) {
     return "loading";
   } else {
-    return x
+    return parsedFloat
       .toFixed(round)
       .toString()
       .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
