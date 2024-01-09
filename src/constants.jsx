@@ -26,7 +26,7 @@ export const ROLE_TO_NAME = {
 };
 
 const useMainnet = () => {
-  return process.env.VITE_REACT_APP_USE_TESTNET === "false";
+  return process.env.VITE_REACT_APP_USE_MAINNET === "true";
 };
 
 export const blockchainToWrapped = (blockchain) => {
