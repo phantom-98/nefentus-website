@@ -1217,7 +1217,7 @@ export default class backendAPI {
 
   async getFees(userId) {
     try {
-      const url = `${this.baseURL}/hierarchy/${userId}`;
+      const url = `${this.baseURL}/fees/${userId}`;
       let headers = {};
       if (this.token) {
         headers = {

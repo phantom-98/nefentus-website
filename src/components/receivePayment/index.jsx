@@ -35,25 +35,8 @@ import { useTranslation } from "react-i18next";
 import { OptionsWithImage } from "../../components/input/input";
 
 const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
-  let internalWalletAddress = useInternalWallet();
   const { t } = useTranslation();
-
-  const [password, setPassword] = useState("");
-  const [internalPayIdx, setInternalPayIdx] = useState(-1); // Index of the currency to pay with (or -1 if not selected)
   const [payCurrency, setPayCurrency] = useState("ETH");
-
-  const wallets = [
-    {
-      connect: walletConnect(),
-      icon: WalletConnectLogo,
-      name: "WalletConnect",
-    },
-    {
-      connect: metamaskWallet(),
-      icon: MetaMaskLogo,
-      name: "MetaMask",
-    },
-  ];
 
   const walletActions = {
     connect: useConnect(),
@@ -71,17 +54,6 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
 
   const backend_API = new backendAPI();
 
-  /*
-	const updateInfo = async () => {
-    fetchBalances(activeWallet.address);
-    fetchPrices();
-  };
-
-  useEffect(() => {
-    updateInfo();
-  }, [activeWallet]);
-	*/
-
   useEffect(() => {
     clearMessages();
   }, []);
@@ -93,10 +65,11 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
   }
 
   function findCurrency() {
-    return currencies().find((currency) => currency.abbr === payCurrency);
+    console.log(payCurrency);
+    return currencies().find((currency) => currency.name === payCurrency.name);
   }
 
-  async function handleBuy(currency, payWithExternalwallet) {
+  async function handleBuy(currency, walletAddress, payWithExternalwallet) {
     // Checks
     if (!(priceUSD > 0.0)) {
       setErrorMessage(t("messages.error.invalidPrice"));
@@ -119,6 +92,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
         backend_API.getHierarchy(userId),
         backend_API.getFees(userId),
       ]);
+      console.log(hierarchy);
       console.log(fees);
 
       const transactionInfo = await web3API.callDepositContract(
@@ -130,8 +104,8 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
         currency,
         stablecoin,
         priceUSD,
-        fees?.serviceFee,
-        fees?.remainingFeeFree,
+        fees?.serviceFee || 0.03,
+        fees?.remainingFeeFree || 0,
       );
 
       if (transactionInfo) {
@@ -141,7 +115,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
         web3API.convertBigIntToString(transactionInfo);
         const ret = await backend_API.setTransactionInfo(
           transactionInfo,
-          metamask.address,
+          walletAddress,
           transInfoArg,
         );
         if (ret) {
@@ -194,10 +168,6 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
       {!disabled && (
         <div className={`card ${styles.productBuy}`}>
           <div className={styles.body}>
-            <TopInfo
-              title={t("products.topInfoTitle")}
-              description={t("products.topInfoDescription")}
-            />
             <OptionsWithImage
               setValue={setPayCurrency}
               wallet={payCurrency}
@@ -210,7 +180,7 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
             />
             <ThirdwebProvider
               clientId="639eea2ebcabed7eab90b56aceeed08b"
-              supportedWallets={wallets.map((w) => metamaskWallet.config)}
+              supportedWallets={metamaskWallet.config}
             >
               <div className={styles.buttonWrap}>
                 <Button
@@ -225,193 +195,17 @@ const ReceivePayment = ({ priceUSD, userId, info, transInfoArg, disabled }) => {
                       chainId: chainId(currency.blockchain),
                     });
                     console.log("Connected to", w);
-                    handleBuy(currency, true);
+                    console.log("address: ", walletActions.address);
+                    handleBuy(currency, walletActions.address, true);
                   }}
                 >
                   Pay
                 </Button>
               </div>
             </ThirdwebProvider>
-            {/*
-            <Tabs
-              tabIds={["internal", "metamask"]}
-              initActiveTab={"internal"}
-              getHeader={(tabId) => {
-                if (tabId === "metamask") {
-                  return (
-                    <>
-                      <img
-                        src={MetaMaskLogo}
-                        className={styles.tabNavLogo}
-                        alt="MetaMask Wallet"
-                      />{" "}
-                      MetaMask
-                    </>
-                  );
-                } else if (tabId === "internal") {
-                  return (
-                    <>
-                      <img
-                        src={NefentusLogo}
-                        className={styles.tabNavLogo}
-                        alt="Nefentus Wallet"
-                      />{" "}
-                      Nefentus Wallet
-                    </>
-                  );
-                }
-              }}
-              getBody={(tabId) => {
-                if (tabId === "metamask") {
-                  return (
-                    <div className={styles.tabContent}>
-                      {metamask.status === "connected" && (
-                        <div className={styles.table}>
-                          {currencies().map((currency, idx) => (
-                            <CryptoLine
-                              key={currency.abbr}
-                              currency={currency}
-                              balance={balances[idx]}
-                              price={prices[idx]}
-                              priceProduct={priceUSD}
-                              onClick={() => {
-                                handleBuy("metamask", idx);
-                              }}
-                            />
-                          ))}
-                        </div>
-                      )}
-                      {metamask.status === "disconnected" && (
-                        <div className={styles.center}>
-                          <Button
-                            className={styles.metamaskConnectButton}
-                            onClick={() =>
-                              metamask.connect(metamask.config, { chainId: 1 })
-                            }
-                          >
-                            {t("products.connect")}MetaMask
-                          </Button>
-                        </div>
-                      )}
-                      {metamask.status === "unknown" && (
-                        <div className={styles.center}>
-                          <Button
-                            className={styles.metamaskConnectButton}
-                            disabled
-                          >
-                            MetaMask{t("products.notAvailable")}
-                          </Button>
-                        </div>
-                      )}
-                      {metamask.status === "connecting" && (
-                        <div className={styles.center}>
-                          <Button
-                            className={styles.metamaskConnectButton}
-                            disabled
-                          >
-                            {t("products.connecting")}
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  );
-                } else if (tabId === "internal") {
-                  return (
-                    <div className={styles.tabContent}>
-                      {!internalWalletAddress && (
-                        <div className={styles.center}>
-                          <Button
-                            className={styles.nefentusLoginButton}
-                            onClick={() => {}}
-                          >
-                            {t("products.login")}Nefentus
-                          </Button>
-                        </div>
-                      )}
-                      {internalWalletAddress && (
-                        <div className={styles.table}>
-                          {currencies().map((currency, idx) => (
-                            <CryptoLine
-                              key={currency.abbr}
-                              currency={currency}
-                              balance={balances[idx]}
-                              price={prices[idx]}
-                              priceProduct={priceUSD}
-                              onClick={() => {
-                                setInternalPayIdx(idx);
-                              }}
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  );
-                }
-              }}
-              beforeChangeTab={() => {}}
-            />*/}
           </div>
         </div>
       )}
-
-      {internalPayIdx >= 0 && (
-        <Modal
-          price={priceUSD}
-          currencyAbbr={currencies()[internalPayIdx].abbr}
-          onClose={() => setInternalPayIdx(-1)}
-          onPay={() => handleBuy("internal", internalPayIdx)}
-          password={password}
-          setPassword={setPassword}
-        />
-      )}
-    </div>
-  );
-};
-
-const CryptoLine = ({ balance, price, currency, priceProduct, onClick }) => {
-  let balanceToken = "loading";
-  let balanceUSD = "loading";
-  if (balance) {
-    balanceToken = balance;
-    if (price) {
-      balanceUSD = balance * price;
-    }
-  }
-
-  let buttonActive = false;
-  if (balanceUSD) {
-    // Currently, we can only pay in Ethereum
-    buttonActive = balanceUSD > priceProduct && currency.abbr === "ETH";
-  }
-
-  return (
-    <div className={styles.line}>
-      <div className={styles.lineLeft}>
-        <img src={currency.icon} className={styles.icon} alt="" />
-        <div>
-          <p className={styles.name}>{currency.name}</p>
-          <p className={styles.abbr}>{currency.abbr}</p>
-        </div>
-      </div>
-
-      <div className={styles.amounts}>
-        <p className={styles.dollar}>≈ {formatUSDBalance(balanceUSD)} USD</p>
-        <p className={styles.crypto}>
-          {formatTokenBalance(balanceToken, currency.decimals)} {currency.abbr}
-        </p>
-      </div>
-
-      <div className={styles.actions}>
-        {buttonActive && (
-          <Button
-            className={styles.buyButton}
-            onClick={onClick}
-            color={"white"}
-          >
-            Pay
-          </Button>
-        )}
-      </div>
     </div>
   );
 };

@@ -91,9 +91,6 @@ export class uniswapApi {
     if (tokenAddress.toLowerCase() === stablecoinAddress.toLowerCase()) {
       return 1;
     }
-    console.log("tokenAddress: ", tokenAddress);
-    console.log("stablecoinAddress: ", stablecoinAddress);
-    console.log("blockchain: ", blockchain);
 
     // Get pool contract
     const factoryContract = new ethers.Contract(
@@ -106,7 +103,6 @@ export class uniswapApi {
       stablecoinAddress,
       POOL_FEES,
     );
-    console.log("poolAddress: ", poolAddress);
     const poolContract = new ethers.Contract(
       poolAddress,
       IUniswapV3PoolABI.abi,
@@ -123,8 +119,6 @@ export class uniswapApi {
         this.getDecimals(stablecoinAddress, blockchain),
       ]);
     }
-
-    console.log("sqrtPriceX96: ", sqrtPriceX96);
 
     const price = this.calculatePoolPrice(
       sqrtPriceX96,
@@ -143,7 +137,6 @@ export class web3Api {
       walletAddress,
     );
     const balanceInEth = ethers.utils.formatEther(balance);
-    console.log("balanceInEth: ", balanceInEth);
     return balanceInEth;
   }
 
@@ -238,6 +231,8 @@ export class web3Api {
 
     const timestampSent = Date.now();
     let txRequest;
+    const serviceFeeInt = Math.ceil(serviceFee * 1_000_000);
+    const feeFreeInt = Math.floor(feeFree * 10 ** stablecoin.decimals);
     if (currency.address === null) {
       txRequest = await contract.deposit(
         sellerAddress,
@@ -248,8 +243,8 @@ export class web3Api {
         stablecoin.address,
         minAmountOut,
         POOL_FEES,
-        serviceFee,
-        feeFree,
+        serviceFeeInt,
+        feeFreeInt,
         { value: amountInInt },
       );
     } else {
@@ -264,8 +259,8 @@ export class web3Api {
         amountInInt,
         minAmountOut,
         POOL_FEES,
-        serviceFee,
-        feeFree,
+        serviceFeeInt,
+        feeFreeInt,
       );
     }
     const txReceipt = await txRequest.wait();
@@ -287,12 +282,11 @@ export class web3Api {
       toChecksumAddress(seniorBrokerAddress),
     );
     info.leaderAddress = zeroAddressToNull(toChecksumAddress(leaderAddress));
+    info.currencyAddress = currency.address;
+    info.stablecoinAddress = toChecksumAddress(stablecoin.address);
+    info.serviceFee = serviceFeeInt;
+    info.feeFree = feeFreeInt;
     info.blockchain = blockchain;
-    info.currencyAddress = currencyAddress;
-    info.blockchain = blockchain;
-    info.stablecoinAddress = toChecksumAddress(stablecoinAddress);
-    this.serviceFee = serviceFee;
-    this.feeFree = feeFree;
     info.transactionHash = txReceipt.transactionHash;
     return info;
   }

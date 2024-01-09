@@ -9,8 +9,10 @@ import USDC from "./assets/icon/crypto/usdc.svg";
 import Ripple from "./assets/icon/crypto/xrp.svg";
 import DAI from "./assets/icon/crypto/dai.svg";
 import Doge from "./assets/icon/crypto/doge.svg";
-import SwapAndDistribute1 from "./assets/abi/SwapAndDistribute1.json";
-import SwapAndDistribute2 from "./assets/abi/SwapAndDistribute2.json";
+import SwapAndDistributeTestETH from "./assets/abi/SwapAndDistributeTestETH.json";
+import SwapAndDistributeTestBNB from "./assets/abi/SwapAndDistributeTestBNB.json";
+import SwapAndDistributeBNB from "./assets/abi/SwapAndDistributeBNB.json";
+import SwapAndDistributeETH from "./assets/abi/SwapAndDistributeETH.json";
 import { findCurrency } from "./utils";
 
 export const ROLE_TO_NAME = {
@@ -130,7 +132,7 @@ export const currencies = () => {
         blockchain: "ETH",
         icon: Tether,
         abbr: "USDT",
-        address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
         decimals: 6,
       },
       {
@@ -163,7 +165,7 @@ export const currencies = () => {
         blockchain: "BNB",
         icon: Ripple,
         abbr: "XRP",
-        address: "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
+        address: "0x1D2F0da169ceB9fC7B3144628dB156f3F6c60dBE",
         decimals: 18,
       },
       {
@@ -208,7 +210,7 @@ export const currencies = () => {
         blockchain: "ETH",
         icon: Tether,
         abbr: "USDT",
-        address: "0xc2c527c0cacf457746bd31b2a698fe89de2b6d49",
+        address: "0xC2C527C0CACF457746Bd31B2a698Fe89de2b6d49",
         decimals: 6,
       },
       {
@@ -216,7 +218,7 @@ export const currencies = () => {
         blockchain: "ETH",
         icon: USDC,
         abbr: "USDC",
-        address: "0x07865c6e87b9f70255377e024ace6630c1eaa37f",
+        address: "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
         decimals: 6,
       },
       /*
@@ -252,7 +254,7 @@ export const currencies = () => {
         blockchain: "ETH",
         icon: DAI,
         abbr: "DAI",
-        address: "0xdc31ee1784292379fbb2964b3b9c4124d8f89c60",
+        address: "0xdc31Ee1784292379Fbb2964b3B9C4124D8F89C60",
         decimals: 18,
       },
       /*
@@ -286,13 +288,13 @@ export const contractDeposits = (blockchain) => {
       return {
         id: 2, // Not used right now!
         address: "0xd577766dd079c123ce677b8a27f9a01e5f4c9905",
-        abi: SwapAndDistribute2,
+        abi: SwapAndDistributeETH.abi,
       };
     } else {
       return {
         id: 1,
-        address: "0xabcdefg",
-        abi: SwapAndDistribute1,
+        address: "0xc5a70e940925cbf02f093c8fb20a7202d7afe2c4",
+        abi: SwapAndDistributeTestETH.abi,
       };
     }
   } else if (blockchain == "BNB") {
@@ -300,13 +302,13 @@ export const contractDeposits = (blockchain) => {
       return {
         id: 2, // Not used right now!
         address: "0xabcdeff",
-        abi: SwapAndDistribute2,
+        abi: SwapAndDistributeBNB.abi,
       };
     } else {
       return {
         id: 2, // Not used right now!
         address: "0xabcdeff",
-        abi: SwapAndDistribute2,
+        abi: SwapAndDistributeTestBNB.abi,
       };
     }
   }
