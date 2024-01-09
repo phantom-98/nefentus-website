@@ -91,7 +91,7 @@ const InvoicesBody = () => {
             <Button
               color="gray"
               fontSize="1rem"
-              width="8rem"
+              width="10rem"
               onClick={() => setShowPopup(true)}
             >
               {t("invoice.action.add")}
@@ -118,7 +118,7 @@ const InvoicesBody = () => {
             <Button
               color="gray"
               fontSize="1rem"
-              width="8rem"
+              width="10rem"
               onClick={() => {
                 setEnableInvoicing((prev) => !prev);
                 setchanged(true);

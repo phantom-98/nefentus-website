@@ -404,23 +404,23 @@
   "footer": {
     "copyright": "© 2023 Nefentus. All rights reserved.",
     "downloadButton": "DOWNLOAD NOW",
-    "content": ["Home", "Payment", "Resources", "Affiliate"],
+    "content": ["Home", "Payment", "Resources", "Affiliate", "Privacy Policy"],
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
     "terms": "Terms and Condition",
     "contact": "Contact us",
-    "contentLabel1": "contentLavel1",
-    "content2": "content2",
-    "contentLabel2": "contentLavel2",
-    "socialTitle": "socialTitle",
-    "socialDescription": "socialDescription"
+    "contentLabel1": "Overview",
+    "content2": ["Play Store", "Sign In", "App Store", "Sign Up", "Imprint"],
+    "contentLabel2": "Action",
+    "socialTitle": "Follow us on:",
+    "socialDescription": " Go to the top\n of the page"
   },
   "reward": {
-    "title1": "title1",
-    "subtitle": "subtitle",
-    "gradient": "gradient",
-    "title2": "title2",
-    "button": "button"
+    "subtitle": "For every new user",
+    "title1": "Get up to",
+    "gradient": "50 USDT",
+    "title2": "in rewards",
+    "button": "Create Your Free Account Now"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -580,11 +580,13 @@
     "update": "Update",
     "open": "Open",
     "confirm": "Confirm",
+    "continue": "Continue",
     "withdraw": "Withdraw",
     "enable": "Enable",
     "disable": "Disable",
     "upload": "Upload",
-    "of": "of"
+    "of": "of",
+    "show": "Show"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -1032,7 +1034,20 @@
       "labelPassword": "One-time passwords via email",
       "descriptionPassword": "Setup Multi-Factor-Authentication based on one-time password sent via email.",
       "labelCode": "Anti-Phishing Code",
-      "descriptionCode": "Protect your account from phishing attempts. The anti-phishing code is added to every email received from Nefentus. If you see this code, the email is from Nefentus."
+      "descriptionCode": "Protect your account from phishing attempts. The anti-phishing code is added to every email received from Nefentus. If you see this code, the email is from Nefentus.",
+      "seedPhrase": "Seed Phrase",
+      "seedDescription": "A sequence of words that allows you to regain access to your crypto funds if you ever lose your crypto wallet.",
+      "rememberSeed": "Store the seed phrase safe! You will be asked to enter it again.",
+      "verifySeed": "Seed Phrase",
+      "enterSeed": "Enter seed phrase to verify that you have saved it. You should store the seed phrase safe.",
+      "recover": "Recover wallet",
+      "recoverDescription": "Recover your wallet using seed phrase.",
+      "recoverErrorMessage": "There was an error recovering your wallet with the seed phrase.",
+      "recoverInfoMessage": "Your wallet was recovered successfully.",
+      "seedErrorMessage": "Seed phrase is wrong. Try it again.",
+      "seedInfoMessage": "Seed phrase is correct.",
+      "askPassword": "To see your seed phrase, please enter your password first.",
+      "newPassword": "To recover your crypto wallet using your seed phrase, please enter your password first."
     },
     "settings": {
       "title": "Security",
@@ -1047,7 +1062,8 @@
       "change": "Change",
       "select": "Select",
       "close": "Close",
-      "verify": "Verify"
+      "verify": "Verify",
+      "recover": "Recover"
     },
     "scanModal": {
       "title": "Scan QR-code or paste code"

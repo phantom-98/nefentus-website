@@ -192,7 +192,7 @@
     "title": "Passwort zurücksetzen",
     "button": "Zurücksetzen",
     "info": "Sie möchten Ihr Passwort nicht zurücksetzen?",
-    "infoLinkText": "Stattdessen nmelden",
+    "infoLinkText": "Stattdessen anmelden",
     "button-label-confirm": "Bestätigen Sie das Passwort"
   },
   "signUp": {
@@ -340,20 +340,37 @@
     "button2": "Planen Sie eine kostenlose Onboarding-Sitzung"
   },
   "reward": {
-    "subtitle": "For every new user",
-    "title1": "Get up to",
+    "subtitle": "Für jeden neuen Benutzer",
+    "title1": "Erhalten Sie bis zu",
     "gradient": "50 USDT",
-    "title2": "in rewards",
-    "button": "Create Your Free Account Now"
+    "title2": "in Belohnungen",
+    "button": "Erstellen Sie jetzt Ihr kostenloses Konto"
   },
   "footer": {
     "copyright": "© 2023 Nefentus. Alle Rechte vorbehalten.",
     "downloadButton": "JETZT RUNTERLADEN",
-    "content": ["Startseite", "Unsere Solution", "Resourcen", "Affiliate"],
+    "content": [
+      "Home",
+      "Zahlung",
+      "Ressourcen",
+      "Affiliate",
+      "Datenschutzrichtlinie"
+    ],
     "privacy": "Datenschutzerklärung",
     "imprint": "Impressum",
     "terms": "Bedingungen und Konditionen",
-    "contact": "Kontaktieren Sie uns"
+    "contact": "Kontaktieren Sie uns",
+    "contentLabel1": "Übersicht",
+    "content2": [
+      "Play Store",
+      "Anmelden",
+      "App Store",
+      "Anmeldung",
+      "Impressum"
+    ],
+    "contentLabel2": "Aktion",
+    "socialTitle": "Folge uns auf:",
+    "socialDescription": "Gehen Sie zum Anfang\nder Seite"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -512,11 +529,13 @@
     "update": "Aktualisieren",
     "open": "Öffen",
     "confirm": "Bestätigen",
+    "continue": "Weitermachen",
     "withdraw": "Abheben",
     "enable": "Aktivieren",
     "disable": "Deaktivieren",
     "upload": "Hochladen",
-    "of": "von"
+    "of": "von",
+    "show": "Anzeigen"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -942,7 +961,20 @@
       "labelPassword": "Einmal-Passwörter per E-Mail",
       "descriptionPassword": "Richten Sie die Multi-Faktor-Authentifizierung basierend auf Einmal-Passwörtern ein, die per E-Mail gesendet werden.",
       "labelCode": "Anti-Phishing Code",
-      "descriptionCode": "Schützen Sie Ihr Konto vor Phishing-Versuchen. Der Code wird in jeder Email von Nefentus eingefügt. Wenn Sie den Code in einer Email sehen, ist diese von Nefentus."
+      "descriptionCode": "Schützen Sie Ihr Konto vor Phishing-Versuchen. Der Code wird in jeder Email von Nefentus eingefügt. Wenn Sie den Code in einer Email sehen, ist diese von Nefentus.",
+      "seedPhrase": "Sicherheitsschlüssel",
+      "seedDescription": "Eine Wortfolge, die es Ihnen ermöglicht, wieder Zugriff auf Ihre Kryptogelder zu erhalten, falls Sie den Zugriff auf Ihr Krypto-Wallet verlieren.",
+      "rememberSeed": "Bewahren Sie den Sicherheitsschlüssel sicher auf! Sie werden gleich dazu aufgefordert ihn zu wiederholen.",
+      "verifySeed": "Sicherheitsschlüssel",
+      "enterSeed": "Geben Sie den Sicherheitsschlüssel ein. Dies dient dazu nachzuweisen, dass Sie ihn notiert/gespeichert haben. Bewahren Sie ihn sicher auf!",
+      "recover": "Wallet wiederherstellen",
+      "recoverDescription": "Stellen Sie Ihre Wallet mit dem Sicherheitsschlüssel wieder her.",
+      "recoverErrorMessage": "Es gab einen Fehler beim Wiederherstellen Ihrer Wallet.",
+      "recoverInfoMessage": "Ihre Wallet wurde erfolgreich wiederhergestellt.",
+      "seedErrorMessage": "Der Sicherheitsschlüssel ist falsch. Bitte überprüfen Sie ihn.",
+      "seedInfoMessage": "Der Sicherheitsschlüssel ist richtig.",
+      "askPassword": "Um Ihren Sicherheitsschlüssel zu sehen, geben Sie bitte zuerst Ihr Passwort ein.",
+      "newPassword": "Um Ihr Konto wiederherzustellen, geben Sie bitte zuerst Ihr Passwort ein."
     },
     "settings": {
       "title": "Sicherheit",
@@ -957,7 +989,8 @@
       "change": "Ändern",
       "select": "Wählen",
       "close": "Schließen",
-      "verify": "Verifizieren"
+      "verify": "Verifizieren",
+      "recover": "Wiederherstellen"
     },
     "passwords": {
       "title": "Passwort ändern",
