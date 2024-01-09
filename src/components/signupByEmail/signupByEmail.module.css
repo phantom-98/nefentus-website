@@ -77,8 +77,7 @@
 }
 
 .button {
-  width: max-content !important;
-
+  width: 100% !important;
   justify-content: center;
   display: flex;
 }

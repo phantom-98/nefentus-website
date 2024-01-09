@@ -246,7 +246,12 @@ const WalletSetting = ({ value, setValue }) => {
         <div style={{ position: "relative" }}>
           <div>
             <div>
-              <Button color="gray" onClick={() => setShowPopup(true)}>
+              <Button
+                color="gray"
+                fontSize="1rem"
+                width="10rem"
+                onClick={() => setShowPopup(true)}
+              >
                 {t("invoice.action.select")}
               </Button>
             </div>

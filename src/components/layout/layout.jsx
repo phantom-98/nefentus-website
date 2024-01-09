@@ -11,7 +11,9 @@ import Dummy from "../../assets/image/dummy.webp";
 import Checkmark from "../../assets/icon/singleCheckmark.svg";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
+import MessageComponent from "../message";
+import { MessageContext } from "../../context/message";
 import backendAPI from "../../api/backendAPI";
 import Error from "../error/error";
 import Input from "../input/input";
@@ -37,10 +39,9 @@ const Layout = ({
   const { t } = useTranslation();
   const backend_API = new backendAPI();
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const content = t("affiliate.affiliateList", { returnObjects: true });
-
+  const { setErrorMessage } = useContext(MessageContext);
   const videoRef = useRef(null);
   const [email, setEmail] = useState("");
 
@@ -60,12 +61,15 @@ const Layout = ({
   };
 
   const handleEnterEmail = async () => {
-    const result = await backend_API.registerByEmail(email);
-
-    if (result) {
-      navigate("/dashboard");
+    if (email) {
+      const result = await backend_API.registerByEmail(email);
+      if (result) {
+        navigate("/dashboard");
+      } else {
+        setErrorMessage("Email already exists");
+      }
     } else {
-      setErrorMessage("Email already exists");
+      setErrorMessage(t("messages.validation.email"));
     }
   };
 
@@ -99,9 +103,9 @@ const Layout = ({
 
         {home && (
           <>
+            <MessageComponent />
             <div className={styles.inputHero}>
               <div className={styles.inputWrapper}>
-                <Error error={errorMessage} />
                 <Input
                   placeholder="Email"
                   value={email}

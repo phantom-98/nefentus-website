@@ -39,7 +39,7 @@ function useBalances(metamask) {
 
   useEffect(() => {
     fetchBalances();
-  }, [internalWalletAddress]);
+  }, [internalWalletAddress, metamask]);
 
   return { balances, fetchBalances };
 }

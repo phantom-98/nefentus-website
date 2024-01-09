@@ -220,11 +220,11 @@ const SideNavigation = () => {
       <div className={styles.referral}>
         {getFullSideBar(active) ? (
           <Link to={dashboardLink(localStorage)}>
-            <Button>{t("sidebar.referral")}</Button>
+            <Button width="">{t("sidebar.referral")}</Button>
           </Link>
         ) : (
           <Link to="/dashboard/">
-            <Button>{t("sidebar.vendorDashboard")}</Button>
+            <Button width="">{t("sidebar.vendorDashboard")}</Button>
           </Link>
         )}
       </div>

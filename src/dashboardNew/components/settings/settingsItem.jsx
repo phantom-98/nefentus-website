@@ -273,7 +273,7 @@ const SettingsItem = ({ data, setIsSaveData }) => {
         setLabel(labelOption?.label);
       }
     }
-  }, []);
+  }, [data]);
 
   const handleEdit = () => {
     setShow(true);
@@ -348,6 +348,8 @@ const SettingsItem = ({ data, setIsSaveData }) => {
           </div>
           <Button
             color="gray"
+            fontSize="1rem"
+            width="10rem"
             onClick={
               data.type === "edit"
                 ? () => handleEdit()
@@ -365,7 +367,9 @@ const SettingsItem = ({ data, setIsSaveData }) => {
               : data.type === "image"
               ? `${t("security.actions.change")}`
               : data.type === "enable"
-              ? `${t("security.actions.enable")}`
+              ? data.value
+                ? `${t("security.actions.disable")}`
+                : `${t("security.actions.enable")}`
               : data.type === "select"
               ? `${t("security.actions.select")}`
               : ""}

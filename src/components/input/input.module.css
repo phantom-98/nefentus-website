@@ -34,15 +34,6 @@
   position: relative;
 }
 
-.input img {
-  position: absolute;
-
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-  right: 2rem;
-}
-
 .searchInput {
   color: var(--white-color);
   background-color: transparent;
@@ -68,7 +59,19 @@
 
 .option .input {
   position: relative;
-  /* height: 33px; */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+  padding: 0.5rem 2rem;
+  border-radius: 1rem;
+}
+
+.walleField {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start;
+  gap: 20px;
 }
 
 .option input {
@@ -142,6 +145,22 @@
 }
 
 .select {
-  padding: 1rem 2rem !important;
+  font-size: 1.4rem;
+  padding: 1.75rem 2rem !important;
   gap: 0.5rem !important;
+}
+
+.walletOptions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.walletDropdownIcon {
+  position: absolute;
+  right: 20px;
+}
+
+.dropdownDisable {
+  cursor: not-allowed;
 }

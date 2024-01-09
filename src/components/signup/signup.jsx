@@ -2,13 +2,15 @@ import Button from "../button/button";
 import Input, { SearchOptions } from "../input/input";
 import styles from "./signup.module.css";
 import { Link } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import ReCAPTCHA from "react-google-recaptcha";
 import backendAPI from "../../api/backendAPI";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { MessageContext } from "../../context/message";
+import MessageComponent from "../message";
 import isMobilePhone from "../../func/isMobilePhone";
 import Error from "../error/error";
 import { NefentusLogo } from "../../assets/icon/logos/logos";
@@ -449,7 +451,7 @@ const Signup = () => {
   });
 
   const recaptchaRef = useRef();
-  const [errorMessage, setErrorMessage] = useState(null);
+  const { setErrorMessage } = useContext(MessageContext);
   const [message, setMessage] = useState(null);
   const [CountryOption, setCountryOption] = useState("");
   const api = new backendAPI();
@@ -499,13 +501,21 @@ const Signup = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema), mode: "onSubmit" });
 
+  useEffect(() => {
+    if (Object.keys(errors)?.length)
+      setErrorMessage(errors[Object.keys(errors)[0]].message);
+  }, [errors]);
+
   const resetForm = () => {
     reset();
     setCountryOption(t("signUp.option1Placeholder"));
   };
 
   async function submitForm(data) {
-    if (CountryOption === t("signUp.option1Placeholder")) {
+    if (
+      CountryOption === t("signUp.option1Placeholder") ||
+      !country_list.find((country) => country?.value === CountryOption)
+    ) {
       setErrorMessage(t("messages.error.country"));
       return;
     }
@@ -527,9 +537,9 @@ const Signup = () => {
         setErrorMessage(t("messages.error.register"));
       } else {
         setMessage(t("messages.error.confirmEmail"));
+        resetForm();
+        setErrorMessage("");
       }
-      resetForm();
-      setErrorMessage(null);
     }
   }
 
@@ -561,16 +571,7 @@ const Signup = () => {
       </div>
 
       <form onSubmit={handleSubmit(submitForm)} className={styles.right}>
-        <Error
-          error={
-            errorMessage ||
-            errors.firstName?.message ||
-            errors.lastName?.message ||
-            errors.email?.message ||
-            errors.password?.message ||
-            errors.confirmPassword?.message
-          }
-        />
+        <MessageComponent />
         {message && (
           <div className={styles.messagecontainer}>
             <p>{message}</p>

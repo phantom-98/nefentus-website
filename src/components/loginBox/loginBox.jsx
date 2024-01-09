@@ -2,7 +2,7 @@ import Input from "../input/input";
 import styles from "./loginBox.module.css";
 
 import Button from "./../button/button";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { dashboardLink, decryptData, encryptData } from "../../utils";
@@ -19,6 +19,8 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { OneTimeCodeInput } from "../../dashboard/input/input";
 import { Checkmark } from "../../assets/icon/icons";
 import { NefentusLogo } from "../../assets/icon/logos/logos";
+import { MessageContext } from "../../context/message";
+import MessageComponent from "../message";
 
 const ConfirmMeEmail = ({
   email,
@@ -139,7 +141,7 @@ const ConfirmMeEmail = ({
 
 const LoginBox = () => {
   const recaptchaRef = useRef();
-  const [errorMessage, setErrorMessage] = useState(null);
+  const { setErrorMessage } = useContext(MessageContext);
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
   const backendAPI = new backend_API();
@@ -322,11 +324,7 @@ const LoginBox = () => {
       </div>
 
       <div className={styles.right}>
-        <Error
-          error={
-            errorMessage || errors.email?.message || errors.password?.message
-          }
-        />
+        <MessageComponent />
         {message && (
           <div className={styles.messagecontainer}>
             <p>{message}</p>

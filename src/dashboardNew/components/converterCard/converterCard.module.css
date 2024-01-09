@@ -3,6 +3,7 @@
 }
 
 .card {
+  min-width: 600px;
   width: max-content;
   margin: auto;
 }
@@ -14,7 +15,7 @@
 .header {
   display: flex;
   align-items: center;
-  gap: 15rem;
+  justify-content: space-between;
   margin-bottom: 2rem;
 }
 

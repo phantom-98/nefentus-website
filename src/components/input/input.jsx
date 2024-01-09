@@ -98,9 +98,10 @@ export const Options = ({
           <div
             style={{
               position: "relative",
+              bottom: 0,
             }}
           >
-            {value}
+            {value ? value : t("signUp.selectLabel")}
           </div>
         }{" "}
         <img src={dropDown} alt="dropdown" />
@@ -320,6 +321,166 @@ export const SearchOptions = ({
                 {item.display}
               </p>
             ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const WalletField = ({
+  value,
+  icon,
+  label = "",
+  walletAddress,
+  dashboard,
+}) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className={`${styles.inputWrapper} ${styles.option}`}>
+      {label && label.length > 0 && (
+        <p
+          className={`${styles.label} ${
+            dashboard ? styles.dashboardLabel : ""
+          }`}
+        >
+          {label.length > 0 ? label : t("signUp.optionLabel")}
+        </p>
+      )}
+
+      <div
+        className={`option ${styles.input} ${
+          dashboard ? styles.dashboardInput : ""
+        } ${styles.walleField}`}
+      >
+        {icon && <img src={icon} alt="dropdown" width={24} />}
+
+        <div
+          style={{
+            position: "relative",
+            bottom: 0,
+            lineHeight: "25px",
+          }}
+        >
+          {value ? value : t("messages.error.accountDisconnect")}
+        </div>
+        <div>
+          {walletAddress?.length
+            ? `${walletAddress.slice(0, 6)} .... ${walletAddress.slice(-4)}`
+            : ""}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const OptionsWithImage = ({
+  options = [],
+  setValue,
+  label = "",
+  dashboard,
+  wallet,
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const { t } = useTranslation();
+
+  return (
+    <div className={`${styles.inputWrapper} ${styles.option}`}>
+      {label && label.length > 0 && (
+        <p
+          className={`${styles.label} ${
+            dashboard ? styles.dashboardLabel : ""
+          }`}
+        >
+          {label.length > 0 ? label : t("signUp.optionLabel")}
+        </p>
+      )}
+
+      <div
+        className={`option ${styles.input} ${
+          dashboard ? styles.dashboardInput : ""
+        } ${styles.walleField} ${
+          options.length <= 1 ? styles.dropdownDisable : ""
+        }`}
+        // style={{cursor: options.length <= 1 && "not-allowed"}}
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        <div className={`${styles.walleField}`}>
+          {wallet?.icon && <img src={wallet?.icon} alt="dropdown" width={24} />}
+
+          <div
+            style={{
+              position: "relative",
+              bottom: 0,
+              lineHeight: "25px",
+            }}
+          >
+            {wallet?.name
+              ? wallet?.name
+              : t("messages.error.accountDisconnect")}
+          </div>
+          <div>
+            {wallet?.address?.length
+              ? `${wallet?.address?.slice(0, 6)} .... ${wallet?.address?.slice(
+                  -4,
+                )}`
+              : ""}
+          </div>
+        </div>
+        <img src={dropDown} alt="dropdown" />
+        {open && options.length > 1 && (
+          <div className={`card ${styles.body}`}>
+            {options.length > 0 ? (
+              options.map((item) =>
+                item?.name ? (
+                  <p
+                    key={item.name}
+                    onClick={() => setValue(item)}
+                    className={styles.walletOptions}
+                  >
+                    <img src={item?.icon} alt="dropdown" width={24} />
+                    <div
+                      style={{
+                        position: "relative",
+                        bottom: 0,
+                        lineHeight: "25px",
+                      }}
+                    >
+                      {item.name}
+                    </div>
+                    <div>
+                      {item?.address?.length
+                        ? `${item?.address?.slice(
+                            0,
+                            6,
+                          )} .... ${item?.address?.slice(-4)}`
+                        : ""}
+                    </div>
+                  </p>
+                ) : (
+                  <p key={item} onClick={() => setValue(item)}>
+                    {item}
+                  </p>
+                ),
+              )
+            ) : (
+              <>
+                <p key={"vendor"} onClick={() => setValue("Vendor")}>
+                  {t("signUp.option1")}
+                </p>
+                <p key={"affiliate"} onClick={() => setValue("Affiliate")}>
+                  {t("signUp.option2")}
+                </p>
+                <p
+                  key={"vendoraffiliate"}
+                  onClick={() => setValue("Vendor / Affiliate")}
+                >
+                  {t("signUp.option1")} / {t("signUp.option2")}
+                </p>
+              </>
+            )}
           </div>
         )}
       </div>

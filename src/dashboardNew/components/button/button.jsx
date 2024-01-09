@@ -2,7 +2,15 @@ import { Link } from "react-router-dom";
 import styles from "./button.module.css";
 import { useTheme } from "../../../context/themeContext/themeContext";
 
-const Button = ({ children, color, onClick, link, style }) => {
+const Button = ({
+  children,
+  color,
+  fontSize = "1.2rem",
+  width = "",
+  onClick,
+  link,
+  style,
+}) => {
   const { theme } = useTheme();
 
   return (
@@ -13,9 +21,9 @@ const Button = ({ children, color, onClick, link, style }) => {
             onClick={onClick}
             className={styles.button}
             style={{
-              width: color === "gray" ? "7rem" : "",
               border:
                 color === "gray" ? "1px solid rgba(255, 255, 255, 0.2)" : "",
+              width: width,
               ...style,
             }}
           >
@@ -36,7 +44,7 @@ const Button = ({ children, color, onClick, link, style }) => {
             ></div>
             <div
               style={{
-                fontSize: color === "gray" ? "1rem" : "",
+                fontSize: fontSize,
               }}
               className={styles.text}
             >
@@ -49,13 +57,13 @@ const Button = ({ children, color, onClick, link, style }) => {
           onClick={onClick}
           className={styles.button}
           style={{
-            width: color === "gray" ? "7rem" : "",
             border:
               color === "gray" && theme === "dark"
                 ? "1px solid rgba(255, 255, 255, 0.2)"
                 : color === "gray" && theme !== "dark"
                 ? "1px solid rgba(0, 0, 0, 0.2)"
                 : "",
+            width: width,
             ...style,
           }}
         >
@@ -76,7 +84,7 @@ const Button = ({ children, color, onClick, link, style }) => {
           ></div>
           <div
             style={{
-              fontSize: color === "gray" ? "1rem" : "",
+              fontSize: fontSize,
             }}
             className={styles.text}
           >

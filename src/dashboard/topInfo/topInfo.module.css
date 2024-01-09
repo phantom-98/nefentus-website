@@ -22,6 +22,19 @@
   color: #23c215;
 }
 
+.sendModalTitle {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+}
+
+.sendModalTitle p {
+  font-size: 1.6rem;
+  color: var(--gray-color);
+  line-height: 140%;
+}
+
 @media (max-width: 900px) {
   .top {
     gap: 2rem;
