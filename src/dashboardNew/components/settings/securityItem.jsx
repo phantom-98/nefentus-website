@@ -154,6 +154,7 @@ const SecurityItem = ({ data, recover }) => {
       currentPassword,
     );
     if (response == null) {
+      setErrorMessage(t("messages.error.passwordCorrect"));
       return;
     }
     setShow(false);
@@ -612,6 +613,7 @@ const SecurityItem = ({ data, recover }) => {
           confirmTitle={t("security.actions.verify")}
         >
           <>
+            <MessageComponent />
             <div className={styles.modalTitle}>
               {t("security.passwords.title")}
             </div>
