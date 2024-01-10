@@ -236,7 +236,7 @@
     "OTPTitle": "Ein Code wurde per Email verschickt",
     "OTPSubtitleP1": "Wir haben einen 6-stelligen Code gesendet an ",
     "OTPSubtitleP2": ". Der Code läuft in Kürze ab.",
-    "useNefentus": "Um mit der Nefentus-Brieftasche zu bezahlen, müssen Sie sich anmelden.",
+    "useNefentus": "Um mit dem Nefentus-Wallet zu bezahlen, müssen Sie sich anmelden.",
     "confirm": "Bestätigen"
   },
   "affiliate": {
