@@ -27,6 +27,7 @@ import { currencies } from "../../constants";
 import { formatTokenBalance, formatUSDBalance } from "../../utils";
 import { nullToZeroAddress } from "../../utils";
 import { useTranslation } from "react-i18next";
+import Popup from "../../dashboardNew/components/popup/popup";
 
 const ReceivePayment = ({
   priceUSD,
@@ -101,6 +102,10 @@ const ReceivePayment = ({
 
   const [isDisable, setDisable] = useState(true);
 
+  const [show, setShow] = useState(false);
+  const [email, setEmail] = useState("");
+  const [pwd, setPwd] = useState("");
+
   const backend_API = new backendAPI();
 
   useEffect(() => {
@@ -108,14 +113,8 @@ const ReceivePayment = ({
   }, []);
 
   useEffect(() => {
-    fetchPrices();
-    fetchBalances();
-
     if (metamask.status === "connected" && metamask.address) {
       registerWallet();
-      if (wallets[selectedWalletIndex].type == "metamask") {
-        setDisable(false || disabled);
-      }
     }
   }, [metamask.status, metamask.address]);
 
@@ -132,6 +131,7 @@ const ReceivePayment = ({
         else setDisable(false || disabled);
       } else {
         setDisable(true);
+        setShow(true);
       }
     } else if (wallet.type == "metamask") {
       if (metamask.status == "disconnected") {
@@ -180,6 +180,7 @@ const ReceivePayment = ({
   }, [selectedCryptoIndex, prices]);
 
   async function registerWallet() {
+    if (metamask.address || metamask.address === "undefined") return;
     const result = await backend_API.registerWalletAddress(metamask.address);
   }
 
@@ -252,6 +253,21 @@ const ReceivePayment = ({
       } else {
         setErrorMessage(t("messages.error.transactionFailed"));
       }
+    }
+  }
+
+  async function signin() {
+    try {
+      const response = await backend_API.login(email, pwd, false);
+      if (response == null) {
+        setErrorMessage(t("messages.error.loginData"));
+        return;
+      } else {
+        setShow(false);
+        console.log("login success");
+      }
+    } catch (error) {
+      setErrorMessage(t("messages.error.login"));
     }
   }
 
@@ -381,6 +397,15 @@ const ReceivePayment = ({
           </p>
         </div>
       </div>
+      <SigninPopup
+        show={show}
+        setShow={setShow}
+        email={email}
+        setEmail={setEmail}
+        password={pwd}
+        setPassword={setPwd}
+        signin={signin}
+      />
     </div>
   );
 };
@@ -564,5 +589,46 @@ export const ProductInfo = ({
         </div>
       </div>
     </div>
+  );
+};
+
+const SigninPopup = ({
+  show,
+  setShow,
+  email,
+  setEmail,
+  password,
+  setPassword,
+  signin,
+}) => {
+  const { t } = useTranslation();
+  return (
+    <Popup
+      show={show}
+      onClose={() => setShow(false)}
+      onConfirm={signin}
+      confirmTitle={t("login.button")}
+    >
+      <MessageComponent />
+      <div className={styles.signinContainer}>
+        <div>
+          <p className={styles.title}>{t("login.button")}</p>
+          <p className={styles.description}>{t("login.useNefentus")}</p>
+        </div>
+        <Input
+          label={`${t("signUp.emailLabel")}*`}
+          placeholder={t("signUp.emailPlaceholder")}
+          value={email}
+          setValue={setEmail}
+        />
+        <Input
+          label={`${t("signUp.passwordLabel")}*`}
+          placeholder={t("signUp.passwordPlaceholder")}
+          value={password}
+          setValue={setPassword}
+          type
+        />
+      </div>
+    </Popup>
   );
 };

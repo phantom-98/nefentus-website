@@ -542,3 +542,22 @@ input.productValue {
   background: #272729;
   border-radius: 8px;
 }
+
+.signinContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  align-self: stretch;
+  color: #f6f6f6;
+}
+
+.signinContainer .title {
+  font-size: 1.8rem;
+}
+
+.signinContainer .description {
+  font-size: 1.2rem;
+  opacity: 0.6;
+  max-width: 360px;
+}

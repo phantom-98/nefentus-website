@@ -298,6 +298,7 @@
     "OTPTitle": "Check your email for a code",
     "OTPSubtitleP1": "We have sent a 6-digits code to ",
     "OTPSubtitleP2": ". The code expires shortly.",
+    "useNefentus": "To pay with Nefentus wallet, you need to log in.",
     "confirm": "Confirm"
   },
   "affiliate": {
