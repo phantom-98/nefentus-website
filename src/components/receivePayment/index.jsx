@@ -124,11 +124,11 @@ const ReceivePayment = ({
       if (internalWalletAddress) {
         if (
           balances[selectedWalletIndex][selectedCryptoIndex] *
-            prices[selectedCryptoIndex] <
+            prices[selectedCryptoIndex] >
           priceUSD
         )
-          setDisable(true);
-        else setDisable(false || disabled);
+          setDisable(false || disabled);
+        else setDisable(true);
       } else {
         setDisable(true);
         setShow(true);
@@ -146,11 +146,11 @@ const ReceivePayment = ({
       } else if (metamask.status == "connected") {
         if (
           balances[selectedWalletIndex][selectedCryptoIndex] *
-            prices[selectedCryptoIndex] <
+            prices[selectedCryptoIndex] >
           priceUSD
-        )
-          setDisable(true);
-        else setDisable(false || disabled);
+        ) {
+          setDisable(false || disabled);
+        } else setDisable(true);
       }
     } else if (wallet.type == "walletconnect") {
       setDisable(true);
@@ -393,7 +393,8 @@ const ReceivePayment = ({
           </div>
           <p>
             {t("payments.agree")}{" "}
-            <a style={{ textDecoration: "underline" }}>{t("payments.terms")}</a>
+            <a style={{ textDecoration: "underline" }}>{t("payments.terms")}</a>{" "}
+            {t("payments.agree2")}
           </p>
         </div>
       </div>

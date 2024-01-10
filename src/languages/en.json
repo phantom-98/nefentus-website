@@ -977,8 +977,9 @@
     "cryptoAmount": "Cryptocurrency amount",
     "chooseWallet": "Choose Wallet",
     "payButton": "Pay",
-    "agree": "By clicking on button you agree to the",
+    "agree": "By clicking on button, you agree to the",
     "terms": "Terms of Service",
+    "agree2": "",
     "pay": {
       "title": "Payment Details",
       "description": "Complete remittance by providing your payment details"

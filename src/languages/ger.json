@@ -912,6 +912,7 @@
     "payButton": "Bezahlen",
     "agree": "Durch Anklicken der Schaltfläche erklären Sie sich mit den",
     "terms": "Bedingungen des Dienstes",
+    "agree2": "einverstanden",
     "pay": {
       "title": "Details zur Bezahlung",
       "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein"
