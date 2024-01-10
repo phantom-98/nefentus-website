@@ -21,6 +21,7 @@ import { Checkmark } from "../../assets/icon/icons";
 import { NefentusLogo } from "../../assets/icon/logos/logos";
 import { MessageContext } from "../../context/message";
 import MessageComponent from "../message";
+import { useTheme } from "../../context/themeContext/themeContext";
 
 const ConfirmMeEmail = ({
   email,
@@ -140,6 +141,7 @@ const ConfirmMeEmail = ({
 };
 
 const LoginBox = () => {
+  const { theme } = useTheme();
   const recaptchaRef = useRef();
   const { setErrorMessage } = useContext(MessageContext);
   const [message, setMessage] = useState(null);
@@ -362,7 +364,7 @@ const LoginBox = () => {
               <ReCAPTCHA
                 ref={recaptchaRef}
                 sitekey={process.env.VITE_REACT_APP_RECAPTCHA_SITE_KEY}
-                theme="dark"
+                theme={theme}
               />
 
               <div className={styles.rememberInfo}>

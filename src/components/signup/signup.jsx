@@ -14,9 +14,11 @@ import MessageComponent from "../message";
 import isMobilePhone from "../../func/isMobilePhone";
 import Error from "../error/error";
 import { NefentusLogo } from "../../assets/icon/logos/logos";
+import { useTheme } from "../../context/themeContext/themeContext";
 
 const Signup = () => {
   const { t } = useTranslation();
+  const { theme } = useTheme();
 
   // let country_list = [
   //   "Afghanistan",
@@ -631,7 +633,7 @@ const Signup = () => {
         <ReCAPTCHA
           ref={recaptchaRef}
           sitekey={process.env.VITE_REACT_APP_RECAPTCHA_SITE_KEY}
-          theme="dark"
+          theme={theme}
         />
 
         <div className={styles.buttonWrapper}>
