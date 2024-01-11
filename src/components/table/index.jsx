@@ -1,5 +1,6 @@
 import styles from "./table.module.css";
 import classNames from "classnames";
+import { useTheme } from "../../context/themeContext/themeContext";
 
 const Table = ({
   headers,
@@ -10,6 +11,7 @@ const Table = ({
   striped,
   className,
 }) => {
+  const { theme } = useTheme();
   if (!colSizes) {
     colSizes = data[0].map(() => 1);
   }
@@ -31,7 +33,10 @@ const Table = ({
             </ul>
           </div>
         )}
-        <div className={styles.tableBody}>
+        <div
+          className={styles.tableBody}
+          style={{ color: theme == "dark" ? "white" : "" }}
+        >
           {data.map((items, rowIndex) => (
             <ul key={rowIndex} style={{ gridTemplateColumns: colSizes }}>
               {items.map((item, colIndex) => (

@@ -28,6 +28,7 @@ import { formatTokenBalance, formatUSDBalance } from "../../utils";
 import { nullToZeroAddress } from "../../utils";
 import { useTranslation } from "react-i18next";
 import Popup from "../../dashboardNew/components/popup/popup";
+import { useTheme } from "../../context/themeContext/themeContext";
 
 const ReceivePayment = ({
   priceUSD,
@@ -39,6 +40,7 @@ const ReceivePayment = ({
 }) => {
   let internalWalletAddress = useInternalWallet();
   const { t } = useTranslation();
+  const { theme } = useTheme();
 
   const [password, setPassword] = useState("");
   const [internalPayIdx, setInternalPayIdx] = useState(-1); // Index of the currency to pay with (or -1 if not selected)
@@ -282,7 +284,13 @@ const ReceivePayment = ({
               <p style={{ fontSize: "1.2rem", color: "#B1B1B1" }}>
                 {t("payments.seller")}
               </p>
-              <div className={styles.sellerContainer}>
+              <div
+                className={styles.sellerContainer}
+                style={{
+                  backgroundColor: `${theme == "dark" ? "" : "white"}`,
+                  borderColor: `${theme == "dark" ? "" : "#0000001a"}`,
+                }}
+              >
                 <div className={styles.avatarWrapper}>
                   {seller.s3Url && (
                     <img
@@ -295,7 +303,13 @@ const ReceivePayment = ({
                     />
                   )}
                   {!seller.s3Url && (
-                    <span style={{ fontSize: "1.4rem", marginTop: "0.3rem" }}>
+                    <span
+                      style={{
+                        fontSize: "1.4rem",
+                        marginTop: "0.3rem",
+                        color: "white",
+                      }}
+                    >
                       {seller.firstName[0]}
                       {seller.lastName[0]}
                     </span>
@@ -303,30 +317,56 @@ const ReceivePayment = ({
                 </div>
                 <div
                   className={styles.sellerInfo}
-                  style={{ borderRight: "1px solid #313131" }}
+                  style={{
+                    borderRight: `1px solid ${
+                      theme == "dark" ? "#313131" : "#0000001a"
+                    }`,
+                  }}
                 >
                   <p className={styles.sellerTitle}>{t("payments.name")}</p>
-                  <p className={styles.sellerValue}>
+                  <p
+                    className={styles.sellerValue}
+                    style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
+                  >
                     {seller.firstName} {seller.lastName}
                   </p>
                 </div>
                 <div
                   className={styles.sellerInfo}
-                  style={{ borderRight: "1px solid #313131" }}
+                  style={{
+                    borderRight: `1px solid ${
+                      theme == "dark" ? "#313131" : "#0000001a"
+                    }`,
+                  }}
                 >
                   <p className={styles.sellerTitle}>{t("payments.email")}</p>
-                  <p className={styles.sellerValue}>{seller.email}</p>
+                  <p
+                    className={styles.sellerValue}
+                    style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
+                  >
+                    {seller.email}
+                  </p>
                 </div>
                 <div className={styles.sellerInfo}>
                   <p className={styles.sellerTitle}>{t("payments.company")}</p>
-                  <p className={styles.sellerValue}>{seller.business}</p>
+                  <p
+                    className={styles.sellerValue}
+                    style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
+                  >
+                    {seller.business}
+                  </p>
                 </div>
               </div>
             </div>
           )}
           <div className={styles.payInfoWrapper}>
             <div className={styles.payInfoHeader}>
-              <h1 className={styles.headerTitle}>{t("payments.pay.title")}</h1>
+              <h1
+                className={styles.headerTitle}
+                style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
+              >
+                {t("payments.pay.title")}
+              </h1>
               <p className={styles.headerDescription}>
                 {t("payments.pay.description")}
               </p>
@@ -336,8 +376,21 @@ const ReceivePayment = ({
         </div>
 
         <div className={styles.productBuy}>
-          <div className={styles.body}>
-            <div className={styles.total}>
+          <div
+            className={styles.body}
+            style={{
+              backgroundColor: `${theme == "dark" ? "" : "white"}`,
+              borderColor: `${theme == "dark" ? "" : "#0000001a"}`,
+            }}
+          >
+            <div
+              className={styles.total}
+              style={{
+                borderBottom: `1px solid ${
+                  theme == "dark" ? "#313131" : "#0000001a"
+                }`,
+              }}
+            >
               <p>{t("payments.total")}</p>
               <p>${formatUSDBalance(priceUSD)}</p>
             </div>
@@ -355,8 +408,12 @@ const ReceivePayment = ({
             <div
               className={styles.walletWrapper}
               style={{
-                borderBottom: "1px solid #313131",
-                borderTop: "1px solid #313131",
+                borderBottom: `1px solid ${
+                  theme == "dark" ? "#313131" : "#0000001a"
+                }`,
+                borderTop: `1px solid ${
+                  theme == "dark" ? "#313131" : "#0000001a"
+                }`,
               }}
             >
               <div className={styles.chooseWallet}>
@@ -456,14 +513,30 @@ const SelectOption = ({
   alt,
   dropdown,
 }) => {
+  const { theme } = useTheme();
   return (
-    <div className={styles.optionLineWrapper}>
+    <div
+      className={styles.optionLineWrapper}
+      style={{
+        backgroundColor: `${theme == "dark" ? "" : "white"}`,
+        borderColor: `${theme == "dark" ? "" : "#0000001a"}`,
+      }}
+    >
       <div className={styles.optionLine}>
-        <div className={styles.iconContainer}>
+        <div
+          className={styles.iconContainer}
+          style={{ backgroundColor: `${theme == "dark" ? "" : "#0000001a"}` }}
+        >
           <img src={icon} className={styles.icon} alt={alt} />
         </div>
         <div className={styles.optionContainer}>
-          <p className={styles.optionTitle}> {optionTitle} </p>
+          <p
+            className={styles.optionTitle}
+            style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
+          >
+            {" "}
+            {optionTitle}{" "}
+          </p>
           {optionDescription && (
             <p className={styles.optionDescription}> {optionDescription} </p>
           )}
@@ -475,6 +548,7 @@ const SelectOption = ({
 };
 
 const Input = ({ label, placeholder, value, setValue, type }) => {
+  const { theme } = useTheme();
   const handleChange = (e) => {
     if (setValue) {
       setValue(e.target.value);
@@ -487,6 +561,7 @@ const Input = ({ label, placeholder, value, setValue, type }) => {
 
       <input
         className={styles.input}
+        style={{ backgroundColor: `${theme == "dark" ? "" : "white"}` }}
         placeholder={placeholder}
         type={type ? "password" : "text"}
         value={value}
@@ -603,18 +678,30 @@ const SigninPopup = ({
   signin,
 }) => {
   const { t } = useTranslation();
+  const { theme } = useTheme();
   return (
     <Popup
       show={show}
       onClose={() => setShow(false)}
       onConfirm={signin}
       confirmTitle={t("login.button")}
+      cancelTitle={t("general.cancel")}
     >
       <MessageComponent />
       <div className={styles.signinContainer}>
         <div>
-          <p className={styles.title}>{t("login.button")}</p>
-          <p className={styles.description}>{t("login.useNefentus")}</p>
+          <p
+            className={styles.title}
+            style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
+          >
+            {t("login.button")}
+          </p>
+          <p
+            className={styles.description}
+            style={{ color: `${theme == "dark" ? "" : "black"}` }}
+          >
+            {t("login.useNefentus")}
+          </p>
         </div>
         <Input
           label={`${t("signUp.emailLabel")}*`}

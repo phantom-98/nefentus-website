@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./button.module.css";
+import { useTheme } from "../../context/themeContext/themeContext";
 
 const Button = ({
   children,
@@ -11,25 +12,29 @@ const Button = ({
   style,
   disabled,
 }) => {
+  const { theme } = useTheme();
   return (
     <button
-      className={`${styles.button} ${className}`}
+      className={`${styles.button}`}
       onClick={onClick}
       type={type}
       style={{
         ...style,
         border: disabled
-          ? "#313131"
+          ? `1px solid ${theme == "dark" ? "#313131" : "#bababa"}`
           : color === "white"
           ? "1px solid rgb(38, 38, 38)"
           : "1px solid #0784B5",
+        backgroundColor: theme == "dark" ? "" : "#dadada",
       }}
     >
       <div
         className={styles.background}
         style={{
           background: disabled
-            ? "#313131"
+            ? theme == "dark"
+              ? "#313131"
+              : "#ffffffd0"
             : color === "white"
             ? "rgb(38, 38, 38)"
             : "#0784B5",
@@ -37,10 +42,20 @@ const Button = ({
       ></div>
       {link ? (
         <Link to={link}>
-          <div className={`${styles.buttonText} unselectable`}>{children}</div>
+          <div
+            className={`${styles.buttonText} unselectable`}
+            style={{ color: theme == "dark" ? "" : "#111111" }}
+          >
+            {children}
+          </div>
         </Link>
       ) : (
-        <div className={`${styles.buttonText} unselectable`}>{children}</div>
+        <div
+          className={`${styles.buttonText} unselectable`}
+          style={{ color: theme == "dark" ? "" : "#111111" }}
+        >
+          {children}
+        </div>
       )}
     </button>
   );

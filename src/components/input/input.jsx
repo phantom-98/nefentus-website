@@ -183,6 +183,7 @@ export const Textarea = ({
 
 export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
   const inputRef = useRef(null);
+  const { theme } = useTheme();
 
   const { t } = useTranslation();
 
@@ -222,9 +223,14 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
           {label}
         </p>
       )}
-      <div className={styles.attachment}>
+      <div
+        className={styles.attachment}
+        style={{
+          border: `1px solid ${theme == "dark" ? "#ffffff14" : "#0000001a"}`,
+        }}
+      >
         <img src={AttachmentImage} alt="Attachment" onClick={handleClick} />
-        <p style={{ color: text ? "#fff" : "#c4c4c4" }} onClick={handleClick}>
+        <p style={{ color: "#c4c4c4" }} onClick={handleClick}>
           {text ? text : t("products.createProductModal.attach")}
         </p>
         <img
