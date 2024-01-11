@@ -36,7 +36,8 @@ import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
 import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
 
 const CryptoCard = () => {
-  let internalWalletAddress = useInternalWallet();
+  const { internalWalletAddress, fetchInternalWalletAddress } =
+    useInternalWallet();
   const [activeToggle, setActiveToggle] = useState(false);
   const [isExternal, setIsExternal] = useState(false);
   const [activeWallet, setActiveWallet] = useState({});

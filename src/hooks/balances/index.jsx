@@ -5,7 +5,8 @@ import { currencies } from "../../constants";
 
 function useBalances(metamask) {
   const [balances, setBalances] = useState([initBalances(), initBalances()]);
-  let internalWalletAddress = useInternalWallet();
+  const { internalWalletAddress, fetchInternalWalletAddress } =
+    useInternalWallet();
 
   function initBalances() {
     return currencies.map((currency) => undefined);

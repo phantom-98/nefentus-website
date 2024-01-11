@@ -15,7 +15,8 @@ const ProfileCard = ({ type }) => {
   const [lastName] = useState(localStorage.getItem("lastName"));
   const [email] = useState(localStorage.getItem("email"));
   const [profileImage] = useState(localStorage.getItem("profile_pic"));
-  let internalWalletAddress = useInternalWallet();
+  const { internalWalletAddress, fetchInternalWalletAddress } =
+    useInternalWallet();
 
   const { t } = useTranslation();
 

@@ -35,7 +35,8 @@ import {
 import { useTranslation } from "react-i18next";
 
 const WalletBody = () => {
-  let internalWalletAddress = useInternalWallet();
+  const { internalWalletAddress, fetchInternalWalletAddress } =
+    useInternalWallet();
   const metamask = {
     connect: useConnect(),
     disconnect: useDisconnect(),

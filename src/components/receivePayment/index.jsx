@@ -38,7 +38,8 @@ const ReceivePayment = ({
   transInfoArg,
   disabled,
 }) => {
-  let internalWalletAddress = useInternalWallet();
+  const { internalWalletAddress, fetchInternalWalletAddress } =
+    useInternalWallet();
   const { t } = useTranslation();
   const { theme } = useTheme();
 
@@ -264,7 +265,7 @@ const ReceivePayment = ({
         return;
       } else {
         setShow(false);
-        console.log("login success");
+        fetchInternalWalletAddress();
       }
     } catch (error) {
       setErrorMessage(t("messages.error.login"));

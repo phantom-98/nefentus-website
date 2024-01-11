@@ -1132,6 +1132,7 @@ export default class backendAPI {
   async getWalletAddresses() {
     try {
       const url = `${this.baseURL}/wallet/addresses`;
+      this.token = Cookies.get("token");
       const options = {
         method: "GET",
         headers: {

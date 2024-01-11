@@ -15,7 +15,7 @@ const Button = ({
   const { theme } = useTheme();
   return (
     <button
-      className={`${styles.button}`}
+      className={`${styles.button} ${className}`}
       onClick={onClick}
       type={type}
       style={{

@@ -39,7 +39,8 @@ const WalletSetting = ({ value, setValue }) => {
 
   const CLIENT_ID = "639eea2ebcabed7eab90b56aceeed08b";
 
-  const internalWalletAddress = useInternalWallet();
+  const { internalWalletAddress, fetchInternalWalletAddress } =
+    useInternalWallet();
 
   const wallets = [
     {
