@@ -53,7 +53,7 @@ const ReceivePayment = ({
     status: useConnectionStatus(),
   };
 
-  const [cryptoAmount, setCryptoAmount] = useState("0 ETH");
+  const [cryptoAmount, setCryptoAmount] = useState("0");
 
   const { balances, fetchBalances } = useBalances(metamask);
   const { prices, fetchPrices } = usePrices(metamask);
@@ -172,9 +172,7 @@ const ReceivePayment = ({
         DAI: 2,
       };
       setCryptoAmount(
-        formatTokenBalance(priceUSD / price, round[currency.abbr]) +
-          " " +
-          currency.abbr,
+        formatTokenBalance(priceUSD / price, round[currency.abbr]),
       );
     } else {
       setCryptoAmount("Loading...");
@@ -394,17 +392,28 @@ const ReceivePayment = ({
               <p>{t("payments.total")}</p>
               <p>${formatUSDBalance(priceUSD)}</p>
             </div>
-            {children ? (
-              children
-            ) : (
-              <div className={styles.crypto}>
-                <p className={styles.cryptoTitle}>
-                  {t("payments.cryptoAmount")}
-                </p>
-                <p className={styles.cryptoEqual}>≈</p>
-                <p className={styles.cryptoAmount}>{cryptoAmount}</p>
+            {children}
+            <div className={styles.crypto}>
+              <p className={styles.cryptoTitle}>{t("payments.cryptoAmount")}</p>
+              <div className={styles.cryptoBody}>
+                <div
+                  className={styles.cryptoAmount}
+                  style={{
+                    color: theme == "dark" ? "" : "#111111",
+                    borderColor: theme == "dark" ? "" : "#0000001a",
+                  }}
+                >
+                  {cryptoAmount}
+                </div>
+                <div style={{ width: "35%" }}>
+                  <Select
+                    data={cryptos}
+                    selectedIndex={selectedCryptoIndex}
+                    setSelectedIndex={setSelectedCryptoIndex}
+                  />
+                </div>
               </div>
-            )}
+            </div>
             <div
               className={styles.walletWrapper}
               style={{
@@ -426,15 +435,8 @@ const ReceivePayment = ({
               />
             </div>
             <div className={styles.paymentWrapper}>
-              <div style={{ width: "35%" }}>
-                <Select
-                  data={cryptos}
-                  selectedIndex={selectedCryptoIndex}
-                  setSelectedIndex={setSelectedCryptoIndex}
-                />
-              </div>
               <Button
-                style={{ width: "65%", height: "60px" }}
+                style={{ width: "100%", height: "60px" }}
                 disabled={isDisable}
                 onClick={() => {
                   if (!isDisable)
@@ -665,7 +667,10 @@ export const ProductInfo = ({
       </div>
       <div
         className={styles.productInfo}
-        style={{ borderTopColor: theme == "dark" ? "" : "#0000001a" }}
+        style={{
+          borderTopColor: theme == "dark" ? "" : "#0000001a",
+          borderBottomColor: theme == "dark" ? "" : "#0000001a",
+        }}
       >
         <div
           className={styles.productPriceContainer}
