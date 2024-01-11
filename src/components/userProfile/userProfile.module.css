@@ -37,7 +37,8 @@
   transform: translateY(2px);
 }
 
-.profileItem img {
+.profileItem img,
+.profileItem svg {
   width: 1.6rem;
 }
 

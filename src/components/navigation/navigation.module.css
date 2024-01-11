@@ -10,10 +10,11 @@
 }
 
 .contentWrapper {
-  background: #111;
   backdrop-filter: blur(10px);
   position: relative;
   z-index: 100;
+
+  background-color: var(--background-color);
 }
 
 .content {
@@ -56,8 +57,7 @@
   transition: 0.2s ease-out;
   font-size: 1.3rem;
   overflow: hidden;
-  color: white;
-
+  opacity: 1;
   transform: translateY(0%);
 }
 
@@ -81,51 +81,6 @@
 
 .menu a {
   text-wrap: nowrap;
-}
-
-.hover:hover .dropdownMenu {
-  transform: translate(-50%, 0);
-  opacity: 1;
-  pointer-events: initial;
-}
-
-.dropdownMenu {
-  position: absolute;
-  transition: 0.5s ease;
-  width: max-content;
-  transform: translate(-50%, 1rem);
-  margin-left: 50%;
-  opacity: 0;
-  color: var(--gray-color);
-
-  pointer-events: none;
-}
-
-.listContent {
-  margin-top: 1rem;
-  display: flex;
-  gap: 2.5rem;
-  position: relative;
-  background-color: var(--white-color);
-  border-radius: 0.5rem;
-  padding: 1.5rem 1.25rem;
-}
-
-.listContent > .item {
-  display: flex;
-  gap: 2.5rem;
-  padding: 1.5rem 1.25rem;
-  position: relative;
-  z-index: 3;
-  border-radius: 0.5rem;
-}
-
-.listContent > .item:hover {
-  background-color: rgba(0, 0, 0, 0.08);
-}
-
-.listContent > a > img {
-  width: 3rem !important;
 }
 
 .headline {
@@ -157,36 +112,13 @@
   font-size: 1.3rem;
 }
 
-.listContent:after {
-  content: "";
-  height: 3rem;
-  width: 3rem;
-  border-radius: 0.2rem;
-
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  top: 0;
-  position: absolute;
-  background-color: var(--white-color);
-}
-
-.dropdownMenu > p:hover {
-  color: var(--white-color);
-}
-
-.dropdownMenu p {
-  color: var(--black-color);
-  position: relative;
-  z-index: 2;
-}
-
-.navigation li:hover {
-  color: var(--white-color);
-}
-
 .navigation ul li img,
 .right img {
   width: 1rem;
+}
+
+.right svg {
+  height: 1.4rem;
 }
 
 .right {
@@ -196,7 +128,7 @@
 
 .right p {
   cursor: pointer;
-  color: var(--gray-color);
+  opacity: 0.9;
   pointer-events: initial;
 }
 
@@ -206,17 +138,13 @@
 
 .button > a {
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.09);
-  color: white;
   font-size: 1.4rem;
   pointer-events: initial;
   cursor: pointer;
   padding: 1rem 3rem;
   transition: 0.2s ease-out;
-}
-
-.button > a:hover {
-  background-color: var(--blue-color);
+  color: #fff;
+  background-color: var(--gray-color);
 }
 
 .login {
@@ -242,17 +170,14 @@
 }
 
 .content {
-  background: #111;
   z-index: 5;
 }
 
 .mobileMenu {
-  background: #111;
   backdrop-filter: blur(10px);
   padding: 2rem 2.5rem;
   transition: 0.5s ease-out;
-  /* height: 100%; */
-
+  background-color: var(--background-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -302,7 +227,7 @@
 .mobileMenu ul li {
   width: 100%;
   padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 15%);
+  border-bottom: 1px solid var(--lightBlack-color);
 
   font-size: 1.6rem;
 }
@@ -463,7 +388,6 @@
 
   .line {
     top: 50%;
-    background-color: white;
     width: 25px;
     height: 1.5px;
     position: absolute;
@@ -471,6 +395,8 @@
     transition: 0.2s ease-out;
     /* transform-origin: left; */
     transform-origin: center;
+
+    background-color: var(--text-color);
   }
 
   .line:nth-child(1) {

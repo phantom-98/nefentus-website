@@ -349,7 +349,7 @@ const SettingsItem = ({ data, setIsSaveData }) => {
           <Button
             color="gray"
             fontSize="1rem"
-            width="8rem"
+            width="10rem"
             onClick={
               data.type === "edit"
                 ? () => handleEdit()

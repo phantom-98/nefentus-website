@@ -1,17 +1,23 @@
 import styles from "./about.module.css";
 
 import Graphic1 from "../../assets/image/graphic4.svg";
+import Graphic1Light from "../../assets/image/graphic4Light.svg";
 import Graphic2 from "../../assets/image/graphic2.svg";
+import Graphic2Light from "../../assets/image/graphic2Light.svg";
 import Graphic3 from "../../assets/image/graphic3.svg";
+import Graphic3Light from "../../assets/image/graphic3Light.svg";
 import { useTranslation } from "react-i18next";
 import Button from "../button/button";
 
 import Arrow from "../../assets/icon/arrow.svg";
 import { separateText } from "../../func/separate";
 import Reward from "../reward/reward";
+import { useTheme } from "../../context/themeContext/themeContext";
 
 const About = () => {
   const { t } = useTranslation();
+
+  const { theme } = useTheme();
 
   return (
     <div className={styles.section}>
@@ -38,7 +44,7 @@ const About = () => {
           </div>
           <img
             className={styles.horizontalImg}
-            src={Graphic1}
+            src={theme === "light" ? Graphic1Light : Graphic1}
             alt="cryptocurrency graphics"
           />
         </div>
@@ -48,7 +54,7 @@ const About = () => {
           >
             <img
               className={styles.verticalImg}
-              src={Graphic2}
+              src={theme === "light" ? Graphic2Light : Graphic2}
               alt="tracking graphics"
             />
             <div className={styles.content}>
@@ -78,7 +84,7 @@ const About = () => {
           >
             <img
               className={styles.verticalImg}
-              src={Graphic3}
+              src={theme === "light" ? Graphic3Light : Graphic3}
               alt="integrating logos"
             />
 

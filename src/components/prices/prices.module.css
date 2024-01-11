@@ -7,14 +7,6 @@
 
 .priceCard {
   overflow: hidden;
-  background: radial-gradient(
-    74.22% 64.62% at 26.36% 14.29%,
-    #1a1a1a 0%,
-    #151515 50%,
-    #101010 100%
-  );
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .priceCard::before {
@@ -59,7 +51,7 @@
 }
 
 .price_box:hover {
-  background-color: #232323;
+  background-color: var(--hover-color);
 }
 
 .main_info {
@@ -76,13 +68,16 @@
 
 .currency {
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.42);
+}
+
+.opacity {
+  opacity: 0.42;
 }
 
 .abbr,
 .change {
   font-size: 1.4rem;
-  color: white;
+  opacity: 1 !important;
 }
 
 .change {
@@ -111,10 +106,9 @@
 
 .description {
   font-size: 1.2rem;
-  color: #ddd;
 
   border-radius: 0.5rem;
-  opacity: 0.8;
+  opacity: 0.4;
   margin-top: 1rem;
   margin-left: 2.5rem;
   margin-bottom: 2rem;
