@@ -69,8 +69,8 @@
 .description {
   font-size: 1.6rem;
   line-height: 140%;
-  color: var(--gray-color);
   margin-bottom: 3rem;
+  opacity: 0.8;
 }
 
 .list {
@@ -92,7 +92,8 @@
 
 .list p {
   font-size: 1.4rem;
-  color: var(--gray-color);
+
+  opacity: 0.8;
 }
 
 @media (max-width: 900px) {

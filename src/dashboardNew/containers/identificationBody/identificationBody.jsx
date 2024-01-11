@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import adminDashboardApi from "../../../api/adminDashboardApi";
 import MessageComponent from "../../../components/message";
 import { MessageContext } from "../../../context/message";
+import { useTheme } from "../../../context/themeContext/themeContext";
 
 const KYC_TYPE = {
   FULL_NAME: "FULL_NAME",
@@ -268,11 +269,15 @@ const IdentificationBody = () => {
     fetchFYC();
   };
 
+  const { theme } = useTheme();
+
   return (
     <>
       <MessageComponent />
       {/* <ToastContainer /> */}
-      <Card className={styles.card}>
+      <Card
+        className={`${styles.card} ${theme !== "dark" ? styles.light : ""} `}
+      >
         <div className={styles.top}>
           <div className={styles.titleHeader}>
             <SettingsTitle

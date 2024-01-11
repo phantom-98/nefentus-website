@@ -8,6 +8,7 @@ import useInternalWallet from "../../../hooks/internalWallet";
 import { useTranslation } from "react-i18next";
 
 import ProfileImg from "../../../assets/icon/user.svg";
+import { useTheme } from "../../../context/themeContext/themeContext";
 
 const ProfileCard = ({ type }) => {
   const [firstName] = useState(localStorage.getItem("firstName"));
@@ -18,9 +19,15 @@ const ProfileCard = ({ type }) => {
 
   const { t } = useTranslation();
 
+  const { theme } = useTheme();
+
   return (
-    <Card className={styles.profileCard}>
-      <div className={styles.profileWrapper}>
+    <Card
+      className={`${styles.profileCard}  ${
+        theme === "dark" ? "" : styles.light
+      }`}
+    >
+      <div className={` ${styles.profileWrapper}`}>
         <div className={styles.profileImage}>
           <img
             src={profileImage !== "null" ? profileImage : ProfileImg}

@@ -2,12 +2,9 @@ import styles from "./layout.module.css";
 import Button from "./../button/button";
 
 import Google from "../../assets/icon/google.svg";
-import Apple from "../../assets/icon/apple2.svg";
 import Chevron from "../../assets/icon/chevron.svg";
 
 import Mega from "../../assets/icon/mega.svg";
-
-import QR from "../../assets/icon/qrcode.svg";
 
 import Dummy from "../../assets/image/dummy.webp";
 
@@ -20,6 +17,7 @@ import { MessageContext } from "../../context/message";
 import backendAPI from "../../api/backendAPI";
 import Error from "../error/error";
 import Input from "../input/input";
+import { Apple, QR } from "../../assets/icon/icons";
 
 const Layout = ({
   heading,
@@ -130,7 +128,7 @@ const Layout = ({
                     <img src={Google} alt="" />
                   </div>
                   <div className={styles.iconBox}>
-                    <img src={Apple} alt="" />
+                    <Apple />
                   </div>
                 </div>
               </div>
@@ -140,7 +138,7 @@ const Layout = ({
 
                 <div className={styles.iconWrapper}>
                   <div className={styles.iconBox}>
-                    <img src={QR} alt="" />
+                    <QR />
                   </div>
                 </div>
               </div>

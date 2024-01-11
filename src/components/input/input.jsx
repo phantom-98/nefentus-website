@@ -5,6 +5,7 @@ import AttachmentImage from "../../assets/icon/attachment.svg";
 import Delete from "../../assets/icon/delete.svg";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "../../context/themeContext/themeContext";
 
 const Input = ({
   label,
@@ -255,6 +256,7 @@ export const SearchOptions = ({
   placeholder = "",
   className = "",
 }) => {
+  const { theme } = useTheme();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(value);
   useEffect(() => {
@@ -282,6 +284,12 @@ export const SearchOptions = ({
         className={`option ${styles.input} ${
           dashboard ? styles.dashboardInput : styles.select
         }`}
+        style={{
+          border:
+            theme === "dark"
+              ? "1px solid rgba(255, 255, 255, 0.08)"
+              : "1px solid rgba(0, 0, 0, 0.1)",
+        }}
         onClick={() => setOpen((prev) => !prev)}
       >
         <input

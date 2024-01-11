@@ -4,8 +4,9 @@
   pointer-events: initial;
 }
 
-.menu {
+.menu svg {
   height: 1.6rem;
+  width: 1.6rem;
 }
 
 .body img {

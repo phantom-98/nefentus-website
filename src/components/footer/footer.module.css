@@ -23,8 +23,8 @@
   gap: 10rem;
 }
 
-.left img {
-  height: 3rem;
+.left svg {
+  height: 4rem;
 }
 
 .content {
@@ -71,7 +71,7 @@
 }
 
 .socialBox {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: var(--lightWhite-color);
   padding: 2rem 0 0 2rem;
 }
 
@@ -86,14 +86,18 @@
   gap: 2rem;
 }
 
-.icons img {
+.socialBox img {
+  width: 100%;
+}
+
+.icons svg {
   opacity: 0.6;
   height: 1.6rem;
   cursor: pointer;
   transition: 0.5s ease-out;
 }
 
-.icons img:hover {
+.icons svg:hover {
   opacity: 1;
 }
 
@@ -173,7 +177,7 @@
     gap: 3rem;
   }
 
-  .socialBox img {
+  .socialBox svg {
     height: 2rem;
   }
 

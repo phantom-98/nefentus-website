@@ -109,6 +109,5 @@ export const reformatFooterInfo = (pages, links) => {
   for (let i = 0; i < pages.length; i++) {
     result[i] = { text: pages[i], link: links[i] };
   }
-  console.log(result, "resultresult");
   return result;
 };

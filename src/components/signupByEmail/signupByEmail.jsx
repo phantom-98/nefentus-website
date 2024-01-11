@@ -13,10 +13,12 @@ import { MessageContext } from "../../context/message";
 import { z } from "zod";
 import isMobilePhone from "../../func/isMobilePhone";
 import Popup from "../../dashboardNew/components/popup/popup";
+import { useTheme } from "../../context/themeContext/themeContext";
 
 const SignupByEmail = () => {
   const recaptchaRef = useRef();
   const { t } = useTranslation();
+  const { theme } = useTheme();
   const { setErrorMessage } = useContext(MessageContext);
   const [message, setMessage] = useState(null);
   const [CountryOption, setCountryOption] = useState("");
@@ -424,7 +426,7 @@ const SignupByEmail = () => {
         <ReCAPTCHA
           ref={recaptchaRef}
           sitekey={process.env.VITE_REACT_APP_RECAPTCHA_SITE_KEY}
-          theme="dark"
+          theme={theme}
           style={{ marginTop: "2rem" }}
         />
       </form>

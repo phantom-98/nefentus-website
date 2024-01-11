@@ -15,6 +15,7 @@ import {
   Legend,
 } from "chart.js";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "../../../context/themeContext/themeContext";
 
 ChartJS.register(
   CategoryScale,
@@ -80,14 +81,71 @@ export const options = {
   },
 };
 
+export const optionsLight = {
+  responsive: true,
+  maintainAspectRatio: false,
+
+  tension: 0.1,
+
+  plugins: {
+    title: {
+      display: true,
+    },
+    legend: {
+      position: "bottom",
+    },
+  },
+
+  scales: {
+    y: {
+      beginAtZero: true,
+
+      grid: {
+        color: "rgba(0,0,0,0.08)",
+      },
+      ticks: {
+        callback: function (value, index, ticks) {
+          return value + " $";
+        },
+        suggestedMin: 0,
+        padding: 10,
+        color: "rgba(0,0,0,0.6)",
+        font: {
+          size: window.innerWidth < 550 ? 8 : 12,
+          family: "Axiforma ",
+          weight: 400,
+        },
+      },
+    },
+    x: {
+      grid: {
+        display: false,
+      },
+
+      ticks: {
+        color: "rgba(0,0,0,0.6)",
+        padding: 10,
+        font: {
+          family: "Axiforma",
+          weight: 400,
+          size: window.innerWidth < 550 ? 8 : 12,
+        },
+      },
+    },
+  },
+};
+
 const IncomeCard = ({ data }) => {
   const { t } = useTranslation();
+
+  const { theme } = useTheme();
+
   return (
     <Card className={styles.card}>
       <div className={styles.label}>{t("dashboard.incomeTitle")}</div>
 
       <div className={styles.chart}>
-        <Line options={options} data={data} />
+        <Line options={theme === "dark" ? options : optionsLight} data={data} />
       </div>
     </Card>
   );

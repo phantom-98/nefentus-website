@@ -43,7 +43,7 @@ const Prices = () => {
                   />
                   <p className={styles.currency}>
                     <span className={styles.abbr}>{price.abbr}</span>{" "}
-                    {price.name}
+                    <span className={styles.opacity}>{price.name}</span>
                   </p>
                 </div>
                 <span className={styles.abbr}>${price.price.toFixed(2)}</span>

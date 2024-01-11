@@ -3,9 +3,9 @@ import HeadingCenter from "../headingCenter/headingCenter";
 import styles from "./paymentCards.module.css";
 import Button from "./../button/button";
 
-import Checkmark from "../../assets/icon/whiteCheckmark.svg";
 import { useTranslation } from "react-i18next";
 import { separateText } from "../../func/separate";
+import { Checkmark } from "../../assets/icon/icons";
 
 const PaymentCards = () => {
   const { t } = useTranslation();
@@ -33,8 +33,7 @@ const PaymentCards = () => {
               <div className={styles.list}>
                 {card1List.map((item, index) => (
                   <div key={index}>
-                    <img src={Checkmark} alt="checkmark" />
-                    <p>{item}</p>
+                    <Checkmark /> <p>{item}</p>
                   </div>
                 ))}
               </div>
@@ -54,7 +53,7 @@ const PaymentCards = () => {
               <div className={styles.list}>
                 {card2List.map((item, index) => (
                   <div key={index}>
-                    <img src={Checkmark} alt="checkmark" />
+                    <Checkmark />
                     <p>{item}</p>
                   </div>
                 ))}

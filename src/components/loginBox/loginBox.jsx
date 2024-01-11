@@ -1,7 +1,6 @@
 import Input from "../input/input";
 import styles from "./loginBox.module.css";
 
-import Logo from "../../assets/logo/logo2.svg";
 import Button from "./../button/button";
 import { useEffect, useState, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,7 +9,6 @@ import { dashboardLink, decryptData, encryptData } from "../../utils";
 
 import backend_API from "../../api/backendAPI";
 
-import CheckBox from "../../assets/icon/whiteCheckmark.svg";
 import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,8 +17,11 @@ import Error from "../error/error";
 import setCookie from "../setCookie/setCookie";
 import ReCAPTCHA from "react-google-recaptcha";
 import { OneTimeCodeInput } from "../../dashboard/input/input";
+import { Checkmark } from "../../assets/icon/icons";
+import { NefentusLogo } from "../../assets/icon/logos/logos";
 import { MessageContext } from "../../context/message";
 import MessageComponent from "../message";
+import { useTheme } from "../../context/themeContext/themeContext";
 
 const ConfirmMeEmail = ({
   email,
@@ -140,6 +141,7 @@ const ConfirmMeEmail = ({
 };
 
 const LoginBox = () => {
+  const { theme } = useTheme();
   const recaptchaRef = useRef();
   const { setErrorMessage } = useContext(MessageContext);
   const [message, setMessage] = useState(null);
@@ -310,7 +312,7 @@ const LoginBox = () => {
         </Button>
       </div>
       <div className={styles.left}>
-        <img src={Logo} alt="nefentus logo" />
+        <NefentusLogo />
 
         <div>
           <h2>
@@ -366,13 +368,13 @@ const LoginBox = () => {
               <ReCAPTCHA
                 ref={recaptchaRef}
                 sitekey={process.env.VITE_REACT_APP_RECAPTCHA_SITE_KEY}
-                theme="dark"
+                theme={theme}
               />
 
               <div className={styles.rememberInfo}>
                 <div onClick={() => setCheckBox((prev) => !prev)}>
                   <div className={styles.checkBox}>
-                    {checkBox && <img src={CheckBox} alt="checkbox" />}
+                    {checkBox && <Checkmark />}
                   </div>
                   <p>{t("login.remember")}</p>
                 </div>

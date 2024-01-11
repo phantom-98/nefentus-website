@@ -127,9 +127,7 @@
   background-color: transparent;
   border: 0;
   outline: 0;
-  color: white;
   border-radius: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
   width: 100%;
   padding: 2rem 1.5rem;
 }
@@ -156,7 +154,7 @@
 }
 
 .iconBox {
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--lightBlack-color);
   height: 4rem;
   width: 4rem;
   display: flex;
@@ -171,7 +169,8 @@
   background-color: rgba(255, 255, 255, 0.04);
 }
 
-.iconBox img {
+.iconBox img,
+.iconBox svg {
   width: 1.6rem;
 }
 

@@ -3,6 +3,7 @@ import styles from "./settingsTitle.module.css";
 import { useTranslation } from "react-i18next";
 import backend_API from "../../../api/backendAPI";
 import { useEffect, useState } from "react";
+import { useTheme } from "../../../context/themeContext/themeContext";
 
 const SettingsTitle = ({
   title,
@@ -14,6 +15,8 @@ const SettingsTitle = ({
   const { t } = useTranslation();
   const [level, setLevel] = useState(null);
   const userId = localStorage.getItem("userId");
+
+  const { theme } = useTheme();
 
   useEffect(() => {
     const getLevel = async () => {
@@ -28,7 +31,11 @@ const SettingsTitle = ({
   }, [userId]);
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={`${theme !== "dark" ? styles.lightWrapper : ""} ${
+        styles.wrapper
+      }`}
+    >
       <div>
         <div className={styles.title}>{title}</div>
         <div className={styles.description}>{description}</div>

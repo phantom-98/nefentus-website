@@ -7,11 +7,32 @@
   align-items: center;
   z-index: 11;
 }
+
+.lightContainer {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  background: #fff;
+
+  box-shadow:
+    0px 18px 36px -18px rgba(0, 0, 0, 0.05),
+    0px 30px 45px -30px rgba(50, 50, 93, 0.05);
+}
+
+.iconButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .logo {
   display: none;
 }
 
-.logo2 {
+.logo2 svg {
   height: 2.5rem;
 }
 
@@ -71,6 +92,10 @@
   top: 0;
   transform: translateY(-50%);
   height: 40px;
+}
+
+.lightMobMenu .line {
+  background-color: black;
 }
 
 .line:nth-child(1) {
@@ -183,7 +208,7 @@
 
   .rightSide > div:nth-child(1),
   .rightSide > div:nth-child(3) {
-    display: initial;
+    display: flex;
   }
 
   .rightSide > div:nth-child(3) {
