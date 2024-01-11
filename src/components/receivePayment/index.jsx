@@ -639,28 +639,69 @@ export const ProductInfo = ({
   setAmount,
 }) => {
   const { t } = useTranslation();
+  const { theme } = useTheme();
   return (
     <div className={styles.productWrapper}>
       <div className={styles.productImage}>
-        <p className={styles.productInfoTitle}>{name}</p>
+        <p
+          className={styles.productInfoTitle}
+          style={{ color: theme == "dark" ? "" : "#111111" }}
+        >
+          {name}
+        </p>
         <img
           className={styles.productImageWrapper}
           src={productPic}
           alt="Product Preview"
         />
-        <p style={{ fontSize: "16px", color: "#f6f6f6" }}>{description}</p>
+        <p
+          style={{
+            fontSize: "16px",
+            color: theme == "dark" ? "#f6f6f6" : "#111111a0",
+          }}
+        >
+          {description}
+        </p>
       </div>
-      <div className={styles.productInfo}>
-        <div className={styles.productPriceContainer}>
-          <p className={styles.productLabel}>{t("payments.price")}</p>
-          <p className={styles.productValue}>${price}</p>
+      <div
+        className={styles.productInfo}
+        style={{ borderTopColor: theme == "dark" ? "" : "#0000001a" }}
+      >
+        <div
+          className={styles.productPriceContainer}
+          style={{ borderRightColor: theme == "dark" ? "" : "#0000001a" }}
+        >
+          <p
+            className={styles.productLabel}
+            style={{ color: theme == "dark" ? "" : "#111111" }}
+          >
+            {t("payments.price")}
+          </p>
+          <p
+            className={styles.productValue}
+            style={{
+              color: theme == "dark" ? "" : "#111111",
+              backgroundColor: theme == "dark" ? "" : "#e6e6e6",
+            }}
+          >
+            ${price}
+          </p>
         </div>
         <div className={styles.productAmountContainer}>
-          <p className={styles.productLabel}>{t("payments.amount")}</p>
+          <p
+            className={styles.productLabel}
+            style={{ color: theme == "dark" ? "" : "#111111" }}
+          >
+            {t("payments.amount")}
+          </p>
           <input
             className={styles.productValue}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
+            style={{
+              color: theme == "dark" ? "" : "#111111",
+              backgroundColor: theme == "dark" ? "" : "#e6e6e6",
+            }}
           />
         </div>
       </div>
