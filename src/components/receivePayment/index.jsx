@@ -550,11 +550,11 @@ const SelectOption = ({
   );
 };
 
-const Input = ({ label, placeholder, value, setValue, type }) => {
+const Input = ({ label, placeholder, value, setValue, setChanged, type }) => {
   const { theme } = useTheme();
-  const handleChange = (e) => {
-    if (setValue) {
-      setValue(e.target.value);
+  const handleChange = () => {
+    if (setChanged) {
+      setChanged(true);
     }
   };
 
@@ -568,7 +568,19 @@ const Input = ({ label, placeholder, value, setValue, type }) => {
         placeholder={placeholder}
         type={type ? "password" : "text"}
         value={value}
-        onChange={handleChange}
+        onChange={(e) => {
+          if (setValue) {
+            setValue(e.target.value);
+          }
+        }}
+        onBlur={(e) => {
+          handleChange();
+        }}
+        onKeyDown={(e) => {
+          if (e.code === "Enter") {
+            handleChange();
+          }
+        }}
       />
     </div>
   );
@@ -585,6 +597,7 @@ export const PaymentInfo = ({
   setTax,
   business,
   setBusiness,
+  setChanged,
 }) => {
   const { t } = useTranslation();
 
@@ -596,6 +609,7 @@ export const PaymentInfo = ({
           label={t("payments.name").concat("*")}
           value={fullName}
           setValue={setFullName}
+          setChanged={setChanged}
         />
       </div>
       <div className={styles.row}>
@@ -604,6 +618,7 @@ export const PaymentInfo = ({
           label={t("payments.email").concat("*")}
           value={email}
           setValue={setEmail}
+          setChanged={setChanged}
         />
       </div>
       <div className={styles.row}>
@@ -612,6 +627,7 @@ export const PaymentInfo = ({
           label={t("payments.address")}
           value={address}
           setValue={setAddress}
+          setChanged={setChanged}
         />
       </div>
       <div className={styles.row}>
@@ -621,12 +637,14 @@ export const PaymentInfo = ({
           value={tax}
           setValue={setTax}
           type
+          setChanged={setChanged}
         />
         <Input
           placeholder={`e.g. Google`}
           label={t("payments.company")}
           value={business}
           setValue={setBusiness}
+          setChanged={setChanged}
         />
       </div>
     </div>

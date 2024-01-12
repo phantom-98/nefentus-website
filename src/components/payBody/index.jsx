@@ -12,15 +12,10 @@ import backendAPI from "../../api/backendAPI";
 const PayBody = ({ invoice }) => {
   const { t } = useTranslation();
 
-  const [showEmail, setShowEmail] = useState(false);
   const [email, setEmail] = useState();
-  const [showName, setShowName] = useState(false);
   const [name, setName] = useState();
-  const [showCompany, setShowCompany] = useState(false);
   const [company, setCompany] = useState();
-  const [showAddress, setShowAddress] = useState(false);
   const [address, setAddress] = useState();
-  const [showTax, setShowTax] = useState(false);
   const [tax, setTax] = useState();
   const [changed, setChanged] = useState(false);
   const backend_API = new backendAPI();
@@ -51,8 +46,11 @@ const PayBody = ({ invoice }) => {
   };
 
   useEffect(() => {
-    updateInvoiceData();
-  }, [name, email, company, address, tax]);
+    if (changed) {
+      updateInvoiceData();
+      setChanged(false);
+    }
+  }, [changed]);
 
   return (
     <ReceivePayment
@@ -71,6 +69,7 @@ const PayBody = ({ invoice }) => {
           setBusiness={setCompany}
           tax={tax}
           setTax={setTax}
+          setChanged={setChanged}
         />
       }
     />
