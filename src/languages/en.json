@@ -1083,6 +1083,10 @@
     "scanModal": {
       "title": "Scan QR-code or paste code"
     },
+    "recommendRecoverModal": {
+      "title": "Recover wallet",
+      "subtitle": "You have reset your password which makes you lose access to your previous wallet. Do you want to restore your previous wallet using the seed phrase?"
+    },
     "passwords": {
       "title": "Change Password",
       "labelCurrent": "Current Password",

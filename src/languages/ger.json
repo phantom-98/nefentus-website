@@ -1019,6 +1019,10 @@
     "scanModal": {
       "title": "QR-Code scannen oder Code einfügen"
     },
+    "recommendRecoverModal": {
+      "title": "Wallet wiederherstellen",
+      "subtitle": "Sie haben Ihr Passwort zurückgesetzt, wodurch Sie den Zugriff auf Ihr vorheriges Wallet verlieren. Möchten Sie Ihr vorheriges Wallet mithilfe der Sicherheitsschlüssel wiederherstellen?"
+    },
     "authentication": "Authentifizierung",
     "enterCode": "Verifizierungscode eingeben:"
   },

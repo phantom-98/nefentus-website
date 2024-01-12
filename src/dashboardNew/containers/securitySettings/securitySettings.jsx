@@ -7,9 +7,12 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useMemo, useState } from "react";
 import backendAPI from "../../../api/backendAPI";
 import MessageComponent from "../../../components/message";
+import { useLocation } from "react-router-dom";
 
 const SecuritySettings = () => {
   const { t, i18n } = useTranslation();
+  const { state } = useLocation();
+  const { recommendRecover } = state || {};
   const { language } = i18n;
   const [password, setPassword] = useState("");
   const [hasTotp, setHasTotp] = useState(false);
@@ -72,13 +75,8 @@ const SecuritySettings = () => {
 
   useEffect(() => {
     fetchSettings();
+    console.log(recommendRecover, "recommendRecover");
   }, []);
-
-  // useEffect(()=>{
-  //   if (changed){
-
-  //   }
-  // }, [changed])
 
   return (
     <>
@@ -89,7 +87,7 @@ const SecuritySettings = () => {
         />
 
         {data.map((item, i) => (
-          <SecurityItem data={item} key={i} />
+          <SecurityItem data={item} key={i} recover={recommendRecover} />
         ))}
       </Card>
     </>
