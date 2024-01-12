@@ -30,6 +30,8 @@ import { useTranslation } from "react-i18next";
 import Popup from "../../dashboardNew/components/popup/popup";
 import { useTheme } from "../../context/themeContext/themeContext";
 
+const emptyList = currencies.map((currency) => undefined);
+
 const ReceivePayment = ({
   priceUSD,
   seller,
@@ -121,7 +123,12 @@ const ReceivePayment = ({
     }
   }, [metamask.status, metamask.address]);
 
-  useEffect(() => {
+  const checkIfPayable = async () => {
+    console.log(balances, "balances");
+    if (balances[selectedWalletIndex] == emptyList || prices == emptyList) {
+      setDisable(true);
+      return;
+    }
     const wallet = wallets[selectedWalletIndex];
     if (wallet.type == "internal") {
       if (internalWalletAddress) {
@@ -158,12 +165,15 @@ const ReceivePayment = ({
     } else if (wallet.type == "walletconnect") {
       setDisable(true);
     }
+  };
+  useEffect(() => {
+    checkIfPayable();
   }, [selectedWalletIndex, balances, prices]);
 
   useEffect(() => {
     const currency = currencies[selectedCryptoIndex];
     const price = prices[selectedCryptoIndex];
-    console.log(currency, price, " --- crypto ---");
+
     if (typeof price == "number") {
       const round = {
         ETH: 5,
@@ -406,7 +416,7 @@ const ReceivePayment = ({
                 >
                   {cryptoAmount}
                 </div>
-                <div style={{ width: "35%" }}>
+                <div style={{ width: "40%" }}>
                   <Select
                     data={cryptos}
                     selectedIndex={selectedCryptoIndex}

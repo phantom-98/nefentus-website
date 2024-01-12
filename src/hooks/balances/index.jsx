@@ -4,7 +4,9 @@ import { web3Api } from "../../api/web3Api";
 import { currencies } from "../../constants";
 
 function useBalances(metamask) {
-  const [balances, setBalances] = useState([initBalances(), initBalances()]);
+  const [balancesEx, setBalancesEx] = useState(initBalances());
+  const [balancesIn, setBalancesIn] = useState(initBalances());
+  let balances = [balancesEx, balancesIn];
   const { internalWalletAddress, fetchInternalWalletAddress } =
     useInternalWallet();
 
@@ -19,13 +21,13 @@ function useBalances(metamask) {
     }
     const web3API = new web3Api(providerSource);
 
-    const balancesEx = metamask.address
-      ? await fetchBalanceForWallet(web3API, metamask.address)
-      : initBalances();
-    const balancesIn = internalWalletAddress
-      ? await fetchBalanceForWallet(web3API, internalWalletAddress)
-      : initBalances();
-    setBalances([balancesEx, balancesIn]);
+    metamask.address &&
+      setBalancesEx(await fetchBalanceForWallet(web3API, metamask.address));
+
+    internalWalletAddress &&
+      setBalancesIn(
+        await fetchBalanceForWallet(web3API, internalWalletAddress),
+      );
   }
 
   async function fetchBalanceForWallet(web3API, walletAddress) {
@@ -35,7 +37,7 @@ function useBalances(metamask) {
         web3API.getBalanceToken(address, walletAddress),
       ),
     );
-    return balances_list;
+    return balances_list.map((balance) => parseFloat(balance));
   }
 
   useEffect(() => {
