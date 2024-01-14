@@ -1,9 +1,5 @@
 import styles from "./receivePayment.module.css";
-import { useState, useEffect, useContext, Children } from "react";
-import { Link } from "react-router-dom";
-import Tabs from "../tabs";
-import TopInfo from "../../dashboard/topInfo/topInfo";
-import Table from "../../components/table";
+import { useState, useEffect, useContext } from "react";
 import MessageComponent from "../message";
 import { MessageContext } from "../../context/message";
 import NefentusLogo from "../../assets/logo/logo_n.png";
@@ -11,7 +7,6 @@ import MetaMaskLogo from "../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../assets/logo/WalletConnect.svg";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
 import backendAPI from "../../api/backendAPI";
-import { web3Api, uniswapApi } from "../../api/web3Api";
 import Button from "../../components/button/button";
 import useInternalWallet from "../../hooks/internalWallet";
 import {
@@ -23,14 +18,12 @@ import {
 } from "@thirdweb-dev/react";
 import useBalances from "../../hooks/balances";
 import usePrices from "../../hooks/prices";
+import { usePayment } from "../../hooks/payment";
 import { currencies } from "../../constants";
 import { formatTokenBalance, formatUSDBalance } from "../../utils";
-import { nullToZeroAddress } from "../../utils";
 import { useTranslation } from "react-i18next";
 import Popup from "../../dashboardNew/components/popup/popup";
 import { useTheme } from "../../context/themeContext/themeContext";
-
-const emptyList = currencies.map((currency) => undefined);
 
 const ReceivePayment = ({
   priceUSD,
@@ -46,7 +39,6 @@ const ReceivePayment = ({
   const { theme } = useTheme();
 
   const [password, setPassword] = useState("");
-  const [internalPayIdx, setInternalPayIdx] = useState(-1); // Index of the currency to pay with (or -1 if not selected)
 
   const metamask = {
     connect: useConnect(),
@@ -60,6 +52,13 @@ const ReceivePayment = ({
 
   const { balances, fetchBalances } = useBalances(metamask);
   const { prices, fetchPrices } = usePrices(metamask);
+  const { handleBuy } = usePayment({
+    metamaskAddress: metamask.address,
+    password,
+    priceUSD,
+    seller,
+    transInfoArg,
+  });
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -195,75 +194,33 @@ const ReceivePayment = ({
     const result = await backend_API.registerWalletAddress(metamask.address);
   }
 
-  async function handleBuy(providerSource, currencyIdx) {
-    // Checks
-    if (!(priceUSD > 0.0)) {
-      setErrorMessage(t("messages.error.invalidPrice"));
-      return;
-    }
-    if (!seller) {
-      setErrorMessage(t("messages.error.invalidUserId"));
-      return;
-    }
+  async function doPayment() {
+    if (isDisable) return;
 
-    // Currently not used because it is always paid in Ethereum
-    const currency = currencies[currencyIdx];
-    const stablecoinAddress = currencies[1].address;
-    const quantity = 1;
+    const res = await handleBuy(
+      wallets[selectedWalletIndex].type,
+      selectedCryptoIndex,
+    );
 
-    if (providerSource === "metamask") {
-      const web3API = new web3Api(providerSource);
-
-      const hierarchy = await backend_API.getHierarchy(seller.id);
-      console.log(hierarchy);
-
-      const transactionInfo = await web3API.callDepositContract(
-        nullToZeroAddress(hierarchy.sellerAddress),
-        nullToZeroAddress(hierarchy.affiliateAddress),
-        nullToZeroAddress(hierarchy.brokerAddress),
-        nullToZeroAddress(hierarchy.seniorBrokerAddress),
-        nullToZeroAddress(hierarchy.leaderAddress),
-        stablecoinAddress,
-        priceUSD,
-      );
-
-      if (transactionInfo) {
-        transactionInfo.quantity = quantity;
-        transactionInfo.totalPrice = priceUSD;
-
-        web3API.convertBigIntToString(transactionInfo);
-        const ret = await backend_API.setTransactionInfo(
-          transactionInfo,
-          metamask.address,
-          transInfoArg,
-        );
-        if (ret) {
-          setInfoMessage(t("messages.success.transaction"));
-        } else {
-          setInfoMessage(
-            "Transaction successfully but could not send transaction info!",
-          );
-        }
-      } else {
-        setErrorMessage(t("messages.error.transactionFailed"));
-      }
-    } else if (providerSource === "internal") {
-      const ret = await backend_API.makePayment(
-        null,
-        priceUSD,
-        quantity,
-        password,
-        stablecoinAddress,
-        transInfoArg,
-      );
-
-      if (ret === "insufficientFunds") {
-        setErrorMessage(t("messages.error.transactionFailed2"));
-      } else if (ret) {
+    switch (res) {
+      case "success":
         setInfoMessage(t("messages.success.transaction"));
-      } else {
+        break;
+      case "failed":
         setErrorMessage(t("messages.error.transactionFailed"));
-      }
+        break;
+      case "insufficient fund":
+        setErrorMessage(t("messages.error.transactionFailed2"));
+        break;
+      case "not sent":
+        setInfoMessage(t("messages.info.transactionNotSaved"));
+        break;
+      case "invalid price":
+        setErrorMessage(t("messages.error.invalidPrice"));
+        break;
+      case "invalid seller":
+        setErrorMessage(t("messages.error.invalidUserId"));
+        break;
     }
   }
 
@@ -449,13 +406,7 @@ const ReceivePayment = ({
               <Button
                 style={{ width: "100%", height: "60px" }}
                 disabled={isDisable}
-                onClick={() => {
-                  if (!isDisable)
-                    handleBuy(
-                      wallets[selectedWalletIndex].type,
-                      selectedCryptoIndex,
-                    );
-                }}
+                onClick={() => doPayment()}
               >
                 {t("payments.payButton")} ${formatUSDBalance(priceUSD)}
               </Button>

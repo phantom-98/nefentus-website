@@ -886,6 +886,7 @@
       "accountDisconnect": "No Account Connected"
     },
     "info": {
+      "transactionNotSaved": "Transaction successfully but could not save transaction info!",
       "email": "Email sent to reset password!",
       "withdrawing": "Withdrawing...",
       "walletCopy": "Wallet address copied!",
