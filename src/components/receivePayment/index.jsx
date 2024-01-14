@@ -123,24 +123,12 @@ const ReceivePayment = ({
     }
   }, [metamask.status, metamask.address]);
 
-  const checkIfPayable = async () => {
-    console.log(balances, "balances");
-    if (balances[selectedWalletIndex] == emptyList || prices == emptyList) {
-      setDisable(true);
-      return;
-    }
+  useEffect(() => {
     const wallet = wallets[selectedWalletIndex];
     if (wallet.type == "internal") {
-      if (internalWalletAddress) {
-        if (
-          balances[selectedWalletIndex][selectedCryptoIndex] *
-            prices[selectedCryptoIndex] >
-          priceUSD
-        )
-          setDisable(false || disabled);
-        else setDisable(true);
-      } else {
+      if (!internalWalletAddress) {
         setDisable(true);
+        console.log("show signin dialog", show);
         setShow(true);
       }
     } else if (wallet.type == "metamask") {
@@ -153,21 +141,33 @@ const ReceivePayment = ({
         setDisable(true);
       } else if (metamask.status == "connecting") {
         setDisable(true);
-      } else if (metamask.status == "connected") {
-        if (
-          balances[selectedWalletIndex][selectedCryptoIndex] *
-            prices[selectedCryptoIndex] >
-          priceUSD
-        ) {
-          setDisable(false || disabled);
-        } else setDisable(true);
       }
     } else if (wallet.type == "walletconnect") {
       setDisable(true);
     }
-  };
+  }, [selectedWalletIndex]);
+
   useEffect(() => {
-    checkIfPayable();
+    const wallet = wallets[selectedWalletIndex];
+    if (wallet.type == "internal" && internalWalletAddress) {
+      if (
+        balances[selectedWalletIndex][selectedCryptoIndex] *
+          prices[selectedCryptoIndex] >
+        priceUSD
+      )
+        setDisable(false || disabled);
+      else setDisable(true);
+    } else if (wallet.type == "metamask" && metamask.status == "connected") {
+      if (
+        balances[selectedWalletIndex][selectedCryptoIndex] *
+          prices[selectedCryptoIndex] >
+        priceUSD
+      ) {
+        setDisable(false || disabled);
+      } else setDisable(true);
+    } else if (wallet.type == "walletconnect") {
+      setDisable(true);
+    }
   }, [selectedWalletIndex, balances, prices]);
 
   useEffect(() => {
