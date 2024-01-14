@@ -13,7 +13,6 @@ import SwapAndDistributeTestETH from "./assets/abi/SwapAndDistributeTestETH.json
 import SwapAndDistributeTestBNB from "./assets/abi/SwapAndDistributeTestBNB.json";
 import SwapAndDistributeBNB from "./assets/abi/SwapAndDistributeBNB.json";
 import SwapAndDistributeETH from "./assets/abi/SwapAndDistributeETH.json";
-import { findCurrency } from "./utils";
 
 export const ROLE_TO_NAME = {
   vendor: "Vendor",
@@ -31,67 +30,17 @@ const useMainnet = () => {
 
 export const blockchainToWrapped = (blockchain) => {
   if (blockchain === "ETH") {
-    if (useMainnet()) {
-      // See https://docs.uniswap.org/contracts/v3/reference/deployments
-      return {
-        address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        decimals: 18,
-      };
-    } else {
-      // See https://docs.uniswap.org/contracts/v3/reference/deployments
-      return {
-        address: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
-        decimals: 18,
-      };
-    }
+    return getCurrencyFromAbbr(blockchain, "WETH");
   } else if (blockchain == "BNB") {
-    if (useMainnet()) {
-      // See https://docs.pancakeswap.finance/developers/smart-contracts/pancakeswap-exchange/v3-contracts
-      return {
-        address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-        decimals: 18,
-      };
-    } else {
-      // See https://testnet.bscscan.com/token/0xae13d989dac2f0debff460ac112a837c89baa7cd
-      return {
-        address: "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
-        decimals: 18,
-      };
-    }
+    return getCurrencyFromAbbr(blockchain, "WBNB");
   }
 };
 
 export const blockchainToUSDC = (blockchain) => {
   if (blockchain === "ETH") {
-    if (useMainnet()) {
-      // See https://developers.circle.com/stablecoins/docs/usdc-on-main-networks
-      return findCurrency(
-        currencies(),
-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      );
-    } else {
-      // See https://developers.circle.com/stablecoins/docs/usdc-on-test-networks#usdc-on-ethereum-goerli
-      return {
-        address: "0x07865c6e87b9f70255377e024ace6630c1eaa37f",
-        decimals: 6,
-      };
-    }
+    return getCurrencyFromAbbr(blockchain, "USDC");
   } else if (blockchain == "BNB") {
-    if (useMainnet()) {
-      // See https://coinmarketcap.com/currencies/usd-coin/
-      // https://pancakeswap.finance/swap?chain=bsc&outputCurrency=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d
-      // BUSD
-      return {
-        address: "0x55d398326f99059fF775485246999027B3197955",
-        decimals: 18,
-      };
-    } else {
-      // See https://testnet.bscscan.com/token/0x64544969ed7EBf5f083679233325356EbE738930
-      return {
-        address: "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee",
-        decimals: 18,
-      };
-    }
+    return getCurrencyFromAbbr(blockchain, "BUSD");
   }
 };
 
@@ -128,6 +77,14 @@ export const currencies = () => {
         decimals: 18,
       },
       {
+        name: "Wrapped Ethereum",
+        blockchain: "ETH",
+        icon: Ethereum,
+        abbr: "WETH",
+        address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        decimals: 18,
+      },
+      {
         name: "Tether",
         blockchain: "ETH",
         icon: Tether,
@@ -161,6 +118,14 @@ export const currencies = () => {
         decimals: 18,
       },
       {
+        name: "Wrapped Binance Coin",
+        blockchain: "BNB",
+        icon: Binance,
+        abbr: "WBNB",
+        address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+        decimals: 18,
+      },
+      {
         name: "Ripple",
         blockchain: "BNB",
         icon: Ripple,
@@ -175,6 +140,13 @@ export const currencies = () => {
         abbr: "DAI",
         address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         decimals: 18,
+      },
+      {
+        name: "Binance USD",
+        blockchain: "BNB",
+        icon: Binance,
+        abbr: "BUSD",
+        address: "0x55d398326f99059fF775485246999027B3197955",
       },
       /*
       {
@@ -203,6 +175,14 @@ export const currencies = () => {
         icon: Ethereum,
         abbr: "ETH",
         address: null,
+        decimals: 18,
+      },
+      {
+        name: "Wrapped Ethereum",
+        blockchain: "ETH",
+        icon: Ethereum,
+        abbr: "WETH",
+        address: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
         decimals: 18,
       },
       {
@@ -238,6 +218,14 @@ export const currencies = () => {
         address: null,
         decimals: 18,
       },
+      {
+        name: "Wrapped Binance Coin",
+        blockchain: "BNB",
+        icon: Binance,
+        abbr: "WBNB",
+        address: "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+        decimals: 18,
+      },
       /*
 			// There is no real XRP on the testnet
 			{
@@ -256,6 +244,13 @@ export const currencies = () => {
         abbr: "DAI",
         address: "0xdc31Ee1784292379Fbb2964b3B9C4124D8F89C60",
         decimals: 18,
+      },
+      {
+        name: "Binance USD",
+        blockchain: "BNB",
+        icon: Binance,
+        abbr: "BUSD",
+        address: "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee",
       },
       /*
       {
@@ -378,6 +373,14 @@ export const blockchainToName = (blockchain) => {
       return "BNB Testnet";
     }
   }
+};
+
+const getCurrencyFromAbbr = (blockchain, abbr) => {
+  return currencies().find(
+    (currency) =>
+      currency.blockchain === blockchain &&
+      currency.abbr?.toLowerCase() === abbr?.toLowerCase(),
+  );
 };
 
 export const coinList = [

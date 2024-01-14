@@ -11,7 +11,7 @@ import {
 import IUniswapV3PoolABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
 import IUniswapV3FactoryABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json";
 import ERC20_ABI from "../assets/abi/ERC20_ABI.json";
-import { zeroAddressToNull, toChecksumAddress, findCurrency } from "../utils";
+import { zeroAddressToNull, toChecksumAddress } from "../utils";
 
 const POOL_FEES = "500";
 
