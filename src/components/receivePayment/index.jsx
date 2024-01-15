@@ -1,9 +1,5 @@
 import styles from "./receivePayment.module.css";
-import { useState, useEffect, useContext, Children } from "react";
-import { Link } from "react-router-dom";
-import Tabs from "../tabs";
-import TopInfo from "../../dashboard/topInfo/topInfo";
-import Table from "../../components/table";
+import { useState, useEffect, useContext } from "react";
 import MessageComponent from "../message";
 import { MessageContext } from "../../context/message";
 import NefentusLogo from "../../assets/logo/logo_n.png";
@@ -21,9 +17,6 @@ import {
   useConnectionStatus,
   useDisconnect,
   walletConnect,
-  useWallet,
-  ThirdwebProvider,
-  useBalance,
 } from "@thirdweb-dev/react";
 import useBalances from "../../hooks/balances";
 import usePrices from "../../hooks/prices";
@@ -33,8 +26,6 @@ import { nullToZeroAddress } from "../../utils";
 import { useTranslation } from "react-i18next";
 import Popup from "../../dashboardNew/components/popup/popup";
 import { useTheme } from "../../context/themeContext/themeContext";
-
-const emptyList = currencies.map((currency) => undefined);
 
 const ReceivePayment = ({
   priceUSD,
@@ -49,18 +40,27 @@ const ReceivePayment = ({
   const { t } = useTranslation();
   const { theme } = useTheme();
 
-  const walletActions = {
-    connect: useConnect(),
-    disconnect: useDisconnect(),
-    address: useAddress(),
-    status: useConnectionStatus(),
-    balance: useBalance(),
-  };
+  const externalWallets = [
+    {
+      connect: useConnect(),
+      disconnect: useDisconnect(),
+      config: metamaskWallet(),
+      address: useAddress(),
+      status: useConnectionStatus(),
+    },
+    {
+      connect: useConnect(),
+      disconnect: useDisconnect(),
+      config: walletConnect(),
+      address: useAddress(),
+      status: useConnectionStatus(),
+    },
+  ];
 
   const [cryptoAmount, setCryptoAmount] = useState("0");
 
-  const { balances, fetchBalances } = useBalances(metamask);
-  const { prices, fetchPrices } = usePrices(metamask);
+  const { balances, fetchBalances } = useBalances();
+  const { prices, fetchPrices } = usePrices();
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -75,14 +75,14 @@ const ReceivePayment = ({
     return `${start}....${end}`;
   };
 
+  const formatBalance = (balance) => {
+    if (balance) {
+      return balance.toFixed(2);
+    }
+    return null;
+  };
+
   const wallets = [
-    {
-      type: "metamask",
-      title: "MetaMask",
-      icon: MetaMaskLogo,
-      description: formatWalletAddress(metamask.address),
-      alt: "MetaMask Wallet",
-    },
     {
       type: "internal",
       title: "Nefentus",
@@ -91,17 +91,26 @@ const ReceivePayment = ({
       alt: "Nefentus Wallet",
     },
     {
+      type: "metamask",
+      title: "MetaMask",
+      icon: MetaMaskLogo,
+      description: formatWalletAddress(externalWallets[0].address),
+      alt: "MetaMask Wallet",
+    },
+    {
       type: "walletconnect",
       title: "WalletConnect",
       icon: WalletConnectLogo,
+      description: formatWalletAddress(externalWallets[1].address),
       alt: "Wallet Connect",
     },
   ];
   const [selectedWalletIndex, setSelectedWalletIndex] = useState(0);
-  const cryptos = currencies.map((currency) => {
+  const cryptos = currencies().map((currency, index) => {
     return {
       title: currency.abbr,
       icon: currency.icon,
+      description: formatBalance(balances[index]),
     };
   });
   const [selectedCryptoIndex, setSelectedCryptoIndex] = useState(0);
@@ -110,7 +119,7 @@ const ReceivePayment = ({
 
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
+  const [password, setPassword] = useState("");
 
   const backend_API = new backendAPI();
 
@@ -119,69 +128,81 @@ const ReceivePayment = ({
   }, []);
 
   useEffect(() => {
-    if (metamask.status === "connected" && metamask.address) {
-      registerWallet();
+    if (internalWalletAddress) {
+      setShow(false);
     }
-  }, [metamask.status, metamask.address]);
+  }, [internalWalletAddress]);
+  useEffect(() => {
+    if (
+      externalWallets[0].status === "connected" &&
+      externalWallets[0].address
+    ) {
+      registerWallet(externalWallets[0]);
+    }
+    if (
+      externalWallets[1].status === "connected" &&
+      externalWallets[1].address
+    ) {
+      registerWallet(externalWallets[1]);
+    }
+  }, [
+    externalWallets[0].status,
+    externalWallets[0].address,
+    externalWallets[1].status,
+    externalWallets[1].address,
+  ]);
 
   useEffect(() => {
-    const wallet = wallets[selectedWalletIndex];
-    if (wallet.type == "internal") {
-      if (!internalWalletAddress) {
-        setDisable(true);
-        console.log("show signin dialog", show);
+    if (selectedWalletIndex == 0) {
+      if (internalWalletAddress) {
+        fetchBalances(internalWalletAddress);
+      } else {
+        !isDisable && setDisable(true);
         setShow(true);
       }
-    } else if (wallet.type == "metamask") {
-      if (metamask.status == "disconnected") {
-        metamask.connect(metamask.config, {
+    } else {
+      const exWallet = externalWallets[selectedWalletIndex - 1];
+      if (exWallet.status == "disconnected") {
+        exWallet.connect(exWallet.config, {
           chainId: 1,
         });
-        setDisable(true);
-      } else if (metamask.status == "unknown") {
-        setDisable(true);
-      } else if (metamask.status == "connecting") {
-        setDisable(true);
+        !isDisable && setDisable(true);
+      } else if (exWallet.status == "unknown") {
+        !isDisable && setDisable(true);
+      } else if (exWallet.status == "connecting") {
+        !isDisable && setDisable(true);
+      } else if (exWallet.status == "connected") {
+        fetchBalances(exWallet.address);
       }
-    } else if (wallet.type == "walletconnect") {
-      setDisable(true);
     }
   }, [selectedWalletIndex]);
 
   useEffect(() => {
-    const wallet = wallets[selectedWalletIndex];
-    if (wallet.type == "internal" && internalWalletAddress) {
-      if (
-        balances[selectedWalletIndex][selectedCryptoIndex] *
-          prices[selectedCryptoIndex] >
-        priceUSD
-      )
-        setDisable(false || disabled);
-      else setDisable(true);
-    } else if (wallet.type == "metamask" && metamask.status == "connected") {
-      if (
-        balances[selectedWalletIndex][selectedCryptoIndex] *
-          prices[selectedCryptoIndex] >
-        priceUSD
-      ) {
-        setDisable(false || disabled);
-      } else setDisable(true);
-    } else if (wallet.type == "walletconnect") {
-      setDisable(true);
+    if (
+      balances[selectedCryptoIndex] * prices[selectedCryptoIndex] >
+      priceUSD
+    ) {
+      isDisable && setDisable(false || disabled);
+    } else {
+      !isDisable && setDisable(true);
     }
-  }, [selectedWalletIndex, balances, prices]);
+  }, [balances, prices]);
 
   useEffect(() => {
-    const currency = currencies[selectedCryptoIndex];
+    const currency = currencies()[selectedCryptoIndex];
     const price = prices[selectedCryptoIndex];
 
     if (typeof price == "number") {
       const round = {
         ETH: 5,
+        WETH: 5,
         BTC: 6,
         USDT: 2,
         USDC: 2,
+        BNB: 4,
+        WBNB: 4,
         DAI: 2,
+        BUSD: 2,
       };
       setCryptoAmount(
         formatTokenBalance(priceUSD / price, round[currency.abbr]),
@@ -191,17 +212,15 @@ const ReceivePayment = ({
     }
   }, [selectedCryptoIndex, prices]);
 
-  async function registerWallet() {
-    if (metamask.address || metamask.address === "undefined") return;
-    const result = await backend_API.registerWalletAddress(metamask.address);
+  async function registerWallet(externalWallet) {
+    if (!externalWallet.address) return;
+    const result = await backend_API.registerWalletAddress(
+      externalWallet.address,
+    );
   }
 
-  function findCurrency() {
-    console.log(payCurrency);
-    return currencies().find((currency) => currency.name === payCurrency.name);
-  }
-
-  async function handleBuy(currency, walletAddress, payWithExternalwallet) {
+  async function handleBuy() {
+    if (isDisable) return;
     // Checks
     if (!(priceUSD > 0.0)) {
       setErrorMessage(t("messages.error.invalidPrice"));
@@ -211,6 +230,12 @@ const ReceivePayment = ({
       setErrorMessage(t("messages.error.invalidUserId"));
       return;
     }
+    const currency = currencies()[selectedCryptoIndex];
+    const walletAddress =
+      selectedWalletIndex == 0
+        ? internalWalletAddress
+        : externalWallets[selectedWalletIndex - 1].address;
+    const payWithExternalwallet = selectedWalletIndex != 0;
 
     const currencyAddress = currency.address;
     // Get stablecoin from backend
@@ -266,7 +291,7 @@ const ReceivePayment = ({
         priceUSD,
         quantity,
         password,
-        stablecoinAddress,
+        stablecoin,
         transInfoArg,
       );
 
@@ -282,7 +307,7 @@ const ReceivePayment = ({
 
   async function signin() {
     try {
-      const response = await backend_API.login(email, pwd, false);
+      const response = await backend_API.login(email, password, false);
       if (response == null) {
         setErrorMessage(t("messages.error.loginData"));
         return;
@@ -429,7 +454,7 @@ const ReceivePayment = ({
                 >
                   {cryptoAmount}
                 </div>
-                <div style={{ width: "40%" }}>
+                <div style={{ width: "50%" }}>
                   <Select
                     data={cryptos}
                     selectedIndex={selectedCryptoIndex}
@@ -462,13 +487,7 @@ const ReceivePayment = ({
               <Button
                 style={{ width: "100%", height: "60px" }}
                 disabled={isDisable}
-                onClick={() => {
-                  if (!isDisable)
-                    handleBuy(
-                      wallets[selectedWalletIndex].type,
-                      selectedCryptoIndex,
-                    );
-                }}
+                onClick={() => handleBuy()}
               >
                 {t("payments.payButton")} ${formatUSDBalance(priceUSD)}
               </Button>
@@ -486,8 +505,8 @@ const ReceivePayment = ({
         setShow={setShow}
         email={email}
         setEmail={setEmail}
-        password={pwd}
-        setPassword={setPwd}
+        password={password}
+        setPassword={setPassword}
         signin={signin}
       />
     </div>
