@@ -3,6 +3,7 @@ import Card from "../card/card";
 
 import styles from "./popup.module.css";
 import ReactDOM from "react-dom";
+import QRCode from "react-qr-code";
 import Close from "../../../assets/icon/close.svg";
 import Verify from "../../../assets/icon/verify.svg";
 import Clipboard from "../../../assets/icon/clipboard.svg";
@@ -83,77 +84,20 @@ export const VerifyPopup = ({
   );
 };
 
-export const PaymentPopup = ({
-  price,
+export const QRPopup = ({
   show,
   setShow,
-  tax,
+  price,
+  taxNumber,
   name,
   email,
   company,
   address,
   link,
-  onClick = () => {},
+  onDownload,
 }) => {
   const dashboardElement = document.getElementById("dashboard");
-
-  const { t } = useTranslation();
-
-  return ReactDOM.createPortal(
-    <div
-      className={`${styles.popup} ${styles.paymentPopup}`}
-      style={{ display: show ? "initial" : "none" }}
-    >
-      <Card className={styles.popupBox}>
-        <div className={styles.close}>
-          <img src={Close} alt="" onClick={() => setShow(false)} />
-        </div>
-
-        <img src={Checkmark} style={{ width: "5rem" }} alt="" />
-        <div className={styles.title}>{price}</div>
-        <div className={styles.description}>{tax}</div>
-
-        <div className={styles.body}>
-          <div className={styles.row}>
-            <p>{t("dashboard.modal.name")}:</p>
-            <p>{name}</p>
-          </div>
-          <div className={styles.row}>
-            <p>{t("dashboard.modal.email")}:</p>
-            <p>{email}</p>
-          </div>
-          <div className={styles.row}>
-            <p>{t("dashboard.modal.company")}:</p>
-            <p>{company}</p>
-          </div>
-          <div className={styles.row}>
-            <p>{t("dashboard.modal.address")}:</p>
-            <p>{address}</p>
-          </div>
-        </div>
-
-        <div className={styles.linkRow}>
-          <p>Link:</p>
-          <div>
-            <img src={Clipboard} alt="" />
-
-            <p>{link}</p>
-          </div>
-        </div>
-
-        <div className={styles.paymentButtons}>
-          <Button onClick={onClick}>{t("payments.scan")}</Button>
-          <div>{t("payments.downloadInvoice")}</div>
-        </div>
-      </Card>
-    </div>,
-    dashboardElement,
-  );
-};
-
-export const QRPopup = ({ show, setShow, data, onClick }) => {
-  const dashboardElement = document.getElementById("dashboard");
-  const { name, email, price, company, address, taxNumber, link } = data;
+  // const { name, email, price, company, address, taxNumber, link } = data;
   const { t } = useTranslation();
 
   return ReactDOM.createPortal(
@@ -173,35 +117,22 @@ export const QRPopup = ({ show, setShow, data, onClick }) => {
 
         <Table
           data={[
-            [`${t("dashboard.modal.address")}:`, `${price} USD`],
-            [`${t("dashboard.modal.email")}:`, `${email}`],
-            [`${t("dashboard.modal.name")}:`, `${name}`],
-            [`${t("dashboard.modal.company")}:`, `${company}`],
-            [`${t("dashboard.modal.address")}:`, `${address}`],
-            [`${t("dashboard.modal.taxNumber")}:`, `${taxNumber}`],
-            [
-              "Link:",
-              <CopyValue
-                value={`${window.location.origin}/pay/${link}`}
-                onCopy={() => {}}
-                link
-              />,
-            ],
+            [`${t("payments.amount")}:`, `${price} USD`],
+            [`${t("payments.email")}:`, `${email}`],
+            [`${t("payments.name")}:`, `${name}`],
+            [`${t("payments.company")}:`, `${company}`],
+            [`${t("payments.address")}:`, `${address}`],
+            [`${t("payments.taxNumber")}:`, `${taxNumber}`],
+            ["Link: ", <CopyValue value={link} onCopy={() => {}} link />],
           ]}
           colSizes={[1, 2]}
         />
-
-        <img
-          src={
-            "https://cdn.britannica.com/17/155017-050-9AC96FC8/Example-QR-code.jpg"
-          }
-          style={{ width: "20rem", margin: "2rem 0 3rem 0" }}
-          alt=""
-        />
-
+        {link && <QRCode value={link} size={256} style={{ margin: "20px" }} />}
         <div className={styles.paymentButtons}>
           <Button onClick={() => setShow(false)}>{t("general.close")}</Button>
-          <div onClick={onClick}>{t("payments.downloadInvoice")}</div>
+          {email && email.match("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") && (
+            <div onClick={onDownload}>{t("payments.downloadInvoice")}</div>
+          )}
         </div>
       </Card>
     </div>,

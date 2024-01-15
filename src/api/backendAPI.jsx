@@ -1132,6 +1132,7 @@ export default class backendAPI {
   async getWalletAddresses() {
     try {
       const url = `${this.baseURL}/wallet/addresses`;
+      this.token = Cookies.get("token");
       const options = {
         method: "GET",
         headers: {
@@ -1342,6 +1343,30 @@ export default class backendAPI {
       return data;
     } catch (error) {
       return null; // or return some default value
+    }
+  }
+
+  async updateInvoice(link, requestBody) {
+    try {
+      const url = `${this.baseURL}/invoice/${link}`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data);
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
   }
 

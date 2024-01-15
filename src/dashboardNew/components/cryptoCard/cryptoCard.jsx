@@ -37,6 +37,8 @@ import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
 import NefentusLogo from "../../../assets/logo/logo_n.png";
 
 const CryptoCard = () => {
+  const { internalWalletAddress, fetchInternalWalletAddress } =
+    useInternalWallet();
   const [activeToggle, setActiveToggle] = useState(false);
   const [isExternal, setIsExternal] = useState(false);
   const [activeWallet, setActiveWallet] = useState({});

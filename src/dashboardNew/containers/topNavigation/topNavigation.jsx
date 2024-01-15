@@ -1,14 +1,6 @@
 import Logo from "../../../assets/logo/logo.svg";
-import Logo2 from "../../../assets/logo/logo2.svg";
-import User from "../../../assets/icon/user.svg";
-import User2 from "../../../assets/icon/user2.svg";
-import Security from "../../../assets/icon/security.svg";
-import Identification from "../../../assets/icon/identification.svg";
-import Logout from "../../../assets/icon/logout.svg";
-import Notification from "../../../assets/icon/notification.svg";
 import LightMode from "../../../assets/icon/lightMode.svg";
 import DarkMode from "../../../assets/icon/darkMode.svg";
-import InvoiceIcon from "../../../assets/icon/invoice.svg";
 
 import styles from "./topNavigation.module.css";
 import { useEffect, useState } from "react";
@@ -18,9 +10,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 import backend_API from "../../../api/backendAPI";
 import UserProfile from "../../../components/userProfile/userProfile";
+import { useTheme } from "../../../context/themeContext/themeContext";
+import { NefentusLogo } from "../../../assets/icon/logos/logos";
+import { Notification } from "../../../assets/icon/icons";
 
 const TopNavigation = () => {
-  const [lightMode, setLightMode] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const [profileImage, setProfileImage] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
@@ -64,27 +59,38 @@ const TopNavigation = () => {
 
   return (
     <>
-      <div className={styles.container}>
+      <div
+        className={`${theme === "dark" ? "" : styles.lightContainer} ${
+          styles.container
+        }`}
+      >
         <img className={styles.logo} src={Logo} alt="" />
-        <img className={styles.logo2} src={Logo2} alt="" />
+        <div className={styles.logo2}>
+          <NefentusLogo />
+        </div>
         <div className={styles.rightSide}>
           <UserProfile logOut={logOut} requireKYC={kyc} />
 
-          <div>
-            <img src={Notification} alt="" />
+          <div className={styles.iconButton}>
+            <Notification />
           </div>
-          <div>
+          <div className={styles.iconButton}>
             <LanguageBox />
           </div>
-          <div onClick={() => setLightMode((prev) => !prev)}>
-            {lightMode ? (
-              <img src={DarkMode} alt="" />
-            ) : (
-              <img src={LightMode} alt="" />
-            )}
+          <div>
+            <img
+              onClick={toggleTheme}
+              src={theme === "dark" ? DarkMode : LightMode}
+              className={styles.light}
+              alt=""
+            />
           </div>
 
-          <div className={styles.mobMenu}>
+          <div
+            className={`${styles.mobMenu} ${
+              theme !== "dark" ? styles.lightMobMenu : ""
+            }`}
+          >
             <div
               className={`${styles.line} ${openMenu ? styles.openLine : ""}`}
             ></div>

@@ -6,14 +6,20 @@ import Button from "../button/button";
 
 import Bitcoin from "../../../assets/icon/crypto/bitcoin.svg";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "../../../context/themeContext/themeContext";
 
 const ConverterCard = () => {
   const { t } = useTranslation();
 
   const [active, setActive] = useState(0);
+
+  const { theme } = useTheme();
+
   return (
     <div className={styles.cardWrapper}>
-      <Card className={styles.card}>
+      <Card
+        className={`${styles.card} ${theme !== "dark" ? styles.light : ""}`}
+      >
         <div className={styles.header}>
           <div className={styles.label}>{t("converter.wallet")}</div>
 

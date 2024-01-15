@@ -1,14 +1,13 @@
 .profileImage {
-  height: 2.5rem;
-  width: 2.5rem;
   border-radius: 50%;
   overflow: hidden;
 }
 
-.profileImage img {
+.profileImage img,
+.profileImage svg {
   object-fit: cover;
-  height: 100% !important;
-  width: 100% !important;
+  height: 2.5rem;
+  width: 2.5rem;
 }
 
 .profileWrapper {
@@ -37,7 +36,8 @@
   transform: translateY(2px);
 }
 
-.profileItem img {
+.profileItem img,
+.profileItem svg {
   width: 1.6rem;
 }
 

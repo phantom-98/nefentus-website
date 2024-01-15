@@ -61,12 +61,10 @@
 
 .paymentPopup .description {
   width: 100%;
-  text-align: left;
 }
 
 .description {
   width: 40rem;
-  text-align: center;
   font-size: 1.4rem;
   opacity: 0.6;
 }

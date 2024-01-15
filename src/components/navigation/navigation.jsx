@@ -4,25 +4,25 @@ import Logo from "../../assets/logo/logo.svg";
 import LightMode from "../../assets/icon/lightMode2.svg";
 import DarkMode from "../../assets/icon/darkMode2.svg";
 
-import Hamburger from "../../assets/icon/hamburger.svg";
 import Button from "../button/button";
 import Languages from "./languages.jsx/languages";
 import { useEffect, useState } from "react";
-
-import QR from "../../assets/icon/qrcode.svg";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import backend_API from "../../api/backendAPI";
 import { dashboardLink } from "../../utils";
 import UserProfile from "../userProfile/userProfile";
+import { useTheme } from "../../context/themeContext/themeContext";
+import { QR } from "../../assets/icon/icons";
 
 const Navigation = () => {
+  const { theme, toggleTheme } = useTheme();
+
   const { t, i18n } = useTranslation();
   const [openMenu, setOpenMenu] = useState(false);
   const [profile, setProfile] = useState({});
   const [height, setHeight] = useState("");
-  const [lightMode, setLightMode] = useState(false);
   const navigate = useNavigate();
 
   const backendAPI = new backend_API();
@@ -77,7 +77,7 @@ const Navigation = () => {
               <p className={styles.fake}>{t("navigation.login")}</p>
             </Link>
           </p>
-          <div className={styles.button}>
+          <div className={`${styles.button}`}>
             <Link to="/signup">{t("navigation.signUp")}</Link>
           </div>
         </>
@@ -155,7 +155,7 @@ const Navigation = () => {
   });
 
   return (
-    <nav className={`${styles.navigation} load`} style={{ height }}>
+    <nav className={`${styles.navigation} load `} style={{ height }}>
       <div className={` ${styles.contentWrapper}`}>
         <div className={`container ${styles.content}`}>
           <div className={styles.left}>
@@ -193,17 +193,13 @@ const Navigation = () => {
 
           <div className={styles.right}>
             <div className={styles.rightWrapper}>
-              <img src={QR} alt="qr" />
-              <div
-                className={`${styles.lang} ${
-                  openMenu ? styles.showLanguage : styles.showLanguage
-                }`}
-              >
-                <Languages />
-              </div>
+              <QR />
+
+              <Languages />
+
               <img
-                onClick={() => setLightMode((prev) => !prev)}
-                src={lightMode ? DarkMode : LightMode}
+                onClick={toggleTheme}
+                src={theme === "dark" ? DarkMode : LightMode}
                 className={styles.light}
                 alt=""
               />
@@ -234,7 +230,7 @@ const Navigation = () => {
       </div>
 
       <div
-        className={styles.mobileMenu}
+        className={`${styles.mobileMenu}`}
         style={{
           transform: openMenu ? "translateY(0%)" : "translateY(-120%)",
         }}

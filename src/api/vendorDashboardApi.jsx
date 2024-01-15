@@ -346,4 +346,26 @@ export default class vendorDashboardApi {
       return null;
     }
   }
+
+  async downloadInvoice(invoiceLink) {
+    try {
+      const url = `${this.baseURL}/downloadInvoice/${invoiceLink}`;
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.text();
+      return data;
+    } catch (error) {
+      console.error("There was an error getting the orders", error);
+      return null;
+    }
+  }
 }

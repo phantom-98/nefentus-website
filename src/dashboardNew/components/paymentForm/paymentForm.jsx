@@ -3,7 +3,7 @@ import Card from "../card/card";
 import styles from "./paymentForm.module.css";
 import Input from "../../containers/input/input";
 import Button from "../button/button";
-import { PaymentPopup, QRPopup } from "../popup/popup";
+import { QRPopup } from "../popup/popup";
 import { useContext, useState } from "react";
 import { MessageContext } from "../../../context/message";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
@@ -31,26 +31,26 @@ const PaymentForm = ({ setLoadingData }) => {
       setErrorMessage(t("messages.error.amountValid"));
       return;
     }
-    if (!email) {
-      setErrorMessage(t("messages.validation.validEmail"));
-      return;
-    }
-    if (!name) {
-      setErrorMessage(t("messages.validation.nameValid"));
-      return;
-    }
-    if (!company) {
-      setErrorMessage(t("messages.validation.companyValid"));
-      return;
-    }
-    if (!address) {
-      setErrorMessage(t("messages.validation.addressValid"));
-      return;
-    }
-    if (!taxNumber) {
-      setErrorMessage(t("messages.validation.taxNumberValid"));
-      return;
-    }
+    // if (!email) {
+    //   setErrorMessage(t("messages.validation.validEmail"));
+    //   return;
+    // }
+    // if (!name) {
+    //   setErrorMessage(t("messages.validation.nameValid"));
+    //   return;
+    // }
+    // if (!company) {
+    //   setErrorMessage(t("messages.validation.companyValid"));
+    //   return;
+    // }
+    // if (!address) {
+    //   setErrorMessage(t("messages.validation.addressValid"));
+    //   return;
+    // }
+    // if (!taxNumber) {
+    //   setErrorMessage(t("messages.validation.taxNumberValid"));
+    //   return;
+    // }
 
     const data = {
       amountUSD: amount,
@@ -67,7 +67,7 @@ const PaymentForm = ({ setLoadingData }) => {
     if (invoiceLinkPart) {
       const invoiceLink = window.location.origin + "/pay/" + invoiceLinkPart;
       setQRValue(invoiceLink);
-      setShowPopup("payment");
+      setShowPopup("qrcode");
       setLoadingData((prev) => !prev);
     } else {
       setErrorMessage(t("messages.error.createInvoice"));
@@ -81,7 +81,7 @@ const PaymentForm = ({ setLoadingData }) => {
 
         <div className={styles.row}>
           <Input
-            placeholder={t("payments.enterAmount")}
+            placeholder={t("payments.enterAmount").concat("*")}
             value={amount}
             setVaue={setAmount}
           />
@@ -119,31 +119,17 @@ const PaymentForm = ({ setLoadingData }) => {
         </div>
       </Card>
 
-      {showPopup === "payment" ? (
-        <PaymentPopup
+      {showPopup === "qrcode" && (
+        <QRPopup
           show={showPopup}
           setShow={setShowPopup}
-          price={`$${amount}`}
-          tax={`Tax Number ${taxNumber}`}
+          price={amount}
+          taxNumber={taxNumber}
           name={name}
           email={email}
           company={company}
           address={address}
           link={qrValue}
-          onClick={() => setShowPopup("QRPopup")}
-        />
-      ) : (
-        <QRPopup
-          show={showPopup}
-          setShow={setShowPopup}
-          data={{
-            amount,
-            email,
-            name,
-            company,
-            address,
-            taxNumber,
-          }}
         />
       )}
     </>

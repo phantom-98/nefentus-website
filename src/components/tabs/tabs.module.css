@@ -1,13 +1,14 @@
 .tabBody {
   border-radius: 0.5rem;
-  padding: 3rem 3rem 5rem 3rem;
+  padding: 2rem 0rem;
 }
 
 .tabNav {
   display: flex;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  gap: 5rem;
+  gap: 1rem;
   font-size: 1.6rem;
+  padding: 0rem 1rem;
 }
 
 .tabNavItem {

@@ -3,10 +3,10 @@ import backendAPI from "../../api/backendAPI";
 
 function useInternalWallet() {
   // Use a öist even though currently only one wallet is supported
-  const [walletList, setWalletList] = useState([]);
+  const [internalWalletAddress, setInternalWalletAddress] = useState();
   const backend_Api = new backendAPI();
 
-  async function fetchInternalWalletAddresses() {
+  async function fetchInternalWalletAddress() {
     const newWalletList = await backend_Api.getWalletAddresses();
     if (newWalletList) {
       console.log(newWalletList);
@@ -14,24 +14,26 @@ function useInternalWallet() {
         .filter((wallet) => wallet.internal)
         .map((wallet) => wallet.address);
       console.log(newAddresses);
-      setWalletList(newAddresses);
+      setInternalWalletAddress(
+        newAddresses.length > 0 ? newAddresses[0] : undefined,
+      );
     }
   }
 
   useEffect(() => {
-    fetchInternalWalletAddresses();
+    fetchInternalWalletAddress();
   }, []);
 
   useEffect(() => {
     const handleStorage = () => {
-      fetchInternalWalletAddresses();
+      fetchInternalWalletAddress();
     };
 
     window.addEventListener("storage", handleStorage);
     return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
-  return walletList.length > 0 ? walletList[0] : undefined;
+  return { internalWalletAddress, fetchInternalWalletAddress };
 }
 
 export default useInternalWallet;

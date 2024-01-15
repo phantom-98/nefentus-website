@@ -298,6 +298,7 @@
     "OTPTitle": "Check your email for a code",
     "OTPSubtitleP1": "We have sent a 6-digits code to ",
     "OTPSubtitleP2": ". The code expires shortly.",
+    "useNefentus": "To pay with Nefentus wallet, you need to log in.",
     "confirm": "Confirm"
   },
   "affiliate": {
@@ -959,6 +960,7 @@
     "name": "Name",
     "company": "Company",
     "address": "Address",
+    "addressHint": "Country, City, Street",
     "taxNumber": "Tax number",
     "createInvoice": "Create Invoice",
     "scan": "Scan QR Code",
@@ -970,6 +972,19 @@
       "status": "Status",
       "qr": "QR code",
       "actions": "Actions"
+    },
+    "price": "Price",
+    "seller": "Seller Info",
+    "total": "Total",
+    "cryptoAmount": "Cryptocurrency amount",
+    "chooseWallet": "Choose Wallet",
+    "payButton": "Pay",
+    "agree": "By clicking on button, you agree to the",
+    "terms": "Terms of Service",
+    "agree2": "",
+    "pay": {
+      "title": "Payment Details",
+      "description": "Complete remittance by providing your payment details"
     }
   },
   "transactions": {
@@ -1067,6 +1082,10 @@
     },
     "scanModal": {
       "title": "Scan QR-code or paste code"
+    },
+    "recommendRecoverModal": {
+      "title": "Recover wallet",
+      "subtitle": "You have reset your password which makes you lose access to your previous wallet. Do you want to restore your previous wallet using the seed phrase?"
     },
     "passwords": {
       "title": "Change Password",

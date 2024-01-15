@@ -1,12 +1,15 @@
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 
-export function formatTokenBalance(x) {
+export function formatTokenBalance(x, round = 2) {
   const parsedFloat = parseFloat(x);
   if (isNaN(parsedFloat)) {
     return "loading";
   } else {
-    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return parsedFloat
+      .toFixed(round)
+      .toString()
+      .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
 }
 
@@ -109,6 +112,5 @@ export const reformatFooterInfo = (pages, links) => {
   for (let i = 0; i < pages.length; i++) {
     result[i] = { text: pages[i], link: links[i] };
   }
-  console.log(result, "resultresult");
   return result;
 };

@@ -8,16 +8,11 @@
   width: 1.3rem;
 }
 
-.menu {
-  height: 1.6rem;
-}
-
 .menu img {
   width: 1.6rem !important;
 }
 
 .languages p {
-  color: var(--white-color);
   margin-left: 0.7rem;
   margin-right: 0.5rem;
 }

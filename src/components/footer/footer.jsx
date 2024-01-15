@@ -1,13 +1,14 @@
 import styles from "./footer.module.css";
-import Logo from "../../assets/logo/logo2.svg";
 
-import Instagram from "../../assets/icon/instagram.svg";
-import Linkedin from "../../assets/icon/linkedin.svg";
-import Youtube from "../../assets/icon/youtube.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { separateText } from "../../func/separate";
 import { reformatFooterInfo } from "../../utils";
+import { Instagram, Linkedin, Youtube } from "../../assets/icon/icons";
+
+import FooterArrow from "../../assets/icon/footerArrow.svg";
+import { useTheme } from "../../context/themeContext/themeContext";
+import { NefentusLogo } from "../../assets/icon/logos/logos";
 
 const content = [
   { link: "/" },
@@ -17,6 +18,7 @@ const content = [
 ];
 
 const Footer = () => {
+  const { theme } = useTheme();
   const { t } = useTranslation();
 
   const footerContentTranslation = t("footer.content", { returnObjects: true });
@@ -27,8 +29,6 @@ const Footer = () => {
   });
 
   const footerContent2 = reformatFooterInfo(footerContentTranslation2, content);
-  console.log(footerContent, "footerContent2");
-  console.log(footerContent2, "footerContent2");
 
   const handleScroll = () => {
     window.scrollTo(0, 0);
@@ -39,7 +39,7 @@ const Footer = () => {
       <div className={`${styles.footerContainer} container`}>
         <div className={styles.leftBox}>
           <div className={`${styles.left}`}>
-            <img src={Logo} alt="nefentus logo" />
+            <NefentusLogo />
             <div className={styles.content}>
               <div className={styles.linkWrapper}>
                 <div className={styles.linkBox}>
@@ -73,13 +73,13 @@ const Footer = () => {
 
           <div className={styles.icons}>
             <Link to="https://www.linkedin.com/company/nefentuspay/">
-              <img src={Linkedin} alt="" />
+              <Linkedin />
             </Link>
             <Link to="https://www.instagram.com/nefentus/">
-              <img src={Instagram} alt="" />
+              <Instagram />
             </Link>
             <Link to="https://www.youtube.com/channel/UCV1QWqkZXtZvXl6bq3AgkTA">
-              <img src={Youtube} alt="" />
+              <Youtube />
             </Link>
           </div>
 
@@ -87,27 +87,11 @@ const Footer = () => {
             <p>{separateText(t("footer.socialDescription"))}</p>
 
             <div className={styles.arrowWrapper} onClick={handleScroll}>
-              <svg
-                width="70"
-                height="70"
-                viewBox="0 0 70 70"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M35.7059 27.5066C35.3155 27.1268 34.6814 27.1268 34.291 27.5066L30.2928 31.3957C29.9024 31.7755 29.9024 32.3922 30.2928 32.772C30.6833 33.1519 31.3174 33.1519 31.7078 32.772L34.0005 30.5419L34.0005 41.8051C34.0005 42.3429 34.4471 42.7773 35 42.7773C35.5529 42.7773 35.9995 42.3429 35.9995 41.8051L35.9995 30.5419L38.2922 32.772C38.6826 33.1519 39.3167 33.1519 39.7072 32.772C40.0976 32.3922 40.0976 31.7755 39.7072 31.3957L35.709 27.5066L35.7059 27.5066Z"
-                  fill="white"
-                />
-                <rect
-                  x="0.5"
-                  y="69.5"
-                  width="69"
-                  height="69"
-                  transform="rotate(-90 0.5 69.5)"
-                  stroke="white"
-                  stroke-opacity="0.2"
-                />
-              </svg>
+              <img
+                style={{ filter: theme === "light" ? "invert()" : "" }}
+                src={FooterArrow}
+                alt=""
+              />
             </div>
           </div>
         </div>

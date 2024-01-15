@@ -13,7 +13,7 @@
 
 .top p {
   font-size: 1.6rem;
-  color: var(--gray-color);
+  opacity: 0.8;
 
   line-height: 140%;
 }

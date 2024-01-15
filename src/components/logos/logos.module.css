@@ -7,7 +7,11 @@
 }
 
 .logos::before {
-  background: linear-gradient(90deg, #111, rgba(9, 9, 9, 0) 100%);
+  background: linear-gradient(
+    90deg,
+    var(--background-color),
+    rgba(9, 9, 9, 0) 100%
+  );
   position: absolute;
   left: 0;
   top: 0;
@@ -20,7 +24,11 @@
 
 .logos::after {
   z-index: 2;
-  background: linear-gradient(-90deg, #111, rgba(9, 9, 9, 0) 100%);
+  background: linear-gradient(
+    -90deg,
+    var(--background-color),
+    rgba(9, 9, 9, 0) 100%
+  );
   position: absolute;
   right: 0;
   pointer-events: none;
@@ -57,14 +65,14 @@
   transition: 5s linear;
 }
 
-.logoImage img {
+.logoImage svg {
   height: 4rem;
   opacity: 0.26;
   margin: 0 5rem;
   transition: 0.2s ease-out;
 }
 
-.logoImage img:hover {
+.logoImage svg:hover {
   opacity: 1;
 }
 
@@ -98,7 +106,7 @@
 }
 
 @media (max-width: 1200px) {
-  .logoImage img {
+  .logoImage svg {
     height: 3rem;
 
     margin: 0 5.25rem;
@@ -106,43 +114,43 @@
 }
 
 @media (max-width: 900px) {
-  .logoImage img:nth-child(5) {
+  .logoImage svg:nth-child(5) {
     /* display: none; */
   }
 
-  .logoImage img {
+  .logoImage svg {
     margin: 0 4.2rem;
   }
 }
 
 @media (max-width: 800px) {
-  .logoImage img:nth-child(5) {
+  .logoImage svg:nth-child(5) {
     /* display: none; */
   }
 
-  .logoImage img {
+  .logoImage svg {
     margin: 0 3rem;
   }
 }
 
 @media (max-width: 700px) {
-  .logoImage img:nth-child(5),
-  .logoImage img:nth-child(2) {
+  .logoImage svg:nth-child(5),
+  .logoImage svg:nth-child(2) {
     /* display: none; */
   }
 
-  .logoImage img {
+  .logoImage svg {
     margin: 0 3rem;
   }
 }
 
 @media (max-width: 650px) {
-  .logoImage img:nth-child(5),
-  .logoImage img:nth-child(2) {
+  .logoImage svg:nth-child(5),
+  .logoImage svg:nth-child(2) {
     /* display: none; */
   }
 
-  .logoImage img {
+  .logoImage svg {
     height: 3rem;
 
     margin: 0 2rem;
@@ -150,13 +158,13 @@
 }
 
 @media (max-width: 550px) {
-  .logoImage img:nth-child(5),
-  .logoImage img:nth-child(2),
-  .logoImage img:nth-child(4) {
+  .logoImage svg:nth-child(5),
+  .logoImage svg:nth-child(2),
+  .logoImage svg:nth-child(4) {
     /* display: none; */
   }
 
-  .logoImage img {
+  .logoImage svg {
     height: 3rem;
 
     margin: 0 3rem;
@@ -164,7 +172,7 @@
 }
 
 @media (max-width: 400px) {
-  .logoImage img {
+  .logoImage svg {
     margin: 0 3rem;
   }
 }

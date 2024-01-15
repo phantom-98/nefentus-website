@@ -4,6 +4,7 @@ import Resizer from "react-image-file-resizer";
 import styles from "./cropDialog.module.css";
 import { Buttons } from "../../dashboard/settings/components/buttons";
 import "react-image-crop/dist/ReactCrop.css";
+import { useTheme } from "../../context/themeContext/themeContext";
 
 export const dataURLtoFile = (dataurl, filename) => {
   var arr = dataurl.split(","),
@@ -41,6 +42,7 @@ const CropDialog = ({ open, file, aspect, onSave, onClose }) => {
     width: 100,
     height: 100,
   });
+  const { theme } = useTheme();
   const [zoom, setZoom] = useState(1);
   const [image, setImage] = useState(undefined);
   const [completedCrop, setCompletedCrop] = useState({
@@ -129,7 +131,14 @@ const CropDialog = ({ open, file, aspect, onSave, onClose }) => {
     <div className={styles["modal-root"]}>
       <div className={styles["modal-mask"]}></div>
       <div className={styles["modal-wrap"]}>
-        <div className={styles["modal"]} style={{ width: 600, height: 600 }}>
+        <div
+          className={styles["modal"]}
+          style={{
+            width: 600,
+            height: 600,
+            backgroundColor: `${theme == "light" ? "#eeeeee" : ""}`,
+          }}
+        >
           <div className={styles["crop-container"]}>
             <ReactCrop
               crop={crop}

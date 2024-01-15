@@ -4,6 +4,7 @@ import ReceivePayment from "../receivePayment";
 import TopInfo from "../../dashboard/topInfo/topInfo";
 import backendAPI from "../../api/backendAPI";
 import { useTranslation } from "react-i18next";
+import { PaymentInfo, ProductInfo } from "../receivePayment";
 
 const ProductBody = ({ product }) => {
   const backend_API = new backendAPI();
@@ -30,38 +31,27 @@ const ProductBody = ({ product }) => {
       transInfoArg={{ productId: product.id }}
       disabled={product.stock === 0}
       info={
-        <div className={styles.productWrapper}>
-          <div className={`card ${styles.productInfo}`}>
-            <div className={styles.body}>
-              <TopInfo
-                title={product.name ? product.name : ""}
-                description={product.description}
-              />
-              <p className={styles.price}>
-                <span>{t("products.price")}:</span>{" "}
-                <span>{product.price} USD</span>
-              </p>
-
-              <p className={styles.stock}>
-                <span>{t("products.stock")}:</span>{" "}
-                <span>
-                  {product.stock >= 0 ? product.stock : t("products.unlimited")}
-                </span>
-              </p>
-            </div>
-          </div>
-          <div className={`card ${styles.productImage}`}>
-            <div className={styles.imageWrapper}>
-              {imageSource && (
-                <img
-                  src={imageSource}
-                  alt={product.title}
-                  className={styles.image}
-                />
-              )}
-            </div>
-          </div>
-        </div>
+        <PaymentInfo
+        // fullName={name}
+        // setFullName={setName}
+        // email={email}
+        // setEmail={setEmail}
+        // address={address}
+        // setAddress={setAddress}
+        // business={company}
+        // setBusiness={setCompany}
+        // tax={tax}
+        // setTax={setTax}
+        />
+      }
+      children={
+        <ProductInfo
+          productPic={imageSource}
+          name={product.name}
+          description={product.description}
+          price={product.price}
+          amount={product.stock}
+        />
       }
     />
   );

@@ -18,14 +18,34 @@
 }
 
 /* Variable */
+:root .dark {
+  --background-color: rgb(17, 17, 17);
+  --lightBlack-color: rgb(38, 38, 38);
+  --text-color: #f6f9fc;
+  --gray-color: rgba(255, 255, 255, 0.09);
+
+  --hover-color: rgba(255, 255, 255, 0.09);
+
+  --lightWhite-color: rgba(255, 255, 255, 0.04);
+}
+
+:root .light {
+  --background-color: #f6f9fc;
+  --lightBlack-color: rgba(38, 38, 38, 0.2);
+  --text-color: rgb(17, 17, 17);
+  --gray-color: rgb(38, 38, 38);
+
+  --hover-color: rgba(0, 0, 0, 0.09);
+
+  --lightWhite-color: rgba(0, 0, 0, 0.04);
+}
+
 :root {
-  --black-color: rgb(17, 17, 17);
-  --white-color: #fff;
-  --gray-color: #c4c4c4;
   --blue-color: #0784b5;
   --linear-color: linear-gradient(90deg, #1595c2 0%, #66bfde 100%);
   --success-color: #23c215;
   --error-color: rgb(228, 46, 0);
+
   --font-size: 0.694vw;
   --dashboard-font-size: 0.54vw;
   --font-size-small: 0.833vw;
@@ -63,19 +83,67 @@ html {
 }
 
 body {
-  background-color: var(--black-color);
-  color: var(--white-color);
   font-family: Axiforma;
   overflow-x: hidden;
   width: 100vw;
-
-  background-position: 50%;
-  background-size: 1090px;
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
 
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+}
+
+.dark .card {
+  background: radial-gradient(
+    circle,
+    rgba(17, 16, 17, 1) 40%,
+    rgba(22, 22, 22, 1) 100%
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.light .card {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  background: #fff;
+
+  box-shadow:
+    0px 18px 36px -18px rgba(0, 0, 0, 0.1),
+    0px 30px 45px -30px rgba(50, 50, 93, 0.25);
+}
+
+.dark input,
+.dark textarea,
+.dark .option {
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+  color: var(--white-color);
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: rgba(255, 255, 255, 0.42) !important;
+}
+
+.light input,
+.light textarea,
+.light .option {
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+
+  color: var(--black-color) !important;
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: rgba(0, 0, 0, 0.42) !important;
+}
+
+svg {
+  display: block;
+  fill: var(--text-color) !important;
 }
 
 /* Scrollbar */
@@ -148,9 +216,10 @@ body {
 /* Text */
 .standard {
   font-size: 1.6rem;
-  color: rgba(255, 255, 255, 0.42);
   line-height: 155%;
   font-weight: 400;
+
+  opacity: 0.42;
 }
 
 h1 {
@@ -162,10 +231,10 @@ h1 {
 .gradient {
   background: linear-gradient(
     to right,
-    white 20%,
+    var(--text-color) 20%,
     #0784b5 40%,
     #1595c2 60%,
-    white 80%
+    var(--text-color) 80%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -231,19 +300,7 @@ h3 {
 }
 
 /* Card */
-
 .card {
-  background-color: #161616;
-  border: 1px solid rgba(255, 255, 255, 0.01);
-
-  background: radial-gradient(
-    74.22% 64.62% at 26.36% 14.29%,
-    #1a1a1a 0%,
-    #151515 50%,
-    #101010 100%
-  );
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 2.5rem;
 }
 

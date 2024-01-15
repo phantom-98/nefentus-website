@@ -1,4 +1,3 @@
-import Globe from "../../../assets/icon/language.svg";
 import USA from "../../../assets/icon/flags/usa.svg";
 import DE from "../../../assets/icon/flags/de.svg";
 import UK from "../../../assets/icon/flags/uk.svg";
@@ -7,6 +6,7 @@ import styles from "./language.module.css";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
+import { Globe } from "../../../assets/icon/icons";
 
 const LanguageBox = () => {
   const { pathname } = useLocation();
@@ -42,7 +42,7 @@ const LanguageBox = () => {
   return (
     <div className={styles.languages}>
       <div className={styles.menu}>
-        <img src={Globe} alt="language globe icon" />
+        <Globe />
       </div>
       <div className={`${styles.dropdown}`}>
         <div className={`${styles.body} card`}>

@@ -70,7 +70,7 @@
 .bgImage {
   background: linear-gradient(
     176deg,
-    rgba(17, 17, 17, 1) 70%,
+    var(--background-color) 70%,
     rgba(21, 147, 192, 1) 100%
   );
   position: absolute;

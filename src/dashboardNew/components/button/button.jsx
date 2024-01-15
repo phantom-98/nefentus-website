@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./button.module.css";
+import { useTheme } from "../../../context/themeContext/themeContext";
 
 const Button = ({
   children,
@@ -10,6 +11,8 @@ const Button = ({
   link,
   style,
 }) => {
+  const { theme } = useTheme();
+
   return (
     <>
       {link ? (
@@ -30,8 +33,10 @@ const Button = ({
                 backgroundColor:
                   color === "light"
                     ? "#222836"
-                    : color === "gray"
+                    : color === "gray" && theme === "dark"
                     ? "rgba(255, 255, 255, 0.08)"
+                    : color === "gray" && theme !== "dark"
+                    ? "rgba(0, 0, 0, 0.8)"
                     : color === "green"
                     ? "#16c172"
                     : "#0784B5",
@@ -53,7 +58,11 @@ const Button = ({
           className={styles.button}
           style={{
             border:
-              color === "gray" ? "1px solid rgba(255, 255, 255, 0.2)" : "",
+              color === "gray" && theme === "dark"
+                ? "1px solid rgba(255, 255, 255, 0.2)"
+                : color === "gray" && theme !== "dark"
+                ? "1px solid rgba(0, 0, 0, 0.2)"
+                : "",
             width: width,
             ...style,
           }}
@@ -64,8 +73,10 @@ const Button = ({
               backgroundColor:
                 color === "light"
                   ? "#222836"
-                  : color === "gray"
+                  : color === "gray" && theme === "dark"
                   ? "rgba(255, 255, 255, 0.08)"
+                  : color === "gray" && theme !== "dark"
+                  ? "rgba(0, 0, 0, 0.8)"
                   : color === "green"
                   ? "#16c172"
                   : "#0784B5",

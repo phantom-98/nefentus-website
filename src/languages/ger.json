@@ -236,6 +236,7 @@
     "OTPTitle": "Ein Code wurde per Email verschickt",
     "OTPSubtitleP1": "Wir haben einen 6-stelligen Code gesendet an ",
     "OTPSubtitleP2": ". Der Code läuft in Kürze ab.",
+    "useNefentus": "Um mit dem Nefentus-Wallet zu bezahlen, müssen Sie sich anmelden.",
     "confirm": "Bestätigen"
   },
   "affiliate": {
@@ -909,6 +910,7 @@
     "name": "Name",
     "company": "Firma",
     "address": "Adresse",
+    "addressHint": "Land, Stadt, Straße",
     "taxNumber": "Steuernummer",
     "createInvoice": "Rechnung erstellen",
     "scan": "QR-Code scannen",
@@ -920,6 +922,19 @@
       "status": "Status",
       "qr": "QR-Code",
       "actions": "Aktionen"
+    },
+    "price": "Preis",
+    "seller": "Infos zum Verkäufer",
+    "total": "Gesamtbetrag",
+    "cryptoAmount": "Kryptowährungsbetrag",
+    "chooseWallet": "Wallet auswählen",
+    "payButton": "Bezahlen",
+    "agree": "Durch Anklicken der Schaltfläche erklären Sie sich mit den",
+    "terms": "Bedingungen des Dienstes",
+    "agree2": "einverstanden",
+    "pay": {
+      "title": "Details zur Bezahlung",
+      "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein"
     }
   },
 
@@ -1003,6 +1018,10 @@
     },
     "scanModal": {
       "title": "QR-Code scannen oder Code einfügen"
+    },
+    "recommendRecoverModal": {
+      "title": "Wallet wiederherstellen",
+      "subtitle": "Sie haben Ihr Passwort zurückgesetzt, wodurch Sie den Zugriff auf Ihr vorheriges Wallet verlieren. Möchten Sie Ihr vorheriges Wallet mithilfe der Sicherheitsschlüssel wiederherstellen?"
     },
     "authentication": "Authentifizierung",
     "enterCode": "Verifizierungscode eingeben:"
