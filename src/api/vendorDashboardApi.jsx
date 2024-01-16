@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import setCookie from "../components/setCookie/setCookie";
 export default class vendorDashboardApi {
   constructor() {
     //LAUNCH
@@ -7,6 +8,15 @@ export default class vendorDashboardApi {
     this.baseURL =
       process.env.VITE_REACT_APP_BASE_ENDPOINT_API + "/dashboard/vendor";
     this.token = Cookies.get("token");
+  }
+
+  async updateToken(response) {
+    if (response.headers.get("Token")) {
+      this.token = response.headers.get("Token");
+      setCookie("token", this.token);
+    } else {
+      console.log("token save failed");
+    }
   }
 
   async checkPermission() {
@@ -23,6 +33,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return true;
     } catch (error) {
       return null; // or return some default value
@@ -43,6 +54,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -64,6 +76,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -85,6 +98,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return response.json();
     } catch (error) {
       console.log(error);
@@ -105,6 +119,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -143,6 +158,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -169,6 +185,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
 
       const data = await response.json();
       return data;
@@ -193,6 +210,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
 
       const data = await response.json();
       return data;
@@ -221,6 +239,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -247,6 +266,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -268,6 +288,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -290,6 +311,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
 
       const data = await response.json();
       return data;
@@ -314,6 +336,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.text();
       console.log(data);
 
@@ -338,6 +361,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
 
       const data = await response.json();
       return data;
@@ -361,6 +385,7 @@ export default class vendorDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.text();
       return data;
     } catch (error) {
