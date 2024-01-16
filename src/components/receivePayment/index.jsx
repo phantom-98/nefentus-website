@@ -294,7 +294,7 @@ const ReceivePayment = ({
         priceUSD,
         quantity,
         password,
-        stablecoin,
+        stablecoin.address,
         transInfoArg,
       );
 
