@@ -3,6 +3,7 @@ import Card from "../card/card";
 import styles from "./cryptoCard.module.css";
 
 import { useContext, useEffect, useState } from "react";
+import { useNetworkMismatch, useNetwork } from "@thirdweb-dev/react";
 import useInternalWallet from "../../../hooks/internalWallet";
 import {
   metamaskWallet,
@@ -16,7 +17,7 @@ import {
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
 import backendAPI from "../../../api/backendAPI";
-import { currencies } from "../../../constants";
+import { currencies, blockchainToName, chainId } from "../../../constants";
 import { formatTokenBalance, formatUSDBalance } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import { MessageContext } from "../../../context/message";
@@ -33,15 +34,20 @@ import Popup from "../popup/popup";
 import { web3Api } from "../../../api/web3Api";
 import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
-import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
+import NefentusLogo from "../../../assets/logo/logo_n.png";
 
 const CryptoCard = () => {
-  const { internalWalletAddress, fetchInternalWalletAddress } =
-    useInternalWallet();
+  const { internalWalletAddress } = useInternalWallet();
   const [activeToggle, setActiveToggle] = useState(false);
   const [isExternal, setIsExternal] = useState(false);
   const [activeWallet, setActiveWallet] = useState({});
   const [walletOptions, setWalletOptions] = useState([]);
+  const [cryptList, setCryptList] = useState([]);
+  const [openReceiveModal, setOpenReceiveModal] = useState(false);
+  const [openWithdrawModal, setOpenWithdrawModal] = useState(false);
+
+  const { balances, fetchBalances } = useBalances();
+  const { prices, fetchPrices } = usePrices();
 
   const wallets = [
     {
@@ -64,16 +70,15 @@ const CryptoCard = () => {
 
   const { t } = useTranslation();
   const backend_API = new backendAPI();
-  const [cryptList, setCryptList] = useState([]);
-  const [openReceiveModal, setOpenReceiveModal] = useState(false);
-  const [openWithdrawModal, setOpenWithdrawModal] = useState(false);
+  const currencyList = currencies();
 
-  const { balances, fetchBalances } = useBalances(activeWallet);
-  const { prices, fetchPrices } = usePrices(activeWallet);
+  const updateInfo = async () => {
+    fetchBalances(activeWallet.address);
+    fetchPrices();
+  };
 
   useEffect(() => {
-    fetchBalances();
-    fetchPrices();
+    updateInfo();
   }, [activeWallet]);
 
   useEffect(() => {
@@ -107,7 +112,7 @@ const CryptoCard = () => {
       const internalWallet = {
         name: "Internal Wallet",
         address: internalWalletAddress,
-        icon: Ethereum,
+        icon: NefentusLogo,
       };
       connectedWallets.push(internalWallet);
       setWalletOptions(connectedWallets);
@@ -120,14 +125,13 @@ const CryptoCard = () => {
   };
 
   useEffect(() => {
-    const data = balances[1].map((balance, index) => ({
-      ...currencies[index],
-      middleName: "Ethereum",
+    const data = currencyList.map((currency, index) => ({
+      ...currency,
+      middleName: blockchainToName(currency.blockchain),
       middleInfo: "Network",
       price: prices[index],
-      value: balance,
+      value: balances[index],
     }));
-
     setCryptList(data);
   }, [prices, balances]);
 
@@ -196,6 +200,7 @@ const CryptoCard = () => {
           else setIsExternal(true);
           setActiveWallet(data);
         }}
+        onSuccess={updateInfo}
       />
     </Card>
   );
@@ -305,8 +310,11 @@ const SendModal = ({
   wallet,
   walletOptions,
   setWallet,
+  onSuccess,
 }) => {
-  const [withdrawCurrency, setWithdrawCurrency] = useState(currencies[0].abbr);
+  const [withdrawCurrency, setWithdrawCurrency] = useState(
+    currencies()[0].abbr,
+  );
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawAddress, setWithdrawAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -315,6 +323,9 @@ const SendModal = ({
   const { t } = useTranslation();
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
+
+  const isMismatched = useNetworkMismatch();
+  const [, switchNetwork] = useNetwork();
 
   const withdraw = async () => {
     if (isWithdrawing) return;
@@ -334,9 +345,10 @@ const SendModal = ({
       return;
     }
 
-    const sendCurrency = currencies.find(
+    const sendCurrency = currencies().find(
       (currency) => currency.abbr === withdrawCurrency,
     );
+    console.log(sendCurrency);
     if (!sendCurrency) {
       setErrorMessage(t("dashboard.cryptoCard.sendModal.correctCurrencyError"));
       return;
@@ -352,27 +364,26 @@ const SendModal = ({
     }
 
     //Before withdraw
-    setPassword("");
     setIsWithdrawing(true);
     setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawing"));
 
     // Withdraw
     const tokenAddress = sendCurrency.address;
-    // TODO! How to determine the right wallet?
-    // const walletAddres = "";
-    // const isExternal = false;
     if (isExternal) {
       const web3API = new web3Api("metamask");
 
       try {
+        await switchNetwork(chainId(sendCurrency.blockchain));
+
         const txReceipt = await web3API.send(
           tokenAddress,
+          sendCurrency.blockchain,
           withdrawAmount,
           withdrawAddress,
         );
         if (txReceipt.status === 1) {
           setInfoMessage(t("messages.success.withdrawal"));
-          fetchBalances();
+          if (onSuccess) onSuccess();
         } else {
           setErrorMessage(t("messages.error.withdraw"));
         }
@@ -384,17 +395,22 @@ const SendModal = ({
       const backend_Api = new backendAPI();
       const ret = await backend_Api.send(
         tokenAddress,
+        sendCurrency.blockchain,
         withdrawAmount,
+        wallet.address,
         withdrawAddress,
         password,
       );
       if (ret) {
         setInfoMessage(t("messages.success.withdrawal"));
-        fetchBalances();
+        if (onSuccess) onSuccess();
       } else {
         setErrorMessage(t("messages.error.withdraw"));
       }
     }
+
+    setPassword("");
+    setIsWithdrawing(false);
   };
 
   return (
@@ -428,7 +444,7 @@ const SendModal = ({
           label={t("dashboard.cryptoCard.sendModal.currencyLabel")}
           placeholder={t("dashboard.cryptoCard.sendModal.currencyPlaceholder")}
           value={withdrawCurrency}
-          options={currencies.map((item) => item.abbr)}
+          options={currencies().map((item) => item.abbr)}
           setValue={setWithdrawCurrency}
         />
 

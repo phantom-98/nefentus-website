@@ -1,16 +1,21 @@
-import { currencies } from "../../constants";
+import { currencies, blockchainToUSDC, chainId } from "../../constants";
 import backendAPI from "../../api/backendAPI";
 import { web3Api } from "../../api/web3Api";
 import { nullToZeroAddress } from "../../utils";
 
 export const usePayment = ({
-  metamaskAddress,
   password,
   priceUSD,
   seller,
   transInfoArg,
+  switchNetwork,
 }) => {
-  async function handleBuy(providerSource, currencyIdx, quantity = 1) {
+  async function handleBuy(
+    currencyIdx,
+    walletAddress,
+    payWithExternalwallet,
+    quantity = 1,
+  ) {
     // Checks
     if (!(priceUSD > 0.0)) {
       return "invalid price";
@@ -19,17 +24,23 @@ export const usePayment = ({
       return "invalid seller";
     }
 
-    // Currently not used because it is always paid in Ethereum
-    const currency = currencies[currencyIdx];
-    const stablecoinAddress = currencies[1].address;
-    // const quantity = 1;
-
+    const currency = currencies()[currencyIdx];
+    const currencyAddress = currency.address;
+    // Get stablecoin from backend
+    const stablecoin = blockchainToUSDC(currency.blockchain);
     const backend_API = new backendAPI();
 
-    if (providerSource === "metamask") {
-      const web3API = new web3Api(providerSource);
+    if (payWithExternalwallet) {
+      await switchNetwork(chainId(currency.blockchain));
 
-      const hierarchy = await backend_API.getHierarchy(seller.id);
+      const web3API = new web3Api();
+
+      const [hierarchy, fees] = await Promise.all([
+        backend_API.getHierarchy(seller.id),
+        backend_API.getFees(seller.id),
+      ]);
+      console.log(hierarchy);
+      console.log(fees);
 
       const transactionInfo = await web3API.callDepositContract(
         nullToZeroAddress(hierarchy.sellerAddress),
@@ -37,8 +48,11 @@ export const usePayment = ({
         nullToZeroAddress(hierarchy.brokerAddress),
         nullToZeroAddress(hierarchy.seniorBrokerAddress),
         nullToZeroAddress(hierarchy.leaderAddress),
-        stablecoinAddress,
+        currency,
+        stablecoin,
         priceUSD,
+        fees?.serviceFee || 0.03,
+        fees?.remainingFeeFree || 0,
       );
 
       if (transactionInfo) {
@@ -48,7 +62,7 @@ export const usePayment = ({
         web3API.convertBigIntToString(transactionInfo);
         const ret = await backend_API.setTransactionInfo(
           transactionInfo,
-          metamaskAddress,
+          walletAddress,
           transInfoArg,
         );
         if (ret) {
@@ -59,13 +73,13 @@ export const usePayment = ({
       } else {
         return "failed";
       }
-    } else if (providerSource === "internal") {
+    } else {
       const ret = await backend_API.makePayment(
-        null,
+        currencyAddress,
         priceUSD,
         quantity,
         password,
-        stablecoinAddress,
+        stablecoin.address,
         transInfoArg,
       );
 

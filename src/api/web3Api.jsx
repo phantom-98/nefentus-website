@@ -1,37 +1,32 @@
 import { ethers } from "ethers";
 import { BigNumber } from "@ethersproject/bignumber";
-import { contractDeposits, currencies } from "../constants";
+import {
+  contractDeposits,
+  providerURL,
+  blockchainToWrapped,
+  blockchainToUSDC,
+  blockchainToFactoryAddress,
+  currencies,
+} from "../constants";
 import IUniswapV3PoolABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
 import IUniswapV3FactoryABI from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Factory.sol/IUniswapV3Factory.json";
 import ERC20_ABI from "../assets/abi/ERC20_ABI.json";
 import { zeroAddressToNull, toChecksumAddress } from "../utils";
 
-const FACTORY_CONTRACT_ADDRESS = "0x1F98431c8aD98523631AE4a59f267346ea31F984";
-const USDC_CONTRACT_ADDRESS = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
 const POOL_FEES = "500";
-const THIRDWEB_CLIENT_ID = "639eea2ebcabed7eab90b56aceeed08b";
 
-const thirdwebProvider = new ethers.providers.JsonRpcProvider(
-  "https://ethereum.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID,
-);
+const provider = (providerURL) => {
+  return new ethers.providers.JsonRpcProvider(providerURL);
+};
+
+const providerMetamask = () => {
+  const providerMM = new ethers.providers.Web3Provider(window.ethereum);
+  //window.ethereum.enable();
+  //await provider.send("eth_requestAccounts", []);
+  return providerMM;
+};
 
 export class uniswapApi {
-  WETH_CONTRACT_ADDRESS = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
-
-  constructor(type) {
-    if (type === "metamask") {
-      this.provider = new ethers.providers.Web3Provider(window.ethereum);
-    } else {
-      this.provider = thirdwebProvider;
-    }
-
-    this.FactoryContract = new ethers.Contract(
-      FACTORY_CONTRACT_ADDRESS,
-      IUniswapV3FactoryABI.abi,
-      this.provider,
-    );
-  }
-
   /**
    * Determine the price of the two tokens in the pool
    * See https://blog.uniswap.org/uniswap-v3-math-primer
@@ -50,9 +45,11 @@ export class uniswapApi {
     let buyOneOfToken0 = (sqrtPriceX96 / 2 ** 96) ** 2;
 
     if (parseInt(tokenAddress0) < parseInt(tokenAddress1)) {
+      console.log("Case 1: ", tokenAddress0, tokenAddress1);
       buyOneOfToken0 = buyOneOfToken0 * 10 ** (Decimal0 - Decimal1);
       return buyOneOfToken0;
     } else {
+      console.log("Case 2: ", tokenAddress0, tokenAddress1);
       buyOneOfToken0 = buyOneOfToken0 / 10 ** (Decimal0 - Decimal1);
       return 1 / buyOneOfToken0;
     }
@@ -63,11 +60,11 @@ export class uniswapApi {
    * @param {*} tokenAddress The token address
    * @returns Number of decimals
    */
-  async getDecimals(tokenAddress) {
+  async getDecimals(tokenAddress, blockchain) {
     const tokenContract = new ethers.Contract(
       tokenAddress,
       ERC20_ABI,
-      this.provider,
+      provider(providerURL(blockchain)),
     );
     const digits = await tokenContract.decimals();
     return digits;
@@ -76,44 +73,57 @@ export class uniswapApi {
   /**
    * Get the price of a token in USDC
    * @param {*} tokenAddress The token address
+   * @param {*} blockchain The blockchain
    * @param {*} decimalsToken0 The decimals of token0
    * @param {*} decimalsToken1 The decimals of token1
    * @returns The price of the token in USDC
    */
   async getUSDCPriceForToken(
     tokenAddress,
+    blockchain,
     decimalsToken0 = null,
     decimalsToken1 = null,
   ) {
-    if (tokenAddress === USDC_CONTRACT_ADDRESS) {
+    // Check input
+    if (tokenAddress === null)
+      tokenAddress = blockchainToWrapped(blockchain).address;
+    const stablecoinAddress = blockchainToUSDC(blockchain).address;
+    if (tokenAddress.toLowerCase() === stablecoinAddress.toLowerCase()) {
       return 1;
     }
 
-    const poolAddress = await this.FactoryContract.getPool(
+    // Get pool contract
+    const factoryContract = new ethers.Contract(
+      blockchainToFactoryAddress(blockchain),
+      IUniswapV3FactoryABI.abi,
+      provider(providerURL(blockchain)),
+    );
+    const poolAddress = await factoryContract.getPool(
       tokenAddress,
-      USDC_CONTRACT_ADDRESS,
+      stablecoinAddress,
       POOL_FEES,
     );
     const poolContract = new ethers.Contract(
       poolAddress,
       IUniswapV3PoolABI.abi,
-      this.provider,
+      provider(providerURL(blockchain)),
     );
 
+    // Get pool price
     const slot0 = await poolContract.slot0();
     const sqrtPriceX96 = slot0.sqrtPriceX96.toString();
 
     if (decimalsToken0 === null || decimalsToken1 === null) {
       [decimalsToken0, decimalsToken1] = await Promise.all([
-        this.getDecimals(tokenAddress),
-        this.getDecimals(USDC_CONTRACT_ADDRESS),
+        this.getDecimals(tokenAddress, blockchain),
+        this.getDecimals(stablecoinAddress, blockchain),
       ]);
     }
 
     const price = this.calculatePoolPrice(
       sqrtPriceX96,
       tokenAddress,
-      USDC_CONTRACT_ADDRESS,
+      stablecoinAddress,
       decimalsToken0,
       decimalsToken1,
     );
@@ -122,27 +132,22 @@ export class uniswapApi {
 }
 
 export class web3Api {
-  constructor(type) {
-    if (type === "metamask") {
-      this.provider = new ethers.providers.Web3Provider(window.ethereum);
-    } else {
-      this.provider = thirdwebProvider;
-    }
-  }
-
-  async getBalanceNative(walletAddress) {
-    const balance = await this.provider.getBalance(walletAddress);
+  async getBalanceNative(walletAddress, blockchain) {
+    const balance = await provider(providerURL(blockchain)).getBalance(
+      walletAddress,
+    );
     const balanceInEth = ethers.utils.formatEther(balance);
     return balanceInEth;
   }
 
-  async getBalanceToken(tokenAddress, walletAddress) {
-    if (!tokenAddress) return await this.getBalanceNative(walletAddress);
+  async getBalanceToken(tokenAddress, walletAddress, blockchain) {
+    if (!tokenAddress)
+      return await this.getBalanceNative(walletAddress, blockchain);
 
     const tokenContract = new ethers.Contract(
       tokenAddress,
       ERC20_ABI,
-      this.provider,
+      provider(providerURL(blockchain)),
     );
     const [digits, balanceWei] = await Promise.all([
       tokenContract.decimals(),
@@ -155,13 +160,15 @@ export class web3Api {
 
   /* Send cryptocurrency (native token or token) */
 
-  async send(tokenAddress, amount, toAddress) {
-    if (!tokenAddress) return await this.sendNative(amount, toAddress);
-    else return await this.sendToken(tokenAddress, amount, toAddress);
+  async send(tokenAddress, blockchain, amount, toAddress) {
+    if (!tokenAddress)
+      return await this.sendNative(blockchain, amount, toAddress);
+    else
+      return await this.sendToken(tokenAddress, blockchain, amount, toAddress);
   }
 
-  async sendNative(amount, toAddress) {
-    const signer = this.provider.getSigner();
+  async sendNative(blockchain, amount, toAddress) {
+    const signer = providerMetamask().getSigner();
     const transaction = {
       to: toAddress,
       value: ethers.utils.parseEther(amount),
@@ -171,8 +178,8 @@ export class web3Api {
     return txReceipt;
   }
 
-  async sendToken(tokenAddress, amount, toAddress) {
-    const signer = this.provider.getSigner();
+  async sendToken(tokenAddress, blockchain, amount, toAddress) {
+    const signer = MMProvider().getSigner();
     const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
     const decimals = await tokenContract.decimals();
     const txRequest = await tokenContract.transfer(
@@ -184,34 +191,38 @@ export class web3Api {
   }
 
   /* Call deposit smart contract */
+
   async callDepositContract(
     sellerAddress,
     affiliateAddress,
     brokerAddress,
     seniorBrokerAddress,
     leaderAddress,
-    stablecoinAddress,
+    currency,
+    stablecoin,
     price,
+    serviceFee,
+    feeFree,
   ) {
+    const blockchain = currency["blockchain"];
+
     // Get min amount out
     const uniswap = new uniswapApi();
-    const decimalsIn = 18;
-    const stablecoinDecimals = await uniswap.getDecimals(stablecoinAddress);
     const priceConvert = await uniswap.getUSDCPriceForToken(
-      uniswap.WETH_CONTRACT_ADDRESS,
-      decimalsIn,
-      stablecoinDecimals,
+      currency.address,
+      blockchain,
+      currency.decimals,
+      stablecoin.decimals,
     );
     // Amount in token
     const amountIn = price / priceConvert;
-    const amountInInt = Math.ceil(amountIn * 10 ** decimalsIn);
+    const amountInInt = Math.ceil(amountIn * 10 ** currency.decimals);
     // Amount in USD stablecoin
-    const minAmountOut = price * 0.98 * 10 ** stablecoinDecimals;
+    const minAmountOut = price * 0.99 * 10 ** stablecoin.decimals;
 
     // Deposit contract
-    const contractInfo =
-      contractDeposits.blockchain[contractDeposits.length - 1];
-    const signer = this.provider.getSigner();
+    const contractInfo = contractDeposits(blockchain);
+    const signer = providerMetamask().getSigner();
     const contract = new ethers.Contract(
       contractInfo.address,
       contractInfo.abi,
@@ -219,18 +230,39 @@ export class web3Api {
     );
 
     const timestampSent = Date.now();
-    const txRequest = await contract.deposit(
-      sellerAddress,
-      affiliateAddress,
-      brokerAddress,
-      seniorBrokerAddress,
-      leaderAddress,
-      stablecoinAddress,
-      minAmountOut,
-      POOL_FEES,
-      { value: amountInInt },
-    );
-
+    let txRequest;
+    const serviceFeeInt = Math.ceil(serviceFee * 1_000_000);
+    const feeFreeInt = Math.floor(feeFree * 10 ** stablecoin.decimals);
+    if (currency.address === null) {
+      txRequest = await contract.deposit(
+        sellerAddress,
+        affiliateAddress,
+        brokerAddress,
+        seniorBrokerAddress,
+        leaderAddress,
+        stablecoin.address,
+        minAmountOut,
+        POOL_FEES,
+        serviceFeeInt,
+        feeFreeInt,
+        { value: amountInInt },
+      );
+    } else {
+      txRequest = await contract.depositToken(
+        sellerAddress,
+        affiliateAddress,
+        brokerAddress,
+        seniorBrokerAddress,
+        leaderAddress,
+        currency.address,
+        stablecoin.address,
+        amountInInt,
+        minAmountOut,
+        POOL_FEES,
+        serviceFeeInt,
+        feeFreeInt,
+      );
+    }
     const txReceipt = await txRequest.wait();
 
     const timestampMined = Date.now();
@@ -250,8 +282,11 @@ export class web3Api {
       toChecksumAddress(seniorBrokerAddress),
     );
     info.leaderAddress = zeroAddressToNull(toChecksumAddress(leaderAddress));
-    info.currencyAddress = null;
-    info.stablecoinAddress = toChecksumAddress(stablecoinAddress);
+    info.currencyAddress = currency.address;
+    info.stablecoinAddress = toChecksumAddress(stablecoin.address);
+    info.serviceFee = serviceFeeInt;
+    info.feeFree = feeFreeInt;
+    info.blockchain = blockchain;
     info.transactionHash = txReceipt.transactionHash;
     return info;
   }
