@@ -76,6 +76,7 @@ export const usePayment = ({
     } else {
       const ret = await backend_API.makePayment(
         currencyAddress,
+        currency.blockchain,
         priceUSD,
         quantity,
         password,
