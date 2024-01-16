@@ -17,6 +17,7 @@ import {
   useConnectionStatus,
   useDisconnect,
   walletConnect,
+  useNetwork,
 } from "@thirdweb-dev/react";
 import useBalances from "../../hooks/balances";
 import usePrices from "../../hooks/prices";
@@ -61,7 +62,7 @@ const ReceivePayment = ({
 
   const { balances, fetchBalances } = useBalances();
   const { prices, fetchPrices } = usePrices();
-
+  const [, switchNetwork] = useNetwork();
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
 
@@ -243,6 +244,8 @@ const ReceivePayment = ({
     const quantity = 1;
 
     if (payWithExternalwallet) {
+      await switchNetwork(chainId(currency.blockchain));
+
       const web3API = new web3Api();
 
       const [hierarchy, fees] = await Promise.all([
