@@ -246,8 +246,8 @@ const ReceivePayment = ({
       const web3API = new web3Api();
 
       const [hierarchy, fees] = await Promise.all([
-        backend_API.getHierarchy(userId),
-        backend_API.getFees(userId),
+        backend_API.getHierarchy(seller.id),
+        backend_API.getFees(seller.id),
       ]);
       console.log(hierarchy);
       console.log(fees);
