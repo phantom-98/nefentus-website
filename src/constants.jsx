@@ -147,6 +147,7 @@ export const currencies = () => {
         icon: Binance,
         abbr: "BUSD",
         address: "0x55d398326f99059fF775485246999027B3197955",
+        decimals: 18,
       },
       /*
       {
@@ -251,6 +252,7 @@ export const currencies = () => {
         icon: Binance,
         abbr: "BUSD",
         address: "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee",
+        decimals: 18,
       },
       /*
       {
