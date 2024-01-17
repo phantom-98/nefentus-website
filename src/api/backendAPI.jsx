@@ -1191,12 +1191,21 @@ export default class backendAPI {
     }
   }
 
-  async send(tokenAddress, amount, toAddress, password) {
+  async send(
+    tokenAddress,
+    blockchain,
+    amount,
+    fromAddress,
+    toAddress,
+    password,
+  ) {
     try {
       const url = `${this.baseURL}/wallet/send`;
       const requestBody = {
         tokenAddress: tokenAddress,
+        blockchain: blockchain,
         amount: amount,
+        fromAddress: fromAddress,
         toAddress: toAddress,
         password: password,
       };
@@ -1291,6 +1300,31 @@ export default class backendAPI {
         throw new Error("Network response was not ok");
       }
       this.updateToken(response);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async getFees(userId) {
+    try {
+      const url = `${this.baseURL}/fees/${userId}`;
+      let headers = {};
+      if (this.token) {
+        headers = {
+          Authorization: `Bearer ${this.token}`,
+        };
+      }
+
+      const options = {
+        method: "GET",
+        headers: headers,
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
       const data = await response.json();
       return data;
     } catch (error) {

@@ -14,6 +14,7 @@ import {
   useDisconnect,
 } from "@thirdweb-dev/react";
 import useBalances from "../../../hooks/balances";
+import useInternalWallet from "../../../hooks/internalWallet";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -67,19 +68,26 @@ const BalanceCard = () => {
     address: useAddress(),
     status: useConnectionStatus(),
   };
-  const { balances } = useBalances(metamask);
+  const { balances, fetchBalances } = useBalances();
+  let internalWalletAddress = useInternalWallet();
   const [percentages, setPercentages] = useState([0, 0, 0, 0, 0]);
 
   useEffect(() => {
-    if (checkBalances(balances[1])) {
-      let totalBalance = balances[1].reduce(
+    if (internalWalletAddress) {
+      fetchBalances(internalWalletAddress);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (checkBalances(balances)) {
+      let totalBalance = balances.reduce(
         (pre, cur) => parseFloat(cur) + parseFloat(pre),
         0,
       );
-      setTotal(totalBalance);
+      setTotal(totalBalance || 0);
 
       if (totalBalance > 0) {
-        const pers = balances[1].map((balance) =>
+        const pers = balances.map((balance) =>
           parseFloat((balance / (totalBalance * 1.0)) * 100).toFixed(2),
         );
 
@@ -93,20 +101,20 @@ const BalanceCard = () => {
       <div className={styles.left}>
         <div className={styles.label}>{t("dashboard.balance")}</div>
         <div className={styles.value}>${parseFloat(total).toFixed(2)}</div>
-        <div className={styles.subtitle}>{currencies.length} Crypto</div>
+        <div className={styles.subtitle}>{currencies().length} Crypto</div>
       </div>
 
       {total !== 0 && (
         <div className={styles.right}>
-          <Doughnut data={data(percentages, balances[1])} options={options} />
+          <Doughnut data={data(percentages, balances)} options={options} />
 
           <div className={styles.legend}>
-            {data(percentages, balances[1]).labels.map((item, index) => (
+            {data(percentages, balances).labels.map((item, index) => (
               <div className={styles.legendItem}>
                 <div
                   className={styles.circle}
                   style={{
-                    backgroundColor: data(percentages, balances[1]).datasets[0]
+                    backgroundColor: data(percentages, balances).datasets[0]
                       .backgroundColor[index],
                   }}
                 ></div>

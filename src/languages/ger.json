@@ -835,6 +835,7 @@
       "accountDisconnect": "Kein Konto verbunden"
     },
     "info": {
+      "transactionNotSaved": "Transaktion erfolgreich, aber Transaktionsinformationen konnten nicht gespeichert werden!",
       "email": "E-Mail zum Zurücksetzen des Passworts gesendet!",
       "withdrawing": "Abheben...",
       "walletCopy": "Wallet-Adresse kopiert!",

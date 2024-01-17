@@ -1,4 +1,5 @@
 import { ThirdwebProvider, metamaskWallet } from "@thirdweb-dev/react";
+import { BinanceTestnet } from "@thirdweb-dev/chains";
 import BalanceCard from "../components/balanceCard/balanceCard";
 import CryptoCard from "../components/cryptoCard/cryptoCard";
 import EarningCards from "../components/earningCards/earningCards";
@@ -41,7 +42,7 @@ const MainDashboard = () => {
   return (
     <div>
       <ThirdwebProvider
-        activeChain="ethereum"
+        activeChain={BinanceTestnet}
         supportedWallets={[metamaskWallet()]}
         clientId="639eea2ebcabed7eab90b56aceeed08b"
       >
