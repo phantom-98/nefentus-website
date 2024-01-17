@@ -140,6 +140,7 @@ const ReceivePayment = ({
   useEffect(() => {
     if (internalWalletAddress) {
       setShow(false);
+      fetchBalances(internalWalletAddress);
     }
   }, [internalWalletAddress]);
   useEffect(() => {
