@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import backendAPI from "../api/backendAPI";
-import ProductBody from "../components/productBody";
+import ProductView from "../components/productView";
 import { ThirdwebProvider, metamaskWallet } from "@thirdweb-dev/react";
 
 const Product = () => {
@@ -26,13 +26,14 @@ const Product = () => {
       <Helmet>
         <title>{product.name ? product.name : ""} | Nefentus</title>
       </Helmet>
-      <ThirdwebProvider
+      {/* <ThirdwebProvider
         activeChain="ethereum"
         supportedWallets={[metamaskWallet()]}
         clientId="639eea2ebcabed7eab90b56aceeed08b"
       >
         <ProductBody product={product} />
-      </ThirdwebProvider>
+      </ThirdwebProvider> */}
+      <ProductView product={product} />
     </div>
   );
 };
