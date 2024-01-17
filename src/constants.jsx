@@ -304,7 +304,7 @@ export const contractDeposits = (blockchain) => {
     } else {
       return {
         id: 2, // Not used right now!
-        address: "0xabcdeff",
+        address: "0xee5711fab04f7e8555395e00987b594a752ed08f",
         abi: SwapAndDistributeTestBNB.abi,
       };
     }
