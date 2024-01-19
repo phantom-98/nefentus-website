@@ -652,7 +652,7 @@ export const PaymentInfo = ({
 export const ProductInfo = ({
   productPic,
   name,
-  description,
+  // description,
   price,
   amount,
   setAmount,
@@ -662,12 +662,12 @@ export const ProductInfo = ({
   return (
     <div className={styles.productWrapper}>
       <div className={styles.productImage}>
-        <p
+        {/* <p
           className={styles.productInfoTitle}
           style={{ color: theme == "dark" ? "" : "#111111" }}
         >
           {name}
-        </p>
+        </p> */}
         <img
           className={styles.productImageWrapper}
           src={productPic}
@@ -679,7 +679,7 @@ export const ProductInfo = ({
             color: theme == "dark" ? "#f6f6f6" : "#111111a0",
           }}
         >
-          {description}
+          {name}
         </p>
       </div>
       <div

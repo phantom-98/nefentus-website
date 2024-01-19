@@ -71,6 +71,7 @@ const Privacy = React.lazy(() => import("./pages/Privacy"));
 const Imprint = React.lazy(() => import("./pages/Imprint"));
 const PasswordForgot = React.lazy(() => import("./pages/PasswordForgot"));
 const Product = React.lazy(() => import("./pages/Product"));
+const ProductPay = React.lazy(() => import("./pages/ProductPay"));
 const Pay = React.lazy(() => import("./pages/Pay"));
 const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
 
@@ -357,6 +358,16 @@ function App() {
                       <>
                         <Navigation />
                         <Product />
+                        <Footer />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/product/:productLink/pay"
+                    element={
+                      <>
+                        <Navigation />
+                        <ProductPay />
                         <Footer />
                       </>
                     }
