@@ -407,7 +407,17 @@
     },
     "charts": {
       "last24h": "Letzte 24 Stunden",
-      "previous24h": "Vorherige 24 Stunden"
+      "previous24h": "Vorherige 24 Stunden",
+      "lastWeek": "Letzte Woche (Hinweis: Diese Grafik wird täglich aktualisiert)",
+      "days": {
+        "monday": "Montag",
+        "tuesday": "Dienstag",
+        "wednesday": "Mittwoch",
+        "thursday": "Donnerstag",
+        "friday": "Freitag",
+        "saturday": "Samstag",
+        "sunday": "Sonntag"
+      }
     },
     "tableHeaders": {
       "firstName": "Vorname",
@@ -445,7 +455,7 @@
       "third": "Verkäufe: Letzte 30 Tage",
       "progress": "im Vergleich zu den letzten 30 Tagen"
     },
-    "incomeTitle": "Einkommen 24 Stunden",
+    "incomeTitle": "Einkommen letzte Woche",
     "cryptoCard": {
       "receiveModal": {
         "title": "Kryptowährung empfangen",

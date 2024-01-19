@@ -5,15 +5,6 @@ import styles from "./cryptoCard.module.css";
 import { useContext, useEffect, useState } from "react";
 import { useNetworkMismatch, useNetwork } from "@thirdweb-dev/react";
 import useInternalWallet from "../../../hooks/internalWallet";
-import {
-  metamaskWallet,
-  useAddress,
-  useConnect,
-  useConnectionStatus,
-  useDisconnect,
-  walletConnect,
-  useWallet,
-} from "@thirdweb-dev/react";
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
 import backendAPI from "../../../api/backendAPI";
@@ -25,104 +16,38 @@ import MessageComponent from "../../../components/message";
 import TopInfo from "../../../dashboard/topInfo/topInfo";
 import CopyValue from "../../../dashboard/copyValue";
 import inputStyles from "../../../components/input/input.module.css";
-import Input, {
-  Options,
-  OptionsWithImage,
-  WalletField,
-} from "../../../components/input/input";
+import Input, { Options } from "../../../components/input/input";
 import Popup from "../popup/popup";
 import { web3Api } from "../../../api/web3Api";
-import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
-import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
-import NefentusLogo from "../../../assets/logo/logo_n.png";
 
-const CryptoCard = () => {
+const CryptoCard = ({ wallet }) => {
   const { internalWalletAddress } = useInternalWallet();
+
   const [activeToggle, setActiveToggle] = useState(false);
   const [isExternal, setIsExternal] = useState(false);
-  const [activeWallet, setActiveWallet] = useState({});
-  const [walletOptions, setWalletOptions] = useState([]);
   const [cryptList, setCryptList] = useState([]);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
   const [openWithdrawModal, setOpenWithdrawModal] = useState(false);
 
-  const { balances, fetchBalances } = useBalances();
-  const { prices, fetchPrices } = usePrices();
-
-  const wallets = [
-    {
-      connect: walletConnect(),
-      icon: WalletConnectLogo,
-      name: "WalletConnect",
-      address: useAddress(),
-      status: useConnectionStatus(),
-      walletDetail: useWallet(),
-    },
-    {
-      connect: metamaskWallet(),
-      icon: MetaMaskLogo,
-      name: "MetaMask",
-      address: useAddress(),
-      status: useConnectionStatus(),
-      walletDetail: useWallet(),
-    },
-  ];
-
   const { t } = useTranslation();
-  const backend_API = new backendAPI();
   const currencyList = currencies();
 
-  const updateInfo = async () => {
-    fetchBalances(activeWallet.address);
+  const { balances, fetchBalances } = useBalances(wallet);
+  const { prices, fetchPrices } = usePrices(wallet);
+
+  useEffect(() => {
+    updateInfo();
+  }, [wallet]);
+
+  const updateInfo = () => {
+    fetchBalances(wallet?.address);
     fetchPrices();
   };
 
   useEffect(() => {
-    updateInfo();
-  }, [activeWallet]);
-
-  useEffect(() => {
-    if (!Object.keys(activeWallet).length && internalWalletAddress) {
-      fetchWallets();
-    }
-  }, [wallets]);
-
-  const fetchWallets = async () => {
-    if (
-      wallets.some(
-        (wal) =>
-          (wal.status == "connecting" || wal.status == "connected") &&
-          wal.address === undefined,
-      )
-    ) {
-      return;
-    } else {
-      let connectedWallets = [];
-      wallets.map((wallet) => {
-        if (
-          wallet?.status === "connected" &&
-          wallet?.address &&
-          wallet?.walletDetail?.walletId === wallet?.name?.toLocaleLowerCase()
-        ) {
-          connectedWallets.push(wallet);
-          registerWallet(wallet);
-        }
-      });
-
-      const internalWallet = {
-        name: "Internal Wallet",
-        address: internalWalletAddress,
-        icon: NefentusLogo,
-      };
-      connectedWallets.push(internalWallet);
-      setWalletOptions(connectedWallets);
-      setActiveWallet(internalWallet);
-    }
-  };
-
-  const registerWallet = async (wallet) => {
-    const result = await backend_API.registerWalletAddress(wallet);
-  };
+    if (wallet?.name == "ETH") setIsExternal(false);
+    else setIsExternal(true);
+  }, [wallet]);
 
   useEffect(() => {
     const data = currencyList.map((currency, index) => ({
@@ -168,38 +93,29 @@ const CryptoCard = () => {
       <div className={styles.body}>
         {cryptList
           .filter((cryptItem) => {
-            if (activeToggle && parseFloat(cryptItem.value) === 0) return false;
+            if (
+              activeToggle &&
+              cryptItem?.value === 0 &&
+              cryptItem?.price === undefined
+            )
+              return false;
             return true;
           })
-          .map((item, index) => (
-            <CryptoItem key={index} data={item} />
-          ))}
+          .map((item, index) => {
+            return <CryptoItem key={index} data={item} />;
+          })}
       </div>
 
       <ReceiveModal
         show={openReceiveModal}
-        walletAddress={activeWallet?.address ?? internalWalletAddress}
+        walletAddress={wallet?.address ?? internalWalletAddress}
         setOpenReceiveModal={setOpenReceiveModal}
-        wallet={activeWallet}
-        walletOptions={walletOptions}
-        setWallet={(data) => {
-          if (data?.name == "ETH") setIsExternal(false);
-          else setIsExternal(true);
-          setActiveWallet(data);
-        }}
       />
 
       <SendModal
         show={openWithdrawModal}
         setShow={setOpenWithdrawModal}
         isExternal={isExternal}
-        wallet={activeWallet}
-        walletOptions={walletOptions}
-        setWallet={(data) => {
-          if (data?.name == "ETH") setIsExternal(false);
-          else setIsExternal(true);
-          setActiveWallet(data);
-        }}
         onSuccess={updateInfo}
       />
     </Card>
@@ -225,9 +141,7 @@ const CryptoItem = ({ data }) => {
 
         <div>
           <div className={styles.title}>{data.name}</div>
-          <div className={styles.subtitle}>{`${parseFloat(data.price).toFixed(
-            2,
-          )}`}</div>
+          <div className={styles.subtitle}>{`${data.price?.toFixed(2)}`}</div>
         </div>
       </div>
       <div className={styles.middle}>
@@ -235,7 +149,12 @@ const CryptoItem = ({ data }) => {
         <div className={styles.subtitle}>{data.middleInfo}</div>
       </div>
       <div className={styles.right}>
-        <div className={styles.title}>${formatUSDBalance(balanceUSD)}</div>
+        <div className={styles.title}>
+          $
+          {formatUSDBalance(
+            balanceUSD === "loading" ? balanceUSD : balanceUSD.toString(),
+          )}
+        </div>
         <div className={styles.subtitle}>
           {formatTokenBalance(balanceToken, data.decimals)} {data.abbr}
         </div>
@@ -244,14 +163,7 @@ const CryptoItem = ({ data }) => {
   );
 };
 
-const ReceiveModal = ({
-  show,
-  walletAddress,
-  setOpenReceiveModal,
-  wallet,
-  walletOptions,
-  setWallet,
-}) => {
+const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
   const { setInfoMessage, clearMessages } = useContext(MessageContext);
   const { t } = useTranslation();
 
@@ -279,15 +191,6 @@ const ReceiveModal = ({
             {/* <p className={`${inputStyles.label} ${inputStyles.dashboardLabel}`}>
               {t("dashboard.cryptoCard.wallet")}
             </p> */}
-            <div style={{ marginBottom: "15px" }}>
-              <OptionsWithImage
-                label={t("dashboard.cryptoCard.sendModal.walletLabel")}
-                dashboard
-                wallet={wallet}
-                options={walletOptions}
-                setValue={setWallet}
-              />
-            </div>
 
             <CopyValue
               receiveModal
@@ -303,15 +206,7 @@ const ReceiveModal = ({
   );
 };
 
-const SendModal = ({
-  show,
-  setShow,
-  isExternal,
-  wallet,
-  walletOptions,
-  setWallet,
-  onSuccess,
-}) => {
+const SendModal = ({ show, setShow, isExternal, onSuccess }) => {
   const [withdrawCurrency, setWithdrawCurrency] = useState(
     currencies()[0].abbr,
   );
@@ -431,14 +326,6 @@ const SendModal = ({
        /> */}
 
       <div className={styles.modalInputs}>
-        <OptionsWithImage
-          label={t("dashboard.cryptoCard.sendModal.walletLabel")}
-          dashboard
-          wallet={wallet}
-          options={walletOptions}
-          setValue={setWallet}
-        />
-
         <Options
           dashboard
           label={t("dashboard.cryptoCard.sendModal.currencyLabel")}

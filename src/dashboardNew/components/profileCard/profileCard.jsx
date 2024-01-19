@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "../card/card";
 
 import Clipboard from "../../../assets/icon/clipboard.svg";
@@ -6,21 +6,116 @@ import Clipboard from "../../../assets/icon/clipboard.svg";
 import styles from "./profileCard.module.css";
 import useInternalWallet from "../../../hooks/internalWallet";
 import { useTranslation } from "react-i18next";
-
+import { Options, OptionsWithImage } from "../../../components/input/input";
 import ProfileImg from "../../../assets/icon/user.svg";
 import { useTheme } from "../../../context/themeContext/themeContext";
+import {
+  metamaskWallet,
+  useAddress,
+  useConnectionStatus,
+  useWallet,
+  walletConnect,
+} from "@thirdweb-dev/react";
+import useBalances from "../../../hooks/balances";
+import usePrices from "../../../hooks/prices";
+import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
+import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
+import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
+import { getCurrentWallet, setCurrentWallet } from "../../../utils";
 
-const ProfileCard = ({ type }) => {
+const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
   const [firstName] = useState(localStorage.getItem("firstName"));
   const [lastName] = useState(localStorage.getItem("lastName"));
   const [email] = useState(localStorage.getItem("email"));
   const [profileImage] = useState(localStorage.getItem("profile_pic"));
+  const [walletOptions, setWalletOptions] = useState([]);
+
   const { internalWalletAddress, fetchInternalWalletAddress } =
     useInternalWallet();
 
   const { t } = useTranslation();
 
   const { theme } = useTheme();
+
+  const wallets = [
+    {
+      connect: walletConnect(),
+      icon: WalletConnectLogo,
+      name: "WalletConnect",
+      address: useAddress(),
+      status: useConnectionStatus(),
+      walletDetail: useWallet(),
+    },
+    {
+      connect: metamaskWallet(),
+      icon: MetaMaskLogo,
+      name: "MetaMask",
+      address: useAddress(),
+      status: useConnectionStatus(),
+      walletDetail: useWallet(),
+    },
+  ];
+
+  const { balances, fetchBalances } = useBalances(wallet);
+  const { prices, fetchPrices } = usePrices(wallet);
+
+  useEffect(() => {
+    fetchBalances();
+    fetchPrices();
+  }, [wallet]);
+
+  useEffect(() => {
+    if (!Object.keys(wallet).length && internalWalletAddress) {
+      fetchWallets();
+    }
+  }, [wallets]);
+
+  const fetchWallets = async () => {
+    if (
+      wallets.some(
+        (wal) =>
+          (wal.status == "connecting" || wal.status == "connected") &&
+          wal.address === undefined,
+      )
+    ) {
+      return;
+    } else {
+      let connectedWallets = [];
+      wallets.map((wallet) => {
+        if (
+          wallet?.status === "connected" &&
+          wallet?.address &&
+          wallet?.walletDetail?.walletId === wallet?.name?.toLocaleLowerCase()
+        ) {
+          connectedWallets.push(wallet);
+          registerWallet(wallet);
+        }
+      });
+
+      const internalWallet = {
+        name: "Internal Wallet",
+        address: internalWalletAddress,
+        icon: Ethereum,
+      };
+      connectedWallets.push(internalWallet);
+      setWalletOptions(connectedWallets);
+      const wallet = localStorage.getItem("Wallet") || null;
+      if (wallet) setActiveWallet(JSON.parse(wallet));
+      else {
+        localStorage.setItem("Wallet", JSON.stringify(internalWallet));
+        setActiveWallet(internalWallet);
+      }
+    }
+  };
+
+  const registerWallet = async (wallet) => {
+    const result = await backend_API.registerWalletAddress(wallet);
+  };
+
+  const handleWallet = async (data) => {
+    setCurrentWallet(data);
+    setActiveWallet(data);
+  };
 
   return (
     <Card
@@ -43,7 +138,7 @@ const ProfileCard = ({ type }) => {
 
       {type === "affiliate" ? (
         <>
-          <div>
+          <div className={styles.wallet}>
             <p className={styles.main}>Affiliate link:</p>
             <div className={styles.link}>
               <img src={Clipboard} alt="" />
@@ -55,11 +150,20 @@ const ProfileCard = ({ type }) => {
         </>
       ) : (
         <>
-          <div>
-            <p className={styles.main}>{t("dashboard.wallet")}:</p>
-            <p className={styles.subtitle}>{internalWalletAddress}</p>
+          <div className={styles.wallet}>
+            {/* <p className={styles.main}>{t("dashboard.wallet")}:</p>
+            <p className={styles.subtitle}>{internalWalletAddress}</p> */}
+            <OptionsWithImage
+              label={t("dashboard.cryptoCard.sendModal.walletLabel")}
+              dashboard
+              wallet={wallet}
+              options={walletOptions}
+              setValue={(data) => {
+                handleWallet(data);
+              }}
+            />
           </div>
-          <div>
+          <div className={styles.plan}>
             <p className={styles.main}>{t("dashboard.plan")}:</p>
             <p className={styles.subtitle}>{t("dashboard.enterprise")}</p>
           </div>

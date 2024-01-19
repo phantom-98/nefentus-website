@@ -144,9 +144,14 @@ const IncomeCard = ({ data }) => {
     <Card className={styles.card}>
       <div className={styles.label}>{t("dashboard.incomeTitle")}</div>
 
-      <div className={styles.chart}>
-        <Line options={theme === "dark" ? options : optionsLight} data={data} />
-      </div>
+      {Object.keys(data).length != 0 && (
+        <div className={styles.chart}>
+          <Line
+            options={theme === "dark" ? options : optionsLight}
+            data={data}
+          />
+        </div>
+      )}
     </Card>
   );
 };
