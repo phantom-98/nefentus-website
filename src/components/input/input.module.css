@@ -74,6 +74,20 @@
   gap: 20px;
 }
 
+.walletName {
+  position: relative;
+  bottom: 0;
+  line-height: 25px;
+  color: #f6f6f6;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.walletAddress {
+  color: #b1b1b1;
+  font-size: 14px;
+}
+
 .option input {
   border: 0px !important;
 }

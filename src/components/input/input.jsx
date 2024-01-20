@@ -414,30 +414,19 @@ export const OptionsWithImage = ({
         onClick={() => setOpen((prev) => !prev)}
       >
         <div className={`${styles.walleField}`}>
-          {wallet?.icon && <img src={wallet?.icon} alt="dropdown" width={24} />}
-
-          <div
-            style={{
-              position: "relative",
-              bottom: 0,
-              lineHeight: "25px",
-            }}
-          >
-            {wallet?.name
-              ? wallet?.name
-              : t("messages.error.accountDisconnect")}
-          </div>
+          {wallet?.icon && <img src={wallet?.icon} alt="dropdown" width={36} />}
           <div>
-            {wallet?.address?.length
-              ? `${wallet?.address?.slice(0, 6)} .... ${wallet?.address?.slice(
-                  -4,
-                )}`
-              : ""}
+            <div className={styles.walletName}>
+              {wallet?.name
+                ? wallet?.name
+                : t("messages.error.accountDisconnect")}
+            </div>
+            <div className={styles.walletAddress}>{wallet?.address}</div>
           </div>
         </div>
         <img src={dropDown} alt="dropdown" />
         {open && options.length > 1 && (
-          <div className={`card ${styles.body}`}>
+          <div className={`card ${styles.body}`} style={{ opacity: "1" }}>
             {options.length > 0 ? (
               options.map((item) =>
                 item?.name ? (
@@ -446,23 +435,12 @@ export const OptionsWithImage = ({
                     onClick={() => setValue(item)}
                     className={styles.walletOptions}
                   >
-                    <img src={item?.icon} alt="dropdown" width={24} />
-                    <div
-                      style={{
-                        position: "relative",
-                        bottom: 0,
-                        lineHeight: "25px",
-                      }}
-                    >
-                      {item.name}
-                    </div>
+                    <img src={item?.icon} alt="dropdown" width={36} />
                     <div>
-                      {item?.address?.length
-                        ? `${item?.address?.slice(
-                            0,
-                            6,
-                          )} .... ${item?.address?.slice(-4)}`
-                        : ""}
+                      <div className={styles.walletName}>{item.name}</div>
+                      <div className={styles.walletAddress}>
+                        {item?.address}
+                      </div>
                     </div>
                   </p>
                 ) : (

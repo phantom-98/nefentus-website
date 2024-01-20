@@ -449,7 +449,17 @@
     "receive": "Receive",
     "charts": {
       "last24h": "Last 24h",
-      "previous24h": "Previous 24h"
+      "previous24h": "Previous 24h",
+      "lastWeek": "Last Week (Note: This graph will update everyday)",
+      "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      }
     },
     "roles": {
       "Vendor": "Vendor",
@@ -496,7 +506,7 @@
       "third": "Sales: Last 30 days",
       "progress": "vs last 30 days"
     },
-    "incomeTitle": "Income 24 Hours",
+    "incomeTitle": "Income Last Week",
     "cryptoCard": {
       "receiveModal": {
         "title": "Receive funds",
