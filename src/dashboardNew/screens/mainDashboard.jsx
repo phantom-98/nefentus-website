@@ -6,31 +6,80 @@ import EarningCards from "../components/earningCards/earningCards";
 import IncomeCard from "../components/incomeCard/incomeCard";
 import ProfileCard from "../components/profileCard/profileCard";
 import { useTranslation } from "react-i18next";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
-import { useTheme } from "../../context/themeContext/themeContext";
+import moment from "moment";
+import backendAPI from "../../api/backendAPI";
 
-const labels = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "00:00"];
+import { useTheme } from "../../context/themeContext/themeContext";
 
 const MainDashboard = () => {
   const { t, i18n } = useTranslation();
+
   const { language } = i18n;
-
   const { theme } = useTheme();
+  const backend_Api = new backendAPI();
 
-  const chartData = useMemo(() => {
-    return {
-      labels,
+  const labels = {
+    Monday: t("dashboard.charts.days.monday"),
+    Tuesday: t("dashboard.charts.days.tuesday"),
+    Wednesday: t("dashboard.charts.days.wednesday"),
+    Thursday: t("dashboard.charts.days.thursday"),
+    Friday: t("dashboard.charts.days.friday"),
+    Saturday: t("dashboard.charts.days.saturday"),
+    Sunday: t("dashboard.charts.days.sunday"),
+  };
+  const [chartData, setChartData] = useState();
+  const [activeWallet, setActiveWallet] = useState();
+
+  useEffect(() => {
+    fetchGraphData();
+  }, [language, theme, activeWallet]);
+
+  const fetchGraphData = async () => {
+    const response = await backend_Api.getUserBalanceForGraph();
+    response.sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      return dateA - dateB;
+    });
+
+    // Object to store aggregated results
+    const aggregatedData = {};
+
+    // Iterate through the array
+    response.forEach((item) => {
+      const { createdAt, amount } = item;
+
+      if (aggregatedData[moment(createdAt).format("DD-MM-YYYY")]) {
+        // If the date exists, add the amounts
+        aggregatedData[moment(createdAt).format("DD-MM-YYYY")].amount += amount;
+      } else {
+        // If the date doesn't exist, create a new entry
+        aggregatedData[moment(createdAt).format("DD-MM-YYYY")] = {
+          createdAt,
+          amount,
+        };
+      }
+    });
+
+    // Convert the aggregated data back to an array
+    const result = Object.values(aggregatedData);
+
+    // If the length of user balances array is greater than 7 then it should be slice
+    const limitedDateList = result?.length > 7 ? result.splice(0, 7) : result;
+
+    const chartData = {
+      labels: limitedDateList?.map((value) => {
+        const dateValues = moment(value?.createdAt)
+          .format("dddd (DD-MM-YY)")
+          .split(" ");
+        return `${labels[dateValues[0]]} ${dateValues[1]}`;
+      }),
       datasets: [
         {
-          label: t("dashboard.charts.last24h"),
-          data: [1, 2, 3, 4, 5, 6, 7],
-          borderColor: "#0784B5",
-          backgroundColor: "#0784B5",
-        },
-        {
-          label: t("dashboard.charts.previous24h"),
-          data: [12, 18, 9, 5, 3, 15, 20],
+          label: t("dashboard.charts.lastWeek"),
+          data: limitedDateList?.map((obj) => obj?.amount),
           borderColor:
             theme === "dark" ? "rgba(255, 255, 255,0.2)" : "rgba(0, 0, 0,0.2)",
           backgroundColor:
@@ -38,7 +87,9 @@ const MainDashboard = () => {
         },
       ],
     };
-  }, [language, theme]);
+
+    setChartData({ ...chartData });
+  };
   return (
     <div>
       <ThirdwebProvider
@@ -46,11 +97,11 @@ const MainDashboard = () => {
         supportedWallets={[metamaskWallet()]}
         clientId="639eea2ebcabed7eab90b56aceeed08b"
       >
-        <ProfileCard />
-        <BalanceCard />
+        <ProfileCard setActiveWallet={setActiveWallet} wallet={activeWallet} />
+        <BalanceCard wallet={activeWallet} />
         <EarningCards />
-        <IncomeCard data={chartData} />
-        <CryptoCard />
+        <IncomeCard data={chartData ?? []} />
+        <CryptoCard wallet={activeWallet} />
       </ThirdwebProvider>
       <SignupByEmail />
     </div>
