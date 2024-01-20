@@ -77,7 +77,6 @@ const AdminDashboard = ({ type }) => {
   const navigate = useNavigate();
   const adminApi = new adminDashboardApi(type);
   const userRole = getRole(localStorage);
-  console.log("adminDash: " + userRole);
   const affiliate = type === "affiliate";
 
   useEffect(() => {

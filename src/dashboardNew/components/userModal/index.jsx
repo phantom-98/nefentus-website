@@ -25,7 +25,6 @@ const UserModal = ({
   password,
   setPassword,
 }) => {
-  console.log("modal: " + userRole);
   const [showPassword, setShowPassword] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
   const combinedClassNames = `${imputStyles.input} ${imputStyles.dashboardInput}`;
