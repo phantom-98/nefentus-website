@@ -10,7 +10,7 @@ import styles from "./userModel.module.css";
 
 const UserModal = ({
   openModal,
-  type,
+  userRole,
   clearFields,
   addUser,
   operationType,
@@ -25,6 +25,7 @@ const UserModal = ({
   password,
   setPassword,
 }) => {
+  console.log("modal: " + userRole);
   const [showPassword, setShowPassword] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
   const combinedClassNames = `${imputStyles.input} ${imputStyles.dashboardInput}`;
@@ -101,7 +102,7 @@ const UserModal = ({
             </div>
           )}
 
-          {type === "admin" && (
+          {userRole === "admin" && (
             <Options
               label={t("dashboard.modal.role").concat("*")}
               value={role}
@@ -116,7 +117,7 @@ const UserModal = ({
               setValue={setRole}
             />
           )}
-          {type === "leader" && (
+          {userRole === "leader" && (
             <Options
               label={t("dashboard.modal.role").concat("*")}
               value={role}
@@ -130,7 +131,7 @@ const UserModal = ({
               setValue={setRole}
             />
           )}
-          {type === "seniorbroker" && (
+          {userRole === "seniorbroker" && (
             <Options
               label={t("dashboard.modal.role").concat("*")}
               value={role}
@@ -143,7 +144,7 @@ const UserModal = ({
               setValue={setRole}
             />
           )}
-          {type === t("dashboard.roles.Broker") && (
+          {userRole === "broker" && (
             <Options
               label={t("dashboard.modal.role").concat("*")}
               value={role}

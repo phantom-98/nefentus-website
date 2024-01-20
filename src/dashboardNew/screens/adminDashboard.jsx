@@ -19,6 +19,7 @@ import styles from "./admin.module.css";
 import TablePagination from "../../components/tablePagination";
 import Popup from "../components/popup/popup";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
+import { getRole } from "../../utils";
 
 const colSizes = [2, 1, 2, 1, 1, 2, 1, 2];
 
@@ -32,6 +33,11 @@ const roleColors = {
 };
 
 const labels = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "00:00"];
+/**
+ *
+ * @param type Type of the dashboard (admin or partner)
+ * @returns
+ */
 const AdminDashboard = ({ type }) => {
   const [cardInfo, setCardInfo] = useState([]);
   const [graphData, setGraphData] = useState([]);
@@ -70,6 +76,8 @@ const AdminDashboard = ({ type }) => {
 
   const navigate = useNavigate();
   const adminApi = new adminDashboardApi(type);
+  const userRole = getRole(localStorage);
+  console.log("adminDash: " + userRole);
   const affiliate = type === "affiliate";
 
   useEffect(() => {
@@ -133,10 +141,10 @@ const AdminDashboard = ({ type }) => {
         },
       ];
       if (
-        type === "admin" ||
-        type === "leader" ||
-        type === "seniorbroker" ||
-        type === "broker"
+        userRole === "admin" ||
+        userRole === "leader" ||
+        userRole === "seniorbroker" ||
+        userRole === "broker"
       ) {
         cardsContent[1] = {
           title: t("dashboard.admin.cardsContent.orders"),
@@ -407,7 +415,7 @@ const AdminDashboard = ({ type }) => {
           {openModal && (
             <UserModal
               openModal={openModal}
-              type={type}
+              userRole={userRole}
               clearFields={closeModal}
               addUser={changeUser}
               operationType={"update"}
