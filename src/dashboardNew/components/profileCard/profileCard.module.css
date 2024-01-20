@@ -4,6 +4,18 @@
   gap: 5rem;
 }
 
+.profileCard .profileWrapper {
+  flex: 1;
+}
+
+.profileCard .wallet {
+  flex: 2;
+}
+
+.profileCard .plan {
+  flex: 1;
+}
+
 .profileWrapper {
   display: flex;
   align-items: center;

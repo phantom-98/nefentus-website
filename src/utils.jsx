@@ -4,7 +4,7 @@ import CryptoJS from "crypto-js";
 export function formatTokenBalance(x, round = 2) {
   const parsedFloat = parseFloat(x);
   if (isNaN(parsedFloat)) {
-    return "loading";
+    return "0.0";
   } else {
     return parsedFloat
       .toFixed(round)
@@ -16,7 +16,7 @@ export function formatTokenBalance(x, round = 2) {
 export function formatUSDBalance(x) {
   const parsedFloat = parseFloat(x);
   if (isNaN(parsedFloat)) {
-    return "loading";
+    return "0.0";
   } else {
     return parsedFloat
       .toFixed(2)
@@ -114,3 +114,30 @@ export const reformatFooterInfo = (pages, links) => {
   }
   return result;
 };
+
+export const setCurrentWallet = (wallet) => {
+  localStorage.setItem(
+    "Wallet",
+    JSON.stringify(wallet, (key, value) => {
+      // Handle non-serializable properties or exclude them
+      if (key === "walletDetail") {
+        return undefined; // Exclude 'walletDetail' property
+      }
+      return value;
+    }),
+  );
+  if (wallet?.name == "Internal Wallet") setIsExternal(false);
+  else setIsExternal(true);
+  return;
+};
+
+export const getCurrentWallet = () =>
+  JSON.parse(localStorage.getItem("Wallet"));
+
+export const setIsExternal = (value) => {
+  localStorage.setItem("isExternal", value);
+  return;
+};
+
+export const getIsExternal = () =>
+  JSON.parse(localStorage.getItem("isExternal"));

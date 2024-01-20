@@ -348,6 +348,29 @@ export default class backendAPI {
     }
   }
 
+  async getUserBalanceForGraph() {
+    const getWallet = JSON.parse(localStorage.getItem("Wallet"));
+    try {
+      const url = `${this.baseURL}/auth/user-balance-wallet?wallet_address=${getWallet?.address}`;
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options)
+        .then((res) => res.json())
+        .catch((err) => {
+          throw new Error("Network response was not ok");
+        });
+
+      return response;
+    } catch (error) {
+      return null;
+    }
+  }
+
   async updateInvoiceSettings(settings) {
     try {
       const url = `${this.baseURL}/auth/update-invoice-settings`;

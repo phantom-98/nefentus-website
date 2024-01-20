@@ -17,36 +17,45 @@ import useBalances from "../../../hooks/balances";
 import useInternalWallet from "../../../hooks/internalWallet";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getIsExternal } from "../../../utils";
+import usePrices from "../../../hooks/prices";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const checkBalances = (balances) => {
-  for (let i = 0; i < balances.length; i++) if (!balances[i]) return false;
+  for (let i = 0; i < balances.length; i++)
+    if (balances[i] === undefined) return false;
   return true;
 };
 
-const data = (percentages, balanaces) => ({
-  labels: [
-    `${percentages[0]}% ETH`,
-    `${percentages[1]}% USDT`,
-    `${percentages[2]}% USDC`,
-    `${percentages[3]}% Bitcoin`,
-    `${percentages[4]}% DAI`,
-  ],
-  datasets: [
-    {
-      data: [
-        balanaces[0],
-        balanaces[1],
-        balanaces[2],
-        balanaces[3],
-        balanaces[4],
-      ],
-      backgroundColor: ["#0784B5", "#AF26E7", "#F5B51B", "#FFFFFF", "#66AABB"],
-      borderWidth: 0,
-    },
-  ],
-});
+const checkPrices = (priceList) => {
+  return priceList?.length && priceList.every((price) => price != undefined);
+};
+
+const data = (percentages, balanaces, priceList) => {
+  return {
+    labels: currencies()?.map((currency, index) => {
+      return `${percentages[index]}% ${currency.abbr}`;
+    }),
+    datasets: [
+      {
+        data: balanaces.map((balance, index) => balance * priceList[index]),
+        backgroundColor: [
+          "#27A4D1",
+          "#E15554",
+          "#E1BC29",
+          "#3BB273",
+          "#102542",
+          "#6016D9",
+          "#39DCBC",
+          "#FFAF63",
+          "#86D4FF",
+        ],
+        borderWidth: 0,
+      },
+    ],
+  };
+};
 
 const options = {
   plugins: {
@@ -57,7 +66,7 @@ const options = {
   },
 };
 
-const BalanceCard = () => {
+const BalanceCard = ({ wallet }) => {
   const { t } = useTranslation();
 
   const [total, setTotal] = useState(0);
@@ -68,33 +77,39 @@ const BalanceCard = () => {
     address: useAddress(),
     status: useConnectionStatus(),
   };
-  const { balances, fetchBalances } = useBalances();
+  const { balances, fetchBalances } = useBalances(wallet);
+  const { prices, fetchPrices } = usePrices(wallet);
   let internalWalletAddress = useInternalWallet();
   const [percentages, setPercentages] = useState([0, 0, 0, 0, 0]);
 
   useEffect(() => {
-    if (internalWalletAddress) {
-      fetchBalances(internalWalletAddress);
-    }
-  }, []);
+    fetchBalances(wallet?.address);
+    fetchPrices();
+  }, [wallet]);
+
+  // useEffect(() => {
+  //   if (internalWalletAddress) {
+  //     fetchBalances(internalWalletAddress);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    if (checkBalances(balances)) {
-      let totalBalance = balances.reduce(
-        (pre, cur) => parseFloat(cur) + parseFloat(pre),
-        0,
-      );
+    if (checkBalances(balances) && checkPrices(prices)) {
+      let totalBalance = balances
+        .map((balance, index) => balance * prices[index])
+        .reduce((pre, cur) => parseFloat(cur) + parseFloat(pre), 0);
       setTotal(totalBalance || 0);
 
       if (totalBalance > 0) {
-        const pers = balances.map((balance) =>
-          parseFloat((balance / (totalBalance * 1.0)) * 100).toFixed(2),
+        const pers = balances.map((balance, index) =>
+          parseFloat(
+            ((balance * prices[index]) / (totalBalance * 1.0)) * 100,
+          ).toFixed(2),
         );
-
         setPercentages(pers);
       }
     }
-  }, [balances]);
+  }, [balances, prices]);
 
   return (
     <Card className={styles.card}>
@@ -106,16 +121,20 @@ const BalanceCard = () => {
 
       {total !== 0 && (
         <div className={styles.right}>
-          <Doughnut data={data(percentages, balances)} options={options} />
+          <Doughnut
+            data={data(percentages, balances, prices)}
+            options={options}
+            className="Test-Donut"
+          />
 
           <div className={styles.legend}>
-            {data(percentages, balances).labels.map((item, index) => (
+            {data(percentages, balances, prices).labels.map((item, index) => (
               <div className={styles.legendItem}>
                 <div
                   className={styles.circle}
                   style={{
-                    backgroundColor: data(percentages, balances).datasets[0]
-                      .backgroundColor[index],
+                    backgroundColor: data(percentages, balances, prices)
+                      .datasets[0].backgroundColor[index],
                   }}
                 ></div>
                 <div>{item}</div>
