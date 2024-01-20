@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { uniswapApi } from "../../api/web3Api";
-import { currencies, blockchainToUSDC } from "../../constants";
+import { currencies, blockchainToStablecoin } from "../../constants";
 
 function usePrices() {
   const [prices, setPrices] = useState(initPrices());
@@ -17,7 +17,7 @@ function usePrices() {
           currency.address,
           currency.blockchain,
           currency.decimals,
-          blockchainToUSDC(currency.blockchain).decimals,
+          blockchainToStablecoin(currency.blockchain).decimals,
         ),
       ),
     );

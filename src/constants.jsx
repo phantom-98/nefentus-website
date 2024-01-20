@@ -36,7 +36,7 @@ export const blockchainToWrapped = (blockchain) => {
   }
 };
 
-export const blockchainToUSDC = (blockchain) => {
+export const blockchainToStablecoin = (blockchain) => {
   if (blockchain === "ETH") {
     return getCurrencyFromAbbr(blockchain, "USDC");
   } else if (blockchain == "BNB") {
