@@ -122,6 +122,7 @@ const ReceivePayment = ({
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [pwd, setPwd] = useState(false);
   const { handleBuy } = usePayment({
     password,
     priceUSD,
@@ -139,6 +140,7 @@ const ReceivePayment = ({
   useEffect(() => {
     if (internalWalletAddress) {
       setShow(false);
+      fetchBalances(internalWalletAddress);
     }
   }, [internalWalletAddress]);
   useEffect(() => {
@@ -229,7 +231,13 @@ const ReceivePayment = ({
   }
 
   async function doPayment() {
+    pwd && setPwd(false);
     if (isDisable) return;
+
+    if (!password && selectedWalletIndex == 0) {
+      !pwd && setPwd(true);
+      return;
+    }
 
     const res = await handleBuy(
       selectedCryptoIndex,
@@ -245,12 +253,15 @@ const ReceivePayment = ({
         break;
       case "failed":
         setErrorMessage(t("messages.error.transactionFailed"));
+        setPassword("");
         break;
       case "insufficient fund":
         setErrorMessage(t("messages.error.transactionFailed2"));
+        setPassword("");
         break;
       case "not sent":
         setInfoMessage(t("messages.info.transactionNotSaved"));
+        setPassword("");
         break;
       case "invalid price":
         setErrorMessage(t("messages.error.invalidPrice"));
@@ -464,6 +475,13 @@ const ReceivePayment = ({
         password={password}
         setPassword={setPassword}
         signin={signin}
+      />
+      <PasswordPopup
+        show={pwd}
+        setShow={setPwd}
+        password={password}
+        setPassword={setPassword}
+        onConfirm={doPayment}
       />
     </div>
   );
@@ -745,7 +763,10 @@ const SigninPopup = ({
   return (
     <Popup
       show={show}
-      onClose={() => setShow(false)}
+      onClose={() => {
+        setShow(false);
+        setPassword("");
+      }}
       onConfirm={signin}
       confirmTitle={t("login.button")}
       cancelTitle={t("general.cancel")}
@@ -772,6 +793,32 @@ const SigninPopup = ({
           value={email}
           setValue={setEmail}
         />
+        <Input
+          label={`${t("signUp.passwordLabel")}*`}
+          placeholder={t("signUp.passwordPlaceholder")}
+          value={password}
+          setValue={setPassword}
+          type
+        />
+      </div>
+    </Popup>
+  );
+};
+
+const PasswordPopup = ({ show, setShow, password, setPassword, onConfirm }) => {
+  const { t } = useTranslation();
+  return (
+    <Popup
+      show={show}
+      onClose={() => {
+        setShow(false);
+        setPassword("");
+      }}
+      onConfirm={onConfirm}
+      confirmTitle={t("general.confirm")}
+      cancelTitle={t("general.cancel")}
+    >
+      <div className={styles.signinContainer}>
         <Input
           label={`${t("signUp.passwordLabel")}*`}
           placeholder={t("signUp.passwordPlaceholder")}
