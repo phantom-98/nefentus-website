@@ -4,7 +4,7 @@ import {
   contractDeposits,
   providerURL,
   blockchainToWrapped,
-  blockchainToUSDC,
+  blockchainToStablecoin,
   blockchainToFactoryAddress,
   currencies,
 } from "../constants";
@@ -87,7 +87,7 @@ export class uniswapApi {
     // Check input
     if (tokenAddress === null)
       tokenAddress = blockchainToWrapped(blockchain).address;
-    const stablecoinAddress = blockchainToUSDC(blockchain).address;
+    const stablecoinAddress = blockchainToStablecoin(blockchain).address;
     if (tokenAddress.toLowerCase() === stablecoinAddress.toLowerCase()) {
       return 1;
     }
