@@ -916,7 +916,7 @@
   "payments": {
     "title": "Neue Rechnung erstellen",
     "enterAmount": "Betrag in $ eingeben",
-    "amount": "Betrag",
+    "amount": "Anzahl",
     "email": "E-Mail",
     "name": "Name",
     "company": "Firma",
@@ -934,12 +934,12 @@
       "qr": "QR-Code",
       "actions": "Aktionen"
     },
-    "price": "Preis",
+    "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
     "total": "Gesamtbetrag",
     "cryptoAmount": "Kryptowährungsbetrag",
     "chooseWallet": "Wallet auswählen",
-    "payButton": "Bezahlen",
+    "payButton": "Kaufen",
     "agree": "Durch Anklicken der Schaltfläche erklären Sie sich mit den",
     "terms": "Bedingungen des Dienstes",
     "agree2": "einverstanden",
