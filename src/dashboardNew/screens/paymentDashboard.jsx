@@ -46,7 +46,9 @@ const PaymentDashboard = () => {
     return [
       new Date(invoice.createdAt).toLocaleString(),
       parseFloat(invoice.price).toFixed(2),
-      <TableStatus color="green">{t("general.open")}</TableStatus>,
+      <TableStatus color={invoice.paidAt ? "blue" : "green"}>
+        {invoice.paidAt ? t("general.paid") : t("general.open")}
+      </TableStatus>,
       <TableQR
         data={invoice}
         link={`${window.location.origin}/pay/${invoice.link}`}
