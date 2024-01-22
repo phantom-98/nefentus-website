@@ -2,13 +2,11 @@ import styles from "./productBody.module.css";
 import { useState, useEffect } from "react";
 import ReceivePayment from "../receivePayment";
 import backendAPI from "../../api/backendAPI";
-import vendorDashboardApi from "../../api/vendorDashboardApi";
 import { useTranslation } from "react-i18next";
 import { PaymentInfo, ProductInfo } from "../receivePayment";
 
 const ProductBody = ({ product }) => {
   const backend_API = new backendAPI();
-  const vendorAPI = new vendorDashboardApi();
   const [imageSource, setImageSource] = useState(null);
   const { t } = useTranslation();
   async function fetchProductImage() {
@@ -37,6 +35,7 @@ const ProductBody = ({ product }) => {
       address,
       taxNumber: tax,
       product,
+      productAmount: amount,
     };
     const data = await backend_API.updateInvoice(link, req);
     if (data) {
@@ -62,7 +61,10 @@ const ProductBody = ({ product }) => {
   }, [changed]);
 
   useEffect(() => {
-    if (amount > 0) {
+    if (amount > product.stock) {
+      setAmount(product.stock);
+    }
+    if (amount >= 0) {
       setPrice(product.price * amount);
     } else {
       setPrice(0);
@@ -74,7 +76,7 @@ const ProductBody = ({ product }) => {
       priceUSD={price}
       seller={product.user}
       transInfoArg={{ productId: product.id }}
-      disabled={product.stock === 0}
+      disabled={!name || !email}
       info={
         <PaymentInfo
           fullName={name}

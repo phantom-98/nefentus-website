@@ -193,11 +193,11 @@ const ReceivePayment = ({
       balances[selectedCryptoIndex] * prices[selectedCryptoIndex] >
       priceUSD
     ) {
-      isDisable && setDisable(false || disabled);
+      isDisable && setDisable(false);
     } else {
       !isDisable && setDisable(true);
     }
-  }, [balances, prices]);
+  }, [balances, prices, priceUSD]);
 
   useEffect(() => {
     const currency = currencies()[selectedCryptoIndex];
@@ -221,7 +221,7 @@ const ReceivePayment = ({
     } else {
       setCryptoAmount("Loading...");
     }
-  }, [selectedCryptoIndex, prices]);
+  }, [selectedCryptoIndex, prices, priceUSD]);
 
   async function registerWallet(externalWallet) {
     if (!externalWallet.address) return;
@@ -231,6 +231,11 @@ const ReceivePayment = ({
   }
 
   async function doPayment() {
+    if (disabled) {
+      setErrorMessage("You need to input your name and email address.");
+      return;
+    }
+
     pwd && setPwd(false);
     if (isDisable) return;
 
