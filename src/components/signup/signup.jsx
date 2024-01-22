@@ -537,6 +537,8 @@ const Signup = () => {
       const response = await api.register(requestData);
       if (response == null) {
         setErrorMessage(t("messages.error.register"));
+      } else if (response.status == 409) {
+        setErrorMessage(t("messages.error.exist"));
       } else {
         setMessage(t("messages.error.confirmEmail"));
         resetForm();

@@ -839,6 +839,7 @@
       "country": "Please choose a country",
       "reCAPTCHA": "Please verify the reCAPTCHA!",
       "register": "Error when registering",
+      "exist": "That email is already taken.",
       "confirmEmail": "Please confirm your email address to proceed.",
       "loginData": "Invalid login data.",
       "login": "There was an error logging in",
