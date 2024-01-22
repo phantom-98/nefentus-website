@@ -36,7 +36,7 @@ export const blockchainToWrapped = (blockchain) => {
   }
 };
 
-export const blockchainToUSDC = (blockchain) => {
+export const blockchainToStablecoin = (blockchain) => {
   if (blockchain === "ETH") {
     return getCurrencyFromAbbr(blockchain, "USDC");
   } else if (blockchain == "BNB") {
@@ -147,6 +147,7 @@ export const currencies = () => {
         icon: Binance,
         abbr: "BUSD",
         address: "0x55d398326f99059fF775485246999027B3197955",
+        decimals: 18,
       },
       /*
       {
@@ -251,6 +252,7 @@ export const currencies = () => {
         icon: Binance,
         abbr: "BUSD",
         address: "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee",
+        decimals: 18,
       },
       /*
       {
@@ -302,7 +304,7 @@ export const contractDeposits = (blockchain) => {
     } else {
       return {
         id: 2, // Not used right now!
-        address: "0xabcdeff",
+        address: "0xee5711fab04f7e8555395e00987b594a752ed08f",
         abi: SwapAndDistributeTestBNB.abi,
       };
     }

@@ -1,4 +1,4 @@
-import { currencies, blockchainToUSDC, chainId } from "../../constants";
+import { currencies, blockchainToStablecoin, chainId } from "../../constants";
 import backendAPI from "../../api/backendAPI";
 import { web3Api } from "../../api/web3Api";
 import { nullToZeroAddress } from "../../utils";
@@ -27,7 +27,7 @@ export const usePayment = ({
     const currency = currencies()[currencyIdx];
     const currencyAddress = currency.address;
     // Get stablecoin from backend
-    const stablecoin = blockchainToUSDC(currency.blockchain);
+    const stablecoin = blockchainToStablecoin(currency.blockchain);
     const backend_API = new backendAPI();
 
     if (payWithExternalwallet) {
@@ -76,6 +76,7 @@ export const usePayment = ({
     } else {
       const ret = await backend_API.makePayment(
         currencyAddress,
+        currency.blockchain,
         priceUSD,
         quantity,
         password,

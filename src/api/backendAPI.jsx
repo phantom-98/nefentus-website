@@ -1395,6 +1395,7 @@ export default class backendAPI {
 
   async makePayment(
     currencyAddress,
+    blockchain,
     amount,
     quantity,
     password,
@@ -1417,6 +1418,7 @@ export default class backendAPI {
         amount: amount,
         quantity: quantity,
         password: password,
+        blockchain: blockchain,
         ...transInfoArg,
       };
 
