@@ -29,7 +29,7 @@ const ProductView = ({ product }) => {
       const current = divRef.current;
       setShow(current.scrollHeight > 250);
     }
-  }, []);
+  }, [divRef.current]);
 
   return (
     <div className={styles.productWrapper}>
