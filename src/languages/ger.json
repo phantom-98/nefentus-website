@@ -788,7 +788,7 @@
       "country": "Bitte wählen Sie ein Land",
       "reCAPTCHA": "Bitte überprüfen Sie das reCAPTCHA!",
       "register": "Fehler bei der Registrierung",
-      "exist": "Diese E-Mail ist bereits vergeben.",
+      "exist": "Unter dieser Email-Adresse existiert bereits ein Account.",
       "confirmEmail": "Bitte bestätigen Sie Ihre E-Mail-Adresse, um fortzufahren.",
       "loginData": "Ungültige Anmeldedaten.",
       "login": "Es ist ein Fehler bei der Anmeldung aufgetreten",
