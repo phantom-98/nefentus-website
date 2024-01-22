@@ -675,22 +675,16 @@ export const PaymentInfo = ({
 export const ProductInfo = ({
   productPic,
   name,
-  // description,
   price,
   amount,
   setAmount,
+  setChanged,
 }) => {
   const { t } = useTranslation();
   const { theme } = useTheme();
   return (
     <div className={styles.productWrapper}>
       <div className={styles.productImage}>
-        {/* <p
-          className={styles.productInfoTitle}
-          style={{ color: theme == "dark" ? "" : "#111111" }}
-        >
-          {name}
-        </p> */}
         <img
           className={styles.productImageWrapper}
           src={productPic}
@@ -743,6 +737,7 @@ export const ProductInfo = ({
             className={styles.productValue}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
+            onBlur={() => setChanged(true)}
             style={{
               color: theme == "dark" ? "" : "#111111",
               backgroundColor: theme == "dark" ? "" : "#e6e6e6",

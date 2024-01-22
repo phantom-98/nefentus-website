@@ -27,7 +27,6 @@ const PayBody = ({ invoice }) => {
   }
 
   useEffect(() => {
-    console.log(invoice, "invoice");
     setEmail(invoice.email);
     setName(invoice.name);
     setCompany(invoice.company);
@@ -37,6 +36,8 @@ const PayBody = ({ invoice }) => {
     if (invoice.product) {
       fetchProductImage(invoice.product);
       setPrice(invoice.product.price * amount);
+    } else {
+      setPrice(invoice.price);
     }
   }, [invoice]);
 
@@ -55,7 +56,7 @@ const PayBody = ({ invoice }) => {
 
   const updateInvoiceData = async () => {
     const req = {
-      amountUSD: invoice.price,
+      amountUSD: price,
       name,
       email,
       company,
@@ -111,6 +112,7 @@ const PayBody = ({ invoice }) => {
             price={invoice.product.price}
             amount={amount}
             setAmount={setAmount}
+            setChanged={setChanged}
           />
         )
       }

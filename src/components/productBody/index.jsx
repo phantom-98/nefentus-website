@@ -99,6 +99,7 @@ const ProductBody = ({ product }) => {
           price={product.price}
           amount={amount}
           setAmount={setAmount}
+          setChanged={setChanged}
         />
       }
     />
