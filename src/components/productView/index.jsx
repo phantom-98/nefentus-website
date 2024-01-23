@@ -34,9 +34,7 @@ const ProductView = ({ product }) => {
   return (
     <div className={styles.productWrapper}>
       <div className={styles.wrapper}>
-        <div className={styles.imageWrapper}>
-          <img src={pic} alt="Product Image" />
-        </div>
+        <div className={styles.imageWrapper}>{pic && <img src={pic} />}</div>
         <div className={styles.infoWrapper}>
           <h1>{product.name}</h1>
           <div className={styles.descriptionWrapper}>
@@ -72,7 +70,9 @@ const ProductView = ({ product }) => {
             </div>
             <div className={styles.stockWrapper}>
               <p>{t("products.view.stock")}</p>
-              <p>{product.stock}</p>
+              <p>
+                {product.stock == -1 ? t("products.unlimited") : product.stock}
+              </p>
             </div>
             <Button
               style={{ width: "30%", height: "55px" }}

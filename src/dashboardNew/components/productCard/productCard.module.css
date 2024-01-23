@@ -53,6 +53,8 @@
 }
 
 .description {
+  max-height: 100px;
+  overflow: hidden;
   font-size: 1.2rem;
   line-height: 140%;
   opacity: 0.6;

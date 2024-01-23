@@ -61,7 +61,7 @@ const ProductBody = ({ product }) => {
   }, [changed]);
 
   useEffect(() => {
-    if (amount > product.stock) {
+    if (product.stock != -1 && amount > product.stock) {
       setAmount(product.stock);
     }
     if (amount >= 0) {

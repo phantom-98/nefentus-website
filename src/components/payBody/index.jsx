@@ -43,7 +43,7 @@ const PayBody = ({ invoice }) => {
 
   useEffect(() => {
     if (invoice.product) {
-      if (amount > invoice.product.stock) {
+      if (invoice.product.stock != -1 && amount > invoice.product.stock) {
         setAmount(invoice.product.stock);
       }
       if (amount >= 0) {
