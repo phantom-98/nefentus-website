@@ -138,6 +138,7 @@
   border-radius: 6px;
   background-color: rgba(34, 40, 54);
   padding: 6px;
+  cursor: pointer;
   transition-duration: 500ms;
 }
 
