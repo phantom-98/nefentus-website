@@ -9,6 +9,15 @@ export default class backendAPI {
     ReactGA.initialize(process.env.VITE_REACT_APP_GA_ID);
   }
 
+  async updateToken(response) {
+    if (response.headers.get("Token")) {
+      this.token = response.headers.get("Token");
+      setCookie("token", this.token);
+    } else {
+      console.log("token save failed");
+    }
+  }
+
   async checkJwt() {
     try {
       const url = `${this.baseURL}/auth/checkJWTCookie`;
@@ -23,6 +32,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return true;
     } catch (error) {
       return false; // or return some default value
@@ -234,6 +244,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return response;
     } catch (error) {
       return null; // or return some default value
@@ -259,6 +270,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return response;
     } catch (error) {
       return null; // or return some default value
@@ -284,6 +296,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return response;
     } catch (error) {
       return null; // or return some default value
@@ -304,6 +317,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       // const data = await response.json();
       return response;
     } catch (error) {
@@ -325,6 +339,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return response;
     } catch (error) {
       return null;
@@ -369,6 +384,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
 
       return response;
     } catch (error) {
@@ -391,6 +407,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       console.log(data);
       localStorage.setItem("email", data.email);
@@ -427,6 +444,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (e) {
@@ -449,6 +467,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
 
       return response.text();
     } catch (error) {
@@ -471,6 +490,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       console.log(data);
       localStorage.setItem("firstName", firstName);
@@ -495,6 +515,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       console.log(data);
       localStorage.setItem("lastName", lastName);
@@ -515,6 +536,7 @@ export default class backendAPI {
         },
       };
       const response = await fetch(url, options);
+      this.updateToken(response);
       return response;
     } catch (e) {
       return null;
@@ -588,7 +610,9 @@ export default class backendAPI {
         },
         body: JSON.stringify(data),
       };
-      return await fetch(url, options);
+      const response = await fetch(url, options);
+      this.updateToken(response);
+      return response;
     } catch (e) {
       throw new Error("Network response was not ok");
     }
@@ -605,7 +629,9 @@ export default class backendAPI {
         },
         body: JSON.stringify(data),
       };
-      return await fetch(url, options);
+      const response = await fetch(url, options);
+      this.updateToken(response);
+      return response;
     } catch (e) {
       throw new Error("Network response was not ok");
     }
@@ -627,6 +653,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
 
       const data = await response.json();
       localStorage.setItem("profile_pic", data.message);
@@ -837,6 +864,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -864,6 +892,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Failed to check affiliate permissions");
       }
+      this.updateToken(response);
       return true;
     } catch (error) {
       console.error("Error checking affiliate permissions:", error);
@@ -891,6 +920,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Failed to check admin permissions");
       }
+      this.updateToken(response);
       return response;
     } catch (error) {
       console.error("Error checking admin permissions:", error);
@@ -918,6 +948,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Failed to check admin permissions");
       }
+      this.updateToken(response);
       return true;
     } catch (error) {
       console.error("Error checking admin permissions:", error);
@@ -939,6 +970,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Failed to get admin dashboard data");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -962,6 +994,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Failed to get affiliate dashboard data");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1006,6 +1039,7 @@ export default class backendAPI {
         },
       };
       const response = await fetch(url, options);
+      this.updateToken(response);
       return response;
     } catch (error) {
       return null; // or return some default value
@@ -1033,6 +1067,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1060,6 +1095,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1080,6 +1116,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return { [type]: data };
     } catch (error) {
@@ -1100,6 +1137,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return { [type]: data };
     } catch (error) {
@@ -1120,6 +1158,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1142,6 +1181,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       localStorage.setItem("profile_pic", "null");
       return data;
@@ -1164,6 +1204,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1201,6 +1242,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1226,6 +1268,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1251,6 +1294,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1276,6 +1320,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1334,6 +1379,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1360,6 +1406,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1381,6 +1428,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       console.log(data);
 
@@ -1432,6 +1480,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1458,6 +1507,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -1489,6 +1539,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.text();
       return data;
     } catch (error) {
@@ -1520,6 +1571,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.text();
       return data;
     } catch (error) {

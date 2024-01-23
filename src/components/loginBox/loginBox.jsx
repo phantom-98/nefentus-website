@@ -174,11 +174,14 @@ const LoginBox = () => {
       password: Cookies.get("nefentus-password")
         ? decryptData(Cookies.get("nefentus-password"))
         : "",
+      rememberMe: Cookies.get("nefentus-remember-me")
+        ? Cookies.get("nefentus-remember-me")
+        : false,
     },
   });
 
   useEffect(() => {
-    if (checkBox) {
+    if (checkBox && Cookies.get("acceptCookie")) {
       setCookie("nefentus-username", getValues("email"), 365);
       setCookie("nefentus-password", encryptData(getValues("password")), 365);
       setCookie("nefentus-remember-me", checkBox, 365);
@@ -219,20 +222,20 @@ const LoginBox = () => {
     checkJwtAndNavigate();
   }, []);
 
-  async function loginUser(data, checkbox) {
+  async function loginUser(data) {
     const captchaValue = recaptchaRef.current.getValue();
 
     if (!captchaValue) {
       setErrorMessage(t("messages.error.reCAPTCHA"));
     } else {
-      if (Cookies.get("acceptCookie") !== true) {
-        checkbox = false;
-      }
+      // if (Cookies.get("acceptCookie") !== true) {
+      //   checkbox = false;
+      // }
       try {
         const response = await backendAPI.login(
           data.email,
           data.password,
-          checkbox,
+          checkBox,
         );
         if (response == null) {
           setErrorMessage(t("messages.error.loginData"));

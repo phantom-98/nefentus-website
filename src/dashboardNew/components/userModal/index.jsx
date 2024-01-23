@@ -157,15 +157,10 @@ const UserModal = ({
           )}
         </div>
         <div className={styles.modalButtons}>
-          <div
-            className={styles.cancelButton}
-            onClick={() => {
-              clearFields();
-            }}
-          >
+          <Button onClick={() => clearFields()} color="gray">
             {t("general.cancel")}
-          </div>
-          <Button onClick={addUser} color="white" width="10rem">
+          </Button>
+          <Button onClick={addUser} color="white">
             {t("general.confirm")}
           </Button>
         </div>
