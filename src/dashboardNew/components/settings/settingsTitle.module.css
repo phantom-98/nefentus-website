@@ -36,6 +36,10 @@
   text-align: left;
 }
 
+.popupContainer > div:first-child {
+  max-width: 50rem !important;
+}
+
 .seedPhrase {
   border-radius: 5px;
   margin: 5px 0;
