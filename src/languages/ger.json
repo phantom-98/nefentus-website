@@ -787,7 +787,7 @@
     "error": {
       "country": "Bitte wählen Sie ein Land",
       "reCAPTCHA": "Bitte überprüfen Sie das reCAPTCHA!",
-      "register": "Fehler bei der Registrierung",
+      "register": "Falsche Anfrage! Bitte geben Sie die richtigen Werte ein.",
       "exist": "Unter dieser Email-Adresse existiert bereits ein Account.",
       "confirmEmail": "Bitte bestätigen Sie Ihre E-Mail-Adresse, um fortzufahren.",
       "loginData": "Ungültige Anmeldedaten.",

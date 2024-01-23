@@ -838,7 +838,7 @@
     "error": {
       "country": "Please choose a country",
       "reCAPTCHA": "Please verify the reCAPTCHA!",
-      "register": "Error when registering",
+      "register": "Bad request! Please input correct values.",
       "exist": "A user with this email address already exists.",
       "confirmEmail": "Please confirm your email address to proceed.",
       "loginData": "Invalid login data.",
