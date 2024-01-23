@@ -134,6 +134,17 @@
   font-size: 1.2rem;
 }
 
+.download {
+  border-radius: 6px;
+  background-color: rgba(34, 40, 54);
+  padding: 6px;
+  transition-duration: 500ms;
+}
+
+.download:hover {
+  background-color: rgb(25, 30, 42);
+}
+
 @media (max-width: 650px) {
   .description {
     width: initial;

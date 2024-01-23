@@ -131,7 +131,9 @@ export const QRPopup = ({
         <div className={styles.paymentButtons}>
           <Button onClick={() => setShow(false)}>{t("general.close")}</Button>
           {email && email.match("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") && (
-            <div onClick={onDownload}>{t("payments.downloadInvoice")}</div>
+            <div onClick={onDownload} className={styles.download}>
+              {t("payments.downloadInvoice")}
+            </div>
           )}
         </div>
       </Card>
