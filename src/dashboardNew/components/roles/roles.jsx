@@ -6,7 +6,13 @@ import { MessageContext } from "../../../context/message";
 import adminDashboardApi from "../../../api/adminDashboardApi";
 import { useTranslation } from "react-i18next";
 import UserModal from "../userModal";
+import { getRole } from "../../../utils";
 
+/**
+ *
+ * @param type Type of the dashboard (admin or partner)
+ * @returns
+ */
 const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -15,7 +21,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const [role, setRole] = useState("Select Role");
   const [openModal, setOpenModal] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
-  const userRole = localStorage.getItem("roles");
+  const userRole = getRole(localStorage);
   const { t } = useTranslation();
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -59,7 +65,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
       setErrorMessage(t("messages.error.passwordRequired"));
       return;
     }
-    if (role === "" && userRole !== "ROLE_AFFILIATE") {
+    if (role === "" && userRole !== "affiliate") {
       setErrorMessage(t("messages.error.roleRequired"));
       return;
     }
@@ -70,7 +76,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
         firstName,
         lastName,
         editEmailAddress,
-        userRole === "ROLE_AFFILIATE" ? "Vendor" : role,
+        userRole === "affiliate" ? "Vendor" : role,
       );
       if (resp) {
         setInfoMessage(t("messages.success.updateUser"));
@@ -84,7 +90,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
         lastName,
         email,
         password,
-        userRole === "ROLE_AFFILIATE" ? "Vendor" : role,
+        userRole === "affiliate" ? "Vendor" : role,
       );
       if (resp) {
         if (resp.ok) {
@@ -178,7 +184,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
           {openModal && (
             <UserModal
               openModal={openModal}
-              type={type}
+              userRole={userRole}
               clearFields={closeModal}
               addUser={addUser}
               operationType={"add"}
