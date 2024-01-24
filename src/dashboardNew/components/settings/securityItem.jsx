@@ -8,6 +8,7 @@ import Popup from "../popup/popup";
 import { useTranslation } from "react-i18next";
 import { EnableType } from "./settingsItem";
 import { MessageContext } from "../../../context/message";
+import SecurityPopupHeader from "./securityPopupHeader";
 
 const emptyArray = ["", "", "", "", "", "", "", "", "", "", "", ""];
 
@@ -374,6 +375,7 @@ const SecurityItem = ({ data, recover }) => {
       {data.flow === "seed" && (
         <>
           <Popup
+            className={styles.popupContainer}
             show={addSeedPhrases}
             onClose={handleCloseSeedModal}
             confirmTitle={
@@ -390,16 +392,18 @@ const SecurityItem = ({ data, recover }) => {
           >
             <MessageComponent />
             <div className={styles.seedPhrasesModalWrapper}>
-              <p className={styles.modalTitle}>
-                {addSeedPhrases === "step1"
-                  ? t("security.items.seedPhrase")
-                  : t("security.items.verifySeed")}
-              </p>
-              <p className={styles.description}>
-                {addSeedPhrases === "step1"
-                  ? t("security.items.rememberSeed")
-                  : t("security.items.enterSeed")}
-              </p>
+              <SecurityPopupHeader
+                title={
+                  addSeedPhrases === "step1"
+                    ? t("security.items.seedPhrase")
+                    : t("security.items.verifySeed")
+                }
+                description={
+                  addSeedPhrases === "step1"
+                    ? t("security.items.rememberSeed")
+                    : t("security.items.enterSeed")
+                }
+              />
 
               {addSeedPhrases === "step2" ? (
                 <div className={styles.seedPhrasesInputWrapper}>
@@ -462,6 +466,7 @@ const SecurityItem = ({ data, recover }) => {
             </div>
           </Popup>
           <Popup
+            className={styles.popupContainer}
             show={input}
             onConfirm={() => {
               getSeedPhrases();
@@ -476,12 +481,10 @@ const SecurityItem = ({ data, recover }) => {
           >
             <>
               <MessageComponent />
-              <div className={styles.modalTitle}>
-                {t("security.passwords.labelCurrent")}
-                <div className={styles.description}>
-                  {t("security.items.askPassword")}
-                </div>
-              </div>
+              <SecurityPopupHeader
+                title={t("security.passwords.labelCurrent")}
+                description={t("security.items.askPassword")}
+              />
               <div className={styles.inputItem}>
                 <input
                   type="password"
@@ -498,6 +501,7 @@ const SecurityItem = ({ data, recover }) => {
       {data.flow === "recover" && (
         <>
           <Popup
+            className={styles.popupContainer}
             show={addSeedPhrases}
             onClose={handleCloseSeedModal}
             confirmTitle={t("general.confirm")}
@@ -506,12 +510,10 @@ const SecurityItem = ({ data, recover }) => {
           >
             <MessageComponent />
             <div className={styles.seedPhrasesModalWrapper}>
-              <p className={styles.modalTitle}>
-                {t("security.items.verifySeed")}
-              </p>
-              <p className={styles.description}>
-                {t("security.items.enterSeed")}
-              </p>
+              <SecurityPopupHeader
+                title={t("security.items.verifySeed")}
+                description={t("security.items.enterSeed")}
+              />
               <div className={styles.seedPhrasesInputWrapper}>
                 {checkedSeedPhrases.map((phrase, index) => (
                   <div
@@ -541,6 +543,7 @@ const SecurityItem = ({ data, recover }) => {
             </div>
           </Popup>
           <Popup
+            className={styles.popupContainer}
             show={input}
             onConfirm={() => {
               setInput(false);
@@ -557,12 +560,10 @@ const SecurityItem = ({ data, recover }) => {
           >
             <>
               <MessageComponent />
-              <div className={styles.modalTitle}>
-                {t("security.passwords.labelCurrent")}
-                <div className={styles.description}>
-                  {t("security.items.newPassword")}
-                </div>
-              </div>
+              <SecurityPopupHeader
+                title={t("security.passwords.labelCurrent")}
+                description={t("security.items.newPassword")}
+              />
               <div className={styles.inputItem}>
                 <input
                   type="password"
@@ -575,6 +576,7 @@ const SecurityItem = ({ data, recover }) => {
           </Popup>
           {recover && (
             <Popup
+              className={styles.popupContainer}
               show={showRecommend}
               onConfirm={() => {
                 setShowRecommend(false);
@@ -603,6 +605,7 @@ const SecurityItem = ({ data, recover }) => {
 
       {data.flow === "password" && (
         <Popup
+          className={styles.popupContainer}
           show={show}
           onClose={() => {
             setShow(false);
@@ -614,9 +617,7 @@ const SecurityItem = ({ data, recover }) => {
         >
           <>
             <MessageComponent />
-            <div className={styles.modalTitle}>
-              {t("security.passwords.title")}
-            </div>
+            <SecurityPopupHeader title={t("security.passwords.title")} />
             {passwordContent.map((item, index) => (
               <div className={styles.inputItem}>
                 <div className={styles.modalSubtitle}>{item.label}</div>
@@ -639,6 +640,7 @@ const SecurityItem = ({ data, recover }) => {
 
       {data.flow === "phishingCode" && (
         <Popup
+          className={styles.popupContainer}
           show={show}
           title={t("security.antiPhishingCodeTitle")}
           onConfirm={handleConfirmPhishingCode}

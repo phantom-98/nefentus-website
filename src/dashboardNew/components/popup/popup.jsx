@@ -21,12 +21,15 @@ const Popup = ({
   cancelTitle = "Cancel",
   confirmTitle = "Confirm",
   title,
+  className = "",
 }) => {
   const dashboardElement = document.getElementById("dashboard");
 
   return ReactDOM.createPortal(
     <div
-      className={styles.popup}
+      className={
+        className == "" ? styles.popup : `${styles.popup} ${className}`
+      }
       style={{ display: show ? "initial" : "none" }}
     >
       <Card className={styles.popupBox}>

@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import setCookie from "../components/setCookie/setCookie";
 import ReactGA from "react-ga4";
 
 export default class adminDashboardApi {
@@ -8,6 +9,15 @@ export default class adminDashboardApi {
       process.env.VITE_REACT_APP_BASE_ENDPOINT_API + `/dashboard/${type}`;
     this.token = Cookies.get("token");
     ReactGA.initialize(process.env.VITE_REACT_APP_GA_ID);
+  }
+
+  async updateToken(response) {
+    if (response.headers.get("Token")) {
+      this.token = response.headers.get("Token");
+      setCookie("token", this.token);
+    } else {
+      console.log("token save failed");
+    }
   }
 
   async checkPermission() {
@@ -24,6 +34,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return true;
     } catch (error) {
       return null; // or return some default value
@@ -44,6 +55,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -65,6 +77,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -86,6 +99,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -107,6 +121,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -128,6 +143,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -149,6 +165,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -170,6 +187,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -194,6 +212,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -219,6 +238,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return true;
     } catch (error) {
       return null; // or return some default value
@@ -238,6 +258,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return true;
     } catch (error) {
       return null; // or return some default value
@@ -257,6 +278,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return true;
     } catch (error) {
       return null; // or return some default value
@@ -289,6 +311,7 @@ export default class adminDashboardApi {
           label: email,
         });
       }
+      this.updateToken(response);
       return response;
     } catch (error) {
       return null; // or return some default value
@@ -316,6 +339,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return true;
     } catch (error) {
       return null; // or return some default value
@@ -336,6 +360,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -357,6 +382,7 @@ export default class adminDashboardApi {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      this.updateToken(response);
       return response.json();
     } catch (error) {
       console.log(error);

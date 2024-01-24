@@ -537,6 +537,48 @@ const Signup = () => {
       const response = await api.register(requestData);
       if (response == null) {
         setErrorMessage(t("messages.error.register"));
+      } else if (response.status == 409) {
+        setErrorMessage(t("messages.error.exist"));
+      } else if (response.status == 400) {
+        const data = await response.json();
+        if (data["firstName"]) {
+          if (
+            data["firstName"] ==
+            "First name must be between 2 and 70 characters"
+          ) {
+            setErrorMessage(t("messages.validation.validFirstName"));
+          } else {
+            setErrorMessage(t("messages.validation.firstName"));
+          }
+        } else if (data["lastName"]) {
+          if (
+            data["lastName"] == "Last name must be between 2 and 70 characters"
+          ) {
+            setErrorMessage(t("messages.validation.validLastName"));
+          } else {
+            setErrorMessage(t("messages.validation.lastName"));
+          }
+        } else if (data["email"]) {
+          if (data["email"] == "Please enter email") {
+            setErrorMessage(t("messages.validation.email"));
+          } else if (data["email"] == "Please enter valid email") {
+            setErrorMessage(t("messages.validation.validEmail"));
+          } else {
+            setErrorMessage(t("messages.validation.lengthEmail"));
+          }
+        } else if (data["password"]) {
+          if (data["password"] == "Please enter your password") {
+            setErrorMessage(t("messages.validation.password"));
+          } else if (
+            data["password"] == "Password must be between 8 and 70 characters"
+          ) {
+            setErrorMessage(t("messages.validation.validPassword"));
+          } else {
+            setErrorMessage(t("messages.validation.securityPassword"));
+          }
+        } else if (data["country"]) {
+          setErrorMessage(t("messages.error.country"));
+        }
       } else {
         setMessage(t("messages.error.confirmEmail"));
         resetForm();
