@@ -35,6 +35,7 @@ const ReceivePayment = ({
   info,
   transInfoArg,
   disabled,
+  valid,
 }) => {
   const { internalWalletAddress, fetchInternalWalletAddress } =
     useInternalWallet();
@@ -193,7 +194,7 @@ const ReceivePayment = ({
       balances[selectedCryptoIndex] * prices[selectedCryptoIndex] >
       priceUSD
     ) {
-      isDisable && setDisable(false);
+      isDisable && setDisable(false || disabled);
     } else {
       !isDisable && setDisable(true);
     }
@@ -231,7 +232,7 @@ const ReceivePayment = ({
   }
 
   async function doPayment() {
-    if (disabled) {
+    if (!valid) {
       setErrorMessage("You need to input your name and email address.");
       return;
     }

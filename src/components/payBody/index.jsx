@@ -17,6 +17,7 @@ const PayBody = ({ invoice }) => {
   const [amount, setAmount] = useState(1);
   const [imageSource, setImageSource] = useState(null);
   const [price, setPrice] = useState(0);
+  const [disable, setDisable] = useState(false);
   const backend_API = new backendAPI();
 
   async function fetchProductImage(product) {
@@ -38,6 +39,9 @@ const PayBody = ({ invoice }) => {
       setPrice(invoice.product.price * amount);
     } else {
       setPrice(invoice.price);
+    }
+    if (invoice.paidAt) {
+      setDisable(true);
     }
   }, [invoice]);
 
@@ -88,7 +92,8 @@ const PayBody = ({ invoice }) => {
         invoiceId: invoice.id,
         productId: invoice.product ? invoice.product.id : null,
       }}
-      disabled={!name || !email}
+      valid={name && email}
+      disabled={disable}
       info={
         <PaymentInfo
           fullName={name}

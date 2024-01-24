@@ -76,7 +76,7 @@ const ProductBody = ({ product }) => {
       priceUSD={price}
       seller={product.user}
       transInfoArg={{ productId: product.id }}
-      disabled={!name || !email}
+      valid={name && email}
       info={
         <PaymentInfo
           fullName={name}
