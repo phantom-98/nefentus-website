@@ -283,8 +283,8 @@ export const contractDeposits = (blockchain) => {
   if (blockchain === "ETH") {
     if (useMainnet()) {
       return {
-        id: 2, // Not used right now!
-        address: "0xd577766dd079c123ce677b8a27f9a01e5f4c9905",
+        id: 1,
+        address: "0x901B5312C5773f88f2589d4a44fb69766F54Aa76",
         abi: SwapAndDistributeETH.abi,
       };
     } else {
@@ -297,13 +297,13 @@ export const contractDeposits = (blockchain) => {
   } else if (blockchain == "BNB") {
     if (useMainnet()) {
       return {
-        id: 2, // Not used right now!
+        id: 1, // Not used right now!
         address: "0xabcdeff",
         abi: SwapAndDistributeBNB.abi,
       };
     } else {
       return {
-        id: 2, // Not used right now!
+        id: 1, // Not used right now!
         address: "0xee5711fab04f7e8555395e00987b594a752ed08f",
         abi: SwapAndDistributeTestBNB.abi,
       };
