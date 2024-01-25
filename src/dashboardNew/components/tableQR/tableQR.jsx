@@ -12,9 +12,10 @@ const TableQR = ({ link, data }) => {
     if (res) {
       const file = ["invoice.html", "receipt.html"];
       const element = document.createElement("a");
-      const html = res.split("$$RGBSPLIT$$");
+      const html = [res["invoice"], res["receipt"]];
 
       for (let i = 0; i < html.length; i++) {
+        if (!html[i]) return;
         const invoice = new Blob([html[i]], {
           type: "text/html",
         });
