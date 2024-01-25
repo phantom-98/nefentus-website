@@ -20,7 +20,7 @@ const InvoicesBody = () => {
   const [vatNumber, setVatNumber] = useState();
   const [enableInvoicing, setEnableInvoicing] = useState();
   const [walletAddress, setWalletAddress] = useState();
-  const [stablecoin, setStablecoin] = useState();
+  const [stablecoin, setStablecoin] = useState("USDT");
   const [showPopup, setShowPopup] = useState(false);
   const [changed, setchanged] = useState(false);
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
@@ -49,7 +49,7 @@ const InvoicesBody = () => {
   const loadSettings = async () => {
     const invoice = await backendAPI.getInvoiceSettings();
     const res = await invoice.json();
-    setStablecoin(res["stablecoin"]);
+    res["stablecoin"] && setStablecoin(res["stablecoin"]);
     setVatNumber(res["vatNumber"]);
     setWalletAddress(res["walletAddress"]);
     setEnableInvoicing(res["enableInvoicing"]);

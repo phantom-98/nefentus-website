@@ -50,9 +50,7 @@ export default class backendAPI {
         body: JSON.stringify(formData),
       };
       const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      } else {
+      if (response.ok) {
         ReactGA.event({
           category: "Registration",
           action: "registration_active",
@@ -320,8 +318,8 @@ export default class backendAPI {
         throw new Error("Network response was not ok");
       }
       this.updateToken(response);
-      // const data = await response.json();
-      return response;
+      const data = await response.json();
+      return data;
     } catch (error) {
       return null; // or return some default value
     }
