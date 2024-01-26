@@ -11,6 +11,7 @@ const ProductView = ({ product }) => {
   const [pic, setPic] = useState();
   const [more, setMore] = useState(false);
   const [show, setShow] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const getProductImage = async () => {
     const res = await new backendAPI().getProductImage(product.link);
@@ -30,6 +31,12 @@ const ProductView = ({ product }) => {
       setShow(current.scrollHeight > 250);
     }
   }, [divRef.current]);
+
+  useEffect(() => {
+    if (product.stock != -1 && quantity > product.stock) {
+      setAmount(product.stock);
+    }
+  }, [quantity]);
 
   return (
     <div className={styles.productWrapper}>
@@ -64,20 +71,33 @@ const ProductView = ({ product }) => {
             </div>
           )}
           <div className={styles.actionWrapper}>
-            <div className={styles.priceWrapper}>
-              <p>{t("products.view.price")}</p>
-              <p>${product.price}</p>
-            </div>
-            <div className={styles.stockWrapper}>
-              <p>{t("products.view.stock")}</p>
-              <p>
-                {product.stock == -1 ? t("products.unlimited") : product.stock}
-              </p>
+            <div style={{ display: "flex" }}>
+              <div className={styles.priceWrapper}>
+                <p>{t("products.view.price")}</p>
+                <p>${product.price}</p>
+              </div>
+              <div className={styles.stockWrapper}>
+                <p>{t("products.view.stock")}</p>
+                <p>
+                  {product.stock == -1
+                    ? t("products.unlimited")
+                    : product.stock}
+                </p>
+              </div>
+              <div className={styles.quantityWrapper}>
+                <input
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                />
+              </div>
             </div>
             <Button
               style={{ width: "30%", height: "55px" }}
               onClick={() => {
-                navigate(`/product/${product.link}/pay`);
+                console.log("quantity", quantity);
+                navigate(`/product/${product.link}/pay`, {
+                  state: { defaultQuantity: quantity },
+                });
               }}
             >
               {t("products.view.buy")}

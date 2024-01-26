@@ -5,7 +5,7 @@ import backendAPI from "../../api/backendAPI";
 import { useTranslation } from "react-i18next";
 import { PaymentInfo, ProductInfo } from "../receivePayment";
 
-const ProductBody = ({ product }) => {
+const ProductBody = ({ product, quantity }) => {
   const backend_API = new backendAPI();
   const [imageSource, setImageSource] = useState(null);
   const { t } = useTranslation();
@@ -22,7 +22,7 @@ const ProductBody = ({ product }) => {
   const [address, setAddress] = useState();
   const [tax, setTax] = useState();
   const [changed, setChanged] = useState(false);
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(quantity || 1);
   const [link, setLink] = useState(null);
   const [price, setPrice] = useState(0);
   const [invoiceId, setInvoiceId] = useState(null);

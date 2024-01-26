@@ -111,21 +111,34 @@
 } */
 
 .priceWrapper,
-.stockWrapper {
+.stockWrapper,
+.quantityWrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  width: 26%;
 }
 
 .priceWrapper {
   border-right: 2px solid var(--Grey, #313131);
-  padding-right: 10px;
+  padding-right: 16px;
 }
 
 .stockWrapper {
-  padding-left: 10px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.quantityWrapper input {
+  outline: none;
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  text-align: right;
+  font-size: 1.8rem;
+  color: var(--Light-grey, #e9e9e9);
+  background-color: var(--BG2, #1f1f1f);
+  width: 50px;
 }
 
 .actionWrapper div p:first-child {
