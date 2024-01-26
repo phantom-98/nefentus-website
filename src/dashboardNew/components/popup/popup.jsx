@@ -97,7 +97,8 @@ export const QRPopup = ({
   company,
   address,
   link,
-  onDownload,
+  onInvoice,
+  onReceipt,
 }) => {
   const dashboardElement = document.getElementById("dashboard");
   // const { name, email, price, company, address, taxNumber, link } = data;
@@ -133,11 +134,20 @@ export const QRPopup = ({
         {link && <QRCode value={link} size={256} style={{ margin: "20px" }} />}
         <div className={styles.paymentButtons}>
           <Button onClick={() => setShow(false)}>{t("general.close")}</Button>
-          {email && email.match("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") && (
-            <div onClick={onDownload} className={styles.download}>
-              {t("payments.downloadInvoice")}
-            </div>
-          )}
+          {email &&
+            email.match("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") &&
+            onInvoice && (
+              <div onClick={onInvoice} className={styles.download}>
+                {t("payments.downloadInvoice")}
+              </div>
+            )}
+          {email &&
+            email.match("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$") &&
+            onReceipt && (
+              <div onClick={onReceipt} className={styles.download}>
+                {t("payments.downloadReceipt")}
+              </div>
+            )}
         </div>
       </Card>
     </div>,

@@ -982,6 +982,7 @@
     "scan": "Scan QR Code",
     "scanDescription": "To confirm you need to scan QR code",
     "downloadInvoice": "Download invoice",
+    "downloadReceipt": "Download receipt",
     "table": {
       "created": "Created at",
       "price": "Price ($)",

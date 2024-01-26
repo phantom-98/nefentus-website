@@ -932,6 +932,7 @@
     "scan": "QR-Code scannen",
     "scanDescription": "Zur Bestätigung müssen Sie einen QR-Code scannen",
     "downloadInvoice": "Rechnung herunterladen",
+    "downloadReceipt": "Zahlungseingang herunterladen",
     "table": {
       "created": "Erstellt am",
       "price": "Preis ($)",
