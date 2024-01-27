@@ -143,24 +143,37 @@
 .buttons {
   display: flex;
   align-items: center;
-  gap: 3rem;
   justify-content: flex-end;
   font-size: 1.6rem;
 
   margin-top: 2rem;
 }
 
-.button1 {
-  color: var(--gray-color);
+.buttons div:first-child {
+  color: var(--text-color);
+  background-color: var(--lightBlack-color);
   cursor: pointer;
+  border-radius: 1rem;
+  margin-right: 1rem;
 }
 
-.button2 {
-  color: var(--black-color);
-  border-radius: 1rem;
+.buttons div {
+  color: var(--gray-color);
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
   padding: 1.4rem 2.3rem;
-  background-color: var(--white-color);
+  background-color: var(--lightWhite-color);
   cursor: pointer;
+  margin-right: -1px;
+}
+.buttons div:last-child {
+  margin-right: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
 .kyc {

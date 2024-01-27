@@ -79,6 +79,14 @@ const CropDialog = ({ open, file, aspect, onSave, onClose }) => {
     }
   }, [open, file]);
 
+  const keepOrigin = async () => {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      onSave(reader.result);
+    };
+  };
+
   const handleCrop = async () => {
     const img = new Image();
     const resizef = await resizeFile(file);
@@ -174,8 +182,8 @@ const CropDialog = ({ open, file, aspect, onSave, onClose }) => {
 
           <div className={styles["modal-footer"]}>
             <Buttons
-              functions={[onClose, handleCrop]}
-              buttons={["Keep original image", "Crop"]}
+              functions={[onClose, keepOrigin, handleCrop]}
+              buttons={["Cancel", "Keep original image", "Crop"]}
             />
           </div>
         </div>

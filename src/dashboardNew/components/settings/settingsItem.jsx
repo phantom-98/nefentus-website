@@ -409,8 +409,12 @@ const SettingsItem = ({ data, setIsSaveData }) => {
           open={cropDialogOpen}
           file={data.file}
           aspect={1}
-          onClose={() => setCropDialogOpen(false)}
+          onClose={() => {
+            console.log("crop dialog closed");
+            setCropDialogOpen(false);
+          }}
           onSave={(croppedImageData) => {
+            console.log("image upload - ", croppedImageData, data.file);
             setCropDialogOpen(false);
             data.setFile(dataURLtoFile(croppedImageData, data.file.name));
             data.setValue(croppedImageData);

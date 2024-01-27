@@ -97,6 +97,7 @@ const ProfileSettings = () => {
   };
 
   useEffect(() => {
+    console.log("avatar upload", imageChanged);
     if (isSaveData) {
       if (!imageChanged) updateUser();
       else uploadAvatar();
@@ -188,10 +189,10 @@ const ProfileSettings = () => {
     },
   ];
 
-  useEffect(() => {
-    const profilePic = localStorage.getItem("profile_pic");
-    if (profilePic !== "null") setImageName(profilePic);
-  }, []);
+  // useEffect(() => {
+  //   const profilePic = localStorage.getItem("profile_pic");
+  //   if (profilePic !== "null") setImageName(profilePic);
+  // }, []);
 
   return (
     <Card className={styles.card}>
