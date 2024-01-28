@@ -34,7 +34,7 @@ const ProductView = ({ product }) => {
 
   useEffect(() => {
     if (product.stock != -1 && quantity > product.stock) {
-      setAmount(product.stock);
+      setQuantity(product.stock);
     }
   }, [quantity]);
 
