@@ -404,26 +404,7 @@ export default class backendAPI {
         body: JSON.stringify(formData),
       };
       const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
       this.updateToken(response);
-      const data = await response.json();
-      console.log(data);
-      localStorage.setItem("email", data.email);
-      localStorage.setItem("contactEmail", data.contactEmail);
-      localStorage.setItem("firstName", data.firstName);
-      localStorage.setItem("lastName", data.lastName);
-      localStorage.setItem("business", data.business);
-      localStorage.setItem("phoneNumber", data.phoneNumber);
-      localStorage.setItem("country", data.country);
-      localStorage.setItem("username", data.username);
-      localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
-      localStorage.setItem("marketingUpdates", data.marketingUpdates);
-      localStorage.setItem("emailNotifications", data.emailNotifications);
-      localStorage.setItem("appNotifications", data.appNotifications);
-      localStorage.setItem("notificationLanguage", data.notificationLanguage);
-      localStorage.setItem("enableInvoicing", data.enableInvoicing);
       return response;
     } catch (error) {
       return null; // or return some default value
