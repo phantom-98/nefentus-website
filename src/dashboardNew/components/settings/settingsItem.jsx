@@ -415,7 +415,8 @@ const SettingsItem = ({ data, setIsSaveData }) => {
           }}
           onSave={(croppedImageData) => {
             setCropDialogOpen(false);
-            data.setFile(dataURLtoFile(croppedImageData, data.file.name));
+            if (!croppedImageData) return;
+            data.setFile(dataURLtoFile(croppedImageData, file.name));
             data.setValue(croppedImageData);
             data.setImageChanged(true);
             setIsSaveData(true);
