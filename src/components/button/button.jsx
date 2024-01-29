@@ -23,7 +23,9 @@ const Button = ({
         border: disabled
           ? `1px solid ${theme == "dark" ? "#313131" : "#bababa"}`
           : color === "white"
-          ? "1px solid rgb(38, 38, 38)"
+          ? theme == "dark"
+            ? "1px solid rgb(38, 38, 38)"
+            : "1px solid rgb(200, 200, 200)"
           : "1px solid #0784B5",
         backgroundColor: theme == "dark" ? "" : "#dadada",
       }}
@@ -36,7 +38,9 @@ const Button = ({
               ? "#313131"
               : "#ffffffd0"
             : color === "white"
-            ? "rgb(38, 38, 38)"
+            ? theme == "dark"
+              ? "rgb(38, 38, 38)"
+              : "#e9e9e9"
             : "#0784B5",
         }}
       ></div>
