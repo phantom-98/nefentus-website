@@ -48,7 +48,14 @@ const Button = ({
         <Link to={link}>
           <div
             className={`${styles.buttonText} unselectable`}
-            style={{ color: theme == "dark" ? "" : "#111111" }}
+            style={{
+              color:
+                theme == "dark"
+                  ? ""
+                  : color == "white" || disabled
+                  ? "#111111"
+                  : "#f6f9fc",
+            }}
           >
             {children}
           </div>
@@ -56,7 +63,14 @@ const Button = ({
       ) : (
         <div
           className={`${styles.buttonText} unselectable`}
-          style={{ color: theme == "dark" ? "" : "#111111" }}
+          style={{
+            color:
+              theme == "dark"
+                ? ""
+                : color == "white" || disabled
+                ? "#111111"
+                : "#f6f9fc",
+          }}
         >
           {children}
         </div>

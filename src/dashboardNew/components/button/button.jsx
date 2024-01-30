@@ -45,6 +45,7 @@ const Button = ({
             <div
               style={{
                 fontSize: fontSize,
+                color: color == "light" || !color ? "#f6f9fc" : "",
               }}
               className={styles.text}
             >
@@ -85,6 +86,7 @@ const Button = ({
           <div
             style={{
               fontSize: fontSize,
+              color: color == "light" || !color ? "#f6f9fc" : "",
             }}
             className={styles.text}
           >
