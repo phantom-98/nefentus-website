@@ -116,7 +116,9 @@ const BalanceCard = ({ wallet }) => {
       <div className={styles.left}>
         <div className={styles.label}>{t("dashboard.balance")}</div>
         <div className={styles.value}>${parseFloat(total).toFixed(2)}</div>
-        <div className={styles.subtitle}>{currencies().length} Crypto</div>
+        <div className={styles.subtitle}>
+          {currencies().length} {t("dashboard.currencies")}
+        </div>
       </div>
 
       {total !== 0 && (

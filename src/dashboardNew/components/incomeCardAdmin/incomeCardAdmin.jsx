@@ -217,7 +217,7 @@ const IncomeCardAdmin = ({ data }) => {
     <Card className={`${styles.card}`}>
       <div className={styles.info}>
         <div className={styles.left}>
-          <div className={styles.label}>{t("dashboard.income")}</div>
+          <div className={styles.label}>{t("dashboard.refIncome")}</div>
           <div className={styles.graphAmount}>{getTotalIncome(graphData)}</div>
         </div>
 

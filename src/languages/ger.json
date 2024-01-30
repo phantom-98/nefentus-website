@@ -379,7 +379,7 @@
     "overviewSubtitle": "Prüfen Sie Informationen über Einkommen, Klicks und Registrierungen.",
     "addUser": "Benutzer hinzufügen",
     "vendorButton": "Verkäufer-Dashboard",
-    "income": "Einkommen",
+    "refIncome": "Referral Einkommen",
     "totalIncome": "Gesamtes Einkommen",
     "clicks": "Klicks",
     "registrations": "Anmeldungen",
@@ -393,6 +393,7 @@
     "plan": "Plan",
     "enterprise": "Unternehmen",
     "balance": "Saldo",
+    "currencies": "Kryptowährungen",
     "cryptoMarket": "Krypto-Markt",
     "hideBalance": "Währungen mit Null-Saldo ausblenden",
     "send": "Senden",
@@ -408,7 +409,7 @@
     "charts": {
       "last24h": "Letzte 24 Stunden",
       "previous24h": "Vorherige 24 Stunden",
-      "lastWeek": "Letzte Woche (Hinweis: Diese Grafik wird täglich aktualisiert)",
+      "lastWeek": "Krypto-Wert (Hinweis: Diese Grafik wird täglich aktualisiert)",
       "days": {
         "monday": "Montag",
         "tuesday": "Dienstag",
@@ -455,7 +456,7 @@
       "third": "Verkäufe: Letzte 30 Tage",
       "progress": "im Vergleich zu den letzten 30 Tagen"
     },
-    "incomeTitle": "Einkommen letzte Woche",
+    "balanceTitle": "Saldo diese Woche",
     "cryptoCard": {
       "receiveModal": {
         "title": "Kryptowährung empfangen",
