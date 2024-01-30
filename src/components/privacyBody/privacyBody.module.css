@@ -28,6 +28,6 @@
 .section p {
   font-size: 1.6rem;
   line-height: 140%;
-  color: var(--gray-color);
+  color: var(--text2-color);
   margin-bottom: 2rem;
 }
