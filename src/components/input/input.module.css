@@ -35,9 +35,9 @@
 }
 
 .searchInput {
-  color: var(--white-color);
+  color: var(--text-color);
   background-color: transparent;
-  border: none;
+  border: none !important;
   outline: none;
   font-size: 1.4rem;
 }

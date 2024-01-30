@@ -453,8 +453,7 @@ const Signup = () => {
   });
 
   const recaptchaRef = useRef();
-  const { setErrorMessage } = useContext(MessageContext);
-  const [message, setMessage] = useState(null);
+  const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
   const [CountryOption, setCountryOption] = useState("");
   const api = new backendAPI();
 
@@ -580,7 +579,7 @@ const Signup = () => {
           setErrorMessage(t("messages.error.country"));
         }
       } else {
-        setMessage(t("messages.error.confirmEmail"));
+        setInfoMessage(t("messages.error.confirmEmail"));
         resetForm();
         setErrorMessage("");
       }
@@ -616,11 +615,6 @@ const Signup = () => {
 
       <form onSubmit={handleSubmit(submitForm)} className={styles.right}>
         <MessageComponent />
-        {message && (
-          <div className={styles.messagecontainer}>
-            <p>{message}</p>
-          </div>
-        )}
 
         <div className={styles.row}>
           <Input

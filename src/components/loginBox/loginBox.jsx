@@ -143,8 +143,7 @@ const ConfirmMeEmail = ({
 const LoginBox = () => {
   const { theme } = useTheme();
   const recaptchaRef = useRef();
-  const { setErrorMessage } = useContext(MessageContext);
-  const [message, setMessage] = useState(null);
+  const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
   const navigate = useNavigate();
   const backendAPI = new backend_API();
   const { t } = useTranslation();
@@ -301,7 +300,7 @@ const LoginBox = () => {
         setErrorMessage(t("messages.error.activateAccount"));
         return;
       }
-      setMessage(t("messages.success.activateAccount"));
+      setInfoMessage(t("messages.success.activateAccount"));
     } catch (error) {
       setErrorMessage(t("messages.error.activateAccount"));
     }
@@ -334,11 +333,6 @@ const LoginBox = () => {
 
       <div className={styles.right}>
         <MessageComponent />
-        {message && (
-          <div className={styles.messagecontainer}>
-            <p>{message}</p>
-          </div>
-        )}
 
         {showConfirmMeEmail ? (
           <ConfirmMeEmail
