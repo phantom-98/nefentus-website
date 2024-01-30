@@ -10,12 +10,8 @@ import FooterArrow from "../../assets/icon/footerArrow.svg";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { NefentusLogo } from "../../assets/icon/logos/logos";
 
-const content = [
-  { link: "/" },
-  { link: "/payment" },
-  { link: "/support" },
-  { link: "/affiliate" },
-];
+const content = ["/", "/payment", "/support", "/affiliate", "/privacy"];
+const content2 = ["/playstore", "/login", "/appstore", "/signup", "/imprint"];
 
 const Footer = () => {
   const { theme } = useTheme();
@@ -28,7 +24,10 @@ const Footer = () => {
     returnObjects: true,
   });
 
-  const footerContent2 = reformatFooterInfo(footerContentTranslation2, content);
+  const footerContent2 = reformatFooterInfo(
+    footerContentTranslation2,
+    content2,
+  );
 
   const handleScroll = () => {
     window.scrollTo(0, 0);
