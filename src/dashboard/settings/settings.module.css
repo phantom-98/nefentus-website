@@ -158,18 +158,28 @@
 }
 
 .buttons div {
-  color: var(--gray-color);
+  color: var(--text3-color, #e9e9e9);
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   padding: 1.4rem 2.3rem;
-  background-color: var(--lightWhite-color);
+  background-color: var(--card-color, #272729);
   cursor: pointer;
-  margin-right: -1px;
 }
 .buttons div:last-child {
   margin-right: 0;
+  border: 2px solid;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(
+    to bottom,
+    #00000000 25%,
+    #b1b1b1b1,
+    #00000000 75%
+  );
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 1rem;
