@@ -45,7 +45,11 @@ const ProductView = ({ product }) => {
   return (
     <div className={styles.productWrapper}>
       <div className={styles.wrapper}>
-        <div className={styles.imageWrapper}>{pic && <img src={pic} />}</div>
+        {pic && pic.toLowerCase() != "null" && (
+          <div className={styles.imageWrapper}>
+            <img src={pic} />
+          </div>
+        )}
         <div className={styles.infoWrapper}>
           <h1>{product.name}</h1>
           <div className={styles.actionWrapper}>
