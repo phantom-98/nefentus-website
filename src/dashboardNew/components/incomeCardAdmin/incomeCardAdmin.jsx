@@ -50,7 +50,7 @@ export const optionsChart = {
       beginAtZero: true,
 
       grid: {
-        color: "rgba(255,255,255,0.08)",
+        color: "#b1b1b159",
       },
       ticks: {
         callback: function (value, index, ticks) {
@@ -58,7 +58,7 @@ export const optionsChart = {
         },
         suggestedMin: 0,
         padding: 10,
-        color: "rgba(255,255,255,0.6)",
+        color: "#b1b1b1",
         font: {
           size: window.innerWidth < 550 ? 8 : 12,
           family: "Axiforma ",
@@ -72,7 +72,7 @@ export const optionsChart = {
       },
 
       ticks: {
-        color: "rgba(255,255,255,0.6)",
+        color: "#b1b1b1",
         padding: 10,
         font: {
           family: "Axiforma",

@@ -89,7 +89,7 @@ export const Options = ({
       )}
 
       <div
-        className={`option ${styles.input} ${
+        className={`option dateOption ${styles.input} ${
           dashboard ? styles.dashboardInput : ""
         }`}
         onClick={() => setOpen((prev) => !prev)}
@@ -311,7 +311,7 @@ export const SearchOptions = ({
             setSelected(e.target.value);
             setValue(e.target.value);
           }}
-          className={`option ${styles.searchInput}`}
+          className={`${styles.searchInput}`}
         />{" "}
         <img src={dropDown} alt="" />
         {open && (

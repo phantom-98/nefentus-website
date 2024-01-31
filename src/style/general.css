@@ -19,25 +19,33 @@
 
 /* Variable */
 :root .dark {
-  --background-color: rgb(17, 17, 17);
   --lightBlack-color: rgb(38, 38, 38);
-  --text-color: #f6f9fc;
   --gray-color: rgba(255, 255, 255, 0.09);
-
   --hover-color: rgba(255, 255, 255, 0.09);
-
   --lightWhite-color: rgba(255, 255, 255, 0.04);
+
+  --background-color: #111111; /* for main background */
+  --bg2-color: #1f1f1f; /* for card background */
+  --text-color: #f6f6f6; /* for primary text background */
+  --text3-color: #e9e9e9; /* for special text background */
+  --card-color: #272729; /* for card header background */
+  --text2-color: #b1b1b1; /* for second text background */
+  --border-color: #313131; /* for border */
 }
 
 :root .light {
-  --background-color: #f6f9fc;
   --lightBlack-color: rgba(38, 38, 38, 0.2);
-  --text-color: rgb(17, 17, 17);
   --gray-color: rgb(38, 38, 38);
-
   --hover-color: rgba(0, 0, 0, 0.09);
-
   --lightWhite-color: rgba(0, 0, 0, 0.04);
+
+  --background-color: #f6f6f6; /* for main background */
+  --bg2-color: #e9e9e9; /* for card background */
+  --text-color: #111111; /* for primary text background */
+  --text3-color: #696969; /* for special text background */
+  --card-color: #f6f9fc; /* for card header background */
+  --text2-color: #565656; /* for second text background */
+  --border-color: #dadada; /* for border */
 }
 
 :root {
@@ -115,12 +123,20 @@ body {
     0px 30px 45px -30px rgba(50, 50, 93, 0.25);
 }
 
+.dark .dateOption {
+  background-color: var(--card-color, #272729) !important;
+}
+
+.light .dateOption {
+  background-color: var(--card-color, #f6f9fc) !important;
+}
+
 .dark input,
 .dark textarea,
 .dark .option {
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
 
-  color: var(--white-color);
+  color: var(--text-color);
 }
 
 .dark input::placeholder,
@@ -474,7 +490,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .dashboard-table li:first-child {
-  color: var(--white-color) !important;
+  color: var(--text-color) !important;
 }
 
 .dashboard-table > div:first-child ul {

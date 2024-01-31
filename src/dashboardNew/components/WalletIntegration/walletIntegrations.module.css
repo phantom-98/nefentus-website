@@ -45,7 +45,7 @@
 
 .walletAddress,
 .walletBalance {
-  color: var(--gray-color);
+  color: var(--text2-color);
 }
 
 @media (max-width: 860px) {
