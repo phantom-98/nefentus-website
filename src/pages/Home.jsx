@@ -44,11 +44,7 @@ const Home = () => {
           </>
         }
         description={<>{t("home.heroDescription")}</>}
-        button={
-          <>
-            <p>{t("home.heroButton")}</p>
-          </>
-        }
+        button={<>{t("home.heroButton")}</>}
         home
         // button2={t("home.heroButton2")}
         image={Main}
