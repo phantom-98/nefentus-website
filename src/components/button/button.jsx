@@ -16,6 +16,16 @@ const Button = ({
   return (
     <button
       className={`${styles.button} ${className}`}
+      onMouseOver={(e) => {
+        if (theme == "light") {
+          e.target.style.color = "#111111";
+        }
+      }}
+      onMouseOut={(e) => {
+        if (theme == "light") {
+          e.target.style.color = "#f6f9fc";
+        }
+      }}
       onClick={onClick}
       type={type}
       style={{
