@@ -146,7 +146,16 @@ const SecurityItem = ({ data, recover }) => {
   ];
 
   const handleConfirm = async () => {
+    if (!newPassword || !currentPassword) {
+      setErrorMessage(t("messages.error.passwordRequired"));
+      return;
+    }
+    if (!confirmPassword) {
+      setErrorMessage(t("messages.error.confirmPasswordRequired"));
+      return;
+    }
     if (newPassword !== confirmPassword) {
+      setErrorMessage(t("messages.error.passwordEqual"));
       return;
     }
 
@@ -158,9 +167,15 @@ const SecurityItem = ({ data, recover }) => {
       setErrorMessage(t("messages.error.passwordCorrect"));
       return;
     }
-    setShow(false);
-    clearMessages();
-    resetValues();
+    setInfoMessage(t("messages.success.passwordChange"));
+    await backendAPI.signout();
+    setTimeout(() => {
+      setShow(false);
+      clearMessages();
+      resetValues();
+
+      navigate("/login");
+    }, 1000);
   };
 
   const resetValues = () => {

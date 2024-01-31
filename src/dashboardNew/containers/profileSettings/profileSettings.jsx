@@ -8,8 +8,11 @@ import backend_API from "../../../api/backendAPI";
 import { MessageContext } from "../../../context/message";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import MessageComponent from "../../../components/message";
+import { useAuth } from "../../../context/auth/authContext";
 
 const ProfileSettings = () => {
+  const { setAvatarUrl } = useAuth();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [business, setBusiness] = useState("");
@@ -49,6 +52,9 @@ const ProfileSettings = () => {
   useEffect(() => {
     fetchProfile();
   }, []);
+  useEffect(() => {
+    setAvatarUrl(imageName);
+  }, [imageName]);
 
   const updateUser = async () => {
     const requestData = {
@@ -71,10 +77,42 @@ const ProfileSettings = () => {
       setTimeout(() => {
         navigate("/");
       }, 1000);
-    }
-
-    if (response !== null) {
+    } else if (response.status == 400) {
+      const data = await response.json();
+      if (data["firstName"]) {
+        if (
+          data["firstName"] == "First name must be between 2 and 70 characters"
+        ) {
+          setErrorMessage(t("messages.validation.validFirstName"));
+        } else {
+          setErrorMessage(t("messages.validation.firstName"));
+        }
+      } else if (data["lastName"]) {
+        if (
+          data["lastName"] == "Last name must be between 2 and 70 characters"
+        ) {
+          setErrorMessage(t("messages.validation.validLastName"));
+        } else {
+          setErrorMessage(t("messages.validation.lastName"));
+        }
+      } else if (data["country"]) {
+        setErrorMessage(t("messages.error.country"));
+      } else {
+        setErrorMessage(t("messages.error.updateData"));
+        await backendAPI.signout();
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      }
+      fetchProfile();
+    } else if (response.ok) {
       setInfoMessage(t("messages.success.updateSettings"));
+    } else {
+      setErrorMessage(t("messages.error.updateData"));
+      await backendAPI.signout();
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
 
     setIsSaveData(false);
@@ -97,6 +135,7 @@ const ProfileSettings = () => {
   };
 
   useEffect(() => {
+    console.log("avatar upload", imageChanged);
     if (isSaveData) {
       if (!imageChanged) updateUser();
       else uploadAvatar();
@@ -188,22 +227,25 @@ const ProfileSettings = () => {
     },
   ];
 
-  useEffect(() => {
-    const profilePic = localStorage.getItem("profile_pic");
-    if (profilePic !== "null") setImageName(profilePic);
-  }, []);
+  // useEffect(() => {
+  //   const profilePic = localStorage.getItem("profile_pic");
+  //   if (profilePic !== "null") setImageName(profilePic);
+  // }, []);
 
   return (
-    <Card className={styles.card}>
-      <SettingsTitle
-        title={t("profile.title")}
-        description={t("profile.description")}
-      />
+    <>
+      <MessageComponent />
+      <Card className={styles.card}>
+        <SettingsTitle
+          title={t("profile.title")}
+          description={t("profile.description")}
+        />
 
-      {data.map((item) => (
-        <SettingsItem data={item} setIsSaveData={setIsSaveData} />
-      ))}
-    </Card>
+        {data.map((item) => (
+          <SettingsItem data={item} setIsSaveData={setIsSaveData} />
+        ))}
+      </Card>
+    </>
   );
 };
 

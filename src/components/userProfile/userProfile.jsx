@@ -1,7 +1,7 @@
 import styles from "./userProfile.module.css";
 
 import Dashboard from "../../assets/icon/dashboard.svg";
-import { useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -11,17 +11,27 @@ import {
   Security,
   User2,
 } from "../../assets/icon/icons";
+import { useAuth } from "../../context/auth/authContext";
+import backend_API from "../../api/backendAPI";
 
 const UserProfile = ({ web, logOut, requireKYC }) => {
-  const [profileImage, setProfileImage] = useState(
-    localStorage.getItem("profile_pic"),
-  );
+  const { avatarUrl, setAvatarUrl } = useAuth();
+  const backendAPI = new backend_API();
+  const fetchProfile = async () => {
+    const data = await backendAPI.getProfile();
+    if (data["imgData"]) setAvatarUrl(data["imgData"]);
+    else setAvatarUrl(null);
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
   const { t } = useTranslation();
   return (
     <div className={styles.profileWrapper}>
       <div className={styles.profileImage}>
-        {profileImage !== "null" ? (
-          <img src={profileImage} alt="Profile" />
+        {avatarUrl ? (
+          <img src={avatarUrl} alt="Profile" />
         ) : (
           <svg
             viewBox="0 0 30 30"

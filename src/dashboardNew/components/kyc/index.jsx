@@ -5,121 +5,17 @@ import Correct from "../../../assets/icon/correct.svg";
 import Download from "../../../assets/icon/download.svg";
 import Button from "../../components/button/button";
 import { useEffect, useState } from "react";
-import backendAPI from "../../../api/backendAPI";
 import adminDashboardApi from "../../../api/adminDashboardApi";
 import TableSearch from "../tableSearch/tableSearch";
 import Popup from "../popup/popup";
 
-const KYC_TYPE = {
-  FULL_NAME: "FULL_NAME",
-  ADRESS: "ADRESS",
-  CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
-  GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
-  PICTURE_WIDTH_ID_IN_HAND: "PICTURE_WIDTH_ID_IN_HAND",
-  PROOF_OF_ADRESS: "PROOF_OF_ADRESS",
-  PROOF_OF_COMPANY: "PROOF_OF_COMPANY",
-  ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
-};
-
-const KYC_TYPE_FILE = {
-  GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
-  PICTURE_WIDTH_ID_IN_HAND: "PICTURE_WIDTH_ID_IN_HAND",
-  PROOF_OF_ADRESS: "PROOF_OF_ADRESS",
-  PROOF_OF_COMPANY: "PROOF_OF_COMPANY",
-  ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
-};
-
-const KYC_TYPE_TEXT = {
-  FULL_NAME: "FULL_NAME",
-  ADRESS: "ADRESS",
-  CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
-};
-
 const KycBody = () => {
   const [data, setData] = useState([]);
-  const BackendAPI = new backendAPI();
   const adminApi = new adminDashboardApi("admin");
 
   const fetchFYC = async () => {
-    const users = await adminApi.getUsers();
-
-    const arrayWithResults = await Promise.all(
-      users.map(async (user) => {
-        const userId = user.id;
-
-        const level = await BackendAPI.getKYCLevel(userId);
-
-        const userKYCDataFile = await Promise.all(
-          Object.values(KYC_TYPE_FILE).map((type) =>
-            BackendAPI.getByKYC(type, userId),
-          ),
-        );
-
-        const userKYCDataText = await Promise.all(
-          Object.values(KYC_TYPE_TEXT).map((type) =>
-            BackendAPI.getByKYCText(type, userId),
-          ),
-        );
-
-        const transformedResults = userKYCDataFile.map((item) => {
-          const key = Object.keys(item)[0];
-          const fileType = key.replace(/_/g, " ").toLowerCase();
-          return {
-            type: fileType.charAt(0).toUpperCase() + fileType.slice(1),
-            file: item[key].data.url,
-            verify: item[key].data.verify,
-            typeData: "photo",
-          };
-        });
-
-        const transformedResultsText = userKYCDataText.map((item) => {
-          const key = Object.keys(item)[0];
-          const fileType = key.replace(/_/g, " ").toLowerCase();
-          return {
-            type: fileType.charAt(0).toUpperCase() + fileType.slice(1),
-            file: item[key].data.url,
-            verify: item[key].data.verify,
-            typeData: "text",
-          };
-        });
-
-        const combinedResults = [
-          ...transformedResultsText,
-          ...transformedResults,
-        ];
-
-        if (
-          transformedResults.every(
-            (item) =>
-              item.file === null ||
-              item.file === undefined ||
-              item.verify === true,
-          ) &&
-          transformedResultsText.every(
-            (item) =>
-              item.file === null ||
-              item.file === undefined ||
-              item.verify === true,
-          )
-        )
-          return;
-
-        return [
-          {
-            img: user.s3Url,
-            name: `${user.firstName} ${user.lastName}`,
-            id: user.id,
-          },
-          user.email,
-          combinedResults,
-          user.tel,
-          user.business,
-          level.data.kycLevel,
-          new Date(user.createdAt).toISOString().substring(0, 10),
-        ];
-      }),
-    );
-    setData(arrayWithResults.filter((item) => item !== undefined));
+    const list = await adminApi.getKycs();
+    setData(list);
   };
 
   useEffect(() => {
@@ -132,7 +28,7 @@ const KycBody = () => {
         <div className={styles.left}>
           <p style={{ fontSize: "22px", color: "white" }}>KYC Request</p>
 
-          <p style={{ fontSize: "13px" }}>
+          <p style={{ fontSize: "13px", color: "rgba(255, 255, 255, 0.8)" }}>
             Check recent KYC requests and approve or deny users.
           </p>
         </div>
@@ -149,24 +45,61 @@ export default KycBody;
 const Table = ({ data, setData }) => {
   const [checkModal, setCheckModal] = useState(false);
   const [feedbackModal, setFeedbackModal] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [declineReason, setDeclineReason] = useState("");
+
+  const TextUrlSection = (item, index) => (
+    <div>
+      {index === 0 && <h5 className={styles.level}>Level 1</h5>}
+      <div className={styles.line} key={index}>
+        <div className={styles.row}>
+          <p>{item?.type}</p>
+          {item?.verify && <img src={Correct} alt="" />}
+        </div>
+        <p>{item?.rejectReason ?? null}</p>
+      </div>
+    </div>
+  );
+
+  const ImageUrlSection = (item, index) => (
+    <div>
+      {index === 2 && <h5 className={styles.level}>Level 2</h5>}
+      {index === 4 && <h5 className={styles.level}>Level 3</h5>}
+      <div className={styles.line} key={index}>
+        <div className={styles.row}>
+          <p>{item?.type}</p>
+          {item?.verify && item?.url === null && <img src={Correct} alt="" />}
+        </div>
+        <p>{item?.rejectReason ?? null}</p>
+
+        {item?.url ? (
+          <a href={item?.url} download>
+            <img src={Download} alt="" />
+          </a>
+        ) : null}
+      </div>
+    </div>
+  );
 
   const adminApi = new adminDashboardApi("admin");
 
-  const acceptKYC = async (id) => {
+  const acceptKYC = async (user) => {
     try {
-      await adminApi.acceptKYC(id);
-      setData(data.filter((item) => item[0].id !== id));
+      await adminApi.acceptKYC(user?.userDetail?.id);
+      setData(
+        data.filter((item) => item?.userDetail?.id !== user?.userDetail?.id),
+      );
     } catch {}
   };
 
-  const declineKYC = async (id) => {
-    if (declineReason && id) {
+  const declineKYC = async (user) => {
+    if (declineReason && user?.userDetail?.id) {
       setFeedbackModal(false);
       try {
-        await adminApi.declineKYC(id, declineReason);
-        setData(data.filter((item) => item[0].id !== id));
+        await adminApi.declineKYC(user?.userDetail?.id, declineReason);
+        setData(
+          data.filter((item) => item?.userDetail?.id !== user?.userDetail?.id),
+        );
       } catch {}
     }
   };
@@ -188,50 +121,58 @@ const Table = ({ data, setData }) => {
             </ul>
           </div>
           <div className={styles.tableBody}>
-            {data.map((items, index) => (
-              <ul key={index}>
-                {items.map((item, index) => (
-                  <div key={index}>
-                    {index === 0 ? (
+            {data?.length > 0 &&
+              data?.map(
+                (items, index) =>
+                  items?.userTextUrls?.length > 0 &&
+                  items?.userImageUrls?.length > 0 && (
+                    <ul key={index}>
                       <li className={styles.profile}>
                         <div className={styles.profileImage}>
-                          <img src={item.img} alt="" />
+                          <img src={items?.userDetail?.s3Url} alt="" />
                         </div>
 
                         <div className={styles.profileInfo}>
-                          <div className={styles.name}>{item.name}</div>
-                          <div className={styles.id}>{item.id}</div>
+                          <div className={styles.name}>
+                            {items?.userDetail?.firstName +
+                              " " +
+                              items?.userDetail?.lastName}
+                          </div>
+                          <div className={styles.id}>
+                            {items?.userDetail?.id}
+                          </div>
                         </div>
                       </li>
-                    ) : index === 2 ? (
+                      <li>{items?.userDetail?.email}</li>
+
                       <li
                         style={{ cursor: "pointer" }}
                         onClick={() => {
                           setCheckModal(true);
-                          setSelectedId(items[0].id);
+                          setSelectedUser(items);
                         }}
                       >
                         Check
                       </li>
-                    ) : (
-                      <li>{item}</li>
-                    )}
-                  </div>
-                ))}
 
-                <li>
-                  <p onClick={() => acceptKYC(items[0].id)}>Accept</p>
-                  <p
-                    onClick={() => {
-                      setFeedbackModal(true);
-                      setSelectedId(items[0].id);
-                    }}
-                  >
-                    Decline
-                  </p>
-                </li>
-              </ul>
-            ))}
+                      <li>{items?.userDetail?.email}</li>
+                      <li>{items?.userDetail?.tel}</li>
+                      <li>{items?.userDetail?.business}</li>
+                      <li>{items?.level}</li>
+                      <li>
+                        <p onClick={() => acceptKYC(items)}>Accept</p>
+                        <p
+                          onClick={() => {
+                            setFeedbackModal(true);
+                            setSelectedUser(items);
+                          }}
+                        >
+                          Decline
+                        </p>
+                      </li>
+                    </ul>
+                  ),
+              )}
           </div>
         </div>
       </div>
@@ -241,45 +182,14 @@ const Table = ({ data, setData }) => {
           <Popup show={true} title="Check verification">
             <div className={styles.modal}>
               <div className={styles.lines}>
-                {data
-                  .find((item) => {
-                    if (Array.isArray(item) && item.length > 0) {
-                      const firstElement = item[0];
-                      if (
-                        firstElement &&
-                        typeof firstElement === "object" &&
-                        "id" in firstElement
-                      ) {
-                        return firstElement.id === selectedId;
-                      }
-                    }
-                    return false;
-                  })[2]
-                  .map((item, index) => (
-                    <div>
-                      {index === 0 && <h5 className={styles.level}>Level 1</h5>}
-                      {index === 5 && <h5 className={styles.level}>Level 2</h5>}
-                      {index === 7 && <h5 className={styles.level}>Level 3</h5>}
-                      <div className={styles.line} key={index}>
-                        <div className={styles.row}>
-                          <p>{item.type}</p>
-                          {item.verify && <img src={Correct} alt="" />}
-                        </div>
-
-                        {item.typeData == "photo" ? (
-                          item.file ? (
-                            <a href={item.file} download>
-                              <img src={Download} alt="" />
-                            </a>
-                          ) : (
-                            <div></div>
-                          )
-                        ) : (
-                          <p>{item.file}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                {Object.keys(selectedUser)?.length > 0 &&
+                  selectedUser?.userTextUrls?.map((doc, index) =>
+                    TextUrlSection(doc, index),
+                  )}
+                {Object.keys(selectedUser)?.length > 0 &&
+                  selectedUser?.userImageUrls?.map((doc, index) =>
+                    ImageUrlSection(doc, index),
+                  )}
               </div>
             </div>
             <div style={{ paddingTop: 20 }}>
@@ -310,7 +220,9 @@ const Table = ({ data, setData }) => {
                   Close
                 </Button>
 
-                <Button onClick={() => declineKYC(selectedId)}>Confirm</Button>
+                <Button onClick={() => declineKYC(selectedUser)}>
+                  Confirm
+                </Button>
               </div>
             </div>
           </Popup>
