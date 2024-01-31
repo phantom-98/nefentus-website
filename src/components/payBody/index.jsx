@@ -36,7 +36,7 @@ const PayBody = ({ invoice }) => {
     setAmount(invoice.productAmount);
     if (invoice.product) {
       fetchProductImage(invoice.product);
-      setPrice(invoice.product.price * amount);
+      setPrice(invoice.product.price * invoice.productAmount);
     } else {
       setPrice(invoice.price);
     }
