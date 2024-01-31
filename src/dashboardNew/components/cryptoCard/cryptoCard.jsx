@@ -93,12 +93,7 @@ const CryptoCard = ({ wallet }) => {
       <div className={styles.body}>
         {cryptList
           .filter((cryptItem) => {
-            if (
-              activeToggle &&
-              cryptItem?.value === 0 &&
-              cryptItem?.price === undefined
-            )
-              return false;
+            if (activeToggle && cryptItem?.value === 0) return false;
             return true;
           })
           .map((item, index) => {

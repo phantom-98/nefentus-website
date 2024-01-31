@@ -261,6 +261,7 @@ const SettingsItem = ({ data, setIsSaveData }) => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [selectDialogOpen, setSelectDialogOpen] = useState(false);
   const [label, setLabel] = useState(null);
+  const [file, setFile] = useState(null);
 
   const { t } = useTranslation();
 
@@ -292,12 +293,12 @@ const SettingsItem = ({ data, setIsSaveData }) => {
     fileInput.addEventListener("change", (e) => {
       const selectedFile = e.target.files[0];
       if (selectedFile) {
-        const imageURL = URL.createObjectURL(selectedFile);
+        // const imageURL = URL.createObjectURL(selectedFile);
 
-        data.setValue(imageURL);
+        // data.setValue(imageURL);
         setCropDialogOpen(true);
-        data.setFile(selectedFile);
-        data.setImageChanged(true);
+        setFile(selectedFile);
+        // data.setImageChanged(true);
       }
     });
   };
@@ -407,13 +408,17 @@ const SettingsItem = ({ data, setIsSaveData }) => {
       {data.type === "image" && (
         <CropDialog
           open={cropDialogOpen}
-          file={data.file}
+          file={file}
           aspect={1}
-          onClose={() => setCropDialogOpen(false)}
+          onClose={() => {
+            setCropDialogOpen(false);
+          }}
           onSave={(croppedImageData) => {
             setCropDialogOpen(false);
-            data.setFile(dataURLtoFile(croppedImageData, data.file.name));
+            if (!croppedImageData) return;
+            data.setFile(dataURLtoFile(croppedImageData, file.name));
             data.setValue(croppedImageData);
+            data.setImageChanged(true);
             setIsSaveData(true);
           }}
         />

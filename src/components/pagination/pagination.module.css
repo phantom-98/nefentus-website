@@ -21,6 +21,7 @@
 .pagination li {
   margin: 5px 10px;
   cursor: pointer;
+  color: var(--text-color);
 }
 
 .hide {
@@ -29,7 +30,7 @@
 }
 
 .pageInput {
-  background-color: black;
+  background-color: var(--background-color);
   color: white;
   font-size: 1.6rem;
   border: 1px solid white;

@@ -1,10 +1,6 @@
-.profileImage {
-  border-radius: 50%;
-  overflow: hidden;
-}
-
 .profileImage img,
 .profileImage svg {
+  border-radius: 50%;
   object-fit: cover;
   height: 2.5rem;
   width: 2.5rem;
