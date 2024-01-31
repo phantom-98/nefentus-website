@@ -893,7 +893,9 @@
       "seller": "Verkäufer",
       "price": "Stückpreis",
       "stock": "Auf Lager",
-      "buy": "Kaufen",
+      "buy": "Kaufen jetzt",
+      "quantity": "Menge",
+      "total": "Gesamt",
       "showLess": "Weniger zeigen",
       "showMore": "Mehr zeigen"
     },

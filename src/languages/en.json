@@ -942,8 +942,10 @@
       "description": "Product Description",
       "seller": "Seller",
       "price": "Unit Price",
-      "stock": "Stock Quantity",
-      "buy": "Buy",
+      "stock": "Product in stock",
+      "buy": "Buy now",
+      "quantity": "Quantity",
+      "total": "Total",
       "showLess": "Show less",
       "showMore": "Show more"
     },
