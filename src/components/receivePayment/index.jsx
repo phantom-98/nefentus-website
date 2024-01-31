@@ -26,7 +26,6 @@ import { currencies } from "../../constants";
 import { formatTokenBalance, formatUSDBalance } from "../../utils";
 import { useTranslation } from "react-i18next";
 import Popup from "../../dashboardNew/components/popup/popup";
-import { useTheme } from "../../context/themeContext/themeContext";
 
 const ReceivePayment = ({
   priceUSD,
@@ -40,7 +39,6 @@ const ReceivePayment = ({
   const { internalWalletAddress, fetchInternalWalletAddress } =
     useInternalWallet();
   const { t } = useTranslation();
-  const { theme } = useTheme();
 
   const externalWallets = [
     {
@@ -467,7 +465,6 @@ const SelectOption = ({
   alt,
   dropdown,
 }) => {
-  const { theme } = useTheme();
   return (
     <div
       className={styles.optionLineWrapper}
@@ -492,7 +489,6 @@ const SelectOption = ({
 };
 
 const Input = ({ label, placeholder, value, setValue, setChanged, type }) => {
-  const { theme } = useTheme();
   const handleChange = () => {
     if (setChanged) {
       setChanged(true);
@@ -600,7 +596,14 @@ export const ProductInfo = ({
   setChanged,
 }) => {
   const { t } = useTranslation();
-  const { theme } = useTheme();
+
+  useEffect(() => {
+    if (amount <= 0) {
+      setAmount(1);
+    }
+    setChanged(true);
+  }, [amount]);
+
   return (
     <div className={styles.productWrapper}>
       {productPic && productPic.toLowerCase() != "null" && (
@@ -612,11 +615,7 @@ export const ProductInfo = ({
           <p>{t("products.view.quantity")}</p>
           <div>
             <div onClick={() => setAmount((prev) => prev - 1)}>-</div>
-            <input
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              onBlur={() => setChanged(true)}
-            />
+            <input value={amount} onChange={(e) => setAmount(e.target.value)} />
             <div onClick={() => setAmount((prev) => prev + 1)}>+</div>
           </div>
         </div>
@@ -635,7 +634,6 @@ const SigninPopup = ({
   signin,
 }) => {
   const { t } = useTranslation();
-  const { theme } = useTheme();
   return (
     <Popup
       show={show}
