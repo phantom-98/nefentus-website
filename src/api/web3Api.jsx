@@ -241,11 +241,11 @@ export class web3Api {
         seniorBrokerAddress,
         leaderAddress,
         stablecoin.address,
-        minAmountOut,
+        ethers.utils.parseUnits(minAmountOut.toString(), 0),
         POOL_FEES,
         serviceFeeInt,
-        feeFreeInt,
-        { value: amountInInt },
+        ethers.utils.parseUnits(feeFreeInt.toString(), 0),
+        { value: ethers.utils.parseUnits(amountInInt.toString(), 0) },
       );
     } else {
       txRequest = await contract.depositToken(
@@ -256,11 +256,11 @@ export class web3Api {
         leaderAddress,
         currency.address,
         stablecoin.address,
-        amountInInt,
-        minAmountOut,
+        ethers.utils.parseUnits(amountInInt.toString(), 0),
+        ethers.utils.parseUnits(minAmountOut.toString(), 0),
         POOL_FEES,
         serviceFeeInt,
-        feeFreeInt,
+        ethers.utils.parseUnits(feeFreeInt.toString(), 0),
       );
     }
     const txReceipt = await txRequest.wait();

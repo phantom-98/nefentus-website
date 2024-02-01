@@ -5,9 +5,17 @@
 
 .wrapper {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 12%;
+  gap: 10%;
+}
+
+@media screen and (max-width: 900px) {
+  .wrapper {
+    flex-direction: column;
+    gap: 40px;
+  }
 }
 
 .infoWrapper {

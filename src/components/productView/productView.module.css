@@ -4,9 +4,17 @@
 }
 .wrapper {
   display: flex;
+  flex-direction: row;
   width: 100%;
   align-items: flex-start;
   gap: 8%;
+}
+
+@media screen and (max-width: 900px) {
+  .wrapper {
+    flex-direction: column;
+    gap: 40px;
+  }
 }
 
 .imageWrapper {
