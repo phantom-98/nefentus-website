@@ -1156,10 +1156,10 @@
   },
   "invoice": {
     "title": "Invoice",
-    "description": "Enter your VAT number and confirm if you want to receive invoices.",
+    "description": "Enter settings that are related to payments on Nefentus.",
     "vatNumber": "VAT Number",
     "enableInvoicing": "Enable invoicing",
-    "walletAddress": "Wallet to receive funds",
+    "walletAddress": "Funds receiving wallet",
     "walletDescription": "Choose the wallet that receives funds when creating an invoice or selling product.",
     "stablecoin": "Stablecoin",
     "stablecoinDescription": "Choose the stablecoin that should be converted to.",
