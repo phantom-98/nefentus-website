@@ -112,12 +112,16 @@ const WalletConnection = ({
       <div className={styles.walletInfoWrap}>
         <div>
           <div style={{ display: "flex" }}>
-            <div style={{ paddingLeft: 5 }}>
+            <div>
               {walletAddress ? (
                 name == "MetaMask" ? (
                   <img
                     src={MetaMaskLogo}
-                    style={{ width: "50px", height: "30px" }}
+                    style={{
+                      minWidth: "30px",
+                      maxWidth: "50px",
+                      height: "30px",
+                    }}
                     alt={`${name}`}
                   />
                 ) : name == "WalletConnect" ? (
@@ -142,18 +146,11 @@ const WalletConnection = ({
                 <div className={styles.walletAddress}>
                   {`${wallet.address.substring(
                     0,
-                    10,
-                  )}...${wallet.address.substring(wallet.address.length - 10)}`}
+                    6,
+                  )} .... ${wallet.address.substring(
+                    wallet.address.length - 4,
+                  )}`}
                 </div>
-              </div>
-            )}
-            {wallet.address && (
-              <div className={styles.walletBalanceTitle}>
-                Wallet balance:{" "}
-                <span className={styles.walletBalance}>
-                  {wallet?.balance?.data?.displayValue.slice(0, 5)}{" "}
-                  {wallet?.balance?.data?.symbol}
-                </span>
               </div>
             )}
           </div>

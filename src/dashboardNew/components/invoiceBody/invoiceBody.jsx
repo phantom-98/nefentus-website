@@ -138,11 +138,11 @@ const InvoicesBody = () => {
         <div
           style={{
             paddingTop: 20,
-            borderBottom:
-              theme === "dark"
-                ? "solid 1px rgba(255,255,255,0.1)"
-                : "solid 1px rgba(0,0,0,0.1)",
-            paddingBottom: 20,
+            // borderBottom:
+            //   theme === "dark"
+            //     ? "solid 1px rgba(255,255,255,0.1)"
+            //     : "solid 1px rgba(0,0,0,0.1)",
+            // paddingBottom: 20,
           }}
         >
           <WalletSetting
@@ -153,7 +153,7 @@ const InvoicesBody = () => {
             }}
           />
         </div>
-        <div style={{ paddingTop: 20 }}>
+        {/* <div style={{ paddingTop: 20 }}>
           <StablecoinSetting
             value={stablecoin}
             setValue={(c) => {
@@ -161,7 +161,7 @@ const InvoicesBody = () => {
               setchanged(true);
             }}
           />
-        </div>
+        </div> */}
       </Card>
       <div></div>
     </div>

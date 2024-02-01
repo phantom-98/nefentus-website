@@ -22,6 +22,7 @@ import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
 import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
 import { getCurrentWallet, setCurrentWallet } from "../../../utils";
+import backendAPI from "../../../api/backendAPI";
 
 const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
   const [firstName] = useState(localStorage.getItem("firstName"));
@@ -29,6 +30,7 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
   const [email] = useState(localStorage.getItem("email"));
   const [profileImage] = useState(localStorage.getItem("profile_pic"));
   const [walletOptions, setWalletOptions] = useState([]);
+  const backend_API = new backendAPI();
 
   const { internalWalletAddress, fetchInternalWalletAddress } =
     useInternalWallet();

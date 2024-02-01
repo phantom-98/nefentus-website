@@ -1073,7 +1073,7 @@
   },
   "invoice": {
     "title": "Rechnung",
-    "description": "Geben Sie Ihre Mehrwertsteuernummer ein und bestätigen Sie, ob Sie Rechnungen erhalten möchten.",
+    "description": "Setzen Sie Einstellungen für Zahlungen auf Nefentus.",
     "vatNumber": "Umsatzsteuernummer",
     "enableInvoicing": "Rechnungen aktivieren",
     "walletAddress": "Wallet zum Empfangen von Zahlungen",
@@ -1087,11 +1087,11 @@
       "select": "Wählen",
       "turnOff": "Aus",
       "turnOn": "An",
-      "connectedWallets": "Verbundene Geldbörsen",
-      "connectWallet": "Neues Geldbörsen verbinden",
-      "connected": "In Verbindung gebracht",
+      "connectedWallets": "Verbundene Wallets",
+      "connectWallet": "Neue Wallet verbinden",
+      "connected": "Verbunden",
       "disconnected": "Getrennt",
-      "selectCoin": "Wählen Sie Stablecoin"
+      "selectCoin": "Wählen Sie einen Stablecoin"
     }
   },
   "identification": {
