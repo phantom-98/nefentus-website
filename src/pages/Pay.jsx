@@ -14,7 +14,7 @@ const Pay = () => {
   async function loadInvoice() {
     const newInvoice = await backend_API.getInvoice(payLink);
     if (newInvoice) setInvoice(newInvoice);
-    console.log(newInvoice);
+    console.log(newInvoice, "invoice", payLink);
   }
 
   useEffect(() => {

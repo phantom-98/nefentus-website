@@ -142,7 +142,7 @@ const IncomeCard = ({ data }) => {
 
   return (
     <Card className={styles.card}>
-      <div className={styles.label}>{t("dashboard.incomeTitle")}</div>
+      <div className={styles.label}>{t("dashboard.balanceTitle")}</div>
 
       {Object.keys(data).length != 0 && (
         <div className={styles.chart}>

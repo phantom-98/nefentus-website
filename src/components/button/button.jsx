@@ -23,7 +23,11 @@ const Button = ({
       }}
       onMouseOut={(e) => {
         if (theme == "light") {
-          e.target.style.color = "#f6f9fc";
+          if (disabled || color == "white") {
+            e.target.style.color = "#111111";
+          } else {
+            e.target.style.color = "#f6f9fc";
+          }
         }
       }}
       onClick={onClick}

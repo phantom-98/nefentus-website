@@ -379,7 +379,7 @@
     "overviewSubtitle": "Prüfen Sie Informationen über Einkommen, Klicks und Registrierungen.",
     "addUser": "Benutzer hinzufügen",
     "vendorButton": "Verkäufer-Dashboard",
-    "income": "Einkommen",
+    "refIncome": "Referral Einkommen",
     "totalIncome": "Gesamtes Einkommen",
     "clicks": "Klicks",
     "registrations": "Anmeldungen",
@@ -393,6 +393,7 @@
     "plan": "Plan",
     "enterprise": "Unternehmen",
     "balance": "Saldo",
+    "currencies": "Kryptowährungen",
     "cryptoMarket": "Krypto-Markt",
     "hideBalance": "Währungen mit Null-Saldo ausblenden",
     "send": "Senden",
@@ -408,7 +409,7 @@
     "charts": {
       "last24h": "Letzte 24 Stunden",
       "previous24h": "Vorherige 24 Stunden",
-      "lastWeek": "Letzte Woche (Hinweis: Diese Grafik wird täglich aktualisiert)",
+      "lastWeek": "Krypto-Wert (Hinweis: Diese Grafik wird täglich aktualisiert)",
       "days": {
         "monday": "Montag",
         "tuesday": "Dienstag",
@@ -455,7 +456,7 @@
       "third": "Verkäufe: Letzte 30 Tage",
       "progress": "im Vergleich zu den letzten 30 Tagen"
     },
-    "incomeTitle": "Einkommen letzte Woche",
+    "balanceTitle": "Saldo diese Woche",
     "cryptoCard": {
       "receiveModal": {
         "title": "Kryptowährung empfangen",
@@ -888,6 +889,17 @@
     "connect": "Verbinden mit ",
     "login": "Einloggen in ",
     "topInfoDescription": "Sie können dieses Produkt mit MetaMask oder Nefentus Wallet kaufen, falls Sie ein Nefentus-Konto haben.",
+    "view": {
+      "description": "Produkt-Beschreibung",
+      "seller": "Verkäufer",
+      "price": "Stückpreis",
+      "stock": "Auf Lager",
+      "buy": "Kaufen jetzt",
+      "quantity": "Menge",
+      "total": "Gesamt",
+      "showLess": "Weniger zeigen",
+      "showMore": "Mehr zeigen"
+    },
     "error": {
       "name": "Name ist erforderlich!",
       "description": "Beschreibung ist erforderlich!",
@@ -921,7 +933,7 @@
   "payments": {
     "title": "Neue Rechnung erstellen",
     "enterAmount": "Betrag in $ eingeben",
-    "amount": "Betrag",
+    "amount": "Anzahl",
     "email": "E-Mail",
     "name": "Name",
     "company": "Firma",
@@ -940,12 +952,12 @@
       "qr": "QR-Code",
       "actions": "Aktionen"
     },
-    "price": "Preis",
+    "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
     "total": "Gesamtbetrag",
     "cryptoAmount": "Kryptowährungsbetrag",
     "chooseWallet": "Wallet auswählen",
-    "payButton": "Bezahlen",
+    "payButton": "Kaufen",
     "agree": "Durch Anklicken der Schaltfläche erklären Sie sich mit den",
     "terms": "Bedingungen des Dienstes",
     "agree2": "einverstanden",

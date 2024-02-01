@@ -5,9 +5,17 @@
 
 .wrapper {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  gap: 14%;
+  gap: 10%;
+}
+
+@media screen and (max-width: 900px) {
+  .wrapper {
+    flex-direction: column;
+    gap: 40px;
+  }
 }
 
 .infoWrapper {
@@ -25,7 +33,6 @@
 
 .imageWrapper {
   height: 23rem;
-  background-color: gray;
   width: 100%;
   border-radius: 0.5rem;
   overflow: hidden;
@@ -60,8 +67,8 @@
   justify-content: center;
   align-items: flex-start;
   border-radius: 6px;
-  border: 1px solid #313131;
-  background: #1f1f1f;
+  border: 1px solid var(--border-color, #313131);
+  background: var(--bg2-color, #1f1f1f);
 }
 
 .optionLineWrapper {
@@ -70,12 +77,12 @@
   padding: 12px;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #313131;
+  /* border: 0.5px solid var(--border-color, #313131); */
   /* border-radius: 1rem; */
-  background: #1f1f1f;
+  background: var(--bg2-color, #1f1f1f);
 }
 .optionLineWrapper:hover {
-  background: #272729;
+  background: var(--card-color, #272729);
 }
 
 .optionLine {
@@ -93,7 +100,7 @@
   align-items: center;
   gap: 10px;
   border-radius: 43px;
-  background: #313131;
+  background: var(--border-color, #313131);
 }
 
 .optionContainer {
@@ -114,11 +121,11 @@
 }
 
 .optionTitle {
-  color: #f6f6f6;
+  color: var(--text-color, #f6f6f6);
 }
 
 .optionDescription {
-  color: #b1b1b1;
+  color: var(--text2-color, #b1b1b1);
 }
 
 .total {
@@ -127,7 +134,7 @@
   justify-content: space-between;
   align-items: flex-start;
   align-self: stretch;
-  border-bottom: 1px solid #313131;
+  border-bottom: 1px solid var(--border-color, #313131);
   font-size: 18px;
   font-weight: 500;
 }
@@ -140,6 +147,8 @@
   align-items: flex-start;
   gap: 12px;
   align-self: stretch;
+  border-bottom: 1px solid var(--border-color, #313131);
+  border-top: 1px solid var(--border-color, #313131);
 }
 
 .chooseWallet {
@@ -150,12 +159,14 @@
   align-self: stretch;
   font-size: 18px;
   font-weight: 500;
+  color: var(--text2-color, #b1b1b1);
 }
 
 .select {
   width: 100%;
   background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color, #313131);
+  border-radius: 8px;
   position: relative;
 }
 
@@ -172,7 +183,7 @@
   flex-direction: column;
   bottom: 0;
   transform: translateY(100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color, #313131);
 
   z-index: 100;
 }
@@ -190,6 +201,11 @@
   /* align-self: stretch; */
 }
 
+.sellerWrapper > p {
+  font-size: 1.4rem;
+  color: var(--text2-color, #b1b1b1);
+}
+
 .sellerContainer {
   display: flex;
   padding: 16px;
@@ -198,8 +214,8 @@
   gap: 16px;
   align-self: stretch;
   border-radius: 6px;
-  border: 1px solid #313131;
-  background: #1f1f1f;
+  border: 1px solid var(--border-color, #313131);
+  background: transparent;
 }
 
 .avatarWrapper {
@@ -218,16 +234,21 @@
   justify-content: space-between;
   padding-left: 0px;
   padding-right: 16px;
+  border-right: 1px solid var(--border-color, #313131);
+}
+
+.sellerInfo:last-child {
+  border-right: none;
 }
 
 .sellerTitle {
   font-size: 1.2rem;
-  color: #b1b1b1;
+  color: var(--text2-color, #b1b1b1);
 }
 
 .sellerValue {
   font-size: 1.4rem;
-  color: #f6f6f6;
+  color: var(--text-color, #f6f6f6);
 }
 
 .payInfoWrapper {
@@ -247,12 +268,12 @@
 
 .headerTitle {
   font-size: 2.4rem;
-  color: #f6f6f6;
+  color: var(--text-color, #f6f6f6);
 }
 
 .headerDescription {
   font-size: 1.2rem;
-  color: #b1b1b1;
+  color: var(--text2-color, #b1b1b1);
 }
 
 .payInfoBody {
@@ -272,7 +293,7 @@
 
 .label {
   font-size: 1.2rem;
-  color: #b1b1b1;
+  color: var(--text2-color, #b1b1b1);
   font-weight: 500;
 }
 
@@ -286,16 +307,15 @@
 }
 
 .input {
-  color: #b1b1b1;
+  color: var(--text2-color, #b1b1b1);
   font-size: 1.2rem;
   padding: 0px 12px;
   height: 56px;
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   outline: 0 !important;
-  border: 1px solid #313131;
-  background: #1f1f1f;
+  border: 1px solid var(--border-color, #313131);
+  background: transparent;
 }
 
 .inputWrapper input::placeholder {
@@ -310,11 +330,12 @@
   align-items: start;
   gap: 8px;
   align-self: stretch;
+  border-bottom: 1px solid var(--border-color, #313131);
 }
 
 .cryptoTitle {
   font-size: 14px;
-  color: #7b7b7b;
+  color: var(--text2-color, #b1b1b1);
 }
 .cryptoBody {
   width: 100%;
@@ -329,93 +350,77 @@
   padding: 8px;
   text-align: center;
   font-size: 28px;
-  color: #f6f6f6;
-  border: 1px solid #313131;
+  color: var(--text-color, #f6f6f6);
+  border: 1px solid var(--border-color, #313131);
+  border-radius: 8px;
 }
 
 .productWrapper {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   align-self: stretch;
-}
-
-.productInfo {
-  display: flex;
-  padding: 0px 24px;
-  align-items: flex-start;
-  align-self: stretch;
-  border-top: 1px solid #313131;
-  border-bottom: 1px solid #313131;
-}
-.productPriceContainer,
-.productAmountContainer {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1 0 0;
-  align-self: stretch;
-}
-.productPriceContainer {
-  padding: 16px 0px;
-  border-right: 1px solid #313131;
-}
-.productAmountContainer {
-  padding: 16px 24px;
-}
-
-.productLabel {
-  color: white;
-  font-size: 14px;
-}
-
-.productValue {
-  padding: 4px 16px;
-  border-radius: 6px;
-  background: #272729;
-  color: #b1b1b1;
-  font-size: 18px;
-}
-
-input.productValue {
-  width: 80px;
-  border: none;
-  outline: none;
-  padding: 8px 16px;
-}
-
-.productImage {
-  display: flex;
-  padding: 24px 24px 0px 24px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  padding: 24px;
   gap: 16px;
-  align-self: stretch;
 }
-.productInfoTitle {
-  color: white;
-  font-size: 18px;
-}
-.productImageWrapper {
+
+.productWrapper img {
   height: 100px;
   width: 100%;
   border-radius: 8px;
   object-fit: cover;
 }
-.productImageWrapper:hover {
-  object-fit: contain;
-}
-.productLandscape {
+
+.productInfo {
   display: flex;
-  padding: 8px;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: flex-start;
-  gap: 8px;
   align-self: stretch;
-  background: #272729;
+}
+
+.productInfo h1 {
+  font-size: 1.6rem;
+  color: var(--text-color, #f6f6f6);
+}
+
+.quantityWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.quantityWrapper > p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text2-color, #b1b1b1);
+}
+
+.quantityWrapper > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.quantityWrapper > div > div {
+  border: 2px solid var(--border-color, #313131);
   border-radius: 8px;
+  padding: 0px 8px;
+  font-size: 1.4rem;
+  color: var(--text3-color, #e9e9e9);
+}
+
+.quantityWrapper input {
+  outline: none !important;
+  border: none !important;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.6rem;
+  width: 32px;
+  color: var(--text3-color, #e9e9e9);
+  background-color: transparent;
 }
 
 .signinContainer {
@@ -426,12 +431,13 @@ input.productValue {
   align-self: stretch;
 }
 
-.signinContainer .title {
+.signinContainer > div:first-child p:first-child {
   font-size: 1.8rem;
+  color: var(--text-color, #f6f6f6);
 }
 
-.signinContainer .description {
+.signinContainer > div:first-child p:last-child {
   font-size: 1.2rem;
-  opacity: 0.6;
+  color: var(--text2-color, #b1b1b1);
   max-width: 360px;
 }

@@ -429,7 +429,7 @@
     "overviewSubtitle": "Check information on income, clicks, and registrations.",
     "addUser": "Add User",
     "vendorButton": "Vendor Dashboard",
-    "income": "Income",
+    "refIncome": "Referral Income",
     "totalIncome": "Total Income",
     "clicks": "Clicks",
     "registrations": "Registrations",
@@ -443,6 +443,7 @@
     "plan": "Plan",
     "enterprise": "Enterprise",
     "balance": "Balance",
+    "currencies": "Cryptocurrencies",
     "cryptoMarket": "Crypto Market",
     "hideBalance": "Hide Zero Balance Assets",
     "send": "Send",
@@ -450,7 +451,7 @@
     "charts": {
       "last24h": "Last 24h",
       "previous24h": "Previous 24h",
-      "lastWeek": "Last Week (Note: This graph will update everyday)",
+      "lastWeek": "Crypto value (Note: This graph updates every day)",
       "days": {
         "monday": "Monday",
         "tuesday": "Tuesday",
@@ -506,7 +507,7 @@
       "third": "Sales: Last 30 days",
       "progress": "vs last 30 days"
     },
-    "incomeTitle": "Income Last Week",
+    "balanceTitle": "Balance this week",
     "cryptoCard": {
       "receiveModal": {
         "title": "Receive funds",
@@ -938,6 +939,17 @@
     "connecting": "Connecting...",
     "topInfoTitle": "Buy product",
     "topInfoDescription": "You can buy this product using MetaMask or Nefentus Wallet, in case you have a Nefentus account.",
+    "view": {
+      "description": "Product Description",
+      "seller": "Seller",
+      "price": "Unit Price",
+      "stock": "Product in stock",
+      "buy": "Buy now",
+      "quantity": "Quantity",
+      "total": "Total",
+      "showLess": "Show less",
+      "showMore": "Show more"
+    },
     "error": {
       "name": "Name is required!",
       "description": "Description is required!",

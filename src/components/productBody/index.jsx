@@ -1,56 +1,107 @@
 import styles from "./productBody.module.css";
 import { useState, useEffect } from "react";
 import ReceivePayment from "../receivePayment";
-import TopInfo from "../../dashboard/topInfo/topInfo";
 import backendAPI from "../../api/backendAPI";
 import { useTranslation } from "react-i18next";
 import { PaymentInfo, ProductInfo } from "../receivePayment";
 
-const ProductBody = ({ product }) => {
+const ProductBody = ({ product, quantity }) => {
   const backend_API = new backendAPI();
   const [imageSource, setImageSource] = useState(null);
   const { t } = useTranslation();
   async function fetchProductImage() {
     if (product.s3Key) {
-      console.log("Fetch image");
       const newImageSource = await backend_API.getProductImage(product.link);
       if (newImageSource) setImageSource(newImageSource);
     }
   }
 
+  const [email, setEmail] = useState();
+  const [name, setName] = useState();
+  const [company, setCompany] = useState();
+  const [address, setAddress] = useState();
+  const [tax, setTax] = useState();
+  const [changed, setChanged] = useState(false);
+  const [amount, setAmount] = useState(quantity || 1);
+  const [link, setLink] = useState(null);
+  const [price, setPrice] = useState(0);
+  const [invoiceId, setInvoiceId] = useState(null);
+
+  const updateInvoiceData = async () => {
+    const req = {
+      amountUSD: price,
+      name,
+      email,
+      company,
+      address,
+      taxNumber: tax,
+      product,
+      productAmount: amount,
+    };
+    const data = await backend_API.updateInvoice(link, req);
+    if (data) {
+      setLink(data.link);
+      setInvoiceId(data.id);
+      console.log("success");
+    } else {
+      console.log("failed");
+    }
+  };
+
   useEffect(() => {
     if (product) {
       fetchProductImage();
+      setPrice(product.price * amount);
     }
   }, [product]);
 
+  useEffect(() => {
+    if (changed) {
+      updateInvoiceData();
+      setChanged(false);
+    }
+  }, [changed]);
+
+  useEffect(() => {
+    if (product.stock != -1 && amount > product.stock) {
+      setAmount(product.stock);
+    }
+    if (amount >= 0) {
+      setPrice(product.price * amount);
+    } else {
+      setPrice(0);
+    }
+  }, [amount]);
+
   return (
     <ReceivePayment
-      priceUSD={product.price}
-      userId={product.user ? product.user.id : null}
-      transInfoArg={{ productId: product.id }}
-      disabled={product.stock === 0}
+      priceUSD={price}
+      seller={product.user}
+      transInfoArg={{ productId: product.id, invoiceId: invoiceId }}
+      valid={name && email}
       info={
         <PaymentInfo
-        // fullName={name}
-        // setFullName={setName}
-        // email={email}
-        // setEmail={setEmail}
-        // address={address}
-        // setAddress={setAddress}
-        // business={company}
-        // setBusiness={setCompany}
-        // tax={tax}
-        // setTax={setTax}
+          fullName={name}
+          setFullName={setName}
+          email={email}
+          setEmail={setEmail}
+          address={address}
+          setAddress={setAddress}
+          business={company}
+          setBusiness={setCompany}
+          tax={tax}
+          setTax={setTax}
+          setChanged={setChanged}
         />
       }
       children={
         <ProductInfo
           productPic={imageSource}
           name={product.name}
-          description={product.description}
           price={product.price}
-          amount={product.stock}
+          amount={amount}
+          setAmount={setAmount}
+          setChanged={setChanged}
         />
       }
     />

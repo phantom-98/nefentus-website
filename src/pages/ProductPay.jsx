@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import backendAPI from "../api/backendAPI";
-import ProductView from "../components/productView";
+import ProductBody from "../components/productBody";
+import { ThirdwebProvider, metamaskWallet } from "@thirdweb-dev/react";
 
 const Product = () => {
   const [product, setProduct] = useState({});
   const params = useParams();
   const productLink = params.productLink;
+  const { state } = useLocation();
+  const { defaultQuantity } = state || {};
+
   const backend_API = new backendAPI();
 
   async function loadProduct() {
@@ -24,7 +28,13 @@ const Product = () => {
       <Helmet>
         <title>{product.name ? product.name : ""} | Nefentus</title>
       </Helmet>
-      <ProductView product={product} />
+      <ThirdwebProvider
+        activeChain="ethereum"
+        supportedWallets={[metamaskWallet()]}
+        clientId="639eea2ebcabed7eab90b56aceeed08b"
+      >
+        <ProductBody product={product} quantity={defaultQuantity} />
+      </ThirdwebProvider>
     </div>
   );
 };
