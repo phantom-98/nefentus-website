@@ -410,4 +410,48 @@ export default class adminDashboardApi {
       return null; // or return some default value
     }
   }
+
+  async patchPreferredWallet(payload) {
+    try {
+      const url = `${this.baseURL}/preferred-wallet`;
+      const options = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(payload),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      this.updateToken(response);
+      return true;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async getPreferredWallet() {
+    try {
+      const url = `${this.baseURL}/preferred-wallet`;
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      this.updateToken(response);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
 }

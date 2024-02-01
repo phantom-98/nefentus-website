@@ -159,7 +159,14 @@ const WalletSetting = ({ value, setValue }) => {
                   <img src={NefentusLogo} style={{ width: "2rem" }} alt="" />
                 </div>
                 <span className={styles.text}>
-                  {walletAddress.address || "Not available"}
+                  {walletAddress.address?.length
+                    ? `${walletAddress.address.substring(
+                        0,
+                        6,
+                      )} .... ${walletAddress.address.substring(
+                        walletAddress.address.length - 4,
+                      )}`
+                    : "Not available"}
                 </span>
               </div>
             </div>
