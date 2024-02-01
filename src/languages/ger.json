@@ -888,6 +888,17 @@
     "connect": "Verbinden mit ",
     "login": "Einloggen in ",
     "topInfoDescription": "Sie können dieses Produkt mit MetaMask oder Nefentus Wallet kaufen, falls Sie ein Nefentus-Konto haben.",
+    "view": {
+      "description": "Produkt-Beschreibung",
+      "seller": "Verkäufer",
+      "price": "Stückpreis",
+      "stock": "Auf Lager",
+      "buy": "Kaufen jetzt",
+      "quantity": "Menge",
+      "total": "Gesamt",
+      "showLess": "Weniger zeigen",
+      "showMore": "Mehr zeigen"
+    },
     "error": {
       "name": "Name ist erforderlich!",
       "description": "Beschreibung ist erforderlich!",
@@ -921,7 +932,7 @@
   "payments": {
     "title": "Neue Rechnung erstellen",
     "enterAmount": "Betrag in $ eingeben",
-    "amount": "Betrag",
+    "amount": "Anzahl",
     "email": "E-Mail",
     "name": "Name",
     "company": "Firma",
@@ -939,12 +950,12 @@
       "qr": "QR-Code",
       "actions": "Aktionen"
     },
-    "price": "Preis",
+    "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
     "total": "Gesamtbetrag",
     "cryptoAmount": "Kryptowährungsbetrag",
     "chooseWallet": "Wallet auswählen",
-    "payButton": "Bezahlen",
+    "payButton": "Kaufen",
     "agree": "Durch Anklicken der Schaltfläche erklären Sie sich mit den",
     "terms": "Bedingungen des Dienstes",
     "agree2": "einverstanden",

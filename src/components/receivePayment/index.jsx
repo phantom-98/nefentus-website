@@ -26,7 +26,6 @@ import { currencies } from "../../constants";
 import { formatTokenBalance, formatUSDBalance } from "../../utils";
 import { useTranslation } from "react-i18next";
 import Popup from "../../dashboardNew/components/popup/popup";
-import { useTheme } from "../../context/themeContext/themeContext";
 
 const ReceivePayment = ({
   priceUSD,
@@ -35,11 +34,11 @@ const ReceivePayment = ({
   info,
   transInfoArg,
   disabled,
+  valid,
 }) => {
   const { internalWalletAddress, fetchInternalWalletAddress } =
     useInternalWallet();
   const { t } = useTranslation();
-  const { theme } = useTheme();
 
   const externalWallets = [
     {
@@ -197,7 +196,7 @@ const ReceivePayment = ({
     } else {
       !isDisable && setDisable(true);
     }
-  }, [balances, prices]);
+  }, [balances, prices, priceUSD]);
 
   useEffect(() => {
     const currency = currencies()[selectedCryptoIndex];
@@ -221,7 +220,7 @@ const ReceivePayment = ({
     } else {
       setCryptoAmount("Loading...");
     }
-  }, [selectedCryptoIndex, prices]);
+  }, [selectedCryptoIndex, prices, priceUSD]);
 
   async function registerWallet(externalWallet) {
     if (!externalWallet.address) return;
@@ -231,6 +230,11 @@ const ReceivePayment = ({
   }
 
   async function doPayment() {
+    if (!valid) {
+      setErrorMessage("You need to input your name and email address.");
+      return;
+    }
+
     pwd && setPwd(false);
     if (isDisable) return;
 
@@ -295,16 +299,8 @@ const ReceivePayment = ({
         <div className={styles.infoWrapper}>
           {seller && (
             <div className={styles.sellerWrapper}>
-              <p style={{ fontSize: "1.2rem", color: "#B1B1B1" }}>
-                {t("payments.seller")}
-              </p>
-              <div
-                className={styles.sellerContainer}
-                style={{
-                  backgroundColor: `${theme == "dark" ? "" : "white"}`,
-                  borderColor: `${theme == "dark" ? "" : "#0000001a"}`,
-                }}
-              >
+              <p>{t("payments.seller")}</p>
+              <div className={styles.sellerContainer}>
                 <div className={styles.avatarWrapper}>
                   {seller.s3Url && (
                     <img
@@ -329,58 +325,26 @@ const ReceivePayment = ({
                     </span>
                   )}
                 </div>
-                <div
-                  className={styles.sellerInfo}
-                  style={{
-                    borderRight: `1px solid ${
-                      theme == "dark" ? "#313131" : "#0000001a"
-                    }`,
-                  }}
-                >
+                <div className={styles.sellerInfo}>
                   <p className={styles.sellerTitle}>{t("payments.name")}</p>
-                  <p
-                    className={styles.sellerValue}
-                    style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
-                  >
+                  <p className={styles.sellerValue}>
                     {seller.firstName} {seller.lastName}
                   </p>
                 </div>
-                <div
-                  className={styles.sellerInfo}
-                  style={{
-                    borderRight: `1px solid ${
-                      theme == "dark" ? "#313131" : "#0000001a"
-                    }`,
-                  }}
-                >
+                <div className={styles.sellerInfo}>
                   <p className={styles.sellerTitle}>{t("payments.email")}</p>
-                  <p
-                    className={styles.sellerValue}
-                    style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
-                  >
-                    {seller.email}
-                  </p>
+                  <p className={styles.sellerValue}>{seller.email}</p>
                 </div>
                 <div className={styles.sellerInfo}>
                   <p className={styles.sellerTitle}>{t("payments.company")}</p>
-                  <p
-                    className={styles.sellerValue}
-                    style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
-                  >
-                    {seller.business}
-                  </p>
+                  <p className={styles.sellerValue}>{seller.business}</p>
                 </div>
               </div>
             </div>
           )}
           <div className={styles.payInfoWrapper}>
             <div className={styles.payInfoHeader}>
-              <h1
-                className={styles.headerTitle}
-                style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
-              >
-                {t("payments.pay.title")}
-              </h1>
+              <h1 className={styles.headerTitle}>{t("payments.pay.title")}</h1>
               <p className={styles.headerDescription}>
                 {t("payments.pay.description")}
               </p>
@@ -390,57 +354,13 @@ const ReceivePayment = ({
         </div>
 
         <div className={styles.productBuy}>
-          <div
-            className={styles.body}
-            style={{
-              backgroundColor: `${theme == "dark" ? "" : "white"}`,
-              borderColor: `${theme == "dark" ? "" : "#0000001a"}`,
-            }}
-          >
-            <div
-              className={styles.total}
-              style={{
-                borderBottom: `1px solid ${
-                  theme == "dark" ? "#313131" : "#0000001a"
-                }`,
-              }}
-            >
+          <div className={styles.body}>
+            <div className={styles.total}>
               <p>{t("payments.total")}</p>
               <p>${formatUSDBalance(priceUSD)}</p>
             </div>
             {children}
-            <div className={styles.crypto}>
-              <p className={styles.cryptoTitle}>{t("payments.cryptoAmount")}</p>
-              <div className={styles.cryptoBody}>
-                <div
-                  className={styles.cryptoAmount}
-                  style={{
-                    color: theme == "dark" ? "" : "#111111",
-                    borderColor: theme == "dark" ? "" : "#0000001a",
-                  }}
-                >
-                  {cryptoAmount}
-                </div>
-                <div style={{ width: "50%" }}>
-                  <Select
-                    data={cryptos}
-                    selectedIndex={selectedCryptoIndex}
-                    setSelectedIndex={setSelectedCryptoIndex}
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              className={styles.walletWrapper}
-              style={{
-                borderBottom: `1px solid ${
-                  theme == "dark" ? "#313131" : "#0000001a"
-                }`,
-                borderTop: `1px solid ${
-                  theme == "dark" ? "#313131" : "#0000001a"
-                }`,
-              }}
-            >
+            <div className={styles.walletWrapper}>
               <div className={styles.chooseWallet}>
                 <p>{t("payments.chooseWallet")}</p>
               </div>
@@ -449,6 +369,19 @@ const ReceivePayment = ({
                 selectedIndex={selectedWalletIndex}
                 setSelectedIndex={setSelectedWalletIndex}
               />
+            </div>
+            <div className={styles.crypto}>
+              <p className={styles.cryptoTitle}>{t("payments.cryptoAmount")}</p>
+              <div className={styles.cryptoBody}>
+                <div className={styles.cryptoAmount}>{cryptoAmount}</div>
+                <div style={{ width: "50%" }}>
+                  <Select
+                    data={cryptos}
+                    selectedIndex={selectedCryptoIndex}
+                    setSelectedIndex={setSelectedCryptoIndex}
+                  />
+                </div>
+              </div>
             </div>
             <div className={styles.paymentWrapper}>
               <Button
@@ -494,7 +427,7 @@ const Select = ({ data, selectedIndex, setSelectedIndex }) => {
   return (
     <>
       <div
-        className={`option ${styles.select}`}
+        className={`${styles.select}`}
         onClick={() => setOpen((prev) => !prev)}
       >
         <SelectOption
@@ -532,30 +465,19 @@ const SelectOption = ({
   alt,
   dropdown,
 }) => {
-  const { theme } = useTheme();
   return (
     <div
       className={styles.optionLineWrapper}
       style={{
-        backgroundColor: `${theme == "dark" ? "" : "white"}`,
-        borderColor: `${theme == "dark" ? "" : "#0000001a"}`,
+        borderRadius: dropdown ? "8px" : "0",
       }}
     >
       <div className={styles.optionLine}>
-        <div
-          className={styles.iconContainer}
-          style={{ backgroundColor: `${theme == "dark" ? "" : "#0000001a"}` }}
-        >
+        <div className={styles.iconContainer}>
           <img src={icon} className={styles.icon} alt={alt} />
         </div>
         <div className={styles.optionContainer}>
-          <p
-            className={styles.optionTitle}
-            style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
-          >
-            {" "}
-            {optionTitle}{" "}
-          </p>
+          <p className={styles.optionTitle}> {optionTitle} </p>
           {optionDescription && (
             <p className={styles.optionDescription}> {optionDescription} </p>
           )}
@@ -567,7 +489,6 @@ const SelectOption = ({
 };
 
 const Input = ({ label, placeholder, value, setValue, setChanged, type }) => {
-  const { theme } = useTheme();
   const handleChange = () => {
     if (setChanged) {
       setChanged(true);
@@ -580,7 +501,6 @@ const Input = ({ label, placeholder, value, setValue, setChanged, type }) => {
 
       <input
         className={styles.input}
-        style={{ backgroundColor: `${theme == "dark" ? "" : "white"}` }}
         placeholder={placeholder}
         type={type ? "password" : "text"}
         value={value}
@@ -670,79 +590,34 @@ export const PaymentInfo = ({
 export const ProductInfo = ({
   productPic,
   name,
-  description,
   price,
   amount,
   setAmount,
+  setChanged,
 }) => {
   const { t } = useTranslation();
-  const { theme } = useTheme();
+
+  useEffect(() => {
+    if (amount <= 0) {
+      setAmount(1);
+    }
+    setChanged(true);
+  }, [amount]);
+
   return (
     <div className={styles.productWrapper}>
-      <div className={styles.productImage}>
-        <p
-          className={styles.productInfoTitle}
-          style={{ color: theme == "dark" ? "" : "#111111" }}
-        >
-          {name}
-        </p>
-        <img
-          className={styles.productImageWrapper}
-          src={productPic}
-          alt="Product Preview"
-        />
-        <p
-          style={{
-            fontSize: "16px",
-            color: theme == "dark" ? "#f6f6f6" : "#111111a0",
-          }}
-        >
-          {description}
-        </p>
-      </div>
-      <div
-        className={styles.productInfo}
-        style={{
-          borderTopColor: theme == "dark" ? "" : "#0000001a",
-          borderBottomColor: theme == "dark" ? "" : "#0000001a",
-        }}
-      >
-        <div
-          className={styles.productPriceContainer}
-          style={{ borderRightColor: theme == "dark" ? "" : "#0000001a" }}
-        >
-          <p
-            className={styles.productLabel}
-            style={{ color: theme == "dark" ? "" : "#111111" }}
-          >
-            {t("payments.price")}
-          </p>
-          <p
-            className={styles.productValue}
-            style={{
-              color: theme == "dark" ? "" : "#111111",
-              backgroundColor: theme == "dark" ? "" : "#e6e6e6",
-            }}
-          >
-            ${price}
-          </p>
-        </div>
-        <div className={styles.productAmountContainer}>
-          <p
-            className={styles.productLabel}
-            style={{ color: theme == "dark" ? "" : "#111111" }}
-          >
-            {t("payments.amount")}
-          </p>
-          <input
-            className={styles.productValue}
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            style={{
-              color: theme == "dark" ? "" : "#111111",
-              backgroundColor: theme == "dark" ? "" : "#e6e6e6",
-            }}
-          />
+      {productPic && productPic.toLowerCase() != "null" && (
+        <img src={productPic} />
+      )}
+      <div className={styles.productInfo}>
+        <h1>{name}</h1>
+        <div className={styles.quantityWrapper}>
+          <p>{t("products.view.quantity")}</p>
+          <div>
+            <div onClick={() => setAmount((prev) => prev - 1)}>-</div>
+            <input value={amount} onChange={(e) => setAmount(e.target.value)} />
+            <div onClick={() => setAmount((prev) => prev + 1)}>+</div>
+          </div>
         </div>
       </div>
     </div>
@@ -759,7 +634,6 @@ const SigninPopup = ({
   signin,
 }) => {
   const { t } = useTranslation();
-  const { theme } = useTheme();
   return (
     <Popup
       show={show}
@@ -774,18 +648,8 @@ const SigninPopup = ({
       <MessageComponent />
       <div className={styles.signinContainer}>
         <div>
-          <p
-            className={styles.title}
-            style={{ color: `${theme == "dark" ? "" : "#111111"}` }}
-          >
-            {t("login.button")}
-          </p>
-          <p
-            className={styles.description}
-            style={{ color: `${theme == "dark" ? "" : "black"}` }}
-          >
-            {t("login.useNefentus")}
-          </p>
+          <p>{t("login.button")}</p>
+          <p>{t("login.useNefentus")}</p>
         </div>
         <Input
           label={`${t("signUp.emailLabel")}*`}

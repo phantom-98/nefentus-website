@@ -1350,7 +1350,7 @@ export default class backendAPI {
         buyerAddress: buyerAddress,
         ...productOrInvoiceId,
       };
-
+      console.log("transaction info", JSON.stringify(body));
       const options = {
         method: "POST",
         headers: headers,
@@ -1411,7 +1411,6 @@ export default class backendAPI {
       }
       this.updateToken(response);
       const data = await response.json();
-      console.log(data);
 
       return data;
     } catch (error) {

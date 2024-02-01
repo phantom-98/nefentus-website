@@ -938,6 +938,17 @@
     "connecting": "Connecting...",
     "topInfoTitle": "Buy product",
     "topInfoDescription": "You can buy this product using MetaMask or Nefentus Wallet, in case you have a Nefentus account.",
+    "view": {
+      "description": "Product Description",
+      "seller": "Seller",
+      "price": "Unit Price",
+      "stock": "Product in stock",
+      "buy": "Buy now",
+      "quantity": "Quantity",
+      "total": "Total",
+      "showLess": "Show less",
+      "showMore": "Show more"
+    },
     "error": {
       "name": "Name is required!",
       "description": "Description is required!",
