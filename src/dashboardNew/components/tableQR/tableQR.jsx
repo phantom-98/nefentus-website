@@ -6,23 +6,20 @@ import vendorDashboardApi from "../../../api/vendorDashboardApi";
 const TableQR = ({ link, data }) => {
   const [show, setShow] = useState(false);
 
-  const requestDownload = async () => {
+  const requestDownload = async (invoice) => {
     const res = await new vendorDashboardApi().downloadInvoice(data.link);
 
     if (res) {
-      const file = ["invoice.html", "receipt.html"];
       const element = document.createElement("a");
-      const html = res.split("$$RGBSPLIT$$");
+      if (!res[invoice]) return;
 
-      for (let i = 0; i < html.length; i++) {
-        const invoice = new Blob([html[i]], {
-          type: "text/html",
-        });
-        element.href = URL.createObjectURL(invoice);
-        element.download = file[i];
-        document.body.appendChild(element); // Required for this to work in FireFox
-        element.click();
-      }
+      const html = new Blob([res[invoice]], {
+        type: "text/html",
+      });
+      element.href = URL.createObjectURL(html);
+      element.download = invoice + ".html";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
     }
   };
 
@@ -44,7 +41,10 @@ const TableQR = ({ link, data }) => {
         name={data.name}
         price={data.price}
         taxNumber={data.taxNumber}
-        onDownload={data.email ? () => requestDownload() : null}
+        onInvoice={data.email ? () => requestDownload("invoice") : null}
+        onReceipt={
+          data.email && data.paidAt ? () => requestDownload("receipt") : null
+        }
       />
     </>
   );

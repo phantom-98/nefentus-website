@@ -386,7 +386,7 @@ export default class vendorDashboardApi {
         throw new Error("Network response was not ok");
       }
       this.updateToken(response);
-      const data = await response.text();
+      const data = await response.json();
       return data;
     } catch (error) {
       console.error("There was an error getting the orders", error);
