@@ -213,7 +213,7 @@ const IdentificationBody = () => {
         !(getData[item.id] || getText[item.id])
       ) {
         res = true;
-        setErrorMessage(item.label + t("identification.fieldRequired"));
+        setErrorMessage(t(item.label) + t("identification.fieldRequired"));
         break;
       }
     }
@@ -224,7 +224,7 @@ const IdentificationBody = () => {
     //     !(item in getData || item in getText)
     //   ) {
     //     res = true;
-    //     toast.error(item.label + " field is required!", {
+    //     toast.error(t(item.label) + " field is required!", {
     //       position: toast.POSITION.TOP_CENTER,
     //       autoClose: 5000,
     //       theme: "colored",
