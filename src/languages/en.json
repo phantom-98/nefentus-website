@@ -1230,6 +1230,8 @@
     "ukrainian": "Ukrainian"
   },
   "kyc": {
+    "kycTitle": "KYC Request",
+    "kycSubTitle": "Check recent KYC requests and approve or deny users.",
     "modalTitle": "Check verification",
     "feedbackModal": "Leave a reason"
   },

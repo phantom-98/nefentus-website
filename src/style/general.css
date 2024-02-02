@@ -480,13 +480,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .dashboard-table ul li {
-  /* border: 1px solid red; */
-
   list-style-type: none;
-
+  color: var(--text-color);
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  opacity: 0.6;
 }
 
 .dashboard-table li:first-child {
@@ -503,9 +502,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-size: 1.1rem;
   text-transform: uppercase;
   font-weight: 400;
-  color: #c4c4c4;
   text-align: left;
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .dashboard-table > div:last-child ul {
@@ -515,7 +513,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .dashboard-table > div:last-child {
   font-size: 1.2rem;
   font-weight: 400;
-  color: var(--gray-color);
 }
 
 .dashboard-table > div:last-child ul:nth-child(odd) {

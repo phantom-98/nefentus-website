@@ -117,6 +117,9 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
   const handleWallet = async (data) => {
     setCurrentWallet(data);
     setActiveWallet(data);
+    const response = await backend_API.patchPreferredWallet({
+      address: data?.address,
+    });
   };
 
   return (

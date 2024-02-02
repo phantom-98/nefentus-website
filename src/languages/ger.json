@@ -1156,6 +1156,8 @@
     "title": "Wert ändern"
   },
   "kyc": {
+    "kycTitle": "KYC-Anfrage",
+    "kycSubTitle": "Überprüfen Sie aktuelle KYC-Anfragen und genehmigen oder lehnen Sie Benutzer ab.",
     "modalTitle": "Überprüfen Sie die Verifizierung",
     "feedbackModal": "Hinterlassen Sie einen Grund"
   },

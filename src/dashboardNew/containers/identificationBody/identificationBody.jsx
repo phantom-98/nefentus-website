@@ -157,7 +157,8 @@ const IdentificationBody = () => {
             ((!transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].rejectReason ||
               transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].rejectReason ==
                 "") &&
-              transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].url && !transformedResults[item.id].url))
+              transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].url &&
+              !transformedResults[item.id].url))
         ) {
           item.verify = true;
           item.url = "notRequired";

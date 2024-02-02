@@ -392,6 +392,28 @@ export default class backendAPI {
     }
   }
 
+  async patchPreferredWallet(payload) {
+    try {
+      const url = `${this.baseURL}/auth/preferred-wallet`;
+      const options = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(payload),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      this.updateToken(response);
+      return true;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async update(formData) {
     try {
       const url = `${this.baseURL}/auth/update`;
@@ -1011,7 +1033,7 @@ export default class backendAPI {
 
   async isRequiredKYC() {
     try {
-      const url = `${this.baseURL}/auth/auth/requireKyc`;
+      const url = `${this.baseURL}/auth/requireKyc`;
 
       const options = {
         method: "PATCH",

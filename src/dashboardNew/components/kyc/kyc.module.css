@@ -18,6 +18,12 @@
   line-height: 140%;
 }
 
+.darkMode .subtitle {
+  color: var(--text-color);
+  opacity: 0.6;
+  font-size: 13px;
+}
+
 .top span {
   color: #23c215;
 }

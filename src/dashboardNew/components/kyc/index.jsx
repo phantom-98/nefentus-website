@@ -8,10 +8,15 @@ import { useEffect, useState } from "react";
 import adminDashboardApi from "../../../api/adminDashboardApi";
 import TableSearch from "../tableSearch/tableSearch";
 import Popup from "../popup/popup";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "../../../context/themeContext/themeContext";
+import moment from "moment";
 
 const KycBody = () => {
   const [data, setData] = useState([]);
   const adminApi = new adminDashboardApi("admin");
+  const { t } = useTranslation();
+  const { theme } = useTheme();
 
   const fetchFYC = async () => {
     const list = await adminApi.getKycs();
@@ -23,14 +28,15 @@ const KycBody = () => {
   }, []);
 
   return (
-    <div style={{ marginBottom: "5rem" }}>
+    <div
+      style={{ marginBottom: "5rem" }}
+      className={`${theme !== "dark" ? "light" : `dark ${styles.darkMode}`}`}
+    >
       <div className={styles.top}>
         <div className={styles.left}>
-          <p style={{ fontSize: "22px", color: "white" }}>KYC Request</p>
+          <div style={{ fontSize: "22px" }}>{t("kyc.kycTitle")}</div>
 
-          <p style={{ fontSize: "13px", color: "rgba(255, 255, 255, 0.8)" }}>
-            Check recent KYC requests and approve or deny users.
-          </p>
+          <div className={styles.subtitle}>{t("kyc.kycSubTitle")}</div>
         </div>
         <TableSearch />
       </div>
@@ -47,6 +53,7 @@ const Table = ({ data, setData }) => {
   const [feedbackModal, setFeedbackModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [declineReason, setDeclineReason] = useState("");
+  const { theme } = useTheme();
 
   const TextUrlSection = (item, index) => (
     <div>
@@ -54,7 +61,7 @@ const Table = ({ data, setData }) => {
       <div className={styles.line} key={index}>
         <div className={styles.row}>
           <p>{item?.type}</p>
-          {item?.verify && <img src={Correct} alt="" />}
+          <p>{item?.verify ? <img src={Correct} alt="" /> : item?.url}</p>
         </div>
         <p>{item?.rejectReason ?? null}</p>
       </div>
@@ -62,7 +69,7 @@ const Table = ({ data, setData }) => {
   );
 
   const ImageUrlSection = (item, index) => (
-    <div>
+    <div key={index}>
       {index === 2 && <h5 className={styles.level}>Level 2</h5>}
       {index === 4 && <h5 className={styles.level}>Level 3</h5>}
       <div className={styles.line} key={index}>
@@ -105,10 +112,10 @@ const Table = ({ data, setData }) => {
   };
 
   return (
-    <div>
+    <div className={`${theme !== "dark" ? "light" : ``}`}>
       <div className={`${styles.card} card`}>
         <div className={`${styles.table} dashboard-table`}>
-          <div className={styles.tableHead}>
+          <div className={`${styles.tableHead}`}>
             <ul>
               <li>Name</li>
               <li>Email</li>
@@ -155,10 +162,14 @@ const Table = ({ data, setData }) => {
                         Check
                       </li>
 
-                      <li>{items?.userDetail?.email}</li>
                       <li>{items?.userDetail?.tel}</li>
                       <li>{items?.userDetail?.business}</li>
                       <li>{items?.level}</li>
+                      <li>
+                        {moment(items?.userDetail?.createdAt).format(
+                          "DD-MM-YYYY",
+                        )}
+                      </li>
                       <li>
                         <p onClick={() => acceptKYC(items)}>Accept</p>
                         <p
