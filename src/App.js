@@ -21,6 +21,8 @@ import WalletSetting from "./dashboardNew/containers/walletSetting/walletSetting
 import InvoicesBody from "./dashboardNew/components/invoiceBody/invoiceBody";
 import { KYC } from "./dashboard/settings/components/KYC";
 import Kyc from "./dashboardNew/components/kyc";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MainDashboard = React.lazy(() =>
   import("./dashboardNew/screens/mainDashboard"),
@@ -131,6 +133,7 @@ function App() {
       <ThemeProvider>
         <div className={`App`}>
           <MessageContextProvider>
+            <ToastContainer />
             <BrowserRouter>
               <Suspense
                 fallback={
