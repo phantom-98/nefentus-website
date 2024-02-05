@@ -253,12 +253,12 @@ const SecurityItem = ({ data, recover }) => {
     console.log(res);
     if (res) {
       setInfoMessage(t("security.items.recoverInfoMessage"));
-      setAddSeedPhrases(false);
-      clearMessages();
-      setCheckedSeedPhrases(emptyArray);
     } else {
       setErrorMessage(t("security.items.recoverErrorMessage"));
     }
+    setAddSeedPhrases(false);
+    clearMessages();
+    setCheckedSeedPhrases(emptyArray);
     setCurrentPassword("");
   };
   return (

@@ -102,11 +102,18 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
       connectedWallets.push(internalWallet);
       setWalletOptions(connectedWallets);
       const wallet = localStorage.getItem("Wallet") || null;
-      if (wallet) setActiveWallet(JSON.parse(wallet));
-      else {
-        localStorage.setItem("Wallet", JSON.stringify(internalWallet));
-        setActiveWallet(internalWallet);
+      if (wallet) {
+        if (
+          JSON.parse(wallet).name != internalWallet.name ||
+          (JSON.parse(wallet).name == internalWallet.name &&
+            JSON.parse(wallet).address == internalWallet.address)
+        ) {
+          setActiveWallet(JSON.parse(wallet));
+          return;
+        }
       }
+      localStorage.setItem("Wallet", JSON.stringify(internalWallet));
+      setActiveWallet(internalWallet);
     }
   };
 
