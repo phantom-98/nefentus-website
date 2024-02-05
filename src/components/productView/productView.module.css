@@ -202,7 +202,7 @@
 }
 
 .less {
-  max-height: 250px;
+  /* max-height: 250px; */
   background-image: linear-gradient(#b1b1b1 70%, #b1b1b100 101%);
   background-size: 100%;
   -webkit-background-clip: text;
