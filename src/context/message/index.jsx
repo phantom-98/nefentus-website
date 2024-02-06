@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { toast } from "react-toastify";
+import { useTheme } from "../themeContext/themeContext";
 
 export const MessageContext = createContext({
   infoMessage: undefined,
@@ -11,6 +12,7 @@ export const MessageContext = createContext({
 });
 
 export function MessageContextProvider({ children }) {
+  const { theme } = useTheme();
   const [infoMessage, setInfoMessage] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState(undefined);
 
@@ -20,7 +22,7 @@ export function MessageContextProvider({ children }) {
     toast.info(message, {
       position: toast.POSITION.TOP_CENTER,
       autoClose: duration,
-      theme: "colored",
+      theme: theme,
     });
   }
 
@@ -30,7 +32,7 @@ export function MessageContextProvider({ children }) {
     toast.error(message, {
       position: toast.POSITION.TOP_CENTER,
       autoClose: duration,
-      theme: "colored",
+      theme: theme,
     });
   }
 
