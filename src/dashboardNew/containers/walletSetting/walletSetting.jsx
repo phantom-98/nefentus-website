@@ -19,6 +19,7 @@ import useInternalWallet from "../../../hooks/internalWallet";
 import Button from "../../components/button/button";
 import Popup from "../../components/popup/popup";
 import { useTranslation } from "react-i18next";
+import WalletAddressFormatter from "../../../func/walletAddressFormatter";
 
 const WalletSetting = ({ value, setValue }) => {
   const { t } = useTranslation();
@@ -160,12 +161,7 @@ const WalletSetting = ({ value, setValue }) => {
                 </div>
                 <span className={styles.text}>
                   {walletAddress.address?.length
-                    ? `${walletAddress.address.substring(
-                        0,
-                        6,
-                      )} .... ${walletAddress.address.substring(
-                        walletAddress.address.length - 4,
-                      )}`
+                    ? WalletAddressFormatter(walletAddress?.address)
                     : "Not available"}
                 </span>
               </div>
@@ -349,7 +345,7 @@ const WalletSetting = ({ value, setValue }) => {
                                   {address.type ? address.type : "Nefentus"}:
                                 </p>
                                 <p style={{ paddingLeft: 10, paddingRight: 5 }}>
-                                  {truncateWalletAddress(address.address, 4)}
+                                  {WalletAddressFormatter(address.address)}
                                 </p>
                               </div>
                             </div>
