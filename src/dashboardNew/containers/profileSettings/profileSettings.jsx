@@ -175,7 +175,7 @@ const ProfileSettings = () => {
       type: "edit",
     },
     {
-      label: `${t("profile.phoneNumber").concat("*")}`,
+      label: `${t("profile.phoneNumber")}`,
       description: "",
       value: phoneNumber,
       setValue: setPhoneNumber,
