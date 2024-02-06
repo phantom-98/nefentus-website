@@ -124,11 +124,11 @@ body {
 }
 
 .dark .dateOption {
-  background-color: var(--card-color, #272729) !important;
+  background-color: transparent !important;
 }
 
 .light .dateOption {
-  background-color: var(--card-color, #f6f9fc) !important;
+  background-color: transparent !important;
 }
 
 .dark input,
