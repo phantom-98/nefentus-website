@@ -7,12 +7,16 @@ import TableStatus from "../../components/tableStatus/tableStatus";
 import moment from "moment";
 import { formatUSDBalance } from "../../../utils";
 import { useTranslation } from "react-i18next";
+import Popup from "../../components/popup/popup";
+import { TransactionInfo } from "../../components/popup/popup";
 
 const TransactionBody = () => {
   const [orderData, setOrderData] = useState([]);
   const [orderIds, setOrderIds] = useState([]);
   const dashboardApi = new vendorDashboardApi();
   const [totalAmount, setTotalAmount] = useState(0);
+  const [detail, setDetail] = useState(false);
+  const [transaction, setTransaction] = useState(null);
   const { t } = useTranslation();
 
   const label = [
@@ -49,6 +53,14 @@ const TransactionBody = () => {
     }
   }
 
+  const showDetails = async (order) => {
+    const data = await dashboardApi.getTransaction(order.id);
+    if (data) {
+      setTransaction(data);
+      setDetail(true);
+    }
+  };
+
   function orderToArray(order) {
     return [
       order.product ? order.product.name : t("payment.customPayment"),
@@ -59,7 +71,7 @@ const TransactionBody = () => {
       `#${order.invoice.id}`,
       moment(order.updatedAt).format("MMM D, YYYY"),
       `$${order.totalPrice}`,
-      <TableAction button2="Details" />,
+      <TableAction button2="Details" onClick2={() => showDetails(order)} />,
     ];
   }
 
@@ -74,6 +86,13 @@ const TransactionBody = () => {
         label={label}
         data={orderData}
       />
+      {transaction && (
+        <TransactionInfo
+          show={detail}
+          setShow={setDetail}
+          transaction={transaction}
+        />
+      )}
     </div>
   );
 };

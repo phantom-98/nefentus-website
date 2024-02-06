@@ -1019,6 +1019,16 @@
   "transactions": {
     "title": "Recent Transactions",
     "subtitle": "Your total transaction value is:",
+    "detail": {
+      "title": "Transaction Info",
+      "concurrencyTitle": "Cryptocurrency amount",
+      "amountTitle": "Amount",
+      "fees": "Fees",
+      "transaction": "Transaction Cost",
+      "swap": "Swap Cost",
+      "commission": "Commission",
+      "total": "Total"
+    },
     "table": {
       "product": "Product",
       "order": "Order",
