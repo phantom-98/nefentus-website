@@ -253,12 +253,12 @@ const SecurityItem = ({ data, recover }) => {
     console.log(res);
     if (res) {
       setInfoMessage(t("security.items.recoverInfoMessage"));
+      setCheckedSeedPhrases(emptyArray);
     } else {
       setErrorMessage(t("security.items.recoverErrorMessage"));
     }
     setAddSeedPhrases(false);
     clearMessages();
-    setCheckedSeedPhrases(emptyArray);
     setCurrentPassword("");
   };
   return (
@@ -437,7 +437,7 @@ const SecurityItem = ({ data, recover }) => {
                         style={{
                           background:
                             checkedSeedPhrases[index] === phrase
-                              ? "#333333"
+                              ? ""
                               : checkedSeedPhrases[index] == ""
                               ? "transparent"
                               : "#bb0000",
@@ -467,7 +467,6 @@ const SecurityItem = ({ data, recover }) => {
                       <label>{index + 1}.</label>
                       <p
                         style={{
-                          background: "#333333",
                           width: 80,
                         }}
                         className={styles.seedPhrase}

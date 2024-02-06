@@ -8,7 +8,6 @@ import useInternalWallet from "../../../hooks/internalWallet";
 import { useTranslation } from "react-i18next";
 import { Options, OptionsWithImage } from "../../../components/input/input";
 import ProfileImg from "../../../assets/icon/user.svg";
-import { useTheme } from "../../../context/themeContext/themeContext";
 import {
   metamaskWallet,
   useAddress,
@@ -36,8 +35,6 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
     useInternalWallet();
 
   const { t } = useTranslation();
-
-  const { theme } = useTheme();
 
   const wallets = [
     {
@@ -130,11 +127,7 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
   };
 
   return (
-    <Card
-      className={`${styles.profileCard}  ${
-        theme === "dark" ? "" : styles.light
-      }`}
-    >
+    <Card className={styles.profileCard}>
       <div className={` ${styles.profileWrapper}`}>
         <div className={styles.profileImage}>
           <img
