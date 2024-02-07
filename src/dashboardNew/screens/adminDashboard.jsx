@@ -254,10 +254,16 @@ const AdminDashboard = ({ type }) => {
         firstName,
         lastName,
         editEmailAddress,
+        email,
         role,
       );
       if (resp) {
         setInfoMessage(t("messages.success.updateUser"));
+        setTimeout(() => {
+          setOpenModal(false);
+          clearAddUserFields();
+          clearMessages();
+        }, 1500);
         updateUsersTable(dataUsers);
       } else {
         setErrorMessage(t("messages.error.updateUser"));
