@@ -54,7 +54,7 @@ const AdminDashboard = ({ type }) => {
     t("dashboard.tableHeaders.status"),
     t("dashboard.tableHeaders.income"),
     t("dashboard.tableHeaders.joinedOn"),
-    t("dashboard.tableHeaders.earnings"),
+    // t("dashboard.tableHeaders.earnings"),
     t("dashboard.tableHeaders.actions"),
   ];
 
@@ -310,7 +310,7 @@ const AdminDashboard = ({ type }) => {
         ),
         formatUSDBalance(user.income),
         moment(user.createdAt).format("MMM D YYYY, HH:mm:ss"),
-        `$${user.income}`,
+        // `$${user.income}`,
         <TableAction
           button={
             user.activated ? t("general.deactivate") : t("general.activate")
@@ -397,7 +397,7 @@ const AdminDashboard = ({ type }) => {
             getDataInput={getDataInput}
           />
           <Table
-            grid="1.2fr 0.9fr 1.5fr 1fr 0.9fr 1fr 0.6fr 1.2fr"
+            grid="1.2fr 0.9fr 1.5fr 1fr 0.9fr 1fr 1.2fr"
             label={label}
             data={paginatedData}
           />
