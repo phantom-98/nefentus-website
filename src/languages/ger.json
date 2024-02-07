@@ -970,6 +970,16 @@
   "transactions": {
     "title": "Letzte Transaktionen",
     "subtitle": "Der Gesamtwert aller Transaktionen ist:",
+    "detail": {
+      "title": "Infos zur Transaktion",
+      "concurrencyTitle": "Betrag der Kryptowährung",
+      "amountTitle": "Endbetrag",
+      "fees": "Gebühren",
+      "transaction": "Transaktionskosten",
+      "swap": "Swapkosten",
+      "commission": "Kommission",
+      "total": "Insgesamt"
+    },
     "table": {
       "product": "Produkt",
       "order": "Bestellung",
