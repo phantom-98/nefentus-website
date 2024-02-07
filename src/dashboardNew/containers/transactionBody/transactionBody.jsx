@@ -15,6 +15,8 @@ const TransactionBody = () => {
   const [orderIds, setOrderIds] = useState([]);
   const dashboardApi = new vendorDashboardApi();
   const [totalAmount, setTotalAmount] = useState(0);
+  const [getDataInput, setGetDataInput] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
   const [detail, setDetail] = useState(false);
   const [transaction, setTransaction] = useState(null);
   const { t } = useTranslation();
@@ -49,6 +51,7 @@ const TransactionBody = () => {
       const newOrderIds = newOrders.map((order) => order.id);
       setTotalAmount(total);
       setOrderData(newOrderData);
+      setFilteredData(newOrderData);
       setOrderIds(newOrderIds);
     }
   }
@@ -75,16 +78,43 @@ const TransactionBody = () => {
     ];
   }
 
+  const findUser = () => {
+    if (getDataInput.trim() == "") {
+      setFilteredData(orderData);
+    } else {
+      const matchingSubarrays = [];
+      orderData.forEach((innerArray) => {
+        if (
+          innerArray.some(
+            (innerValue) =>
+              innerValue &&
+              typeof innerValue === "string" &&
+              innerValue
+                .toLowerCase()
+                .includes(getDataInput.trim().toLowerCase()),
+          )
+        ) {
+          matchingSubarrays.push(innerArray);
+        }
+      });
+      setFilteredData([...matchingSubarrays]);
+    }
+  };
+
   return (
     <div>
       <TableSearch
         title={t("transactions.title")}
         description={`${t("transactions.subtitle")} ${totalAmount}$`}
+        users={filteredData}
+        setGetDataInput={setGetDataInput}
+        findUser={findUser}
+        getDataInput={getDataInput}
       />
       <Table
         grid="1.4fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr"
         label={label}
-        data={orderData}
+        data={filteredData}
       />
       {transaction && (
         <TransactionInfo
