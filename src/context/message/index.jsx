@@ -19,7 +19,7 @@ export function MessageContextProvider({ children }) {
   function setInfoMessageClear(message, duration = 5000) {
     // setErrorMessage(undefined);
     // setInfoMessage(message);
-    toast.info(message, {
+    toast.success(message, {
       position: toast.POSITION.TOP_CENTER,
       autoClose: duration,
       theme: theme,

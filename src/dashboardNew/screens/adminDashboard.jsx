@@ -259,12 +259,7 @@ const AdminDashboard = ({ type }) => {
       );
       if (resp) {
         setInfoMessage(t("messages.success.updateUser"));
-        setTimeout(() => {
-          setOpenModal(false);
-          clearAddUserFields();
-          clearMessages();
-        }, 1500);
-        updateUsersTable(dataUsers);
+        closeModal();
       } else {
         setErrorMessage(t("messages.error.updateUser"));
       }
