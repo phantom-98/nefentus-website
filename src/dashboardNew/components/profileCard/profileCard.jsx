@@ -141,39 +141,25 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
         </div>
       </div>
 
-      {type === "affiliate" ? (
-        <>
-          <div className={styles.wallet}>
-            <p className={styles.main}>Affiliate link:</p>
-            <div className={styles.link}>
-              <img src={Clipboard} alt="" />
-              <p className={styles.subtitle}>
-                https://nefentus.com/affiliate=ccc738232
-              </p>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className={styles.wallet}>
-            {/* <p className={styles.main}>{t("dashboard.wallet")}:</p>
-            <p className={styles.subtitle}>{internalWalletAddress}</p> */}
-            <OptionsWithImage
-              label={t("dashboard.cryptoCard.sendModal.walletLabel")}
-              dashboard
-              wallet={wallet}
-              options={walletOptions}
-              setValue={(data) => {
-                handleWallet(data);
-              }}
-            />
-          </div>
-          <div className={styles.plan}>
-            <p className={styles.main}>{t("dashboard.plan")}:</p>
-            <p className={styles.subtitle}>{t("dashboard.enterprise")}</p>
-          </div>
-        </>
-      )}
+      <>
+        <div className={styles.wallet}>
+          {/* <p className={styles.main}>{t("dashboard.wallet")}:</p>
+          <p className={styles.subtitle}>{internalWalletAddress}</p> */}
+          <OptionsWithImage
+            label={t("dashboard.cryptoCard.sendModal.walletLabel")}
+            dashboard
+            wallet={wallet}
+            options={walletOptions}
+            setValue={(data) => {
+              handleWallet(data);
+            }}
+          />
+        </div>
+        <div className={styles.plan}>
+          <p className={styles.main}>{t("dashboard.plan")}:</p>
+          <p className={styles.subtitle}>{t("dashboard.enterprise")}</p>
+        </div>
+      </>
     </Card>
   );
 };

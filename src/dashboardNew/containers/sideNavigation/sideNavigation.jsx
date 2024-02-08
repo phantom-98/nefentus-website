@@ -4,7 +4,7 @@ import Profile from "../../../assets/icon/user.svg";
 import LightMode from "../../../assets/icon/lightMode2.svg";
 import DarkMode from "../../../assets/icon/darkMode2.svg";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Button from "../../components/button/button";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -218,6 +218,7 @@ const SideNavigation = () => {
       </div>
 
       <div className={styles.referral}>
+        <AffiliateLink />
         {getFullSideBar(active) ? (
           <Link to={dashboardLink(localStorage)}>
             <Button width="">{t("sidebar.referral")}</Button>
@@ -233,3 +234,68 @@ const SideNavigation = () => {
 };
 
 export default SideNavigation;
+
+export const AffiliateLink = () => {
+  const { t } = useTranslation();
+  const ref = useRef();
+
+  const link =
+    "https://nefentus.com?affiliate=" + localStorage.getItem("affiliateLink");
+
+  const formatLink = (link) => {
+    if (!link) return "unknown";
+    const len = link.length;
+    return link.substring(0, 20) + " ... " + link.substring(len - 8, len);
+  };
+
+  const copyLinkToClipboard = () => {
+    navigator.clipboard.writeText(link);
+
+    ref.current.style.visibility = "visible";
+    ref.current.style.opacity = "1";
+    setTimeout(() => {
+      ref.current.style.visibility = "hidden";
+      ref.current.style.opacity = "0.3";
+    }, 2000);
+  };
+
+  return (
+    <div className={`${styles.linkContainer} affiliate`}>
+      <div>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="10" cy="8" r="5" />
+          <path d="M19 10L19 16" stroke-width="3" stroke-linecap="round" />
+          <path d="M22 13L16 13" stroke-width="3" stroke-linecap="round" />
+          <path d="M17.1421 20.3825C17.6038 20.278 17.8806 19.7981 17.676 19.3713C17.1242 18.2203 16.2173 17.2088 15.0419 16.4465C13.5955 15.5085 11.8232 15 10 15C8.17681 15 6.40455 15.5085 4.95811 16.4465C3.78266 17.2088 2.87577 18.2202 2.32396 19.3713C2.11935 19.7981 2.39623 20.278 2.85786 20.3825C7.55976 21.4474 12.4402 21.4474 17.1421 20.3825Z" />
+        </svg>
+        {t("sidebar.affiliate")}:
+      </div>
+      <div onClick={copyLinkToClipboard}>
+        <span className={styles.tooltip} ref={ref}>
+          {t("sidebar.copied")}
+        </span>
+        {formatLink(link)}
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5 15C4.06812 15 3.60218 15 3.23463 14.8478C2.74458 14.6448 2.35523 14.2554 2.15224 13.7654C2 13.3978 2 12.9319 2 12V5.2C2 4.0799 2 3.51984 2.21799 3.09202C2.40973 2.71569 2.71569 2.40973 3.09202 2.21799C3.51984 2 4.0799 2 5.2 2H12C12.9319 2 13.3978 2 13.7654 2.15224C14.2554 2.35523 14.6448 2.74458 14.8478 3.23463C15 3.60218 15 4.06812 15 5M12.2 22H18.8C19.9201 22 20.4802 22 20.908 21.782C21.2843 21.5903 21.5903 21.2843 21.782 20.908C22 20.4802 22 19.9201 22 18.8V12.2C22 11.0799 22 10.5198 21.782 10.092C21.5903 9.71569 21.2843 9.40973 20.908 9.21799C20.4802 9 19.9201 9 18.8 9H12.2C11.0799 9 10.5198 9 10.092 9.21799C9.71569 9.40973 9.40973 9.71569 9.21799 10.092C9 10.5198 9 11.0799 9 12.2V18.8C9 19.9201 9 20.4802 9.21799 20.908C9.40973 21.2843 9.71569 21.5903 10.092 21.782C10.5198 22 11.0799 22 12.2 22Z"
+            stroke-width="3"
+            stroke-linecap="round"
+            fill="none"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+};
