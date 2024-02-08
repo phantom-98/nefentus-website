@@ -240,7 +240,9 @@ export const AffiliateLink = () => {
   const ref = useRef();
 
   const link =
-    "https://nefentus.com?affiliate=" + localStorage.getItem("affiliateLink");
+    window.location.origin +
+    "?affiliate=" +
+    localStorage.getItem("affiliateLink");
 
   const formatLink = (link) => {
     if (!link) return "unknown";
