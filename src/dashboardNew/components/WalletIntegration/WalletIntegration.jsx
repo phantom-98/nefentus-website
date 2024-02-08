@@ -10,6 +10,7 @@ import Button from "../../components/button/button";
 import styles from "./walletIntegrations.module.css";
 import { useTranslation } from "react-i18next";
 import backendAPI from "../../../api/backendAPI";
+import WalletAddressFormatter from "../../../func/walletAddressFormatter";
 
 const WalletIntegration = ({
   name,
@@ -81,9 +82,7 @@ const WalletIntegration = ({
           <div className={styles.walletAddressTitle}>
             Wallet address:
             <span className={styles.walletAddress}>
-              {`${wallet.address.substring(0, 5)}...${wallet.address.substring(
-                wallet.address.length - 5,
-              )}`}
+              {" " + WalletAddressFormatter(wallet.address)}
             </span>
           </div>
         )}

@@ -154,3 +154,61 @@ export const QRPopup = ({
     dashboardElement,
   );
 };
+
+export const TransactionInfo = ({ show, setShow, transaction }) => {
+  const { t } = useTranslation();
+  console.log("transaction", transaction);
+
+  return (
+    <Popup
+      show={show}
+      title={t("transactions.detail.title")}
+      onConfirm={() => setShow(false)}
+      confirmTitle={t("general.close")}
+    >
+      <div className={styles.transaction}>
+        <div className={styles.transactionWrapper}>
+          <div className={styles.transactionHeader}>
+            <div style={{ alignItems: "flex-start;" }}>
+              <p>{t("transactions.detail.concurrencyTitle")}</p>
+              <p>{transaction.crypto}</p>
+            </div>
+          </div>
+          <div className={styles.transactionHeader}>
+            <div style={{ alignItems: "flex-end;" }}>
+              <p style={{ textAlign: "right;" }}>
+                {t("transactions.detail.amountTitle")}
+              </p>
+              <p>${transaction.amount}</p>
+            </div>
+          </div>
+        </div>
+        <div className={styles.billWrapper}>
+          <div>
+            <span>{t("transactions.detail.fees")}</span>
+          </div>
+          <div className={styles.bill}>
+            <div>
+              <div className={styles.fee}>
+                <span>{t("transactions.detail.swap")}</span>
+                <span>${transaction.swapFee}</span>
+              </div>
+              <div className={styles.fee}>
+                <span>{t("transactions.detail.transaction")}</span>
+                <span>${transaction.transactionFee}</span>
+              </div>
+              <div className={styles.fee}>
+                <span>{t("transactions.detail.commission")}</span>
+                <span>${transaction.commissionFee}</span>
+              </div>
+            </div>
+            <div className={styles.fee}>
+              <span>{t("transactions.detail.total")}</span>
+              <span>${transaction.total}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Popup>
+  );
+};

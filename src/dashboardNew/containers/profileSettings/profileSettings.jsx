@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import MessageComponent from "../../../components/message";
 import { useAuth } from "../../../context/auth/authContext";
+import { encodeConstructorParamsForImplementation } from "@thirdweb-dev/sdk";
 
 const ProfileSettings = () => {
   const { setAvatarUrl } = useAuth();
@@ -17,13 +18,13 @@ const ProfileSettings = () => {
   const [lastName, setLastName] = useState("");
   const [business, setBusiness] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("unknown");
   const [email, setEmail] = useState("");
   const [imageName, setImageName] = useState(null);
   const [marketingUpdates, setMarketingUpdates] = useState("");
   const [emailNotifications, setEmailNotifications] = useState("");
   const [appNotifications, setAppNotifications] = useState("");
-  const [notificationLanguage, setNotificationLanguage] = useState("");
+  const [notificationLanguage, setNotificationLanguage] = useState("en");
 
   const [isSaveData, setIsSaveData] = useState(false);
   const [file, setFile] = useState(null);
@@ -41,13 +42,14 @@ const ProfileSettings = () => {
     setLastName(data["lastName"]);
     setBusiness(data["business"]);
     setPhoneNumber(data["phoneNumber"]);
-    setCountry(data["country"]);
+    data["country"] && setCountry(data["country"]);
     setEmail(data["email"]);
     setImageName(data["imgData"]);
     setMarketingUpdates(data["marketingUpdates"]);
     setEmailNotifications(data["emailNotifications"]);
     setAppNotifications(data["appNotifications"]);
-    setNotificationLanguage(data["notificationLanguage"]);
+    data["notificationLanguage"] &&
+      setNotificationLanguage(data["notificationLanguage"]);
   };
   useEffect(() => {
     fetchProfile();
@@ -98,6 +100,7 @@ const ProfileSettings = () => {
       } else if (data["country"]) {
         setErrorMessage(t("messages.error.country"));
       } else {
+        console.log("response", response);
         setErrorMessage(t("messages.error.updateData"));
         await backendAPI.signout();
         setTimeout(() => {
@@ -158,7 +161,7 @@ const ProfileSettings = () => {
       type: "edit",
     },
     {
-      label: `${t("profile.business").concat("*")}`,
+      label: `${t("profile.business")}`,
       description: `${t("profile.businessDescription")}`,
       value: business,
       setValue: setBusiness,
@@ -172,7 +175,7 @@ const ProfileSettings = () => {
       type: "edit",
     },
     {
-      label: `${t("profile.phoneNumber").concat("*")}`,
+      label: `${t("profile.phoneNumber")}`,
       description: "",
       value: phoneNumber,
       setValue: setPhoneNumber,
@@ -187,7 +190,7 @@ const ProfileSettings = () => {
     },
     {
       label: `${t("profile.avatar")}`,
-      description: `${t("profile.avatarDescription").concat("*")}`,
+      description: `${t("profile.avatarDescription")}`,
       value: imageName,
       setValue: setImageName,
       type: "image",

@@ -429,6 +429,7 @@ const Select = ({ data, selectedIndex, setSelectedIndex }) => {
       <div
         className={`${styles.select}`}
         onClick={() => setOpen((prev) => !prev)}
+        onMouseLeave={() => setOpen(false)}
       >
         <SelectOption
           icon={data[selectedIndex].icon}

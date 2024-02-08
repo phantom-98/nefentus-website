@@ -6,6 +6,7 @@ import Delete from "../../assets/icon/delete.svg";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../context/themeContext/themeContext";
+import WalletAddressFormatter from "../../func/walletAddressFormatter";
 
 const Input = ({
   label,
@@ -371,11 +372,7 @@ export const WalletField = ({
         >
           {value ? value : t("messages.error.accountDisconnect")}
         </div>
-        <div>
-          {walletAddress?.length
-            ? `${walletAddress.slice(0, 6)} .... ${walletAddress.slice(-4)}`
-            : ""}
-        </div>
+        <div>{WalletAddressFormatter(walletAddress)}</div>
       </div>
     </div>
   );

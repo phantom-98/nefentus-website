@@ -49,8 +49,8 @@ const CropDialog = ({ open, file, aspect, onSave, onClose }) => {
     unit: "px",
     x: 0,
     y: 0,
-    width: 0,
-    height: 0,
+    width: 100,
+    height: 100,
   });
 
   useEffect(() => {
@@ -67,13 +67,23 @@ const CropDialog = ({ open, file, aspect, onSave, onClose }) => {
         const img = new Image();
         img.src = imageReader.result;
         if (aspect) {
-          setCrop({
-            unit: "%",
-            x: 25,
-            y: 25,
-            width: 50,
-            height: 50,
-          });
+          img.onload = function () {
+            const size = img.width > img.height ? img.height : img.width;
+            setCrop({
+              unit: "px",
+              x: (img.width - size / 2) / 2,
+              y: (img.height - size / 2) / 2,
+              width: size / 2,
+              height: size / 2,
+            });
+            setCompletedCrop({
+              unit: "px",
+              x: (img.width - size / 2) / 2,
+              y: (img.height - size / 2) / 2,
+              width: size / 2,
+              height: size / 2,
+            });
+          };
         }
       };
     }
@@ -150,7 +160,7 @@ const CropDialog = ({ open, file, aspect, onSave, onClose }) => {
           <div className={styles["crop-container"]}>
             <ReactCrop
               crop={crop}
-              onChange={(_, percentCrop) => setCrop(percentCrop)}
+              onChange={(pxCrop, percentCrop) => setCrop(pxCrop)}
               zoom={zoom}
               onComplete={(c) => setCompletedCrop(c)}
               aspect={aspect}
