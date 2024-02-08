@@ -5,7 +5,7 @@ const ResetPassword = () => {
   return (
     <div className="dashboardFont">
       <Helmet>
-        <title>Nefentus | Password-forgot</title>
+        <title>Nefentus | Reset Password</title>
       </Helmet>
       <ResetPasswords />
     </div>
