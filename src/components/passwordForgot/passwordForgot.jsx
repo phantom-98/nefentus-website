@@ -3,7 +3,7 @@ import styles from "./passwordForgot.module.css";
 
 import Logo from "../../assets/logo/logo.svg";
 import Button from "../button/button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import backend_API from "../../api/backendAPI";
@@ -11,10 +11,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Error from "../error/error";
+import { MessageContext } from "../../context/message";
 
 const PasswordForgot = () => {
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [message, setMessage] = useState(null);
+  const { setInfoMessage, setErrorMessage } = useContext(MessageContext);
+
   const backendAPI = new backend_API();
   const { t } = useTranslation();
 
@@ -35,7 +36,7 @@ const PasswordForgot = () => {
         setErrorMessage(t("messages.error.email"));
         return;
       }
-      setMessage(t("messages.info.email"));
+      setInfoMessage(t("messages.info.email"));
     } catch (error) {
       setErrorMessage(t("messages.error.sendingEmail"));
     }
@@ -44,20 +45,9 @@ const PasswordForgot = () => {
   return (
     <div className={styles.login}>
       <div className={styles.card}>
-        <div className={styles.left}>
-          <img src={Logo} alt="nefentus logo" />
-
-          <h3>{t("forgot-password.title")}</h3>
-        </div>
         <div className={styles.top}>
-          <div className={styles.message}>
-            <Error error={errorMessage || errors.email?.message} />
-            {message && (
-              <div className={styles.messagecontainer}>
-                <p>{message}</p>
-              </div>
-            )}
-          </div>
+          <img src={Logo} alt="nefentus logo" />
+          <h3>{t("forgot-password.title")}</h3>
         </div>
 
         <form onSubmit={handleSubmit(sendResetMail)}>

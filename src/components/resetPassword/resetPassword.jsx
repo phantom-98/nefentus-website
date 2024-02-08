@@ -3,18 +3,18 @@ import styles from "./resetPassword.module.css";
 
 import Logo from "../../assets/logo/logo.svg";
 import Button from "../button/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import backend_API from "../../api/backendAPI";
-import Error from "../error/error";
+import { MessageContext } from "../../context/message";
 
 const ResetPassword = () => {
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [message, setMessage] = useState(null);
+  const { setInfoMessage, setErrorMessage } = useContext(MessageContext);
+
   const [token, setToken] = useState(null);
   const backendAPI = new backend_API();
   const { t } = useTranslation();
@@ -61,6 +61,12 @@ const ResetPassword = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setErrorMessage(
+      errors.password?.message || errors.confirmPassword?.message,
+    );
+  }, [errors]);
+
   async function resetPassword(data) {
     try {
       const response = await backendAPI.resetPassword(data.password, token);
@@ -68,7 +74,7 @@ const ResetPassword = () => {
         setErrorMessage(t("messages.error.token"));
         return;
       }
-      setMessage(t("messages.success.passwordReset"));
+      setInfoMessage(t("messages.success.passwordReset"));
     } catch (error) {
       setErrorMessage(t("messages.error.updatePassword"));
     }
@@ -81,20 +87,6 @@ const ResetPassword = () => {
           <img src={Logo} alt="nefentus logo" />
 
           <h3>{t("reset-password.title")}</h3>
-          <div>
-            <Error
-              error={
-                errorMessage ||
-                errors.password?.message ||
-                errors.confirmPassword?.message
-              }
-            />
-            {message && (
-              <div className={styles.messagecontainer}>
-                <p style={{ color: "green" }}>{message}</p>
-              </div>
-            )}
-          </div>
         </div>
 
         <form onSubmit={handleSubmit(resetPassword)}>

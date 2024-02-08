@@ -55,7 +55,7 @@
 .card p {
   font-size: 1.4rem;
   line-height: 140%;
-  color: var(--gray-color);
+  color: var(--text2-color);
 }
 
 .sectionHeader br {
