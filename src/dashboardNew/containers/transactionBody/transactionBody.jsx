@@ -7,12 +7,18 @@ import TableStatus from "../../components/tableStatus/tableStatus";
 import moment from "moment";
 import { formatUSDBalance } from "../../../utils";
 import { useTranslation } from "react-i18next";
+import Popup from "../../components/popup/popup";
+import { TransactionInfo } from "../../components/popup/popup";
 
 const TransactionBody = () => {
   const [orderData, setOrderData] = useState([]);
   const [orderIds, setOrderIds] = useState([]);
   const dashboardApi = new vendorDashboardApi();
   const [totalAmount, setTotalAmount] = useState(0);
+  const [getDataInput, setGetDataInput] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [detail, setDetail] = useState(false);
+  const [transaction, setTransaction] = useState(null);
   const { t } = useTranslation();
 
   const label = [
@@ -45,9 +51,18 @@ const TransactionBody = () => {
       const newOrderIds = newOrders.map((order) => order.id);
       setTotalAmount(total);
       setOrderData(newOrderData);
+      setFilteredData(newOrderData);
       setOrderIds(newOrderIds);
     }
   }
+
+  const showDetails = async (order) => {
+    const data = await dashboardApi.getTransaction(order.id);
+    if (data) {
+      setTransaction(data);
+      setDetail(true);
+    }
+  };
 
   function orderToArray(order) {
     return [
@@ -59,21 +74,55 @@ const TransactionBody = () => {
       `#${order.invoice.id}`,
       moment(order.updatedAt).format("MMM D, YYYY"),
       `$${order.totalPrice}`,
-      <TableAction button2="Details" />,
+      <TableAction button2="Details" onClick2={() => showDetails(order)} />,
     ];
   }
+
+  const findUser = () => {
+    if (getDataInput.trim() == "") {
+      setFilteredData(orderData);
+    } else {
+      const matchingSubarrays = [];
+      orderData.forEach((innerArray) => {
+        if (
+          innerArray.some(
+            (innerValue) =>
+              innerValue &&
+              typeof innerValue === "string" &&
+              innerValue
+                .toLowerCase()
+                .includes(getDataInput.trim().toLowerCase()),
+          )
+        ) {
+          matchingSubarrays.push(innerArray);
+        }
+      });
+      setFilteredData([...matchingSubarrays]);
+    }
+  };
 
   return (
     <div>
       <TableSearch
         title={t("transactions.title")}
         description={`${t("transactions.subtitle")} ${totalAmount}$`}
+        users={filteredData}
+        setGetDataInput={setGetDataInput}
+        findUser={findUser}
+        getDataInput={getDataInput}
       />
       <Table
         grid="1.4fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr"
         label={label}
-        data={orderData}
+        data={filteredData}
       />
+      {transaction && (
+        <TransactionInfo
+          show={detail}
+          setShow={setDetail}
+          transaction={transaction}
+        />
+      )}
     </div>
   );
 };

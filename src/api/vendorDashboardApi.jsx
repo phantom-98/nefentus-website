@@ -389,7 +389,30 @@ export default class vendorDashboardApi {
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error("There was an error getting the orders", error);
+      console.error("There was an error downloading invoices", error);
+      return null;
+    }
+  }
+
+  async getTransaction(orderId) {
+    try {
+      const url = `${this.baseURL}/getTransaction/${orderId}`;
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      this.updateToken(response);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("There was an error getting transaction info", error);
       return null;
     }
   }

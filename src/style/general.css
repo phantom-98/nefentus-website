@@ -650,3 +650,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .mb-2 {
   margin-bottom: 2rem;
 }
+
+.Toastify__toast-body {
+  font-size: 1.4rem;
+}
+
+.Toastify__toast-theme--dark {
+  background-color: var(--card-color, #272727) !important;
+  border: 1px solid var(--border-color, #313131) !important;
+}

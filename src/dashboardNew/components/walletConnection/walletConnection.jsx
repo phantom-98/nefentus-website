@@ -10,6 +10,7 @@ import styles from "./walletConnection.module.css";
 import backendAPI from "../../../api/backendAPI";
 import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
+import WalletAddressFormatter from "../../../func/walletAddressFormatter";
 
 const WalletConnection = ({
   name,
@@ -144,12 +145,7 @@ const WalletConnection = ({
             {wallet.address && (
               <div>
                 <div className={styles.walletAddress}>
-                  {`${wallet.address.substring(
-                    0,
-                    6,
-                  )} .... ${wallet.address.substring(
-                    wallet.address.length - 4,
-                  )}`}
+                  {WalletAddressFormatter(wallet?.address)}
                 </div>
               </div>
             )}

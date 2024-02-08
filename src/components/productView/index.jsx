@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../button/button";
 import styles from "./productView.module.css";
 import backendAPI from "../../api/backendAPI";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
+const length = 400;
 
 const ProductView = ({ product }) => {
   const navigate = useNavigate();
@@ -20,18 +22,11 @@ const ProductView = ({ product }) => {
     }
   };
   useEffect(() => {
-    getProductImage();
-    console.log(product, "product");
-  }, [product]);
-
-  const divRef = useRef(null);
-
-  useEffect(() => {
-    if (divRef.current) {
-      const current = divRef.current;
-      setShow(current.scrollHeight > 250);
+    if (product) {
+      getProductImage();
+      product.description && setShow(product.description.length > length);
     }
-  }, [divRef.current]);
+  }, [product]);
 
   useEffect(() => {
     if (product.stock != -1 && quantity > product.stock) {
@@ -98,11 +93,16 @@ const ProductView = ({ product }) => {
               <p>{t("products.view.description")}</p>
             </div>
             <div className={styles.descriptionBody}>
-              <div className={more ? "" : styles.less} ref={divRef}>
+              <div className={more ? "" : styles.less}>
                 {product.description &&
-                  product.description.split("\n").map((item) => {
-                    return <p>{item}</p>;
-                  })}
+                  (more
+                    ? product.description
+                    : product.description.substring(0, length)
+                  )
+                    .split("\n")
+                    .map((item) => {
+                      return <p>{item}</p>;
+                    })}
               </div>
               {show && (
                 <p onClick={() => setMore((prev) => !prev)}>
