@@ -245,6 +245,16 @@ const SecurityItem = ({ data, recover }) => {
     setCheckedSeedPhrases(copyPhrases);
     return;
   };
+  const checkPassword = async () => {
+    const res = await backendAPI.checkPassword(currentPassword);
+    if (res) {
+      setInput(false);
+      clearMessages();
+      setAddSeedPhrases("step2");
+    } else {
+      setErrorMessage(t("messages.error.passwordCorrect"));
+    }
+  };
   const handleRecoverWallet = async () => {
     const res = await backendAPI.recoverWallet(
       checkedSeedPhrases.join(" "),
@@ -560,9 +570,7 @@ const SecurityItem = ({ data, recover }) => {
             className={styles.popupContainer}
             show={input}
             onConfirm={() => {
-              setInput(false);
-              clearMessages();
-              setAddSeedPhrases("step2");
+              checkPassword();
             }}
             onClose={() => {
               setCurrentPassword("");
