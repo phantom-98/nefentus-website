@@ -5,7 +5,7 @@ import Button from "./../button/button";
 import { useEffect, useState, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { dashboardLink, decryptData, encryptData } from "../../utils";
+import { dashboardLink, decryptData, encryptData, getRole } from "../../utils";
 
 import backend_API from "../../api/backendAPI";
 
@@ -213,7 +213,7 @@ const LoginBox = () => {
 
     async function checkJwtAndNavigate() {
       const jwtIsValid = await backendAPI.checkJwt();
-      if (jwtIsValid) {
+      if (jwtIsValid && getRole(localStorage)) {
         navigateDashboard();
       }
     }
