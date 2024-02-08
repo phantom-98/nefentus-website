@@ -591,6 +591,7 @@
     "add": "Add",
     "update": "Update",
     "open": "Open",
+    "openAction": "Open",
     "paid": "Paid",
     "confirm": "Confirm",
     "continue": "Continue",
