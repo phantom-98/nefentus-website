@@ -1117,7 +1117,8 @@
       "placeholderConfirm": "Підтвердіть новий пароль"
     },
     "scanModal": {
-      "title": "Скануйте QR-код або вставте код"
+      "title": "Скануйте QR-код або вставте код",
+      "verifyCode": "TOTP успішно перевірено"
     },
     "recommendRecoverModal": {
       "title": "Відновити гаманець",

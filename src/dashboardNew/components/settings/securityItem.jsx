@@ -9,36 +9,39 @@ import { useTranslation } from "react-i18next";
 import { EnableType } from "./settingsItem";
 import { MessageContext } from "../../../context/message";
 import SecurityPopupHeader from "./securityPopupHeader";
+import QRCode from "react-qr-code";
+import { OneTimeCodeInput } from "../../../dashboard/input/input";
+import copyClipboard from "../../../assets/icon/copyClipboard.svg";
 
 const emptyArray = ["", "", "", "", "", "", "", "", "", "", "", ""];
 
 const SecurityItem = ({ data, recover }) => {
   const { setErrorMessage, setInfoMessage, clearMessages } =
     useContext(MessageContext);
-  // const [isTotp, setIsTotp] = useState();
-  // const [isOtp, setIsOtp] = useState();
+  const [isTotp, setIsTotp] = useState();
+  const [isOtp, setIsOtp] = useState();
   const [status, setStatus] = useState();
   const [seedPhrases, setSeedPhrases] = useState([]);
-  // const [reset, setReset] = useState(false);
+  const [reset, setReset] = useState(false);
+  const [email, setEmail] = useState("");
 
-  // const [copied, setCopied] = useState(false);
-  // const [verify, setVerify] = useState(false);
-  // const [code, setCode] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [verify, setVerify] = useState(false);
+  const [code, setCode] = useState("");
   const [show, setShow] = useState(false);
   const [input, setInput] = useState(false);
   const [showRecommend, setShowRecommend] = useState(recover);
 
   // const [open, setOpen] = useState(false);
 
-  // const [secretToken, setSecretToken] = useState("");
-
+  const [secretToken, setSecretToken] = useState("");
   // const [openBox, setOpenBox] = useState(false);
   // const [openChangePassword, setOpenChangePassword] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   // const [verificationCode, setVerificationCode] = useState(null);
-  // const [phishingCode, setPhishingCode] = useState(data.value);
+  const [phishingCode, setPhishingCode] = useState(data.value);
   // const [phishingCodeValue, setPhishingCodeValue] = useState();
   const [addSeedPhrases, setAddSeedPhrases] = useState(false);
   const [checkedSeedPhrases, setCheckedSeedPhrases] = useState(emptyArray);
@@ -48,15 +51,16 @@ const SecurityItem = ({ data, recover }) => {
   const backendAPI = new backend_API();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (data.flow === "otp") {
-  //     setStatus(isOtp);
-  //   } else if (data.flow === "totp") {
-  //     setStatus(isTotp);
-  //   } else if (data.flow === "phishingCode"){
-  //     setStatus(phishingCode)
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data.flow === "otp") {
+      setStatus(isOtp);
+    } else if (data.flow === "totp") {
+      setEmail(localStorage.getItem("email"));
+      setStatus(isTotp);
+    } else if (data.flow === "phishingCode") {
+      setStatus(phishingCode);
+    }
+  }, [data]);
   useEffect(() => {
     setStatus(data.value);
   }, [data]);
@@ -75,19 +79,15 @@ const SecurityItem = ({ data, recover }) => {
     const response = await backendAPI.setupTotp({ active: !status });
     if (response.status === 200) {
       setStatus(!status);
+      handleTotpSecretKey();
     }
   };
   const handleTotpSecretKey = async () => {
     if (!status) {
-      backendAPI
-        .getTotpToken()
-        .then((data) => console.log(data, "data"))
-        .then((res) => {
-          console.log(res, "res");
-        });
-
-      // setSecretToken(response);
-      setShow(true);
+      backendAPI.getTotpToken().then(async (token) => {
+        setSecretToken(token);
+        setShow(true);
+      });
     } else {
       await backendAPI.setupTotp({
         active: false,
@@ -105,9 +105,10 @@ const SecurityItem = ({ data, recover }) => {
 
       if (response2 == null) {
       } else {
+        setInfoMessage(t("security.scanModal.verifyCode"));
         setShow(false);
-        clearMessages();
         setVerify(false);
+        clearMessages();
       }
     }
     if (response.status === 400) {
@@ -324,14 +325,16 @@ const SecurityItem = ({ data, recover }) => {
         </div>
       </div>
 
-      {/* {data.flow === "totp" && (
+      {data.flow === "totp" && (
         <Popup
           show={show && secretToken}
           onClose={() => {
             setShow(false);
-            // setIsTotp(!isTotp);
+            setIsTotp(!isTotp);
           }}
-          onConfirm={() => handleTotpVerify(email.current, code, false)}
+          onConfirm={() =>
+            verify ? handleTotpVerify(email, code, false) : setVerify(!verify)
+          }
           cancelTitle={t("security.actions.close")}
           confirmTitle={t("security.actions.verify")}
         >
@@ -355,13 +358,15 @@ const SecurityItem = ({ data, recover }) => {
                     borderRadius: "2rem",
                     border: "white 1rem solid",
                   }}
-                  value={`otpauth://totp/Nefentus?secret=${secretToken}&issuer=${email.current}`}
+                  value={`otpauth://totp/Nefentus?secret=${secretToken}&issuer=${email}`}
                   viewBox={`0 0 256 256`}
                 />
               </div>
               <div className={styles.copyLink}>
                 {copied && (
-                  <div className={styles.tooltip}>Link copied to clipboard!</div>
+                  <div className={styles.tooltip}>
+                    Link copied to clipboard!
+                  </div>
                 )}
                 <div
                   className={styles.linkBox}
@@ -373,7 +378,7 @@ const SecurityItem = ({ data, recover }) => {
                   <p id="affiliate-link" className={styles.url}>
                     {secretToken?.slice(0, 15) + "..."}
                   </p>
-                  <img src={UrlLink} alt="url icon" />
+                  <img src={copyClipboard} alt="url icon" />
                 </div>
               </div>
             </div>
@@ -389,13 +394,13 @@ const SecurityItem = ({ data, recover }) => {
                 setOTPCode={setCode}
                 resetCodeFlag={reset}
                 request={() => {
-                  handleTotpVerify(email.current, code, false);
+                  handleTotpVerify(email, code, false);
                 }}
               />
             </div>
           )}
         </Popup>
-      )} */}
+      )}
 
       {data.flow === "seed" && (
         <>

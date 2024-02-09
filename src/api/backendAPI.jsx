@@ -532,15 +532,15 @@ export default class backendAPI {
     try {
       const url = `${this.baseURL}/auth/setup/getTotpToken`;
       const options = {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
         },
       };
       const response = await fetch(url, options);
-      this.updateToken(response);
-      return response;
+      const result = await response.text();
+      return result;
     } catch (e) {
       return null;
     }

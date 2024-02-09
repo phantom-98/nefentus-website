@@ -1057,7 +1057,8 @@
       "placeholderConfirm": "Neues Passwort bestätigen"
     },
     "scanModal": {
-      "title": "QR-Code scannen oder Code einfügen"
+      "title": "QR-Code scannen oder Code einfügen",
+      "verifyCode": "TOTP wurde erfolgreich verifiziert"
     },
     "recommendRecoverModal": {
       "title": "Wallet wiederherstellen",

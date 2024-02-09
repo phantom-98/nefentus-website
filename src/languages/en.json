@@ -1121,7 +1121,8 @@
       "recover": "Recover"
     },
     "scanModal": {
-      "title": "Scan QR-code or paste code"
+      "title": "Scan QR-code or paste code",
+      "verifyCode": "TOTP has been verified successfully!"
     },
     "recommendRecoverModal": {
       "title": "Recover wallet",
