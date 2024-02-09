@@ -240,9 +240,7 @@ export const AffiliateLink = () => {
   const ref = useRef();
 
   const link =
-    window.location.origin +
-    "?affiliate=" +
-    localStorage.getItem("affiliateLink");
+    window.location.origin + "?ref=" + localStorage.getItem("affiliateLink");
 
   const formatLink = (link) => {
     if (!link) return "unknown";
