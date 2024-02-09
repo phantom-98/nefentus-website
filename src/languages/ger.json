@@ -1024,7 +1024,7 @@
       "enterSeed": "Geben Sie den Sicherheitsschlüssel ein. Dies dient dazu nachzuweisen, dass Sie ihn notiert/gespeichert haben. Bewahren Sie ihn sicher auf!",
       "recover": "Wallet wiederherstellen",
       "recoverDescription": "Stellen Sie Ihre Wallet mit dem Sicherheitsschlüssel wieder her.",
-      "recoverErrorMessage": "Es gab einen Fehler beim Wiederherstellen Ihrer Wallet.",
+      "recoverErrorMessage": "Sie haben wahrscheinlich das falsche Passwort oder die falsche Sicherheitsschlüssel angegeben.",
       "recoverInfoMessage": "Ihre Wallet wurde erfolgreich wiederhergestellt.",
       "seedErrorMessage": "Der Sicherheitsschlüssel ist falsch. Bitte überprüfen Sie ihn.",
       "seedInfoMessage": "Der Sicherheitsschlüssel ist richtig.",

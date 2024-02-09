@@ -1,6 +1,6 @@
 .wrapper {
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--border-color, #313131);
   display: flex;
   gap: 2rem;
   justify-content: space-between;
@@ -17,9 +17,15 @@
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color, #313131);
   border-radius: 10px;
   margin: 20px 0;
+}
+
+.seedPhrasesInputWrapper input,
+.seedPhrasesInputWrapper p {
+  background-color: var(--card-color, #292929);
+  border-color: var(--border-color, #313131);
 }
 
 .inputSeedPhrase {

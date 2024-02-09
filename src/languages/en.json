@@ -1097,7 +1097,7 @@
       "enterSeed": "Enter seed phrase to verify that you have saved it. You should store the seed phrase safe.",
       "recover": "Recover wallet",
       "recoverDescription": "Recover your wallet using seed phrase.",
-      "recoverErrorMessage": "There was an error recovering your wallet with the seed phrase.",
+      "recoverErrorMessage": "You probably provided the wrong password or seed phrase.",
       "recoverInfoMessage": "Your wallet was recovered successfully.",
       "seedErrorMessage": "Seed phrase is wrong. Try it again.",
       "seedInfoMessage": "Seed phrase is correct.",

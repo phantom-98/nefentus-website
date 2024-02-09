@@ -245,6 +245,16 @@ const SecurityItem = ({ data, recover }) => {
     setCheckedSeedPhrases(copyPhrases);
     return;
   };
+  const checkPassword = async () => {
+    const res = await backendAPI.checkPassword(currentPassword);
+    if (res) {
+      setInput(false);
+      clearMessages();
+      setAddSeedPhrases("step2");
+    } else {
+      setErrorMessage(t("messages.error.passwordCorrect"));
+    }
+  };
   const handleRecoverWallet = async () => {
     const res = await backendAPI.recoverWallet(
       checkedSeedPhrases.join(" "),
@@ -253,12 +263,12 @@ const SecurityItem = ({ data, recover }) => {
     console.log(res);
     if (res) {
       setInfoMessage(t("security.items.recoverInfoMessage"));
-      setAddSeedPhrases(false);
-      clearMessages();
       setCheckedSeedPhrases(emptyArray);
     } else {
       setErrorMessage(t("security.items.recoverErrorMessage"));
     }
+    setAddSeedPhrases(false);
+    clearMessages();
     setCurrentPassword("");
   };
   return (
@@ -437,7 +447,7 @@ const SecurityItem = ({ data, recover }) => {
                         style={{
                           background:
                             checkedSeedPhrases[index] === phrase
-                              ? "#333333"
+                              ? ""
                               : checkedSeedPhrases[index] == ""
                               ? "transparent"
                               : "#bb0000",
@@ -467,7 +477,6 @@ const SecurityItem = ({ data, recover }) => {
                       <label>{index + 1}.</label>
                       <p
                         style={{
-                          background: "#333333",
                           width: 80,
                         }}
                         className={styles.seedPhrase}
@@ -561,9 +570,7 @@ const SecurityItem = ({ data, recover }) => {
             className={styles.popupContainer}
             show={input}
             onConfirm={() => {
-              setInput(false);
-              clearMessages();
-              setAddSeedPhrases("step2");
+              checkPassword();
             }}
             onClose={() => {
               setCurrentPassword("");
