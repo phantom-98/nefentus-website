@@ -132,8 +132,14 @@ export const QRPopup = ({
           colSizes={[1, 2]}
         />
         {link && (
-          <div style={{ backgroundColor: "#fff", margin: "16px" }}>
-            <QRCode value={link} size={200} style={{ margin: "32px" }} />
+          <div
+            style={{
+              backgroundColor: "#fff",
+              margin: "16px",
+              borderRadius: "1rem",
+            }}
+          >
+            <QRCode value={link} size={200} style={{ margin: "10px" }} />
           </div>
         )}
         <div className={styles.paymentButtons}>
