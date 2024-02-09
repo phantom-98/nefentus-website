@@ -24,8 +24,8 @@ const Home = () => {
   const api = new backendAPI();
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has("affiliate")) {
-      const paramValue = urlParams.get("affiliate");
+    if (urlParams.has("ref")) {
+      const paramValue = urlParams.get("ref");
       localStorage.setItem("affiliateJoined", paramValue);
       api.countAffiliate(paramValue);
     }
