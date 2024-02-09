@@ -339,12 +339,13 @@ export default class adminDashboardApi {
     }
   }
 
-  async updateUser(firstName, lastName, email, roles) {
+  async updateUser(firstName, lastName, email, editEmailAddress, roles) {
     try {
       const request = {
         firstName: firstName,
         lastName: lastName,
         email: email,
+        editEmail: editEmailAddress,
         roles: [roles],
       };
       const url = `${this.baseURL}/users`;

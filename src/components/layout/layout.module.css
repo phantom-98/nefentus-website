@@ -200,7 +200,7 @@
 .list {
   display: grid;
   row-gap: 1rem;
-  margin-top: -2rem;
+  margin-top: 0.5rem;
   column-gap: 5rem;
   margin-bottom: 4rem;
 }
@@ -215,7 +215,7 @@
   align-items: center;
   font-size: 1.4rem;
   width: max-content;
-  color: var(--gray-color);
+  color: var(--text2-color);
 }
 
 @media (max-width: 900px) {
