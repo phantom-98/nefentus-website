@@ -122,21 +122,19 @@ export const QRPopup = ({
         <Table
           data={[
             [`${t("payments.amount")}:`, `${price} USD`],
-            [`${t("payments.email")}:`, `${email}`],
-            [`${t("payments.name")}:`, `${name}`],
-            [`${t("payments.company")}:`, `${company}`],
-            [`${t("payments.address")}:`, `${address}`],
-            [`${t("payments.taxNumber")}:`, `${taxNumber}`],
+            [`${t("payments.email")}:`, email],
+            [`${t("payments.name")}:`, name],
+            [`${t("payments.company")}:`, company],
+            [`${t("payments.address")}:`, address],
+            [`${t("payments.taxNumber")}:`, taxNumber],
             ["Link: ", <CopyValue value={link} onCopy={() => {}} link />],
           ]}
           colSizes={[1, 2]}
         />
         {link && (
-          <QRCode
-            value={link}
-            size={256}
-            style={{ margin: "20px", minHeight: "120px" }}
-          />
+          <div style={{ backgroundColor: "#fff", margin: "16px" }}>
+            <QRCode value={link} size={200} style={{ margin: "32px" }} />
+          </div>
         )}
         <div className={styles.paymentButtons}>
           <Button onClick={() => setShow(false)}>{t("general.close")}</Button>
