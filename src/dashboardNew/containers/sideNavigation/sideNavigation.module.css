@@ -87,6 +87,68 @@
   filter: invert();
 }
 
+.linkContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.linkContainer > div:first-child {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  background-color: var(--card-color);
+  padding: 0.7rem 1rem;
+  gap: 1rem;
+  font-size: 1.2rem;
+}
+
+.linkContainer svg {
+  stroke: var(--text-color) !important;
+}
+
+.linkContainer > div:last-child {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  gap: 0.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 100px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 70%;
+  left: 50%;
+  margin-left: -55px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  box-shadow: 0.3rem 0.3rem 1rem var(--border-color);
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--background-color) transparent transparent transparent;
+}
+
 @media (max-width: 900px) {
   .soon {
     font-size: 0.6rem;

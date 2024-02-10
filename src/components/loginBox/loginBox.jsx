@@ -283,7 +283,7 @@ const LoginBox = () => {
     }
     const response = await backendAPI.verifyTotpToken(email, code, checkbox);
     try {
-      if (response == null) {
+      if (response == null || !response.ok) {
         setErrorMessage("Failed to Confirm");
         return;
       }

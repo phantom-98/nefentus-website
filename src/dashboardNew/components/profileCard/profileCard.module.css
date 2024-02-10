@@ -21,12 +21,12 @@
   align-items: center;
   gap: 1.5rem;
   padding-right: 5rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid var(--border-color, #313131);
 }
 
-.light .profileWrapper {
+/* .light .profileWrapper {
   border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
+} */
 
 .profileImage {
   height: 6.4rem;
@@ -76,11 +76,11 @@
     padding-right: 0;
     border-right: 0px;
     width: 100%;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--border-color, #313131);
     padding-bottom: 1rem;
   }
 
-  .light .profileWrapper {
+  /* .light .profileWrapper {
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  }
+  } */
 }

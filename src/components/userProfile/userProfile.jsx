@@ -80,7 +80,7 @@ const UserProfile = ({ web, logOut, requireKYC }) => {
             <Identification />
             <p>{t("navigation.identification")}</p>
           </Link>
-          <Link onClick={logOut} to="/" className={styles.profileItem}>
+          <Link onClick={logOut} className={styles.profileItem}>
             <Logout />
             <p>{t("navigation.logOut")}</p>
           </Link>
