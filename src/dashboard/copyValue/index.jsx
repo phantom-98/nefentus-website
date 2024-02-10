@@ -29,11 +29,10 @@ const CopyValue = ({ value, onCopy, link, receiveModal }) => {
       )}
       <div
         onClick={handleClipboard}
-        style={{ position: "relative", overflow: "visible" }}
+        style={{ position: "relative", overflow: "visible", cursor: "pointer" }}
       >
         <span className={styles.tooltip} ref={ref}>
-          {/* {t("sidebar.copied")} */}
-          Copied
+          {t("general.copied")}
         </span>
         <svg
           width="24"
