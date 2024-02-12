@@ -88,6 +88,23 @@
   font-size: 14px;
 }
 
+.walletAddressField {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.walletAddressSubContainer {
+  padding: 3px 6px 3px 6px;
+  border-radius: 6px;
+  background-color: #313131;
+}
+
+.copyAddressIcon {
+  z-index: 2;
+  cursor: pointer;
+}
+
 .option input {
   border: 0px !important;
 }
