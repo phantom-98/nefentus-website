@@ -185,10 +185,10 @@ export const TransactionInfo = ({ show, setShow, transaction }) => {
             </div>
           </div>
           <div className={styles.transactionHeader}>
-            <div style={{ alignItems: "flex-end;" }}>
-              <p style={{ textAlign: "right;" }}>
-                {t("transactions.detail.amountTitle")}
-              </p>
+            <div
+              style={{ alignItems: "flex-end", textAlign: "right !important;" }}
+            >
+              <p>{t("transactions.detail.amountTitle")}</p>
               <p>${transaction.amount}</p>
             </div>
           </div>
