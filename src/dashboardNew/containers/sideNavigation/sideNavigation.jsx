@@ -8,7 +8,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Button from "../../components/button/button";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { dashboardLink } from "../../../utils";
+import { checkJwtToken, dashboardLink } from "../../../utils";
 import { useTheme } from "../../../context/themeContext/themeContext";
 
 const SideNavigation = () => {
@@ -134,6 +134,8 @@ const SideNavigation = () => {
   };
 
   useEffect(() => {
+    const verifyJwt = async () => await checkJwtToken();
+    verifyJwt();
     switch (query.pathname) {
       case "/dashboard/":
         setActive("Dashboard");

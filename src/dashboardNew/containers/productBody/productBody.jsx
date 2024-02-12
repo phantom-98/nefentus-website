@@ -12,6 +12,7 @@ import CropDialog, {
 } from "../../../components/cropDialog/cropDialog";
 import { useTranslation } from "react-i18next";
 import Popup from "../../components/popup/popup";
+import { checkJwtToken } from "../../../utils";
 
 const ProductBody = () => {
   const [products, setProducts] = useState([]);
@@ -38,6 +39,7 @@ const ProductBody = () => {
   }, [load]);
 
   async function loadProducts() {
+    await checkJwtToken();
     const newProducts = await dashboardApi.getProducts();
     if (newProducts) {
       const newSignedImagePaths = await Promise.all(

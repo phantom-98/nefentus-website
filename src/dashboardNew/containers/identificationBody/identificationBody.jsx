@@ -14,6 +14,7 @@ import adminDashboardApi from "../../../api/adminDashboardApi";
 import MessageComponent from "../../../components/message";
 import { MessageContext } from "../../../context/message";
 import { useTheme } from "../../../context/themeContext/themeContext";
+import { checkJwtToken } from "../../../utils";
 
 const KYC_TYPE = {
   FULL_NAME: "FULL_NAME",
@@ -191,6 +192,7 @@ const IdentificationBody = () => {
 
   useEffect(() => {
     const getLevel = async () => {
+      await checkJwtToken();
       const BackendAPI = new backend_API();
       const { data } = await BackendAPI.getKYCLevel(userId);
       if (data) {

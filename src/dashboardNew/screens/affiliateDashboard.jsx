@@ -4,6 +4,7 @@ import EarningCards from "../components/earningCards/earningCards";
 import IncomeCard from "../components/incomeCard/incomeCard";
 import ProfileCard from "../components/profileCard/profileCard";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
+import { useEffect } from "react";
 
 const data = [
   {
@@ -44,6 +45,11 @@ const chartData = {
 };
 
 const AffiliateDashboard = () => {
+  useEffect(() => {
+    const verifyJwt = async () => await checkJwtToken();
+    verifyJwt();
+  }, []);
+
   return (
     <div>
       <ProfileCard type="affiliate" />

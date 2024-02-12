@@ -11,6 +11,7 @@ import WalletIntegration from "../../components/WalletIntegration/WalletIntegrat
 import SettingsTitle from "../../components/settings/settingsTitle";
 import Card from "../../components/card/card";
 import { useTranslation } from "react-i18next";
+import { checkJwtToken } from "../../../utils";
 
 const IntegrationsBody = () => {
   const wallets = [
@@ -32,6 +33,10 @@ const IntegrationsBody = () => {
     Metamask: "disconnected",
   });
   useEffect(() => {
+    const verifyJwt = async () => {
+      await checkJwtToken();
+    };
+    verifyJwt();
     console.log(connectStatus);
   }, [connectStatus]);
 
