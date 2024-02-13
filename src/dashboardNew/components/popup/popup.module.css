@@ -11,6 +11,7 @@
 .popupBox {
   width: max-content;
   max-height: 86vh;
+  overflow-y: auto;
   position: relative;
   left: 50%;
   top: 50%;
@@ -135,6 +136,7 @@
 
 .download {
   border-radius: 6px;
+  color: #f6f6f6;
   background-color: rgba(34, 40, 54);
   padding: 6px;
   cursor: pointer;

@@ -122,16 +122,26 @@ export const QRPopup = ({
         <Table
           data={[
             [`${t("payments.amount")}:`, `${price} USD`],
-            [`${t("payments.email")}:`, `${email}`],
-            [`${t("payments.name")}:`, `${name}`],
-            [`${t("payments.company")}:`, `${company}`],
-            [`${t("payments.address")}:`, `${address}`],
-            [`${t("payments.taxNumber")}:`, `${taxNumber}`],
+            [`${t("payments.email")}:`, email],
+            [`${t("payments.name")}:`, name],
+            [`${t("payments.company")}:`, company],
+            [`${t("payments.address")}:`, address],
+            [`${t("payments.taxNumber")}:`, taxNumber],
             ["Link: ", <CopyValue value={link} onCopy={() => {}} link />],
           ]}
           colSizes={[1, 2]}
         />
-        {link && <QRCode value={link} size={256} style={{ margin: "20px" }} />}
+        {link && (
+          <div
+            style={{
+              backgroundColor: "#fff",
+              margin: "16px",
+              borderRadius: "1rem",
+            }}
+          >
+            <QRCode value={link} size={200} style={{ margin: "10px" }} />
+          </div>
+        )}
         <div className={styles.paymentButtons}>
           <Button onClick={() => setShow(false)}>{t("general.close")}</Button>
           {email &&
@@ -175,10 +185,10 @@ export const TransactionInfo = ({ show, setShow, transaction }) => {
             </div>
           </div>
           <div className={styles.transactionHeader}>
-            <div style={{ alignItems: "flex-end;" }}>
-              <p style={{ textAlign: "right;" }}>
-                {t("transactions.detail.amountTitle")}
-              </p>
+            <div
+              style={{ alignItems: "flex-end", textAlign: "right !important;" }}
+            >
+              <p>{t("transactions.detail.amountTitle")}</p>
               <p>${transaction.amount}</p>
             </div>
           </div>
