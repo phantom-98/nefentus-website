@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 import backendAPI from "../../../api/backendAPI";
 import MessageComponent from "../../../components/message";
 import { useLocation } from "react-router-dom";
+import { checkJwtToken } from "../../../utils";
 
 const SecuritySettings = () => {
   const { t, i18n } = useTranslation();
@@ -65,6 +66,7 @@ const SecuritySettings = () => {
   ];
 
   const fetchSettings = async () => {
+    await checkJwtToken();
     const data = await new backendAPI().getSecuritySettings();
 
     setHasTotp(data["hasTotp"]);

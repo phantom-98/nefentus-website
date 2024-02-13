@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ProfileSettings from "../containers/profileSettings/profileSettings";
 import { useNavigate } from "react-router-dom";
 import backendAPI from "../../api/backendAPI";
-import { dashboardLink } from "../../utils";
+import { checkJwtToken, dashboardLink } from "../../utils";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 
 const ProfileDashboard = () => {
@@ -22,6 +22,7 @@ const ProfileDashboard = () => {
     };
 
     async function checkJwtAndNavigate() {
+      await checkJwtToken();
       const jwtIsValid = await backendapi.checkJwt();
       if (jwtIsValid) {
         const newLink = dashboardLink(localStorage);

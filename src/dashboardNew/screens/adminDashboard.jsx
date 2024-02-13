@@ -6,7 +6,7 @@ import TableAction from "../components/tableAction/tableAction";
 import TableSearch from "../components/tableSearch/tableSearch";
 import TableStatus from "../components/tableStatus/tableStatus";
 import adminDashboardApi from "../../api/adminDashboardApi";
-import { formatUSDBalance } from "../../utils";
+import { checkJwtToken, formatUSDBalance } from "../../utils";
 import moment from "moment";
 import UserModal from "../../dashboardNew/components/userModal";
 import { MessageContext } from "../../context/message";
@@ -87,6 +87,7 @@ const AdminDashboard = ({ type }) => {
   }, [isReloadData]);
 
   const fetchAdminData = async () => {
+    await checkJwtToken();
     const result = await adminApi.checkPermission();
     if (result !== true) {
       navigate("/login");

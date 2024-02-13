@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
+import backendAPI from "./api/backendAPI";
 
 export function formatTokenBalance(x, round = 2) {
   const parsedFloat = parseFloat(x);
@@ -141,3 +142,8 @@ export const setIsExternal = (value) => {
 
 export const getIsExternal = () =>
   JSON.parse(localStorage.getItem("isExternal"));
+
+export const checkJwtToken = async () => {
+  const isAuthorize = await new backendAPI().checkJwt();
+  if (!isAuthorize) window.location.href = "/";
+};

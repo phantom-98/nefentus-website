@@ -12,6 +12,7 @@ import moment from "moment";
 import backendAPI from "../../api/backendAPI";
 
 import { useTheme } from "../../context/themeContext/themeContext";
+import { checkJwtToken } from "../../utils";
 
 const MainDashboard = () => {
   const { t, i18n } = useTranslation();
@@ -37,6 +38,7 @@ const MainDashboard = () => {
   }, [language, theme, activeWallet]);
 
   const fetchGraphData = async () => {
+    await checkJwtToken();
     const response = await backend_Api.getUserBalanceForGraph();
     response.sort((a, b) => {
       const dateA = new Date(a.createdAt);

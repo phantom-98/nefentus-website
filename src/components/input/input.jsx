@@ -3,10 +3,12 @@ import styles from "./input.module.css";
 import dropDown from "../../assets/icon/dropdown.svg";
 import AttachmentImage from "../../assets/icon/attachment.svg";
 import Delete from "../../assets/icon/delete.svg";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../context/themeContext/themeContext";
 import WalletAddressFormatter from "../../func/walletAddressFormatter";
+import CopyAddress from "../../assets/icon/copy.png";
+import { MessageContext } from "../../context/message";
 
 const Input = ({
   label,
@@ -386,8 +388,16 @@ export const OptionsWithImage = ({
   wallet,
 }) => {
   const [open, setOpen] = useState(false);
+  const { theme } = useTheme();
+  const { setSuccessMessage } = useContext(MessageContext);
 
   const { t } = useTranslation();
+
+  const handleCopy = (e, value) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(value);
+    setSuccessMessage(t("dashboard.cryptoCard.walletCopied"));
+  };
 
   return (
     <div className={`${styles.inputWrapper} ${styles.option}`}>
@@ -418,7 +428,22 @@ export const OptionsWithImage = ({
                 ? wallet?.name
                 : t("messages.error.accountDisconnect")}
             </div>
-            <div className={styles.walletAddress}>{wallet?.address}</div>
+            <div className={styles.walletAddressField}>
+              <div>Address </div>
+              <div
+                className={`${styles.walletAddressSubContainer} ${styles.walletAddressField}`}
+              >
+                <div className={styles.walletAddress}>
+                  {WalletAddressFormatter(wallet?.address)}
+                </div>
+                <img
+                  src={CopyAddress}
+                  width={18}
+                  className={styles.copyAddressIcon}
+                  onClick={(e) => handleCopy(e, wallet?.address)}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <img src={dropDown} alt="dropdown" />

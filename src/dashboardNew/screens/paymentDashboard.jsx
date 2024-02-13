@@ -10,6 +10,7 @@ import TableStatus from "../components/tableStatus/tableStatus";
 import vendorDashboardApi from "../../api/vendorDashboardApi";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 import { useTranslation } from "react-i18next";
+import { checkJwtToken } from "../../utils";
 
 const label = ["Created At", "Price ($)", "Status", "QR Code", "Actions"];
 
@@ -31,6 +32,7 @@ const PaymentDashboard = () => {
   }, [isLoadingInvoiceData]);
 
   async function fetchInvoices() {
+    await checkJwtToken();
     let newInvoices = await vendorAPI.getInvoices();
     // Reverse the array
     newInvoices = newInvoices.reverse();
