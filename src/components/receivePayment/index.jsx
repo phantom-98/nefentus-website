@@ -148,12 +148,14 @@ const ReceivePayment = ({
       externalWallets[0].address
     ) {
       registerWallet(externalWallets[0]);
+      selectedWalletIndex == 1 && fetchBalances(externalWallets[0].address);
     }
     if (
       externalWallets[1].status === "connected" &&
       externalWallets[1].address
     ) {
       registerWallet(externalWallets[1]);
+      selectedWalletIndex == 2 && fetchBalances(externalWallets[1].address);
     }
   }, [
     externalWallets[0].status,
@@ -196,7 +198,7 @@ const ReceivePayment = ({
     } else {
       !isDisable && setDisable(true);
     }
-  }, [balances, prices, priceUSD]);
+  }, [balances, prices, priceUSD, selectedCryptoIndex]);
 
   useEffect(() => {
     const currency = currencies()[selectedCryptoIndex];
