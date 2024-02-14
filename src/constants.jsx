@@ -8,6 +8,7 @@ import Tether from "./assets/icon/crypto/tether.svg";
 import USDC from "./assets/icon/crypto/usdc.svg";
 import Ripple from "./assets/icon/crypto/xrp.svg";
 import DAI from "./assets/icon/crypto/dai.svg";
+import BSC from "./assets/icon/crypto/bsc.svg";
 import Doge from "./assets/icon/crypto/doge.svg";
 import SwapAndDistributeTestETH from "./assets/abi/SwapAndDistributeTestETH.json";
 import SwapAndDistributeTestBNB from "./assets/abi/SwapAndDistributeTestBNB.json";
@@ -40,7 +41,7 @@ export const blockchainToStablecoin = (blockchain) => {
   if (blockchain === "ETH") {
     return getCurrencyFromAbbr(blockchain, "USDC");
   } else if (blockchain == "BNB") {
-    return getCurrencyFromAbbr(blockchain, "BUSD");
+    return getCurrencyFromAbbr(blockchain, "BSC");
   }
 };
 
@@ -142,10 +143,10 @@ export const currencies = () => {
         decimals: 18,
       },
       {
-        name: "Binance USD",
+        name: "Tether",
         blockchain: "BNB",
-        icon: Binance,
-        abbr: "BUSD",
+        icon: BSC,
+        abbr: "BSC",
         address: "0x55d398326f99059fF775485246999027B3197955",
         decimals: 18,
       },
@@ -247,10 +248,10 @@ export const currencies = () => {
         decimals: 18,
       },
       {
-        name: "Binance USD",
+        name: "Tether",
         blockchain: "BNB",
-        icon: Binance,
-        abbr: "BUSD",
+        icon: BSC,
+        abbr: "BSC",
         address: "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee",
         decimals: 18,
       },
