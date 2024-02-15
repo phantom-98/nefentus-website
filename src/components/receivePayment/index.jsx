@@ -416,7 +416,15 @@ const ReceivePayment = ({
         setShow={setPwd}
         password={password}
         setPassword={setPassword}
-        onConfirm={doPayment}
+        onConfirm={async () => {
+          const res = await backend_API.checkPassword(password);
+          if (res) {
+            doPayment();
+          } else {
+            setPassword("");
+            setErrorMessage(t("messages.error.passwordCorrect"));
+          }
+        }}
       />
     </div>
   );
