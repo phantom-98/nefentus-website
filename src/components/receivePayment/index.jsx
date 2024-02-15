@@ -214,7 +214,7 @@ const ReceivePayment = ({
         BNB: 4,
         WBNB: 4,
         DAI: 2,
-        BSC: 2,
+        "USDT-BSC": 2,
       };
       setCryptoAmount(
         formatTokenBalance(priceUSD / price, round[currency.abbr]),

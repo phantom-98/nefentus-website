@@ -41,7 +41,7 @@ export const blockchainToStablecoin = (blockchain) => {
   if (blockchain === "ETH") {
     return getCurrencyFromAbbr(blockchain, "USDC");
   } else if (blockchain == "BNB") {
-    return getCurrencyFromAbbr(blockchain, "BSC");
+    return getCurrencyFromAbbr(blockchain, "USDT-BSC");
   }
 };
 
@@ -143,10 +143,10 @@ export const currencies = () => {
         decimals: 18,
       },
       {
-        name: "Tether",
+        name: "Tether (BSC)",
         blockchain: "BNB",
         icon: BSC,
-        abbr: "BSC",
+        abbr: "USDT-BSC",
         address: "0x55d398326f99059fF775485246999027B3197955",
         decimals: 18,
       },
@@ -248,10 +248,10 @@ export const currencies = () => {
         decimals: 18,
       },
       {
-        name: "Tether",
+        name: "Tether (BSC)",
         blockchain: "BNB",
         icon: BSC,
-        abbr: "BSC",
+        abbr: "USDT-BSC",
         address: "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee",
         decimals: 18,
       },
