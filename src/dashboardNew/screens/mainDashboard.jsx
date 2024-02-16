@@ -13,6 +13,7 @@ import backendAPI from "../../api/backendAPI";
 
 import { useTheme } from "../../context/themeContext/themeContext";
 import { checkJwtToken } from "../../utils";
+import { Helmet } from "react-helmet";
 
 const MainDashboard = () => {
   const { t, i18n } = useTranslation();
@@ -94,6 +95,9 @@ const MainDashboard = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Nefentus | {t("navigation.dashboard")}</title>
+      </Helmet>
       <ThirdwebProvider
         activeChain={BinanceTestnet}
         supportedWallets={[metamaskWallet()]}

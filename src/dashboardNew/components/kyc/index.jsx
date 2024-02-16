@@ -11,6 +11,7 @@ import Popup from "../popup/popup";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import moment from "moment";
+import { Helmet } from "react-helmet";
 
 const KycBody = () => {
   const [data, setData] = useState([]);
@@ -28,21 +29,26 @@ const KycBody = () => {
   }, []);
 
   return (
-    <div
-      style={{ marginBottom: "5rem" }}
-      className={`${theme !== "dark" ? "light" : `dark ${styles.darkMode}`}`}
-    >
-      <div className={styles.top}>
-        <div className={styles.left}>
-          <div style={{ fontSize: "22px" }}>{t("kyc.kycTitle")}</div>
+    <>
+      <Helmet>
+        <title>Nefentus | {t("navigation.kyc")}</title>
+      </Helmet>
+      <div
+        style={{ marginBottom: "5rem" }}
+        className={`${theme !== "dark" ? "light" : `dark ${styles.darkMode}`}`}
+      >
+        <div className={styles.top}>
+          <div className={styles.left}>
+            <div style={{ fontSize: "22px" }}>{t("kyc.kycTitle")}</div>
 
-          <div className={styles.subtitle}>{t("kyc.kycSubTitle")}</div>
+            <div className={styles.subtitle}>{t("kyc.kycSubTitle")}</div>
+          </div>
+          <TableSearch />
         </div>
-        <TableSearch />
-      </div>
 
-      <Table data={data} setData={setData} />
-    </div>
+        <Table data={data} setData={setData} />
+      </div>
+    </>
   );
 };
 

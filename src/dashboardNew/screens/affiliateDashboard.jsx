@@ -5,6 +5,8 @@ import IncomeCard from "../components/incomeCard/incomeCard";
 import ProfileCard from "../components/profileCard/profileCard";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 const data = [
   {
@@ -45,6 +47,7 @@ const chartData = {
 };
 
 const AffiliateDashboard = () => {
+  const { t } = useTranslation();
   useEffect(() => {
     const verifyJwt = async () => await checkJwtToken();
     verifyJwt();
@@ -52,6 +55,12 @@ const AffiliateDashboard = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>
+          Nefentus |{" "}
+          {t("navigation.affiliate") + " " + t("navigation.dashboard")}
+        </title>
+      </Helmet>
       <ProfileCard type="affiliate" />
       <EarningCards data={data} />
       <IncomeCard data={chartData} />

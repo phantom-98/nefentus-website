@@ -51,7 +51,7 @@ const Payment = () => {
   return (
     <div>
       <Helmet>
-        <title>Nefentus | Payment</title>
+        <title>Nefentus | {t("navigation.payment")}</title>
       </Helmet>
       {/* <Circle /> */}
       <Layout

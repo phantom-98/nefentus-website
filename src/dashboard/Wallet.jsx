@@ -1,8 +1,10 @@
 import WalletBody from "./wallet/index";
 import { ThirdwebProvider, metamaskWallet } from "@thirdweb-dev/react";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 const Wallet = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <ThirdwebProvider
@@ -11,7 +13,7 @@ const Wallet = () => {
         clientId="639eea2ebcabed7eab90b56aceeed08b"
       >
         <Helmet>
-          <title>Nefentus | Wallet</title>
+          <title>Nefentus | {t("navigation.wallet")}</title>
         </Helmet>
         <WalletBody />
       </ThirdwebProvider>

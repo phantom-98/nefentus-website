@@ -53,7 +53,7 @@ const Affiliate = () => {
   return (
     <div>
       <Helmet>
-        <title>Nefentus | Affiliate</title>
+        <title>Nefentus | {t("navigation.affiliate")}</title>
       </Helmet>
       <HeroAff />
 

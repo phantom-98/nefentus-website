@@ -7,7 +7,7 @@ const Affiliate = () => {
     <>
       <div className="container dashboardContainer">
         <Helmet>
-          <title>Nefentus | Dashboard</title>
+          <title>Nefentus | {t("navigation.dashboard")}</title>
         </Helmet>
         <AdminBody type={"affiliate"} />
       </div>

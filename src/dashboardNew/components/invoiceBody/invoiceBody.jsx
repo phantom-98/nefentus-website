@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { get } from "react-hook-form";
 import Popup from "../popup/popup";
 import { useTheme } from "../../../context/themeContext/themeContext";
+import { Helmet } from "react-helmet";
 
 const InvoicesBody = () => {
   const [vatNumber, setVatNumber] = useState();
@@ -68,92 +69,102 @@ const InvoicesBody = () => {
   const { theme } = useTheme();
 
   return (
-    <div
-      className={`${styles.tabContent} ${theme !== "dark" ? styles.light : ""}`}
-    >
-      <MessageComponent />
-      <Card className={styles.card}>
-        <SettingsTitle
-          title={t("invoice.title")}
-          description={t("invoice.description")}
-        />
+    <>
+      <Helmet>
+        <title>Nefentus | {t("navigation.invoice")}</title>
+      </Helmet>
+      <div
+        className={`${styles.tabContent} ${
+          theme !== "dark" ? styles.light : ""
+        }`}
+      >
+        <MessageComponent />
+        <Card className={styles.card}>
+          <SettingsTitle
+            title={t("invoice.title")}
+            description={t("invoice.description")}
+          />
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            paddingBottom: 20,
-            paddingTop: 20,
-          }}
-        >
-          <div style={{ paddingTop: 5 }} className={styles.left}>
-            <span style={{ fontSize: "1.6rem" }}>{t("invoice.vatNumber")}</span>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              paddingBottom: 20,
+              paddingTop: 20,
+            }}
+          >
+            <div style={{ paddingTop: 5 }} className={styles.left}>
+              <span style={{ fontSize: "1.6rem" }}>
+                {t("invoice.vatNumber")}
+              </span>
+            </div>
+            <div className={styles.right}>
+              <span className={styles.value}>{vatNumber || " "}</span>
+            </div>
+            <div>
+              <Button
+                color="gray"
+                fontSize="1rem"
+                width="10rem"
+                onClick={() => setShowPopup(true)}
+              >
+                {t("invoice.action.add")}
+              </Button>
+            </div>
           </div>
-          <div className={styles.right}>
-            <span className={styles.value}>{vatNumber || " "}</span>
-          </div>
-          <div>
-            <Button
-              color="gray"
-              fontSize="1rem"
-              width="10rem"
-              onClick={() => setShowPopup(true)}
-            >
-              {t("invoice.action.add")}
-            </Button>
-          </div>
-        </div>
-        <EditPopup
-          show={showPopup}
-          setShow={setShowPopup}
-          value={vatNumber}
-          setValue={(v) => {
-            setVatNumber(v);
-            setchanged(true);
-          }}
-        />
-        <div className={styles.input}>
-          <div className={styles.left}>
-            <p style={{ fontSize: "1.6rem" }}>{t("invoice.enableInvoicing")}</p>
-          </div>
-          <div className={styles.right}>
-            <EnableType value={enableInvoicing} />
-          </div>
-          <div>
-            <Button
-              color="gray"
-              fontSize="1rem"
-              width="10rem"
-              onClick={() => {
-                setEnableInvoicing((prev) => !prev);
-                setchanged(true);
-              }}
-            >
-              {enableInvoicing
-                ? t("invoice.action.disable")
-                : t("invoice.action.enable")}
-            </Button>
-          </div>
-        </div>
-        <div
-          style={{
-            paddingTop: 20,
-            // borderBottom:
-            //   theme === "dark"
-            //     ? "solid 1px rgba(255,255,255,0.1)"
-            //     : "solid 1px rgba(0,0,0,0.1)",
-            // paddingBottom: 20,
-          }}
-        >
-          <WalletSetting
-            value={walletAddress}
-            setValue={(w) => {
-              setWalletAddress(w);
+          <EditPopup
+            show={showPopup}
+            setShow={setShowPopup}
+            value={vatNumber}
+            setValue={(v) => {
+              setVatNumber(v);
               setchanged(true);
             }}
           />
-        </div>
-        {/* <div style={{ paddingTop: 20 }}>
+          <div className={styles.input}>
+            <div className={styles.left}>
+              <p style={{ fontSize: "1.6rem" }}>
+                {t("invoice.enableInvoicing")}
+              </p>
+            </div>
+            <div className={styles.right}>
+              <EnableType value={enableInvoicing} />
+            </div>
+            <div>
+              <Button
+                color="gray"
+                fontSize="1rem"
+                width="10rem"
+                onClick={() => {
+                  setEnableInvoicing((prev) => !prev);
+                  setchanged(true);
+                }}
+              >
+                {enableInvoicing
+                  ? t("invoice.action.disable")
+                  : t("invoice.action.enable")}
+              </Button>
+            </div>
+          </div>
+          <div
+            style={{
+              paddingTop: 20,
+              // borderBottom:
+              //   theme === "dark"
+              //     ? "solid 1px rgba(255,255,255,0.1)"
+              //     : "solid 1px rgba(0,0,0,0.1)",
+              // paddingBottom: 20,
+            }}
+          >
+            <WalletSetting
+              value={walletAddress}
+              setValue={(w) => {
+                setWalletAddress(w);
+                setchanged(true);
+              }}
+            />
+          </div>
+          {/* <div style={{ paddingTop: 20 }}>
           <StablecoinSetting
             value={stablecoin}
             setValue={(c) => {
@@ -162,9 +173,10 @@ const InvoicesBody = () => {
             }}
           />
         </div> */}
-      </Card>
-      <div></div>
-    </div>
+        </Card>
+        <div></div>
+      </div>
+    </>
   );
 };
 

@@ -34,7 +34,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Nefentus | Accept Crypto Payments Risk Free</title>
+        <title>Nefentus | {t("navigation.home")}</title>
       </Helmet>
       <Layout
         heading={

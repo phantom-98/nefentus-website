@@ -9,6 +9,7 @@ import backendAPI from "../../../api/backendAPI";
 import MessageComponent from "../../../components/message";
 import { useLocation } from "react-router-dom";
 import { checkJwtToken } from "../../../utils";
+import { Helmet } from "react-helmet";
 
 const SecuritySettings = () => {
   const { t, i18n } = useTranslation();
@@ -82,6 +83,9 @@ const SecuritySettings = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Nefentus | {t("navigation.security")}</title>
+      </Helmet>
       <Card className={styles.card}>
         <SettingsTitle
           title={t("security.settings.title")}

@@ -1,6 +1,6 @@
 {
   "navigation": {
-    "home": "Home",
+    "home": "Accept Crypto Payments Risk Free",
     "solutions": "Solutions",
     "payment": "Payment",
     "paymentDescription": "Experience the future of finance with modern invoicing and payment processes.",
@@ -16,7 +16,22 @@
     "dashboard": "Dashboard",
     "security": "Security",
     "identification": "Identification",
-    "logOut": "Log Out"
+    "logOut": "Log Out",
+    "products": "Products",
+    "settings": "Settings",
+    "transactions": "Transactions",
+    "vendor": "Vendor",
+    "wallet": "Wallet",
+    "kyc": "KYC",
+    "admin": "Admin",
+    "partner": "Partner",
+    "converter": "Converter",
+    "integration": "Integration",
+    "imprint": "Imprint",
+    "forgotPassword": "Password forgotten",
+    "privacy": "Privacy",
+    "resetPassword": "Reset Password",
+    "support": "Support"
   },
   "home": {
     "heroTitle": "Accept Crypto Payments",

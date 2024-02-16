@@ -11,6 +11,7 @@ import vendorDashboardApi from "../../api/vendorDashboardApi";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 import { useTranslation } from "react-i18next";
 import { checkJwtToken } from "../../utils";
+import { Helmet } from "react-helmet";
 
 const label = ["Created At", "Price ($)", "Status", "QR Code", "Actions"];
 
@@ -73,6 +74,9 @@ const PaymentDashboard = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Nefentus | {t("navigation.payment")}</title>
+      </Helmet>
       <ThirdwebProvider
         activeChain="ethereum"
         supportedWallets={[metamaskWallet()]}

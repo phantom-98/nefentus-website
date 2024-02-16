@@ -25,7 +25,7 @@ const Payroll = () => {
   return (
     <div>
       <Helmet>
-        <title>Nefentus | Payroll</title>
+        <title>Nefentus | {t("navigation.payroll")}</title>
       </Helmet>
       <PayrollHero />
       <Layout
