@@ -109,7 +109,7 @@ export const QRPopup = ({
       className={`${styles.popup} ${styles.paymentPopup}`}
       style={{ display: show ? "initial" : "none" }}
     >
-      <Card className={styles.popupBox}>
+      <Card className={`${styles.popupBox} ${styles.scroll}`}>
         <div className={styles.close}>
           <img src={Close} alt="" onClick={() => setShow(false)} />
         </div>

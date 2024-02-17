@@ -233,36 +233,41 @@ export class web3Api {
     let txRequest;
     const serviceFeeInt = Math.ceil(serviceFee * 1_000_000);
     const feeFreeInt = Math.floor(feeFree * 10 ** stablecoin.decimals);
-    if (currency.address === null) {
-      txRequest = await contract.deposit(
-        sellerAddress,
-        affiliateAddress,
-        brokerAddress,
-        seniorBrokerAddress,
-        leaderAddress,
-        stablecoin.address,
-        ethers.utils.parseUnits(minAmountOut.toString(), 0),
-        POOL_FEES,
-        serviceFeeInt,
-        ethers.utils.parseUnits(feeFreeInt.toString(), 0),
-        { value: ethers.utils.parseUnits(amountInInt.toString(), 0) },
-      );
-    } else {
-      txRequest = await contract.depositToken(
-        sellerAddress,
-        affiliateAddress,
-        brokerAddress,
-        seniorBrokerAddress,
-        leaderAddress,
-        currency.address,
-        stablecoin.address,
-        ethers.utils.parseUnits(amountInInt.toString(), 0),
-        ethers.utils.parseUnits(minAmountOut.toString(), 0),
-        POOL_FEES,
-        serviceFeeInt,
-        ethers.utils.parseUnits(feeFreeInt.toString(), 0),
-      );
+    try {
+      if (currency.address === null) {
+        txRequest = await contract.deposit(
+          sellerAddress,
+          affiliateAddress,
+          brokerAddress,
+          seniorBrokerAddress,
+          leaderAddress,
+          stablecoin.address,
+          ethers.utils.parseUnits(minAmountOut.toString(), 0),
+          POOL_FEES,
+          serviceFeeInt,
+          ethers.utils.parseUnits(feeFreeInt.toString(), 0),
+          { value: ethers.utils.parseUnits(amountInInt.toString(), 0) },
+        );
+      } else {
+        txRequest = await contract.depositToken(
+          sellerAddress,
+          affiliateAddress,
+          brokerAddress,
+          seniorBrokerAddress,
+          leaderAddress,
+          currency.address,
+          stablecoin.address,
+          ethers.utils.parseUnits(amountInInt.toString(), 0),
+          ethers.utils.parseUnits(minAmountOut.toString(), 0),
+          POOL_FEES,
+          serviceFeeInt,
+          ethers.utils.parseUnits(feeFreeInt.toString(), 0),
+        );
+      }
+    } catch (e) {
+      return null;
     }
+
     const txReceipt = await txRequest.wait();
 
     const timestampMined = Date.now();

@@ -24,6 +24,7 @@ const UserModal = ({
   setRole,
   password,
   setPassword,
+  spinner,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
@@ -160,7 +161,7 @@ const UserModal = ({
           <Button onClick={() => clearFields()} color="gray">
             {t("general.cancel")}
           </Button>
-          <Button onClick={addUser} color="white">
+          <Button onClick={addUser} color="white" spinner={spinner}>
             {t("general.confirm")}
           </Button>
         </div>

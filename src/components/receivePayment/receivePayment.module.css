@@ -177,6 +177,8 @@
 
 .selectBody {
   width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
   position: absolute;
   left: 0;
   right: 0;
