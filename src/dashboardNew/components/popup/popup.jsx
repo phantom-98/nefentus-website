@@ -22,6 +22,7 @@ const Popup = ({
   confirmTitle = "Confirm",
   title,
   className = "",
+  spinner,
 }) => {
   const dashboardElement = document.getElementById("dashboard");
 
@@ -41,7 +42,11 @@ const Popup = ({
               {cancelTitle}
             </Button>
           )}
-          {onConfirm && <Button onClick={onConfirm}>{confirmTitle}</Button>}
+          {onConfirm && (
+            <Button onClick={onConfirm} spinner={spinner}>
+              {confirmTitle}
+            </Button>
+          )}
         </div>
       </Card>
     </div>,
