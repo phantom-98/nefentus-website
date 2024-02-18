@@ -314,6 +314,7 @@ const SendModal = ({ show, setShow, isExternal, onSuccess }) => {
       }}
       onConfirm={() => withdraw()}
       title={t("dashboard.cryptoCard.sendModal.title")}
+      spinner={isWithdrawing}
     >
       <MessageComponent />
       {/* <TopInfo 

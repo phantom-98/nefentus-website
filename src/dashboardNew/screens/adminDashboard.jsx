@@ -71,6 +71,7 @@ const AdminDashboard = ({ type }) => {
   const [dataSize, setDataSize] = useState(10);
   const [getFilteredUser, setGetFilteredUser] = useState();
   const [searchTrigger, setSearchTrigger] = useState(false);
+  const [spinner, setSpinner] = useState(false);
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -250,6 +251,8 @@ const AdminDashboard = ({ type }) => {
       return;
     }
 
+    setSpinner(true);
+
     if (editEmailAddress) {
       // Update
       const resp = await adminApi.updateUser(
@@ -274,15 +277,15 @@ const AdminDashboard = ({ type }) => {
           fetchAdminData();
           clearAddUserFields();
           setInfoMessage(t("messages.success.addUser"));
-          return;
         } else if (resp.status === 409) {
           setErrorMessage(t("messages.error.userExist"));
-          return;
         }
+      } else {
+        setErrorMessage(t("messages.error.addUser"));
       }
-
-      setErrorMessage(t("messages.error.addUser"));
     }
+
+    setSpinner(false);
   };
 
   function updateUsers(dataUsers) {
@@ -434,6 +437,7 @@ const AdminDashboard = ({ type }) => {
               setEmail={setEmail}
               role={role}
               setRole={setRole}
+              spinner={spinner}
             />
           )}
         </div>

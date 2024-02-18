@@ -22,6 +22,7 @@ const Popup = ({
   confirmTitle = "Confirm",
   title,
   className = "",
+  spinner,
 }) => {
   const dashboardElement = document.getElementById("dashboard");
 
@@ -41,7 +42,11 @@ const Popup = ({
               {cancelTitle}
             </Button>
           )}
-          {onConfirm && <Button onClick={onConfirm}>{confirmTitle}</Button>}
+          {onConfirm && (
+            <Button onClick={onConfirm} spinner={spinner}>
+              {confirmTitle}
+            </Button>
+          )}
         </div>
       </Card>
     </div>,
@@ -109,7 +114,7 @@ export const QRPopup = ({
       className={`${styles.popup} ${styles.paymentPopup}`}
       style={{ display: show ? "initial" : "none" }}
     >
-      <Card className={styles.popupBox}>
+      <Card className={`${styles.popupBox} ${styles.scroll}`}>
         <div className={styles.close}>
           <img src={Close} alt="" onClick={() => setShow(false)} />
         </div>

@@ -21,6 +21,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const [role, setRole] = useState("Select Role");
   const [openModal, setOpenModal] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
+  const [spinner, setSpinner] = useState(false);
   const userRole = getRole(localStorage);
   const { t } = useTranslation();
   const { setInfoMessage, setErrorMessage, clearMessages } =
@@ -70,6 +71,8 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
       return;
     }
 
+    setSpinner(true);
+
     if (editEmailAddress) {
       // Update
       const resp = await adminApi.updateUser(
@@ -99,15 +102,15 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
           setIsReloadData((prev) => !prev);
           clearAddUserFields();
           setInfoMessage(t("messages.success.addUser"));
-          return;
         } else if (resp.status === 409) {
           setErrorMessage(t("messages.error.userExist"));
-          return;
         }
+      } else {
+        setErrorMessage(t("messages.error.addUser"));
       }
-
-      setErrorMessage(t("messages.error.addUser"));
     }
+
+    setSpinner(false);
   };
 
   const closeModal = () => {
@@ -198,6 +201,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
               setRole={setRole}
               password={password}
               setPassword={setPassword}
+              spinner={spinner}
             />
           )}
         </div>

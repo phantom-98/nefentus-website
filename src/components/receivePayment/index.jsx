@@ -58,7 +58,7 @@ const ReceivePayment = ({
   ];
 
   const [cryptoAmount, setCryptoAmount] = useState("0");
-
+  const [spinner, setSpinner] = useState(false);
   const { balances, fetchBalances } = useBalances();
   const { prices, fetchPrices } = usePrices();
   const [, switchNetwork] = useNetwork();
@@ -244,6 +244,7 @@ const ReceivePayment = ({
       !pwd && setPwd(true);
       return;
     }
+    setSpinner(true);
 
     const res = await handleBuy(
       selectedCryptoIndex,
@@ -276,6 +277,8 @@ const ReceivePayment = ({
         setErrorMessage(t("messages.error.invalidUserId"));
         break;
     }
+
+    setSpinner(false);
   }
 
   async function signin() {
@@ -390,6 +393,7 @@ const ReceivePayment = ({
                 style={{ width: "100%", height: "60px" }}
                 disabled={isDisable}
                 onClick={() => doPayment()}
+                spinner={spinner}
               >
                 {t("payments.payButton")} ${formatUSDBalance(priceUSD)}
               </Button>

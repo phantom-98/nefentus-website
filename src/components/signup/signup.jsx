@@ -247,6 +247,7 @@ const Signup = () => {
   const recaptchaRef = useRef();
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
   const [CountryOption, setCountryOption] = useState("");
+  const [spinner, setSpinner] = useState(false);
   const api = new backendAPI();
 
   const schema = z
@@ -318,6 +319,8 @@ const Signup = () => {
     if (!captchaValue) {
       setErrorMessage(t("messages.error.reCAPTCHA"));
     } else {
+      setSpinner(true);
+
       const requestData = {
         ...data,
         roles: ["Affiliate"],
@@ -374,6 +377,7 @@ const Signup = () => {
         setInfoMessage(t("messages.error.confirmEmail"));
         resetForm();
       }
+      setSpinner(false);
     }
   }
 
@@ -464,7 +468,7 @@ const Signup = () => {
         />
 
         <div className={styles.buttonWrapper}>
-          <Button className={styles.button} type="submit">
+          <Button className={styles.button} type="submit" spinner={spinner}>
             {t("signUp.formButton")}
           </Button>
         </div>

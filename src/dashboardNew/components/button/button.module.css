@@ -28,9 +28,34 @@
   opacity: 0.6;
 }
 
-.text {
+.textWrapper {
   position: relative;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.text {
   padding-top: 2px;
   color: var(--text-color);
+}
+
+.spinner {
+  border: 3px solid var(--text2-color);
+  border-top: 3px solid var(--text-color);
+  border-radius: 50%;
+  width: 1.3rem !important;
+  height: 1.3rem !important;
+  padding: 0 !important;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

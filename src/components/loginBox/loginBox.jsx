@@ -152,6 +152,7 @@ const LoginBox = () => {
       ? JSON.parse(Cookies.get("nefentus-remember-me"))
       : false,
   );
+  const [spinner, setSpinner] = useState(false);
 
   const schema = z.object({
     email: z.string().min(1, { message: t("messages.validation.email") }),
@@ -230,6 +231,7 @@ const LoginBox = () => {
       // if (Cookies.get("acceptCookie") !== true) {
       //   checkbox = false;
       // }
+      setSpinner(true);
       try {
         const response = await backendAPI.login(
           data.email,
@@ -254,6 +256,7 @@ const LoginBox = () => {
       } catch (error) {
         setErrorMessage(t("messages.error.login"));
       }
+      setSpinner(false);
     }
   }
 
@@ -382,7 +385,7 @@ const LoginBox = () => {
               </div>
             </div>
             <div className={styles.buttonWrapper}>
-              <Button className={styles.button} type="submit">
+              <Button className={styles.button} type="submit" spinner={spinner}>
                 {t("login.button")}
               </Button>
             </div>
