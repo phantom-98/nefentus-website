@@ -230,7 +230,7 @@ export class web3Api {
     );
 
     const timestampSent = Date.now();
-    let txRequest;
+    let txRequest, txReceipt;
     const serviceFeeInt = Math.ceil(serviceFee * 1_000_000);
     const feeFreeInt = Math.floor(feeFree * 10 ** stablecoin.decimals);
     try {
@@ -249,26 +249,39 @@ export class web3Api {
           { value: ethers.utils.parseUnits(amountInInt.toString(), 0) },
         );
       } else {
+        // approve to deposit token
+        const tokenContract = new ethers.Contract(
+          currency.address,
+          ERC20_ABI,
+          signer,
+        );
+        const tx = await tokenContract.approve(
+          contract.address,
+          ethers.utils.parseUnits(amountIn.toString(), currency.decimals),
+        );
+        await tx.wait();
+
         txRequest = await contract.depositToken(
           sellerAddress,
           affiliateAddress,
           brokerAddress,
           seniorBrokerAddress,
           leaderAddress,
-          currency.address,
           stablecoin.address,
+          currency.address,
           ethers.utils.parseUnits(amountInInt.toString(), 0),
           ethers.utils.parseUnits(minAmountOut.toString(), 0),
           POOL_FEES,
           serviceFeeInt,
           ethers.utils.parseUnits(feeFreeInt.toString(), 0),
+          { gasLimit: 600_000 },
         );
+        txReceipt = await txRequest.wait();
       }
     } catch (e) {
+      console.log(e);
       return null;
     }
-
-    const txReceipt = await txRequest.wait();
 
     const timestampMined = Date.now();
     // const transaction = await this.provider.getTransaction(txReceipt.transactionHash);
