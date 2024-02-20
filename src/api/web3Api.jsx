@@ -178,8 +178,16 @@ export class web3Api {
     return txReceipt;
   }
 
+  async MMProvider() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    window.ethereum.enable();
+    await provider.send("eth_requestAccounts", []); // <- this promps user to connect metamask
+    console.log(provider);
+    return provider.getSigner();
+  }
+
   async sendToken(tokenAddress, blockchain, amount, toAddress) {
-    const signer = MMProvider().getSigner();
+    const signer = await this.MMProvider();
     const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
     const decimals = await tokenContract.decimals();
     const txRequest = await tokenContract.transfer(

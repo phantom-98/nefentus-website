@@ -3,7 +3,7 @@ import Card from "../card/card";
 import styles from "./cryptoCard.module.css";
 
 import { useContext, useEffect, useState } from "react";
-import { useNetworkMismatch, useNetwork } from "@thirdweb-dev/react";
+import { useNetworkMismatch, useSwitchChain } from "@thirdweb-dev/react";
 import useInternalWallet from "../../../hooks/internalWallet";
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
@@ -45,7 +45,8 @@ const CryptoCard = ({ wallet }) => {
   };
 
   useEffect(() => {
-    if (wallet?.name == "ETH") setIsExternal(false);
+    if (wallet?.name == "ETH" || wallet?.name == "Internal Wallet")
+      setIsExternal(false);
     else setIsExternal(true);
   }, [wallet]);
 
@@ -112,6 +113,7 @@ const CryptoCard = ({ wallet }) => {
         setShow={setOpenWithdrawModal}
         isExternal={isExternal}
         onSuccess={updateInfo}
+        wallet={wallet}
       />
     </Card>
   );
@@ -150,8 +152,14 @@ const CryptoItem = ({ data }) => {
             balanceUSD === "loading" ? balanceUSD : balanceUSD.toString(),
           )}
         </div>
-        <div className={styles.subtitle}>
-          {formatTokenBalance(balanceToken, data.decimals)} {data.abbr}
+        <div className={styles.tooltip}>
+          <span className={styles.tooltiptext}>
+            {" "}
+            {formatTokenBalance(balanceToken, data.decimals)}
+          </span>
+          <div className={styles.subtitle}>
+            {formatTokenBalance(balanceToken)} {data.abbr}
+          </div>
         </div>
       </div>
     </div>
@@ -201,7 +209,7 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
   );
 };
 
-const SendModal = ({ show, setShow, isExternal, onSuccess }) => {
+const SendModal = ({ show, setShow, isExternal, onSuccess, wallet }) => {
   const [withdrawCurrency, setWithdrawCurrency] = useState(
     currencies()[0].abbr,
   );
@@ -215,7 +223,7 @@ const SendModal = ({ show, setShow, isExternal, onSuccess }) => {
     useContext(MessageContext);
 
   const isMismatched = useNetworkMismatch();
-  const [, switchNetwork] = useNetwork();
+  const switchNetwork = useSwitchChain();
 
   const withdraw = async () => {
     if (isWithdrawing) return;
@@ -287,7 +295,7 @@ const SendModal = ({ show, setShow, isExternal, onSuccess }) => {
         tokenAddress,
         sendCurrency.blockchain,
         withdrawAmount,
-        wallet.address,
+        wallet?.address,
         withdrawAddress,
         password,
       );
