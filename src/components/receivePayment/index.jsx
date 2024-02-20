@@ -17,7 +17,7 @@ import {
   useConnectionStatus,
   useDisconnect,
   walletConnect,
-  useNetwork,
+  useSwitchChain,
 } from "@thirdweb-dev/react";
 import useBalances from "../../hooks/balances";
 import usePrices from "../../hooks/prices";
@@ -61,7 +61,7 @@ const ReceivePayment = ({
   const [spinner, setSpinner] = useState(false);
   const { balances, fetchBalances } = useBalances();
   const { prices, fetchPrices } = usePrices();
-  const [, switchNetwork] = useNetwork();
+  const switchNetwork = useSwitchChain();
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);

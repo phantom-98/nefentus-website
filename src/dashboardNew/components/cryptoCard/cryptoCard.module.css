@@ -15,6 +15,37 @@
   font-size: 1.4rem;
 }
 
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  min-width: 100px;
+  max-width: 200px;
+  background-color: var(--lightBlack-color);
+  color: #fff;
+  text-align: center;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  right: -20px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when hovering over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 .toggle {
   background-color: #222836;
   width: 4rem;
