@@ -13,7 +13,7 @@ import IUniswapV3FactoryABI from "@uniswap/v3-core/artifacts/contracts/interface
 import ERC20_ABI from "../assets/abi/ERC20_ABI.json";
 import { zeroAddressToNull, toChecksumAddress } from "../utils";
 
-const POOL_FEES = "500";
+let POOL_FEES = "500";
 
 const provider = (providerURL) => {
   return new ethers.providers.JsonRpcProvider(providerURL);
@@ -215,10 +215,11 @@ export class web3Api {
       stablecoin.decimals,
     );
     // Amount in token
-    const amountIn = price / priceConvert;
+    const amountIn = (price / priceConvert).toFixed(currency.decimals);
     const amountInInt = Math.ceil(amountIn * 10 ** currency.decimals);
     // Amount in USD stablecoin
-    const minAmountOut = price * 0.99 * 10 ** stablecoin.decimals;
+    const minAmountOut =
+      (price * 0.99).toFixed(stablecoin.decimals) * 10 ** stablecoin.decimals;
 
     // Deposit contract
     const contractInfo = contractDeposits(blockchain);
@@ -257,12 +258,14 @@ export class web3Api {
         );
         const tx = await tokenContract.approve(
           contract.address,
-          ethers.utils.parseUnits(
-            amountIn.toFixed(currency.decimals).toString(),
-            currency.decimals,
-          ),
+          ethers.utils.parseUnits(amountIn.toString(), currency.decimals),
         );
         await tx.wait();
+
+        if (currency.abbr === "XRP" || currency.abbr === "WETH") {
+          console.log("Pool fee: 2500");
+          POOL_FEES = "2500";
+        }
 
         txRequest = await contract.depositToken(
           sellerAddress,
