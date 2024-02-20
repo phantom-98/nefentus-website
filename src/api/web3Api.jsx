@@ -242,11 +242,11 @@ export class web3Api {
           seniorBrokerAddress,
           leaderAddress,
           stablecoin.address,
-          ethers.utils.parseUnits(minAmountOut.toString(), 0),
+          ethers.utils.parseUnits(BigInt(minAmountOut).toString(), 0),
           POOL_FEES,
           serviceFeeInt,
-          ethers.utils.parseUnits(feeFreeInt.toString(), 0),
-          { value: ethers.utils.parseUnits(amountInInt.toString(), 0) },
+          ethers.utils.parseUnits(BigInt(feeFreeInt).toString(), 0),
+          { value: ethers.utils.parseUnits(BigInt(amountInInt).toString(), 0) },
         );
       } else {
         // approve to deposit token
@@ -257,7 +257,10 @@ export class web3Api {
         );
         const tx = await tokenContract.approve(
           contract.address,
-          ethers.utils.parseUnits(amountIn.toString(), currency.decimals),
+          ethers.utils.parseUnits(
+            amountIn.toFixed(currency.decimals).toString(),
+            currency.decimals,
+          ),
         );
         await tx.wait();
 
@@ -269,11 +272,11 @@ export class web3Api {
           leaderAddress,
           stablecoin.address,
           currency.address,
-          ethers.utils.parseUnits(amountInInt.toString(), 0),
-          ethers.utils.parseUnits(minAmountOut.toString(), 0),
+          ethers.utils.parseUnits(BigInt(amountInInt).toString(), 0),
+          ethers.utils.parseUnits(BigInt(minAmountOut).toString(), 0),
           POOL_FEES,
           serviceFeeInt,
-          ethers.utils.parseUnits(feeFreeInt.toString(), 0),
+          ethers.utils.parseUnits(BigInt(feeFreeInt).toString(), 0),
           { gasLimit: 600_000 },
         );
         txReceipt = await txRequest.wait();
