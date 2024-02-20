@@ -292,6 +292,7 @@ export class web3Api {
     // Create transaction info
     // 1. 0x000 to null  2. Make checksum addresses
     const info = this.parseReceipt(txRequest, txReceipt);
+    info.value = amountInInt;
     info.timestampSent = timestampSent;
     info.timestampMined = timestampMined;
     info.sellerAddress = zeroAddressToNull(toChecksumAddress(sellerAddress));
@@ -331,7 +332,7 @@ export class web3Api {
     // Gas & value
     info.gasPrice = BigNumber.from(request.gasPrice).toBigInt();
     info.gasUsed = BigNumber.from(receipt.gasUsed).toBigInt();
-    info.value = BigNumber.from(request.value).toBigInt();
+    // info.value = BigNumber.from(request.value).toBigInt();
 
     // Amounts distributed
     for (const event of receipt.events) {
