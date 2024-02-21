@@ -110,6 +110,13 @@ const ProfileSettings = () => {
       fetchProfile();
     } else if (response.ok) {
       setInfoMessage(t("messages.success.updateSettings"));
+      const data = await response.json();
+      if (data["email"] != data["contactEmail"]) {
+        await backendAPI.signout();
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      }
     } else {
       setErrorMessage(t("messages.error.updateData"));
       await backendAPI.signout();
