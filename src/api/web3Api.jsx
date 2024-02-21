@@ -202,10 +202,7 @@ export class web3Api {
 
   async callDepositContract(
     sellerAddress,
-    affiliateAddress,
-    brokerAddress,
-    seniorBrokerAddress,
-    leaderAddress,
+    partnerAddresses,
     currency,
     stablecoin,
     price,
@@ -245,10 +242,7 @@ export class web3Api {
       if (currency.address === null) {
         txRequest = await contract.deposit(
           sellerAddress,
-          affiliateAddress,
-          brokerAddress,
-          seniorBrokerAddress,
-          leaderAddress,
+          partnerAddresses,
           stablecoin.address,
           ethers.utils.parseUnits(minAmountOut.toString(), 0),
           POOL_FEES,
@@ -259,10 +253,7 @@ export class web3Api {
       } else {
         txRequest = await contract.depositToken(
           sellerAddress,
-          affiliateAddress,
-          brokerAddress,
-          seniorBrokerAddress,
-          leaderAddress,
+          partnerAddresses,
           currency.address,
           stablecoin.address,
           ethers.utils.parseUnits(amountInInt.toString(), 0),
@@ -287,14 +278,9 @@ export class web3Api {
     info.timestampSent = timestampSent;
     info.timestampMined = timestampMined;
     info.sellerAddress = zeroAddressToNull(toChecksumAddress(sellerAddress));
-    info.affiliateAddress = zeroAddressToNull(
-      toChecksumAddress(affiliateAddress),
-    );
-    info.brokerAddress = zeroAddressToNull(toChecksumAddress(brokerAddress));
-    info.seniorBrokerAddress = zeroAddressToNull(
-      toChecksumAddress(seniorBrokerAddress),
-    );
-    info.leaderAddress = zeroAddressToNull(toChecksumAddress(leaderAddress));
+    info.partnerAddresses = partnerAddresses.map((address) => {
+      return zeroAddressToNull(toChecksumAddress(address));
+    });
     info.currencyAddress = currency.address;
     info.stablecoinAddress = toChecksumAddress(stablecoin.address);
     info.serviceFee = serviceFeeInt;
@@ -333,11 +319,8 @@ export class web3Api {
         info = {
           ...info,
           sellerAmount: values[0],
-          affiliateAmount: values[1],
-          brokerAmount: values[2],
-          seniorBrokerAmount: values[3],
-          leaderAmount: values[4],
-          ownerAmount: values[5],
+          ownerAmount: values[1],
+          partnerAmounts: values[2],
         };
       }
     }
