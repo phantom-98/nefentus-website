@@ -916,7 +916,9 @@
       "emptyPassword": "Please enter your password",
       "lengthPassword": "Password must be at least 8 characters",
       "matchPassword": "Passwords must match",
-      "accountDisconnect": "No Account Connected"
+      "accountDisconnect": "No Account Connected",
+      "invalidMail": "Email Address is Invalid",
+      "invalidPhone": "Phone Number is Invalid"
     },
     "info": {
       "transactionNotSaved": "Transaction successfully but could not save transaction info!",
