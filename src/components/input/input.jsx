@@ -74,6 +74,7 @@ export const Options = ({
   setValue,
   label = "",
   dashboard,
+  showOnTop,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -109,7 +110,9 @@ export const Options = ({
         }{" "}
         <img src={dropDown} alt="dropdown" />
         {open && (
-          <div className={`card ${styles.body}`}>
+          <div
+            className={`card ${styles.body} ${showOnTop && styles.reverseOpen}`}
+          >
             {options.length > 0 ? (
               options.map((item) =>
                 item.value ? (
@@ -422,27 +425,24 @@ export const OptionsWithImage = ({
       >
         <div className={`${styles.walleField}`}>
           {wallet?.icon && <img src={wallet?.icon} alt="dropdown" width={36} />}
-          <div>
+          <div className={styles.walletFieldSubContainer}>
             <div className={styles.walletName}>
               {wallet?.name
                 ? wallet?.name
                 : t("messages.error.accountDisconnect")}
             </div>
-            <div className={styles.walletAddressField}>
-              <div>Address </div>
-              <div
-                className={`${styles.walletAddressSubContainer} ${styles.walletAddressField}`}
-              >
-                <div className={styles.walletAddress}>
-                  {WalletAddressFormatter(wallet?.address)}
-                </div>
-                <img
-                  src={CopyAddress}
-                  width={18}
-                  className={styles.copyAddressIcon}
-                  onClick={(e) => handleCopy(e, wallet?.address)}
-                />
+            <div
+              className={`${styles.walletAddressSubContainer} ${styles.walletAddressField}`}
+            >
+              <div className={styles.walletAddress}>
+                {WalletAddressFormatter(wallet?.address)}
               </div>
+              <img
+                src={CopyAddress}
+                width={18}
+                className={styles.copyAddressIcon}
+                onClick={(e) => handleCopy(e, wallet?.address)}
+              />
             </div>
           </div>
         </div>

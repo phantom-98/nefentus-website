@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Card from "../../components/card/card";
 import SettingsItem from "../../components/settings/settingsItem";
 import SettingsTitle from "../../components/settings/settingsTitle";
@@ -11,9 +11,11 @@ import { useTranslation } from "react-i18next";
 import MessageComponent from "../../../components/message";
 import { useAuth } from "../../../context/auth/authContext";
 import { encodeConstructorParamsForImplementation } from "@thirdweb-dev/sdk";
+import { validateEmail, validatePhoneNumber } from "../../../utils";
 
 const ProfileSettings = () => {
   const { setAvatarUrl } = useAuth();
+  const [userProfile, setUserProfile] = useState({});
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [business, setBusiness] = useState("");
@@ -26,7 +28,7 @@ const ProfileSettings = () => {
   const [appNotifications, setAppNotifications] = useState("");
   const [notificationLanguage, setNotificationLanguage] = useState("en");
 
-  const [isSaveData, setIsSaveData] = useState(false);
+  const isDataSave = useRef(false);
   const [file, setFile] = useState(null);
   const [imageChanged, setImageChanged] = useState(false);
   const { t } = useTranslation();
@@ -38,6 +40,7 @@ const ProfileSettings = () => {
 
   const fetchProfile = async () => {
     const data = await backendAPI.getProfile();
+    setUserProfile(data);
     setFirstName(data["firstName"]);
     setLastName(data["lastName"]);
     setBusiness(data["business"]);
@@ -59,6 +62,18 @@ const ProfileSettings = () => {
   }, [imageName]);
 
   const updateUser = async () => {
+    if (!validateEmail(email)) {
+      isDataSave.current = false;
+      setEmail(userProfile["email"]);
+      setErrorMessage(t("messages.error.invalidMail"));
+      return;
+    }
+    if (!validatePhoneNumber(phoneNumber)) {
+      isDataSave.current = false;
+      setPhoneNumber(userProfile["phoneNumber"]);
+      setErrorMessage(t("messages.error.invalidPhone"));
+      return;
+    }
     const requestData = {
       firstName: firstName,
       lastName: lastName,
@@ -138,8 +153,7 @@ const ProfileSettings = () => {
         navigate("/");
       }, 1000);
     }
-
-    setIsSaveData(false);
+    isDataSave.current = false;
   };
 
   const uploadAvatar = async () => {
@@ -154,17 +168,9 @@ const ProfileSettings = () => {
         setErrorMessage(t("messages.error.uploadPicture"));
       }
       setImageChanged(false);
-      setIsSaveData(false);
+      isDataSave.current = false;
     }
   };
-
-  useEffect(() => {
-    console.log("avatar upload", imageChanged);
-    if (isSaveData) {
-      if (!imageChanged) updateUser();
-      else uploadAvatar();
-    }
-  }, [isSaveData]);
 
   const data = [
     {
@@ -251,6 +257,13 @@ const ProfileSettings = () => {
     },
   ];
 
+  useEffect(() => {
+    if (isDataSave.current) {
+      if (!imageChanged) updateUser();
+      else uploadAvatar();
+    }
+  }, [data, isDataSave]);
+
   // useEffect(() => {
   //   const profilePic = localStorage.getItem("profile_pic");
   //   if (profilePic !== "null") setImageName(profilePic);
@@ -266,7 +279,10 @@ const ProfileSettings = () => {
         />
 
         {data.map((item) => (
-          <SettingsItem data={item} setIsSaveData={setIsSaveData} />
+          <SettingsItem
+            data={item}
+            setIsSaveData={(toggle) => (isDataSave.current = toggle)}
+          />
         ))}
       </Card>
     </>
