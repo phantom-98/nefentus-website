@@ -422,27 +422,24 @@ export const OptionsWithImage = ({
       >
         <div className={`${styles.walleField}`}>
           {wallet?.icon && <img src={wallet?.icon} alt="dropdown" width={36} />}
-          <div>
+          <div className={styles.walletFieldSubContainer}>
             <div className={styles.walletName}>
               {wallet?.name
                 ? wallet?.name
                 : t("messages.error.accountDisconnect")}
             </div>
-            <div className={styles.walletAddressField}>
-              <div>Address </div>
-              <div
-                className={`${styles.walletAddressSubContainer} ${styles.walletAddressField}`}
-              >
-                <div className={styles.walletAddress}>
-                  {WalletAddressFormatter(wallet?.address)}
-                </div>
-                <img
-                  src={CopyAddress}
-                  width={18}
-                  className={styles.copyAddressIcon}
-                  onClick={(e) => handleCopy(e, wallet?.address)}
-                />
+            <div
+              className={`${styles.walletAddressSubContainer} ${styles.walletAddressField}`}
+            >
+              <div className={styles.walletAddress}>
+                {WalletAddressFormatter(wallet?.address)}
               </div>
+              <img
+                src={CopyAddress}
+                width={18}
+                className={styles.copyAddressIcon}
+                onClick={(e) => handleCopy(e, wallet?.address)}
+              />
             </div>
           </div>
         </div>

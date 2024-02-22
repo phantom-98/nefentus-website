@@ -97,7 +97,7 @@
 .walletAddressSubContainer {
   padding: 3px 6px 3px 6px;
   border-radius: 6px;
-  background-color: #313131;
+  background-color: var(--lightWhite-color);
 }
 
 .copyAddressIcon {
@@ -193,4 +193,10 @@
 
 .dropdownDisable {
   cursor: not-allowed;
+}
+
+.walletFieldSubContainer {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
 }
