@@ -114,6 +114,18 @@ const ProfileSettings = () => {
         }
       } else if (data["country"]) {
         setErrorMessage(t("messages.error.country"));
+      } else if (data["email"]) {
+        if (data["email"] == "Email is already used") {
+          setErrorMessage(t("messages.error.emailUsed"));
+        } else if (data["email"] == "Please enter your email") {
+          setErrorMessage(t("messages.validation.email"));
+        } else if (
+          data["email"] == "Email must be less than or equal to 70 characters"
+        ) {
+          setErrorMessage(t("messages.validation.lengthEmail"));
+        } else if (data["email"] == "Please enter a valid email") {
+          setErrorMessage(t("messages.validation.validEmail"));
+        }
       } else {
         console.log("response", response);
         setErrorMessage(t("messages.error.updateData"));
@@ -124,7 +136,16 @@ const ProfileSettings = () => {
       }
       fetchProfile();
     } else if (response.ok) {
-      setInfoMessage(t("messages.success.updateSettings"));
+      const data = await response.json();
+      if (data["email"] != data["contactEmail"]) {
+        setInfoMessage(t("messages.success.email"));
+        await backendAPI.signout();
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else {
+        setInfoMessage(t("messages.success.updateSettings"));
+      }
     } else {
       setErrorMessage(t("messages.error.updateData"));
       await backendAPI.signout();

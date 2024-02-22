@@ -800,7 +800,7 @@
       "passwordReset": "Passwort erfolgreich zurückgesetzt!",
       "transaction": "Transaktion erfolgreich!",
       "withdrawal": "Abhebung erfolgreich!",
-      "email": "E-Mail erfolgreich geändert!",
+      "email": "E-Mail wurde erfolgreich geändert! Aus Sicherheitsgründen müssen Sie sich erneut anmelden.",
       "addProduct": "Produkt erfolgreich hinzugefügt!",
       "updateProduct": "Produkt erfolgreich aktualisiert!",
       "deleteProduct": "Produkt erfolgreich gelöscht!",

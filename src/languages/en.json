@@ -847,7 +847,7 @@
       "passwordReset": "Password reset successfully!",
       "transaction": "Transaction successful!",
       "withdrawal": "Withdrawal successful!",
-      "email": "Email successfully changed!",
+      "email": "Email was successfully changed! For security reasons, you need to login again.",
       "addProduct": "Product added successfully!",
       "updateProduct": "Product updated successfully!",
       "deleteProduct": "Product deleted successfully!",
