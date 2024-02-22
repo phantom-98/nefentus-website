@@ -74,6 +74,7 @@ export const Options = ({
   setValue,
   label = "",
   dashboard,
+  showOnTop,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -109,7 +110,9 @@ export const Options = ({
         }{" "}
         <img src={dropDown} alt="dropdown" />
         {open && (
-          <div className={`card ${styles.body}`}>
+          <div
+            className={`card ${styles.body} ${showOnTop && styles.reverseOpen}`}
+          >
             {options.length > 0 ? (
               options.map((item) =>
                 item.value ? (
