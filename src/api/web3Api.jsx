@@ -320,13 +320,13 @@ export class web3Api {
     // Amounts distributed
     for (const event of receipt.events) {
       if (event.event === "Distributed") {
-        const values = event.args.map((arg) => bigNumberArgToBigInt(arg));
-        // 	event Distributed(uint seller, uint affiliate, uint broker, uint leader, uint owner);
         info = {
           ...info,
-          sellerAmount: values[0],
-          ownerAmount: values[1],
-          partnerAmounts: values[2],
+          sellerAmount: bigNumberArgToBigInt(event.args[0]).toString(),
+          ownerAmount: bigNumberArgToBigInt(event.args[1]).toString(),
+          partnerAmounts: event.args[2].map((v) =>
+            bigNumberArgToBigInt(v).toString(),
+          ),
         };
       }
     }
