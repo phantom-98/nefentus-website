@@ -47,6 +47,7 @@ export const usePayment = ({
         hierarchy.partnerAddresses.map((address) => {
           return nullToZeroAddress(address);
         }),
+        hierarchy.feeShares,
         currency,
         stablecoin,
         priceUSD,

@@ -203,6 +203,7 @@ export class web3Api {
   async callDepositContract(
     sellerAddress,
     partnerAddresses,
+    feeShares,
     currency,
     stablecoin,
     price,
@@ -243,17 +244,22 @@ export class web3Api {
         txRequest = await contract.deposit(
           sellerAddress,
           partnerAddresses,
+          feeShares,
           stablecoin.address,
           ethers.utils.parseUnits(minAmountOut.toString(), 0),
           POOL_FEES,
           serviceFeeInt,
           ethers.utils.parseUnits(feeFreeInt.toString(), 0),
-          { value: ethers.utils.parseUnits(amountInInt.toString(), 0) },
+          {
+            value: ethers.utils.parseUnits(amountInInt.toString(), 0),
+            gasLimit: 600_000,
+          },
         );
       } else {
         txRequest = await contract.depositToken(
           sellerAddress,
           partnerAddresses,
+          feeShares,
           currency.address,
           stablecoin.address,
           ethers.utils.parseUnits(amountInInt.toString(), 0),

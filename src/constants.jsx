@@ -299,7 +299,7 @@ export const contractDeposits = (blockchain) => {
     if (useMainnet()) {
       return {
         id: 1, // Not used right now!
-        address: "0x29401bDdfa6a77Bd79b9814B8231E8c409864Dc4",
+        address: "0x009487Fa4838c03bA753a90Fe07F01E69bDAbFb4",
         abi: SwapAndDistributeBNB.abi,
       };
     } else {
