@@ -211,6 +211,7 @@ export class web3Api {
     price,
     serviceFee,
     feeFree,
+    buyerAddress,
   ) {
     const blockchain = currency["blockchain"];
 
@@ -264,11 +265,21 @@ export class web3Api {
           ERC20_ABI,
           signer,
         );
-        const tx = await tokenContract.approve(
+        const allowance = await tokenContract.allowance(
+          buyerAddress,
           contract.address,
-          ethers.utils.parseUnits(amountIn.toString(), currency.decimals),
         );
-        await tx.wait();
+        if (
+          allowance.lt(
+            ethers.utils.parseUnits(amountIn.toString(), currency.decimals),
+          )
+        ) {
+          const tx = await tokenContract.approve(
+            contract.address,
+            ethers.utils.parseUnits(amountIn.toString(), currency.decimals),
+          );
+          await tx.wait();
+        }
 
         if (currency.abbr === "XRP" || currency.abbr === "WETH") {
           console.log("Pool fee: 2500");
