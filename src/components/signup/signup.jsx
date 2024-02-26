@@ -308,6 +308,7 @@ const Signup = () => {
   };
 
   async function submitForm(data) {
+    if (spinner) return;
     if (
       CountryOption === t("signUp.option1Placeholder") ||
       !country_list.find((country) => country?.value === CountryOption)
