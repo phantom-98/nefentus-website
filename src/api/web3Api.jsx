@@ -298,8 +298,8 @@ export class web3Api {
           ethers.utils.parseUnits(BigInt(feeFreeInt).toString(), 0),
           { gasLimit: 600_000 },
         );
-        txReceipt = await txRequest.wait();
       }
+      txReceipt = await txRequest.wait();
     } catch (e) {
       console.log(e);
       return null;
