@@ -86,24 +86,14 @@
           "internalType": "address"
         },
         {
-          "name": "affiliate",
-          "type": "address",
-          "internalType": "address"
+          "name": "partners",
+          "type": "address[]",
+          "internalType": "address[]"
         },
         {
-          "name": "broker",
-          "type": "address",
-          "internalType": "address"
-        },
-        {
-          "name": "seniorBroker",
-          "type": "address",
-          "internalType": "address"
-        },
-        {
-          "name": "leader",
-          "type": "address",
-          "internalType": "address"
+          "name": "feeShare",
+          "type": "uint24[]",
+          "internalType": "uint24[]"
         },
         {
           "name": "tokenOut",
@@ -144,24 +134,14 @@
           "internalType": "address"
         },
         {
-          "name": "affiliate",
-          "type": "address",
-          "internalType": "address"
+          "name": "partners",
+          "type": "address[]",
+          "internalType": "address[]"
         },
         {
-          "name": "broker",
-          "type": "address",
-          "internalType": "address"
-        },
-        {
-          "name": "seniorBroker",
-          "type": "address",
-          "internalType": "address"
-        },
-        {
-          "name": "leader",
-          "type": "address",
-          "internalType": "address"
+          "name": "feeShare",
+          "type": "uint24[]",
+          "internalType": "uint24[]"
         },
         {
           "name": "tokenOut",
@@ -260,40 +240,22 @@
       "name": "Distributed",
       "inputs": [
         {
-          "name": "seller",
+          "name": "sellerAmount",
           "type": "uint256",
           "indexed": false,
           "internalType": "uint256"
         },
         {
-          "name": "affiliate",
+          "name": "ownerAmount",
           "type": "uint256",
           "indexed": false,
           "internalType": "uint256"
         },
         {
-          "name": "broker",
-          "type": "uint256",
+          "name": "partnerAmounts",
+          "type": "uint256[]",
           "indexed": false,
-          "internalType": "uint256"
-        },
-        {
-          "name": "seniorBroker",
-          "type": "uint256",
-          "indexed": false,
-          "internalType": "uint256"
-        },
-        {
-          "name": "leader",
-          "type": "uint256",
-          "indexed": false,
-          "internalType": "uint256"
-        },
-        {
-          "name": "owner",
-          "type": "uint256",
-          "indexed": false,
-          "internalType": "uint256"
+          "internalType": "uint256[]"
         }
       ],
       "anonymous": false

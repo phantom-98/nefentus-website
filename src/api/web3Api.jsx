@@ -202,10 +202,8 @@ export class web3Api {
 
   async callDepositContract(
     sellerAddress,
-    affiliateAddress,
-    brokerAddress,
-    seniorBrokerAddress,
-    leaderAddress,
+    partnerAddresses,
+    feeShares,
     currency,
     stablecoin,
     price,
@@ -247,16 +245,17 @@ export class web3Api {
       if (currency.address === null) {
         txRequest = await contract.deposit(
           sellerAddress,
-          affiliateAddress,
-          brokerAddress,
-          seniorBrokerAddress,
-          leaderAddress,
+          partnerAddresses,
+          feeShares,
           stablecoin.address,
           ethers.utils.parseUnits(BigInt(minAmountOut).toString(), 0),
           POOL_FEES,
           serviceFeeInt,
           ethers.utils.parseUnits(BigInt(feeFreeInt).toString(), 0),
-          { value: ethers.utils.parseUnits(BigInt(amountInInt).toString(), 0) },
+          {
+            value: ethers.utils.parseUnits(BigInt(amountInInt).toString(), 0),
+            gasLimit: 600_000,
+          },
         );
       } else {
         // approve to deposit token
@@ -288,10 +287,8 @@ export class web3Api {
 
         txRequest = await contract.depositToken(
           sellerAddress,
-          affiliateAddress,
-          brokerAddress,
-          seniorBrokerAddress,
-          leaderAddress,
+          partnerAddresses,
+          feeShares,
           stablecoin.address,
           currency.address,
           ethers.utils.parseUnits(BigInt(amountInInt).toString(), 0),
@@ -301,8 +298,8 @@ export class web3Api {
           ethers.utils.parseUnits(BigInt(feeFreeInt).toString(), 0),
           { gasLimit: 600_000 },
         );
-        txReceipt = await txRequest.wait();
       }
+      txReceipt = await txRequest.wait();
     } catch (e) {
       console.log(e);
       return null;
@@ -318,14 +315,9 @@ export class web3Api {
     info.timestampSent = timestampSent;
     info.timestampMined = timestampMined;
     info.sellerAddress = zeroAddressToNull(toChecksumAddress(sellerAddress));
-    info.affiliateAddress = zeroAddressToNull(
-      toChecksumAddress(affiliateAddress),
-    );
-    info.brokerAddress = zeroAddressToNull(toChecksumAddress(brokerAddress));
-    info.seniorBrokerAddress = zeroAddressToNull(
-      toChecksumAddress(seniorBrokerAddress),
-    );
-    info.leaderAddress = zeroAddressToNull(toChecksumAddress(leaderAddress));
+    info.partnerAddresses = partnerAddresses.map((address) => {
+      return zeroAddressToNull(toChecksumAddress(address));
+    });
     info.currencyAddress = currency.address;
     info.stablecoinAddress = toChecksumAddress(stablecoin.address);
     info.serviceFee = serviceFeeInt;
@@ -359,16 +351,13 @@ export class web3Api {
     // Amounts distributed
     for (const event of receipt.events) {
       if (event.event === "Distributed") {
-        const values = event.args.map((arg) => bigNumberArgToBigInt(arg));
-        // 	event Distributed(uint seller, uint affiliate, uint broker, uint leader, uint owner);
         info = {
           ...info,
-          sellerAmount: values[0],
-          affiliateAmount: values[1],
-          brokerAmount: values[2],
-          seniorBrokerAmount: values[3],
-          leaderAmount: values[4],
-          ownerAmount: values[5],
+          sellerAmount: bigNumberArgToBigInt(event.args[0]).toString(),
+          ownerAmount: bigNumberArgToBigInt(event.args[1]).toString(),
+          partnerAmounts: event.args[2].map((v) =>
+            bigNumberArgToBigInt(v).toString(),
+          ),
         };
       }
     }

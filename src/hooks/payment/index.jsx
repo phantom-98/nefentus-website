@@ -44,10 +44,10 @@ export const usePayment = ({
 
       const transactionInfo = await web3API.callDepositContract(
         nullToZeroAddress(hierarchy.sellerAddress),
-        nullToZeroAddress(hierarchy.affiliateAddress),
-        nullToZeroAddress(hierarchy.brokerAddress),
-        nullToZeroAddress(hierarchy.seniorBrokerAddress),
-        nullToZeroAddress(hierarchy.leaderAddress),
+        hierarchy.partnerAddresses.map((address) => {
+          return nullToZeroAddress(address);
+        }),
+        hierarchy.feeShares,
         currency,
         stablecoin,
         priceUSD,
