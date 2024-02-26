@@ -231,5 +231,5 @@
   font-size: 1.2rem;
   margin-bottom: 2rem;
   margin-top: -1rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text2-color);
 }

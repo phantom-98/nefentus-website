@@ -847,7 +847,7 @@
       "passwordReset": "Password reset successfully!",
       "transaction": "Transaction successful!",
       "withdrawal": "Withdrawal successful!",
-      "email": "Email successfully changed!",
+      "email": "Email was successfully changed! For security reasons, you need to login again.",
       "addProduct": "Product added successfully!",
       "updateProduct": "Product updated successfully!",
       "deleteProduct": "Product deleted successfully!",
@@ -916,7 +916,9 @@
       "emptyPassword": "Please enter your password",
       "lengthPassword": "Password must be at least 8 characters",
       "matchPassword": "Passwords must match",
-      "accountDisconnect": "No Account Connected"
+      "accountDisconnect": "No Account Connected",
+      "invalidMail": "Email Address is Invalid",
+      "invalidPhone": "Phone Number is Invalid"
     },
     "info": {
       "transactionNotSaved": "Transaction successfully but could not save transaction info!",

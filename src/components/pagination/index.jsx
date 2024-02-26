@@ -55,7 +55,7 @@ const Pagination = ({
             «
           </li>
           <li
-            onClick={() => updatePage(currentPage - 1)}
+            onClick={() => currentPage > 0 && updatePage(currentPage - 1)}
             className={classNames({ [styles.hide]: currentPage === 0 })}
           >
             ‹
@@ -65,7 +65,9 @@ const Pagination = ({
             {t("general.of")} {numPages}
           </li>
           <li
-            onClick={() => updatePage(currentPage + 1)}
+            onClick={() =>
+              currentPage + 1 < numPages && updatePage(currentPage + 1)
+            }
             className={classNames({
               [styles.hide]: currentPage + 1 === numPages,
             })}
@@ -86,6 +88,7 @@ const Pagination = ({
         options={[10, 20, 50, 100]}
         value={pageSize}
         setValue={updatePageSize}
+        showOnTop
       />
     </div>
   );

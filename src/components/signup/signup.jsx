@@ -15,6 +15,7 @@ import isMobilePhone from "../../func/isMobilePhone";
 import Error from "../error/error";
 import { NefentusLogo } from "../../assets/icon/logos/logos";
 import { useTheme } from "../../context/themeContext/themeContext";
+import { validateEmail } from "../../utils";
 
 const Signup = () => {
   const { t } = useTranslation();
@@ -262,7 +263,8 @@ const Signup = () => {
       email: z
         .string()
         .min(1, { message: t("messages.validation.email") })
-        .email({ message: t("messages.validation.validEmail") }),
+        .email({ message: t("messages.validation.validEmail") })
+        .refine((value) => validateEmail(value)),
       password: z
         .string()
         .min(1, { message: t("messages.validation.password") })
@@ -306,6 +308,7 @@ const Signup = () => {
   };
 
   async function submitForm(data) {
+    if (spinner) return;
     if (
       CountryOption === t("signUp.option1Placeholder") ||
       !country_list.find((country) => country?.value === CountryOption)

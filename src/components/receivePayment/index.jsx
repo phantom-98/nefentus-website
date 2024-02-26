@@ -256,6 +256,7 @@ const ReceivePayment = ({
 
     switch (res) {
       case "success":
+        setDisable(true);
         setInfoMessage(t("messages.success.transaction"));
         break;
       case "failed":

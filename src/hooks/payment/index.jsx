@@ -53,6 +53,7 @@ export const usePayment = ({
         priceUSD,
         fees?.serviceFee || 0.03,
         fees?.remainingFeeFree || 0,
+        walletAddress,
       );
 
       if (transactionInfo) {

@@ -223,6 +223,7 @@ const LoginBox = () => {
   }, []);
 
   async function loginUser(data) {
+    if (spinner) return;
     const captchaValue = recaptchaRef.current.getValue();
 
     if (!captchaValue) {
@@ -240,6 +241,7 @@ const LoginBox = () => {
         );
         if (response == null) {
           setErrorMessage(t("messages.error.loginData"));
+          setSpinner(false);
           return;
         } else if (response.hasOtp || response.hasTotp) {
           setShowConfirmMeEmail(true);

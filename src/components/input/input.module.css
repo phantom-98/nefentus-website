@@ -97,7 +97,7 @@
 .walletAddressSubContainer {
   padding: 3px 6px 3px 6px;
   border-radius: 6px;
-  background-color: #313131;
+  background-color: var(--lightWhite-color);
 }
 
 .copyAddressIcon {
@@ -126,6 +126,11 @@
   z-index: 100;
 }
 
+.reverseOpen {
+  bottom: 100%;
+  transform: none;
+}
+
 /* Scrollbar */
 .body::-webkit-scrollbar {
   width: 7px;
@@ -138,7 +143,7 @@
 
 /* Handle */
 .body::-webkit-scrollbar-thumb {
-  background: white;
+  background: transparent;
 }
 
 .dashboardLabel {
@@ -193,4 +198,10 @@
 
 .dropdownDisable {
   cursor: not-allowed;
+}
+
+.walletFieldSubContainer {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
 }
