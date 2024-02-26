@@ -285,7 +285,7 @@ export const contractDeposits = (blockchain) => {
     if (useMainnet()) {
       return {
         id: 1, // Not used right now!
-        address: "0xd40a95e2b832fd46683e2200a0cf9201e20bbdd9",
+        address: "0xBf764c78C865dA89CD15BedEEF7537e23DAcC2cB",
         abi: SwapAndDistributeETH.abi,
       };
     } else {
