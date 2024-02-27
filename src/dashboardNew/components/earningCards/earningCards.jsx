@@ -26,21 +26,29 @@ const EarningCards = () => {
     const cardsContent = [
       {
         title: t("dashboard.earningCards.first"),
-        value: `$${parseFloat(sales?.value?.total?.number).toFixed(2)}`,
+        value: `$${parseFloat(sales?.value?.total?.number)?.toLocaleString(
+          undefined,
+          { maximumFractionDigits: 2 },
+        )}`,
         percentage: sales?.value?.total?.percentage
           ? parseFloat(sales?.value?.total?.percentage).toFixed(2)
           : 0,
       },
       {
         title: t("dashboard.earningCards.second"),
-        value: `$${parseFloat(sales?.value?.last24Hours?.number).toFixed(2)}`,
+        value: `$${parseFloat(
+          sales?.value?.last24Hours?.number,
+        )?.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
         percentage: sales?.value?.last24Hours?.percentage
           ? parseFloat(sales?.value?.last24Hours?.percentage).toFixed(2)
           : 0,
       },
       {
         title: t("dashboard.earningCards.third"),
-        value: `$${parseFloat(sales?.value?.last30Days?.number).toFixed(2)}`,
+        value: `$${parseFloat(sales?.value?.last30Days?.number)?.toLocaleString(
+          undefined,
+          { maximumFractionDigits: 2 },
+        )}`,
         percentage: sales?.value?.last30Days?.percentage
           ? parseFloat(sales?.value?.last30Days?.percentage).toFixed(2)
           : 0,
