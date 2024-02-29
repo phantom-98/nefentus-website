@@ -19,8 +19,8 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("Select Role");
+  const [agentEmail, setAgentEmail] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const [editEmailAddress, setEditEmailAddress] = useState(null);
   const [spinner, setSpinner] = useState(false);
   const userRole = getRole(localStorage);
   const { t } = useTranslation();
@@ -30,13 +30,12 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const adminApi = new adminDashboardApi(type);
 
   const modalAddUser = async () => {
-    setEditEmailAddress(null);
-
     setFirstName("");
     setLastName("");
     setEmail("");
     setPassword("");
     setRole("");
+    setAgentEmail("");
 
     setOpenModal(true);
   };
@@ -47,6 +46,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
     setEmail("");
     setPassword("");
     setRole("");
+    setAgentEmail("");
   };
 
   const addUser = async () => {
@@ -58,11 +58,11 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
       setErrorMessage(t("messages.error.lastNameRequired"));
       return;
     }
-    if (email === "" && editEmailAddress === null) {
+    if (email === "") {
       setErrorMessage(t("messages.error.emailRequired"));
       return;
     }
-    if (password === "" && editEmailAddress === null) {
+    if (password === "") {
       setErrorMessage(t("messages.error.passwordRequired"));
       return;
     }
@@ -73,41 +73,26 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
 
     setSpinner(true);
 
-    if (editEmailAddress) {
-      // Update
-      const resp = await adminApi.updateUser(
-        firstName,
-        lastName,
-        editEmailAddress,
-        userRole === "affiliate" ? "Vendor" : role,
-      );
-      if (resp) {
-        setInfoMessage(t("messages.success.updateUser"));
-      } else {
-        setErrorMessage(t("messages.error.updateUser"));
+    const resp = await adminApi.addUser(
+      firstName,
+      lastName,
+      email,
+      password,
+      userRole === "affiliate" ? "Vendor" : role,
+      agentEmail,
+    );
+    if (resp) {
+      if (resp.ok) {
+        setOpenModal(false);
+        // fetchAdminData();
+        setIsReloadData((prev) => !prev);
+        clearAddUserFields();
+        setInfoMessage(t("messages.success.addUser"));
+      } else if (resp.status === 409) {
+        setErrorMessage(t("messages.error.userExist"));
       }
     } else {
-      // Add
-      const resp = await adminApi.addUser(
-        firstName,
-        lastName,
-        email,
-        password,
-        userRole === "affiliate" ? "Vendor" : role,
-      );
-      if (resp) {
-        if (resp.ok) {
-          setOpenModal(false);
-          // fetchAdminData();
-          setIsReloadData((prev) => !prev);
-          clearAddUserFields();
-          setInfoMessage(t("messages.success.addUser"));
-        } else if (resp.status === 409) {
-          setErrorMessage(t("messages.error.userExist"));
-        }
-      } else {
-        setErrorMessage(t("messages.error.addUser"));
-      }
+      setErrorMessage(t("messages.error.addUser"));
     }
 
     setSpinner(false);
@@ -202,6 +187,8 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
               password={password}
               setPassword={setPassword}
               spinner={spinner}
+              agentEmail={agentEmail}
+              setAgentEmail={setAgentEmail}
             />
           )}
         </div>

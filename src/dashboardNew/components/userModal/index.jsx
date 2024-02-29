@@ -25,6 +25,8 @@ const UserModal = ({
   password,
   setPassword,
   spinner,
+  agentEmail,
+  setAgentEmail,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
@@ -156,6 +158,18 @@ const UserModal = ({
               setValue={setRole}
             />
           )}
+          {setAgentEmail &&
+            (userRole === "leader" ||
+              userRole === "seniorbroker" ||
+              userRole === "broker") && (
+              <Input
+                dashboard
+                label={t("dashboard.modal.agent")}
+                placeholder={t("dashboard.modal.agentPlaceholder")}
+                value={agentEmail}
+                setState={setAgentEmail}
+              />
+            )}
         </div>
         <div className={styles.modalButtons}>
           <Button onClick={() => clearFields()} color="gray">

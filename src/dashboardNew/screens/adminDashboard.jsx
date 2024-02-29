@@ -22,7 +22,7 @@ import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 import { getRole } from "../../utils";
 import { Helmet } from "react-helmet";
 
-const colSizes = [2, 1, 2, 1, 1, 2, 1, 2];
+const colSizes = [2, 1, 2, 2, 1, 1, 2, 1, 2];
 
 const roleColors = {
   vendor: "#107CDF",
@@ -56,6 +56,7 @@ const AdminDashboard = ({ type }) => {
     t("dashboard.tableHeaders.income"),
     t("dashboard.tableHeaders.joinedOn"),
     // t("dashboard.tableHeaders.earnings"),
+    t("dashboard.tableHeaders.agent"),
     t("dashboard.tableHeaders.actions"),
   ];
 
@@ -65,6 +66,7 @@ const AdminDashboard = ({ type }) => {
   const [openModal, setOpenModal] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
   const [role, setRole] = useState("");
+  const [agentEmail, setAgentEmail] = useState("");
   const [users, setUsers] = useState();
   const [getDataInput, setGetDataInput] = useState("");
   const [dataPage, setDataPage] = useState(1);
@@ -229,6 +231,7 @@ const AdminDashboard = ({ type }) => {
     setEmail(user.email);
     // Only one role!
     setRole(ROLE_TO_NAME[user.roles[0]]);
+    setAgentEmail(user.agent);
 
     setOpenModal(true);
   };
@@ -261,6 +264,7 @@ const AdminDashboard = ({ type }) => {
         editEmailAddress,
         email,
         role,
+        agentEmail,
       );
       if (resp) {
         setInfoMessage(t("messages.success.updateUser"));
@@ -270,7 +274,13 @@ const AdminDashboard = ({ type }) => {
       }
     } else {
       // Add
-      const resp = await adminApi.addUser(firstName, lastName, email, role);
+      const resp = await adminApi.addUser(
+        firstName,
+        lastName,
+        email,
+        role,
+        agentEmail,
+      );
       if (resp) {
         if (resp.ok) {
           setOpenModal(false);
@@ -311,6 +321,7 @@ const AdminDashboard = ({ type }) => {
         formatUSDBalance(user.income),
         moment(user.createdAt).format("MMM D YYYY, HH:mm:ss"),
         // `$${user.income}`,
+        user.agent,
         <TableAction
           button={
             user.activated ? t("general.deactivate") : t("general.activate")
@@ -341,6 +352,9 @@ const AdminDashboard = ({ type }) => {
     const filteredData = users?.filter((item) => {
       return (
         item?.email
+          ?.toLowerCase()
+          .includes(getDataInput.trim().toLowerCase()) ||
+        item?.agent
           ?.toLowerCase()
           .includes(getDataInput.trim().toLowerCase()) ||
         item?.firstName
@@ -402,7 +416,7 @@ const AdminDashboard = ({ type }) => {
             getDataInput={getDataInput}
           />
           <Table
-            grid="1.2fr 0.9fr 1.5fr 1fr 0.9fr 1fr 1.2fr"
+            grid="1fr 0.8fr 1.5fr 0.6fr 0.9fr 1fr 1.2fr 1.5fr"
             label={label}
             data={paginatedData}
           />
