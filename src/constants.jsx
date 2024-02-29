@@ -285,7 +285,7 @@ export const contractDeposits = (blockchain) => {
     if (useMainnet()) {
       return {
         id: 1, // Not used right now!
-        address: "0xBf764c78C865dA89CD15BedEEF7537e23DAcC2cB",
+        address: "0x253a02f4a4dd97fd0b0d0a840b87770118e2973c",
         abi: SwapAndDistributeETH.abi,
       };
     } else {
@@ -299,7 +299,7 @@ export const contractDeposits = (blockchain) => {
     if (useMainnet()) {
       return {
         id: 1, // Not used right now!
-        address: "0x009487Fa4838c03bA753a90Fe07F01E69bDAbFb4",
+        address: "0x7e48dc51d530b786af3e6bec3cc8de86e394897e",
         abi: SwapAndDistributeBNB.abi,
       };
     } else {
