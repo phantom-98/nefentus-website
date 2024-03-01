@@ -6,11 +6,11 @@ import { checkJwtToken, dashboardLink } from "../../utils";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../context/auth/authContext";
 
 const ProfileDashboard = () => {
-  const [requireKyc, setRequireKyc] = useState(
-    localStorage.getItem("requireKyc"),
-  );
+  const { user } = useAuth();
+  const [requireKyc, setRequireKyc] = useState(user?.requireKyc);
   const [counter, setCounter] = useState(0);
   const [link, setLink] = useState(null);
   const navigate = useNavigate();
@@ -19,16 +19,16 @@ const ProfileDashboard = () => {
 
   useEffect(() => {
     const handleStorageChange = () => {
-      setProfilePicUrl(localStorage.getItem("profile_pic"));
+      setProfilePicUrl(user?.profileImage);
       setCounter(counter + 1);
-      setRequireKyc(localStorage.setItem("requireKyc"));
+      setRequireKyc(user?.requireKyc);
     };
 
     async function checkJwtAndNavigate() {
       await checkJwtToken();
       const jwtIsValid = await backendapi.checkJwt();
       if (jwtIsValid) {
-        const newLink = dashboardLink(localStorage);
+        const newLink = dashboardLink(user);
         setLink(newLink);
       } else {
         navigate("/login");

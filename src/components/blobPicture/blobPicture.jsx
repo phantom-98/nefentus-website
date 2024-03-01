@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useAuth } from "../../context/auth/authContext";
 
 const BlobPicture = () => {
   const [base64Data, setBase64Data] = useState("");
+  const { user } = useAuth();
 
   useEffect(() => {
-    setBase64Data(localStorage.getItem("profile_pic"));
-  }, [localStorage.getItem("profile_pic")]);
+    setBase64Data(user?.profileImage);
+  }, [user?.profileImage]);
 
   return (
     <div style={{ width: "100%", height: "100%" }}>

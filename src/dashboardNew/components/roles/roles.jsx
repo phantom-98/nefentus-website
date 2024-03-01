@@ -7,6 +7,7 @@ import adminDashboardApi from "../../../api/adminDashboardApi";
 import { useTranslation } from "react-i18next";
 import UserModal from "../userModal";
 import { getRole } from "../../../utils";
+import { useAuth } from "../../../context/auth/authContext";
 
 /**
  *
@@ -14,6 +15,7 @@ import { getRole } from "../../../utils";
  * @returns
  */
 const Roles = ({ data, userCnt, type, setIsReloadData }) => {
+  const { user } = useAuth();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -22,7 +24,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const [openModal, setOpenModal] = useState(false);
   const [editEmailAddress, setEditEmailAddress] = useState(null);
   const [spinner, setSpinner] = useState(false);
-  const userRole = getRole(localStorage);
+  const userRole = getRole(user);
   const { t } = useTranslation();
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);

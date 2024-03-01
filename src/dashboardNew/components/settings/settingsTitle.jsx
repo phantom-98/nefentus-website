@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import backend_API from "../../../api/backendAPI";
 import { useEffect, useState } from "react";
 import { useTheme } from "../../../context/themeContext/themeContext";
+import { useAuth } from "../../../context/auth/authContext";
 
 const SettingsTitle = ({
   title,
@@ -12,9 +13,10 @@ const SettingsTitle = ({
   product,
   onCreate,
 }) => {
+  const { user } = useAuth();
   const { t } = useTranslation();
   const [level, setLevel] = useState(null);
-  const userId = localStorage.getItem("userId");
+  const userId = user?.userId;
 
   const { theme } = useTheme();
 

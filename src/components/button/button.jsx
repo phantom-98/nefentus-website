@@ -39,7 +39,9 @@ const Button = ({
       }}
       onClick={() => {
         if (spinner) return;
-        onClick();
+        if (onClick && typeof onClick === "function") {
+          onClick();
+        }
       }}
       type={type}
       style={{

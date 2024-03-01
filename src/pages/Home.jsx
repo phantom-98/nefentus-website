@@ -17,16 +17,18 @@ import PaymentCards from "../components/paymentCards/paymentCards";
 import Prices from "../components/prices/prices";
 import Reward from "../components/reward/reward";
 import { useTheme } from "../context/themeContext/themeContext";
+import { useAuth } from "../context/auth/authContext";
 
 const Home = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const api = new backendAPI();
+  const { user, setUser } = useAuth();
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has("ref")) {
       const paramValue = urlParams.get("ref");
-      localStorage.setItem("affiliateJoined", paramValue);
+      setUser({ ...user, affiliateJoined: paramValue });
       api.countAffiliate(paramValue);
     }
   }, []);

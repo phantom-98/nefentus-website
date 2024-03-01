@@ -15,6 +15,7 @@ import { dashboardLink } from "../../utils";
 import UserProfile from "../userProfile/userProfile";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { QR } from "../../assets/icon/icons";
+import { useAuth } from "../../context/auth/authContext";
 
 const Navigation = () => {
   const { theme, toggleTheme } = useTheme();
@@ -24,6 +25,7 @@ const Navigation = () => {
   const [profile, setProfile] = useState({});
   const [height, setHeight] = useState("");
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const backendAPI = new backend_API();
 
@@ -40,13 +42,13 @@ const Navigation = () => {
   async function getProfile() {
     const jwtIsValid = await backendAPI.checkJwt();
     if (jwtIsValid) {
-      const link = dashboardLink(localStorage);
+      const link = dashboardLink(user);
       console.log(link);
 
       const newProfile = {
-        email: localStorage.getItem("email"),
-        firstName: localStorage.getItem("firstName"),
-        lastName: localStorage.getItem("lastName"),
+        email: user?.email,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
         dashboardLink: link,
       };
       setProfile(newProfile);

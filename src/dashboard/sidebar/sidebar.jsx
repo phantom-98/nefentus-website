@@ -8,6 +8,7 @@ import Hamburger from "../../assets/icon/hamburger.svg";
 import Button from "../../components/button/button";
 import { dashboardLink, getRole } from "../../utils";
 import { ROLE_TO_NAME } from "../../constants";
+import { useAuth } from "../../context/auth/authContext";
 
 const items = [
   {
@@ -139,8 +140,8 @@ const items = [
 
 const Sidebar = () => {
   const [open, setOpen] = useState(window.innerWidth < 900 ? false : true);
-
-  const role = getRole(localStorage);
+  const { user } = useAuth();
+  const role = getRole(user);
   const roleName = ROLE_TO_NAME[role];
 
   useEffect(() => {
@@ -218,7 +219,7 @@ const Sidebar = () => {
             role === "broker") && (
             <div>
               <Button
-                link={dashboardLink(localStorage)}
+                link={dashboardLink(user)}
                 color={"white"}
                 style={{ padding: "0.3rem 0.5rem" }}
               >

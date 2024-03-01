@@ -14,6 +14,7 @@ import { z } from "zod";
 import isMobilePhone from "../../func/isMobilePhone";
 import Popup from "../../dashboardNew/components/popup/popup";
 import { useTheme } from "../../context/themeContext/themeContext";
+import { useAuth } from "../../context/auth/authContext";
 
 const SignupByEmail = () => {
   const recaptchaRef = useRef();
@@ -29,6 +30,7 @@ const SignupByEmail = () => {
   const [password, setPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(false);
   const api = new backendAPI();
+  const { user, setUser } = useAuth();
 
   const schema = z
     .object({
@@ -299,7 +301,7 @@ const SignupByEmail = () => {
   });
 
   useEffect(() => {
-    if (localStorage.getItem("firstName") === "") setShowModal(true);
+    if (user?.firstName === "") setShowModal(true);
   }, []);
 
   useEffect(() => {
@@ -313,7 +315,7 @@ const SignupByEmail = () => {
   };
 
   const onSubmit = async (data) => {
-    if (!localStorage.getItem("email")) {
+    if (!user?.email) {
       setErrorMessage(t("messages.error.emailRequired"));
       return;
     }
@@ -331,17 +333,18 @@ const SignupByEmail = () => {
 
     const requestData = {
       ...data,
-      email: localStorage.getItem("email"),
+      email: user?.email,
       roles: ["Affiliate"],
       country: CountryOption,
-      affiliateLink: localStorage.getItem("affiliateJoined"),
+      affiliateLink: user?.affiliateJoined,
     };
 
     const response = await api
       .updateUserByEmail(requestData)
-      .then(() => {
+      .then((res) => {
         setMessage("Please confirm your email address to proceed.");
         setShowModal(false);
+        setUser(res);
         resetForm();
       })
       .catch((error) => {
@@ -394,7 +397,7 @@ const SignupByEmail = () => {
             label={t("signUp.emailLabel") + "*"}
             placeholder={t("signUp.emailPlaceholder")}
             disabled={true}
-            value={localStorage.getItem("email")}
+            value={user?.email}
           />
           <Input
             label={t("signUp.passwordLabel") + "*"}

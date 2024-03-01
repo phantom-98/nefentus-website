@@ -20,14 +20,15 @@ import usePrices from "../../../hooks/prices";
 import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
 import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
-import { getCurrentWallet, setCurrentWallet } from "../../../utils";
 import backendAPI from "../../../api/backendAPI";
+import { useAuth } from "../../../context/auth/authContext";
 
 const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
-  const [firstName] = useState(localStorage.getItem("firstName"));
-  const [lastName] = useState(localStorage.getItem("lastName"));
-  const [email] = useState(localStorage.getItem("email"));
-  const [profileImage] = useState(localStorage.getItem("profile_pic"));
+  const { user, setUser } = useAuth();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
   const [walletOptions, setWalletOptions] = useState([]);
   const backend_API = new backendAPI();
 
@@ -57,6 +58,15 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
 
   const { balances, fetchBalances } = useBalances(wallet);
   const { prices, fetchPrices } = usePrices(wallet);
+
+  useEffect(() => {
+    if (Object.keys(user)?.length) {
+      setFirstName(user?.firstName);
+      setLastName(user?.lastName);
+      setEmail(user?.email);
+      setProfileImage(user?.profileImage);
+    }
+  }, [user]);
 
   useEffect(() => {
     fetchBalances();
@@ -98,7 +108,7 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
       };
       connectedWallets.push(internalWallet);
       setWalletOptions(connectedWallets);
-      const wallet = localStorage.getItem("Wallet") || null;
+      const wallet = user?.Wallet || null;
       if (wallet) {
         if (
           JSON.parse(wallet).name != internalWallet.name ||
@@ -109,7 +119,7 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
           return;
         }
       }
-      localStorage.setItem("Wallet", JSON.stringify(internalWallet));
+      setUser({ ...user, Wallet: JSON.stringify(internalWallet) });
       setActiveWallet(internalWallet);
     }
   };
@@ -119,7 +129,15 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
   };
 
   const handleWallet = async (data) => {
-    setCurrentWallet(data);
+    setUser({
+      ...user,
+      wallet: JSON.stringify(data, (key, value) => {
+        if (key === "walletDetail") {
+          return undefined; // Exclude 'walletDetail' property
+        }
+        return value;
+      }),
+    });
     setActiveWallet(data);
     const response = await backend_API.patchPreferredWallet({
       address: data?.address,

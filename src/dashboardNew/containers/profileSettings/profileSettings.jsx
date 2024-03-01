@@ -14,7 +14,7 @@ import { encodeConstructorParamsForImplementation } from "@thirdweb-dev/sdk";
 import { validateEmail, validatePhoneNumber } from "../../../utils";
 
 const ProfileSettings = () => {
-  const { setAvatarUrl } = useAuth();
+  const { user, setUser, setAvatarUrl } = useAuth();
   const [userProfile, setUserProfile] = useState({});
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -40,6 +40,7 @@ const ProfileSettings = () => {
 
   const fetchProfile = async () => {
     const data = await backendAPI.getProfile();
+    setUser({ ...data });
     setUserProfile(data);
     setFirstName(data["firstName"]);
     setLastName(data["lastName"]);
@@ -47,7 +48,7 @@ const ProfileSettings = () => {
     setPhoneNumber(data["phoneNumber"]);
     data["country"] && setCountry(data["country"]);
     setEmail(data["email"]);
-    setImageName(data["imgData"]);
+    setImageName(data["profileImage"] ?? "");
     setMarketingUpdates(data["marketingUpdates"]);
     setEmailNotifications(data["emailNotifications"]);
     setAppNotifications(data["appNotifications"]);
@@ -153,6 +154,7 @@ const ProfileSettings = () => {
         navigate("/");
       }, 1000);
     }
+    fetchProfile();
     isDataSave.current = false;
   };
 
@@ -164,6 +166,7 @@ const ProfileSettings = () => {
       } else {
         resp2 = await backendAPI.deleteProfileImage(file);
       }
+      setUser({ ...user, profileImage: file ? resp2 : "null" });
       if (resp2 == null) {
         setErrorMessage(t("messages.error.uploadPicture"));
       }

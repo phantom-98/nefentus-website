@@ -13,6 +13,7 @@
 }
 
 .profileItem {
+  min-width: max-content;
   color: var(--white-color);
   margin-left: 0.7rem;
   margin-right: 0.5rem;
@@ -50,6 +51,7 @@
 }
 
 .profileBody {
+  min-width: 110px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;

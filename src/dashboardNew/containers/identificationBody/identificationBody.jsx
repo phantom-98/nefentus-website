@@ -15,6 +15,7 @@ import MessageComponent from "../../../components/message";
 import { MessageContext } from "../../../context/message";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import { checkJwtToken } from "../../../utils";
+import { useAuth } from "../../../context/auth/authContext";
 
 const KYC_TYPE = {
   FULL_NAME: "FULL_NAME",
@@ -109,7 +110,7 @@ const INITIAL_TEXT = {
 
 const IdentificationBody = () => {
   const { t } = useTranslation();
-
+  const { user } = useAuth();
   const [level, setLevel] = useState(null);
   const BackendAPI = new backend_API();
   const adminApi = new adminDashboardApi("admin");
@@ -121,7 +122,7 @@ const IdentificationBody = () => {
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
 
-  const userId = localStorage.getItem("userId");
+  const userId = user?.userId;
 
   const fetchFYC = async () => {
     const userKYCData = await Promise.all(
@@ -243,7 +244,7 @@ const IdentificationBody = () => {
     if (getData) {
       const arrayWithResults = await Promise.allSettled(
         Object.keys(getData).map((type) =>
-          BackendAPI.uploadKYCByType(type, getData[type]),
+          BackendAPI.uploadKYCByType(type, getData[type], user?.userId),
         ),
       );
 
@@ -257,7 +258,7 @@ const IdentificationBody = () => {
     if (getText) {
       const arrayWithResultsText = await Promise.allSettled(
         Object.keys(getText).map((type) =>
-          BackendAPI.uploadKYCByText(type, getText[type]),
+          BackendAPI.uploadKYCByText(type, getText[type], user?.userId),
         ),
       );
 

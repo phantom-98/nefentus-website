@@ -31,8 +31,10 @@ import PercentageInfo from "../percentageInfo/percentageInfo";
 import { transformNumber } from "./../func/transformNumber";
 import Card from "../card/card";
 import affiliateDashboardApi from "../../api/affiliateDashboardApi";
+import { useAuth } from "../../context/auth/authContext";
 
 const AffiliateBody = () => {
+  const { user } = useAuth();
   const affDashboardApi = new affiliateDashboardApi();
   const navigate = useNavigate();
   const [totalRegistrations, setTotalRegistrations] = useState(0);
@@ -89,7 +91,7 @@ const AffiliateBody = () => {
   return (
     <div className="container">
       <AffiliateNavigation />
-      <AffiliateHeader />
+      <AffiliateHeader user={user} />
 
       <div className={styles.row}>
         {cardsContent.map((item, index) => (
@@ -144,7 +146,7 @@ const AffiliateNavigation = () => {
   );
 };
 
-const AffiliateHeader = () => {
+const AffiliateHeader = ({ user }) => {
   const [copied, setCopied] = useState(false);
 
   const navigate = useNavigate();
@@ -174,16 +176,14 @@ const AffiliateHeader = () => {
         <div className={styles.linkBox}>
           <p id="affiliate-link" className={styles.url}>
             https://nefentus.com/?affiliate=
-            {localStorage.getItem("affiliateLink")}
+            {user?.affiliateLink}
           </p>
           <img
             src={UrlLink}
             alt="url icon"
             onClick={() => {
               navigator.clipboard.writeText(
-                `https://nefentus.com/?affiliate=${localStorage.getItem(
-                  "affiliateLink",
-                )}`,
+                `https://nefentus.com/?affiliate=${user?.affiliateLink}`,
               );
               setCopied(true);
             }}

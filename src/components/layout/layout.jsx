@@ -18,6 +18,7 @@ import backendAPI from "../../api/backendAPI";
 import Error from "../error/error";
 import Input from "../input/input";
 import { Apple, QR } from "../../assets/icon/icons";
+import { useAuth } from "../../context/auth/authContext";
 
 const Layout = ({
   heading,
@@ -39,6 +40,7 @@ const Layout = ({
   const { t } = useTranslation();
   const backend_API = new backendAPI();
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const content = t("affiliate.affiliateList", { returnObjects: true });
   const { setErrorMessage } = useContext(MessageContext);
@@ -64,6 +66,7 @@ const Layout = ({
     if (email) {
       const result = await backend_API.registerByEmail(email);
       if (result) {
+        setUser(result);
         navigate("/dashboard");
       } else {
         setErrorMessage("Email already exists");

@@ -32,6 +32,7 @@ import ModalOverlay from "../modal/modalOverlay";
 import UrlLink from "../../assets/icon/copyClipboardWhite.svg";
 import { useTranslation } from "react-i18next";
 import QRCode from "react-qr-code";
+import { useAuth } from "../../context/auth/authContext";
 
 let nav = [
   "Profile",
@@ -69,29 +70,26 @@ const instruction = [
 ];
 
 const SettingsBody = ({ type }) => {
+  const { user, setUser } = useAuth();
   const backendapi = new backendAPI();
   const [active, setActive] = useState(0);
-  const [requireKyc, setRequireKyc] = useState(
-    localStorage.getItem("requireKyc"),
-  );
-  const [profilePicUrl, setProfilePicUrl] = useState(
-    localStorage.getItem("profile_pic"),
-  );
+  const [requireKyc, setRequireKyc] = useState(user?.requireKyc);
+  const [profilePicUrl, setProfilePicUrl] = useState(user?.profileImage);
   const [counter, setCounter] = useState(0);
   const navigate = useNavigate();
   const { clearMessages } = useContext(MessageContext);
 
   useEffect(() => {
     const handleStorageChange = () => {
-      setProfilePicUrl(localStorage.getItem("profile_pic"));
+      setProfilePicUrl(user?.profileImage);
       setCounter(counter + 1);
-      setRequireKyc(localStorage.getItem("requireKyc"));
+      setRequireKyc(user?.requireKyc);
     };
 
     async function checkJwtAndNavigate() {
       const jwtIsValid = await backendapi.checkJwt();
       if (jwtIsValid) {
-        const newLink = dashboardLink(localStorage);
+        const newLink = dashboardLink(user);
         setLink(newLink);
       } else {
         navigate("/login");
@@ -155,11 +153,9 @@ const SettingsBody = ({ type }) => {
 
           <div className={styles.info}>
             <p className={styles.name}>
-              {localStorage.getItem("firstName") +
-                " " +
-                localStorage.getItem("lastName")}
+              {user?.firstName + " " + user?.lastName}
             </p>
-            <p className={styles.email}>{localStorage.getItem("email")}</p>
+            <p className={styles.email}>{user?.email}</p>
           </div>
         </div>
       )}
@@ -175,8 +171,10 @@ const SettingsBody = ({ type }) => {
                 <ProfileBody
                   active={active}
                   afterUpdateSettings={() =>
-                    setProfilePicUrl(localStorage.getItem("profile_pic"))
+                    setProfilePicUrl(user?.profileImage)
                   }
+                  user={user}
+                  setUser={setUser}
                 />
               );
             case nav[1]:
@@ -184,11 +182,17 @@ const SettingsBody = ({ type }) => {
             case nav[2]:
               return <EmailBody active={active} />;
             case nav[3]:
-              return <AuthenticatorBody active={active} />;
+              return (
+                <AuthenticatorBody
+                  active={active}
+                  user={user}
+                  setUser={setUser}
+                />
+              );
             case nav[4]:
-              return <InvoiceBody />;
+              return <InvoiceBody user={user} />;
             default:
-              return <KYC />;
+              return <KYC user={user} />;
           }
         }}
       />
@@ -198,30 +202,26 @@ const SettingsBody = ({ type }) => {
 
 export default SettingsBody;
 
-const ProfileBody = ({ afterUpdateSettings, active }) => {
+const ProfileBody = ({ afterUpdateSettings, active, user, setUser }) => {
   const [file, setFile] = useState(null);
-  const [firstName, setFirstName] = useState(localStorage.getItem("firstName"));
-  const [lastName, setLastName] = useState(localStorage.getItem("lastName"));
-  const [business, setBusiness] = useState(localStorage.getItem("business"));
-  const [phoneNumber, setPhoneNumber] = useState(
-    localStorage.getItem("phoneNumber"),
-  );
-  const [email, setEmail] = useState(localStorage.getItem("email"));
+  const [firstName, setFirstName] = useState(user?.firstName);
+  const [lastName, setLastName] = useState(user?.lastName);
+  const [business, setBusiness] = useState(user?.business);
+  const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber);
+  const [email, setEmail] = useState(user?.email);
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [imageName, setImageName] = useState(null);
   const [imageChanged, setImageChanged] = useState(false); // Set to true if image changed (was added or deleted))
-  const isTotp = useRef(localStorage.getItem("hasTotp") === "true");
-  const isOtp = useRef(localStorage.getItem("hasOtp") === "true");
+  const isTotp = useRef(user?.hasTotp === "true");
+  const isOtp = useRef(user?.hasOtp === "true");
   const [phishingCode, setPhishingCode] = useState(
-    localStorage.getItem("antiPhishingCode") !== "undefined"
-      ? localStorage.getItem("antiPhishingCode")
-      : "",
+    user?.antiPhishingCode !== "undefined" ? user?.antiPhishingCode : "",
   );
   const { t } = useTranslation();
 
   useEffect(() => {
-    const profilePic = localStorage.getItem("profile_pic");
+    const profilePic = user?.profileImage;
     if (profilePic !== "null") setImageName(profilePic.split("_").pop());
   }, []);
 
@@ -308,6 +308,7 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
       } else {
         resp2 = await backendAPI.deleteProfileImage(file);
       }
+      setUser({ ...user, profileImage: file ? resp2 : "null" });
       if (resp2 == null) {
         setErrorMessage(t("messages.error.uploadPicture"));
       }
@@ -321,9 +322,6 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
       setTimeout(() => {
         navigate("/");
       }, 1000);
-    } else {
-      // localStorage.setItem("hasOtp", isOtp.toString());
-      // localStorage.setItem("hasTotp", isTotp.toString());
     }
 
     resetValues();
@@ -335,11 +333,11 @@ const ProfileBody = ({ afterUpdateSettings, active }) => {
   };
 
   const resetValues = () => {
-    setFirstName(localStorage.getItem("firstName"));
-    setLastName(localStorage.getItem("lastName"));
-    setBusiness(localStorage.getItem("business"));
-    setPhoneNumber(localStorage.getItem("phoneNumber"));
-    setEmail(localStorage.getItem("email"));
+    setFirstName(user?.firstName);
+    setLastName(user?.lastName);
+    setBusiness(user?.business);
+    setPhoneNumber(user?.phoneNumber);
+    setEmail(user?.email);
   };
 
   return (
@@ -681,11 +679,9 @@ const EmailBody = ({ active }) => {
   );
 };
 
-const InvoiceBody = () => {
-  const [vatNumber, setVatNumber] = useState(localStorage.getItem("vatNumber"));
-  const [sendInvoice, setSendInvoice] = useState(
-    JSON.parse(localStorage.getItem("sendInvoice")),
-  );
+const InvoiceBody = ({ user }) => {
+  const [vatNumber, setVatNumber] = useState(user?.vatNumber);
+  const [sendInvoice, setSendInvoice] = useState(JSON.parse(user?.sendInvoice));
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
 
   const backendAPI = new backend_API();
@@ -735,12 +731,10 @@ const InvoiceBody = () => {
   );
 };
 
-const AuthenticatorBody = ({ active }) => {
-  const [isTotp, setIsTotp] = useState(
-    localStorage.getItem("hasTotp") === "true",
-  );
-  const [isOtp, setIsOtp] = useState(localStorage.getItem("hasOtp") === "true");
-  const email = useRef(localStorage.getItem("email"));
+const AuthenticatorBody = ({ active, user, setUser }) => {
+  const [isTotp, setIsTotp] = useState(user?.hasTotp === "true");
+  const [isOtp, setIsOtp] = useState(user?.hasOtp === "true");
+  const email = useRef(user?.email);
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
   const [reset, setReset] = useState(false);
 
@@ -778,7 +772,7 @@ const AuthenticatorBody = ({ active }) => {
       if (response2 == null) {
         setErrorMessage("Error on updating data");
       } else {
-        localStorage.setItem("hasTotp", true.toString());
+        setUser({ ...user, hasTotp: true.toString() });
         setInfoMessage("Settings updated successfully!");
         setOpen(false);
         setVerify(false);
@@ -804,7 +798,7 @@ const AuthenticatorBody = ({ active }) => {
     if (response.status === 200) {
       console.log(response.status, "status");
       console.log(isOtp, "statusOtp");
-      localStorage.setItem("hasOtp", data.toString());
+      setUser({ ...user, hasOtp: true.toString() });
       setInfoMessage("Settings updated successfully!");
     }
   };

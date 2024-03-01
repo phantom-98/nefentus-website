@@ -10,11 +10,13 @@ import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { checkJwtToken, dashboardLink } from "../../../utils";
 import { useTheme } from "../../../context/themeContext/themeContext";
+import { useAuth } from "../../../context/auth/authContext";
 
 const SideNavigation = () => {
   const { t, i18n } = useTranslation();
   const { language } = i18n;
   const query = useLocation();
+  const { user } = useAuth();
 
   const [active, setActive] = useState(0);
 
@@ -220,9 +222,9 @@ const SideNavigation = () => {
       </div>
 
       <div className={styles.referral}>
-        <AffiliateLink />
+        <AffiliateLink user={user} />
         {getFullSideBar(active) ? (
-          <Link to={dashboardLink(localStorage)}>
+          <Link to={dashboardLink(user)}>
             <Button width="">{t("sidebar.referral")}</Button>
           </Link>
         ) : (
@@ -237,12 +239,11 @@ const SideNavigation = () => {
 
 export default SideNavigation;
 
-export const AffiliateLink = () => {
+export const AffiliateLink = ({ user }) => {
   const { t } = useTranslation();
   const ref = useRef();
 
-  const link =
-    window.location.origin + "?ref=" + localStorage.getItem("affiliateLink");
+  const link = window.location.origin + "?ref=" + user?.affiliateLink;
 
   const formatLink = (link) => {
     if (!link) return "unknown";

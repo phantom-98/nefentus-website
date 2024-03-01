@@ -41,16 +41,16 @@ export function toChecksumAddress(address) {
   return ethers.utils.getAddress(address);
 }
 
-export function getRole(localStorage) {
+export function getRole(user) {
   // const roles = "ROLE_ADMIN";
-  const roles = localStorage.getItem("roles");
-  const roleArray = roles?.split(",");
-  const isVendor = roleArray?.includes("ROLE_VENDOR");
-  const isAffiliate = roleArray?.includes("ROLE_AFFILIATE");
-  const isBroker = roleArray?.includes("ROLE_BROKER");
-  const isSeniorBroker = roleArray?.includes("ROLE_SENIOR_BROKER");
-  const isLeader = roleArray?.includes("ROLE_LEADER");
-  const isAdmin = roleArray?.includes("ROLE_ADMIN");
+  const roles = user?.roles || [];
+  // const roleArray = roles?.split(",");
+  const isVendor = roles?.includes("ROLE_VENDOR");
+  const isAffiliate = roles?.includes("ROLE_AFFILIATE");
+  const isBroker = roles?.includes("ROLE_BROKER");
+  const isSeniorBroker = roles?.includes("ROLE_SENIOR_BROKER");
+  const isLeader = roles?.includes("ROLE_LEADER");
+  const isAdmin = roles?.includes("ROLE_ADMIN");
 
   if (isAdmin) {
     return "admin";
@@ -67,8 +67,8 @@ export function getRole(localStorage) {
   }
 }
 
-export function dashboardLink(localStorage) {
-  let role = getRole(localStorage);
+export function dashboardLink(user) {
+  let role = getRole(user);
   if (
     role === "affiliate" ||
     role === "broker" ||
@@ -80,6 +80,8 @@ export function dashboardLink(localStorage) {
     role = "admin";
   } else if (role === "vendor") {
     return "/dashboard";
+  } else if (role === undefined) {
+    return "/login";
   }
   return "/dashboard/" + role;
 }
@@ -115,33 +117,6 @@ export const reformatFooterInfo = (pages, links) => {
   }
   return result;
 };
-
-export const setCurrentWallet = (wallet) => {
-  localStorage.setItem(
-    "Wallet",
-    JSON.stringify(wallet, (key, value) => {
-      // Handle non-serializable properties or exclude them
-      if (key === "walletDetail") {
-        return undefined; // Exclude 'walletDetail' property
-      }
-      return value;
-    }),
-  );
-  if (wallet?.name == "Internal Wallet") setIsExternal(false);
-  else setIsExternal(true);
-  return;
-};
-
-export const getCurrentWallet = () =>
-  JSON.parse(localStorage.getItem("Wallet"));
-
-export const setIsExternal = (value) => {
-  localStorage.setItem("isExternal", value);
-  return;
-};
-
-export const getIsExternal = () =>
-  JSON.parse(localStorage.getItem("isExternal"));
 
 export const checkJwtToken = async () => {
   const isAuthorize = await new backendAPI().checkJwt();
