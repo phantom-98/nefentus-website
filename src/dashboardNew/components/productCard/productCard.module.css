@@ -2,6 +2,14 @@
   border-radius: 1rem;
   padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0;
 }
 
 .imageWrapper {
@@ -45,20 +53,28 @@
 
 .body {
   padding: 1.5rem 2rem;
+  height: initial;
 }
 
 .name {
   font-size: 1.6rem;
+  padding: 1.5rem 2rem 0 2rem;
   margin-bottom: 0.5rem;
 }
 
 .description {
-  max-height: 100px;
-  overflow: hidden;
   font-size: 1.2rem;
   line-height: 140%;
-  opacity: 0.6;
-  margin-bottom: 1.5rem;
+  padding: 0 2rem;
+}
+
+.less {
+  background-image: linear-gradient(#b1b1b1 70%, #b1b1b100 96%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
 }
 
 .price {

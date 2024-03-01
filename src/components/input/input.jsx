@@ -59,7 +59,16 @@ const Input = ({
         value={value}
         style={style}
         onChange={handleChange}
-        onKeyDown={handleKeyDown}
+        onKeyDown={(e) => {
+          console.log(e.key, number);
+          if (number && e.key == "Backspace") {
+            if (e.key < "0" || e.key > "9") {
+              e.preventDefault();
+              return;
+            }
+          }
+          handleKeyDown();
+        }}
         disabled={disabled}
       />
     </div>
@@ -250,6 +259,7 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
         />
       </div>
       <input
+        accept=".jpeg, .jpg, .png, .gif, .heic"
         ref={inputRef}
         className={styles.hideInput}
         type="file"

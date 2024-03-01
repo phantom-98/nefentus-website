@@ -228,7 +228,7 @@ export default class vendorDashboardApi {
 
       const url = `${this.baseURL}/products/delete`;
       const options = {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
@@ -255,7 +255,7 @@ export default class vendorDashboardApi {
 
       const url = `${this.baseURL}/products/deleteImage`;
       const options = {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${this.token}`,
