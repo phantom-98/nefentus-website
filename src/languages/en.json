@@ -843,6 +843,7 @@
       "matchPassword": "Passwords must match"
     },
     "success": {
+      "general": "Successfully Updated",
       "activateAccount": "Account successfully activated",
       "passwordReset": "Password reset successfully!",
       "transaction": "Transaction successful!",
@@ -858,6 +859,7 @@
       "updateSettings": "Settings updated successfully!"
     },
     "error": {
+      "general": "Failed to Update",
       "country": "Please choose a country",
       "reCAPTCHA": "Please verify the reCAPTCHA!",
       "register": "Bad request! Please input correct values.",

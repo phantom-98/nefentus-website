@@ -796,6 +796,7 @@
       "matchPassword": "Passwörter müssen übereinstimmen"
     },
     "success": {
+      "general": "Erfolgreich aktualisiert",
       "activateAccount": "Konto erfolgreich aktiviert",
       "passwordReset": "Passwort erfolgreich zurückgesetzt!",
       "transaction": "Transaktion erfolgreich!",
@@ -811,6 +812,7 @@
       "updateSettings": "Einstellungen erfolgreich aktualisiert!"
     },
     "error": {
+      "general": "Aktualisierung fehlgeschlagen",
       "country": "Bitte wählen Sie ein Land",
       "reCAPTCHA": "Bitte überprüfen Sie das reCAPTCHA!",
       "register": "Falsche Anfrage! Bitte geben Sie die richtigen Werte ein.",
