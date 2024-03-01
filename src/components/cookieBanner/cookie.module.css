@@ -17,7 +17,7 @@
   align-items: center;
   display: flex;
   font-size: 1.4rem;
-  color: var(--gray-color);
+  color: var(--text2-color);
   line-height: 140%;
   gap: 2rem;
 }
@@ -26,7 +26,8 @@
   text-decoration: underline;
 }
 
-.left img {
+.left img,
+.left svg {
   width: 4rem;
 }
 
@@ -43,14 +44,14 @@
 }
 
 .button1 {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--gray-color);
+  border: 1px solid var(--border-color);
+  color: var(--text2-color);
 }
 
 .button2 {
-  background-color: white;
-  color: black;
-  border: 1px solid rgba(255, 255, 255, 1);
+  background-color: var(--text-color);
+  color: var(--card-color);
+  border: 1px solid var(--border-color);
 }
 
 @media (max-width: 900px) {
