@@ -526,7 +526,7 @@
     "cryptoCard": {
       "receiveModal": {
         "title": "Receive funds",
-        "description": "Receive funds by sending cryptocurrency to the address below."
+        "description": "Please only send Ethereum and ERC20 tokens via the Ethereum network or BNB and BEP20 tokens via the BNB Smart Chain."
       },
       "sendModal": {
         "title": "Withdraw funds",

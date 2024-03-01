@@ -537,7 +537,7 @@
     "cryptoCard": {
       "receiveModal": {
         "title": "Отримати кошти",
-        "description": "Отримайте кошти, відправивши криптовалюту на вказану нижче адресу."
+        "description": "Будь ласка, надсилайте токени Ethereum і ERC20 лише через мережу Ethereum або токени BNB і BEP20 через BNB Smart Chain."
       },
       "sendModal": {
         "title": "Виведення коштів",

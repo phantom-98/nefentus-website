@@ -479,7 +479,7 @@
     "cryptoCard": {
       "receiveModal": {
         "title": "Kryptowährung empfangen",
-        "description": "Erhalten Sie Geld, indem Sie Kryptowährung an die unten stehende Adresse senden."
+        "description": "Bitte senden Sie ausschließlich Ethereum- und ERC20-Token über das Ethereum-Netzwerk oder BNB- und BEP20-Token über die BNB Smart Chain."
       },
       "sendModal": {
         "title": "Kryptowährung abheben",

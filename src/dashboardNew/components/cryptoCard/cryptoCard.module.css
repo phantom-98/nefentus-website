@@ -228,6 +228,7 @@
 }
 
 .receiveModalDescription {
+  max-width: 420px;
   font-size: 1.2rem;
   margin-bottom: 2rem;
   margin-top: -1rem;
