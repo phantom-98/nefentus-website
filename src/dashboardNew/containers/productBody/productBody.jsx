@@ -76,12 +76,22 @@ const ProductBody = () => {
     priceAsFloat = parseFloat(price);
     if (!priceAsFloat) {
       setErrorMessage(t("products.error.priceAsFloat"));
+      return;
     }
 
     // Set stock to -1 if not given
     let stockRequest = stock;
     if (stock === null || stock === "") {
       stockRequest = -1;
+    } else {
+      const stockAsInt = parseInt(stock);
+      if (stockAsInt < 0) {
+        setStock("");
+        stockRequest = -1;
+      } else {
+        setStock(stockAsInt.toString());
+        stockRequest = stockAsInt;
+      }
     }
 
     const resp1 = await dashboardApi.upsertProduct(

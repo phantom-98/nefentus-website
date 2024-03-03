@@ -59,16 +59,7 @@ const Input = ({
         value={value}
         style={style}
         onChange={handleChange}
-        onKeyDown={(e) => {
-          console.log(e.key, number);
-          if (number && e.key == "Backspace") {
-            if (e.key < "0" || e.key > "9") {
-              e.preventDefault();
-              return;
-            }
-          }
-          handleKeyDown();
-        }}
+        onKeyDown={handleKeyDown}
         disabled={disabled}
       />
     </div>
