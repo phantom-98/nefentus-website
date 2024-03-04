@@ -473,7 +473,9 @@
       "first": "Verkäufe: Insgesamt",
       "second": "Verkäufe: Letzte 24 Stunden",
       "third": "Verkäufe: Letzte 30 Tage",
-      "progress": "im Vergleich zu den letzten 30 Tagen"
+      "progressFirst": "im Vergleich zu den letzten 30 Tagen",
+      "progressSecond": "im Vergleich zum Tag davor",
+      "progressThird": "im Vergleich zum Vormonat"
     },
     "balanceTitle": "Saldo diese Woche",
     "cryptoCard": {

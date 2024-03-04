@@ -520,7 +520,9 @@
       "first": "Sales: Total",
       "second": "Sales: Last 24 hours",
       "third": "Sales: Last 30 days",
-      "progress": "vs last 30 days"
+      "progressFirst": "vs last 30 days",
+      "progressSecond": "vs the day before",
+      "progressThird": "vs the month before"
     },
     "balanceTitle": "Balance this week",
     "cryptoCard": {

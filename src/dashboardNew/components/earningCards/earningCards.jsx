@@ -33,6 +33,7 @@ const EarningCards = () => {
         percentage: sales?.value?.total?.percentage
           ? parseFloat(sales?.value?.total?.percentage).toFixed(2)
           : 0,
+        progress: t("dashboard.earningCards.progressFirst"),
       },
       {
         title: t("dashboard.earningCards.second"),
@@ -42,6 +43,7 @@ const EarningCards = () => {
         percentage: sales?.value?.last24Hours?.percentage
           ? parseFloat(sales?.value?.last24Hours?.percentage).toFixed(2)
           : 0,
+        progress: t("dashboard.earningCards.progressSecond"),
       },
       {
         title: t("dashboard.earningCards.third"),
@@ -52,6 +54,7 @@ const EarningCards = () => {
         percentage: sales?.value?.last30Days?.percentage
           ? parseFloat(sales?.value?.last30Days?.percentage).toFixed(2)
           : 0,
+        progress: t("dashboard.earningCards.progressThird"),
       },
     ];
 
@@ -70,8 +73,6 @@ const EarningCards = () => {
 export default EarningCards;
 
 const SingleCard = ({ data }) => {
-  const { t } = useTranslation();
-
   return (
     <Card>
       <div className={styles.label}>{data.title}</div>
@@ -84,9 +85,7 @@ const SingleCard = ({ data }) => {
           >
             {data.percentage}%
           </div>
-          <div className={styles.rest}>
-            {t("dashboard.earningCards.progress")}
-          </div>
+          <div className={styles.rest}>{data.progress}</div>
         </div>
       </div>
     </Card>
