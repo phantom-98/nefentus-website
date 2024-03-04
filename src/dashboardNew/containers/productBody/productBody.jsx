@@ -74,17 +74,17 @@ const ProductBody = () => {
     }
     let priceAsFloat = null;
     priceAsFloat = parseFloat(price);
-    if (!priceAsFloat) {
+    if (priceAsFloat <= 0) {
       setErrorMessage(t("products.error.priceAsFloat"));
       return;
     }
 
     // Set stock to -1 if not given
-    let stockRequest = stock;
+    let stockRequest;
     if (stock === null || stock === "") {
       stockRequest = -1;
     } else {
-      const stockAsInt = parseInt(stock);
+      const stockAsInt = parseInt(parseFloat(stock).toString());
       if (stockAsInt < 0) {
         setStock("");
         stockRequest = -1;
@@ -98,7 +98,7 @@ const ProductBody = () => {
       productId,
       name,
       description,
-      price,
+      priceAsFloat,
       stockRequest,
       image,
     );

@@ -977,7 +977,7 @@
       "name": "Name is required!",
       "description": "Description is required!",
       "price": "Price is required!",
-      "priceAsFloat": "Price must be a number!"
+      "priceAsFloat": "Price must be a positive!"
     },
     "createProductModal": {
       "imageLabel": "Product image",
