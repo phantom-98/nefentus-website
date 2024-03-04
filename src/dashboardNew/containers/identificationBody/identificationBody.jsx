@@ -574,7 +574,12 @@ const IdentificationBody = () => {
             {/* <AddFile label="Enhanced Diligence" /> */}
 
             <div className={styles.button}>
-              <Button onClick={handleUpload} width="10rem" spinner={spinner}>
+              <Button
+                onClick={handleUpload}
+                width="10rem"
+                spinner={spinner}
+                disabled={level > 2}
+              >
                 {t("identification.verification.confirm")}
               </Button>
             </div>
