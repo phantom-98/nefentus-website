@@ -118,6 +118,7 @@ const IdentificationBody = () => {
   const [getData, setGetData] = useState([]);
   const [getText, setGetText] = useState([]);
   const [declineResponse, setDeclineResponse] = useState(null);
+  const [spinner, setSpinner] = useState(false);
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -206,9 +207,17 @@ const IdentificationBody = () => {
   }, [userId]);
 
   const checkUploadingData = () => {
-    let res = false;
+    let res = false,
+      confirm = true;
     for (let i = 0; i < KYCContent.length; i++) {
       const item = KYCContent[i];
+      if (
+        item.level == level &&
+        !item.verify &&
+        (declineResponse || !item.url)
+      ) {
+        confirm = false;
+      }
       if (
         item.level == level &&
         item.notRequired == undefined &&
@@ -221,26 +230,13 @@ const IdentificationBody = () => {
         break;
       }
     }
-    // KYCContent.forEach((item) => {
-    //   if (
-    //     item.level == level &&
-    //     item.notRequired == undefined &&
-    //     !(item in getData || item in getText)
-    //   ) {
-    //     res = true;
-    //     toast.error(t(item.label) + " field is required!", {
-    //       position: toast.POSITION.TOP_CENTER,
-    //       autoClose: 5000,
-    //       theme: "colored",
-    //     });
-    //   }
-    // });
 
-    return res;
+    return res || confirm;
   };
   const handleUpload = async () => {
     if (checkUploadingData()) return;
 
+    setSpinner(true);
     if (getData) {
       const arrayWithResults = await Promise.allSettled(
         Object.keys(getData).map((type) =>
@@ -271,6 +267,7 @@ const IdentificationBody = () => {
     setInfoMessage(t("identification.uploadSuccess"));
     setDeclineResponse(null);
     fetchFYC();
+    setSpinner(false);
   };
 
   const { theme } = useTheme();
@@ -577,7 +574,12 @@ const IdentificationBody = () => {
             {/* <AddFile label="Enhanced Diligence" /> */}
 
             <div className={styles.button}>
-              <Button onClick={handleUpload} width="10rem">
+              <Button
+                onClick={handleUpload}
+                width="10rem"
+                spinner={spinner}
+                disabled={level > 2}
+              >
                 {t("identification.verification.confirm")}
               </Button>
             </div>
