@@ -455,6 +455,8 @@ const AdminDashboard = ({ type }) => {
               role={role}
               setRole={setRole}
               spinner={spinner}
+              agentEmail={agentEmail}
+              setAgentEmail={setAgentEmail}
             />
           )}
         </div>
