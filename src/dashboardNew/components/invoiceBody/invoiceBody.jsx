@@ -38,10 +38,10 @@ const InvoicesBody = () => {
       walletAddress,
     });
     if (response == null) {
-      setErrorMessage("Failed to update");
+      setErrorMessage(t("messages.error.general"));
       return;
     } else {
-      setInfoMessage("Successfully updated!");
+      setInfoMessage(t("messages.success.general"));
     }
     setErrorMessage(null);
     setchanged(false);

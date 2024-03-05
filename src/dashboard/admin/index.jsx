@@ -17,11 +17,13 @@ import { MessageContext } from "../../context/message";
 import MessageComponent from "../../components/message";
 import imputStyles from "../../components/input/input.module.css";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../context/auth/authContext";
 
 const colSizes = [1, 1, 2, 1, 1, 1, 1, 3];
 
 const AdminBody = ({ type }) => {
   const { t } = useTranslation();
+  const { user } = useAuth();
 
   const header = [
     t("dashboard.tableHeaders.firstName"),
@@ -382,9 +384,7 @@ const AdminBody = ({ type }) => {
             <p className={styles.affiliateLabel}>Affiliate link: </p>
 
             <CopyValue
-              value={`${
-                window.location.origin
-              }/?affiliate=${localStorage.getItem("affiliateLink")}`}
+              value={`${window.location.origin}/?affiliate=${user?.affiliateLink}`}
               onCopy={() => affiliateLinkCopied(true)}
               inputStyle={{ width: "400px" }}
               buttonStyle={{ padding: "100px !important" }}

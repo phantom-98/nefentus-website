@@ -15,11 +15,13 @@ import isMobilePhone from "../../func/isMobilePhone";
 import Error from "../error/error";
 import { NefentusLogo } from "../../assets/icon/logos/logos";
 import { useTheme } from "../../context/themeContext/themeContext";
+import { useAuth } from "../../context/auth/authContext";
 import { validateEmail } from "../../utils";
 
 const Signup = () => {
   const { t } = useTranslation();
   const { theme } = useTheme();
+  const { user } = useAuth();
 
   const country_list = [
     { value: "Afghanistan", display: t("countries.Afghanistan") },
@@ -328,7 +330,7 @@ const Signup = () => {
         ...data,
         roles: ["Affiliate"],
         country: CountryOption,
-        affiliateLink: localStorage.getItem("affiliateJoined"),
+        affiliateLink: user?.affiliateJoined,
       };
 
       const response = await api.register(requestData);

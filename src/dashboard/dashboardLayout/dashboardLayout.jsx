@@ -6,12 +6,14 @@ import styles from "./dashboardLayout.module.css";
 import Button from "../../components/button/button";
 import { ROLE_TO_NAME } from "../../constants";
 import { getRole, dashboardLink } from "../../utils";
+import { useAuth } from "../../context/auth/authContext";
 
 const DashboardLayout = ({ children }) => {
+  const { user } = useAuth();
   const role = getRole(localStorage);
   const roleName = ROLE_TO_NAME[role];
   const isAdmin = role === "admin";
-  const email = localStorage.getItem("email");
+  const email = user?.email;
 
   if (isAdmin || email === "nikolaykislik@gmail.com") {
     return (
@@ -37,7 +39,7 @@ const DashboardLayout = ({ children }) => {
               role === "broker") && (
               <div>
                 <Button
-                  link={dashboardLink(localStorage)}
+                  link={dashboardLink(user)}
                   color={"white"}
                   style={{ padding: "0.3rem 0.5rem" }}
                 >

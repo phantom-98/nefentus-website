@@ -22,6 +22,7 @@ import { NefentusLogo } from "../../assets/icon/logos/logos";
 import { MessageContext } from "../../context/message";
 import MessageComponent from "../message";
 import { useTheme } from "../../context/themeContext/themeContext";
+import { useAuth } from "../../context/auth/authContext";
 
 const ConfirmMeEmail = ({
   email,
@@ -153,6 +154,7 @@ const LoginBox = () => {
       : false,
   );
   const [spinner, setSpinner] = useState(false);
+  const { user, setUser } = useAuth();
 
   const schema = z.object({
     email: z.string().min(1, { message: t("messages.validation.email") }),
@@ -198,10 +200,9 @@ const LoginBox = () => {
   const [totp, setTotp] = useState(false);
   const [step, setStep] = useState(false);
 
-  function navigateDashboard() {
-    const link = dashboardLink(localStorage);
-
-    navigate(link);
+  function navigateDashboard(response = {}) {
+    if (Object.keys(response)?.length > 0) navigate(dashboardLink(response));
+    else navigate(dashboardLink(user));
   }
 
   useEffect(() => {
@@ -214,7 +215,7 @@ const LoginBox = () => {
 
     async function checkJwtAndNavigate() {
       const jwtIsValid = await backendAPI.checkJwt();
-      if (jwtIsValid && getRole(localStorage)) {
+      if (jwtIsValid && getRole(user)) {
         navigateDashboard();
       }
     }
@@ -253,7 +254,8 @@ const LoginBox = () => {
             state: { recommendRecover: true },
           });
         } else {
-          navigateDashboard();
+          setUser(response);
+          navigateDashboard(response);
         }
       } catch (error) {
         setErrorMessage(t("messages.error.login"));
@@ -267,7 +269,12 @@ const LoginBox = () => {
       checkbox = false;
     }
     try {
-      const response = await backendAPI.verifyOTP(email, code, checkbox);
+      const response = await backendAPI.verifyOTP(
+        email,
+        code,
+        checkbox,
+        setUser,
+      );
       if (response == null) {
         setErrorMessage(t("messages.error.confirm"));
         return;
@@ -275,7 +282,7 @@ const LoginBox = () => {
       if (otp && totp) {
         setStep(true);
       } else {
-        navigateDashboard();
+        setTimeout(() => navigateDashboard(), 500);
       }
     } catch (error) {
       setErrorMessage(t("messages.error.login"));
@@ -286,13 +293,19 @@ const LoginBox = () => {
     if (Cookies.get("acceptCookie") !== true) {
       checkbox = false;
     }
-    const response = await backendAPI.verifyTotpToken(email, code, checkbox);
+    const response = await backendAPI.verifyTotpToken(
+      email,
+      code,
+      checkbox,
+      setUser,
+    );
     try {
       if (response == null || !response.ok) {
         setErrorMessage("Failed to Confirm");
         return;
+      } else {
+        setTimeout(() => navigateDashboard(), 500);
       }
-      navigateDashboard();
     } catch (error) {
       setErrorMessage(t("messages.error.login"));
     }

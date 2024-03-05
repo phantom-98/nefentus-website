@@ -17,7 +17,6 @@ import useBalances from "../../../hooks/balances";
 import useInternalWallet from "../../../hooks/internalWallet";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getIsExternal } from "../../../utils";
 import usePrices from "../../../hooks/prices";
 
 ChartJS.register(ArcElement, Tooltip, Legend);

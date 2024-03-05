@@ -21,6 +21,7 @@ import Popup from "../components/popup/popup";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 import { getRole } from "../../utils";
 import { Helmet } from "react-helmet";
+import { useAuth } from "../../context/auth/authContext";
 
 const colSizes = [2, 1, 2, 2, 1, 1, 2, 1, 2];
 
@@ -47,6 +48,7 @@ const AdminDashboard = ({ type }) => {
   const [isReloadData, setIsReloadData] = useState(false);
   const [totalRegUserCnt, setTotalRegUserCnt] = useState(0);
   const { t } = useTranslation();
+  const { user } = useAuth();
 
   const label = [
     t("dashboard.tableHeaders.name"),
@@ -80,7 +82,7 @@ const AdminDashboard = ({ type }) => {
 
   const navigate = useNavigate();
   const adminApi = new adminDashboardApi(type);
-  const userRole = getRole(localStorage);
+  const userRole = getRole(user);
   const affiliate = type === "affiliate";
 
   useEffect(() => {
@@ -267,6 +269,7 @@ const AdminDashboard = ({ type }) => {
         agentEmail,
       );
       if (resp) {
+        fetchAdminData();
         setInfoMessage(t("messages.success.updateUser"));
         closeModal();
       } else {

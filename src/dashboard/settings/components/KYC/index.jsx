@@ -44,7 +44,7 @@ const INITIAL_FILES = {
   [KYC_TYPE.ADRESS]: null,
 };
 
-export const KYC = () => {
+export const KYC = ({ user }) => {
   const backendapi = new backendAPI();
   const [statusIndex, setStatusIndex] = useState(0);
   const [level, setLevel] = useState(0);
@@ -59,7 +59,7 @@ export const KYC = () => {
   });
 
   const fetchFYC = async () => {
-    const userId = localStorage.getItem("userId");
+    const userId = user?.userId;
     const level = await backendapi.getKYCLevel(userId);
 
     const arrayWithResults = await Promise.all(

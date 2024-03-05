@@ -14,6 +14,7 @@ import backendAPI from "../../api/backendAPI";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { checkJwtToken } from "../../utils";
 import { Helmet } from "react-helmet";
+import { useAuth } from "../../context/auth/authContext";
 
 const MainDashboard = () => {
   const { t, i18n } = useTranslation();
@@ -21,6 +22,7 @@ const MainDashboard = () => {
   const { language } = i18n;
   const { theme } = useTheme();
   const backend_Api = new backendAPI();
+  const { user, setUser } = useAuth();
 
   const labels = {
     Monday: t("dashboard.charts.days.monday"),
@@ -35,12 +37,21 @@ const MainDashboard = () => {
   const [activeWallet, setActiveWallet] = useState();
 
   useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  useEffect(() => {
     fetchGraphData();
   }, [language, theme, activeWallet]);
 
+  const fetchProfile = async () => {
+    const response = await backend_Api.getProfile();
+    setUser({ ...response });
+  };
+
   const fetchGraphData = async () => {
     await checkJwtToken();
-    const response = await backend_Api.getUserBalanceForGraph();
+    const response = await backend_Api.getUserBalanceForGraph(user);
     response.sort((a, b) => {
       const dateA = new Date(a.createdAt);
       const dateB = new Date(b.createdAt);

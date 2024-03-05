@@ -12,10 +12,12 @@ import SecurityPopupHeader from "./securityPopupHeader";
 import QRCode from "react-qr-code";
 import { OneTimeCodeInput } from "../../../dashboard/input/input";
 import copyClipboard from "../../../assets/icon/copyClipboard.svg";
+import { useAuth } from "../../../context/auth/authContext";
 
 const emptyArray = ["", "", "", "", "", "", "", "", "", "", "", ""];
 
 const SecurityItem = ({ data, recover }) => {
+  const { user } = useAuth();
   const { setErrorMessage, setInfoMessage, clearMessages } =
     useContext(MessageContext);
   const [isTotp, setIsTotp] = useState();
@@ -55,7 +57,7 @@ const SecurityItem = ({ data, recover }) => {
     if (data.flow === "otp") {
       setStatus(isOtp);
     } else if (data.flow === "totp") {
-      setEmail(localStorage.getItem("email"));
+      setEmail(user?.email);
       setStatus(isTotp);
     } else if (data.flow === "phishingCode") {
       setStatus(phishingCode);
@@ -190,10 +192,6 @@ const SecurityItem = ({ data, recover }) => {
       code: status,
     };
     const response2 = await backendAPI.setPhishingCode(requestData);
-    // if (response2 === "Success") {
-    //   setPhishingCodeValue(requestData.code);
-    //   localStorage.setItem("antiPhishingCode", requestData.code);
-    // }
 
     if (response2 == null) {
       await backendAPI.signout();

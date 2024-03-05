@@ -14,11 +14,12 @@ import { useAuth } from "../../context/auth/authContext";
 import backend_API from "../../api/backendAPI";
 
 const UserProfile = ({ web, logOut, requireKYC }) => {
-  const { avatarUrl, setAvatarUrl } = useAuth();
+  const { user, setUser, avatarUrl, setAvatarUrl } = useAuth();
   const backendAPI = new backend_API();
   const fetchProfile = async () => {
     const data = await backendAPI.getProfile();
-    if (data["imgData"]) setAvatarUrl(data["imgData"]);
+    setUser({ ...data });
+    if (data["profileImage"]) setAvatarUrl(data["profileImage"]);
     else setAvatarUrl(null);
   };
   useEffect(() => {
@@ -76,10 +77,12 @@ const UserProfile = ({ web, logOut, requireKYC }) => {
             <Security />
             <p>{t("navigation.security")}</p>
           </Link>
-          <Link to="/dashboard/identification" className={styles.profileItem}>
-            <Identification />
-            <p>{t("navigation.identification")}</p>
-          </Link>
+          {user?.isRequireKyc && (
+            <Link to="/dashboard/identification" className={styles.profileItem}>
+              <Identification />
+              <p>{t("navigation.identification")}</p>
+            </Link>
+          )}
           <Link onClick={logOut} className={styles.profileItem}>
             <Logout />
             <p>{t("navigation.logOut")}</p>

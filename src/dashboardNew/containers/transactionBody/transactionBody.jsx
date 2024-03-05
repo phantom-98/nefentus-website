@@ -66,13 +66,15 @@ const TransactionBody = () => {
 
   function orderToArray(order) {
     return [
-      order.product ? order.product.name : t("payment.customPayment"),
+      order.invoice?.product
+        ? order.invoice?.product.name
+        : t("payment.customPayment"),
       `#${order.id}`,
       order.invoice?.user?.email,
       `${order.totalPrice}`,
       <TableStatus color="blue">{order.currency}</TableStatus>,
       `#${order.invoice.id}`,
-      moment(order.updatedAt).format("MMM D, YYYY"),
+      moment(order.updatedAt).format("MMM D YYYY, HH:mm:ss"),
       `$${order.totalPrice}`,
       <TableAction button2="Details" onClick2={() => showDetails(order)} />,
     ];
@@ -112,7 +114,7 @@ const TransactionBody = () => {
         getDataInput={getDataInput}
       />
       <Table
-        grid="1.4fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr"
+        grid="1.4fr 1fr 2fr 1fr 1fr 1fr 1.4fr 1fr 1fr"
         label={label}
         data={filteredData}
       />

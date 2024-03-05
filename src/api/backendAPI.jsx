@@ -79,28 +79,6 @@ export default class backendAPI {
       } else {
         const data = await response.json();
         setCookie("token", data.jwtToken);
-        localStorage.setItem("token", data.jwtToken);
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("contactEmail", data.contactEmail);
-        localStorage.setItem("affiliateLink", data.affiliateLink);
-        localStorage.setItem("firstName", data.firstName);
-        localStorage.setItem("lastName", data.lastName);
-        localStorage.setItem("business", data.business);
-        localStorage.setItem("phoneNumber", data.phoneNumber);
-        localStorage.setItem("username", data.username);
-        localStorage.setItem("profile_pic", data.profileImage);
-        localStorage.setItem("roles", data.roles);
-        localStorage.setItem("country", data.country);
-        localStorage.setItem("hasTotp", data.hasTotp);
-        // localStorage.setItem("requireKyc", data.requireKyc);
-        localStorage.setItem("hasOtp", data.hasOtp);
-        localStorage.setItem("userId", data.userId);
-        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
-        localStorage.setItem("marketingUpdates", data.marketingUpdates);
-        localStorage.setItem("emailNotifications", data.emailNotifications);
-        localStorage.setItem("appNotifications", data.appNotifications);
-        localStorage.setItem("notificationLanguage", data.notificationLanguage);
-        localStorage.setItem("enableInvoicing", data.enableInvoicing);
 
         ReactGA.event({
           category: "User",
@@ -148,27 +126,6 @@ export default class backendAPI {
         });
       } else {
         const data = await response.json();
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("contactEmail", data.contactEmail);
-        localStorage.setItem("affiliateLink", data.affiliateLink);
-        localStorage.setItem("firstName", data.firstName);
-        localStorage.setItem("lastName", data.lastName);
-        localStorage.setItem("business", data.business);
-        localStorage.setItem("phoneNumber", data.phoneNumber);
-        localStorage.setItem("username", data.username);
-        localStorage.setItem("profile_pic", data.profileImage);
-        localStorage.setItem("roles", data.roles);
-        localStorage.setItem("country", data.country);
-        localStorage.setItem("hasTotp", data.hasTotp);
-        // localStorage.setItem("requireKyc", data.requireKyc);
-        localStorage.setItem("hasOtp", data.hasOtp);
-        localStorage.setItem("userId", data.userId);
-        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
-        localStorage.setItem("marketingUpdates", data.marketingUpdates);
-        localStorage.setItem("emailNotifications", data.emailNotifications);
-        localStorage.setItem("appNotifications", data.appNotifications);
-        localStorage.setItem("notificationLanguage", data.notificationLanguage);
-        localStorage.setItem("enableInvoicing", data.enableInvoicing);
 
         window.dispatchEvent(new Event("storage"));
 
@@ -346,8 +303,8 @@ export default class backendAPI {
     }
   }
 
-  async getUserBalanceForGraph() {
-    const getWallet = JSON.parse(localStorage.getItem("Wallet"));
+  async getUserBalanceForGraph(user) {
+    const getWallet = JSON.parse(user?.Wallet);
     try {
       const url = `${this.baseURL}/auth/user-balance-wallet?wallet_address=${getWallet?.address}`;
       const options = {
@@ -546,7 +503,7 @@ export default class backendAPI {
     }
   }
 
-  async verifyTotpToken(email, code, checkbox) {
+  async verifyTotpToken(email, code, checkbox, setUser) {
     try {
       const url = `${this.baseURL}/auth/verify/totp`;
       const options = {
@@ -569,32 +526,15 @@ export default class backendAPI {
       if (response.ok) {
         const data = await response.json();
         setCookie("token", data.jwtToken);
-        localStorage.setItem("token", data.jwtToken);
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("contactEmail", data.contactEmail);
-        localStorage.setItem("affiliateLink", data.affiliateLink);
-        localStorage.setItem("firstName", data.firstName);
-        localStorage.setItem("lastName", data.lastName);
-        localStorage.setItem("business", data.business);
-        localStorage.setItem("phoneNumber", data.phoneNumber);
-        localStorage.setItem("username", data.username);
-        localStorage.setItem("profile_pic", data.profileImage);
-        localStorage.setItem("roles", data.roles);
-        localStorage.setItem("country", data.country);
-        localStorage.setItem("hasTotp", data.hasTotp);
-        // localStorage.setItem("requireKyc", data.requireKyc);
-        localStorage.setItem("hasOtp", data.hasOtp);
-        localStorage.setItem("userId", data.userId);
-        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
+        setUser({ ...data });
 
         ReactGA.event({
           category: "User",
           action: "login",
           label: data.email,
         });
+        return response;
       }
-
-      return response;
     } catch (e) {
       console.log(e, "responseresponse");
 
@@ -659,7 +599,6 @@ export default class backendAPI {
       this.updateToken(response);
 
       const data = await response.json();
-      localStorage.setItem("profile_pic", data.message);
       return data.message;
     } catch (error) {
       console.error("There was an error uploading the file:", error);
@@ -729,30 +668,6 @@ export default class backendAPI {
       const data = await response.json();
       if (!data.hasOtp) {
         setCookie("token", data.jwtToken);
-        localStorage.setItem("token", data.jwtToken);
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("contactEmail", data.contactEmail);
-        localStorage.setItem("affiliateLink", data.affiliateLink);
-        localStorage.setItem("firstName", data.firstName);
-        localStorage.setItem("lastName", data.lastName);
-        localStorage.setItem("business", data.business);
-        localStorage.setItem("phoneNumber", data.phoneNumber);
-        localStorage.setItem("username", data.username);
-        localStorage.setItem("profile_pic", data.profileImage);
-        localStorage.setItem("roles", data.roles);
-        localStorage.setItem("country", data.country);
-        localStorage.setItem("hasTotp", data.hasTotp);
-        // localStorage.setItem("requireKyc", data.requireKyc);
-        localStorage.setItem("hasOtp", data.hasOtp);
-        localStorage.setItem("userId", data.userId);
-        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
-        localStorage.setItem("marketingUpdates", data.marketingUpdates);
-        localStorage.setItem("emailNotifications", data.emailNotifications);
-        localStorage.setItem("appNotifications", data.appNotifications);
-        localStorage.setItem("notificationLanguage", data.notificationLanguage);
-        localStorage.setItem("enableInvoicing", data.enableInvoicing);
-        localStorage.setItem("vatNumber", data.vatNumber);
-        localStorage.setItem("sendInvoice", data.sendInvoice);
       }
 
       ReactGA.event({
@@ -767,7 +682,7 @@ export default class backendAPI {
     }
   }
 
-  async verifyOTP(email, code, longToken) {
+  async verifyOTP(email, code, longToken, setUser) {
     try {
       const url = `${this.baseURL}/auth/verify/otp`;
       const options = {
@@ -791,28 +706,7 @@ export default class backendAPI {
 
       if (step) {
         setCookie("token", data.jwtToken);
-        localStorage.setItem("token", data.jwtToken);
-        localStorage.setItem("email", data.email);
-        localStorage.setItem("contactEmail", data.contactEmail);
-        localStorage.setItem("affiliateLink", data.affiliateLink);
-        localStorage.setItem("firstName", data.firstName);
-        localStorage.setItem("lastName", data.lastName);
-        localStorage.setItem("business", data.business);
-        localStorage.setItem("phoneNumber", data.phoneNumber);
-        localStorage.setItem("username", data.username);
-        localStorage.setItem("profile_pic", data.profileImage);
-        localStorage.setItem("roles", data.roles);
-        localStorage.setItem("country", data.country);
-        localStorage.setItem("hasTotp", data.hasTotp);
-        // localStorage.setItem("requireKyc", data.requireKyc);
-        localStorage.setItem("hasOtp", data.hasOtp);
-        localStorage.setItem("userId", data.userId);
-        localStorage.setItem("antiPhishingCode", data.antiPhishingCode);
-        localStorage.setItem("marketingUpdates", data.marketingUpdates);
-        localStorage.setItem("emailNotifications", data.emailNotifications);
-        localStorage.setItem("appNotifications", data.appNotifications);
-        localStorage.setItem("notificationLanguage", data.notificationLanguage);
-        localStorage.setItem("enableInvoicing", data.enableInvoicing);
+        setUser({ ...data });
 
         ReactGA.event({
           category: "User",
@@ -982,30 +876,6 @@ export default class backendAPI {
     }
   }
 
-  async getAffiliateDashboardTotalStats() {
-    const url = `${this.baseURL}/dashboard/affiliate/data`;
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${this.token}`,
-      },
-      body: localStorage.getItem("affiliateLink"),
-    };
-    try {
-      const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Failed to get affiliate dashboard data");
-      }
-      this.updateToken(response);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error getting affiliate dashboard data:", error);
-      return null;
-    }
-  }
-
   async countAffiliate(affiliate) {
     try {
       const url = `${this.baseURL}/clicks/${affiliate}`;
@@ -1049,13 +919,12 @@ export default class backendAPI {
     }
   }
 
-  async uploadKYCByType(type, file) {
+  async uploadKYCByType(type, file, userId) {
     try {
       if (!file) {
         return null;
       }
       const formData = new FormData();
-      const userId = localStorage.getItem("userId");
       const url = `${this.baseURL}/auth/${userId}/upload_kyc?type=${type}`;
       formData.append("file", file);
 
@@ -1078,13 +947,12 @@ export default class backendAPI {
     }
   }
 
-  async uploadKYCByText(type, content) {
+  async uploadKYCByText(type, content, userId) {
     try {
       if (!content) {
         return null;
       }
       const formData = new FormData();
-      const userId = localStorage.getItem("userId");
       const url = `${this.baseURL}/auth/${userId}/upload_kyc_text?type=${type}`;
       formData.append("content", content);
       const options = {
@@ -1186,7 +1054,6 @@ export default class backendAPI {
       }
       this.updateToken(response);
       const data = await response.json();
-      localStorage.setItem("profile_pic", "null");
       return data;
     } catch (error) {
       return null; // or return some default value

@@ -523,13 +523,15 @@
       "first": "Sales: Total",
       "second": "Sales: Last 24 hours",
       "third": "Sales: Last 30 days",
-      "progress": "vs last 30 days"
+      "progressFirst": "vs last 30 days",
+      "progressSecond": "vs the day before",
+      "progressThird": "vs the month before"
     },
     "balanceTitle": "Balance this week",
     "cryptoCard": {
       "receiveModal": {
         "title": "Receive funds",
-        "description": "Receive funds by sending cryptocurrency to the address below."
+        "description": "Please only send Ethereum and ERC20 tokens via the Ethereum network or BNB and BEP20 tokens via the BNB Smart Chain."
       },
       "sendModal": {
         "title": "Withdraw funds",
@@ -846,6 +848,7 @@
       "matchPassword": "Passwords must match"
     },
     "success": {
+      "general": "Successfully Updated",
       "activateAccount": "Account successfully activated",
       "passwordReset": "Password reset successfully!",
       "transaction": "Transaction successful!",
@@ -861,6 +864,7 @@
       "updateSettings": "Settings updated successfully!"
     },
     "error": {
+      "general": "Failed to Update",
       "country": "Please choose a country",
       "reCAPTCHA": "Please verify the reCAPTCHA!",
       "register": "Bad request! Please input correct values.",
