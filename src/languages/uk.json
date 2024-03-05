@@ -507,7 +507,8 @@
       "income": "Дохід ($)",
       "joinedOn": "Приєднався",
       "earnings": "Прибуток",
-      "actions": "Дії"
+      "actions": "Дії",
+      "activate": "активувати"
     },
     "modal": {
       "create_user": "створити користувача",

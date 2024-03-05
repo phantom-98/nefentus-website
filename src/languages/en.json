@@ -495,7 +495,8 @@
       "income": "Income ($)",
       "joinedOn": "Joined on",
       "earnings": "Earnings",
-      "actions": "Actions"
+      "actions": "Actions",
+      "activate": "Activate"
     },
     "modal": {
       "create_user": "Create User",

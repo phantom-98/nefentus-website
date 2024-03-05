@@ -326,6 +326,11 @@
   margin-bottom: auto;
 }
 
+.actionButton {
+  cursor: pointer;
+  color: #0784b5;
+}
+
 @media (max-width: 900px) {
   .rows {
     display: flex;

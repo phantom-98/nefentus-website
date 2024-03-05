@@ -449,7 +449,8 @@
       "income ": "Einkommen ($)",
       "joinedOn": "Beigetreten am",
       "earnings": "Ergebnis",
-      "actions": "Aktionen"
+      "actions": "Aktionen",
+      "activate": "aktivieren"
     },
     "modal": {
       "create_user": "Benutzer hinzufügen",
