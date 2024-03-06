@@ -226,7 +226,7 @@ export default class vendorDashboardApi {
         productId: productId,
       };
 
-      const url = `${this.baseURL}/products/delete`;
+      const url = `${this.baseURL}/products`;
       const options = {
         method: "DELETE",
         headers: {
@@ -253,7 +253,7 @@ export default class vendorDashboardApi {
         productId: productId,
       };
 
-      const url = `${this.baseURL}/products/deleteImage`;
+      const url = `${this.baseURL}/products/image`;
       const options = {
         method: "DELETE",
         headers: {
