@@ -47,7 +47,7 @@ const AdminDashboard = ({ type }) => {
   const [tableData, setTableData] = useState([]);
   const [isReloadData, setIsReloadData] = useState(false);
   const [totalRegUserCnt, setTotalRegUserCnt] = useState(0);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useAuth();
 
   const label = [
@@ -59,7 +59,9 @@ const AdminDashboard = ({ type }) => {
     t("dashboard.tableHeaders.joinedOn"),
     // t("dashboard.tableHeaders.earnings"),
     t("dashboard.tableHeaders.agent"),
-    t("dashboard.tableHeaders.actions"),
+    t("dashboard.tableHeaders.activate"),
+    t("general.edit"),
+    t("general.delete"),
   ];
 
   const [firstName, setFirstName] = useState("");
@@ -271,6 +273,7 @@ const AdminDashboard = ({ type }) => {
       if (resp) {
         fetchAdminData();
         setInfoMessage(t("messages.success.updateUser"));
+        clearAddUserFields();
         closeModal();
       } else {
         setErrorMessage(t("messages.error.updateUser"));
@@ -325,14 +328,23 @@ const AdminDashboard = ({ type }) => {
         moment(user.createdAt).format("MMM D YYYY, HH:mm:ss"),
         // `$${user.income}`,
         user.agent,
-        <TableAction
-          button={
-            user.activated ? t("general.deactivate") : t("general.activate")
-          }
+        <div
           onClick={() => updateStatusUser(user.email, user.activated)}
-          editUser={() => editUser(user)}
-          deleteUser={() => deleteUser(user.email)}
-        />,
+          style={{ color: "#0784b5" }}
+          className={styles.actionButton}
+        >
+          {user.activated ? t("general.deactivate") : t("general.activate")}
+        </div>,
+        <div onClick={() => editUser(user)} className={styles.actionButton}>
+          {t("general.edit")}
+        </div>,
+        <div
+          onClick={() => deleteUser(user.email)}
+          style={{ color: "red" }}
+          className={styles.actionButton}
+        >
+          {t("general.delete")}
+        </div>,
       ]);
       setTableData(newDataUsers);
       setSearchTrigger(false);
@@ -344,6 +356,7 @@ const AdminDashboard = ({ type }) => {
     setLastName("");
     setEmail("");
     setRole("");
+    setEditEmailAddress(null);
   };
 
   useEffect(() => {
@@ -419,7 +432,13 @@ const AdminDashboard = ({ type }) => {
             getDataInput={getDataInput}
           />
           <Table
-            grid="1fr 0.8fr 1.5fr 0.6fr 0.9fr 1fr 1.2fr 1.5fr"
+            grid={`1.2fr 0.9fr 1.8fr 1fr 0.9fr 1.5fr ${
+              i18n?.language == "en"
+                ? "0.5fr 0.3fr 0.5fr"
+                : i18n?.language == "de"
+                ? "0.8fr 0.8fr 0.8fr"
+                : "1fr 0.8fr 0.8fr"
+            }`}
             label={label}
             data={paginatedData}
           />
@@ -455,6 +474,7 @@ const AdminDashboard = ({ type }) => {
               role={role}
               setRole={setRole}
               spinner={spinner}
+              editEmailAddress={editEmailAddress}
               agentEmail={agentEmail}
               setAgentEmail={setAgentEmail}
             />

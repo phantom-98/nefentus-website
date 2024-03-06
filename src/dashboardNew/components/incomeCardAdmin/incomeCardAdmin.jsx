@@ -1,4 +1,4 @@
-import { formatUSDBalance } from "../../../utils";
+import { formatIncome, formatUSDBalance } from "../../../utils";
 
 import Card from "../card/card";
 import { Line } from "react-chartjs-2";
@@ -116,7 +116,7 @@ function populateGraph(totalPrices) {
     datasets: [
       {
         label: "Income",
-        data: values,
+        data: values?.map((value) => formatIncome(value)),
         borderColor: "#0784B5",
         backgroundColor: "#0784B5",
       },

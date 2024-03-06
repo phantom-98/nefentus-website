@@ -199,10 +199,10 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
     inputRef.current.click();
   };
 
-  const allowedExtensions = ["jpg", "jpeg", "png", "JPG", "PNG", "JPEG"];
+  const allowedExtensions = ["jpg", "jpeg", "png", "gif", "heic"];
 
   function checkFileExtension(extension) {
-    return allowedExtensions.includes(extension);
+    return allowedExtensions.includes(extension.toLowerCase());
   }
 
   const handleChange = () => {
@@ -250,6 +250,7 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
         />
       </div>
       <input
+        accept=".jpeg, .jpg, .png, .gif, .heic"
         ref={inputRef}
         className={styles.hideInput}
         type="file"

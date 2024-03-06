@@ -25,11 +25,11 @@ const UserModal = ({
   password,
   setPassword,
   spinner,
+  editEmailAddress,
   agentEmail,
   setAgentEmail,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [editEmailAddress, setEditEmailAddress] = useState(null);
   const combinedClassNames = `${imputStyles.input} ${imputStyles.dashboardInput}`;
   const { t } = useTranslation();
 
@@ -65,7 +65,7 @@ const UserModal = ({
             placeholder={t("dashboard.modal.emailPlaceholder")}
             value={email}
             setState={setEmail}
-            disabled={editEmailAddress !== null}
+            disabled={editEmailAddress != null}
           />
           {operationType === "add" && (
             <div className={styles.passwordContainer}>

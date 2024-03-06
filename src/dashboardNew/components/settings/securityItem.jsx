@@ -75,14 +75,18 @@ const SecurityItem = ({ data, recover }) => {
     const response = await backendAPI.setupOtp({ active: !status });
     if (response.status === 200) {
       setStatus(!status);
+      setInfoMessage(t("messages.success.updateSettings"));
     }
   };
   const handleTotp = async () => {
-    const response = await backendAPI.setupTotp({ active: !status });
-    if (response.status === 200) {
-      setStatus(!status);
-      handleTotpSecretKey();
+    if (status) {
+      const response = await backendAPI.setupTotp({ active: !status });
+      if (status) setInfoMessage(t("messages.success.updateSettings"));
+      if (response.status === 200) {
+        setStatus(!status);
+      }
     }
+    handleTotpSecretKey();
   };
   const handleTotpSecretKey = async () => {
     if (!status) {
@@ -98,7 +102,12 @@ const SecurityItem = ({ data, recover }) => {
   };
 
   const handleTotpVerify = async (email, token, rememberMe) => {
-    const response = await backendAPI.verifyTotpToken(email, token, rememberMe);
+    const response = await backendAPI.verifyTotpToken(
+      email,
+      token,
+      rememberMe,
+      () => {},
+    );
     console.log(response, "response");
     if (response?.status === 200) {
       const response2 = await backendAPI.setupTotp({
@@ -109,6 +118,7 @@ const SecurityItem = ({ data, recover }) => {
       } else {
         setInfoMessage(t("security.scanModal.verifyCode"));
         setShow(false);
+        setStatus(!status);
         setVerify(false);
         clearMessages();
       }
@@ -199,10 +209,11 @@ const SecurityItem = ({ data, recover }) => {
         navigate("/");
       }, 1000);
       setPhishingCode("");
+    } else {
+      setInfoMessage(t("messages.success.updateSettings"));
+      setShow(false);
+      clearMessages();
     }
-
-    setShow(false);
-    clearMessages();
   };
 
   const comparePhrases = () => {
@@ -329,6 +340,7 @@ const SecurityItem = ({ data, recover }) => {
           onClose={() => {
             setShow(false);
             setIsTotp(!isTotp);
+            setVerify(false);
           }}
           onConfirm={() =>
             verify ? handleTotpVerify(email, code, false) : setVerify(!verify)
@@ -363,7 +375,7 @@ const SecurityItem = ({ data, recover }) => {
               <div className={styles.copyLink}>
                 {copied && (
                   <div className={styles.tooltip}>
-                    Link copied to clipboard!
+                    {t("security.scanModal.copyLink")}
                   </div>
                 )}
                 <div
@@ -384,7 +396,7 @@ const SecurityItem = ({ data, recover }) => {
             <div>
               <div className={styles.modalSubtitle}>
                 {" "}
-                Enter code from Authenticator
+                {t("security.scanModal.TOTPDescription")}
               </div>
               <MessageComponent />
 

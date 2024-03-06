@@ -33,6 +33,7 @@ const ConfirmMeEmail = ({
   otp,
   totp,
   step,
+  t,
 }) => {
   console.log(code, "code");
   console.log(totp, otp, "111");
@@ -41,11 +42,8 @@ const ConfirmMeEmail = ({
     <>
       {otp && !totp && (
         <div className={styles["confirm-email"]}>
-          <h3>Check your email for a code</h3>
-          <p>
-            We have sent a 6-digits code to {email}. The code expires shortly,
-            so please enter it soon.
-          </p>
+          <h3>{t("login.OTPTitle")}</h3>
+          <p>{t("login.OTPSubtitleP1") + email + t("login.OTPSubtitleP2")}</p>
           <form onSubmit={handleClickOtp}>
             <OneTimeCodeInput
               setOTPCode={setCode}
@@ -57,7 +55,7 @@ const ConfirmMeEmail = ({
                 className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
               >
                 <Button className={styles.button} onClick={handleClickOtp}>
-                  Confirm
+                  {t("general.confirm")}
                 </Button>
               </div>
             </div>
@@ -66,8 +64,8 @@ const ConfirmMeEmail = ({
       )}
       {totp && !otp && (
         <div className={styles["confirm-email"]}>
-          <h3>Enter code from your Authenticator</h3>
-          <p>You need to enter 6-digit code from your Authenticator</p>
+          <h3>{t("login.TOTPTitle")}</h3>
+          <p>{t("login.TOTPSubtitle")}</p>
           <form onSubmit={handleClickTotp}>
             <OneTimeCodeInput
               setOTPCode={setCode}
@@ -79,7 +77,7 @@ const ConfirmMeEmail = ({
                 className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
               >
                 <Button className={styles.button} onClick={handleClickTotp}>
-                  Confirm
+                  {t("general.confirm")}
                 </Button>
               </div>
             </div>
@@ -90,10 +88,9 @@ const ConfirmMeEmail = ({
         <>
           {!step ? (
             <div className={styles["confirm-email"]}>
-              <h3>Check your email for a code</h3>
+              <h3>{t("login.OTPTitle")}</h3>
               <p>
-                We have sent a 6-digits code to {email}. The code expires
-                shortly, so please enter it soon.
+                {t("login.OTPSubtitleP1") + email + t("login.OTPSubtitleP2")}
               </p>
               <form onSubmit={handleClickOtp}>
                 <OneTimeCodeInput
@@ -106,7 +103,7 @@ const ConfirmMeEmail = ({
                     className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
                   >
                     <Button className={styles.button} onClick={handleClickOtp}>
-                      Confirm
+                      {t("general.confirm")}
                     </Button>
                   </div>
                 </div>
@@ -114,8 +111,8 @@ const ConfirmMeEmail = ({
             </div>
           ) : (
             <div className={styles["confirm-email"]}>
-              <h3>Enter code from your Authenticator</h3>
-              <p>You need to enter 6-digit code from your Authenticator</p>
+              <h3>{t("login.TOTPTitle")}</h3>
+              <p>{t("login.TOTPSubtitle")}</p>
               <form id={"totpForm"} onSubmit={handleClickTotp}>
                 <OneTimeCodeInput
                   setOTPCode={setCode}
@@ -128,7 +125,7 @@ const ConfirmMeEmail = ({
                     className={`${styles.buttonWrapper} ${styles.buttonWrapperOTP}`}
                   >
                     <Button className={styles.button} onClick={handleClickTotp}>
-                      Confirm
+                      {t("general.confirm")}
                     </Button>
                   </div>
                 </div>
@@ -362,6 +359,7 @@ const LoginBox = () => {
             otp={otp}
             totp={totp}
             step={step}
+            t={t}
           />
         ) : (
           <form onSubmit={handleSubmit(loginUser)}>
