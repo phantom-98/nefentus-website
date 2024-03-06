@@ -432,7 +432,7 @@ const AdminDashboard = ({ type }) => {
             getDataInput={getDataInput}
           />
           <Table
-            grid={`1.2fr 0.9fr 1.8fr 1fr 0.9fr 1.5fr ${
+            grid={`1.2fr 0.9fr 1.8fr 1fr 0.9fr 1.5fr 1.8fr ${
               i18n?.language == "en"
                 ? "0.5fr 0.3fr 0.5fr"
                 : i18n?.language == "de"
