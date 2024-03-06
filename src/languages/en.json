@@ -312,7 +312,9 @@
     "forgot": "Forgot password?",
     "OTPTitle": "Check your email for a code",
     "OTPSubtitleP1": "We have sent a 6-digits code to ",
-    "OTPSubtitleP2": ". The code expires shortly.",
+    "OTPSubtitleP2": ". The code expires shortly. So please enter it soon.",
+    "TOTPTitle": "Enter code from your Authenticator",
+    "TOTPSubtitle": "You need to enter 6-digit code from your Authenticator",
     "useNefentus": "To pay with Nefentus wallet, you need to log in.",
     "confirm": "Confirm"
   },
@@ -619,7 +621,8 @@
     "disable": "Disable",
     "upload": "Upload",
     "of": "of",
-    "show": "Show"
+    "show": "Show",
+    "verify": "Verify"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -1147,7 +1150,10 @@
     },
     "scanModal": {
       "title": "Scan QR-code or paste code",
-      "verifyCode": "TOTP has been verified successfully!"
+      "verifyCode": "TOTP has been verified successfully!",
+      "copyLink": "Link copied to clipboard!",
+      "TOTPTitle": "TOTP Authentication",
+      "TOTPDescription": "Enter code from Authenticator"
     },
     "recommendRecoverModal": {
       "title": "Recover wallet",

@@ -762,7 +762,12 @@ const AuthenticatorBody = ({ active, user, setUser }) => {
   };
 
   const handleTotpVerify = async (email, token, rememberMe) => {
-    const response = await backendAPI.verifyTotpToken(email, token, rememberMe);
+    const response = await backendAPI.verifyTotpToken(
+      email,
+      token,
+      rememberMe,
+      () => {},
+    );
     console.log(response, "response");
     if (response?.status === 200) {
       const response2 = await backendAPI.setupTotp({
@@ -826,13 +831,15 @@ const AuthenticatorBody = ({ active, user, setUser }) => {
 
       {open && secretToken && (
         <ModalOverlay>
-          <div className={styles.modalTitle}>TOTP Authentication</div>
+          <div className={styles.modalTitle}>
+            {t("security.scanModal.TOTPTitle")}
+          </div>
 
           {!verify ? (
             <div>
               <div className={styles.modalSubtitle}>
                 {" "}
-                Scan QR-code or paste code
+                {t("security.scanModal.title")}
               </div>
               <div className={styles.QRCode}>
                 <QRCode
@@ -851,7 +858,7 @@ const AuthenticatorBody = ({ active, user, setUser }) => {
               <div className={styles.copyLink}>
                 {copied && (
                   <div className={styles.tooltip}>
-                    Link copied to clipboard!
+                    {t("security.scanModal.copyLink")}
                   </div>
                 )}
                 <div
@@ -868,7 +875,7 @@ const AuthenticatorBody = ({ active, user, setUser }) => {
                 </div>
               </div>
               <Buttons
-                buttons={["Close", "Verify"]}
+                buttons={[t("general.close"), t("general.verify")]}
                 functions={[
                   () => {
                     setOpen(!open);
@@ -884,7 +891,7 @@ const AuthenticatorBody = ({ active, user, setUser }) => {
             <div>
               <div className={styles.modalSubtitle}>
                 {" "}
-                Enter code from Authenticator
+                {t("security.scanModal.TOTPDescription")}
               </div>
               <MessageComponent />
 

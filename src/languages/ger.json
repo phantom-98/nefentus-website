@@ -254,7 +254,9 @@
     "forgot": "Passwort vergessen?",
     "OTPTitle": "Ein Code wurde per Email verschickt",
     "OTPSubtitleP1": "Wir haben einen 6-stelligen Code gesendet an ",
-    "OTPSubtitleP2": ". Der Code läuft in Kürze ab.",
+    "OTPSubtitleP2": ". Der Code läuft in Kürze ab. Geben Sie es also bitte bald ein.",
+    "TOTPTitle": "Geben Sie den Code von Ihrem Authentifikator ein",
+    "TOTPSubtitle": "Sie müssen den 6-stelligen Code von Ihrem Authenticator eingeben",
     "useNefentus": "Um mit dem Nefentus-Wallet zu bezahlen, müssen Sie sich anmelden.",
     "confirm": "Bestätigen"
   },
@@ -572,7 +574,8 @@
     "disable": "Deaktivieren",
     "upload": "Hochladen",
     "of": "von",
-    "show": "Anzeigen"
+    "show": "Anzeigen",
+    "verify": "Verifizieren"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -1087,7 +1090,10 @@
     },
     "scanModal": {
       "title": "QR-Code scannen oder Code einfügen",
-      "verifyCode": "TOTP wurde erfolgreich verifiziert"
+      "verifyCode": "TOTP wurde erfolgreich verifiziert",
+      "copyLink": "Link in die Zwischenablage kopiert!",
+      "TOTPTitle": "TOTP-Authentifizierung",
+      "TOTPDescription": "Geben Sie den Code vom Authenticator ein"
     },
     "recommendRecoverModal": {
       "title": "Wallet wiederherstellen",
