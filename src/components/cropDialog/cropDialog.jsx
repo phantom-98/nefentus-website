@@ -22,8 +22,8 @@ const resizeFile = (file) =>
   new Promise((resolve) => {
     Resizer.imageFileResizer(
       file,
-      580,
-      480,
+      600,
+      600,
       "JPEG",
       100,
       0,
@@ -66,25 +66,48 @@ const CropDialog = ({ open, file, aspect, onSave, onClose }) => {
         setImage(imageReader.result);
         const img = new Image();
         img.src = imageReader.result;
-        if (aspect) {
-          img.onload = function () {
-            const size = img.width > img.height ? img.height : img.width;
+        img.onload = function () {
+          let width = img.width,
+            height = img.height;
+          let size = width > height ? height : width;
+          if (width > 600 || height > 600) {
+            const rate = (width > height ? width : height) / 600;
+            width = Math.floor(width / rate);
+            height = Math.floor(height / rate);
+            size = Math.floor(size / rate);
+          }
+          if (aspect) {
             setCrop({
               unit: "px",
-              x: (img.width - size / 2) / 2,
-              y: (img.height - size / 2) / 2,
+              x: (width - size / 2) / 2,
+              y: (height - size / 2) / 2,
               width: size / 2,
               height: size / 2,
             });
             setCompletedCrop({
               unit: "px",
-              x: (img.width - size / 2) / 2,
-              y: (img.height - size / 2) / 2,
+              x: (width - size / 2) / 2,
+              y: (height - size / 2) / 2,
               width: size / 2,
               height: size / 2,
             });
-          };
-        }
+          } else {
+            setCrop({
+              unit: "px",
+              x: width / 20,
+              y: height / 20,
+              width: width * 0.9,
+              height: height * 0.9,
+            });
+            setCompletedCrop({
+              unit: "px",
+              x: width / 20,
+              y: height / 20,
+              width: width * 0.9,
+              height: height * 0.9,
+            });
+          }
+        };
       };
     }
   }, [open, file]);
@@ -165,14 +188,7 @@ const CropDialog = ({ open, file, aspect, onSave, onClose }) => {
               onComplete={(c) => setCompletedCrop(c)}
               aspect={aspect}
             >
-              <img
-                src={image}
-                style={{
-                  transform: `scale(${zoom})`,
-                  maxWidth: 580,
-                  maxHeight: 480,
-                }}
-              />
+              <img src={image} />
             </ReactCrop>
           </div>
 

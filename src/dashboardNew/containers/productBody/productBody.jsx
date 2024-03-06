@@ -25,7 +25,6 @@ const ProductBody = () => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [productId, setProductId] = useState(null);
-  const [load, setLoad] = useState(false);
 
   const { t } = useTranslation();
 
@@ -36,7 +35,7 @@ const ProductBody = () => {
 
   useEffect(() => {
     loadProducts();
-  }, [load]);
+  }, []);
 
   async function loadProducts() {
     await checkJwtToken();
@@ -75,21 +74,31 @@ const ProductBody = () => {
     }
     let priceAsFloat = null;
     priceAsFloat = parseFloat(price);
-    if (!priceAsFloat) {
+    if (priceAsFloat <= 0) {
       setErrorMessage(t("products.error.priceAsFloat"));
+      return;
     }
 
     // Set stock to -1 if not given
-    let stockRequest = stock;
+    let stockRequest;
     if (stock === null || stock === "") {
       stockRequest = -1;
+    } else {
+      const stockAsInt = parseInt(parseFloat(stock).toString());
+      if (stockAsInt < 0) {
+        setStock("");
+        stockRequest = -1;
+      } else {
+        setStock(stockAsInt.toString());
+        stockRequest = stockAsInt;
+      }
     }
 
     const resp1 = await dashboardApi.upsertProduct(
       productId,
       name,
       description,
-      price,
+      priceAsFloat,
       stockRequest,
       image,
     );
@@ -132,6 +141,7 @@ const ProductBody = () => {
   };
 
   function showModal(updateProductId) {
+    console.log(products, updateProductId);
     if (updateProductId) {
       const product = products.find(
         (product) => product.id === updateProductId,
@@ -141,9 +151,13 @@ const ProductBody = () => {
       setName(product.name);
       setDescription(product.description);
       setPrice(product.price);
-      setStock(product.stock);
+      if (product.stock != "-1") {
+        setStock(product.stock);
+      } else {
+        setStock("");
+      }
       let imageName = null;
-      if (product.s3Key) imageName = product.s3Key.split("_").pop();
+      if (product.s3Key) imageName = product?.s3Key?.split("_")[1];
       setImage(imageName);
 
       setOpenModal("update");
@@ -182,7 +196,6 @@ const ProductBody = () => {
               product={item}
               onClickEdit={() => showModal(item.id)}
               onClickDelete={() => deleteProduct(item.id)}
-              update={() => setLoad(!load)}
             />
           ))}
         </div>
@@ -191,7 +204,11 @@ const ProductBody = () => {
       <div>
         <Popup
           show={openModal}
-          title={t("products.createProductModal.createProduct")}
+          title={
+            openModal === "add"
+              ? t("products.createProductModal.createProduct")
+              : t("products.editProduct")
+          }
           onClose={() => {
             clearMessages();
             setOpenModal(false);
@@ -269,6 +286,7 @@ const ProductBody = () => {
         onClose={() => setCropDialogOpen(false)}
         onSave={(croppedImageData) => {
           setCropDialogOpen(false);
+          if (!croppedImageData) return;
           setImage(dataURLtoFile(croppedImageData, image.name));
         }}
       />

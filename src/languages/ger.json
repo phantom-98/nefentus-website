@@ -934,7 +934,7 @@
       "name": "Name ist erforderlich!",
       "description": "Beschreibung ist erforderlich!",
       "price": "Preis ist erforderlich!",
-      "priceAsFloat": "Preis muss eine Zahl sein!"
+      "priceAsFloat": "Preis muss positiv sein!"
     },
     "createProductModal": {
       "createNewProduct": "Neues Produkt erstellen",
