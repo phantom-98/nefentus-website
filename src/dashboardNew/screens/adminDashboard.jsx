@@ -271,10 +271,17 @@ const AdminDashboard = ({ type }) => {
         agentEmail,
       );
       if (resp) {
-        fetchAdminData();
-        setInfoMessage(t("messages.success.updateUser"));
-        clearAddUserFields();
-        closeModal();
+        if (resp.ok) {
+          fetchAdminData();
+          setInfoMessage(t("messages.success.updateUser"));
+          clearAddUserFields();
+          closeModal();
+        } else {
+          const data = await resp.json();
+          if (data.message == "agent not found")
+            setErrorMessage(t("messages.error.agent"));
+          else setErrorMessage(t("messages.error.updateUser"));
+        }
       } else {
         setErrorMessage(t("messages.error.updateUser"));
       }
@@ -295,6 +302,11 @@ const AdminDashboard = ({ type }) => {
           setInfoMessage(t("messages.success.addUser"));
         } else if (resp.status === 409) {
           setErrorMessage(t("messages.error.userExist"));
+        } else {
+          const data = await resp.json();
+          if (data.message == "agent not found")
+            setErrorMessage(t("messages.error.agent"));
+          else setErrorMessage(t("messages.error.addUser"));
         }
       } else {
         setErrorMessage(t("messages.error.addUser"));

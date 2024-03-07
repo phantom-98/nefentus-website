@@ -159,7 +159,8 @@ const UserModal = ({
             />
           )}
           {setAgentEmail &&
-            (userRole === "leader" ||
+            (userRole === "admin" ||
+              userRole === "leader" ||
               userRole === "seniorbroker" ||
               userRole === "broker") && (
               <Input
