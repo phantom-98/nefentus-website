@@ -69,7 +69,7 @@ const ProfileSettings = () => {
       setErrorMessage(t("messages.error.invalidMail"));
       return;
     }
-    if (!validatePhoneNumber(phoneNumber)) {
+    if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
       isDataSave.current = false;
       setPhoneNumber(userProfile["phoneNumber"]);
       setErrorMessage(t("messages.error.invalidPhone"));
@@ -169,6 +169,8 @@ const ProfileSettings = () => {
       setUser({ ...user, profileImage: file ? resp2 : "null" });
       if (resp2 == null) {
         setErrorMessage(t("messages.error.uploadPicture"));
+      } else {
+        setInfoMessage(t("messages.success.updatePicture"));
       }
       setImageChanged(false);
       isDataSave.current = false;
@@ -265,7 +267,7 @@ const ProfileSettings = () => {
       if (!imageChanged) updateUser();
       else uploadAvatar();
     }
-  }, [data, isDataSave]);
+  }, [isDataSave.current]);
 
   // useEffect(() => {
   //   const profilePic = localStorage.getItem("profile_pic");

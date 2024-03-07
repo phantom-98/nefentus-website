@@ -815,6 +815,7 @@
       "updateUser": "Benutzer erfolgreich aktualisiert!",
       "deleteInvoice": "Rechnung gelöscht!",
       "passwordChange": "Passwort erfolgreich geändert!",
+      "updatePicture": "Profilbild erfolgreich geändert!",
       "updateSettings": "Einstellungen erfolgreich aktualisiert!"
     },
     "error": {
