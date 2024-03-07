@@ -280,6 +280,8 @@ const AdminDashboard = ({ type }) => {
           const data = await resp.json();
           if (data.message == "agent not found")
             setErrorMessage(t("messages.error.agent"));
+          else if (data.message == "You are not allowed to update this user")
+            setErrorMessage(t("messages.error.updatePermission"));
           else setErrorMessage(t("messages.error.updateUser"));
         }
       } else {

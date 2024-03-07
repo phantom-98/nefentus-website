@@ -920,6 +920,7 @@
       "priceValidation": "Price must be a number!",
       "updateUser": "Could not update user!",
       "agent": "Could not find agent!",
+      "updatePermission": "You don't have permission!",
       "userExist": "User already exists!",
       "addUser": "Could not add user!",
       "updateProduct": "Could not update the product!",
