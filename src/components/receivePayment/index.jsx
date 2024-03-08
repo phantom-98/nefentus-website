@@ -227,7 +227,7 @@ const ReceivePayment = ({
   }, [selectedCryptoIndex, prices, priceUSD]);
 
   async function registerWallet(externalWallet) {
-    if (externalWallet.address == "undefined") return;
+    if (externalWallet.address === "undefined") return;
     const result = await backend_API.registerWalletAddress(
       externalWallet
     );
