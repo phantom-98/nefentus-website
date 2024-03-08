@@ -129,7 +129,7 @@ export const validateEmail = (email) => {
 };
 
 export const validatePhoneNumber = (number) => {
-  const phoneRegex = /^(\+\d{2,4}|(\(\d{3}\)|\d{4}))[-\s]?\d{3,5}[-\s]?\d{5}$/;
+  const phoneRegex = /[\+\-\/\\\(\)0-9]*/;
   return phoneRegex.test(number);
 };
 
