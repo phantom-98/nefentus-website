@@ -194,9 +194,9 @@ export default class adminDashboardApi {
     }
   }
 
-  async acceptKYC(id) {
+  async acceptKYC(email) {
     try {
-      const url = `${this.baseURL}/accept_kyc/${id}`;
+      const url = `${this.baseURL}/accept_kyc/${email}`;
       const options = {
         method: "PATCH",
         headers: {
@@ -216,9 +216,9 @@ export default class adminDashboardApi {
     }
   }
 
-  async declineKYC(id, declineReason) {
+  async declineKYC(email, declineReason) {
     try {
-      const url = `${this.baseURL}/decline_kyc/${id}`;
+      const url = `${this.baseURL}/decline_kyc/${email}`;
       const options = {
         method: "PATCH",
         headers: {

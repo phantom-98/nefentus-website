@@ -128,9 +128,9 @@ export default class vendorDashboardApi {
   }
 
   /**
-   * Upsert a new product (insert if productId is null)
+   * Upsert a new product (insert if link is null)
    */
-  async upsertProduct(productId, name, description, price, stock) {
+  async upsertProduct(link, name, description, price, stock) {
     try {
       let stockInt = -1;
       try {
@@ -138,7 +138,7 @@ export default class vendorDashboardApi {
       } catch (error) {}
 
       const request = {
-        productId: productId,
+        productLink: link,
         name: name,
         description: description,
         price: price,
@@ -166,13 +166,13 @@ export default class vendorDashboardApi {
     }
   }
 
-  async uploadProductImage(productId, file) {
+  async uploadProductImage(link, file) {
     try {
       const formData = new FormData();
       formData.append("file", file);
 
       const response = await fetch(
-        `${this.baseURL}/products/uploadImage?productId=${productId}`,
+        `${this.baseURL}/products/uploadImage?link=${link}`,
         {
           method: "POST",
           headers: {
@@ -195,17 +195,14 @@ export default class vendorDashboardApi {
     }
   }
 
-  async getSignedImagePath(productId) {
+  async getSignedImagePath(link) {
     try {
-      const response = await fetch(
-        `${this.baseURL}/products/image/${productId}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${this.token}`,
-          },
+      const response = await fetch(`${this.baseURL}/products/image/${link}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
         },
-      );
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -220,10 +217,10 @@ export default class vendorDashboardApi {
     }
   }
 
-  async deleteProduct(productId) {
+  async deleteProduct(link) {
     try {
       const request = {
-        productId: productId,
+        productLink: link,
       };
 
       const url = `${this.baseURL}/products`;
@@ -247,10 +244,10 @@ export default class vendorDashboardApi {
     }
   }
 
-  async deleteProductImage(productId) {
+  async deleteProductImage(link) {
     try {
       const request = {
-        productId: productId,
+        productLink: link,
       };
 
       const url = `${this.baseURL}/products/image`;
@@ -394,9 +391,9 @@ export default class vendorDashboardApi {
     }
   }
 
-  async getTransaction(orderId) {
+  async getTransaction(hash) {
     try {
-      const url = `${this.baseURL}/getTransaction/${orderId}`;
+      const url = `${this.baseURL}/getTransaction/${hash}`;
       const options = {
         method: "GET",
         headers: {

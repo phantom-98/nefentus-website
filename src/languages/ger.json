@@ -1015,7 +1015,8 @@
     },
     "table": {
       "product": "Produkt",
-      "order": "Bestellung",
+      "invoice": "Rechnung",
+      "details": "Einzelheiten",
       "email": "E-Mail",
       "amount": "Betrag",
       "currency": "Währung",

@@ -36,8 +36,8 @@ export const usePayment = ({
       const web3API = new web3Api();
 
       const [hierarchy, fees] = await Promise.all([
-        backend_API.getHierarchy(seller.id),
-        backend_API.getFees(seller.id),
+        backend_API.getHierarchy(seller.email),
+        backend_API.getFees(seller.email),
       ]);
       console.log(hierarchy);
       console.log(fees);

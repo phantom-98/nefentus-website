@@ -24,7 +24,7 @@ const ProductBody = () => {
   const [imageChanged, setImageChanged] = useState(false);
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [productId, setProductId] = useState(null);
+  const [productLink, setProductLink] = useState(null);
 
   const { t } = useTranslation();
 
@@ -43,7 +43,7 @@ const ProductBody = () => {
     if (newProducts) {
       const newSignedImagePaths = await Promise.all(
         newProducts.map((product) =>
-          dashboardApi.getSignedImagePath(product.id),
+          dashboardApi.getSignedImagePath(product.link),
         ),
       );
 
@@ -95,7 +95,7 @@ const ProductBody = () => {
     }
 
     const resp1 = await dashboardApi.upsertProduct(
-      productId,
+      productLink,
       name,
       description,
       priceAsFloat,
@@ -105,23 +105,23 @@ const ProductBody = () => {
 
     let resp2 = true;
     if (resp1 && imageChanged) {
-      const imageProductId = resp1.id;
+      const imageProductLink = resp1.link;
 
       if (image) {
-        console.log("Uploading image for product id: " + imageProductId);
-        resp2 = await dashboardApi.uploadProductImage(imageProductId, image);
+        console.log("Uploading image for product link: " + imageProductLink);
+        resp2 = await dashboardApi.uploadProductImage(imageProductLink, image);
       } else {
-        resp2 = await dashboardApi.deleteProductImage(imageProductId, image);
+        resp2 = await dashboardApi.deleteProductImage(imageProductLink, image);
       }
       setImageChanged(false);
     }
 
     if (resp1 && resp2) {
-      if (productId !== null)
+      if (productLink !== null)
         setInfoMessage(t("products.createProductModal.updatedSuccessfully"));
       else setInfoMessage(t("products.createProductModal.addedSuccessfully"));
     } else {
-      if (productId !== null)
+      if (productLink !== null)
         setErrorMessage(t("products.createProductModal.updateError"));
       else setErrorMessage(t("products.createProductModal.addError"));
     }
@@ -130,8 +130,8 @@ const ProductBody = () => {
     setOpenModal(false);
   };
 
-  const deleteProduct = async (productId) => {
-    const resp = await dashboardApi.deleteProduct(productId);
+  const deleteProduct = async (link) => {
+    const resp = await dashboardApi.deleteProduct(link);
     if (resp) {
       setInfoMessage(t("products.createProductModal.deletedSuccessfully"));
     } else {
@@ -140,14 +140,12 @@ const ProductBody = () => {
     loadProducts();
   };
 
-  function showModal(updateProductId) {
-    console.log(products, updateProductId);
-    if (updateProductId) {
-      const product = products.find(
-        (product) => product.id === updateProductId,
-      );
+  function showModal(link) {
+    console.log(products, link);
+    if (link) {
+      const product = products.find((product) => product.link === link);
 
-      setProductId(updateProductId);
+      setProductLink(link);
       setName(product.name);
       setDescription(product.description);
       setPrice(product.price);
@@ -162,7 +160,7 @@ const ProductBody = () => {
 
       setOpenModal("update");
     } else {
-      setProductId(null);
+      setProductLink(null);
       setName("");
       setDescription("");
       setPrice("");
@@ -192,10 +190,10 @@ const ProductBody = () => {
         <div className={styles.row}>
           {products.map((item) => (
             <ProductCard
-              key={item.id}
+              key={item.link}
               product={item}
-              onClickEdit={() => showModal(item.id)}
-              onClickDelete={() => deleteProduct(item.id)}
+              onClickEdit={() => showModal(item.link)}
+              onClickDelete={() => deleteProduct(item.link)}
             />
           ))}
         </div>
@@ -212,7 +210,7 @@ const ProductBody = () => {
           onClose={() => {
             clearMessages();
             setOpenModal(false);
-            setProductId(null);
+            setProductLink(null);
           }}
           onConfirm={() => addOrUpdateProduct()}
           cancelTitle={t("general.cancel")}
