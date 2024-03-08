@@ -45,6 +45,7 @@ const ReceivePayment = ({
       connect: useConnect(),
       disconnect: useDisconnect(),
       config: metamaskWallet(),
+      name: "MetaMask",
       address: useAddress(),
       status: useConnectionStatus(),
     },
@@ -52,6 +53,7 @@ const ReceivePayment = ({
       connect: useConnect(),
       disconnect: useDisconnect(),
       config: walletConnect(),
+      name: "WalletConnect",
       address: useAddress(),
       status: useConnectionStatus(),
     },
@@ -225,9 +227,9 @@ const ReceivePayment = ({
   }, [selectedCryptoIndex, prices, priceUSD]);
 
   async function registerWallet(externalWallet) {
-    if (!externalWallet.address) return;
+    if (externalWallet.address === "undefined") return;
     const result = await backend_API.registerWalletAddress(
-      externalWallet.address,
+      externalWallet
     );
   }
 
