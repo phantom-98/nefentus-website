@@ -279,7 +279,8 @@ const LoginBox = () => {
       if (otp && totp) {
         setStep(true);
       } else {
-        setTimeout(() => navigateDashboard(), 500);
+        setUser(response);
+        navigateDashboard(response);
       }
     } catch (error) {
       setErrorMessage(t("messages.error.login"));
