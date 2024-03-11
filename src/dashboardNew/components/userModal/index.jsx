@@ -26,6 +26,8 @@ const UserModal = ({
   setPassword,
   spinner,
   editEmailAddress,
+  agentEmail,
+  setAgentEmail,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const combinedClassNames = `${imputStyles.input} ${imputStyles.dashboardInput}`;
@@ -156,6 +158,19 @@ const UserModal = ({
               setValue={setRole}
             />
           )}
+          {setAgentEmail &&
+            (userRole === "admin" ||
+              userRole === "leader" ||
+              userRole === "seniorbroker" ||
+              userRole === "broker") && (
+              <Input
+                dashboard
+                label={t("dashboard.modal.agent")}
+                placeholder={t("dashboard.modal.agentPlaceholder")}
+                value={agentEmail}
+                setState={setAgentEmail}
+              />
+            )}
         </div>
         <div className={styles.modalButtons}>
           <Button onClick={() => clearFields()} color="gray">

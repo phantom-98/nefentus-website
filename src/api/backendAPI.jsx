@@ -620,6 +620,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      localStorage.removeItem("isLoggedIn");
       Cookies.remove("token");
       localStorage.clear();
       return response;
@@ -715,7 +716,7 @@ export default class backendAPI {
         });
       }
 
-      return response;
+      return data;
     } catch (error) {
       return null; // or return some default value
     }

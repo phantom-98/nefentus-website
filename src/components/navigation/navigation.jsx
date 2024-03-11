@@ -16,6 +16,7 @@ import UserProfile from "../userProfile/userProfile";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { QR } from "../../assets/icon/icons";
 import { useAuth } from "../../context/auth/authContext";
+import Cookie from "js-cookie";
 
 const Navigation = () => {
   const { theme, toggleTheme } = useTheme();
@@ -26,6 +27,7 @@ const Navigation = () => {
   const [height, setHeight] = useState("");
   const navigate = useNavigate();
   const { user } = useAuth();
+  const token = Cookie.get("token");
 
   const backendAPI = new backend_API();
 
@@ -68,7 +70,7 @@ const Navigation = () => {
   }
 
   function loginAndSignupWeb() {
-    if (profile.email) {
+    if (token?.length) {
       return <UserProfile web logOut={logOut} />;
     } else {
       return (
@@ -88,7 +90,7 @@ const Navigation = () => {
   }
 
   function loginAndSignupTopButtons() {
-    if (!profile.email) {
+    if (!token?.length) {
       return (
         <>
           {/* <div className={styles.mobileButtonWrapper}>
@@ -100,7 +102,7 @@ const Navigation = () => {
   }
 
   function loginAndSignupMobile() {
-    if (profile.email) {
+    if (token?.length) {
       return (
         <>
           <Button

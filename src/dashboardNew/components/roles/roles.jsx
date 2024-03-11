@@ -21,8 +21,8 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("Select Role");
+  const [agentEmail, setAgentEmail] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const [editEmailAddress, setEditEmailAddress] = useState(null);
   const [spinner, setSpinner] = useState(false);
   const userRole = getRole(user);
   const { t } = useTranslation();
@@ -32,13 +32,12 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
   const adminApi = new adminDashboardApi(type);
 
   const modalAddUser = async () => {
-    setEditEmailAddress(null);
-
     setFirstName("");
     setLastName("");
     setEmail("");
     setPassword("");
     setRole("");
+    setAgentEmail("");
 
     setOpenModal(true);
   };
@@ -49,6 +48,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
     setEmail("");
     setPassword("");
     setRole("");
+    setAgentEmail("");
   };
 
   const addUser = async () => {
@@ -60,11 +60,11 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
       setErrorMessage(t("messages.error.lastNameRequired"));
       return;
     }
-    if (email === "" && editEmailAddress === null) {
+    if (email === "") {
       setErrorMessage(t("messages.error.emailRequired"));
       return;
     }
-    if (password === "" && editEmailAddress === null) {
+    if (password === "") {
       setErrorMessage(t("messages.error.passwordRequired"));
       return;
     }
@@ -75,41 +75,66 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
 
     setSpinner(true);
 
-    if (editEmailAddress) {
-      // Update
-      const resp = await adminApi.updateUser(
-        firstName,
-        lastName,
-        editEmailAddress,
-        userRole === "affiliate" ? "Vendor" : role,
-      );
-      if (resp) {
-        setInfoMessage(t("messages.success.updateUser"));
+    const resp = await adminApi.addUser(
+      firstName,
+      lastName,
+      email,
+      password,
+      userRole === "affiliate" ? "Vendor" : role,
+      agentEmail,
+    );
+    if (resp) {
+      if (resp.ok) {
+        setOpenModal(false);
+        // fetchAdminData();
+        setIsReloadData((prev) => !prev);
+        clearAddUserFields();
+        setInfoMessage(t("messages.success.addUser"));
+      } else if (resp.status === 409) {
+        setErrorMessage(t("messages.error.userExist"));
       } else {
-        setErrorMessage(t("messages.error.updateUser"));
+        const data = await resp.json();
+        if (data["firstName"]) {
+          if (
+            data["firstName"] ==
+            "First name must be between 2 and 70 characters"
+          ) {
+            setErrorMessage(t("messages.validation.validFirstName"));
+          } else {
+            setErrorMessage(t("messages.validation.firstName"));
+          }
+        } else if (data["lastName"]) {
+          if (
+            data["lastName"] == "Last name must be between 2 and 70 characters"
+          ) {
+            setErrorMessage(t("messages.validation.validLastName"));
+          } else {
+            setErrorMessage(t("messages.validation.lastName"));
+          }
+        } else if (data["email"]) {
+          if (data["email"] == "Please enter email") {
+            setErrorMessage(t("messages.validation.email"));
+          } else if (data["email"] == "Please enter valid email") {
+            setErrorMessage(t("messages.validation.validEmail"));
+          } else {
+            setErrorMessage(t("messages.validation.lengthEmail"));
+          }
+        } else if (data["password"]) {
+          if (data["password"] == "Please enter your password") {
+            setErrorMessage(t("messages.validation.password"));
+          } else if (
+            data["password"] == "Password must be between 8 and 70 characters"
+          ) {
+            setErrorMessage(t("messages.validation.validPassword"));
+          } else {
+            setErrorMessage(t("messages.validation.securityPassword"));
+          }
+        } else if (data.message == "agent not found")
+          setErrorMessage(t("messages.error.agent"));
+        else setErrorMessage(t("messages.error.addUser"));
       }
     } else {
-      // Add
-      const resp = await adminApi.addUser(
-        firstName,
-        lastName,
-        email,
-        password,
-        userRole === "affiliate" ? "Vendor" : role,
-      );
-      if (resp) {
-        if (resp.ok) {
-          setOpenModal(false);
-          // fetchAdminData();
-          setIsReloadData((prev) => !prev);
-          clearAddUserFields();
-          setInfoMessage(t("messages.success.addUser"));
-        } else if (resp.status === 409) {
-          setErrorMessage(t("messages.error.userExist"));
-        }
-      } else {
-        setErrorMessage(t("messages.error.addUser"));
-      }
+      setErrorMessage(t("messages.error.addUser"));
     }
 
     setSpinner(false);
@@ -204,6 +229,8 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
               password={password}
               setPassword={setPassword}
               spinner={spinner}
+              agentEmail={agentEmail}
+              setAgentEmail={setAgentEmail}
             />
           )}
         </div>
