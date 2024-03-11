@@ -306,7 +306,7 @@ export default class adminDashboardApi {
     }
   }
 
-  async addUser(firstName, lastName, email, password, roles) {
+  async addUser(firstName, lastName, email, password, roles, agent) {
     try {
       const request = {
         firstName: firstName,
@@ -315,6 +315,7 @@ export default class adminDashboardApi {
         password: password,
         roles: [roles],
       };
+      agent && (request.agent = agent);
       const url = `${this.baseURL}/users`;
       const options = {
         method: "POST",
@@ -339,7 +340,7 @@ export default class adminDashboardApi {
     }
   }
 
-  async updateUser(firstName, lastName, email, editEmailAddress, roles) {
+  async updateUser(firstName, lastName, email, editEmailAddress, roles, agent) {
     try {
       const request = {
         firstName: firstName,
@@ -348,6 +349,7 @@ export default class adminDashboardApi {
         editEmail: editEmailAddress,
         roles: [roles],
       };
+      agent && (request.agent = agent);
       const url = `${this.baseURL}/users`;
       const options = {
         method: "PUT",
@@ -358,11 +360,8 @@ export default class adminDashboardApi {
         body: JSON.stringify(request),
       };
       const response = await fetch(url, options);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
       this.updateToken(response);
-      return true;
+      return response;
     } catch (error) {
       return null; // or return some default value
     }
