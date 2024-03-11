@@ -278,7 +278,41 @@ const AdminDashboard = ({ type }) => {
           closeModal();
         } else {
           const data = await resp.json();
-          if (data.message == "agent not found")
+          if (data["firstName"]) {
+            if (
+              data["firstName"] ==
+              "First name must be between 2 and 70 characters"
+            ) {
+              setErrorMessage(t("messages.validation.validFirstName"));
+            } else {
+              setErrorMessage(t("messages.validation.firstName"));
+            }
+          } else if (data["lastName"]) {
+            if (
+              data["lastName"] ==
+              "Last name must be between 2 and 70 characters"
+            ) {
+              setErrorMessage(t("messages.validation.validLastName"));
+            } else {
+              setErrorMessage(t("messages.validation.lastName"));
+            }
+          } else if (data["email"]) {
+            if (data["email"] == "Please enter email") {
+              setErrorMessage(t("messages.validation.email"));
+            } else if (data["email"] == "Please enter valid email") {
+              setErrorMessage(t("messages.validation.validEmail"));
+            } else {
+              setErrorMessage(t("messages.validation.lengthEmail"));
+            }
+          } else if (data["editEmail"]) {
+            if (data["editEmail"] == "Please enter email") {
+              setErrorMessage(t("messages.validation.email"));
+            } else if (data["editEmail"] == "Please enter valid email") {
+              setErrorMessage(t("messages.validation.validEmail"));
+            } else {
+              setErrorMessage(t("messages.validation.lengthEmail"));
+            }
+          } else if (data.message == "agent not found")
             setErrorMessage(t("messages.error.agent"));
           else if (data.message == "You are not allowed to update this user")
             setErrorMessage(t("messages.error.updatePermission"));

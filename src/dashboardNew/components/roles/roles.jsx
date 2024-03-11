@@ -92,6 +92,46 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
         setInfoMessage(t("messages.success.addUser"));
       } else if (resp.status === 409) {
         setErrorMessage(t("messages.error.userExist"));
+      } else {
+        const data = await resp.json();
+        if (data["firstName"]) {
+          if (
+            data["firstName"] ==
+            "First name must be between 2 and 70 characters"
+          ) {
+            setErrorMessage(t("messages.validation.validFirstName"));
+          } else {
+            setErrorMessage(t("messages.validation.firstName"));
+          }
+        } else if (data["lastName"]) {
+          if (
+            data["lastName"] == "Last name must be between 2 and 70 characters"
+          ) {
+            setErrorMessage(t("messages.validation.validLastName"));
+          } else {
+            setErrorMessage(t("messages.validation.lastName"));
+          }
+        } else if (data["email"]) {
+          if (data["email"] == "Please enter email") {
+            setErrorMessage(t("messages.validation.email"));
+          } else if (data["email"] == "Please enter valid email") {
+            setErrorMessage(t("messages.validation.validEmail"));
+          } else {
+            setErrorMessage(t("messages.validation.lengthEmail"));
+          }
+        } else if (data["password"]) {
+          if (data["password"] == "Please enter your password") {
+            setErrorMessage(t("messages.validation.password"));
+          } else if (
+            data["password"] == "Password must be between 8 and 70 characters"
+          ) {
+            setErrorMessage(t("messages.validation.validPassword"));
+          } else {
+            setErrorMessage(t("messages.validation.securityPassword"));
+          }
+        } else if (data.message == "agent not found")
+          setErrorMessage(t("messages.error.agent"));
+        else setErrorMessage(t("messages.error.addUser"));
       }
     } else {
       setErrorMessage(t("messages.error.addUser"));

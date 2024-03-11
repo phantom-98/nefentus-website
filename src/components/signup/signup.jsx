@@ -377,7 +377,7 @@ const Signup = () => {
           }
         } else if (data["country"]) {
           setErrorMessage(t("messages.error.country"));
-        }
+        } else setErrorMessage(t("messages.error.register"));
       } else {
         setInfoMessage(t("messages.error.confirmEmail"));
         resetForm();
