@@ -66,7 +66,7 @@ const PayBody = ({ invoice }) => {
       company,
       address,
       taxNumber: tax,
-      productLink: invoice.product.link,
+      productLink: invoice.product ? invoice.product.link : null,
       productAmount: amount,
     };
     const data = await backend_API.updateInvoice(invoice.link, req);
