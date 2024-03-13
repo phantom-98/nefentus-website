@@ -192,18 +192,21 @@ const IdentificationBody = () => {
     setUploadingFiles(filteredArray);
   };
 
-  useEffect(async () => {
-    const getLevel = async () => {
-      await checkJwtToken();
-      const BackendAPI = new backend_API();
-      const { data } = await BackendAPI.getKYCLevel();
-      if (data) {
-        setLevel(data.kycLevel);
-      }
-    };
+  useEffect(() => {
+    const init = async () => {
+      const getLevel = async () => {
+        await checkJwtToken();
+        const BackendAPI = new backend_API();
+        const { data } = await BackendAPI.getKYCLevel();
+        if (data) {
+          setLevel(data.kycLevel);
+        }
+      };
 
-    await getLevel();
-    fetchFYC();
+      await getLevel();
+      fetchFYC();
+    };
+    init();
   }, [user.email]);
 
   const checkUploadingData = () => {
