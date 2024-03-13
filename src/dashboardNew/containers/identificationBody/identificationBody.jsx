@@ -166,7 +166,10 @@ const IdentificationBody = () => {
           item.verify = transformedResults[item.id].verify;
         }
 
-        if (transformedResults[item.id].rejectReason != null) {
+        if (
+          transformedResults[item.id].rejectReason != null &&
+          item.level == level
+        ) {
           setDeclineResponse(transformedResults[item.id].rejectReason);
         }
       }
@@ -175,7 +178,10 @@ const IdentificationBody = () => {
         item.url = transformedResultsText[item.id].url;
         item.verify = transformedResultsText[item.id].verify;
 
-        if (transformedResultsText[item.id].rejectReason != null) {
+        if (
+          transformedResultsText[item.id].rejectReason != null &&
+          item.level == level
+        ) {
           setDeclineResponse(transformedResultsText[item.id].rejectReason);
         }
       }
@@ -186,7 +192,7 @@ const IdentificationBody = () => {
     setUploadingFiles(filteredArray);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     const getLevel = async () => {
       await checkJwtToken();
       const BackendAPI = new backend_API();
@@ -196,7 +202,7 @@ const IdentificationBody = () => {
       }
     };
 
-    getLevel();
+    await getLevel();
     fetchFYC();
   }, [user.email]);
 
