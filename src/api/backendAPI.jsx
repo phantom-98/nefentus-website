@@ -920,13 +920,13 @@ export default class backendAPI {
     }
   }
 
-  async uploadKYCByType(type, file, userId) {
+  async uploadKYCByType(type, file) {
     try {
       if (!file) {
         return null;
       }
       const formData = new FormData();
-      const url = `${this.baseURL}/auth/${userId}/upload_kyc?type=${type}`;
+      const url = `${this.baseURL}/auth/upload_kyc?type=${type}`;
       formData.append("file", file);
 
       const options = {
@@ -948,13 +948,13 @@ export default class backendAPI {
     }
   }
 
-  async uploadKYCByText(type, content, userId) {
+  async uploadKYCByText(type, content) {
     try {
       if (!content) {
         return null;
       }
       const formData = new FormData();
-      const url = `${this.baseURL}/auth/${userId}/upload_kyc_text?type=${type}`;
+      const url = `${this.baseURL}/auth/upload_kyc_text?type=${type}`;
       formData.append("content", content);
       const options = {
         method: "POST",
@@ -975,9 +975,9 @@ export default class backendAPI {
     }
   }
 
-  async getByKYC(type, userId) {
+  async getByKYC(type) {
     try {
-      const url = `${this.baseURL}/auth/${userId}/kyc-image-url?type=${type}`;
+      const url = `${this.baseURL}/auth/kyc-image-url?type=${type}`;
       const options = {
         method: "GET",
         headers: {
@@ -996,9 +996,9 @@ export default class backendAPI {
     }
   }
 
-  async getByKYCText(type, userId) {
+  async getByKYCText(type) {
     try {
-      const url = `${this.baseURL}/auth/${userId}/kyc-text-url?type=${type}`;
+      const url = `${this.baseURL}/auth/kyc-text-url?type=${type}`;
       const options = {
         method: "GET",
         headers: {
@@ -1017,9 +1017,9 @@ export default class backendAPI {
     }
   }
 
-  async getKYCLevel(userId) {
+  async getKYCLevel() {
     try {
-      const url = `${this.baseURL}/auth/${userId}/kyc-level`;
+      const url = `${this.baseURL}/auth/kyc-level`;
       const options = {
         method: "GET",
         headers: {
@@ -1173,9 +1173,9 @@ export default class backendAPI {
     }
   }
 
-  async getHierarchy(userId) {
+  async getHierarchy(email) {
     try {
-      const url = `${this.baseURL}/hierarchy/${userId}`;
+      const url = `${this.baseURL}/hierarchy/${email}`;
       let headers = {};
       if (this.token) {
         headers = {
@@ -1199,9 +1199,9 @@ export default class backendAPI {
     }
   }
 
-  async getFees(userId) {
+  async getFees(email) {
     try {
-      const url = `${this.baseURL}/fees/${userId}`;
+      const url = `${this.baseURL}/fees/${email}`;
       let headers = {};
       if (this.token) {
         headers = {

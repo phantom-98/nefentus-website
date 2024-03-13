@@ -25,7 +25,6 @@ const ProductBody = ({ product, quantity }) => {
   const [amount, setAmount] = useState(quantity || 1);
   const [link, setLink] = useState(null);
   const [price, setPrice] = useState(0);
-  const [invoiceId, setInvoiceId] = useState(null);
 
   const updateInvoiceData = async () => {
     const req = {
@@ -35,13 +34,12 @@ const ProductBody = ({ product, quantity }) => {
       company,
       address,
       taxNumber: tax,
-      product,
+      productLink: product.link,
       productAmount: amount,
     };
     const data = await backend_API.updateInvoice(link, req);
     if (data) {
       setLink(data.link);
-      setInvoiceId(data.id);
       console.log("success");
     } else {
       console.log("failed");
@@ -77,7 +75,7 @@ const ProductBody = ({ product, quantity }) => {
     <ReceivePayment
       priceUSD={price}
       seller={product.user}
-      transInfoArg={{ productId: product.id, invoiceId: invoiceId }}
+      transInfoArg={{ productLink: product.link, invoiceLink: link }}
       valid={name && email}
       info={
         <PaymentInfo

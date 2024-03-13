@@ -66,7 +66,7 @@ const PayBody = ({ invoice }) => {
       company,
       address,
       taxNumber: tax,
-      product: invoice.product,
+      productLink: invoice.product ? invoice.product.link : null,
       productAmount: amount,
     };
     const data = await backend_API.updateInvoice(invoice.link, req);
@@ -89,8 +89,8 @@ const PayBody = ({ invoice }) => {
       priceUSD={price}
       seller={invoice.user}
       transInfoArg={{
-        invoiceId: invoice.id,
-        productId: invoice.product ? invoice.product.id : null,
+        invoiceLink: invoice.link,
+        productLink: invoice.product ? invoice.product.link : null,
       }}
       valid={name && email}
       disabled={disable}

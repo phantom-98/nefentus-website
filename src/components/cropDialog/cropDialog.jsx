@@ -176,7 +176,7 @@ const CropDialog = ({ open, file, aspect, onSave, onClose }) => {
           className={styles["modal"]}
           style={{
             width: 600,
-            height: 600,
+            height: 700,
             backgroundColor: `${theme == "light" ? "#eeeeee" : ""}`,
           }}
         >
@@ -187,6 +187,9 @@ const CropDialog = ({ open, file, aspect, onSave, onClose }) => {
               zoom={zoom}
               onComplete={(c) => setCompletedCrop(c)}
               aspect={aspect}
+              circularCrop={aspect == 1}
+              maxHeight={600}
+              maxWidth={600}
             >
               <img src={image} />
             </ReactCrop>

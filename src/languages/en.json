@@ -1066,7 +1066,8 @@
     },
     "table": {
       "product": "Product",
-      "order": "Order",
+      "invoice": "Invoice",
+      "details": "Details",
       "email": "Email",
       "amount": "Amount",
       "currency": "Currency",

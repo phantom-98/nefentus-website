@@ -219,7 +219,7 @@ const AdminDashboard = ({ type }) => {
 
     if (dataUsers) {
       const filteredData = newUserData.filter((item) => {
-        return dataUsers.some((user) => item.id === user.id);
+        return dataUsers.some((user) => item.email === user.email);
       });
 
       updateUsers(filteredData);

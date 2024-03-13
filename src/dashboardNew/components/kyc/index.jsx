@@ -98,20 +98,24 @@ const Table = ({ data, setData }) => {
 
   const acceptKYC = async (user) => {
     try {
-      await adminApi.acceptKYC(user?.userDetail?.id);
+      await adminApi.acceptKYC(user?.userDetail?.email);
       setData(
-        data.filter((item) => item?.userDetail?.id !== user?.userDetail?.id),
+        data.filter(
+          (item) => item?.userDetail?.email !== user?.userDetail?.email,
+        ),
       );
     } catch {}
   };
 
   const declineKYC = async (user) => {
-    if (declineReason && user?.userDetail?.id) {
+    if (declineReason && user?.userDetail?.email) {
       setFeedbackModal(false);
       try {
-        await adminApi.declineKYC(user?.userDetail?.id, declineReason);
+        await adminApi.declineKYC(user?.userDetail?.email, declineReason);
         setData(
-          data.filter((item) => item?.userDetail?.id !== user?.userDetail?.id),
+          data.filter(
+            (item) => item?.userDetail?.email !== user?.userDetail?.email,
+          ),
         );
       } catch {}
     }
@@ -151,8 +155,8 @@ const Table = ({ data, setData }) => {
                               " " +
                               items?.userDetail?.lastName}
                           </div>
-                          <div className={styles.id}>
-                            {items?.userDetail?.id}
+                          <div className={styles.email}>
+                            {items?.userDetail?.email}
                           </div>
                         </div>
                       </li>

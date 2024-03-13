@@ -123,19 +123,13 @@ const IdentificationBody = () => {
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
 
-  const userId = user?.userId;
-
   const fetchFYC = async () => {
     const userKYCData = await Promise.all(
-      Object.values(KYC_TYPE_FILE).map((type) =>
-        BackendAPI.getByKYC(type, userId),
-      ),
+      Object.values(KYC_TYPE_FILE).map((type) => BackendAPI.getByKYC(type)),
     );
 
     const userKYCDataText = await Promise.all(
-      Object.values(KYC_TYPE_TEXT).map((type) =>
-        BackendAPI.getByKYCText(type, userId),
-      ),
+      Object.values(KYC_TYPE_TEXT).map((type) => BackendAPI.getByKYCText(type)),
     );
 
     const transformedResults = userKYCData
@@ -172,7 +166,10 @@ const IdentificationBody = () => {
           item.verify = transformedResults[item.id].verify;
         }
 
-        if (transformedResults[item.id].rejectReason != null) {
+        if (
+          transformedResults[item.id].rejectReason != null &&
+          item.level == level
+        ) {
           setDeclineResponse(transformedResults[item.id].rejectReason);
         }
       }
@@ -181,7 +178,10 @@ const IdentificationBody = () => {
         item.url = transformedResultsText[item.id].url;
         item.verify = transformedResultsText[item.id].verify;
 
-        if (transformedResultsText[item.id].rejectReason != null) {
+        if (
+          transformedResultsText[item.id].rejectReason != null &&
+          item.level == level
+        ) {
           setDeclineResponse(transformedResultsText[item.id].rejectReason);
         }
       }
@@ -193,18 +193,21 @@ const IdentificationBody = () => {
   };
 
   useEffect(() => {
-    const getLevel = async () => {
-      await checkJwtToken();
-      const BackendAPI = new backend_API();
-      const { data } = await BackendAPI.getKYCLevel(userId);
-      if (data) {
-        setLevel(data.kycLevel);
-      }
-    };
+    const init = async () => {
+      const getLevel = async () => {
+        await checkJwtToken();
+        const BackendAPI = new backend_API();
+        const { data } = await BackendAPI.getKYCLevel();
+        if (data) {
+          setLevel(data.kycLevel);
+        }
+      };
 
-    getLevel();
-    fetchFYC();
-  }, [userId]);
+      await getLevel();
+      fetchFYC();
+    };
+    init();
+  }, [user.email]);
 
   const checkUploadingData = () => {
     let res = false,
@@ -240,7 +243,7 @@ const IdentificationBody = () => {
     if (getData) {
       const arrayWithResults = await Promise.allSettled(
         Object.keys(getData).map((type) =>
-          BackendAPI.uploadKYCByType(type, getData[type], user?.userId),
+          BackendAPI.uploadKYCByType(type, getData[type]),
         ),
       );
 
@@ -254,7 +257,7 @@ const IdentificationBody = () => {
     if (getText) {
       const arrayWithResultsText = await Promise.allSettled(
         Object.keys(getText).map((type) =>
-          BackendAPI.uploadKYCByText(type, getText[type], user?.userId),
+          BackendAPI.uploadKYCByText(type, getText[type]),
         ),
       );
 
