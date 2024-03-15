@@ -8,7 +8,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Button from "../../components/button/button";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { checkJwtToken, dashboardLink } from "../../../utils";
+import { checkJwtToken, dashboardLink, getRole } from "../../../utils";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import { useAuth } from "../../../context/auth/authContext";
 
@@ -17,6 +17,7 @@ const SideNavigation = () => {
   const { language } = i18n;
   const query = useLocation();
   const { user } = useAuth();
+  const userRole = getRole(user);
 
   const [active, setActive] = useState(0);
 
@@ -221,18 +222,20 @@ const SideNavigation = () => {
         </div>
       </div>
 
-      <div className={styles.referral}>
-        <AffiliateLink user={user} />
-        {getFullSideBar(active) ? (
+      {userRole !== "vendor" ? (
+        <div className={styles.referral}>
+          <AffiliateLink user={user} />
+          getFullSideBar(active) ? (
           <Link to={dashboardLink(user)}>
             <Button width="">{t("sidebar.referral")}</Button>
           </Link>
-        ) : (
+          ) : (
           <Link to="/dashboard/">
             <Button width="">{t("sidebar.vendorDashboard")}</Button>
           </Link>
-        )}
-      </div>
+          )
+        </div>
+      ) : null}
     </div>
   );
 };
