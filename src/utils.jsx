@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 import backendAPI from "./api/backendAPI";
+import Cookies from "js-cookie";
 
 export function formatTokenBalance(x, round = 2) {
   const parsedFloat = parseFloat(x);
@@ -120,7 +121,10 @@ export const reformatFooterInfo = (pages, links) => {
 
 export const checkJwtToken = async () => {
   const isAuthorize = await new backendAPI().checkJwt();
-  if (!isAuthorize) window.location.href = "/";
+  if (!isAuthorize) {
+    Cookies.remove("token");
+    window.location.href = "/";
+  }
 };
 
 export const validateEmail = (email) => {
