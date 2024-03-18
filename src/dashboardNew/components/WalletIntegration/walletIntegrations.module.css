@@ -33,7 +33,7 @@
 
 .walletAddressTitle,
 .walletBalanceTitle {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   width: 22rem;
 }
 
@@ -47,6 +47,29 @@
 .walletBalance {
   color: var(--text2-color);
 }
+
+.walletDropdownContainer {
+  font-size: 1.6rem !important;
+  padding: 0.8rem 2rem !important;
+  font-size: 1.2rem !important;
+  position: relative;
+  cursor: pointer;
+  border-radius: 0.5rem !important;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  color: white !important;
+}
+
+.connectButtonBackground {
+  background-color: #0784b5 !important;
+}
+
+/* .disconnectButtonBackground {
+  background-color: #16c172 !important;
+} */
 
 @media (max-width: 860px) {
   .walletBalanceTitle {

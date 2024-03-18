@@ -109,17 +109,12 @@ const MainDashboard = () => {
       <Helmet>
         <title>Nefentus | {t("navigation.dashboard")}</title>
       </Helmet>
-      <ThirdwebProvider
-        activeChain={BinanceTestnet}
-        supportedWallets={[metamaskWallet()]}
-        clientId="639eea2ebcabed7eab90b56aceeed08b"
-      >
-        <ProfileCard setActiveWallet={setActiveWallet} wallet={activeWallet} />
-        <BalanceCard wallet={activeWallet} />
-        <EarningCards />
-        <IncomeCard data={chartData ?? []} />
-        <CryptoCard wallet={activeWallet} />
-      </ThirdwebProvider>
+
+      <ProfileCard setActiveWallet={setActiveWallet} wallet={activeWallet} />
+      <BalanceCard wallet={activeWallet} />
+      <EarningCards />
+      <IncomeCard data={chartData ?? []} />
+      <CryptoCard wallet={activeWallet} />
       <SignupByEmail />
     </div>
   );

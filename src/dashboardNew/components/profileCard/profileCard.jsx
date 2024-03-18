@@ -20,8 +20,11 @@ import usePrices from "../../../hooks/prices";
 import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
 import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
+import CoinbaseLogo from "../../../assets/logo/coinbase.svg";
+import TrustLogo from "../../../assets/logo/trust.png";
 import backendAPI from "../../../api/backendAPI";
 import { useAuth } from "../../../context/auth/authContext";
+import { getWalletIcon } from "../../../utils";
 
 const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
   const { user, setUser } = useAuth();
@@ -80,52 +83,34 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
   }, [wallets]);
 
   const fetchWallets = async () => {
-    if (
-      wallets.some(
-        (wal) =>
-          (wal.status == "connecting" || wal.status == "connected") &&
-          wal.address === undefined,
-      )
-    ) {
-      return;
-    } else {
-      let connectedWallets = [];
-      wallets.map((wallet) => {
-        if (
-          wallet?.status === "connected" &&
-          wallet?.address &&
-          wallet?.walletDetail?.walletId === wallet?.name?.toLocaleLowerCase()
-        ) {
-          connectedWallets.push(wallet);
-          registerWallet(wallet);
-        }
-      });
+    const list = await backend_API.getWalletAddresses();
 
-      const internalWallet = {
-        name: "Internal Wallet",
-        address: internalWalletAddress,
-        icon: Ethereum,
-      };
-      connectedWallets.push(internalWallet);
-      setWalletOptions(connectedWallets);
-      const wallet = user?.Wallet || null;
-      if (wallet) {
-        if (
-          JSON.parse(wallet).name != internalWallet.name ||
-          (JSON.parse(wallet).name == internalWallet.name &&
-            JSON.parse(wallet).address == internalWallet.address)
-        ) {
-          setActiveWallet(JSON.parse(wallet));
-          return;
-        }
+    const internalWallet = {
+      name: "Internal Wallet",
+      address: internalWalletAddress,
+      icon: Ethereum,
+    };
+    setWalletOptions(
+      list.map((wallet) => ({
+        ...wallet,
+        name: wallet?.type,
+        icon: getWalletIcon(wallet?.type),
+      })),
+    );
+    const wallet = user?.Wallet || null;
+    if (wallet) {
+      if (
+        JSON.parse(wallet).name != internalWallet.name ||
+        (JSON.parse(wallet).name == internalWallet.name &&
+          JSON.parse(wallet).address == internalWallet.address)
+      ) {
+        setActiveWallet(JSON.parse(wallet));
+        return;
       }
-      setUser({ ...user, Wallet: JSON.stringify(internalWallet) });
-      setActiveWallet(internalWallet);
     }
-  };
-
-  const registerWallet = async (wallet) => {
-    const result = await backend_API.registerWalletAddress(wallet);
+    setUser({ ...user, Wallet: JSON.stringify(internalWallet) });
+    setActiveWallet(internalWallet);
+    // }
   };
 
   const handleWallet = async (data) => {
@@ -139,9 +124,6 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
       }),
     });
     setActiveWallet(data);
-    const response = await backend_API.patchPreferredWallet({
-      address: data?.address,
-    });
   };
 
   return (

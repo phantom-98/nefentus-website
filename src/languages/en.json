@@ -866,7 +866,9 @@
       "deleteInvoice": "Invoice deleted!",
       "passwordChange": "Password successfully changed!",
       "updatePicture": "Profile picture successfully changed!",
-      "updateSettings": "Settings updated successfully!"
+      "updateSettings": "Settings updated successfully!",
+      "connecting": "Connecting Wallet",
+      "connected": "Wallet Connected"
     },
     "error": {
       "general": "Failed to Update",
@@ -932,7 +934,8 @@
       "matchPassword": "Passwords must match",
       "accountDisconnect": "No Account Connected",
       "invalidMail": "Email Address is Invalid",
-      "invalidPhone": "Phone Number is Invalid"
+      "invalidPhone": "Phone Number is Invalid",
+      "connectionCancel": "Wallet Connection Failed"
     },
     "info": {
       "transactionNotSaved": "Transaction successfully but could not save transaction info!",

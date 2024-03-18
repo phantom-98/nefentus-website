@@ -819,7 +819,9 @@
       "deleteInvoice": "Rechnung gelöscht!",
       "passwordChange": "Passwort erfolgreich geändert!",
       "updatePicture": "Profilbild erfolgreich geändert!",
-      "updateSettings": "Einstellungen erfolgreich aktualisiert!"
+      "updateSettings": "Einstellungen erfolgreich aktualisiert!",
+      "connecting": "Wallet verbinden",
+      "connected": "Wallet verbunden"
     },
     "error": {
       "general": "Aktualisierung fehlgeschlagen",
@@ -885,7 +887,8 @@
       "matchPassword": "Die Passwörter müssen übereinstimmen",
       "accountDisconnect": "Kein Konto verbunden",
       "invalidMail": "E-mail Adresse ist nicht korrekt",
-      "invalidPhone": "Telefonnummer ist ungültig"
+      "invalidPhone": "Telefonnummer ist ungültig",
+      "connectionCancel": "Wallet-Verbindung fehlgeschlagen"
     },
     "info": {
       "transactionNotSaved": "Transaktion erfolgreich, aber Transaktionsinformationen konnten nicht gespeichert werden!",

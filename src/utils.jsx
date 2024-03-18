@@ -1,6 +1,11 @@
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 import backendAPI from "./api/backendAPI";
+import MetaMaskLogo from "./assets/logo/MetaMask.svg";
+import WalletConnectLogo from "./assets/logo/WalletConnect.svg";
+import Ethereum from "./assets/icon/crypto/ethereum.svg";
+import CoinbaseLogo from "./assets/logo/coinbase.svg";
+import TrustLogo from "./assets/logo/trust.png";
 import Cookies from "js-cookie";
 
 export function formatTokenBalance(x, round = 2) {
@@ -140,4 +145,19 @@ export const validatePhoneNumber = (number) => {
 export const formatIncome = (income) => {
   if (Number.isInteger(income)) return income;
   else return income.toFixed(2);
+};
+
+export const getWalletIcon = (type) => {
+  switch (type?.toLowerCase()) {
+    case "metamask":
+      return MetaMaskLogo;
+    case "walletconnect":
+      return WalletConnectLogo;
+    case "coinbase":
+      return CoinbaseLogo;
+    case "trust":
+      return TrustLogo;
+    default:
+      return Ethereum;
+  }
 };

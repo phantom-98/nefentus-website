@@ -1,11 +1,4 @@
-import React, { useEffect, useState } from "react";
-import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
-import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
-import {
-  metamaskWallet,
-  ThirdwebProvider,
-  walletConnect,
-} from "@thirdweb-dev/react";
+import React from "react";
 import styles from "./integrationsBody.module.css";
 import WalletIntegration from "../../components/WalletIntegration/WalletIntegration";
 import SettingsTitle from "../../components/settings/settingsTitle";
@@ -14,31 +7,7 @@ import { useTranslation } from "react-i18next";
 import { checkJwtToken } from "../../../utils";
 
 const IntegrationsBody = () => {
-  const wallets = [
-    {
-      connect: walletConnect(),
-      icon: WalletConnectLogo,
-      name: "WalletConnect",
-    },
-    {
-      connect: metamaskWallet(),
-      icon: MetaMaskLogo,
-      name: "MetaMask",
-    },
-  ];
   const { t } = useTranslation();
-
-  const [connectStatus, setConnectStatus] = useState({
-    "Wallet Connect": "disconnected",
-    Metamask: "disconnected",
-  });
-  useEffect(() => {
-    const verifyJwt = async () => {
-      await checkJwtToken();
-    };
-    verifyJwt();
-    console.log(connectStatus);
-  }, [connectStatus]);
 
   return (
     <Card>
@@ -50,24 +19,7 @@ const IntegrationsBody = () => {
       </div>
 
       <div className={styles.walletsWrap}>
-        {wallets.map((wallet) => {
-          return (
-            <React.Fragment key={wallet.name}>
-              <ThirdwebProvider
-                clientId="639eea2ebcabed7eab90b56aceeed08b"
-                supportedWallets={[wallet.connect]}
-              >
-                <WalletIntegration
-                  name={wallet.name}
-                  config={wallet.connect}
-                  icon={wallet.icon}
-                  connectStatus={connectStatus}
-                  setConnectStatus={setConnectStatus}
-                />
-              </ThirdwebProvider>
-            </React.Fragment>
-          );
-        })}
+        <WalletIntegration />
       </div>
     </Card>
   );

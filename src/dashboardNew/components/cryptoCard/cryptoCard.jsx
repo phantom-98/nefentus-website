@@ -3,7 +3,14 @@ import Card from "../card/card";
 import styles from "./cryptoCard.module.css";
 
 import { useContext, useEffect, useState } from "react";
-import { useNetworkMismatch, useSwitchChain } from "@thirdweb-dev/react";
+import {
+  metamaskWallet,
+  useConnect,
+  useNetworkMismatch,
+  useSwitchChain,
+  useWallet,
+  walletConnect,
+} from "@thirdweb-dev/react";
 import useInternalWallet from "../../../hooks/internalWallet";
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
@@ -19,6 +26,8 @@ import inputStyles from "../../../components/input/input.module.css";
 import Input, { Options } from "../../../components/input/input";
 import Popup from "../popup/popup";
 import { web3Api } from "../../../api/web3Api";
+import { coinbaseWallet } from "@thirdweb-dev/react";
+import { trustWallet } from "@thirdweb-dev/react";
 
 const CryptoCard = ({ wallet }) => {
   const { internalWalletAddress } = useInternalWallet();
@@ -34,6 +43,9 @@ const CryptoCard = ({ wallet }) => {
 
   const { balances, fetchBalances } = useBalances(wallet);
   const { prices, fetchPrices } = usePrices(wallet);
+
+  const connectedWallet = useWallet();
+  const connect = useConnect();
 
   useEffect(() => {
     updateInfo();
@@ -114,6 +126,8 @@ const CryptoCard = ({ wallet }) => {
         isExternal={isExternal}
         onSuccess={updateInfo}
         wallet={wallet}
+        connectedWallet={connectedWallet}
+        connect={connect}
       />
     </Card>
   );
@@ -209,7 +223,15 @@ const ReceiveModal = ({ show, walletAddress, setOpenReceiveModal }) => {
   );
 };
 
-const SendModal = ({ show, setShow, isExternal, onSuccess, wallet }) => {
+const SendModal = ({
+  show,
+  setShow,
+  isExternal,
+  onSuccess,
+  wallet,
+  connectedWallet,
+  connect,
+}) => {
   const [withdrawCurrency, setWithdrawCurrency] = useState(
     currencies()[0].abbr,
   );
@@ -263,12 +285,56 @@ const SendModal = ({ show, setShow, isExternal, onSuccess, wallet }) => {
 
     //Before withdraw
     setIsWithdrawing(true);
-    setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawing"));
 
     // Withdraw
     const tokenAddress = sendCurrency.address;
     if (isExternal) {
-      const web3API = new web3Api("metamask");
+      const currentWalletConfig =
+        wallet?.type?.toLowerCase() === "metamask"
+          ? metamaskWallet()
+          : wallet?.type?.toLowerCase() === "walletconnect"
+          ? walletConnect({
+              qrModal: "walletConnect",
+              qrModalOptions: {
+                themeMode: "light",
+              },
+              recommended: true,
+            })
+          : wallet?.type?.toLowerCase() === "coinbase"
+          ? coinbaseWallet({ recommended: true, qrmodal: "coinbase" })
+          : // : wallet?.type?.toLowerCase() === "trust"
+            // ? trustWallet({
+            //     projectId: "57e1cfc18509bb9cc4d51638ce8d18ed",
+            //     recommended: true,
+            //   })
+            null;
+      if (
+        connectedWallet === undefined ||
+        connectedWallet?.walletId?.toLowerCase() != wallet?.name?.toLowerCase()
+      ) {
+        setInfoMessage(t("messages.success.connecting"));
+        if (
+          wallet?.name?.toLowerCase() === "walletconnect" ||
+          wallet?.name?.toLowerCase() === "coinbase"
+        )
+          setShow(false);
+        const response = await connect(currentWalletConfig)
+          .then(async (res) => {
+            setInfoMessage(t("messages.success.connected"));
+            setShow(true);
+            return true;
+          })
+          .catch(() => {
+            setErrorMessage(t("messages.error.connectionCancel"));
+            setIsWithdrawing(false);
+            return false;
+          });
+        if (!response) return;
+      }
+
+      setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawing"));
+
+      const web3API = new web3Api();
 
       try {
         await switchNetwork(chainId(sendCurrency.blockchain));

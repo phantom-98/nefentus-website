@@ -18,12 +18,20 @@ import {
   useDisconnect,
   walletConnect,
   useSwitchChain,
+  coinbaseWallet,
+  trustWallet,
+  useWallet,
+  useCreateWalletInstance,
 } from "@thirdweb-dev/react";
 import useBalances from "../../hooks/balances";
 import usePrices from "../../hooks/prices";
 import { usePayment } from "../../hooks/payment";
 import { currencies } from "../../constants";
-import { formatTokenBalance, formatUSDBalance } from "../../utils";
+import {
+  formatTokenBalance,
+  formatUSDBalance,
+  getWalletIcon,
+} from "../../utils";
 import { useTranslation } from "react-i18next";
 import Popup from "../../dashboardNew/components/popup/popup";
 
@@ -39,25 +47,10 @@ const ReceivePayment = ({
   const { internalWalletAddress, fetchInternalWalletAddress } =
     useInternalWallet();
   const { t } = useTranslation();
-
-  const externalWallets = [
-    {
-      connect: useConnect(),
-      disconnect: useDisconnect(),
-      config: metamaskWallet(),
-      name: "MetaMask",
-      address: useAddress(),
-      status: useConnectionStatus(),
-    },
-    {
-      connect: useConnect(),
-      disconnect: useDisconnect(),
-      config: walletConnect(),
-      name: "WalletConnect",
-      address: useAddress(),
-      status: useConnectionStatus(),
-    },
-  ];
+  const [wallets, setWallets] = useState([]);
+  const connectedWallet = useWallet();
+  const connect = useConnect();
+  const createWalletInstance = useCreateWalletInstance();
 
   const [cryptoAmount, setCryptoAmount] = useState("0");
   const [spinner, setSpinner] = useState(false);
@@ -85,29 +78,6 @@ const ReceivePayment = ({
     return null;
   };
 
-  const wallets = [
-    {
-      type: "internal",
-      title: "Nefentus",
-      description: formatWalletAddress(internalWalletAddress),
-      icon: NefentusLogo,
-      alt: "Nefentus Wallet",
-    },
-    {
-      type: "metamask",
-      title: "MetaMask",
-      icon: MetaMaskLogo,
-      description: formatWalletAddress(externalWallets[0].address),
-      alt: "MetaMask Wallet",
-    },
-    {
-      type: "walletconnect",
-      title: "WalletConnect",
-      icon: WalletConnectLogo,
-      description: formatWalletAddress(externalWallets[1].address),
-      alt: "Wallet Connect",
-    },
-  ];
   const [selectedWalletIndex, setSelectedWalletIndex] = useState(0);
   const cryptos = currencies().map((currency, index) => {
     return {
@@ -144,27 +114,6 @@ const ReceivePayment = ({
       fetchBalances(internalWalletAddress);
     }
   }, [internalWalletAddress]);
-  useEffect(() => {
-    if (
-      externalWallets[0].status === "connected" &&
-      externalWallets[0].address
-    ) {
-      registerWallet(externalWallets[0]);
-      selectedWalletIndex == 1 && fetchBalances(externalWallets[0].address);
-    }
-    if (
-      externalWallets[1].status === "connected" &&
-      externalWallets[1].address
-    ) {
-      registerWallet(externalWallets[1]);
-      selectedWalletIndex == 2 && fetchBalances(externalWallets[1].address);
-    }
-  }, [
-    externalWallets[0].status,
-    externalWallets[0].address,
-    externalWallets[1].status,
-    externalWallets[1].address,
-  ]);
 
   useEffect(() => {
     if (selectedWalletIndex == 0) {
@@ -175,19 +124,7 @@ const ReceivePayment = ({
         setShow(true);
       }
     } else {
-      const exWallet = externalWallets[selectedWalletIndex - 1];
-      if (exWallet.status == "disconnected") {
-        exWallet.connect(exWallet.config, {
-          chainId: 1,
-        });
-        !isDisable && setDisable(true);
-      } else if (exWallet.status == "unknown") {
-        !isDisable && setDisable(true);
-      } else if (exWallet.status == "connecting") {
-        !isDisable && setDisable(true);
-      } else if (exWallet.status == "connected") {
-        fetchBalances(exWallet.address);
-      }
+      connectSelectedWallet();
     }
   }, [selectedWalletIndex]);
 
@@ -226,12 +163,56 @@ const ReceivePayment = ({
     }
   }, [selectedCryptoIndex, prices, priceUSD]);
 
-  async function registerWallet(externalWallet) {
-    if (externalWallet.address === "undefined") return;
-    const result = await backend_API.registerWalletAddress(
-      externalWallet
+  useEffect(() => {
+    fetchWallets();
+  }, []);
+
+  const fetchWallets = async () => {
+    const list = await backend_API.getWalletAddresses();
+
+    setWallets(
+      list.map((wallet) => ({
+        ...wallet,
+        title: wallet?.type?.charAt(0)?.toUpperCase() + wallet?.type?.slice(1),
+        description: formatWalletAddress(wallet?.address),
+        icon: getWalletIcon(wallet?.type),
+      })),
     );
-  }
+  };
+
+  const connectSelectedWallet = async () => {
+    const wallet = wallets[selectedWalletIndex];
+
+    const currentWalletConfig =
+      wallet?.type?.toLowerCase() === "metamask"
+        ? metamaskWallet()
+        : wallet?.type?.toLowerCase() === "walletconnect"
+        ? walletConnect({
+            // projectId: "4b9cb6ce8bcff9cedc49607dd34435e5",
+            qrModal: "walletConnect", // or "walletConnect"
+            qrModalOptions: {
+              themeMode: "light",
+            },
+            recommended: true,
+          })
+        : wallet?.type?.toLowerCase() === "coinbase"
+        ? coinbaseWallet({ recommended: true, qrmodal: "coinbase" })
+        : // : wallet?.type?.toLowerCase() === "trust"
+          // ? trustWallet({
+          //     projectId: "57e1cfc18509bb9cc4d51638ce8d18ed",
+          //     recommended: true,
+          //     // qrModal: "trust",
+          //   })
+          null;
+    if (
+      connectedWallet === undefined ||
+      connectedWallet?.walletId?.toLowerCase() != wallet?.title?.toLowerCase()
+    ) {
+      const response = createWalletInstance(currentWalletConfig);
+      await response.connect();
+      fetchBalances(wallet?.address);
+    }
+  };
 
   async function doPayment() {
     if (!valid) {
@@ -252,7 +233,7 @@ const ReceivePayment = ({
       selectedCryptoIndex,
       selectedWalletIndex == 0
         ? internalWalletAddress
-        : externalWallets[selectedWalletIndex - 1].address,
+        : wallets[selectedWalletIndex]?.address,
       selectedWalletIndex != 0,
     );
 
@@ -449,10 +430,10 @@ const Select = ({ data, selectedIndex, setSelectedIndex }) => {
         onMouseLeave={() => setOpen(false)}
       >
         <SelectOption
-          icon={data[selectedIndex].icon}
-          optionTitle={data[selectedIndex].title}
-          optionDescription={data[selectedIndex].description}
-          alt={data[selectedIndex].alt}
+          icon={data[selectedIndex]?.icon}
+          optionTitle={data[selectedIndex]?.title}
+          optionDescription={data[selectedIndex]?.description}
+          alt={data[selectedIndex]?.alt}
           dropdown
         />
         {open && (

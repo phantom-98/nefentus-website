@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import backendAPI from "../api/backendAPI";
 import PayBody from "../components/payBody";
-import { ThirdwebProvider, metamaskWallet } from "@thirdweb-dev/react";
 
 const Pay = () => {
   const [invoice, setInvoice] = useState({});
@@ -26,13 +25,7 @@ const Pay = () => {
       <Helmet>
         <title>Pay invoice | Nefentus</title>
       </Helmet>
-      <ThirdwebProvider
-        activeChain="ethereum"
-        supportedWallets={[metamaskWallet()]}
-        clientId="639eea2ebcabed7eab90b56aceeed08b"
-      >
-        <PayBody invoice={invoice} />
-      </ThirdwebProvider>
+      <PayBody invoice={invoice} />
     </div>
   );
 };
