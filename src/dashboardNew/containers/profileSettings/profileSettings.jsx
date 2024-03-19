@@ -11,10 +11,11 @@ import { useTranslation } from "react-i18next";
 import MessageComponent from "../../../components/message";
 import { useAuth } from "../../../context/auth/authContext";
 import { encodeConstructorParamsForImplementation } from "@thirdweb-dev/sdk";
-import { validateEmail, validatePhoneNumber } from "../../../utils";
+import { getRole, validateEmail, validatePhoneNumber } from "../../../utils";
 
 const ProfileSettings = () => {
   const { user, setUser, setAvatarUrl } = useAuth();
+  const userRole = getRole(user);
   const [userProfile, setUserProfile] = useState({});
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -192,6 +193,15 @@ const ProfileSettings = () => {
       setValue: setLastName,
       type: "edit",
     },
+    userRole !== "vendor"
+      ? {
+          label: `${t("profile.affiliate")}`,
+          description: `${t("profile.affiliateDescription")}`,
+          value: window.location.origin + "?ref=" + user?.affiliateLink,
+          setValue: null,
+          type: "copy",
+        }
+      : undefined,
     {
       label: `${t("profile.business")}`,
       description: `${t("profile.businessDescription")}`,
@@ -260,7 +270,7 @@ const ProfileSettings = () => {
       popup: "language",
       type: "edit",
     },
-  ];
+  ].filter((x) => x !== undefined);
 
   useEffect(() => {
     if (isDataSave.current) {

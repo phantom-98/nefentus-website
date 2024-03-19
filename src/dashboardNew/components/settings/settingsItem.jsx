@@ -5,7 +5,7 @@ import Fail from "../../../assets/icon/fail.svg";
 import Correct from "../../../assets/icon/correct.svg";
 import ProfileImage from "../../../assets/icon/user.svg";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Popup from "../popup/popup";
 import { SearchOptions } from "../../../components/input/input";
@@ -262,6 +262,7 @@ const SettingsItem = ({ data, setIsSaveData }) => {
   const [selectDialogOpen, setSelectDialogOpen] = useState(false);
   const [label, setLabel] = useState(null);
   const [file, setFile] = useState(null);
+  const ref = useRef();
 
   const { t } = useTranslation();
 
@@ -278,6 +279,17 @@ const SettingsItem = ({ data, setIsSaveData }) => {
 
   const handleEdit = () => {
     setShow(true);
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(data.value);
+
+    ref.current.style.visibility = "visible";
+    ref.current.style.opacity = "1";
+    setTimeout(() => {
+      ref.current.style.visibility = "hidden";
+      ref.current.style.opacity = "0.3";
+    }, 2000);
   };
 
   const handleSelect = () => {
@@ -337,6 +349,8 @@ const SettingsItem = ({ data, setIsSaveData }) => {
                 value={data.popup === "language" ? label : data.value}
                 type={data.type}
               />
+            ) : data.type === "copy" ? (
+              <CopyType text={data.value} refer={ref} />
             ) : data.type === "image" ? (
               <ImageType value={data.value} />
             ) : data.type === "enable" ? (
@@ -354,6 +368,8 @@ const SettingsItem = ({ data, setIsSaveData }) => {
             onClick={
               data.type === "edit"
                 ? () => handleEdit()
+                : data.type === "copy"
+                ? () => handleCopy()
                 : data.type === "image"
                 ? () => handleChangeImage()
                 : data.type === "enable"
@@ -365,6 +381,8 @@ const SettingsItem = ({ data, setIsSaveData }) => {
           >
             {data.type === "edit"
               ? `${t("security.actions.edit")}`
+              : data.type === "copy"
+              ? `${t("general.copy")}`
               : data.type === "image"
               ? `${t("security.actions.change")}`
               : data.type === "enable"
@@ -543,5 +561,17 @@ export const SelectPopup = ({
         className="countryOption"
       />
     </Popup>
+  );
+};
+
+const CopyType = ({ text, refer }) => {
+  const { t } = useTranslation();
+  return (
+    <div className={`${styles.linkContainer} affiliate`}>
+      <span className={styles.copyTip} ref={refer}>
+        {t("general.copied")}
+      </span>
+      <span className={styles.text}>{text}</span>
+    </div>
   );
 };

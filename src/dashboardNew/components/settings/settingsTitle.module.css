@@ -242,3 +242,36 @@
 .inputItem {
   margin-top: 1.8rem;
 }
+
+.linkContainer {
+  position: relative;
+}
+
+.copyTip {
+  visibility: hidden;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 1.4rem;
+  text-align: center;
+  border-radius: 6px;
+  padding: 0.5rem 2rem;
+  position: absolute;
+  z-index: 1;
+  bottom: 120%;
+  left: 50%;
+  margin-left: -55px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  box-shadow: 0.3rem 0.3rem 1rem var(--border-color);
+}
+
+.copyTip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--background-color) transparent transparent transparent;
+}
