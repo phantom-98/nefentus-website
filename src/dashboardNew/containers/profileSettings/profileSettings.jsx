@@ -193,15 +193,6 @@ const ProfileSettings = () => {
       setValue: setLastName,
       type: "edit",
     },
-    userRole !== "vendor"
-      ? {
-          label: `${t("profile.affiliate")}`,
-          description: `${t("profile.affiliateDescription")}`,
-          value: window.location.origin + "?ref=" + user?.affiliateLink,
-          setValue: null,
-          type: "copy",
-        }
-      : undefined,
     {
       label: `${t("profile.business")}`,
       description: `${t("profile.businessDescription")}`,
@@ -270,6 +261,15 @@ const ProfileSettings = () => {
       popup: "language",
       type: "edit",
     },
+    userRole !== "vendor"
+      ? {
+          label: `${t("profile.affiliate")}`,
+          description: `${t("profile.affiliateDescription")}`,
+          value: window.location.origin + "?ref=" + user?.affiliateLink,
+          setValue: null,
+          type: "copy",
+        }
+      : undefined,
   ].filter((x) => x !== undefined);
 
   useEffect(() => {
