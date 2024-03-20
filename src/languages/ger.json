@@ -994,6 +994,15 @@
       "qr": "QR-Code",
       "actions": "Aktionen"
     },
+    "fee": {
+      "quotes": "Zitate",
+      "viewDetails": "Details anzeigen",
+      "estimatedGas": "Geschätzte Gasgebühr",
+      "maxFee": "Maximale Gebühr",
+      "gasPrice": "Gaspreis",
+      "gasLimit": "Grenzwert Gas",
+      "total": "Gesamtbetrag"
+    },
     "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
     "total": "Gesamtbetrag",

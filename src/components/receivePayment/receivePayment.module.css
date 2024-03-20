@@ -1,13 +1,13 @@
 .container {
-  margin-top: 14rem;
-  margin-bottom: 14rem;
+  margin-top: 12rem;
+  margin-bottom: 12rem;
 }
 
 .wrapper {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   gap: 10%;
 }
 
@@ -444,4 +444,48 @@
   font-size: 1.2rem;
   color: var(--text2-color, #b1b1b1);
   max-width: 360px;
+}
+
+.feeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feeRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+@keyframes close {
+  0% {
+    height: 90px;
+  }
+  100% {
+    height: 1px;
+  }
+}
+
+@keyframes expand {
+  0% {
+    height: 1px;
+  }
+  100% {
+    height: 90px;
+  }
+}
+
+.animClose {
+  height: 1px;
+  animation: close 0.1s;
+}
+
+.animExpand {
+  height: max-content;
+  animation: expand 0.1s;
 }

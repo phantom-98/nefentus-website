@@ -1040,12 +1040,21 @@
       "qr": "QR code",
       "actions": "Actions"
     },
+    "fee": {
+      "quotes": "Quotes",
+      "viewDetails": "View Details",
+      "estimatedGas": "Estimated gas fee",
+      "maxFee": "Maximun fee",
+      "gasPrice": "Gas Price",
+      "gasLimit": "Gas Limit",
+      "total": "Total"
+    },
     "price": "Price",
     "seller": "Seller Info",
     "total": "Total",
     "cryptoAmount": "Cryptocurrency amount",
     "chooseWallet": "Choose Wallet",
-    "payButton": "Pay",
+    "payButton": "Pay now",
     "agree": "By clicking on button, you agree to the",
     "terms": "Terms of Service",
     "agree2": "",

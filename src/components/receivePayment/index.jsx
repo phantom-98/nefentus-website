@@ -7,7 +7,7 @@ import MetaMaskLogo from "../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../assets/logo/WalletConnect.svg";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
 import backendAPI from "../../api/backendAPI";
-import { web3Api } from "../../api/web3Api";
+import { uniswapApi, web3Api } from "../../api/web3Api";
 import Button from "../../components/button/button";
 import useInternalWallet from "../../hooks/internalWallet";
 import {
@@ -35,6 +35,23 @@ import {
 import { useTranslation } from "react-i18next";
 import Popup from "../../dashboardNew/components/popup/popup";
 
+const formatWalletAddress = (address, symbolCount = 8) => {
+  if (!address || address.length <= symbolCount * 2 + 2) {
+    return address;
+  }
+
+  const start = address.substring(0, symbolCount + 2);
+  const end = address.substring(address.length - symbolCount);
+  return `${start}....${end}`;
+};
+
+const formatBalance = (balance, digits = 2) => {
+  if (typeof balance === "number") {
+    return balance.toFixed(digits);
+  }
+  return null;
+};
+
 const ReceivePayment = ({
   priceUSD,
   seller,
@@ -60,23 +77,6 @@ const ReceivePayment = ({
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
-
-  const formatWalletAddress = (address, symbolCount = 8) => {
-    if (!address || address.length <= symbolCount * 2 + 2) {
-      return address;
-    }
-
-    const start = address.substring(0, symbolCount + 2);
-    const end = address.substring(address.length - symbolCount);
-    return `${start}....${end}`;
-  };
-
-  const formatBalance = (balance) => {
-    if (balance) {
-      return balance.toFixed(2);
-    }
-    return null;
-  };
 
   const [selectedWalletIndex, setSelectedWalletIndex] = useState(0);
   const cryptos = currencies().map((currency, index) => {
@@ -359,7 +359,10 @@ const ReceivePayment = ({
                 setSelectedIndex={setSelectedWalletIndex}
               />
             </div>
-            <div className={styles.crypto}>
+            <div
+              className={styles.crypto}
+              style={{ borderBottom: selectedWalletIndex === 0 ? "0px" : "" }}
+            >
               <p className={styles.cryptoTitle}>{t("payments.cryptoAmount")}</p>
               <div className={styles.cryptoBody}>
                 <div className={styles.cryptoAmount}>{cryptoAmount}</div>
@@ -372,6 +375,15 @@ const ReceivePayment = ({
                 </div>
               </div>
             </div>
+            {selectedWalletIndex === 0 && (
+              <div style={{ padding: "0 24px", width: "100%" }}>
+                <GasDetails
+                  currency={currencies()[selectedCryptoIndex]}
+                  cryptoAmount={parseFloat(cryptoAmount)}
+                  usdAmount={parseFloat(priceUSD)}
+                />
+              </div>
+            )}
             <div className={styles.paymentWrapper}>
               <Button
                 style={{ width: "100%", height: "60px" }}
@@ -379,7 +391,7 @@ const ReceivePayment = ({
                 onClick={() => doPayment()}
                 spinner={spinner}
               >
-                {t("payments.payButton")} ${formatUSDBalance(priceUSD)}
+                {t("payments.payButton")}
               </Button>
             </div>
           </div>
@@ -691,5 +703,131 @@ const PasswordPopup = ({ show, setShow, password, setPassword, onConfirm }) => {
         />
       </div>
     </Popup>
+  );
+};
+
+const GasDetails = ({
+  show,
+  currency,
+  cryptoAmount,
+  usdAmount,
+  gasLimit = 600_000,
+}) => {
+  const { t } = useTranslation();
+  const [gasValues, setGasValues] = useState({});
+  const [gasPriceAsWei, setGasPrice] = useState(0);
+  const [maxFee, setMaxFee] = useState(0);
+  // const [gasFee, setGasFee] = useState(0);
+  const [blockchain, setBlockchain] = useState(
+    currencies().find((c) => currency.blockchain === c.abbr),
+  );
+  const [blockchainPrice, setBlockchainPrice] = useState(0);
+  const uniswap = new uniswapApi();
+  const [collapse, setCollapse] = useState(true);
+
+  const init = async () => {
+    setMaxFee((gasValues.gasPrice * gasLimit) / 10 ** blockchain.decimals);
+    // setGasFee((estimatedGas * gasValues.gasPrice) / 10 ** blockchain.decimals);
+    setBlockchainPrice(await uniswap.getNativeTokenPrice(blockchain.abbr));
+  };
+
+  const fetch = async () => {
+    const res = await uniswap.getGasValues(blockchain.abbr);
+    setGasValues(res);
+    setGasPrice(res.gasPrice);
+  };
+
+  useEffect(() => {
+    setBlockchain(currencies().find((c) => currency.blockchain === c.abbr));
+  }, [currency]);
+
+  useEffect(() => {
+    fetch();
+  }, [blockchain.abbr]);
+
+  useEffect(() => {
+    init();
+  }, [gasValues]);
+
+  return (
+    <div className={styles.feeContainer} style={{ width: "100%" }}>
+      <div
+        className={styles.feeContainer}
+        style={{
+          gap: "0",
+          borderRadius: "8px",
+          border: "1px solid var(--border-color)",
+          overflow: "hidden",
+          backgroundColor: "var(--bg2-color)",
+        }}
+      >
+        <div
+          className={styles.feeRow}
+          style={{ backgroundColor: "var(--card-color)" }}
+        >
+          <span>{t("payments.fee.quotes")}</span>
+          <span
+            onClick={() => {
+              setCollapse((prev) => !prev);
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            {t("payments.fee.viewDetails")}{" "}
+            <img
+              src={DropDownIcon}
+              alt="dropdown"
+              style={{ transform: `rotateX(${collapse ? "0" : "180deg"})` }}
+            />
+          </span>
+        </div>
+        <div className={`${collapse ? styles.animClose : styles.animExpand}`}>
+          <div
+            className={styles.feeRow}
+            style={{ borderBottom: "1px solid var(--border-color)" }}
+          >
+            <span>
+              {t("payments.fee.gasPrice")}:{" "}
+              {Math.round(gasPriceAsWei / 10 ** 9)} Gwei
+            </span>
+            <span>
+              {t("payments.fee.gasLimit")}: {gasLimit}
+            </span>
+          </div>
+          <div className={styles.feeRow}>
+            <div>
+              <svg
+                style={{ display: "inline", marginRight: "4px" }}
+                width="14"
+                height="16"
+                viewBox="0 0 14 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M13.2667 4.02305L13.275 4.01471L10.6167 1.35638C10.375 1.11471 9.975 1.11471 9.73333 1.35638C9.49167 1.59805 9.49167 1.99805 9.73333 2.23971L11.05 3.55638C10.175 3.88971 9.58333 4.78138 9.73333 5.81471C9.86667 6.73138 10.65 7.47305 11.5667 7.57305C11.9583 7.61471 12.3 7.54805 12.625 7.40638V13.4147C12.625 13.873 12.25 14.248 11.7917 14.248C11.3333 14.248 10.9583 13.873 10.9583 13.4147V9.66471C10.9583 8.74805 10.2083 7.99805 9.29167 7.99805H8.45833V2.16471C8.45833 1.24805 7.70833 0.498047 6.79167 0.498047H1.79167C0.875 0.498047 0.125 1.24805 0.125 2.16471V14.6647C0.125 15.123 0.5 15.498 0.958333 15.498H7.625C8.08333 15.498 8.45833 15.123 8.45833 14.6647V9.24805H9.70833V13.298C9.70833 14.3897 10.4917 15.3814 11.575 15.4897C12.825 15.6147 13.875 14.6397 13.875 13.4147V5.49805C13.875 4.92305 13.6417 4.39805 13.2667 4.02305ZM6.79167 6.33138H1.79167V2.99805C1.79167 2.53971 2.16667 2.16471 2.625 2.16471H5.95833C6.41667 2.16471 6.79167 2.53971 6.79167 2.99805V6.33138ZM11.7917 6.33138C11.3333 6.33138 10.9583 5.95638 10.9583 5.49805C10.9583 5.03971 11.3333 4.66471 11.7917 4.66471C12.25 4.66471 12.625 5.03971 12.625 5.49805C12.625 5.95638 12.25 6.33138 11.7917 6.33138Z"
+                  fill="#B1B1B1"
+                />
+              </svg>
+              <span>{t("payments.fee.maxFee")}:</span>
+            </div>
+            <span>
+              {formatBalance(maxFee, 8)} {blockchain.abbr}
+            </span>
+          </div>
+        </div>
+        <div
+          className={styles.feeRow}
+          style={{ backgroundColor: "var(--card-color)" }}
+        >
+          <span>{t("payments.fee.total")}:</span>
+          <span>
+            ≈${formatUSDBalance(usdAmount + maxFee * blockchainPrice)}
+          </span>
+          <span>
+            {formatTokenBalance(cryptoAmount + maxFee, 8)} {blockchain.abbr}
+          </span>
+        </div>
+      </div>
+    </div>
   );
 };
