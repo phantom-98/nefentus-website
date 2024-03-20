@@ -637,7 +637,8 @@
     "upload": "Завантажити",
     "of": "з",
     "show": "Показати",
-    "verify": "Підтвердити"
+    "verify": "Підтвердити",
+    "or": "або"
   },
   "countries": {
     "Afghanistan": "Афганістан",
@@ -1061,7 +1062,9 @@
     "agree2": "",
     "pay": {
       "title": "Реквізити для оплати",
-      "description": "Завершіть переказ, вказавши свої платіжні реквізити"
+      "description": "Завершіть переказ, вказавши свої платіжні реквізити",
+      "internalWalletButtonTitle": "Гаманець Нефентус",
+      "externalWalletButtonTitle": "Інші гаманці"
     }
   },
   "transactions": {

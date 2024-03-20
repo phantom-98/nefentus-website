@@ -579,7 +579,8 @@
     "upload": "Hochladen",
     "of": "von",
     "show": "Anzeigen",
-    "verify": "Verifizieren"
+    "verify": "Verifizieren",
+    "or": "oder"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -1004,7 +1005,9 @@
     "agree2": "einverstanden",
     "pay": {
       "title": "Details zur Bezahlung",
-      "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein"
+      "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein",
+      "internalWalletButtonTitle": "Nefentus Wallet",
+      "externalWalletButtonTitle": "Andere Wallets"
     }
   },
 

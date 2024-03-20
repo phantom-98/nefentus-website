@@ -626,7 +626,8 @@
     "upload": "Upload",
     "of": "of",
     "show": "Show",
-    "verify": "Verify"
+    "verify": "Verify",
+    "or": "or"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -1050,7 +1051,9 @@
     "agree2": "",
     "pay": {
       "title": "Payment Details",
-      "description": "Complete remittance by providing your payment details"
+      "description": "Complete remittance by providing your payment details",
+      "internalWalletButtonTitle": "Nefentus Wallet",
+      "externalWalletButtonTitle": "Other Wallets"
     }
   },
   "transactions": {
