@@ -5,7 +5,7 @@ import Fail from "../../../assets/icon/fail.svg";
 import Correct from "../../../assets/icon/correct.svg";
 import ProfileImage from "../../../assets/icon/user.svg";
 
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Popup from "../popup/popup";
 import { SearchOptions } from "../../../components/input/input";
@@ -13,6 +13,7 @@ import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
 import Options from "../options/options";
+import { MessageContext } from "../../../context/message";
 
 const langOptions = [
   { value: "en", label: "English" },
@@ -262,9 +263,10 @@ const SettingsItem = ({ data, setIsSaveData }) => {
   const [selectDialogOpen, setSelectDialogOpen] = useState(false);
   const [label, setLabel] = useState(null);
   const [file, setFile] = useState(null);
-  const ref = useRef();
 
   const { t } = useTranslation();
+
+  const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
 
   useEffect(() => {
     if (data.popup === "language") {
@@ -283,13 +285,7 @@ const SettingsItem = ({ data, setIsSaveData }) => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(data.value);
-
-    ref.current.style.visibility = "visible";
-    ref.current.style.opacity = "1";
-    setTimeout(() => {
-      ref.current.style.visibility = "hidden";
-      ref.current.style.opacity = "0.3";
-    }, 2000);
+    setInfoMessage(t("profile.affiliate") + " " + t("general.copied"));
   };
 
   const handleSelect = () => {
@@ -350,7 +346,7 @@ const SettingsItem = ({ data, setIsSaveData }) => {
                 type={data.type}
               />
             ) : data.type === "copy" ? (
-              <CopyType text={data.value} refer={ref} />
+              <CopyType text={data.value} />
             ) : data.type === "image" ? (
               <ImageType value={data.value} />
             ) : data.type === "enable" ? (
@@ -564,14 +560,6 @@ export const SelectPopup = ({
   );
 };
 
-const CopyType = ({ text, refer }) => {
-  const { t } = useTranslation();
-  return (
-    <div className={`${styles.linkContainer} affiliate`}>
-      <span className={styles.copyTip} ref={refer}>
-        {t("general.copied")}
-      </span>
-      <span className={styles.text}>{text}</span>
-    </div>
-  );
+const CopyType = ({ text }) => {
+  return <span className={styles.text}>{text}</span>;
 };
