@@ -224,7 +224,7 @@ const SideNavigation = () => {
 
       {userRole !== "vendor" ? (
         <div className={styles.referral}>
-          <AffiliateLink user={user} />
+          {/* <AffiliateLink user={user} /> */}
           {getFullSideBar(active) ? (
             <Link to={dashboardLink(user)}>
               <Button width="">{t("sidebar.referral")}</Button>
