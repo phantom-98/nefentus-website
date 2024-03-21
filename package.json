@@ -7,6 +7,7 @@
     "@hookform/resolvers": "^3.3.1",
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "@openzeppelin/contracts": "^4.9.3",
+    "@swing.xyz/sdk": "^0.50.18",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
