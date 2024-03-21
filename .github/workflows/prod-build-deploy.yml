@@ -4,7 +4,7 @@ name: prod-build-and-deploy
 on:
   push:
     branches:
-      - masterX
+      - production
 jobs:
   # To build the project
   build-nefentus:
@@ -28,4 +28,4 @@ jobs:
           aws-region: eu-central-1
 
       - name: Deploy to S3 bucket
-        run: aws s3 sync ./build/ s3://www.nefentus.com
+        run: aws s3 sync ./dist/ s3://nefentus.comx
