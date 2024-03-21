@@ -631,12 +631,14 @@
     "confirm": "Підтвердити",
     "continue": "Продовжити",
     "withdraw": "Вивести",
+    "copy": "Копія",
     "enable": "Увімкнути",
     "disable": "Вимкнути",
     "upload": "Завантажити",
     "of": "з",
     "show": "Показати",
-    "verify": "Підтвердити"
+    "verify": "Підтвердити",
+    "or": "або"
   },
   "countries": {
     "Afghanistan": "Афганістан",
@@ -966,8 +968,6 @@
     "converter": "Конвертер",
     "integration": "ІнтеграціЇ",
     "soon": "Скоро",
-    "affiliate": "Запросити",
-    "copied": "Cкопійовано",
     "referral": "Реферал",
     "vendorDashboard": "Панель управління продавця",
     "notification": "Сповіщення"
@@ -1062,7 +1062,9 @@
     "agree2": "",
     "pay": {
       "title": "Реквізити для оплати",
-      "description": "Завершіть переказ, вказавши свої платіжні реквізити"
+      "description": "Завершіть переказ, вказавши свої платіжні реквізити",
+      "internalWalletButtonTitle": "Гаманець Нефентус",
+      "externalWalletButtonTitle": "Інші гаманці"
     }
   },
   "transactions": {
@@ -1173,6 +1175,8 @@
     "description": "Оновіть особисту інформацію та налаштування сповіщень",
     "firstName": "Ім'я",
     "lastName": "Прізвище",
+    "affiliate": "Партнерське посилання",
+    "affiliateDescription": "Запросіть своїх партнерів до Nefentus",
     "business": "Бізнес",
     "businessDescription": "Якщо ви є підприємством, будь ласка, введіть назву свого підприємства тут.",
     "email": "Email",

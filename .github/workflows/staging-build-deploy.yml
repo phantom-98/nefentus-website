@@ -4,7 +4,7 @@ name: dev-build-and-deploy
 on:
   push:
     branches:
-      - devX
+      - staging
 jobs:
   # To build the project
   build-nefentus:
@@ -19,7 +19,7 @@ jobs:
       - name: Installing dependencies
         run: npm install
       - name: Building project
-        run: CI=false npm run build
+        run: CI=false npm run build:staging
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -28,4 +28,4 @@ jobs:
           aws-region: eu-central-1
 
       - name: Deploy to S3 bucket
-        run: aws s3 sync ./build/ s3://dev.nefentus.com
+        run: aws s3 sync ./dist/ s3://staging.nefentus.com

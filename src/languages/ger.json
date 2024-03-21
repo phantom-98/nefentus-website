@@ -573,12 +573,14 @@
     "confirm": "Bestätigen",
     "continue": "Weitermachen",
     "withdraw": "Abheben",
+    "copy": "Kopieren",
     "enable": "Aktivieren",
     "disable": "Deaktivieren",
     "upload": "Hochladen",
     "of": "von",
     "show": "Anzeigen",
-    "verify": "Verifizieren"
+    "verify": "Verifizieren",
+    "or": "oder"
   },
   "countries": {
     "Afghanistan": "Afghanistan",
@@ -908,8 +910,6 @@
     "converter": "Konvertierung",
     "integration": "Integration",
     "soon": "Demnächst",
-    "affiliate": "Benutzer einladen",
-    "copied": "Kopiert",
     "referral": "Referral Dashboard",
     "vendorDashboard": "Anbieter-Dashboard",
     "notification": "Benachrichtigung"
@@ -1005,7 +1005,9 @@
     "agree2": "einverstanden",
     "pay": {
       "title": "Details zur Bezahlung",
-      "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein"
+      "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein",
+      "internalWalletButtonTitle": "Nefentus Wallet",
+      "externalWalletButtonTitle": "Andere Wallets"
     }
   },
 
@@ -1117,6 +1119,8 @@
     "description": "Aktualisieren Sie Ihre persönlichen Daten und Benachrichtigungseinstellungen",
     "firstName": "Vorname",
     "lastName": "Nachname",
+    "affiliate": "Affiliate-Link",
+    "affiliateDescription": "Laden Sie Nutzer zu Nefentus ein und verdienen Sie Provision",
     "business": "Firma",
     "businessDescription": "Wenn Sie ein Unternehmen sind, geben Sie hier bitte Ihren Firmennamen ein.",
     "email": "Email",
