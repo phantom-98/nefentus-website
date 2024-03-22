@@ -7,7 +7,6 @@ import Button from "../button/button";
 import Bitcoin from "../../../assets/icon/crypto/bitcoin.svg";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../../context/themeContext/themeContext";
-import { SwingSDK } from "@swing.xyz/sdk";
 import NefentusLogo from "../../../assets/logo/logo_n.png";
 import DropDownIcon from "../../../assets/icon/dropdown.svg";
 import useInternalWallet from "../../../hooks/internalWallet";
@@ -25,6 +24,7 @@ import {
   useCreateWalletInstance,
   useSetConnectedWallet,
   ConnectWallet,
+  useSigner,
 } from "@thirdweb-dev/react";
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
@@ -37,6 +37,16 @@ import {
   formatUSDBalance,
   getWalletIcon,
 } from "../../../utils";
+import SwingSDK, {
+  TransferStepResults,
+  TransferStepResult,
+  TransferRoute,
+  TransferParams,
+  Chain,
+  Token,
+  // type TransferQuote,
+} from "@swing.xyz/sdk";
+import { useCustomSwingSdk } from "../../../hooks/swing/useSwingSDK";
 
 const ConverterCard = () => {
   const { t } = useTranslation();
@@ -59,6 +69,30 @@ const ConverterCard = () => {
   const [selectedWalletIndex, setSelectedWalletIndex] = useState(0);
   const [fromCryptoIndex, setFromCryptoIndex] = useState(0);
   const [toCryptoIndex, setToCryptoIndex] = useState(0);
+  const [swingSDK, setSwingSDK] = useState(null);
+  const [receiveAmount, setReceiveAmount] = useState("");
+  const [sendChains, setSendChains] = useState();
+  const [receiveChains, setReceiveChains] = useState();
+  const [fromChain, setFromChain] = useState();
+  const [toChain, setToChain] = useState();
+  const [fromToken, setFromToken] = useState();
+  const [fromTokenBalance, setFromTokenBalance] = useState("0");
+  const [toToken, setToToken] = useState();
+  const [toTokenBalance, setToTokenBalance] = useState("0");
+  const [toTokenLocalAmount, setToTokenLocalAmount] = useState("");
+  const [quotes, setQuotes] = useState([]);
+  const [transferParams, setTransferParams] = useState({
+    amount: "0",
+    fromChain: "ethereum",
+    fromToken: "ETH",
+    fromUserAddress: "",
+    toChain: "ethereum",
+    toToken: "USDC",
+    toUserAddress: "",
+  });
+  const [signer, setSigner] = useSigner();
+  const switchNetwork = useSwitchChain();
+
   const cryptos = currencies().map((currency, index) => {
     return {
       title: currency.abbr,
@@ -89,18 +123,213 @@ const ConverterCard = () => {
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
+  async function switchChain(chain) {
+    if (!swingSDK) return;
 
+    try {
+      await embeddedWallet?.switchChain(chain.chainId);
+      const signer = await embeddedWallet?.getSigner();
+
+      // Connect wallet signer to Swing SDK
+      const walletAddress = await swingSDK.wallet.connect(signer, chain.slug);
+      // setWalletAddress(walletAddress);
+      // console.log(walletAddress);
+      // const balance = await swingSDK.wallet.getBalance(
+      //   defaultTransferParams.fromChain,
+      //   defaultTransferParams.fromToken,
+      //   walletAddress,
+      // );
+      // setBalance(balance);
+
+      setTransferParams((prev) => {
+        return {
+          ...prev,
+          fromUserAddress: walletAddress,
+          toUserAddress: walletAddress,
+        };
+      });
+    } catch (error) {
+      console.error("Switch Chain Error:", error);
+    }
+  }
+  async function getQuote() {
+    if (!swingSDK) return;
+
+    // setIsLoading(true);
+
+    try {
+      // Get a quote from the Swing API
+      const _quotes = await swingSDK.getQuote(transferParams);
+
+      console.log(_quotes);
+
+      if (!_quotes.routes.length) {
+        // setIsLoading(false);
+        setQuotes([]);
+        setTransferRoute(null);
+        return;
+      }
+
+      const bestQuote = _quotes.routes.sort(
+        (a, b) => Number(a.quote.amount) - Number(b.quote.amount),
+      )[0];
+      const quoteIntegration = swingSDK.getIntegration(
+        bestQuote.quote.integration,
+      );
+
+      setToTokenLocalAmount(bestQuote?.quote?.amountUSD);
+
+      setQuotes(_quotes.routes);
+      setTransferRoute({ ...bestQuote, ...quoteIntegration });
+    } catch (error) {
+      console.error("Quote Error:", error);
+    }
+
+    // setIsLoading(false);
+  }
+  async function startTransfer() {
+    if (!swingSDK) return;
+
+    if (!transferRoute) {
+      console.log("transfer route error");
+      return;
+    }
+
+    const transferListener = swingSDK.on(
+      "TRANSFER",
+      async (transferStepStatus, transferResults) => {
+        // setStatus(transferStepStatus);
+        // setResults(transferResults);
+
+        console.log("TRANSFER:", transferStepStatus, transferResults);
+
+        switch (transferStepStatus.status) {
+          case "CHAIN_SWITCH_REQUIRED":
+            await switchChain(transferStepStatus.chain);
+            break;
+
+          case "WALLET_CONNECTION_REQUIRED":
+            await connectWallet();
+            break;
+        }
+      },
+    );
+
+    setIsLoading(true);
+
+    try {
+      await swingSDK.transfer(transferRoute, transferParams);
+    } catch (error) {
+      console.error("Transfer Error:", error);
+    }
+
+    // Close the transfer listener
+    transferListener();
+    // setIsLoading(false);
+  }
   useEffect(() => {
     fetchWallets();
+    const swing = new SwingSDK({
+      projectId: "nef",
+      environment: "testnet",
+      debug: true,
+    });
+
+    // setIsLoading(true);
+
+    swing
+      .init()
+      .then(async () => {
+        // setIsLoading(false);
+        setSwingSDK(swing);
+
+        const _sendChains = swing
+          .getAvailableSendChains({
+            type: "swap",
+          })
+          .filter((chain) => {
+            const blockchain = chain.nativeToken?.symbol;
+            return blockchain === "ETH" || blockchain === "BNB";
+          });
+
+        setSendChains(_sendChains);
+
+        const _fromChain = _sendChains.find(
+          (chain) => chain.nativeToken?.symbol === "ETH",
+        );
+
+        const _sendChainTokens = swing.getAvailableSendTokens({
+          type: "swap",
+          fromChainSlug: _fromChain.slug,
+        });
+        console.log("send", _sendChainTokens);
+        const _fromToken = _sendChainTokens.find(
+          (token) => token.symbol === "ETH",
+        );
+
+        setFromToken(_fromToken);
+        setFromChain(_fromChain);
+
+        const _receiveChains = swing
+          .getAvailableReceiveChains({
+            type: "swap",
+            fromChainSlug: _fromChain.slug,
+            fromTokenSymbol: _fromToken.symbol,
+          })
+          .filter((chain) => {
+            const blockchain = chain.nativeToken?.symbol;
+            return blockchain === "ETH" || blockchain === "BNB";
+          });
+
+        setReceiveChains(_receiveChains);
+
+        const _toChain = _receiveChains.find(
+          (chain) => chain.nativeToken?.symbol === "BNB",
+        );
+
+        const _receiveChainsTokens = swing.getAvailableReceiveTokens({
+          type: "swap",
+          toChainSlug: _toChain.slug,
+          fromChainSlug: _fromChain?.slug,
+          fromTokenSymbol: _fromToken.symbol,
+        });
+        const _toToken = _receiveChainsTokens.find(
+          (token) => token.symbol === "BNB",
+        );
+
+        setToChain(_toChain);
+        setToToken(_toToken);
+      })
+      .catch((error) => {
+        // setIsLoading(false);
+        console.log(error.message);
+        setSwingSDK(swing);
+      });
   }, []);
   useEffect(() => {
+    getQuote();
+  }, [transferParams]);
+  useEffect(() => {
     if (wallets[selectedWalletIndex]) {
-      console.log(wallets, selectedWalletIndex);
-      fetchBalances(wallets[selectedWalletIndex].address);
+      const address = wallets[selectedWalletIndex].address;
+      fetchBalances(address);
+      setTransferParams({
+        ...transferParams,
+        fromUserAddress: address,
+        toUserAddress: address,
+      });
     }
   }, [selectedWalletIndex, wallets]);
   useEffect(() => {
     setPrice((prev) => prev + 1);
+    const currency = currencies();
+    setFromChain(
+      sendChains.find(
+        (chain) =>
+          chain.nativeToken?.symbol === currency[fromCryptoIndex].blockchain,
+      ),
+    );
+    setFromToken(from);
   }, [fromCryptoIndex, toCryptoIndex]);
 
   return (
