@@ -1085,6 +1085,8 @@
   "converter": {
     "wallet": "Wallet",
     "from": "From",
+    "to": "To",
+    "insufficient": "Insufficient",
     "balance": "Balance",
     "convert": "Convert"
   },

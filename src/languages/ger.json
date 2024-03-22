@@ -1040,6 +1040,8 @@
   "converter": {
     "wallet": "Wallet",
     "from": "Von",
+    "to": "Nach",
+    "insufficient": "Unzureichend",
     "balance": "Saldo",
     "convert": "Konvertieren"
   },

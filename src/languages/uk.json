@@ -1096,6 +1096,8 @@
   "converter": {
     "wallet": "Гаманець",
     "from": "З",
+    "to": "До",
+    "insufficient": "Недостатньо",
     "balance": "Баланс",
     "convert": "Конвертувати"
   },
