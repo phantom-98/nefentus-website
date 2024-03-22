@@ -225,6 +225,7 @@ const ReceivePayment = ({
     ) {
       const response = createWalletInstance(currentWalletConfig);
       await response.connect();
+      setConnectedWallet(response);
       fetchBalances(wallet?.address);
     }
   };
