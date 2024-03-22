@@ -1,5 +1,5 @@
 # Name of workflow as seen in Github actions tab
-name: dev-build-and-deploy
+name: staging-build-and-deploy
 # Run workflow only on push to dev branch. Currently, deactivated!
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - staging
 jobs:
   # To build the project
-  build-nefentus:
+  build-nefentus-staging:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out code
@@ -28,4 +28,4 @@ jobs:
           aws-region: eu-central-1
 
       - name: Deploy to S3 bucket
-        run: aws s3 sync ./dist/ s3://staging-ci.nefentus.com
+        run: aws s3 sync ./dist/ s3://staging.nefentus.com
