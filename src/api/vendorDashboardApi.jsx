@@ -368,9 +368,9 @@ export default class vendorDashboardApi {
     }
   }
 
-  async downloadInvoice(invoiceLink) {
+  async downloadInvoice(invoice, invoiceLink) {
     try {
-      const url = `${this.baseURL}/downloadInvoice/${invoiceLink}`;
+      const url = `${this.baseURL}/download${invoice}/${invoiceLink}`;
       const options = {
         method: "GET",
         headers: {
@@ -383,7 +383,7 @@ export default class vendorDashboardApi {
         throw new Error("Network response was not ok");
       }
       this.updateToken(response);
-      const data = await response.json();
+      const data = await response.blob();
       return data;
     } catch (error) {
       console.error("There was an error downloading invoices", error);
