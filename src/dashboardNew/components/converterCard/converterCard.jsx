@@ -8,7 +8,15 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import NefentusLogo from "../../../assets/logo/logo_n.png";
 import DropDownIcon from "../../../assets/icon/dropdown.svg";
-import { useSwitchChain, useSigner, useConnect } from "@thirdweb-dev/react";
+import {
+  useSwitchChain,
+  useSigner,
+  useConnect,
+  metamaskWallet,
+  walletConnect,
+  coinbaseWallet,
+  useWallet,
+} from "@thirdweb-dev/react";
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
 import { currencies, getChainSlug, useMainnet } from "../../../constants";
@@ -51,6 +59,7 @@ const ConverterCard = () => {
   });
   const [signer, setSigner] = useState();
   const connect = useConnect();
+  const walletInstance = useWallet();
   const switchNetwork = useSwitchChain();
 
   const cryptos = currencies().map((currency, index) => {
@@ -128,12 +137,11 @@ const ConverterCard = () => {
     if (!swingSDK) return;
 
     try {
-      await switchNetwork(chain.chainId);
-      const signer = useSigner();
+      await walletInstance?.switchChain(chain.chainId);
+      const signer = await walletInstance?.getSigner();
 
       // Connect wallet signer to Swing SDK
       const walletAddress = await swingSDK.wallet.connect(signer, chain.slug);
-      console.log(walletAddress);
 
       setTransferParams((prev) => {
         return {
@@ -152,15 +160,18 @@ const ConverterCard = () => {
       setReceiveAmount(amount);
       return;
     }
+    if (parseFloat(transferParams.amount) <= 0) {
+      return;
+    }
 
-    // setIsLoading(true);
+    setSpinner(true);
 
     try {
       // Get a quote from the Swing API
       const _quotes = await swingSDK.getQuote(transferParams);
 
       if (!_quotes.routes.length) {
-        // setIsLoading(false);
+        setSpinner(false);
         setTransferRoute(null);
         return;
       }
@@ -187,7 +198,7 @@ const ConverterCard = () => {
       setErrorMessage(error.message);
     }
 
-    // setIsLoading(false);
+    setSpinner(false);
   }
   async function startTransfer() {
     if (!swingSDK) return;
@@ -217,8 +228,6 @@ const ConverterCard = () => {
       },
     );
 
-    // setIsLoading(true);
-
     try {
       await swingSDK.transfer(transferRoute, transferParams);
     } catch (error) {
@@ -228,7 +237,6 @@ const ConverterCard = () => {
     // Close the transfer listener
     transferListener();
     setSpinner(false);
-    // setIsLoading(false);
   }
   useEffect(() => {
     fetchWallets();
@@ -238,16 +246,16 @@ const ConverterCard = () => {
       debug: true,
     });
 
-    // setIsLoading(true);
+    setSpinner(true);
 
     swing
       .init()
       .then(async () => {
-        // setIsLoading(false);
+        setSpinner(false);
         setSwingSDK(swing);
       })
       .catch((error) => {
-        // setIsLoading(false);
+        setSpinner(false);
         setErrorMessage(error.message);
         setSwingSDK(swing);
       });
