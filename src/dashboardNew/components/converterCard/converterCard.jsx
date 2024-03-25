@@ -4,32 +4,14 @@ import Convert from "../../../assets/icon/convert.svg";
 import styles from "./converterCard.module.css";
 import Button from "../button/button";
 
-import Bitcoin from "../../../assets/icon/crypto/bitcoin.svg";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import NefentusLogo from "../../../assets/logo/logo_n.png";
 import DropDownIcon from "../../../assets/icon/dropdown.svg";
-import useInternalWallet from "../../../hooks/internalWallet";
-import {
-  metamaskWallet,
-  useAddress,
-  useConnect,
-  useConnectionStatus,
-  useDisconnect,
-  walletConnect,
-  useSwitchChain,
-  coinbaseWallet,
-  trustWallet,
-  useWallet,
-  useCreateWalletInstance,
-  useSetConnectedWallet,
-  ConnectWallet,
-  useSigner,
-} from "@thirdweb-dev/react";
+import { useSwitchChain, useSigner, useConnect } from "@thirdweb-dev/react";
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
-import { usePayment } from "../../../hooks/payment";
-import { currencies } from "../../../constants";
+import { currencies, getChainSlug, useMainnet } from "../../../constants";
 import { MessageContext } from "../../../context/message";
 import backendAPI from "../../../api/backendAPI";
 import {
@@ -37,52 +19,29 @@ import {
   formatUSDBalance,
   getWalletIcon,
 } from "../../../utils";
-import SwingSDK, {
-  TransferStepResults,
-  TransferStepResult,
-  TransferRoute,
-  TransferParams,
-  Chain,
-  Token,
-  // type TransferQuote,
-} from "@swing.xyz/sdk";
-import { useCustomSwingSdk } from "../../../hooks/swing/useSwingSDK";
+import SwingSDK from "@swing.xyz/sdk";
 
 const ConverterCard = () => {
   const { t } = useTranslation();
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
   const backend_API = new backendAPI();
   const [wallets, setWallets] = useState([]);
-  // const {internalWalletAddress} = useInternalWallet();
-  // const connectedWallet = useWallet();
-  // const connect = useConnect();
-  // const disconnect = useDisconnect();
-  // const setConnectedWallet = useSetConnectedWallet();
-  // const activeExternalWalletAddress = useAddress();
-  // const createWalletInstance = useCreateWalletInstance();
+
   const { balances, fetchBalances } = useBalances();
   const { prices, fetchPrices } = usePrices();
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState();
   const [insufficient, setInsufficient] = useState(false);
   const [spinner, setSpinner] = useState(false);
-  // const switchNetwork = useSwitchChain();
-  const [selectedWalletIndex, setSelectedWalletIndex] = useState(0);
+  const [selectedWalletIndex, setSelectedWalletIndex] = useState(1);
   const [fromCryptoIndex, setFromCryptoIndex] = useState(0);
-  const [toCryptoIndex, setToCryptoIndex] = useState(0);
+  const [toCryptoIndex, setToCryptoIndex] = useState(3);
   const [swingSDK, setSwingSDK] = useState(null);
   const [receiveAmount, setReceiveAmount] = useState("");
-  const [sendChains, setSendChains] = useState();
-  const [receiveChains, setReceiveChains] = useState();
-  const [fromChain, setFromChain] = useState();
-  const [toChain, setToChain] = useState();
-  const [fromToken, setFromToken] = useState();
-  const [fromTokenBalance, setFromTokenBalance] = useState("0");
-  const [toToken, setToToken] = useState();
-  const [toTokenBalance, setToTokenBalance] = useState("0");
   const [toTokenLocalAmount, setToTokenLocalAmount] = useState("");
-  const [quotes, setQuotes] = useState([]);
+  const [amount, setAmount] = useState("");
+  const [transferRoute, setTransferRoute] = useState();
   const [transferParams, setTransferParams] = useState({
-    amount: "0",
+    amount: "",
     fromChain: "ethereum",
     fromToken: "ETH",
     fromUserAddress: "",
@@ -90,7 +49,8 @@ const ConverterCard = () => {
     toToken: "USDC",
     toUserAddress: "",
   });
-  const [signer, setSigner] = useSigner();
+  const [signer, setSigner] = useState();
+  const connect = useConnect();
   const switchNetwork = useSwitchChain();
 
   const cryptos = currencies().map((currency, index) => {
@@ -123,23 +83,57 @@ const ConverterCard = () => {
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
+  async function connectWallet(chainId) {
+    if (!swingSDK) return;
+
+    try {
+      const wallet = wallets[selectedWalletIndex];
+      const walletConfig =
+        wallet?.type?.toLowerCase() === "metamask"
+          ? metamaskWallet()
+          : wallet?.type?.toLowerCase() === "walletconnect"
+          ? walletConnect({
+              qrModal: "walletConnect",
+              qrModalOptions: {
+                themeMode: "light",
+              },
+              recommended: true,
+            })
+          : wallet?.type?.toLowerCase() === "coinbase"
+          ? coinbaseWallet({ recommended: true, qrmodal: "coinbase" })
+          : null;
+      const connection = await connect(walletConfig, { chainId });
+      // const signer = await connection.getSigner();
+      const _signer = await connection.getSigner();
+      setSigner(_signer);
+
+      // Connect wallet signer to Swing SDK
+      const walletAddress = await swingSDK.wallet.connect(
+        _signer,
+        transferParams.fromChain,
+      );
+
+      setTransferParams((prev) => {
+        return {
+          ...prev,
+          fromUserAddress: walletAddress,
+          toUserAddress: walletAddress,
+        };
+      });
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  }
   async function switchChain(chain) {
     if (!swingSDK) return;
 
     try {
-      await embeddedWallet?.switchChain(chain.chainId);
-      const signer = await embeddedWallet?.getSigner();
+      await switchNetwork(chain.chainId);
+      const signer = useSigner();
 
       // Connect wallet signer to Swing SDK
       const walletAddress = await swingSDK.wallet.connect(signer, chain.slug);
-      // setWalletAddress(walletAddress);
-      // console.log(walletAddress);
-      // const balance = await swingSDK.wallet.getBalance(
-      //   defaultTransferParams.fromChain,
-      //   defaultTransferParams.fromToken,
-      //   walletAddress,
-      // );
-      // setBalance(balance);
+      console.log(walletAddress);
 
       setTransferParams((prev) => {
         return {
@@ -154,6 +148,10 @@ const ConverterCard = () => {
   }
   async function getQuote() {
     if (!swingSDK) return;
+    if (fromCryptoIndex == toCryptoIndex) {
+      setReceiveAmount(amount);
+      return;
+    }
 
     // setIsLoading(true);
 
@@ -161,11 +159,8 @@ const ConverterCard = () => {
       // Get a quote from the Swing API
       const _quotes = await swingSDK.getQuote(transferParams);
 
-      console.log(_quotes);
-
       if (!_quotes.routes.length) {
         // setIsLoading(false);
-        setQuotes([]);
         setTransferRoute(null);
         return;
       }
@@ -177,12 +172,19 @@ const ConverterCard = () => {
         bestQuote.quote.integration,
       );
 
-      setToTokenLocalAmount(bestQuote?.quote?.amountUSD);
+      console.log(bestQuote, "quote");
 
-      setQuotes(_quotes.routes);
+      const _amount =
+        parseInt(bestQuote?.quote?.amount) / 10 ** bestQuote?.quote?.decimals;
+      setReceiveAmount(_amount.toFixed(4).toString());
+      setPrice(_amount / parseFloat(amount));
+      // setToTokenLocalAmount(bestQuote?.quote?.amountUSD);
+
+      // setQuotes(_quotes.routes);
       setTransferRoute({ ...bestQuote, ...quoteIntegration });
     } catch (error) {
       console.error("Quote Error:", error);
+      setErrorMessage(error.message);
     }
 
     // setIsLoading(false);
@@ -194,7 +196,7 @@ const ConverterCard = () => {
       console.log("transfer route error");
       return;
     }
-
+    setSpinner(true);
     const transferListener = swingSDK.on(
       "TRANSFER",
       async (transferStepStatus, transferResults) => {
@@ -215,23 +217,24 @@ const ConverterCard = () => {
       },
     );
 
-    setIsLoading(true);
+    // setIsLoading(true);
 
     try {
       await swingSDK.transfer(transferRoute, transferParams);
     } catch (error) {
-      console.error("Transfer Error:", error);
+      setErrorMessage(error.message);
     }
 
     // Close the transfer listener
     transferListener();
+    setSpinner(false);
     // setIsLoading(false);
   }
   useEffect(() => {
     fetchWallets();
     const swing = new SwingSDK({
       projectId: "nef",
-      environment: "testnet",
+      environment: useMainnet() ? "production" : "testnet",
       debug: true,
     });
 
@@ -242,67 +245,10 @@ const ConverterCard = () => {
       .then(async () => {
         // setIsLoading(false);
         setSwingSDK(swing);
-
-        const _sendChains = swing
-          .getAvailableSendChains({
-            type: "swap",
-          })
-          .filter((chain) => {
-            const blockchain = chain.nativeToken?.symbol;
-            return blockchain === "ETH" || blockchain === "BNB";
-          });
-
-        setSendChains(_sendChains);
-
-        const _fromChain = _sendChains.find(
-          (chain) => chain.nativeToken?.symbol === "ETH",
-        );
-
-        const _sendChainTokens = swing.getAvailableSendTokens({
-          type: "swap",
-          fromChainSlug: _fromChain.slug,
-        });
-        console.log("send", _sendChainTokens);
-        const _fromToken = _sendChainTokens.find(
-          (token) => token.symbol === "ETH",
-        );
-
-        setFromToken(_fromToken);
-        setFromChain(_fromChain);
-
-        const _receiveChains = swing
-          .getAvailableReceiveChains({
-            type: "swap",
-            fromChainSlug: _fromChain.slug,
-            fromTokenSymbol: _fromToken.symbol,
-          })
-          .filter((chain) => {
-            const blockchain = chain.nativeToken?.symbol;
-            return blockchain === "ETH" || blockchain === "BNB";
-          });
-
-        setReceiveChains(_receiveChains);
-
-        const _toChain = _receiveChains.find(
-          (chain) => chain.nativeToken?.symbol === "BNB",
-        );
-
-        const _receiveChainsTokens = swing.getAvailableReceiveTokens({
-          type: "swap",
-          toChainSlug: _toChain.slug,
-          fromChainSlug: _fromChain?.slug,
-          fromTokenSymbol: _fromToken.symbol,
-        });
-        const _toToken = _receiveChainsTokens.find(
-          (token) => token.symbol === "BNB",
-        );
-
-        setToChain(_toChain);
-        setToToken(_toToken);
       })
       .catch((error) => {
         // setIsLoading(false);
-        console.log(error.message);
+        setErrorMessage(error.message);
         setSwingSDK(swing);
       });
   }, []);
@@ -321,16 +267,29 @@ const ConverterCard = () => {
     }
   }, [selectedWalletIndex, wallets]);
   useEffect(() => {
-    setPrice((prev) => prev + 1);
-    const currency = currencies();
-    setFromChain(
-      sendChains.find(
-        (chain) =>
-          chain.nativeToken?.symbol === currency[fromCryptoIndex].blockchain,
-      ),
-    );
-    setFromToken(from);
-  }, [fromCryptoIndex, toCryptoIndex]);
+    const _fromChain = getChainSlug(currencies()[fromCryptoIndex].blockchain);
+    const _fromToken = currencies()[fromCryptoIndex].abbr;
+    setTransferParams({
+      ...transferParams,
+      fromChain: _fromChain,
+      fromToken: _fromToken,
+    });
+  }, [fromCryptoIndex]);
+  useEffect(() => {
+    const _toChain = getChainSlug(currencies()[toCryptoIndex].blockchain);
+    const _toToken = currencies()[toCryptoIndex].abbr;
+    setTransferParams({
+      ...transferParams,
+      toChain: _toChain,
+      toToken: _toToken,
+    });
+  }, [toCryptoIndex]);
+  useEffect(() => {
+    setTransferParams({
+      ...transferParams,
+      amount: amount,
+    });
+  }, [amount]);
 
   return (
     <div className={styles.cardWrapper}>
@@ -347,51 +306,63 @@ const ConverterCard = () => {
         <div className={styles.walletContainer}>
           <WalletBox
             title={t("converter.from")}
+            value={amount}
+            setValue={setAmount}
             selectedCryptoIndex={fromCryptoIndex}
             setSelectedCryptoIndex={setFromCryptoIndex}
             balances={balances}
             setAlert={setInsufficient}
           />
           <div className={styles.convertIconWrapper}>
-            <div className={styles.convertIcon}>
+            <div
+              className={styles.convertIcon}
+              onClick={() => {
+                const tmp = fromCryptoIndex;
+                setFromCryptoIndex(toCryptoIndex);
+                setToCryptoIndex(tmp);
+              }}
+            >
               <img src={Convert} alt="" />
             </div>
           </div>
           <WalletBox
             title={t("converter.to")}
+            value={receiveAmount}
             selectedCryptoIndex={toCryptoIndex}
             setSelectedCryptoIndex={setToCryptoIndex}
             balances={balances}
           />
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginTop: "1rem",
-              fontSize: "1.4rem",
-            }}
-          >
-            <span style={{ marginTop: "0.3rem", marginRight: "0.8rem" }}>
-              1{cryptos[fromCryptoIndex].title} ≈ {price}{" "}
-              {cryptos[toCryptoIndex].title}
-            </span>
-            <div style={{ cursor: "pointer" }}>
-              <svg
-                width="13"
-                height="14"
-                viewBox="0 0 13 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M10.2637 3.70736C8.72397 1.94377 6.10401 1.45551 3.99997 2.67028C2.56099 3.50108 1.69079 4.9386 1.52717 6.47575C1.4882 6.84187 1.15981 7.10708 0.793689 7.06811C0.427567 7.02914 0.162359 6.70075 0.20133 6.33463C0.408115 4.39192 1.50964 2.56847 3.3333 1.51558C6.08587 -0.0736134 9.5355 0.638236 11.4548 3.05429L11.5272 2.78398C11.6225 2.42833 11.9881 2.21728 12.3437 2.31257C12.6994 2.40787 12.9104 2.77343 12.8151 3.12907L12.3271 4.95044C12.2813 5.12122 12.1696 5.26684 12.0165 5.35524C11.8633 5.44365 11.6814 5.4676 11.5106 5.42184L9.68921 4.93381C9.33357 4.83851 9.12251 4.47296 9.21781 4.11731C9.3131 3.76167 9.67866 3.55061 10.0343 3.64591L10.2637 3.70736ZM12.206 6.93296C12.5722 6.97193 12.8374 7.30032 12.7984 7.66645C12.5916 9.60915 11.4901 11.4326 9.66643 12.4855C6.914 14.0746 3.46457 13.3629 1.54523 10.9471L1.47289 11.2171C1.3776 11.5727 1.01204 11.7838 0.656395 11.6885C0.300751 11.5932 0.0896964 11.2277 0.184991 10.872L0.673025 9.05064C0.768319 8.695 1.13388 8.48395 1.48952 8.57924L3.31089 9.06727C3.66653 9.16257 3.87759 9.52813 3.78229 9.88377C3.687 10.2394 3.32144 10.4505 2.9658 10.3552L2.73597 10.2936C4.27565 12.0573 6.89567 12.5456 8.99976 11.3308C10.4387 10.5 11.3089 9.06247 11.4726 7.52532C11.5115 7.1592 11.8399 6.89399 12.206 6.93296Z"
-                  fill="#078BB9"
-                />
-              </svg>
+          {price && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginTop: "1rem",
+                fontSize: "1.4rem",
+              }}
+            >
+              <span style={{ marginTop: "0.3rem", marginRight: "0.8rem" }}>
+                1{cryptos[fromCryptoIndex].title} ≈ {price}{" "}
+                {cryptos[toCryptoIndex].title}
+              </span>
+              <div style={{ cursor: "pointer" }} onClick={getQuote}>
+                <svg
+                  width="13"
+                  height="14"
+                  viewBox="0 0 13 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M10.2637 3.70736C8.72397 1.94377 6.10401 1.45551 3.99997 2.67028C2.56099 3.50108 1.69079 4.9386 1.52717 6.47575C1.4882 6.84187 1.15981 7.10708 0.793689 7.06811C0.427567 7.02914 0.162359 6.70075 0.20133 6.33463C0.408115 4.39192 1.50964 2.56847 3.3333 1.51558C6.08587 -0.0736134 9.5355 0.638236 11.4548 3.05429L11.5272 2.78398C11.6225 2.42833 11.9881 2.21728 12.3437 2.31257C12.6994 2.40787 12.9104 2.77343 12.8151 3.12907L12.3271 4.95044C12.2813 5.12122 12.1696 5.26684 12.0165 5.35524C11.8633 5.44365 11.6814 5.4676 11.5106 5.42184L9.68921 4.93381C9.33357 4.83851 9.12251 4.47296 9.21781 4.11731C9.3131 3.76167 9.67866 3.55061 10.0343 3.64591L10.2637 3.70736ZM12.206 6.93296C12.5722 6.97193 12.8374 7.30032 12.7984 7.66645C12.5916 9.60915 11.4901 11.4326 9.66643 12.4855C6.914 14.0746 3.46457 13.3629 1.54523 10.9471L1.47289 11.2171C1.3776 11.5727 1.01204 11.7838 0.656395 11.6885C0.300751 11.5932 0.0896964 11.2277 0.184991 10.872L0.673025 9.05064C0.768319 8.695 1.13388 8.48395 1.48952 8.57924L3.31089 9.06727C3.66653 9.16257 3.87759 9.52813 3.78229 9.88377C3.687 10.2394 3.32144 10.4505 2.9658 10.3552L2.73597 10.2936C4.27565 12.0573 6.89567 12.5456 8.99976 11.3308C10.4387 10.5 11.3089 9.06247 11.4726 7.52532C11.5115 7.1592 11.8399 6.89399 12.206 6.93296Z"
+                    fill="#078BB9"
+                  />
+                </svg>
+              </div>
             </div>
-          </div>
+          )}
         </div>
         {insufficient && (
           <div
@@ -426,7 +397,13 @@ const ConverterCard = () => {
           </div>
         )}
         <div className={styles.button}>
-          <Button onClick={() => {}} disabled={insufficient} spinner={spinner}>
+          <Button
+            onClick={() => {
+              startTransfer();
+            }}
+            disabled={insufficient || fromCryptoIndex == toCryptoIndex}
+            spinner={spinner}
+          >
             {t("converter.convert")}
           </Button>
         </div>
@@ -439,6 +416,8 @@ export default ConverterCard;
 
 const WalletBox = ({
   title,
+  value,
+  setValue,
   selectedCryptoIndex,
   setSelectedCryptoIndex,
   balances,
@@ -478,7 +457,11 @@ const WalletBox = ({
                   setAlert(true);
                 else setAlert(false);
               }
+              if (setValue) {
+                setValue(e.target.value);
+              }
             }}
+            value={value}
           />
         </div>
       </div>
