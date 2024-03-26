@@ -70,11 +70,6 @@ const ReceivePayment = ({
   const switchNetwork = useSwitchChain();
   const switchAccount = async (address) => {
     try {
-      console.log(
-        activeExternalWalletAddress,
-        address.toLowerCase(),
-        "switch test",
-      );
       if (activeExternalWalletAddress.toLowerCase() !== address.toLowerCase()) {
         await walletInstance.switchAccount();
       }
