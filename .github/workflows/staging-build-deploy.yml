@@ -1,6 +1,6 @@
 # Name of workflow as seen in Github actions tab
 name: staging-build-and-deploy
-# Run workflow only on push to dev branch. Currently, deactivated!
+# Run workflow only on push to staging branch.
 on:
   push:
     branches:
@@ -18,6 +18,9 @@ jobs:
           node-version: "18"
       - name: Installing dependencies
         run: npm install
+      - name: Create .env file
+        run: |
+          echo "${{ secrets.DOTENV_STAGING }}" > .env
       - name: Building project
         run: CI=false npm run build:staging
       - name: Configure AWS Credentials
