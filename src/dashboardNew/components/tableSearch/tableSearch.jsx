@@ -16,7 +16,7 @@ const TableSearch = ({
 
   const handleRemoveSearch = () => {
     setGetDataInput("");
-    findUser();
+    findUser(true);
   };
 
   return (

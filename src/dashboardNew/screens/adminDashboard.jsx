@@ -185,7 +185,7 @@ const AdminDashboard = ({ type }) => {
     }
   };
 
-  const fetchAdminUsersData = async () => {
+  const fetchAdminUsersData = async (clear) => {
     const result = await adminApi.checkPermission();
     if (result !== true) {
       navigate("/login");
@@ -193,7 +193,7 @@ const AdminDashboard = ({ type }) => {
       const res = await adminApi.getUsers(
         dataPage * dataSize,
         dataSize,
-        getDataInput.trim().toLowerCase(),
+        clear ? "" : getDataInput.trim().toLowerCase(),
       );
       console.log("res", res);
       setDataLength(parseInt(res.count));
@@ -397,8 +397,8 @@ const AdminDashboard = ({ type }) => {
     setEditEmailAddress(null);
   };
 
-  const findUser = async () => {
-    dataPage == 0 ? fetchAdminUsersData() : setDataPage(0);
+  const findUser = async (clear) => {
+    dataPage == 0 ? fetchAdminUsersData(clear) : setDataPage(0);
   };
 
   useEffect(() => {
