@@ -22,6 +22,8 @@ import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 import { getRole } from "../../utils";
 import { Helmet } from "react-helmet";
 import { useAuth } from "../../context/auth/authContext";
+import Pagination from "../../components/pagination";
+import userEvent from "@testing-library/user-event";
 
 const colSizes = [2, 1, 2, 2, 1, 1, 2, 1, 2];
 
@@ -73,10 +75,9 @@ const AdminDashboard = ({ type }) => {
   const [agentEmail, setAgentEmail] = useState("");
   const [users, setUsers] = useState();
   const [getDataInput, setGetDataInput] = useState("");
-  const [dataPage, setDataPage] = useState(1);
+  const [dataLength, setDataLength] = useState(0);
+  const [dataPage, setDataPage] = useState(0);
   const [dataSize, setDataSize] = useState(10);
-  const [getFilteredUser, setGetFilteredUser] = useState();
-  const [searchTrigger, setSearchTrigger] = useState(false);
   const [spinner, setSpinner] = useState(false);
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
@@ -189,11 +190,15 @@ const AdminDashboard = ({ type }) => {
     if (result !== true) {
       navigate("/login");
     } else {
-      const dataUsers = await adminApi.getUsers();
-
-      dataUsers.reverse();
-      setUsers(dataUsers);
-      updateUsers(dataUsers);
+      const res = await adminApi.getUsers(
+        dataPage * dataSize,
+        dataSize,
+        getDataInput.trim().toLowerCase(),
+      );
+      console.log("res", res);
+      setDataLength(parseInt(res.count));
+      setUsers(res.users);
+      updateUsers(res.users);
     }
   };
 
@@ -210,21 +215,6 @@ const AdminDashboard = ({ type }) => {
     const resp = await adminApi.deleteUser(userEmail);
     if (resp) {
       updateUsersTable(dataUsers);
-    }
-  };
-
-  const updateUsersTable = async (dataUsers) => {
-    const newUserData = await adminApi.getUsers();
-    newUserData.reverse();
-
-    if (dataUsers) {
-      const filteredData = newUserData.filter((item) => {
-        return dataUsers.some((user) => item.email === user.email);
-      });
-
-      updateUsers(filteredData);
-    } else {
-      updateUsers(newUserData);
     }
   };
 
@@ -354,6 +344,7 @@ const AdminDashboard = ({ type }) => {
 
   function updateUsers(dataUsers) {
     if (dataUsers) {
+      console.log("datauser", dataUsers);
       const newDataUsers = dataUsers?.map((user) => [
         `${user.firstName} ${user.lastName}`,
         user.roles
@@ -395,7 +386,6 @@ const AdminDashboard = ({ type }) => {
         </div>,
       ]);
       setTableData(newDataUsers);
-      setSearchTrigger(false);
     }
   }
 
@@ -407,51 +397,23 @@ const AdminDashboard = ({ type }) => {
     setEditEmailAddress(null);
   };
 
-  useEffect(() => {
-    if (searchTrigger)
-      updateUsers(getFilteredUser?.length > 0 ? getFilteredUser : users);
-  }, [searchTrigger]);
-
-  const findUser = () => {
-    const filteredData = users?.filter((item) => {
-      return (
-        item?.email
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase()) ||
-        item?.agent
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase()) ||
-        item?.firstName
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase()) ||
-        item?.lastName
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase()) ||
-        String(item?.createdAt)?.toLowerCase().includes(getDataInput.trim()) ||
-        String(item?.income)
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase()) ||
-        item?.roles[0]
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase())
-      );
-    });
-    setGetFilteredUser(filteredData);
-    setDataPage(0);
-    setSearchTrigger(true);
+  const findUser = async () => {
+    dataPage == 0 ? fetchAdminUsersData() : setDataPage(0);
   };
 
-  const paginatedData = tableData.filter((item, index) => {
-    if (index >= dataPage * dataSize && index < dataPage * dataSize + dataSize)
-      return true;
-    return false;
-  });
+  useEffect(() => {
+    findUser();
+  }, [dataSize]);
+
+  useEffect(() => {
+    fetchAdminUsersData();
+  }, [dataPage]);
 
   const closeModal = () => {
     clearMessages();
     clearAddUserFields();
     setOpenModal(false);
-    updateUsersTable(getFilteredUser);
+    updateUsers(users);
   };
 
   return (
@@ -473,8 +435,6 @@ const AdminDashboard = ({ type }) => {
         <div>
           <TableSearch
             title={t("dashboard.userManagement")}
-            users={tableData}
-            setFiltered={tableData}
             setGetDataInput={setGetDataInput}
             findUser={findUser}
             getDataInput={getDataInput}
@@ -488,18 +448,16 @@ const AdminDashboard = ({ type }) => {
                 : "1fr 0.8fr 0.8fr"
             }`}
             label={label}
-            data={paginatedData}
+            data={tableData}
           />
 
           <>
-            <TablePagination
-              data={tableData}
+            <Pagination
+              dataLength={dataLength}
+              dataSize={dataSize}
               setDataPage={setDataPage}
               setDataSize={setDataSize}
-              colSizes={colSizes}
-              searchTrigger={searchTrigger}
               dataPage={dataPage}
-              striped
             />
           </>
         </div>
