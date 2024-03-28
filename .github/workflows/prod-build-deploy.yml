@@ -4,7 +4,7 @@ name: prod-build-and-deploy
 on:
   push:
     branches:
-      - masterX
+      - production
 jobs:
   # To build the project
   build-nefentus:
@@ -18,8 +18,11 @@ jobs:
           node-version: "18"
       - name: Installing dependencies
         run: npm install
+      - name: Create .env file
+        run: |
+          echo "${{ secrets.DOTENV_PROD }}" > .env
       - name: Building project
-        run: CI=false REACT_APP_BASE_ENDPOINT_API=${{ secrets.PROD_ENDPOINT }} npm run build
+        run: npm run build
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -28,4 +31,4 @@ jobs:
           aws-region: eu-central-1
 
       - name: Deploy to S3 bucket
-        run: aws s3 sync ./build/ s3://www.nefentus.com
+        run: aws s3 sync ./dist/ s3://nefentus.comx

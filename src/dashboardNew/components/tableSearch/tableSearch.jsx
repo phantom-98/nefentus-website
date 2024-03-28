@@ -13,19 +13,11 @@ const TableSearch = ({
   getDataInput,
 }) => {
   const { t } = useTranslation();
-  const [trigger, setTrigger] = useState(false);
 
   const handleRemoveSearch = () => {
     setGetDataInput("");
-    setTrigger(true);
+    findUser(true);
   };
-
-  useEffect(() => {
-    if (trigger) {
-      findUser(); // Execute findUser after the state has been updated
-      setTrigger(false);
-    }
-  }, [trigger]);
 
   return (
     <div className={styles.search}>

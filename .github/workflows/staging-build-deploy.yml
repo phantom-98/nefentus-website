@@ -1,13 +1,13 @@
 # Name of workflow as seen in Github actions tab
-name: dev-build-and-deploy
-# Run workflow only on push to dev branch. Currently, deactivated!
+name: staging-build-and-deploy
+# Run workflow only on push to staging branch.
 on:
   push:
     branches:
-      - devX
+      - staging
 jobs:
   # To build the project
-  build-nefentus:
+  build-nefentus-staging:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out code
@@ -18,8 +18,11 @@ jobs:
           node-version: "18"
       - name: Installing dependencies
         run: npm install
+      - name: Create .env file
+        run: |
+          echo "${{ secrets.DOTENV_STAGING }}" > .env.staging
       - name: Building project
-        run: CI=false npm run build
+        run: CI=false npm run build:staging
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -28,4 +31,4 @@ jobs:
           aws-region: eu-central-1
 
       - name: Deploy to S3 bucket
-        run: aws s3 sync ./build/ s3://dev.nefentus.com
+        run: aws s3 sync ./dist/ s3://staging.nefentus.com

@@ -22,6 +22,8 @@ import {
   trustWallet,
   useWallet,
   useCreateWalletInstance,
+  useSetConnectedWallet,
+  ConnectWallet,
 } from "@thirdweb-dev/react";
 import useBalances from "../../hooks/balances";
 import usePrices from "../../hooks/prices";
@@ -34,6 +36,9 @@ import {
 } from "../../utils";
 import { useTranslation } from "react-i18next";
 import Popup from "../../dashboardNew/components/popup/popup";
+import { useAuth } from "../../context/auth/authContext";
+
+const icons = ["walletconnect", "metamask", "coinbase", "trust"];
 
 const formatWalletAddress = (address, symbolCount = 8) => {
   if (!address || address.length <= symbolCount * 2 + 2) {
@@ -64,9 +69,13 @@ const ReceivePayment = ({
   const { internalWalletAddress, fetchInternalWalletAddress } =
     useInternalWallet();
   const { t } = useTranslation();
+  const { user, setUser } = useAuth();
   const [wallets, setWallets] = useState([]);
   const connectedWallet = useWallet();
   const connect = useConnect();
+  const disconnect = useDisconnect();
+  const setConnectedWallet = useSetConnectedWallet();
+  const activeExternalWalletAddress = useAddress();
   const createWalletInstance = useCreateWalletInstance();
 
   const [cryptoAmount, setCryptoAmount] = useState("0");
@@ -89,6 +98,7 @@ const ReceivePayment = ({
   const [selectedCryptoIndex, setSelectedCryptoIndex] = useState(0);
 
   const [isDisable, setDisable] = useState(true);
+  const [onPageLogin, setOnPageLogin] = useState(false);
 
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
@@ -105,6 +115,7 @@ const ReceivePayment = ({
   const backend_API = new backendAPI();
 
   useEffect(() => {
+    fetchProfile();
     clearMessages();
   }, []);
 
@@ -121,7 +132,6 @@ const ReceivePayment = ({
         fetchBalances(internalWalletAddress);
       } else {
         !isDisable && setDisable(true);
-        setShow(true);
       }
     } else {
       connectSelectedWallet();
@@ -167,6 +177,17 @@ const ReceivePayment = ({
     fetchWallets();
   }, []);
 
+  useEffect(() => {
+    if (connectedWallet) {
+      fetchBalances(activeExternalWalletAddress);
+    }
+  }, [connectedWallet, activeExternalWalletAddress]);
+
+  const fetchProfile = async () => {
+    const data = await backend_API.getProfile();
+    setUser({ ...data });
+  };
+
   const fetchWallets = async () => {
     const list = await backend_API.getWalletAddresses();
 
@@ -210,8 +231,9 @@ const ReceivePayment = ({
     ) {
       const response = createWalletInstance(currentWalletConfig);
       await response.connect();
-      fetchBalances(wallet?.address);
+      setConnectedWallet(response);
     }
+    fetchBalances(wallet?.address);
   };
 
   async function doPayment() {
@@ -231,10 +253,13 @@ const ReceivePayment = ({
 
     const res = await handleBuy(
       selectedCryptoIndex,
-      selectedWalletIndex == 0
+      wallets?.length == 0
+        ? activeExternalWalletAddress
+        : selectedWalletIndex == 0
         ? internalWalletAddress
         : wallets[selectedWalletIndex]?.address,
-      selectedWalletIndex != 0,
+      (wallets?.length == 0 && activeExternalWalletAddress) ||
+        selectedWalletIndex != 0,
     );
 
     switch (res) {
@@ -272,13 +297,32 @@ const ReceivePayment = ({
         setErrorMessage(t("messages.error.loginData"));
         return;
       } else {
+        await disconnect();
+        setUser(response);
         setShow(false);
+        setOnPageLogin(true);
         fetchInternalWalletAddress();
+        fetchWallets();
       }
     } catch (error) {
       setErrorMessage(t("messages.error.login"));
     }
   }
+
+  const selectInternalWallet = async () => {
+    if (!Object.keys(user)?.length) setShow(true);
+    else {
+      await disconnect();
+      setSelectedWalletIndex(0);
+    }
+  };
+
+  const onConnectExternalWallet = (wlt) => {
+    if (wallets?.length) {
+      const index = wallets.findIndex((w) => w.type === wlt.walletId);
+      setSelectedWalletIndex(index);
+    } else setConnectedWallet(wlt);
+  };
 
   return (
     <div className={styles.container}>
@@ -353,11 +397,63 @@ const ReceivePayment = ({
               <div className={styles.chooseWallet}>
                 <p>{t("payments.chooseWallet")}</p>
               </div>
-              <Select
-                data={wallets}
-                selectedIndex={selectedWalletIndex}
-                setSelectedIndex={setSelectedWalletIndex}
-              />
+              <div className={styles.fullWidthBox}>
+                {internalWalletAddress && !onPageLogin && (
+                  <Select
+                    data={wallets}
+                    selectedIndex={selectedWalletIndex}
+                    setSelectedIndex={setSelectedWalletIndex}
+                  />
+                )}
+                {((!onPageLogin && !Object.keys(user)?.length) ||
+                  (onPageLogin && Object.keys(user)?.length)) && (
+                  <>
+                    {onPageLogin && selectedWalletIndex == 0 ? (
+                      <div className={styles.internalWalletContainer}>
+                        <img src={NefentusLogo} alt="logo" width={25} />
+                        <div>
+                          <div className={styles.internalWalletTitle}>
+                            {wallets[selectedWalletIndex]?.title}
+                          </div>
+                          <div className={styles.internalWalletAddress}>
+                            {formatWalletAddress(
+                              wallets[selectedWalletIndex]?.address,
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <Button
+                        className={styles.connectInternalButton}
+                        onClick={selectInternalWallet}
+                      >
+                        <img src={NefentusLogo} alt="logo" width={25} />
+                        <span>
+                          {t("payments.pay.internalWalletButtonTitle")}
+                        </span>
+                      </Button>
+                    )}
+                    <div className={styles.or_divider}>{t("general.or")}</div>
+                    {connectedWallet == undefined ? (
+                      <div className={styles.connectWalletContainer}>
+                        <ConnectWallet
+                          // style={{ width: "100%" }}
+                          btnTitle={t("payments.pay.externalWalletButtonTitle")}
+                          onConnect={onConnectExternalWallet}
+                          className={styles.externalWalletButton}
+                        />
+                      </div>
+                    ) : (
+                      <ConnectWallet
+                        style={{ width: "100%" }}
+                        btnTitle={t("payments.pay.externalWalletButtonTitle")}
+                        onConnect={onConnectExternalWallet}
+                        // className={styles.externalWalletButton}
+                      />
+                    )}
+                  </>
+                )}
+              </div>
             </div>
             <div
               className={styles.crypto}
