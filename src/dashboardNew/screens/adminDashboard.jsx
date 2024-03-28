@@ -119,16 +119,6 @@ const AdminDashboard = ({ type }) => {
         totalPricePerDate,
       ] = await Promise.allSettled(getPromises);
 
-      // console.log(
-      //   dataReg,
-      //   dataClick,
-      //   dataOrders,
-      //   dataInc,
-      //   dataUsers,
-      //   reportResp,
-      //   totalPricePerDate,
-      // );
-
       const cardsContent = [
         {
           title: t("dashboard.admin.cardsContent.totalIncome"),
@@ -195,10 +185,10 @@ const AdminDashboard = ({ type }) => {
         dataSize,
         clear ? "" : getDataInput.trim().toLowerCase(),
       );
-      console.log("res", res);
       setDataLength(parseInt(res.count));
       setUsers(res.users);
       updateUsers(res.users);
+      return res.users;
     }
   };
 
@@ -215,6 +205,20 @@ const AdminDashboard = ({ type }) => {
     const resp = await adminApi.deleteUser(userEmail);
     if (resp) {
       updateUsersTable(dataUsers);
+    }
+  };
+
+  const updateUsersTable = async (dataUsers) => {
+    const newUserData = await fetchAdminUsersData();
+
+    if (dataUsers) {
+      const filteredData = newUserData.filter((item) => {
+        return dataUsers.some((user) => item.email === user.email);
+      });
+
+      updateUsers(filteredData);
+    } else {
+      updateUsers(newUserData);
     }
   };
 
@@ -262,7 +266,7 @@ const AdminDashboard = ({ type }) => {
       );
       if (resp) {
         if (resp.ok) {
-          fetchAdminData();
+          fetchAdminUsersData();
           setInfoMessage(t("messages.success.updateUser"));
           clearAddUserFields();
           closeModal();
@@ -344,7 +348,6 @@ const AdminDashboard = ({ type }) => {
 
   function updateUsers(dataUsers) {
     if (dataUsers) {
-      console.log("datauser", dataUsers);
       const newDataUsers = dataUsers?.map((user) => [
         `${user.firstName} ${user.lastName}`,
         user.roles
