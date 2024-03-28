@@ -150,9 +150,9 @@ export default class adminDashboardApi {
     }
   }
 
-  async getUsers() {
+  async getUsers(start, size, keyword) {
     try {
-      const url = `${this.baseURL}/users`;
+      const url = `${this.baseURL}/users?start=${start}&size=${size}&keyword=${keyword}`;
       const options = {
         method: "GET",
         headers: {

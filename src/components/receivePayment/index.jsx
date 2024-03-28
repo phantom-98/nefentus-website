@@ -127,6 +127,7 @@ const ReceivePayment = ({
   const backend_API = new backendAPI();
 
   useEffect(() => {
+    fetchProfile();
     clearMessages();
   }, []);
 
@@ -193,6 +194,11 @@ const ReceivePayment = ({
       fetchBalances(activeExternalWalletAddress);
     }
   }, [connectedWallet, activeExternalWalletAddress]);
+
+  const fetchProfile = async () => {
+    const data = await backend_API.getProfile();
+    setUser({ ...data });
+  };
 
   const fetchWallets = async () => {
     const list = await backend_API.getWalletAddresses();
@@ -443,26 +449,23 @@ const ReceivePayment = ({
                       </Button>
                     )}
                     <div className={styles.or_divider}>{t("general.or")}</div>
-                    <div className={styles.connectWalletContainer}>
-                      {/* <div className={styles.connectWalletIcons}>
-                        {icons.map((icon) => (
-                          <img
-                            src={getWalletIcon(icon)}
-                            width={25}
-                            alt="logo"
-                          />
-                        ))}
-                      </div> */}
+                    {connectedWallet == undefined ? (
+                      <div className={styles.connectWalletContainer}>
+                        <ConnectWallet
+                          // style={{ width: "100%" }}
+                          btnTitle={t("payments.pay.externalWalletButtonTitle")}
+                          onConnect={onConnectExternalWallet}
+                          className={styles.externalWalletButton}
+                        />
+                      </div>
+                    ) : (
                       <ConnectWallet
-                        // style={{ width: "100%" }}
+                        style={{ width: "100%" }}
                         btnTitle={t("payments.pay.externalWalletButtonTitle")}
                         onConnect={onConnectExternalWallet}
-                        className={styles.externalWalletButton}
-                        detailsBtn={() => {
-                          return <button>connected to</button>;
-                        }}
-                      ></ConnectWallet>
-                    </div>
+                        // className={styles.externalWalletButton}
+                      />
+                    )}
                   </>
                 )}
               </div>

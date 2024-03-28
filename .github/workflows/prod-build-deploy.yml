@@ -18,8 +18,11 @@ jobs:
           node-version: "18"
       - name: Installing dependencies
         run: npm install
+      - name: Create .env file
+        run: |
+          echo "${{ secrets.DOTENV_PROD }}" > .env
       - name: Building project
-        run: CI=false REACT_APP_BASE_ENDPOINT_API=${{ secrets.PROD_ENDPOINT }} npm run build
+        run: npm run build
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
