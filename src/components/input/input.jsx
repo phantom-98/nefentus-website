@@ -449,7 +449,10 @@ export const OptionsWithImage = ({
         </div>
         <img src={dropDown} alt="dropdown" />
         {open && options.length > 1 && (
-          <div className={`card ${styles.body}`} style={{ opacity: "1" }}>
+          <div
+            className={`card ${styles.walletDropdownBody}`}
+            style={{ opacity: "1" }}
+          >
             {options.length > 0 ? (
               options.map((item) =>
                 item?.name ? (

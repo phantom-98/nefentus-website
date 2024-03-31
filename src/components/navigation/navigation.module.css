@@ -32,6 +32,10 @@
   align-items: center;
 }
 
+.contentAlignForPay {
+  justify-content: center;
+}
+
 .left {
   gap: 5rem;
 }
