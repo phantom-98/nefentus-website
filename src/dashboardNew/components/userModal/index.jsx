@@ -110,7 +110,6 @@ const UserModal = ({
               value={role}
               options={[
                 t("dashboard.roles.Vendor"),
-                t("dashboard.roles.Affiliate"),
                 t("dashboard.roles.Broker"),
                 t("dashboard.roles.SeniorBroker"),
                 t("dashboard.roles.Leader"),
@@ -125,7 +124,6 @@ const UserModal = ({
               value={role}
               options={[
                 t("dashboard.roles.Vendor"),
-                t("dashboard.roles.Affiliate"),
                 t("dashboard.roles.Broker"),
                 t("dashboard.roles.SeniorBroker"),
               ]}
@@ -139,7 +137,6 @@ const UserModal = ({
               value={role}
               options={[
                 t("dashboard.roles.Vendor"),
-                t("dashboard.roles.Affiliate"),
                 t("dashboard.roles.Broker"),
               ]}
               dashboard
@@ -150,10 +147,7 @@ const UserModal = ({
             <Options
               label={t("dashboard.modal.role").concat("*")}
               value={role}
-              options={[
-                t("dashboard.roles.Vendor"),
-                t("dashboard.roles.Affiliate"),
-              ]}
+              options={[t("dashboard.roles.Vendor")]}
               dashboard
               setValue={setRole}
             />

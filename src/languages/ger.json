@@ -371,13 +371,7 @@
   "footer": {
     "copyright": "© 2023 Nefentus. Alle Rechte vorbehalten.",
     "downloadButton": "JETZT RUNTERLADEN",
-    "content": [
-      "Home",
-      "Zahlung",
-      "Ressourcen",
-      "Affiliate",
-      "Datenschutzrichtlinie"
-    ],
+    "content": ["Home", "Zahlung", "Ressourcen", "Datenschutzrichtlinie"],
     "privacy": "Datenschutzerklärung",
     "imprint": "Impressum",
     "terms": "Bedingungen und Konditionen",

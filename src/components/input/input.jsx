@@ -113,7 +113,7 @@ export const Options = ({
           <div
             className={`card ${styles.body} ${showOnTop && styles.reverseOpen}`}
           >
-            {options.length > 0 ? (
+            {options?.length > 0 &&
               options.map((item) =>
                 item.value ? (
                   <p key={item.value} onClick={() => setValue(item.value)}>
@@ -124,23 +124,7 @@ export const Options = ({
                     {item}
                   </p>
                 ),
-              )
-            ) : (
-              <>
-                <p key={"vendor"} onClick={() => setValue("Vendor")}>
-                  {t("signUp.option1")}
-                </p>
-                <p key={"affiliate"} onClick={() => setValue("Affiliate")}>
-                  {t("signUp.option2")}
-                </p>
-                <p
-                  key={"vendoraffiliate"}
-                  onClick={() => setValue("Vendor / Affiliate")}
-                >
-                  {t("signUp.option1")} / {t("signUp.option2")}
-                </p>
-              </>
-            )}
+              )}
           </div>
         )}
       </div>
@@ -453,7 +437,7 @@ export const OptionsWithImage = ({
             className={`card ${styles.walletDropdownBody}`}
             style={{ opacity: "1" }}
           >
-            {options.length > 0 ? (
+            {options?.length > 0 &&
               options.map((item) =>
                 item?.name ? (
                   <p
@@ -474,23 +458,7 @@ export const OptionsWithImage = ({
                     {item}
                   </p>
                 ),
-              )
-            ) : (
-              <>
-                <p key={"vendor"} onClick={() => setValue("Vendor")}>
-                  {t("signUp.option1")}
-                </p>
-                <p key={"affiliate"} onClick={() => setValue("Affiliate")}>
-                  {t("signUp.option2")}
-                </p>
-                <p
-                  key={"vendoraffiliate"}
-                  onClick={() => setValue("Vendor / Affiliate")}
-                >
-                  {t("signUp.option1")} / {t("signUp.option2")}
-                </p>
-              </>
-            )}
+              )}
           </div>
         )}
       </div>

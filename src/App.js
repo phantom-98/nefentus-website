@@ -269,14 +269,6 @@ function App() {
                           </ScreenLayout>
                         }
                       />
-                      <Route
-                        path="/dashboard/affiliate"
-                        element={
-                          <ScreenLayout>
-                            <AffiliateDashboard />
-                          </ScreenLayout>
-                        }
-                      />
 
                       <Route
                         path="/dashboard/profile"

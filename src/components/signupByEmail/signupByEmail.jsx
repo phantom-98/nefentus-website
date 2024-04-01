@@ -334,7 +334,7 @@ const SignupByEmail = () => {
     const requestData = {
       ...data,
       email: user?.email,
-      roles: ["Affiliate"],
+      roles: ["Vendor"],
       country: CountryOption,
       affiliateLink: user?.affiliateJoined,
     };
