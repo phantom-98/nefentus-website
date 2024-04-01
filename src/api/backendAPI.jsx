@@ -1227,8 +1227,7 @@ export default class backendAPI {
   async setTransactionInfo(transactionInfo, buyerAddress, productOrInvoiceId) {
     try {
       const url = `${this.baseURL}/transaction`;
-      let headers = {};
-      headers = {
+      let headers = {
         "Content-Type": "application/json",
       };
       if (this.token) {
