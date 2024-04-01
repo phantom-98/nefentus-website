@@ -3,6 +3,7 @@ import { coinList } from "../../constants";
 import { useTranslation } from "react-i18next";
 import styles from "./prices.module.css";
 import { useAuth } from "../../context/auth/authContext";
+import { formatUSDBalance } from "../../utils";
 
 const Prices = () => {
   const [prices, setPrices] = useState([]);
@@ -50,7 +51,7 @@ const Prices = () => {
                 </div>
                 <span className={styles.abbr}>
                   {currencyRate.symbol}
-                  {(price.price * currencyRate.rate).toFixed(2)}
+                  {formatUSDBalance(price.price * currencyRate.rate)}
                 </span>
                 <span
                   className={`${styles.change} ${

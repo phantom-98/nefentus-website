@@ -19,13 +19,13 @@ import { useAuth } from "../../../context/auth/authContext";
 const TopNavigation = () => {
   const { theme, toggleTheme } = useTheme();
   const { currencyRate, setCurrencyRate } = useAuth();
+  const [currencyIndex, setCurrencyIndex] = useState(0);
 
   const [profileImage, setProfileImage] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
   const [openLanguage, setOpenLanguage] = useState(false);
 
   const [kyc, setKyc] = useState(false);
-  const [currencyIndex, setCurrencyIndex] = useState(0);
 
   const [height, setHeight] = useState(0);
   const backendAPI = new backend_API();
@@ -61,17 +61,18 @@ const TopNavigation = () => {
       .then((data) => setKyc(data));
   }, []);
 
+  const fetchRate = async () => {
+    const res = await backendAPI.getCurrencyRate();
+    if (res) {
+      setCurrencyRate({
+        ...res,
+        symbol: "€",
+      });
+    }
+  };
+
   useEffect(() => {
-    const fetchRate = async () => {
-      const res = await backendAPI.getCurrencyRate();
-      if (res) {
-        setCurrencyRate({
-          ...res,
-          symbol: "€",
-        });
-      }
-    };
-    if (currencyIndex == 1) {
+    if (currencyIndex === 1) {
       fetchRate();
     } else {
       setCurrencyRate({

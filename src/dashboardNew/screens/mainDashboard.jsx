@@ -23,6 +23,7 @@ const MainDashboard = () => {
   const { theme } = useTheme();
   const backend_Api = new backendAPI();
   const { user, setUser, currencyRate } = useAuth();
+  const [limitedList, setLimitedList] = useState([]);
 
   const labels = {
     Monday: t("dashboard.charts.days.monday"),
@@ -82,6 +83,7 @@ const MainDashboard = () => {
 
     // If the length of user balances array is greater than 7 then it should be slice
     const limitedDateList = result?.length > 7 ? result.splice(0, 7) : result;
+    setLimitedList(limitedDateList);
 
     const chartData = {
       labels: limitedDateList?.map((value) => {
@@ -93,7 +95,7 @@ const MainDashboard = () => {
       datasets: [
         {
           label: t("dashboard.charts.lastWeek"),
-          data: limitedDateList?.map((obj) => obj?.amount * currencyRate.rate),
+          data: limitedDateList?.map((obj) => obj?.amount),
           borderColor:
             theme === "dark" ? "rgba(255, 255, 255,0.2)" : "rgba(0, 0, 0,0.2)",
           backgroundColor:
@@ -104,6 +106,27 @@ const MainDashboard = () => {
 
     setChartData({ ...chartData });
   };
+
+  useEffect(() => {
+    if (chartData && chartData.datasets) {
+      const _datasets = [
+        {
+          label: t("dashboard.charts.lastWeek").concat(
+            " (" + currencyRate.symbol + ")",
+          ),
+          data: limitedList?.map((obj) => obj?.amount * currencyRate.rate),
+          borderColor:
+            theme === "dark" ? "rgba(255, 255, 255,0.2)" : "rgba(0, 0, 0,0.2)",
+          backgroundColor:
+            theme === "dark" ? "rgba(255, 255, 255,0.2)" : "rgba(0, 0, 0,0.2)",
+        },
+      ];
+      let _chart = { ...chartData, datasets: _datasets };
+      console.log("chart", _chart);
+      setChartData(_chart);
+    }
+  }, [currencyRate]);
+
   return (
     <div>
       <Helmet>

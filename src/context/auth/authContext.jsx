@@ -14,20 +14,6 @@ export const AuthProvider = ({ children }) => {
     rate: 1,
   });
 
-  useEffect(() => {
-    const fetchRate = async () => {
-      const api = new backendAPI();
-      const res = await api.getCurrencyRate();
-      if (res) {
-        setCurrencyRate({
-          ...res,
-          symbol: "€",
-        });
-      }
-    };
-    fetchRate();
-  }, []);
-
   return (
     <AuthContext.Provider
       value={{

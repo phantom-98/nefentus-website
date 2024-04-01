@@ -154,7 +154,10 @@ const CryptoItem = ({ data }) => {
 
         <div>
           <div className={styles.title}>{data.name}</div>
-          <div className={styles.subtitle}>{`${data.price?.toFixed(2)}`}</div>
+          <div className={styles.subtitle}>
+            {currencyRate.symbol}
+            {formatUSDBalance(data.price * currencyRate.rate)}
+          </div>
         </div>
       </div>
       <div className={styles.middle}>
@@ -165,7 +168,9 @@ const CryptoItem = ({ data }) => {
         <div className={styles.title}>
           {currencyRate.symbol}
           {formatUSDBalance(
-            balanceUSD === "loading" ? balanceUSD : balanceUSD.toString(),
+            balanceUSD === "loading"
+              ? balanceUSD
+              : formatUSDBalance(balanceUSD * currencyRate.rate),
           )}
         </div>
         <div className={styles.tooltip}>

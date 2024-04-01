@@ -79,6 +79,7 @@ const AdminDashboard = ({ type }) => {
   const [dataPage, setDataPage] = useState(0);
   const [dataSize, setDataSize] = useState(10);
   const [spinner, setSpinner] = useState(false);
+  const [graph, setGraph] = useState();
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -170,13 +171,32 @@ const AdminDashboard = ({ type }) => {
       setCardInfo(cardsContent);
 
       setBarContent(regRoleGraphData);
+      setGraph(totalPricePerDate.value);
       let _graph = {};
       Object.keys(totalPricePerDate.value).forEach((key) => {
-        _graph[key] = totalPricePerDate.value[key] * currencyRate.rate;
+        _graph[key] = totalPricePerDate.value[key];
       });
       setGraphData(_graph);
     }
   };
+
+  useEffect(() => {
+    if (graph) {
+      let _graph = {};
+      Object.keys(graph).forEach((key) => {
+        _graph[key] = graph[key] * currencyRate.rate;
+      });
+      setGraphData(_graph);
+    }
+    if (tableData) {
+      const _table = tableData.map((item, index) => {
+        const _item = item;
+        _item[4] = formatUSDBalance(users[index].income * currencyRate.rate);
+        return _item;
+      });
+      setTableData(_table);
+    }
+  }, [currencyRate]);
 
   const fetchAdminUsersData = async (clear) => {
     const result = await adminApi.checkPermission();

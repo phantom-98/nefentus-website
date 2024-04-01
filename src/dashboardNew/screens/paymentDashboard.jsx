@@ -10,12 +10,13 @@ import TableStatus from "../components/tableStatus/tableStatus";
 import vendorDashboardApi from "../../api/vendorDashboardApi";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 import { useTranslation } from "react-i18next";
-import { checkJwtToken } from "../../utils";
+import { checkJwtToken, formatUSDBalance } from "../../utils";
 import { Helmet } from "react-helmet";
 import { useAuth } from "../../context/auth/authContext";
 
 const PaymentDashboard = () => {
   const [invoiceData, setInvoiceData] = useState([]);
+  const [invoices, setInvoices] = useState([]);
   const [isLoadingInvoiceData, setIsLoadingInvoiceData] = useState(false);
   const { t } = useTranslation();
   const { currencyRate } = useAuth();
@@ -39,15 +40,29 @@ const PaymentDashboard = () => {
     newInvoices = newInvoices.reverse();
 
     if (newInvoices) {
+      setInvoices(newInvoices);
       const newInvoiceData = newInvoices.map((item) => invoiceToArray(item));
       setInvoiceData(newInvoiceData);
     }
   }
 
+  useEffect(() => {
+    if (invoices) {
+      const _invoiceData = invoiceData.map((item, index) => {
+        const _row = item;
+        _row[1] = formatUSDBalance(
+          parseFloat(invoices[index].price) * currencyRate.rate,
+        );
+        return _row;
+      });
+      setInvoiceData(_invoiceData);
+    }
+  }, [currencyRate]);
+
   function invoiceToArray(invoice) {
     return [
       new Date(invoice.createdAt).toLocaleString(),
-      (parseFloat(invoice.price) * currencyRate.rate).toFixed(2),
+      formatUSDBalance(parseFloat(invoice.price) * currencyRate.rate),
       <TableStatus color={invoice.paidAt ? "green" : "blue"}>
         {invoice.paidAt ? t("general.paid") : t("general.open")}
       </TableStatus>,

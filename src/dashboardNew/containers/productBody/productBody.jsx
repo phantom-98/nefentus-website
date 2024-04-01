@@ -51,7 +51,7 @@ const ProductBody = () => {
 
       const productData = newProducts.map((item, index) => ({
         ...item,
-        price: item.price * currencyRate.rate,
+        price: item.price,
         image: newSignedImagePaths[index],
       }));
       setProducts(productData);
@@ -150,7 +150,7 @@ const ProductBody = () => {
       setProductLink(link);
       setName(product.name);
       setDescription(product.description);
-      setPrice(product.price.toFixed(2));
+      setPrice((product.price * currencyRate.rate).toFixed(2));
       if (product.stock != "-1") {
         setStock(product.stock);
       } else {
@@ -261,7 +261,11 @@ const ProductBody = () => {
               />
               <Input
                 dashboard
-                label={t("products.createProductModal.priceLabel") + "*"}
+                label={
+                  t("products.createProductModal.priceLabel").concat(
+                    " (" + currencyRate.symbol + ")",
+                  ) + "*"
+                }
                 placeholder={t("products.createProductModal.pricePlaceholder")}
                 value={price}
                 setState={setPrice}

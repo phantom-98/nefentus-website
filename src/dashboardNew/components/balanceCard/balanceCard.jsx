@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import usePrices from "../../../hooks/prices";
 import { useAuth } from "../../../context/auth/authContext";
+import { formatUSDBalance } from "../../../utils";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -97,7 +98,7 @@ const BalanceCard = ({ wallet }) => {
   useEffect(() => {
     if (checkBalances(balances) && checkPrices(prices)) {
       let totalBalance = balances
-        .map((balance, index) => balance * prices[index] * currencyRate.rate)
+        .map((balance, index) => balance * prices[index])
         .reduce((pre, cur) => parseFloat(cur) + parseFloat(pre), 0);
       setTotal(totalBalance || 0);
 
@@ -110,7 +111,7 @@ const BalanceCard = ({ wallet }) => {
         setPercentages(pers);
       }
     }
-  }, [balances, prices, currencyRate.rate]);
+  }, [balances, prices]);
 
   return (
     <Card className={styles.card}>
@@ -118,7 +119,7 @@ const BalanceCard = ({ wallet }) => {
         <div className={styles.label}>{t("dashboard.balance")}</div>
         <div className={styles.value}>
           {currencyRate.symbol}
-          {parseFloat(total).toFixed(2)}
+          {formatUSDBalance(total * currencyRate.rate)}
         </div>
         <div className={styles.subtitle}>
           {currencies().length} {t("dashboard.currencies")}

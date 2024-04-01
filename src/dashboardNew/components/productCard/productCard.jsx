@@ -44,7 +44,7 @@ const ProductCard = ({
           <div>
             <p className={styles.price}>
               {currencyRate.symbol}
-              {formatUSDBalance(product.price)}
+              {formatUSDBalance(product.price * currencyRate.rate)}
             </p>
             <Button link={`${window.location.origin}/product/${product.link}`}>
               {t("general.openAction")}

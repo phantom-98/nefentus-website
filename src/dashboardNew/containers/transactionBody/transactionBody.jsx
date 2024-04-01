@@ -13,6 +13,7 @@ import { formatUSDBalance } from "../../../utils";
 
 const TransactionBody = () => {
   const [orderData, setOrderData] = useState([]);
+  const [orders, setOrders] = useState([]);
   const dashboardApi = new vendorDashboardApi();
   const [totalAmount, setTotalAmount] = useState(0);
   const [getDataInput, setGetDataInput] = useState("");
@@ -47,6 +48,7 @@ const TransactionBody = () => {
       list.forEach((item) => {
         total = total + item.order.totalPrice;
       });
+      setOrders(list);
       const newOrderData = list.map((item) =>
         orderToArray(item.order, item.hash),
       );
@@ -55,6 +57,19 @@ const TransactionBody = () => {
       setFilteredData(newOrderData);
     }
   }
+
+  useEffect(() => {
+    if (orders) {
+      const _orderData = orderData.map((item, index) => {
+        const _row = item;
+        _row[6] =
+          currencyRate.symbol +
+          formatUSDBalance(orders[index].order.totalPrice * currencyRate.rate);
+        return _row;
+      });
+      setOrderData(_orderData);
+    }
+  }, [currencyRate]);
 
   const showDetails = async (hash) => {
     const data = await dashboardApi.getTransaction(hash);
