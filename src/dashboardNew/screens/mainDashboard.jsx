@@ -22,7 +22,7 @@ const MainDashboard = () => {
   const { language } = i18n;
   const { theme } = useTheme();
   const backend_Api = new backendAPI();
-  const { user, setUser } = useAuth();
+  const { user, setUser, currencyRate } = useAuth();
 
   const labels = {
     Monday: t("dashboard.charts.days.monday"),
@@ -93,7 +93,7 @@ const MainDashboard = () => {
       datasets: [
         {
           label: t("dashboard.charts.lastWeek"),
-          data: limitedDateList?.map((obj) => obj?.amount),
+          data: limitedDateList?.map((obj) => obj?.amount * currencyRate.rate),
           borderColor:
             theme === "dark" ? "rgba(255, 255, 255,0.2)" : "rgba(0, 0, 0,0.2)",
           backgroundColor:

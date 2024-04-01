@@ -495,7 +495,7 @@
       "agent": "Agent email",
       "roles": "Roles",
       "status": "Status",
-      "income": "Income ($)",
+      "income": "Income",
       "joinedOn": "Joined on",
       "earnings": "Earnings",
       "actions": "Actions",
@@ -1020,7 +1020,7 @@
   },
   "payments": {
     "title": "Create a new invoice",
-    "enterAmount": "Enter amount in $",
+    "enterAmount": "Enter amount in ",
     "amount": "Amount",
     "email": "Email",
     "name": "Name",
@@ -1035,7 +1035,7 @@
     "downloadReceipt": "Download receipt",
     "table": {
       "created": "Created at",
-      "price": "Price ($)",
+      "price": "Price",
       "status": "Status",
       "qr": "QR code",
       "actions": "Actions"
@@ -1078,7 +1078,7 @@
       "currency": "Currency",
       "transaction": "Transaction",
       "date": "Date",
-      "earnings": "Amount ($)",
+      "earnings": "Amount",
       "action": "Action"
     }
   },

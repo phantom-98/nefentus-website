@@ -8,6 +8,8 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { TransactionInfo } from "../../components/popup/popup";
 import styles from "./transactionBody.module.css";
+import { useAuth } from "../../../context/auth/authContext";
+import { formatUSDBalance } from "../../../utils";
 
 const TransactionBody = () => {
   const [orderData, setOrderData] = useState([]);
@@ -18,6 +20,7 @@ const TransactionBody = () => {
   const [detail, setDetail] = useState(false);
   const [transaction, setTransaction] = useState(null);
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
 
   const label = [
     t("transactions.table.product"),
@@ -26,7 +29,7 @@ const TransactionBody = () => {
     t("transactions.table.currency"),
     t("transactions.table.invoice"),
     t("transactions.table.date"),
-    t("transactions.table.earnings"),
+    t("transactions.table.earnings").concat("(" + currencyRate.symbol + ")"),
     t("transactions.table.action"),
   ];
 
@@ -74,7 +77,9 @@ const TransactionBody = () => {
         link={`${window.location.origin}/pay/${order.invoice.link}`}
       />,
       moment(order.updatedAt).format("MMM D YYYY, HH:mm:ss"),
-      `$${order.totalPrice}`,
+      `${currencyRate.symbol}${formatUSDBalance(
+        order.totalPrice * currencyRate.rate,
+      )}`,
       <TableAction
         button2={t("transactions.table.details")}
         onClick2={() => showDetails(hash)}
@@ -109,7 +114,9 @@ const TransactionBody = () => {
     <div>
       <TableSearch
         title={t("transactions.title")}
-        description={`${t("transactions.subtitle")} ${totalAmount}$`}
+        description={`${t("transactions.subtitle")} ${formatUSDBalance(
+          totalAmount * currencyRate.rate,
+        )}${currencyRate.symbol}`}
         users={filteredData}
         setGetDataInput={setGetDataInput}
         findUser={findUser}

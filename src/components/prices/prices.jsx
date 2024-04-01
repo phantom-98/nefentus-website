@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { coinList } from "../../constants";
 import { useTranslation } from "react-i18next";
 import styles from "./prices.module.css";
+import { useAuth } from "../../context/auth/authContext";
 
 const Prices = () => {
   const [prices, setPrices] = useState([]);
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
 
   useEffect(() => {
     const getPrices = async () => {
@@ -46,7 +48,10 @@ const Prices = () => {
                     <span className={styles.opacity}>{price.name}</span>
                   </p>
                 </div>
-                <span className={styles.abbr}>${price.price.toFixed(2)}</span>
+                <span className={styles.abbr}>
+                  {currencyRate.symbol}
+                  {(price.price * currencyRate.rate).toFixed(2)}
+                </span>
                 <span
                   className={`${styles.change} ${
                     price.priceChange >= 0 ? styles.positive : styles.negative

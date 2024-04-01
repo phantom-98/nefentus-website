@@ -449,7 +449,7 @@
       "agent": "E-Mail des Agenten",
       "roles": "Rollen",
       "status": "Status",
-      "income ": "Einkommen ($)",
+      "income ": "Einkommen",
       "joinedOn": "Beigetreten am",
       "earnings": "Ergebnis",
       "actions": "Aktionen",
@@ -974,7 +974,7 @@
   },
   "payments": {
     "title": "Neue Rechnung erstellen",
-    "enterAmount": "Betrag in $ eingeben",
+    "enterAmount": "Betrag in ",
     "amount": "Anzahl",
     "email": "E-Mail",
     "name": "Name",
@@ -989,7 +989,7 @@
     "downloadReceipt": "Zahlungseingang herunterladen",
     "table": {
       "created": "Erstellt am",
-      "price": "Preis ($)",
+      "price": "Preis",
       "status": "Status",
       "qr": "QR-Code",
       "actions": "Aktionen"
@@ -1033,7 +1033,7 @@
       "currency": "Währung",
       "transaction": "Transaktion",
       "date": "Datum",
-      "earnings": "Betrag ($)",
+      "earnings": "Betrag",
       "action": "Aktion"
     }
   },

@@ -7,6 +7,7 @@ import styles from "./earningCards.module.css";
 import { useEffect, useState } from "react";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../context/auth/authContext";
 
 const EarningCards = () => {
   const [cardInfo, setCardInfo] = useState([]);
@@ -14,6 +15,7 @@ const EarningCards = () => {
 
   const { t, i18n } = useTranslation();
   const { language } = i18n;
+  const { currencyRate } = useAuth();
 
   useEffect(() => {
     fetchData();
@@ -26,10 +28,9 @@ const EarningCards = () => {
     const cardsContent = [
       {
         title: t("dashboard.earningCards.first"),
-        value: `$${parseFloat(sales?.value?.total?.number)?.toLocaleString(
-          undefined,
-          { maximumFractionDigits: 2 },
-        )}`,
+        value: `${currencyRate.symbol}${(
+          parseFloat(sales?.value?.total?.number) * currencyRate.rate
+        )?.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
         percentage: sales?.value?.total?.percentage
           ? parseFloat(sales?.value?.total?.percentage).toFixed(2)
           : 0,
@@ -37,8 +38,8 @@ const EarningCards = () => {
       },
       {
         title: t("dashboard.earningCards.second"),
-        value: `$${parseFloat(
-          sales?.value?.last24Hours?.number,
+        value: `${currencyRate.symbol}${(
+          parseFloat(sales?.value?.last24Hours?.number) * currencyRate.rate
         )?.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
         percentage: sales?.value?.last24Hours?.percentage
           ? parseFloat(sales?.value?.last24Hours?.percentage).toFixed(2)
@@ -47,10 +48,9 @@ const EarningCards = () => {
       },
       {
         title: t("dashboard.earningCards.third"),
-        value: `$${parseFloat(sales?.value?.last30Days?.number)?.toLocaleString(
-          undefined,
-          { maximumFractionDigits: 2 },
-        )}`,
+        value: `${currencyRate.symbol}${(
+          parseFloat(sales?.value?.last30Days?.number) * currencyRate.rate
+        )?.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
         percentage: sales?.value?.last30Days?.percentage
           ? parseFloat(sales?.value?.last30Days?.percentage).toFixed(2)
           : 0,

@@ -28,6 +28,7 @@ import Popup from "../popup/popup";
 import { web3Api } from "../../../api/web3Api";
 import { coinbaseWallet } from "@thirdweb-dev/react";
 import { trustWallet } from "@thirdweb-dev/react";
+import { useAuth } from "../../../context/auth/authContext";
 
 const CryptoCard = ({ wallet }) => {
   const { internalWalletAddress } = useInternalWallet();
@@ -138,6 +139,7 @@ export default CryptoCard;
 const CryptoItem = ({ data }) => {
   let balanceToken = "loading";
   let balanceUSD = "loading";
+  const { currencyRate } = useAuth();
   if (data.value) {
     balanceToken = data.value;
     if (data.price) {
@@ -161,7 +163,7 @@ const CryptoItem = ({ data }) => {
       </div>
       <div className={styles.right}>
         <div className={styles.title}>
-          $
+          {currencyRate.symbol}
           {formatUSDBalance(
             balanceUSD === "loading" ? balanceUSD : balanceUSD.toString(),
           )}

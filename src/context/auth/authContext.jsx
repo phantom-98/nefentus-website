@@ -1,14 +1,37 @@
 // ThemeContext.js
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
+import backendAPI from "../../api/backendAPI";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [user, setUser] = useState({});
+  const [currencyRate, setCurrencyRate] = useState({
+    from: "USD",
+    to: "USD",
+    symbol: "$",
+    rate: 1,
+  });
+
+  useEffect(() => {
+    const fetchRate = async () => {
+      const api = new backendAPI();
+      const res = await api.getCurrencyRate();
+      if (res) {
+        setCurrencyRate({
+          ...res,
+          symbol: "€",
+        });
+      }
+    };
+    fetchRate();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ avatarUrl, setAvatarUrl, user, setUser }}>
+    <AuthContext.Provider
+      value={{ avatarUrl, setAvatarUrl, user, setUser, currencyRate }}
+    >
       {children}
     </AuthContext.Provider>
   );

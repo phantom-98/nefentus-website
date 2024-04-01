@@ -4,6 +4,8 @@ import Edit from "../../../assets/icon/edit.svg";
 import Delete from "../../../assets/icon/delete.svg";
 import Button from "../button/button";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../context/auth/authContext";
+import { formatUSDBalance } from "../../../utils";
 
 const ProductCard = ({
   onClickDelete = () => {},
@@ -12,6 +14,7 @@ const ProductCard = ({
   update,
 }) => {
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
 
   return (
     <>
@@ -39,7 +42,10 @@ const ProductCard = ({
 
         <div className={`${styles.body} ${styles.flex}`}>
           <div>
-            <p className={styles.price}>${product.price}</p>
+            <p className={styles.price}>
+              {currencyRate.symbol}
+              {formatUSDBalance(product.price)}
+            </p>
             <Button link={`${window.location.origin}/product/${product.link}`}>
               {t("general.openAction")}
             </Button>

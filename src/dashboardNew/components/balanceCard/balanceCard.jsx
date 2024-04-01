@@ -18,6 +18,7 @@ import useInternalWallet from "../../../hooks/internalWallet";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import usePrices from "../../../hooks/prices";
+import { useAuth } from "../../../context/auth/authContext";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -66,6 +67,7 @@ const options = {
 };
 
 const BalanceCard = ({ wallet }) => {
+  const { currencyRate } = useAuth();
   const { t } = useTranslation();
 
   const [total, setTotal] = useState(0);
@@ -114,7 +116,10 @@ const BalanceCard = ({ wallet }) => {
     <Card className={styles.card}>
       <div className={styles.left}>
         <div className={styles.label}>{t("dashboard.balance")}</div>
-        <div className={styles.value}>${parseFloat(total).toFixed(2)}</div>
+        <div className={styles.value}>
+          {currencyRate.symbol}
+          {parseFloat(total).toFixed(2)}
+        </div>
         <div className={styles.subtitle}>
           {currencies().length} {t("dashboard.currencies")}
         </div>

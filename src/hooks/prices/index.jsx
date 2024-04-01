@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { uniswapApi } from "../../api/web3Api";
 import { currencies, blockchainToStablecoin } from "../../constants";
+import { useAuth } from "../../context/auth/authContext";
 
 function usePrices() {
   const [prices, setPrices] = useState(initPrices());
   const uniswapAPi = new uniswapApi();
+  const { currencyRate } = useAuth();
 
   function initPrices() {
     return currencies().map((currency) => undefined);
@@ -21,7 +23,7 @@ function usePrices() {
         ),
       ),
     );
-    setPrices(pricesList);
+    setPrices(pricesList.map((p) => p * currencyRate.rate));
   }
 
   useEffect(() => {

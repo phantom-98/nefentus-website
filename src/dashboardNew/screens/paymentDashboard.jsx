@@ -12,18 +12,18 @@ import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 import { useTranslation } from "react-i18next";
 import { checkJwtToken } from "../../utils";
 import { Helmet } from "react-helmet";
-
-const label = ["Created At", "Price ($)", "Status", "QR Code", "Actions"];
+import { useAuth } from "../../context/auth/authContext";
 
 const PaymentDashboard = () => {
   const [invoiceData, setInvoiceData] = useState([]);
   const [isLoadingInvoiceData, setIsLoadingInvoiceData] = useState(false);
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
 
   const vendorAPI = new vendorDashboardApi();
   const label = [
     t("payments.table.created"),
-    t("payments.table.price"),
+    t("payments.table.price").concat("(" + currencyRate.symbol + ")"),
     t("payments.table.status"),
     t("payments.table.qr"),
     t("payments.table.actions"),
@@ -37,7 +37,6 @@ const PaymentDashboard = () => {
     let newInvoices = await vendorAPI.getInvoices();
     // Reverse the array
     newInvoices = newInvoices.reverse();
-    console.log(newInvoices, "newInvoices");
 
     if (newInvoices) {
       const newInvoiceData = newInvoices.map((item) => invoiceToArray(item));
@@ -48,7 +47,7 @@ const PaymentDashboard = () => {
   function invoiceToArray(invoice) {
     return [
       new Date(invoice.createdAt).toLocaleString(),
-      parseFloat(invoice.price).toFixed(2),
+      (parseFloat(invoice.price) * currencyRate.rate).toFixed(2),
       <TableStatus color={invoice.paidAt ? "green" : "blue"}>
         {invoice.paidAt ? t("general.paid") : t("general.open")}
       </TableStatus>,

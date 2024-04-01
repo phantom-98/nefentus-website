@@ -50,14 +50,14 @@ const AdminDashboard = ({ type }) => {
   const [isReloadData, setIsReloadData] = useState(false);
   const [totalRegUserCnt, setTotalRegUserCnt] = useState(0);
   const { t, i18n } = useTranslation();
-  const { user } = useAuth();
+  const { user, currencyRate } = useAuth();
 
   const label = [
     t("dashboard.tableHeaders.name"),
     t("dashboard.tableHeaders.roles"),
     t("dashboard.tableHeaders.email"),
     t("dashboard.tableHeaders.status"),
-    t("dashboard.tableHeaders.income"),
+    t("dashboard.tableHeaders.income").concat("(" + currencyRate.symbol + ")"),
     t("dashboard.tableHeaders.joinedOn"),
     // t("dashboard.tableHeaders.earnings"),
     t("dashboard.tableHeaders.agent"),
@@ -170,8 +170,11 @@ const AdminDashboard = ({ type }) => {
       setCardInfo(cardsContent);
 
       setBarContent(regRoleGraphData);
-
-      setGraphData(totalPricePerDate.value);
+      let _graph = {};
+      Object.keys(totalPricePerDate.value).forEach((key) => {
+        _graph[key] = totalPricePerDate.value[key] * currencyRate.rate;
+      });
+      setGraphData(_graph);
     }
   };
 
@@ -366,7 +369,7 @@ const AdminDashboard = ({ type }) => {
         ) : (
           <TableStatus color="red">{t("general.notActive")}</TableStatus>
         ),
-        formatUSDBalance(user.income),
+        formatUSDBalance(user.income * currencyRate.rate),
         moment(user.createdAt).format("MMM D YYYY, HH:mm:ss"),
         // `$${user.income}`,
         user.agent,
