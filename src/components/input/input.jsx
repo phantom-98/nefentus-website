@@ -9,6 +9,9 @@ import { useTheme } from "../../context/themeContext/themeContext";
 import WalletAddressFormatter from "../../func/walletAddressFormatter";
 import CopyAddress from "../../assets/icon/copy.png";
 import { MessageContext } from "../../context/message";
+import DropDownIcon from "../../assets/icon/dropdown.svg";
+import USD from "../../assets/icon/usd.png";
+import EUR from "../../assets/icon/eur.png";
 
 const Input = ({
   label,
@@ -494,6 +497,85 @@ export const OptionsWithImage = ({
           </div>
         )}
       </div>
+    </div>
+  );
+};
+
+export const CurrencySelect = ({ selectedIndex, setSelectedIndex }) => {
+  const data = [
+    { title: "USD $", icon: USD, alt: "" },
+    { title: "EUR $", icon: EUR, alt: "" },
+  ];
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <div
+        className={`${styles.currencySelect}`}
+        onClick={() => setOpen((prev) => !prev)}
+        // onMouseLeave={() => setOpen(false)}
+      >
+        <CurrencyOption
+          icon={data[selectedIndex]?.icon}
+          optionTitle={data[selectedIndex]?.title}
+          alt={data[selectedIndex]?.alt}
+          dropdown
+        />
+        {open && (
+          <div className={styles.selectBody}>
+            {data.map((item, index) => {
+              return (
+                <div key={index} onClick={() => setSelectedIndex(index)}>
+                  <CurrencyOption
+                    icon={item.icon}
+                    optionTitle={item.title}
+                    alt={item.alt}
+                    selected={selectedIndex === index}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+const CurrencyOption = ({ icon, optionTitle, alt, dropdown, selected }) => {
+  return (
+    <div
+      className={styles.optionLineWrapper}
+      style={{
+        borderRadius: dropdown ? "8px" : "0",
+      }}
+    >
+      <div className={styles.optionLine}>
+        <img src={icon} className={styles.icon} alt={alt} />
+        <div className={styles.optionContainer}>
+          <p className={styles.optionTitle}> {optionTitle} </p>
+        </div>
+      </div>
+      {dropdown && (
+        <img src={DropDownIcon} alt="dropdown" width={12} height={12} />
+      )}
+      {selected && (
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="check">
+            <path
+              id="Icon"
+              d="M13.3334 4L6.00008 11.3333L2.66675 8"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </g>
+        </svg>
+      )}
     </div>
   );
 };

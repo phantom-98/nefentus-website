@@ -97,7 +97,7 @@ const BalanceCard = ({ wallet }) => {
   useEffect(() => {
     if (checkBalances(balances) && checkPrices(prices)) {
       let totalBalance = balances
-        .map((balance, index) => balance * prices[index])
+        .map((balance, index) => balance * prices[index] * currencyRate.rate)
         .reduce((pre, cur) => parseFloat(cur) + parseFloat(pre), 0);
       setTotal(totalBalance || 0);
 
@@ -110,7 +110,7 @@ const BalanceCard = ({ wallet }) => {
         setPercentages(pers);
       }
     }
-  }, [balances, prices]);
+  }, [balances, prices, currencyRate.rate]);
 
   return (
     <Card className={styles.card}>

@@ -13,15 +13,19 @@ import UserProfile from "../../../components/userProfile/userProfile";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import { NefentusLogo } from "../../../assets/icon/logos/logos";
 import { Notification } from "../../../assets/icon/icons";
+import { CurrencySelect } from "../../../components/input/input";
+import { useAuth } from "../../../context/auth/authContext";
 
 const TopNavigation = () => {
   const { theme, toggleTheme } = useTheme();
+  const { currencyRate, setCurrencyRate } = useAuth();
 
   const [profileImage, setProfileImage] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
   const [openLanguage, setOpenLanguage] = useState(false);
 
   const [kyc, setKyc] = useState(false);
+  const [currencyIndex, setCurrencyIndex] = useState(0);
 
   const [height, setHeight] = useState(0);
   const backendAPI = new backend_API();
@@ -57,6 +61,28 @@ const TopNavigation = () => {
       .then((data) => setKyc(data));
   }, []);
 
+  useEffect(() => {
+    const fetchRate = async () => {
+      const res = await backendAPI.getCurrencyRate();
+      if (res) {
+        setCurrencyRate({
+          ...res,
+          symbol: "€",
+        });
+      }
+    };
+    if (currencyIndex == 1) {
+      fetchRate();
+    } else {
+      setCurrencyRate({
+        from: "USD",
+        to: "USD",
+        rate: 1,
+        symbol: "$",
+      });
+    }
+  }, [currencyIndex]);
+
   return (
     <>
       <div
@@ -69,6 +95,10 @@ const TopNavigation = () => {
           <NefentusLogo />
         </div>
         <div className={styles.rightSide}>
+          <CurrencySelect
+            selectedIndex={currencyIndex}
+            setSelectedIndex={setCurrencyIndex}
+          />
           <UserProfile logOut={logOut} requireKYC={kyc} />
 
           <div className={styles.iconButton}>
