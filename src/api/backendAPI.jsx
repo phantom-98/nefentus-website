@@ -1227,12 +1227,11 @@ export default class backendAPI {
   async setTransactionInfo(transactionInfo, buyerAddress, productOrInvoiceId) {
     try {
       const url = `${this.baseURL}/transaction`;
-      let headers = {};
+      let headers = {
+        "Content-Type": "application/json",
+      };
       if (this.token) {
-        headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        };
+        headers.Authorization = `Bearer ${this.token}`;
       }
 
       const body = {
@@ -1321,11 +1320,11 @@ export default class backendAPI {
     try {
       const url = `${this.baseURL}/payment`;
       let headers = {};
+      headers = {
+        "Content-Type": "application/json",
+      };
       if (this.token) {
-        headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        };
+        headers.Authorization = `Bearer ${this.token}`;
       }
 
       const body = {
@@ -1362,11 +1361,11 @@ export default class backendAPI {
     try {
       const url = `${this.baseURL}/wallet/address?address=${ConnectedWallet.address}&name=${ConnectedWallet.name}`;
       let headers = {};
+      headers = {
+        "Content-Type": "application/json",
+      };
       if (this.token) {
-        headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        };
+        headers.Authorization = `Bearer ${this.token}`;
       }
 
       const options = {
@@ -1389,11 +1388,11 @@ export default class backendAPI {
     try {
       const url = `${this.baseURL}/wallet/seedPhrase`;
       let headers = {};
+      headers = {
+        "Content-Type": "application/json",
+      };
       if (this.token) {
-        headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        };
+        headers.Authorization = `Bearer ${this.token}`;
       }
 
       const body = {
@@ -1420,11 +1419,11 @@ export default class backendAPI {
     try {
       const url = `${this.baseURL}/wallet/recoverWallet`;
       let headers = {};
+      headers = {
+        "Content-Type": "application/json",
+      };
       if (this.token) {
-        headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        };
+        headers.Authorization = `Bearer ${this.token}`;
       }
 
       const body = {
