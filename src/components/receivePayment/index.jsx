@@ -245,7 +245,7 @@ const ReceivePayment = ({
     pwd && setPwd(false);
     if (isDisable) return;
 
-    if (!password && selectedWalletIndex == 0) {
+    if (wallets?.length > 0 && !password && selectedWalletIndex == 0) {
       !pwd && setPwd(true);
       return;
     }
