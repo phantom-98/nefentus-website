@@ -422,7 +422,7 @@
   "footer": {
     "copyright": "© 2023 Nefentus. All rights reserved.",
     "downloadButton": "DOWNLOAD NOW",
-    "content": ["Home", "Payment", "Resources", "Affiliate", "Privacy Policy"],
+    "content": ["Home", "Payment", "Resources", "Privacy Policy"],
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
     "terms": "Terms and Condition",

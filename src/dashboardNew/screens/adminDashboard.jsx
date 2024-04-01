@@ -154,16 +154,18 @@ const AdminDashboard = ({ type }) => {
       }
 
       let total = 0;
-      const regRoleGraphData = reportResp.value.map((item) => {
-        total = total + item.count;
+      const regRoleGraphData = reportResp.value
+        ?.filter((report) => report.role !== "affiliate")
+        ?.map((item) => {
+          total = total + item.count;
 
-        return {
-          color: roleColors[item.role],
-          legend: ROLE_TO_NAME[item.role],
-          num: item.count,
-          percentage: item.percentage,
-        };
-      });
+          return {
+            color: roleColors[item.role],
+            legend: ROLE_TO_NAME[item.role],
+            num: item.count,
+            percentage: item.percentage,
+          };
+        });
 
       setTotalRegUserCnt(total);
 
