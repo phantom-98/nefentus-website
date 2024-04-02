@@ -96,15 +96,15 @@ const TopNavigation = () => {
           <NefentusLogo />
         </div>
         <div className={styles.rightSide}>
+          <UserProfile logOut={logOut} requireKYC={kyc} />
           <CurrencySelect
             selectedIndex={currencyIndex}
             setSelectedIndex={setCurrencyIndex}
           />
-          <UserProfile logOut={logOut} requireKYC={kyc} />
-
+          {/* 
           <div className={styles.iconButton}>
             <Notification />
-          </div>
+          </div> */}
           <div className={styles.iconButton}>
             <LanguageBox />
           </div>
