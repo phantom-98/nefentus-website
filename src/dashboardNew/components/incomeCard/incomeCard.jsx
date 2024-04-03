@@ -16,6 +16,7 @@ import {
 } from "chart.js";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../../context/themeContext/themeContext";
+import { useAuth } from "../../../context/auth/authContext";
 
 ChartJS.register(
   CategoryScale,
@@ -51,7 +52,7 @@ export const options = {
       },
       ticks: {
         callback: function (value, index, ticks) {
-          return value + " $";
+          return value;
         },
         suggestedMin: 0,
         padding: 10,
@@ -105,7 +106,7 @@ export const optionsLight = {
       },
       ticks: {
         callback: function (value, index, ticks) {
-          return value + " $";
+          return value;
         },
         suggestedMin: 0,
         padding: 10,
@@ -137,12 +138,16 @@ export const optionsLight = {
 
 const IncomeCard = ({ data }) => {
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
 
   const { theme } = useTheme();
 
   return (
     <Card className={styles.card}>
-      <div className={styles.label}>{t("dashboard.balanceTitle")}</div>
+      <div className={styles.label}>
+        {t("dashboard.balanceTitle")}
+        {` (${currencyRate.symbol})`}
+      </div>
 
       {Object.keys(data).length != 0 && (
         <div className={styles.chart}>

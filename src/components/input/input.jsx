@@ -9,6 +9,10 @@ import { useTheme } from "../../context/themeContext/themeContext";
 import WalletAddressFormatter from "../../func/walletAddressFormatter";
 import CopyAddress from "../../assets/icon/copy.png";
 import { MessageContext } from "../../context/message";
+import DropDownIcon from "../../assets/icon/dropdown.svg";
+import CheckedIcon from "../../assets/icon/checked.svg";
+import USD from "../../assets/icon/usd.png";
+import EUR from "../../assets/icon/eur.png";
 
 const Input = ({
   label,
@@ -462,6 +466,79 @@ export const OptionsWithImage = ({
           </div>
         )}
       </div>
+    </div>
+  );
+};
+
+export const CurrencySelect = ({ selectedIndex, setSelectedIndex }) => {
+  const data = [
+    { title: "USD $", icon: USD, alt: "" },
+    { title: "EUR €", icon: EUR, alt: "" },
+  ];
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <div
+        className={`${styles.currencySelect}`}
+        onClick={() => setOpen((prev) => !prev)}
+        // onMouseLeave={() => setOpen(false)}
+        // onMouseEnter={() => setOpen(true)}
+      >
+        <CurrencyOption
+          icon={data[selectedIndex]?.icon}
+          optionTitle={data[selectedIndex]?.title}
+          alt={data[selectedIndex]?.alt}
+          dropdown
+        />
+        <div
+          className={`${styles.selectBody} ${
+            open ? styles.visible : styles.hidden
+          }`}
+        >
+          {data.map((item, index) => {
+            return (
+              <div key={index} onClick={() => setSelectedIndex(index)}>
+                <CurrencyOption
+                  icon={item.icon}
+                  optionTitle={item.title}
+                  alt={item.alt}
+                  selected={selectedIndex === index}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+};
+
+const CurrencyOption = ({ icon, optionTitle, alt, dropdown, selected }) => {
+  return (
+    <div
+      className={styles.optionLineWrapper}
+      style={{
+        borderRadius: dropdown ? "3px" : "0",
+      }}
+    >
+      <div className={styles.optionLine}>
+        <img src={icon} className={styles.icon} alt={alt} />
+        <div className={styles.optionContainer}>
+          <p className={styles.optionTitle}> {optionTitle} </p>
+        </div>
+      </div>
+      {dropdown && (
+        <img src={DropDownIcon} alt="dropdown" width={8} height={4} />
+      )}
+      {selected && (
+        <img
+          className={styles.icon}
+          src={CheckedIcon}
+          alt="checked"
+          width={16}
+          height={11}
+        />
+      )}
     </div>
   );
 };

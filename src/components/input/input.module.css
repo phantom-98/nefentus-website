@@ -221,3 +221,78 @@
   align-items: center;
   gap: 1.2rem;
 }
+
+.currencySelect {
+  width: max-content;
+  height: 2.5rem;
+  background-color: transparent;
+  border: 1px solid var(--border-color, #313131);
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+}
+
+.option {
+  cursor: pointer;
+}
+
+.selectBody {
+  width: max-content;
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  bottom: 0;
+  transform: translateY(100%);
+  border: 1px solid var(--border-color, #313131);
+  z-index: 100;
+}
+
+.visible {
+  opacity: 100%;
+  transition: 0.1s ease-out;
+}
+
+.hidden {
+  opacity: 0;
+  transition: 0.2s ease-out;
+}
+
+.optionLineWrapper {
+  display: flex;
+  height: 100%;
+  padding: 0 6px;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg2-color, #1f1f1f);
+}
+.optionLineWrapper:hover {
+  background: var(--card-color, #272729);
+}
+
+.selectBody .optionLineWrapper {
+  padding: 8px 10px;
+}
+
+.optionLine {
+  display: flex;
+  gap: 6px;
+  margin-right: 12px;
+  align-items: center;
+  align-self: stretch;
+}
+
+.icon {
+  width: 16px;
+  flex-shrink: 0;
+  height: auto !important;
+  /* border-radius: 50%; */
+}
+
+.optionTitle {
+  font-size: 1rem;
+  line-height: 1rem;
+  margin-top: 2px;
+  color: var(--text-color, #f6f6f6);
+}
