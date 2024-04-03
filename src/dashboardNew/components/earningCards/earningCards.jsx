@@ -7,6 +7,8 @@ import styles from "./earningCards.module.css";
 import { useEffect, useState } from "react";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../context/auth/authContext";
+import { formatUSDBalance } from "../../../utils";
 
 const EarningCards = () => {
   const [cardInfo, setCardInfo] = useState([]);
@@ -26,10 +28,7 @@ const EarningCards = () => {
     const cardsContent = [
       {
         title: t("dashboard.earningCards.first"),
-        value: `$${parseFloat(sales?.value?.total?.number)?.toLocaleString(
-          undefined,
-          { maximumFractionDigits: 2 },
-        )}`,
+        value: parseFloat(sales?.value?.total?.number),
         percentage: sales?.value?.total?.percentage
           ? parseFloat(sales?.value?.total?.percentage).toFixed(2)
           : 0,
@@ -37,9 +36,7 @@ const EarningCards = () => {
       },
       {
         title: t("dashboard.earningCards.second"),
-        value: `$${parseFloat(
-          sales?.value?.last24Hours?.number,
-        )?.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
+        value: parseFloat(sales?.value?.last24Hours?.number),
         percentage: sales?.value?.last24Hours?.percentage
           ? parseFloat(sales?.value?.last24Hours?.percentage).toFixed(2)
           : 0,
@@ -47,10 +44,7 @@ const EarningCards = () => {
       },
       {
         title: t("dashboard.earningCards.third"),
-        value: `$${parseFloat(sales?.value?.last30Days?.number)?.toLocaleString(
-          undefined,
-          { maximumFractionDigits: 2 },
-        )}`,
+        value: parseFloat(sales?.value?.last30Days?.number),
         percentage: sales?.value?.last30Days?.percentage
           ? parseFloat(sales?.value?.last30Days?.percentage).toFixed(2)
           : 0,
@@ -73,10 +67,14 @@ const EarningCards = () => {
 export default EarningCards;
 
 const SingleCard = ({ data }) => {
+  const { currencyRate } = useAuth();
   return (
     <Card>
       <div className={styles.label}>{data.title}</div>
-      <div className={styles.value}>{data.value}</div>
+      <div className={styles.value}>
+        {currencyRate.symbol}
+        {formatUSDBalance(data.value * currencyRate.rate)}
+      </div>
       <div className={styles.percentage}>
         <img src={data.percentage >= 0 ? Positive : Negative} alt="" />
         <div className={styles.percentageText}>

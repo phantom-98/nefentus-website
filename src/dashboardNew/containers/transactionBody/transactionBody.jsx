@@ -8,9 +8,12 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { TransactionInfo } from "../../components/popup/popup";
 import styles from "./transactionBody.module.css";
+import { useAuth } from "../../../context/auth/authContext";
+import { formatUSDBalance } from "../../../utils";
 
 const TransactionBody = () => {
   const [orderData, setOrderData] = useState([]);
+  const [orders, setOrders] = useState([]);
   const dashboardApi = new vendorDashboardApi();
   const [totalAmount, setTotalAmount] = useState(0);
   const [getDataInput, setGetDataInput] = useState("");
@@ -18,6 +21,7 @@ const TransactionBody = () => {
   const [detail, setDetail] = useState(false);
   const [transaction, setTransaction] = useState(null);
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
 
   const label = [
     t("transactions.table.product"),
@@ -26,7 +30,7 @@ const TransactionBody = () => {
     t("transactions.table.currency"),
     t("transactions.table.invoice"),
     t("transactions.table.date"),
-    t("transactions.table.earnings"),
+    t("transactions.table.earnings").concat("(" + currencyRate.symbol + ")"),
     t("transactions.table.action"),
   ];
 
@@ -44,6 +48,7 @@ const TransactionBody = () => {
       list.forEach((item) => {
         total = total + item.order.totalPrice;
       });
+      setOrders(list);
       const newOrderData = list.map((item) =>
         orderToArray(item.order, item.hash),
       );
@@ -52,6 +57,19 @@ const TransactionBody = () => {
       setFilteredData(newOrderData);
     }
   }
+
+  useEffect(() => {
+    if (orders) {
+      const _orderData = orderData.map((item, index) => {
+        const _row = item;
+        _row[6] =
+          currencyRate.symbol +
+          formatUSDBalance(orders[index].order.totalPrice * currencyRate.rate);
+        return _row;
+      });
+      setOrderData(_orderData);
+    }
+  }, [currencyRate]);
 
   const showDetails = async (hash) => {
     const data = await dashboardApi.getTransaction(hash);
@@ -74,7 +92,9 @@ const TransactionBody = () => {
         link={`${window.location.origin}/pay/${order.invoice.link}`}
       />,
       moment(order.updatedAt).format("MMM D YYYY, HH:mm:ss"),
-      `$${order.totalPrice}`,
+      `${currencyRate.symbol}${formatUSDBalance(
+        order.totalPrice * currencyRate.rate,
+      )}`,
       <TableAction
         button2={t("transactions.table.details")}
         onClick2={() => showDetails(hash)}
@@ -109,7 +129,9 @@ const TransactionBody = () => {
     <div>
       <TableSearch
         title={t("transactions.title")}
-        description={`${t("transactions.subtitle")} ${totalAmount}$`}
+        description={`${t("transactions.subtitle")} ${formatUSDBalance(
+          totalAmount * currencyRate.rate,
+        )}${currencyRate.symbol}`}
         users={filteredData}
         setGetDataInput={setGetDataInput}
         findUser={findUser}

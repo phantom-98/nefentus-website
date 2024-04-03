@@ -52,7 +52,7 @@ const ReceivePayment = ({
   const { internalWalletAddress, fetchInternalWalletAddress } =
     useInternalWallet();
   const { t } = useTranslation();
-  const { user, setUser } = useAuth();
+  const { user, setUser, currencyRate } = useAuth();
   const [wallets, setWallets] = useState([]);
   const connectedWallet = useWallet();
   const connect = useConnect();
@@ -141,7 +141,7 @@ const ReceivePayment = ({
   useEffect(() => {
     if (
       balances[selectedCryptoIndex] * prices[selectedCryptoIndex] >
-      priceUSD
+      priceUSD * currencyRate.rate
     ) {
       isDisable && setDisable(false || disabled);
     } else {
@@ -166,7 +166,10 @@ const ReceivePayment = ({
         "USDT-BSC": 2,
       };
       setCryptoAmount(
-        formatTokenBalance(priceUSD / price, round[currency.abbr]),
+        formatTokenBalance(
+          (priceUSD * currencyRate.rate) / price,
+          round[currency.abbr],
+        ),
       );
     } else {
       setCryptoAmount("Loading...");
@@ -390,7 +393,10 @@ const ReceivePayment = ({
           <div className={styles.body}>
             <div className={styles.total}>
               <p>{t("payments.total")}</p>
-              <p>${formatUSDBalance(priceUSD)}</p>
+              <p>
+                {currencyRate.symbol}
+                {formatUSDBalance(priceUSD * currencyRate.rate)}
+              </p>
             </div>
             {children}
             <div className={styles.walletWrapper}>
@@ -475,7 +481,8 @@ const ReceivePayment = ({
                 onClick={() => doPayment()}
                 spinner={spinner}
               >
-                {t("payments.payButton")} ${formatUSDBalance(priceUSD)}
+                {t("payments.payButton")} {currencyRate.symbol}
+                {formatUSDBalance(priceUSD * currencyRate.rate)}
               </Button>
             </div>
           </div>

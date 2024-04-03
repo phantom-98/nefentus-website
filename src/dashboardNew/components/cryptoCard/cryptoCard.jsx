@@ -28,6 +28,7 @@ import Popup from "../popup/popup";
 import { web3Api } from "../../../api/web3Api";
 import { coinbaseWallet } from "@thirdweb-dev/react";
 import { trustWallet } from "@thirdweb-dev/react";
+import { useAuth } from "../../../context/auth/authContext";
 
 const CryptoCard = ({ wallet }) => {
   const { internalWalletAddress } = useInternalWallet();
@@ -138,6 +139,7 @@ export default CryptoCard;
 const CryptoItem = ({ data }) => {
   let balanceToken = "loading";
   let balanceUSD = "loading";
+  const { currencyRate } = useAuth();
   if (data.value) {
     balanceToken = data.value;
     if (data.price) {
@@ -152,7 +154,10 @@ const CryptoItem = ({ data }) => {
 
         <div>
           <div className={styles.title}>{data.name}</div>
-          <div className={styles.subtitle}>{`${data.price?.toFixed(2)}`}</div>
+          <div className={styles.subtitle}>
+            {currencyRate.symbol}
+            {formatUSDBalance(data.price * currencyRate.rate)}
+          </div>
         </div>
       </div>
       <div className={styles.middle}>
@@ -161,9 +166,11 @@ const CryptoItem = ({ data }) => {
       </div>
       <div className={styles.right}>
         <div className={styles.title}>
-          $
+          {currencyRate.symbol}
           {formatUSDBalance(
-            balanceUSD === "loading" ? balanceUSD : balanceUSD.toString(),
+            balanceUSD === "loading"
+              ? balanceUSD
+              : formatUSDBalance(balanceUSD * currencyRate.rate),
           )}
         </div>
         <div className={styles.tooltip}>

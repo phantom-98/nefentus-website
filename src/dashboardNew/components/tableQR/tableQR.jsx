@@ -2,8 +2,10 @@ import { useState } from "react";
 import QRCode from "react-qr-code";
 import { QRPopup } from "../popup/popup";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
+import { useAuth } from "../../../context/auth/authContext";
 
 const TableQR = ({ link, data }) => {
+  const { currencyRate } = useAuth();
   const [show, setShow] = useState(false);
 
   const requestDownload = async (invoice) => {
@@ -39,7 +41,7 @@ const TableQR = ({ link, data }) => {
         email={data.email}
         link={link}
         name={data.name}
-        price={data.price}
+        price={(data.price * currencyRate.rate).toFixed(2)}
         taxNumber={data.taxNumber}
         onInvoice={data.email ? () => requestDownload("invoice") : null}
         onReceipt={
