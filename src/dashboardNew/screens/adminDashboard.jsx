@@ -277,6 +277,11 @@ const AdminDashboard = ({ type }) => {
       return;
     }
 
+    if (agentEmail === user.email) {
+      setErrorMessage("You are not allowed to set yourself as agent.");
+      return;
+    }
+
     setSpinner(true);
 
     if (editEmailAddress) {
