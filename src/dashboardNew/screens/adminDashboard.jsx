@@ -277,8 +277,8 @@ const AdminDashboard = ({ type }) => {
       return;
     }
 
-    if (agentEmail === user.email) {
-      setErrorMessage("You are not allowed to set yourself as agent.");
+    if (agentEmail.toLowerCase() === user.email.toLowerCase()) {
+      setErrorMessage(t("messages.error.agentYourself"));
       return;
     }
 
