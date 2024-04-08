@@ -23,8 +23,7 @@ export default ({ mode }) => {
       // minify: false,
       // target: "es2015",
       //outDir: 'dist_web',
-      sourcemap: true,
-      commonjsOptions: { include: [] },
+      //sourcemap: true,
       rollupOptions: {
         plugins: [
           // Enable rollup polyfills plugin
@@ -35,15 +34,26 @@ export default ({ mode }) => {
         ],
       },
     },
+    // See https://gist.github.com/FbN/0e651105937c8000f10fefdf9ec9af3d?permalink_comment_id=4450749#gistcomment-4450749
     resolve: {
       alias: {
-        "@": resolve(__dirname, "src"),
-        process: "rollup-plugin-node-polyfills/polyfills/process-es6",
-        buffer: "rollup-plugin-node-polyfills/polyfills/buffer-es6",
-        events: "rollup-plugin-node-polyfills/polyfills/events",
-        util: "rollup-plugin-node-polyfills/polyfills/util",
+        // This Rollup aliases are extracted from @esbuild-plugins/node-modules-polyfill,
+        // see https://github.com/remorses/esbuild-plugins/blob/master/node-modules-polyfill/src/polyfills.ts
+        // process and buffer are excluded because already managed
+        // by node-globals-polyfill
+        util: "util",
         sys: "util",
+        events: "rollup-plugin-node-polyfills/polyfills/events",
         stream: "rollup-plugin-node-polyfills/polyfills/stream",
+        path: "rollup-plugin-node-polyfills/polyfills/path",
+        querystring: "rollup-plugin-node-polyfills/polyfills/qs",
+        punycode: "rollup-plugin-node-polyfills/polyfills/punycode",
+        url: "rollup-plugin-node-polyfills/polyfills/url",
+        http: "rollup-plugin-node-polyfills/polyfills/http",
+        https: "rollup-plugin-node-polyfills/polyfills/http",
+        os: "rollup-plugin-node-polyfills/polyfills/os",
+        assert: "rollup-plugin-node-polyfills/polyfills/assert",
+        constants: "rollup-plugin-node-polyfills/polyfills/constants",
         _stream_duplex:
           "rollup-plugin-node-polyfills/polyfills/readable-stream/duplex",
         _stream_passthrough:
@@ -54,10 +64,16 @@ export default ({ mode }) => {
           "rollup-plugin-node-polyfills/polyfills/readable-stream/writable",
         _stream_transform:
           "rollup-plugin-node-polyfills/polyfills/readable-stream/transform",
+        timers: "rollup-plugin-node-polyfills/polyfills/timers",
+        console: "rollup-plugin-node-polyfills/polyfills/console",
+        vm: "rollup-plugin-node-polyfills/polyfills/vm",
+        zlib: "rollup-plugin-node-polyfills/polyfills/zlib",
+        tty: "rollup-plugin-node-polyfills/polyfills/tty",
+        domain: "rollup-plugin-node-polyfills/polyfills/domain",
       },
     },
     optimizeDeps: {
-      disabled: false,
+      //disabled: false,
       esbuildOptions: {
         plugins: [
           {
@@ -71,6 +87,7 @@ export default ({ mode }) => {
           },
           NodeGlobalsPolyfillPlugin({
             process: true,
+            buffer: true,
           }),
           NodeModulesPolyfillPlugin(),
         ],
