@@ -842,6 +842,7 @@
       "confirmPasswordRequired": "Zur Bestätigung ist ein Passwort erforderlich",
       "phoneNumberRequired": "Telefonnummer ist erforderlich",
       "roleRequired": "Rolle ist erforderlich.",
+      "agentYourself": "Sie dürfen sich nicht als Vermittler aufstellen.",
       "passwordCorrect": "Sie haben nicht das richtige Passwort eingegeben!",
       "currencyCorrect": "Bitte wählen Sie eine korrekte Währung für die Abhebung.",
       "addressWithdraw": "Bitte geben Sie eine Adresse für die Abhebung an.",
