@@ -11,7 +11,7 @@
 
 .button {
   display: flex;
-  margin-top: 2rem;
+  margin-top: 0.8rem;
   justify-content: flex-end;
 }
 

@@ -21,6 +21,9 @@ const PaymentForm = ({ setLoadingData }) => {
   const [company, setCompany] = useState("");
   const [address, setAddress] = useState("");
   const [taxNumber, setTaxNumber] = useState("");
+  const [taxPercent, setTaxPercent] = useState("");
+  const [showEuro, setShowEuro] = useState(false);
+  const [reverseCharge, setReverseCharge] = useState(false);
   const { clearMessages, setErrorMessage, setInfoMessage } =
     useContext(MessageContext);
   const [qrValue, setQRValue] = useState("");
@@ -61,6 +64,9 @@ const PaymentForm = ({ setLoadingData }) => {
       company,
       address,
       taxNumber,
+      vatPercent: taxPercent,
+      showEuro,
+      reverseCharge,
     };
 
     // Create invoice
@@ -104,22 +110,80 @@ const PaymentForm = ({ setLoadingData }) => {
             value={company}
             setVaue={setCompany}
           />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 0.5fr",
+              gap: "1.5rem",
+            }}
+          >
+            <Input
+              placeholder={t("payments.taxNumber")}
+              value={taxNumber}
+              setVaue={setTaxNumber}
+            />
+            <Input
+              placeholder={t("payments.taxPercent")}
+              value={taxPercent}
+              setVaue={setTaxPercent}
+            />
+          </div>
           <Input
             placeholder={t("payments.address")}
             value={address}
             setVaue={setAddress}
           />
-          <Input
-            placeholder={t("payments.taxNumber")}
-            value={taxNumber}
-            setVaue={setTaxNumber}
-          />
-        </div>
 
-        <div className={styles.button}>
-          <Button width="14rem" onClick={createInvoice}>
-            {t("payments.createInvoice")}
-          </Button>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "1.5rem",
+              fontSize: "1.4rem",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1.5rem",
+              }}
+            >
+              <label style={{ marginTop: "0.2rem" }}>
+                {t("payments.showEuro")}
+              </label>
+              <Input
+                type={"checkbox"}
+                value={showEuro}
+                setVaue={setShowEuro}
+                placeholder={""}
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1.5rem",
+              }}
+            >
+              <label style={{ marginTop: "0.2rem" }}>
+                {t("payments.reverseCharge")}
+              </label>
+              <Input
+                type={"checkbox"}
+                value={reverseCharge}
+                setVaue={setReverseCharge}
+                placeholder={""}
+              />
+            </div>
+          </div>
+
+          <div className={styles.button}>
+            <Button width="14rem" onClick={createInvoice}>
+              {t("payments.createInvoice")}
+            </Button>
+          </div>
         </div>
       </Card>
 
