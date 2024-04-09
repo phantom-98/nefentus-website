@@ -18,12 +18,9 @@ import { useTheme } from "../../context/themeContext/themeContext";
 import { QR } from "../../assets/icon/icons";
 import { useAuth } from "../../context/auth/authContext";
 import Cookie from "js-cookie";
-import { CurrencySelect } from "../input/input";
 
 const Navigation = () => {
   const { theme, toggleTheme } = useTheme();
-  const { currencyRate, setCurrencyRate } = useAuth();
-  const [currencyIndex, setCurrencyIndex] = useState(0);
 
   const { t, i18n } = useTranslation();
   const [openMenu, setOpenMenu] = useState(false);
@@ -150,29 +147,6 @@ const Navigation = () => {
     }
   }
 
-  const fetchRate = async () => {
-    const res = await backendAPI.getCurrencyRate();
-    if (res) {
-      setCurrencyRate({
-        ...res,
-        symbol: "€",
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (currencyIndex === 1) {
-      fetchRate();
-    } else {
-      setCurrencyRate({
-        from: "USD",
-        to: "USD",
-        rate: 1,
-        symbol: "$",
-      });
-    }
-  }, [currencyIndex]);
-
   useEffect(() => {
     if (window.innerHeight >= 900) return;
 
@@ -230,11 +204,6 @@ const Navigation = () => {
 
           {!hideOptions && (
             <div className={styles.right}>
-              <CurrencySelect
-                selectedIndex={currencyIndex}
-                setSelectedIndex={setCurrencyIndex}
-              />
-
               <div className={styles.rightWrapper}>
                 <QR />
 
