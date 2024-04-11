@@ -176,6 +176,16 @@ export const OneTimeCodeInput = ({ setOTPCode, resetCodeFlag, request }) => {
     }
   }, [resetCodeFlag]);
 
+  useEffect(() => {
+    let ready = true;
+    code.forEach((digit) => {
+      ready = ready && digit && /^[0-9]*$/.test(digit);
+    });
+    if (ready) {
+      request();
+    }
+  }, [code]);
+
   const handleCodeChange = (e, index) => {
     const value = e.target.value;
 

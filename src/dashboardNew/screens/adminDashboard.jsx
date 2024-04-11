@@ -50,14 +50,14 @@ const AdminDashboard = ({ type }) => {
   const [isReloadData, setIsReloadData] = useState(false);
   const [totalRegUserCnt, setTotalRegUserCnt] = useState(0);
   const { t, i18n } = useTranslation();
-  const { user } = useAuth();
+  const { user, currencyRate } = useAuth();
 
   const label = [
     t("dashboard.tableHeaders.name"),
     t("dashboard.tableHeaders.roles"),
     t("dashboard.tableHeaders.email"),
     t("dashboard.tableHeaders.status"),
-    t("dashboard.tableHeaders.income"),
+    t("dashboard.tableHeaders.income").concat("(" + currencyRate.symbol + ")"),
     t("dashboard.tableHeaders.joinedOn"),
     // t("dashboard.tableHeaders.earnings"),
     t("dashboard.tableHeaders.agent"),
@@ -79,6 +79,7 @@ const AdminDashboard = ({ type }) => {
   const [dataPage, setDataPage] = useState(0);
   const [dataSize, setDataSize] = useState(10);
   const [spinner, setSpinner] = useState(false);
+  const [graph, setGraph] = useState();
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -154,26 +155,50 @@ const AdminDashboard = ({ type }) => {
       }
 
       let total = 0;
-      const regRoleGraphData = reportResp.value.map((item) => {
-        total = total + item.count;
+      const regRoleGraphData = reportResp.value
+        ?.filter((report) => report.role !== "affiliate")
+        ?.map((item) => {
+          total = total + item.count;
 
-        return {
-          color: roleColors[item.role],
-          legend: ROLE_TO_NAME[item.role],
-          num: item.count,
-          percentage: item.percentage,
-        };
-      });
+          return {
+            color: roleColors[item.role],
+            legend: ROLE_TO_NAME[item.role],
+            num: item.count,
+            percentage: item.percentage,
+          };
+        });
 
       setTotalRegUserCnt(total);
 
       setCardInfo(cardsContent);
 
       setBarContent(regRoleGraphData);
-
-      setGraphData(totalPricePerDate.value);
+      setGraph(totalPricePerDate.value);
+      let _graph = {};
+      Object.keys(totalPricePerDate.value).forEach((key) => {
+        _graph[key] = totalPricePerDate.value[key];
+      });
+      setGraphData(_graph);
     }
   };
+
+  useEffect(() => {
+    if (graph) {
+      let _graph = {};
+      Object.keys(graph).forEach((key) => {
+        _graph[key] = graph[key] * currencyRate.rate;
+      });
+      setGraphData(_graph);
+    }
+    if (tableData) {
+      const _table = tableData.map((item, index) => {
+        const _item = item;
+        _item[4] = formatUSDBalance(users[index].income * currencyRate.rate);
+        return _item;
+      });
+      setTableData(_table);
+    }
+  }, [currencyRate]);
 
   const fetchAdminUsersData = async (clear) => {
     const result = await adminApi.checkPermission();
@@ -249,6 +274,11 @@ const AdminDashboard = ({ type }) => {
     }
     if (role === "") {
       setErrorMessage(t("messages.error.roleRequired"));
+      return;
+    }
+
+    if (agentEmail.toLowerCase() === user.email.toLowerCase()) {
+      setErrorMessage(t("messages.error.agentYourself"));
       return;
     }
 
@@ -366,7 +396,7 @@ const AdminDashboard = ({ type }) => {
         ) : (
           <TableStatus color="red">{t("general.notActive")}</TableStatus>
         ),
-        formatUSDBalance(user.income),
+        formatUSDBalance(user.income * currencyRate.rate),
         moment(user.createdAt).format("MMM D YYYY, HH:mm:ss"),
         // `$${user.income}`,
         user.agent,
