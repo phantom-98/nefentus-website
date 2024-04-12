@@ -756,22 +756,27 @@ export const PaymentInfo = ({
         />
       </div>
       <div className={styles.row}>
-        <Input
-          placeholder={t("payments.taxNumber")}
-          label={t("payments.taxNumber")}
-          value={tax}
-          setValue={setTax}
-          type
-          setChanged={setChanged}
-        />
-        <Input
-          placeholder={"0.00%"}
-          label={"VAT %"}
-          // value={tax}
-          // setValue={setTax}
-          // type
-          setChanged={setChanged}
-        />
+        <div
+          style={{
+            display: "flex",
+            gap: "1rem",
+            width: "100%",
+          }}
+        >
+          <Input
+            placeholder={t("payments.taxNumber")}
+            label={t("payments.taxNumber")}
+            value={tax}
+            setValue={setTax}
+            type
+            setChanged={setChanged}
+          />
+          <Input
+            placeholder={"0.00%"}
+            label={"VAT %"}
+            setChanged={setChanged}
+          />
+        </div>
         <Input
           placeholder={`e.g. Google`}
           label={t("payments.company")}

@@ -105,13 +105,6 @@
   transform: translateY(100%);
 }
 
-@media screen and (max-width: 640px) {
-  .wrapper {
-    flex-direction: column;
-    gap: 40px;
-  }
-}
-
 .right {
   width: 45%;
   height: 100%;
@@ -475,7 +468,6 @@ svg path {
   align-items: flex-start;
   align-self: stretch;
   gap: 1.4rem;
-  width: 40rem;
 }
 
 .productWrapper img {
@@ -491,7 +483,8 @@ svg path {
   justify-content: space-around;
   align-items: flex-start;
   align-self: stretch;
-  width: 24rem;
+  max-width: 24rem;
+  width: 60%;
 }
 
 .productInfo h1 {
@@ -602,4 +595,37 @@ svg path {
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+@media screen and (max-width: 640px) {
+  .wrapper {
+    flex-direction: column !important;
+    gap: 40px;
+  }
+  .container {
+    position: inherit !important;
+    margin: 0 -2.5rem;
+  }
+  .left,
+  .right {
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+  .infoWrapper {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 4rem 2rem;
+    height: fit-content;
+  }
+  .productBuy {
+    margin: 0 auto !important;
+    padding: 4rem 2rem !important;
+  }
+  .row {
+    flex-direction: column;
+  }
+  .feeRow {
+    gap: 2rem !important;
+  }
 }
