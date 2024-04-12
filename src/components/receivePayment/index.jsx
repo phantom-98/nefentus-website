@@ -457,55 +457,99 @@ const ReceivePayment = ({
           </div>
         </div>
         <div className={styles.right}>
-          <div className={styles.infoWrapper}>
-            {seller && (
-              <div className={styles.sellerWrapper}>
-                <p>{t("payments.seller")}</p>
-                <div className={styles.sellerContainer}>
-                  <div className={styles.avatarWrapper}>
-                    {seller.s3Url && (
-                      <img
-                        src={seller.s3Url}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          borderRadius: "50%",
-                        }}
-                      />
-                    )}
-                    {!seller.s3Url && (
-                      <span
-                        style={{
-                          fontSize: "1.4rem",
-                          marginTop: "0.3rem",
-                          color: "white",
-                        }}
-                      >
-                        {seller.firstName[0]}
-                        {seller.lastName[0]}
-                      </span>
-                    )}
-                  </div>
-                  <div className={styles.sellerInfo}>
-                    <p className={styles.sellerTitle}>{t("payments.name")}</p>
-                    <p className={styles.sellerValue}>
-                      {seller.firstName} {seller.lastName}
-                    </p>
-                  </div>
-                  <div className={styles.sellerInfo}>
-                    <p className={styles.sellerTitle}>{t("payments.email")}</p>
-                    <p className={styles.sellerValue}>{seller.email}</p>
-                  </div>
-                  <div className={styles.sellerInfo}>
-                    <p className={styles.sellerTitle}>
-                      {t("payments.company")}
-                    </p>
-                    <p className={styles.sellerValue}>{seller.business}</p>
+          <div
+            className={styles.infoWrapper}
+            style={{
+              width: "60%",
+              height: "80%",
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "column",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-start",
+                flexDirection: "column",
+                gap: "2rem",
+              }}
+            >
+              {seller && (
+                <div className={styles.sellerWrapper} style={{ width: "100%" }}>
+                  <p>{t("payments.seller")}</p>
+                  <div className={styles.sellerContainer}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "1rem",
+                      }}
+                    >
+                      <div className={styles.avatarWrapper}>
+                        {seller.s3Url && (
+                          <img
+                            src={seller.s3Url}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              borderRadius: "50%",
+                            }}
+                          />
+                        )}
+                        {!seller.s3Url && (
+                          <span
+                            style={{
+                              fontSize: "1.4rem",
+                              marginTop: "0.3rem",
+                              color: "white",
+                            }}
+                          >
+                            {seller.firstName[0]}
+                            {seller.lastName[0]}
+                          </span>
+                        )}
+                      </div>
+                      <div className={styles.sellerInfo}>
+                        {/* <p className={styles.sellerTitle}>{t("payments.name")}</p> */}
+                        <p className={styles.sellerValue}>
+                          {seller.firstName} {seller.lastName}
+                        </p>
+                        <p className={styles.sellerValue}>{seller.email}</p>
+                      </div>
+                    </div>
+                    {/* <div className={styles.sellerInfo}>
+                      <p className={styles.sellerTitle}>{t("payments.email")}</p>
+                      <p className={styles.sellerValue}>{seller.email}</p>
+                    </div> */}
+                    <div
+                      className={styles.sellerInfo}
+                      style={{
+                        borderLeft: "1px solid var(--border-color)",
+                        paddingLeft: "2rem",
+                      }}
+                    >
+                      <p className={styles.sellerTitle}>
+                        {t("payments.company")}
+                      </p>
+                      <p className={styles.sellerValue}>{seller.business}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-            <div className={styles.payInfoWrapper}>{info}</div>
+              )}
+              <div className={styles.payInfoWrapper}>{info}</div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <p>@2023 Nefentus all rights are reserved</p>
+              <img src={NefentusLogo} style={{ width: "2rem" }} />
+            </div>
           </div>
         </div>
       </div>
@@ -692,6 +736,14 @@ export const PaymentInfo = ({
           value={tax}
           setValue={setTax}
           type
+          setChanged={setChanged}
+        />
+        <Input
+          placeholder={"0.00%"}
+          label={"VAT %"}
+          // value={tax}
+          // setValue={setTax}
+          // type
           setChanged={setChanged}
         />
         <Input
