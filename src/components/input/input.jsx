@@ -81,6 +81,14 @@ export const Options = ({
   showOnTop,
 }) => {
   const [open, setOpen] = useState(false);
+  const [display, setDisplay] = useState("");
+
+  useEffect(() => {
+    if (value) {
+      const d = options.find((item) => item.value && value === item.value);
+      d && setDisplay(d.display);
+    }
+  }, [value]);
 
   const { t } = useTranslation();
 
@@ -109,7 +117,7 @@ export const Options = ({
               bottom: 0,
             }}
           >
-            {value ? value : t("signUp.selectLabel")}
+            {display ? display : value ? value : t("signUp.selectLabel")}
           </div>
         }{" "}
         <img src={dropDown} alt="dropdown" />
@@ -120,7 +128,13 @@ export const Options = ({
             {options?.length > 0 &&
               options.map((item) =>
                 item.value ? (
-                  <p key={item.value} onClick={() => setValue(item.value)}>
+                  <p
+                    key={item.value}
+                    onClick={() => {
+                      setValue(item.value);
+                      setDisplay && setDisplay(item.display);
+                    }}
+                  >
                     {item.display}
                   </p>
                 ) : (
