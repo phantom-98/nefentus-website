@@ -332,143 +332,82 @@ const ReceivePayment = ({
       <MessageComponent />
 
       <div className={styles.wrapper}>
-        <div className={styles.infoWrapper}>
-          {seller && (
-            <div className={styles.sellerWrapper}>
-              <p>{t("payments.seller")}</p>
-              <div className={styles.sellerContainer}>
-                <div className={styles.avatarWrapper}>
-                  {seller.s3Url && (
-                    <img
-                      src={seller.s3Url}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        borderRadius: "50%",
-                      }}
-                    />
-                  )}
-                  {!seller.s3Url && (
-                    <span
-                      style={{
-                        fontSize: "1.4rem",
-                        marginTop: "0.3rem",
-                        color: "white",
-                      }}
-                    >
-                      {seller.firstName[0]}
-                      {seller.lastName[0]}
-                    </span>
-                  )}
-                </div>
-                <div className={styles.sellerInfo}>
-                  <p className={styles.sellerTitle}>{t("payments.name")}</p>
-                  <p className={styles.sellerValue}>
-                    {seller.firstName} {seller.lastName}
-                  </p>
-                </div>
-                <div className={styles.sellerInfo}>
-                  <p className={styles.sellerTitle}>{t("payments.email")}</p>
-                  <p className={styles.sellerValue}>{seller.email}</p>
-                </div>
-                <div className={styles.sellerInfo}>
-                  <p className={styles.sellerTitle}>{t("payments.company")}</p>
-                  <p className={styles.sellerValue}>{seller.business}</p>
-                </div>
-              </div>
-            </div>
-          )}
-          <div className={styles.payInfoWrapper}>
+        <div className={styles.left}>
+          <div className={styles.productBuy}>
             <div className={styles.payInfoHeader}>
               <h1 className={styles.headerTitle}>{t("payments.pay.title")}</h1>
-              <p className={styles.headerDescription}>
-                {t("payments.pay.description")}
-              </p>
             </div>
-            {info}
-          </div>
-        </div>
-
-        <div className={styles.productBuy}>
-          <div className={styles.body}>
-            <div className={styles.total}>
-              <p>{t("payments.total")}</p>
-              <p>
-                {currencyRate.symbol}
-                {formatUSDBalance(priceUSD * currencyRate.rate)}
-              </p>
-            </div>
-            {children}
-            <div className={styles.walletWrapper}>
-              <div className={styles.chooseWallet}>
-                <p>{t("payments.chooseWallet")}</p>
-              </div>
-              <div className={styles.fullWidthBox}>
-                {internalWalletAddress && !onPageLogin && (
-                  <Select
-                    data={wallets}
-                    selectedIndex={selectedWalletIndex}
-                    setSelectedIndex={setSelectedWalletIndex}
-                  />
-                )}
-                {((!onPageLogin && !Object.keys(user)?.length) ||
-                  (onPageLogin && Object.keys(user)?.length)) && (
-                  <>
-                    {onPageLogin && selectedWalletIndex == 0 ? (
-                      <div className={styles.internalWalletContainer}>
-                        <img src={NefentusLogo} alt="logo" width={25} />
-                        <div>
-                          <div className={styles.internalWalletTitle}>
-                            {wallets[selectedWalletIndex]?.title}
-                          </div>
-                          <div className={styles.internalWalletAddress}>
-                            {formatWalletAddress(
-                              wallets[selectedWalletIndex]?.address,
-                            )}
+            <div className={styles.body}>
+              {children}
+              <div className={styles.walletWrapper}>
+                <div className={styles.chooseWallet}>
+                  <p>{t("payments.chooseWallet")}</p>
+                </div>
+                <div className={styles.fullWidthBox}>
+                  {internalWalletAddress && !onPageLogin && (
+                    <Select
+                      data={wallets}
+                      selectedIndex={selectedWalletIndex}
+                      setSelectedIndex={setSelectedWalletIndex}
+                    />
+                  )}
+                  {((!onPageLogin && !Object.keys(user)?.length) ||
+                    (onPageLogin && Object.keys(user)?.length)) && (
+                    <>
+                      {onPageLogin && selectedWalletIndex == 0 ? (
+                        <div className={styles.internalWalletContainer}>
+                          <img src={NefentusLogo} alt="logo" width={25} />
+                          <div>
+                            <div className={styles.internalWalletTitle}>
+                              {wallets[selectedWalletIndex]?.title}
+                            </div>
+                            <div className={styles.internalWalletAddress}>
+                              {formatWalletAddress(
+                                wallets[selectedWalletIndex]?.address,
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ) : (
-                      <Button
-                        className={styles.connectInternalButton}
-                        onClick={selectInternalWallet}
-                      >
-                        <img src={NefentusLogo} alt="logo" width={25} />
-                        <span>
-                          {t("payments.pay.internalWalletButtonTitle")}
-                        </span>
-                      </Button>
-                    )}
-                    <div className={styles.or_divider}>{t("general.or")}</div>
-                    {connectedWallet == undefined ? (
-                      <div className={styles.connectWalletContainer}>
+                      ) : (
+                        <Button
+                          className={styles.connectInternalButton}
+                          onClick={selectInternalWallet}
+                        >
+                          <img src={NefentusLogo} alt="logo" width={25} />
+                          <span>
+                            {t("payments.pay.internalWalletButtonTitle")}
+                          </span>
+                        </Button>
+                      )}
+                      <div className={styles.or_divider}>{t("general.or")}</div>
+                      {connectedWallet == undefined ? (
+                        <div className={styles.connectWalletContainer}>
+                          <ConnectWallet
+                            // style={{ width: "100%" }}
+                            btnTitle={t(
+                              "payments.pay.externalWalletButtonTitle",
+                            )}
+                            onConnect={onConnectExternalWallet}
+                            className={styles.externalWalletButton}
+                          />
+                        </div>
+                      ) : (
                         <ConnectWallet
-                          // style={{ width: "100%" }}
+                          style={{ width: "100%" }}
                           btnTitle={t("payments.pay.externalWalletButtonTitle")}
                           onConnect={onConnectExternalWallet}
-                          className={styles.externalWalletButton}
+                          // className={styles.externalWalletButton}
                         />
-                      </div>
-                    ) : (
-                      <ConnectWallet
-                        style={{ width: "100%" }}
-                        btnTitle={t("payments.pay.externalWalletButtonTitle")}
-                        onConnect={onConnectExternalWallet}
-                        // className={styles.externalWalletButton}
-                      />
-                    )}
-                  </>
-                )}
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-            <div
-              className={styles.crypto}
-              style={{ borderBottom: selectedWalletIndex === 0 ? "0px" : "" }}
-            >
-              <p className={styles.cryptoTitle}>{t("payments.cryptoAmount")}</p>
-              <div className={styles.cryptoBody}>
-                <div className={styles.cryptoAmount}>{cryptoAmount}</div>
-                <div style={{ width: "50%" }}>
+              <div className={styles.walletWrapper}>
+                <div className={styles.chooseWallet}>
+                  <p>{t("payments.chooseCoin")}</p>
+                </div>
+                <div className={styles.fullWidthBox}>
                   <Select
                     data={cryptos}
                     selectedIndex={selectedCryptoIndex}
@@ -476,33 +415,98 @@ const ReceivePayment = ({
                   />
                 </div>
               </div>
-            </div>
-            {selectedWalletIndex === 0 && (
-              <div style={{ padding: "0 24px", width: "100%" }}>
+
+              <div className={styles.total}>
+                <p>{t("payments.total")}</p>
+                <p>
+                  {currencyRate.symbol}
+                  {formatUSDBalance(priceUSD * currencyRate.rate)}
+                </p>
+
+                <p className={styles.cryptoTitle}>
+                  {t("payments.cryptoAmount")}
+                </p>
+                <div className={styles.cryptoBody}>
+                  <div className={styles.cryptoAmount}>{cryptoAmount}</div>
+                  <SelectOption
+                    icon={cryptos[selectedCryptoIndex].icon}
+                    optionTitle={cryptos[selectedCryptoIndex].title}
+                    className={styles.nonOption}
+                  />
+                </div>
+              </div>
+              <div style={{ width: "100%" }}>
                 <GasDetails
                   currency={currencies()[selectedCryptoIndex]}
                   cryptoAmount={parseFloat(cryptoAmount)}
                   usdAmount={parseFloat(priceUSD)}
                 />
               </div>
-            )}
-            <div className={styles.paymentWrapper}>
-              <Button
-                style={{ width: "100%", height: "60px" }}
-                disabled={isDisable}
-                onClick={() => doPayment()}
-                spinner={spinner}
-              >
-                {t("payments.payButton")} {currencyRate.symbol}
-                {formatUSDBalance(priceUSD * currencyRate.rate)}
-              </Button>
+              <div className={styles.paymentWrapper}>
+                <Button
+                  style={{ width: "100%" }}
+                  disabled={isDisable}
+                  onClick={() => doPayment()}
+                  spinner={spinner}
+                >
+                  {t("payments.payButton")} {currencyRate.symbol}
+                  {formatUSDBalance(priceUSD * currencyRate.rate)}
+                </Button>
+              </div>
             </div>
           </div>
-          <p>
-            {t("payments.agree")}{" "}
-            <a style={{ textDecoration: "underline" }}>{t("payments.terms")}</a>{" "}
-            {t("payments.agree2")}
-          </p>
+        </div>
+        <div className={styles.right}>
+          <div className={styles.infoWrapper}>
+            {seller && (
+              <div className={styles.sellerWrapper}>
+                <p>{t("payments.seller")}</p>
+                <div className={styles.sellerContainer}>
+                  <div className={styles.avatarWrapper}>
+                    {seller.s3Url && (
+                      <img
+                        src={seller.s3Url}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    )}
+                    {!seller.s3Url && (
+                      <span
+                        style={{
+                          fontSize: "1.4rem",
+                          marginTop: "0.3rem",
+                          color: "white",
+                        }}
+                      >
+                        {seller.firstName[0]}
+                        {seller.lastName[0]}
+                      </span>
+                    )}
+                  </div>
+                  <div className={styles.sellerInfo}>
+                    <p className={styles.sellerTitle}>{t("payments.name")}</p>
+                    <p className={styles.sellerValue}>
+                      {seller.firstName} {seller.lastName}
+                    </p>
+                  </div>
+                  <div className={styles.sellerInfo}>
+                    <p className={styles.sellerTitle}>{t("payments.email")}</p>
+                    <p className={styles.sellerValue}>{seller.email}</p>
+                  </div>
+                  <div className={styles.sellerInfo}>
+                    <p className={styles.sellerTitle}>
+                      {t("payments.company")}
+                    </p>
+                    <p className={styles.sellerValue}>{seller.business}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div className={styles.payInfoWrapper}>{info}</div>
+          </div>
         </div>
       </div>
       <SigninPopup
@@ -578,10 +582,11 @@ const SelectOption = ({
   optionDescription,
   alt,
   dropdown,
+  className,
 }) => {
   return (
     <div
-      className={styles.optionLineWrapper}
+      className={`${styles.optionLineWrapper} ${className}`}
       style={{
         borderRadius: dropdown ? "8px" : "0",
       }}
@@ -861,33 +866,10 @@ const GasDetails = ({
           borderRadius: "8px",
           border: "1px solid var(--border-color)",
           overflow: "hidden",
-          backgroundColor: "var(--bg2-color)",
         }}
       >
-        <div
-          className={styles.feeRow}
-          style={{ backgroundColor: "var(--card-color)" }}
-        >
-          <span>{t("payments.fee.quotes")}</span>
-          <span
-            onClick={() => {
-              setCollapse((prev) => !prev);
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            {t("payments.fee.viewDetails")}{" "}
-            <img
-              src={DropDownIcon}
-              alt="dropdown"
-              style={{ transform: `rotateX(${collapse ? "0" : "180deg"})` }}
-            />
-          </span>
-        </div>
-        <div className={`${collapse ? styles.animClose : styles.animExpand}`}>
-          <div
-            className={styles.feeRow}
-            style={{ borderBottom: "1px solid var(--border-color)" }}
-          >
+        <div style={{ padding: "1.2rem" }}>
+          <div className={styles.feeRow}>
             <span>
               {t("payments.fee.gasPrice")}:{" "}
               {Math.round(gasPriceAsWei / 10 ** 9)} Gwei
@@ -913,22 +895,26 @@ const GasDetails = ({
               </svg>
               <span>{t("payments.fee.maxFee")}:</span>
             </div>
-            <span>
-              {formatBalance(maxFee, 8)} {blockchain.abbr}
-            </span>
+            <div>
+              <span>
+                {formatBalance(maxFee, 8)} {blockchain.abbr}
+              </span>
+              <span style={{ marginLeft: "3rem" }}>
+                ${formatUSDBalance(maxFee * blockchainPrice)}
+              </span>
+            </div>
           </div>
         </div>
         <div
           className={styles.feeRow}
-          style={{ backgroundColor: "var(--card-color)" }}
+          style={{
+            padding: "1.2rem",
+            borderTop: "1px solid var(--border-color)",
+            fontSize: "1.4rem",
+          }}
         >
           <span>{t("payments.fee.total")}:</span>
-          <span>
-            ≈${formatUSDBalance(usdAmount + maxFee * blockchainPrice)}
-          </span>
-          <span>
-            {formatTokenBalance(cryptoAmount + maxFee, 8)} {blockchain.abbr}
-          </span>
+          <span>${formatUSDBalance(usdAmount + maxFee * blockchainPrice)}</span>
         </div>
       </div>
     </div>

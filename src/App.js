@@ -390,9 +390,9 @@ function App() {
                         path="/pay/:payLink"
                         element={
                           <>
-                            <Navigation />
+                            {/* <Navigation /> */}
                             <Pay />
-                            <Footer />
+                            {/* <Footer /> */}
                           </>
                         }
                       />
