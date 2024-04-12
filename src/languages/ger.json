@@ -994,6 +994,7 @@
       "viewDetails": "Details anzeigen",
       "estimatedGas": "Geschätzte Gasgebühr",
       "maxFee": "Maximale Gebühr",
+      "description": "Kosten, die unweigerlich anfallen, um eine Transaktion auf einer Blockchain auszuführen. Die Kosten gehen letztlich an die Miner, die die Blockchain sicher halten.",
       "gasPrice": "Gaspreis",
       "gasLimit": "Gaslimit",
       "total": "Gesamtbetrag"
@@ -1002,6 +1003,7 @@
     "seller": "Infos zum Verkäufer",
     "total": "Zahlbetrag",
     "cryptoAmount": "In Krypto",
+    "cryptoDescription": "Geben Sie die Währung an, in der Sie die Rechnung bezahlen möchten. Diese Mittel werden an den Verkäufer überwiesen.",
     "chooseWallet": "Wallet auswählen",
     "chooseCoin": "Münze auswählen",
     "payButton": "Kaufen",

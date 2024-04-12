@@ -425,6 +425,32 @@ const ReceivePayment = ({
 
                 <p className={styles.cryptoTitle}>
                   {t("payments.cryptoAmount")}
+                  <div className={styles.tooltip}>
+                    <span className={styles.tooltiptext}>
+                      {t("payments.cryptoDescription")}
+                    </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                    >
+                      <g clip-path="url(#clip0_839_16182)">
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M10.0002 2.50065C5.85803 2.50065 2.50016 5.85852 2.50016 10.0007C2.50016 14.1428 5.85803 17.5007 10.0002 17.5007C14.1423 17.5007 17.5002 14.1428 17.5002 10.0007C17.5002 5.85852 14.1423 2.50065 10.0002 2.50065ZM0.833496 10.0007C0.833496 4.93804 4.93755 0.833984 10.0002 0.833984C15.0628 0.833984 19.1668 4.93804 19.1668 10.0007C19.1668 15.0633 15.0628 19.1673 10.0002 19.1673C4.93755 19.1673 0.833496 15.0633 0.833496 10.0007ZM9.16683 6.66732C9.16683 6.20708 9.53993 5.83398 10.0002 5.83398H10.0085C10.4687 5.83398 10.8418 6.20708 10.8418 6.66732C10.8418 7.12756 10.4687 7.50065 10.0085 7.50065H10.0002C9.53993 7.50065 9.16683 7.12756 9.16683 6.66732ZM10.0002 9.16732C10.4604 9.16732 10.8335 9.54041 10.8335 10.0007V13.334C10.8335 13.7942 10.4604 14.1673 10.0002 14.1673C9.53993 14.1673 9.16683 13.7942 9.16683 13.334V10.0007C9.16683 9.54041 9.53993 9.16732 10.0002 9.16732Z"
+                          fill="#323232"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_839_16182">
+                          <rect width="20" height="20" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </div>
                 </p>
                 <div className={styles.cryptoBody}>
                   <div className={styles.cryptoAmount}>{cryptoAmount}</div>
@@ -917,7 +943,6 @@ const GasDetails = ({
           gap: "0",
           borderRadius: "8px",
           border: "1px solid var(--border-color)",
-          overflow: "hidden",
         }}
       >
         <div style={{ padding: "1.2rem" }}>
@@ -931,9 +956,10 @@ const GasDetails = ({
             </span>
           </div>
           <div className={styles.feeRow}>
-            <div>
+            <div
+              style={{ display: "flex", gap: "0.4rem", alignItems: "start" }}
+            >
               <svg
-                style={{ display: "inline", marginRight: "4px" }}
                 width="14"
                 height="16"
                 viewBox="0 0 14 16"
@@ -945,7 +971,35 @@ const GasDetails = ({
                   fill="#B1B1B1"
                 />
               </svg>
-              <span>{t("payments.fee.maxFee")}:</span>
+              <span>{t("payments.fee.maxFee")}</span>
+              <div className={styles.tooltip}>
+                <span className={styles.tooltiptext}>
+                  {t("payments.fee.description")}
+                </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  style={{ cursor: "pointer" }}
+                >
+                  <g clip-path="url(#clip0_839_16182)">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M10.0002 2.50065C5.85803 2.50065 2.50016 5.85852 2.50016 10.0007C2.50016 14.1428 5.85803 17.5007 10.0002 17.5007C14.1423 17.5007 17.5002 14.1428 17.5002 10.0007C17.5002 5.85852 14.1423 2.50065 10.0002 2.50065ZM0.833496 10.0007C0.833496 4.93804 4.93755 0.833984 10.0002 0.833984C15.0628 0.833984 19.1668 4.93804 19.1668 10.0007C19.1668 15.0633 15.0628 19.1673 10.0002 19.1673C4.93755 19.1673 0.833496 15.0633 0.833496 10.0007ZM9.16683 6.66732C9.16683 6.20708 9.53993 5.83398 10.0002 5.83398H10.0085C10.4687 5.83398 10.8418 6.20708 10.8418 6.66732C10.8418 7.12756 10.4687 7.50065 10.0085 7.50065H10.0002C9.53993 7.50065 9.16683 7.12756 9.16683 6.66732ZM10.0002 9.16732C10.4604 9.16732 10.8335 9.54041 10.8335 10.0007V13.334C10.8335 13.7942 10.4604 14.1673 10.0002 14.1673C9.53993 14.1673 9.16683 13.7942 9.16683 13.334V10.0007C9.16683 9.54041 9.53993 9.16732 10.0002 9.16732Z"
+                      fill="#323232"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_839_16182">
+                      <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </div>
+              :
             </div>
             <div>
               <span>

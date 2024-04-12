@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 import backendAPI from "./api/backendAPI";
+import NefentusLogo from "./assets/logo/logo.svg";
 import MetaMaskLogo from "./assets/logo/MetaMask.svg";
 import WalletConnectLogo from "./assets/logo/WalletConnect.svg";
 import Ethereum from "./assets/icon/crypto/ethereum.svg";
@@ -154,6 +155,8 @@ export const getWalletIcon = (type) => {
       return CoinbaseLogo;
     case "trust":
       return TrustLogo;
+    case "internal":
+      return NefentusLogo;
     default:
       return Ethereum;
   }

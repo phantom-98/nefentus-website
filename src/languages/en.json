@@ -1045,7 +1045,8 @@
       "quotes": "Quotes",
       "viewDetails": "View Details",
       "estimatedGas": "Estimated gas fee",
-      "maxFee": "Maximun fee",
+      "maxFee": "Maximum fee",
+      "description": "Costs that are inevitably incurred in order to carry out a transaction on a blockchain. The costs ultimately go to the miners who keep the blockchain secure.",
       "gasPrice": "Gas Price",
       "gasLimit": "Gas Limit",
       "total": "Total"
@@ -1054,6 +1055,7 @@
     "seller": "Seller Info",
     "total": "Payment Amount",
     "cryptoAmount": "In Crypto",
+    "cryptoDescription": "Specify the currency in which you want to pay the invoice. These funds are transferred to the seller.",
     "chooseWallet": "Choose Wallet",
     "chooseCoin": "Choose Coin",
     "payButton": "Pay now",
