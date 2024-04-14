@@ -1055,7 +1055,7 @@
     "seller": "Seller Info",
     "total": "Payment Amount",
     "cryptoAmount": "In Crypto",
-    "cryptoDescription": "Specify the currency in which you want to pay the invoice. These funds are transferred to the seller.",
+    "cryptoDescription": "This amount corresponds to the invoice amount in the selected cryptocurrency. After payment, these funds are sent to the seller.",
     "chooseWallet": "Choose Wallet",
     "chooseCoin": "Choose Coin",
     "payButton": "Pay now",
