@@ -1002,7 +1002,7 @@
     },
     "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
-    "total": "Zahlbetrag",
+    "total": "Rechnungsbetrag",
     "cryptoAmount": "In Krypto",
     "cryptoDescription": "Dieser Betrag entspricht dem Rechnungsbetrag in der ausgewählten Kryptowährung. Nach der Bezahlung werden diese Mittel dem Verkäufer zugeschickt.",
     "chooseWallet": "Wallet auswählen",
