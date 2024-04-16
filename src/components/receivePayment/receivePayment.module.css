@@ -30,56 +30,54 @@
 
 .internalWalletContainer {
   width: 100%;
-  background-color: rgb(38, 38, 38);
-  padding: 1rem 2rem;
+  background-color: var(--bg2-color);
+  padding: 1rem;
   display: flex;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   cursor: pointer;
-  gap: 2rem;
+  gap: 1rem;
+  border: 1px solid var(--border-color, #313131);
 }
 
 .internalWalletTitle {
-  font-size: 16px;
+  font-size: 1.5rem;
   color: var(--text-color, #fff);
 }
 
 .internalWalletAddress {
-  font-size: 12px;
+  font-size: 1.1rem;
   color: var(--text2-color, #b1b1b1);
 }
 
-.connectInternalButton {
+.connectInternalButton,
+.connectWalletContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.4rem;
   width: 100%;
-  border-radius: 8px;
-}
-
-.connectInternalButton > div {
-  padding: 10.5px !important;
-}
-
-.connectInternalButton span {
-  font-size: 16px;
+  padding: 1.4rem 1rem 0.5rem 1rem;
+  border-radius: 0.8rem;
+  border: 1px solid var(--border-color, #313131);
+  background-color: var(--bg2-color);
+  font-size: 1.6rem;
+  cursor: pointer;
 }
 
 .externalWalletButton {
   background-color: transparent !important;
-  color: #fff !important;
-  font-weight: 400 !important;
-  font-family: Arial !important;
-  position: relative !important;
+  color: transparent !important;
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
 }
 
 .connectWalletContainer {
-  border-radius: 8px;
-  background: rgb(17, 17, 17);
-  border: 1px solid #0784b5;
   position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
 }
 
 .connectWalletIcons {
@@ -89,24 +87,8 @@
   gap: 4px;
 }
 
-.connectWalletContainer:before {
-  content: "";
-  background: #0784b5;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  transition: transform 0.3s;
-}
-
-.connectWalletContainer:hover:before {
-  transform: translateY(100%);
-}
-
 .right {
-  width: 45%;
+  width: 50%;
   height: 100%;
   overflow: auto;
   background-color: var(--bg2-color, #171717);
@@ -114,10 +96,14 @@
 .infoWrapper {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: flex-start;
-  gap: 36px;
+  gap: 3rem;
   width: max-content;
-  margin: 10rem auto;
+  margin: 4rem 10rem;
+  width: 60%;
+  height: 80%;
+  max-width: 40rem;
 }
 
 .productImage {
@@ -146,17 +132,21 @@
 }
 
 .left {
-  width: 55%;
+  width: 50%;
   height: 100%;
   overflow: auto;
 }
 
+.left::-webkit-scrollbar,
+.right::-webkit-scrollbar {
+  display: none;
+}
+
 .productBuy {
-  /* min-width: 400px; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 10rem auto;
+  margin: 4rem 10rem 4rem auto;
   width: max-content;
   gap: 2.4rem;
 }
@@ -168,9 +158,6 @@
   justify-content: center;
   align-items: flex-start;
   gap: 2rem;
-  /* border-radius: 6px; */
-  /* border: 1px solid var(--border-color, #313131); */
-  /* background: var(--bg2-color, #1f1f1f); */
 }
 
 .optionLineWrapper {
@@ -179,8 +166,6 @@
   padding: 1rem;
   justify-content: space-between;
   align-items: center;
-  /* border: 0.5px solid var(--border-color, #313131); */
-  /* border-radius: 1rem; */
   background: var(--bg2-color, #1f1f1f);
 }
 .optionLineWrapper:hover {
@@ -191,6 +176,7 @@
   padding: 0;
   justify-content: start;
   background: none;
+  display: block;
 }
 
 .nonOption:hover {
@@ -309,7 +295,12 @@
 }
 
 .paymentWrapper {
-  align-self: stretch;
+  width: 100%;
+  display: block;
+}
+
+.paymentWrapperForMobile {
+  display: none;
 }
 
 .sellerWrapper {
@@ -326,13 +317,11 @@
 
 .sellerContainer {
   display: flex;
-  padding: 16px;
+  padding: 0.4rem 0 1rem;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
   align-self: stretch;
-  border-radius: 6px;
-  border: 1px solid var(--border-color, #313131);
   background: transparent;
 }
 
@@ -350,13 +339,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-left: 0px;
-  padding-right: 16px;
-  border-right: 1px solid var(--border-color, #313131);
-}
-
-.sellerInfo:last-child {
-  border-right: none;
 }
 
 .sellerTitle {
@@ -419,7 +401,7 @@
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.2rem;
   align-self: stretch;
   width: 100%;
 }
@@ -427,13 +409,12 @@
 .input {
   color: var(--text2-color, #b1b1b1);
   font-size: 1.2rem;
-  padding: 0px 12px;
-  height: 56px;
+  padding: 1rem;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 0.6rem;
   outline: 0 !important;
   border: 1px solid var(--border-color, #313131);
-  background: transparent;
+  background: var(--card-color, #272729);
 }
 
 .inputWrapper input::placeholder {
@@ -597,10 +578,28 @@ svg path {
   opacity: 1;
 }
 
+.paymentDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.sellerDropdown {
+  display: none;
+}
+
+.unlogged {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
 @media screen and (max-width: 640px) {
   .wrapper {
     flex-direction: column !important;
-    gap: 40px;
   }
   .container {
     position: inherit !important;
@@ -627,5 +626,68 @@ svg path {
   }
   .feeRow {
     gap: 2rem !important;
+  }
+
+  .paymentWrapper {
+    display: none;
+  }
+
+  .paymentWrapperForMobile {
+    display: block;
+    width: 100%;
+  }
+  .total {
+    align-items: center;
+  }
+
+  .sellerWrapper {
+    display: none;
+  }
+
+  .sellerDropdown {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    background: var(--bg-color, #171717);
+    box-shadow: 0 0 1rem 0 #171717;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2rem;
+    width: 100%;
+    padding: 1.2rem 2rem;
+  }
+  .sellerForMobile {
+    background: var(--bg-color, #171717);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 3rem !important;
+  }
+  .avatarWrapper {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+  }
+  .sellerTitle {
+    font-size: 1.8rem;
+  }
+  .sellerValue {
+    font-size: 2rem;
+  }
+  .showSeller {
+    animation: slide 0.4s;
+  }
+  @keyframes slide {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
 }

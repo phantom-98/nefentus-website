@@ -973,6 +973,7 @@
     "amount": "Anzahl",
     "email": "E-Mail",
     "name": "Name",
+    "number": "Nummer",
     "company": "Firma",
     "address": "Adresse",
     "addressHint": "Land, Stadt, Straße",
