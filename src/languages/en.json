@@ -1054,7 +1054,7 @@
     },
     "price": "Price",
     "seller": "Seller Info",
-    "total": "Payment Amount",
+    "total": "Invoice Amount",
     "cryptoAmount": "In Crypto",
     "cryptoDescription": "This amount corresponds to the invoice amount in the selected cryptocurrency. After payment, these funds are sent to the seller.",
     "chooseWallet": "Choose Wallet",
