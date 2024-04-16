@@ -15,7 +15,7 @@ export function formatTokenBalance(x, round = 2) {
     return "0.0";
   } else {
     return parsedFloat
-      .toFixed(round)
+      .toFixed(!isNaN(round) && parseInt(round) ? parseInt(round) : 2)
       .toString()
       .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -32,6 +32,17 @@ export function formatUSDBalance(x) {
       .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
 }
+
+export const formatWalletAddress = (address, symbolCount = 8) => {
+  isNaN(symbolCount) && (symbolCount = 8);
+  if (!address || address.length <= symbolCount * 2 + 2) {
+    return address;
+  }
+
+  const start = address.substring(0, symbolCount + 2);
+  const end = address.substring(address.length - symbolCount);
+  return `${start}....${end}`;
+};
 
 export function nullToZeroAddress(address) {
   if (address === null) return ethers.constants.AddressZero;

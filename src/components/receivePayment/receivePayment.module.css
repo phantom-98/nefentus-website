@@ -532,22 +532,6 @@ svg path {
   max-width: 360px;
 }
 
-.feeContainer {
-  display: flex;
-  flex-direction: column;
-  /* gap: 12px; */
-}
-
-.feeRow {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 6rem;
-  padding: 0.4rem;
-  font-size: 1.2rem;
-}
-
 .tooltip {
   position: relative;
   display: inline-block;
@@ -623,9 +607,6 @@ svg path {
   }
   .row {
     flex-direction: column;
-  }
-  .feeRow {
-    gap: 2rem !important;
   }
 
   .paymentWrapper {

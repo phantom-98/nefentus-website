@@ -6,6 +6,8 @@ import NefentusLogo from "../../assets/logo/logo_n.png";
 import WalletIcon from "../../assets/icon/wallets.svg";
 import MetaMaskLogo from "../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../assets/logo/WalletConnect.svg";
+import InfoMarkDark from "../../assets/icon/dark/info.svg";
+import InfoMarkLight from "../../assets/icon/light/info.svg";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
 import backendAPI from "../../api/backendAPI";
 import { uniswapApi, web3Api } from "../../api/web3Api";
@@ -33,30 +35,14 @@ import { currencies } from "../../constants";
 import {
   formatTokenBalance,
   formatUSDBalance,
+  formatWalletAddress,
   getWalletIcon,
 } from "../../utils";
 import { useTranslation } from "react-i18next";
 import Popup from "../../dashboardNew/components/popup/popup";
 import { useAuth } from "../../context/auth/authContext";
-
-const icons = ["walletconnect", "metamask", "coinbase", "trust"];
-
-const formatWalletAddress = (address, symbolCount = 8) => {
-  if (!address || address.length <= symbolCount * 2 + 2) {
-    return address;
-  }
-
-  const start = address.substring(0, symbolCount + 2);
-  const end = address.substring(address.length - symbolCount);
-  return `${start}....${end}`;
-};
-
-const formatBalance = (balance, digits = 2) => {
-  if (typeof balance === "number") {
-    return balance.toFixed(digits);
-  }
-  return null;
-};
+import { useTheme } from "../../context/themeContext/themeContext";
+import { GasDetails } from "../gasDetails/gasDetails";
 
 const ReceivePayment = ({
   priceUSD,
@@ -68,6 +54,7 @@ const ReceivePayment = ({
   valid,
 }) => {
   const [sellerDropdown, openSellerDropdown] = useState(false);
+  const { theme } = useTheme();
 
   const { internalWalletAddress, fetchInternalWalletAddress } =
     useInternalWallet();
@@ -95,7 +82,7 @@ const ReceivePayment = ({
     return {
       title: currency.abbr,
       icon: currency.icon,
-      description: formatBalance(balances[index]),
+      description: formatTokenBalance(balances[index]),
     };
   });
   const [selectedCryptoIndex, setSelectedCryptoIndex] = useState(0);
@@ -561,27 +548,10 @@ const ReceivePayment = ({
                       <span className={styles.tooltiptext}>
                         {t("payments.cryptoDescription")}
                       </span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <g clip-path="url(#clip0_839_16182)">
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M10.0002 2.50065C5.85803 2.50065 2.50016 5.85852 2.50016 10.0007C2.50016 14.1428 5.85803 17.5007 10.0002 17.5007C14.1423 17.5007 17.5002 14.1428 17.5002 10.0007C17.5002 5.85852 14.1423 2.50065 10.0002 2.50065ZM0.833496 10.0007C0.833496 4.93804 4.93755 0.833984 10.0002 0.833984C15.0628 0.833984 19.1668 4.93804 19.1668 10.0007C19.1668 15.0633 15.0628 19.1673 10.0002 19.1673C4.93755 19.1673 0.833496 15.0633 0.833496 10.0007ZM9.16683 6.66732C9.16683 6.20708 9.53993 5.83398 10.0002 5.83398H10.0085C10.4687 5.83398 10.8418 6.20708 10.8418 6.66732C10.8418 7.12756 10.4687 7.50065 10.0085 7.50065H10.0002C9.53993 7.50065 9.16683 7.12756 9.16683 6.66732ZM10.0002 9.16732C10.4604 9.16732 10.8335 9.54041 10.8335 10.0007V13.334C10.8335 13.7942 10.4604 14.1673 10.0002 14.1673C9.53993 14.1673 9.16683 13.7942 9.16683 13.334V10.0007C9.16683 9.54041 9.53993 9.16732 10.0002 9.16732Z"
-                            fill="#323232"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_839_16182">
-                            <rect width="20" height="20" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
+                      <img
+                        style={{ width: "1.4rem" }}
+                        src={theme === "dark" ? InfoMarkDark : InfoMarkLight}
+                      />
                     </div>
                   </p>
                   <div className={styles.cryptoBody}>
@@ -594,13 +564,11 @@ const ReceivePayment = ({
                   </div>
                 </div>
               </div>
-              <div style={{ width: "100%" }}>
-                <GasDetails
-                  currency={currencies()[selectedCryptoIndex]}
-                  cryptoAmount={parseFloat(cryptoAmount)}
-                  usdAmount={parseFloat(priceUSD)}
-                />
-              </div>
+              <GasDetails
+                currency={currencies()[selectedCryptoIndex]}
+                cryptoAmount={parseFloat(cryptoAmount)}
+                usdAmount={parseFloat(priceUSD)}
+              />
               <div className={styles.paymentWrapper}>
                 <Button
                   style={{ width: "100%" }}
@@ -1023,140 +991,5 @@ const PasswordPopup = ({ show, setShow, password, setPassword, onConfirm }) => {
         />
       </div>
     </Popup>
-  );
-};
-
-const GasDetails = ({
-  show,
-  currency,
-  cryptoAmount,
-  usdAmount,
-  gasLimit = 600_000,
-}) => {
-  const { t } = useTranslation();
-  const [gasValues, setGasValues] = useState({});
-  const [gasPriceAsWei, setGasPrice] = useState(0);
-  const [maxFee, setMaxFee] = useState(0);
-  // const [gasFee, setGasFee] = useState(0);
-  const [blockchain, setBlockchain] = useState(
-    currencies().find((c) => currency.blockchain === c.abbr),
-  );
-  const [blockchainPrice, setBlockchainPrice] = useState(0);
-  const uniswap = new uniswapApi();
-  const [collapse, setCollapse] = useState(true);
-
-  const init = async () => {
-    setMaxFee((gasValues.gasPrice * gasLimit) / 10 ** blockchain.decimals);
-    // setGasFee((estimatedGas * gasValues.gasPrice) / 10 ** blockchain.decimals);
-    setBlockchainPrice(await uniswap.getNativeTokenPrice(blockchain.abbr));
-  };
-
-  const fetch = async () => {
-    const res = await uniswap.getGasValues(blockchain.abbr);
-    setGasValues(res);
-    setGasPrice(res.gasPrice);
-  };
-
-  useEffect(() => {
-    setBlockchain(currencies().find((c) => currency.blockchain === c.abbr));
-  }, [currency]);
-
-  useEffect(() => {
-    fetch();
-  }, [blockchain.abbr]);
-
-  useEffect(() => {
-    init();
-  }, [gasValues]);
-
-  return (
-    <div className={styles.feeContainer} style={{ width: "100%" }}>
-      <div
-        className={styles.feeContainer}
-        style={{
-          gap: "0",
-          borderRadius: "8px",
-          border: "1px solid var(--border-color)",
-        }}
-      >
-        <div style={{ padding: "1.2rem" }}>
-          <div className={styles.feeRow}>
-            <span>
-              {t("payments.fee.gasPrice")}:{" "}
-              {Math.round(gasPriceAsWei / 10 ** 9)} Gwei
-            </span>
-            <span>
-              {t("payments.fee.gasLimit")}: {gasLimit}
-            </span>
-          </div>
-          <div className={styles.feeRow}>
-            <div
-              style={{ display: "flex", gap: "0.4rem", alignItems: "start" }}
-            >
-              <svg
-                width="14"
-                height="16"
-                viewBox="0 0 14 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M13.2667 4.02305L13.275 4.01471L10.6167 1.35638C10.375 1.11471 9.975 1.11471 9.73333 1.35638C9.49167 1.59805 9.49167 1.99805 9.73333 2.23971L11.05 3.55638C10.175 3.88971 9.58333 4.78138 9.73333 5.81471C9.86667 6.73138 10.65 7.47305 11.5667 7.57305C11.9583 7.61471 12.3 7.54805 12.625 7.40638V13.4147C12.625 13.873 12.25 14.248 11.7917 14.248C11.3333 14.248 10.9583 13.873 10.9583 13.4147V9.66471C10.9583 8.74805 10.2083 7.99805 9.29167 7.99805H8.45833V2.16471C8.45833 1.24805 7.70833 0.498047 6.79167 0.498047H1.79167C0.875 0.498047 0.125 1.24805 0.125 2.16471V14.6647C0.125 15.123 0.5 15.498 0.958333 15.498H7.625C8.08333 15.498 8.45833 15.123 8.45833 14.6647V9.24805H9.70833V13.298C9.70833 14.3897 10.4917 15.3814 11.575 15.4897C12.825 15.6147 13.875 14.6397 13.875 13.4147V5.49805C13.875 4.92305 13.6417 4.39805 13.2667 4.02305ZM6.79167 6.33138H1.79167V2.99805C1.79167 2.53971 2.16667 2.16471 2.625 2.16471H5.95833C6.41667 2.16471 6.79167 2.53971 6.79167 2.99805V6.33138ZM11.7917 6.33138C11.3333 6.33138 10.9583 5.95638 10.9583 5.49805C10.9583 5.03971 11.3333 4.66471 11.7917 4.66471C12.25 4.66471 12.625 5.03971 12.625 5.49805C12.625 5.95638 12.25 6.33138 11.7917 6.33138Z"
-                  fill="#B1B1B1"
-                />
-              </svg>
-              <span>{t("payments.fee.maxFee")}</span>
-              <div className={styles.tooltip}>
-                <span className={styles.tooltiptext}>
-                  {t("payments.fee.description")}
-                </span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  style={{ cursor: "pointer" }}
-                >
-                  <g clip-path="url(#clip0_839_16182)">
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M10.0002 2.50065C5.85803 2.50065 2.50016 5.85852 2.50016 10.0007C2.50016 14.1428 5.85803 17.5007 10.0002 17.5007C14.1423 17.5007 17.5002 14.1428 17.5002 10.0007C17.5002 5.85852 14.1423 2.50065 10.0002 2.50065ZM0.833496 10.0007C0.833496 4.93804 4.93755 0.833984 10.0002 0.833984C15.0628 0.833984 19.1668 4.93804 19.1668 10.0007C19.1668 15.0633 15.0628 19.1673 10.0002 19.1673C4.93755 19.1673 0.833496 15.0633 0.833496 10.0007ZM9.16683 6.66732C9.16683 6.20708 9.53993 5.83398 10.0002 5.83398H10.0085C10.4687 5.83398 10.8418 6.20708 10.8418 6.66732C10.8418 7.12756 10.4687 7.50065 10.0085 7.50065H10.0002C9.53993 7.50065 9.16683 7.12756 9.16683 6.66732ZM10.0002 9.16732C10.4604 9.16732 10.8335 9.54041 10.8335 10.0007V13.334C10.8335 13.7942 10.4604 14.1673 10.0002 14.1673C9.53993 14.1673 9.16683 13.7942 9.16683 13.334V10.0007C9.16683 9.54041 9.53993 9.16732 10.0002 9.16732Z"
-                      fill="#323232"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_839_16182">
-                      <rect width="20" height="20" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
-              :
-            </div>
-            <div>
-              <span>
-                {formatBalance(maxFee, 8)} {blockchain.abbr}
-              </span>
-              <span style={{ marginLeft: "3rem" }}>
-                ${formatUSDBalance(maxFee * blockchainPrice)}
-              </span>
-            </div>
-          </div>
-        </div>
-        <div
-          className={styles.feeRow}
-          style={{
-            padding: "1.2rem",
-            borderTop: "1px solid var(--border-color)",
-            fontSize: "1.4rem",
-          }}
-        >
-          <span>{t("payments.fee.total")}:</span>
-          <span>${formatUSDBalance(usdAmount + maxFee * blockchainPrice)}</span>
-        </div>
-      </div>
-    </div>
   );
 };
