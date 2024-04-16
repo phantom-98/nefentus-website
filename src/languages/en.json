@@ -422,7 +422,7 @@
   "footer": {
     "copyright": "© 2023 Nefentus. All rights reserved.",
     "downloadButton": "DOWNLOAD NOW",
-    "content": ["Home", "Payment", "Resources", "Affiliate", "Privacy Policy"],
+    "content": ["Home", "Payment", "Resources", "Privacy Policy"],
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
     "terms": "Terms and Condition",
@@ -495,7 +495,7 @@
       "agent": "Agent email",
       "roles": "Roles",
       "status": "Status",
-      "income": "Income ($)",
+      "income": "Income",
       "joinedOn": "Joined on",
       "earnings": "Earnings",
       "actions": "Actions",
@@ -895,6 +895,7 @@
       "confirmPasswordRequired": "Confirm password is required",
       "phoneNumberRequired": "Phone Number is required",
       "roleRequired": "Role is required.",
+      "agentYourself": "You are not allowed to set yourself as an agent.",
       "passwordCorrect": "You did not provide the correct password!",
       "currencyCorrect": "Please select a correct currency to withdraw.",
       "addressWithdraw": "Please enter an address to withdraw to.",
@@ -1020,7 +1021,7 @@
   },
   "payments": {
     "title": "Create a new invoice",
-    "enterAmount": "Enter amount in $",
+    "enterAmount": "Enter amount in ",
     "amount": "Amount",
     "email": "Email",
     "name": "Name",
@@ -1035,7 +1036,7 @@
     "downloadReceipt": "Download receipt",
     "table": {
       "created": "Created at",
-      "price": "Price ($)",
+      "price": "Price",
       "status": "Status",
       "qr": "QR code",
       "actions": "Actions"
@@ -1078,7 +1079,7 @@
       "currency": "Currency",
       "transaction": "Transaction",
       "date": "Date",
-      "earnings": "Amount ($)",
+      "earnings": "Amount",
       "action": "Action"
     }
   },

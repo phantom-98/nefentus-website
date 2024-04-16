@@ -8,9 +8,11 @@ import { useContext, useState } from "react";
 import { MessageContext } from "../../../context/message";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../context/auth/authContext";
 
 const PaymentForm = ({ setLoadingData }) => {
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
 
   const [showPopup, setShowPopup] = useState(false);
   const [amount, setAmount] = useState("");
@@ -53,7 +55,7 @@ const PaymentForm = ({ setLoadingData }) => {
     // }
 
     const data = {
-      amountUSD: amount,
+      amountUSD: parseFloat(amount) / currencyRate.rate,
       email,
       name,
       company,
@@ -81,7 +83,9 @@ const PaymentForm = ({ setLoadingData }) => {
 
         <div className={styles.row}>
           <Input
-            placeholder={t("payments.enterAmount").concat("*")}
+            placeholder={t("payments.enterAmount").concat(
+              currencyRate.symbol + "*",
+            )}
             value={amount}
             setVaue={setAmount}
           />

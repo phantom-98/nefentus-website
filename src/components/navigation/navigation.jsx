@@ -193,12 +193,6 @@ const Navigation = () => {
                   </Link>
                 </li>
                 <li className="standard">
-                  <Link to="/affiliate">
-                    <p>{t("navigation.affiliate")}</p>
-                    <p className={styles.fake}>{t("navigation.affiliate")}</p>
-                  </Link>
-                </li>
-                <li className="standard">
                   <Link to="/support">
                     <p>{t("navigation.resources")}</p>
                     <p className={styles.fake}>{t("navigation.resources")}</p>

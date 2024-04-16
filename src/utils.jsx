@@ -52,7 +52,6 @@ export function getRole(user) {
   const roles = user?.roles || [];
   // const roleArray = roles?.split(",");
   const isVendor = roles?.includes("ROLE_VENDOR");
-  const isAffiliate = roles?.includes("ROLE_AFFILIATE");
   const isBroker = roles?.includes("ROLE_BROKER");
   const isSeniorBroker = roles?.includes("ROLE_SENIOR_BROKER");
   const isLeader = roles?.includes("ROLE_LEADER");
@@ -62,15 +61,13 @@ export function getRole(user) {
     return "admin";
   } else if (isVendor) {
     return "vendor";
-  } else if (isAffiliate) {
-    return "affiliate";
   } else if (isBroker) {
     return "broker";
   } else if (isSeniorBroker) {
     return "seniorbroker";
   } else if (isLeader) {
     return "leader";
-  }
+  } else return "";
 }
 
 export function dashboardLink(user) {

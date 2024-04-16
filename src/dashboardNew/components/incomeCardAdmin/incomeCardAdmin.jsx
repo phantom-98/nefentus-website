@@ -19,6 +19,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useAuth } from "../../../context/auth/authContext";
 
 ChartJS.register(
   CategoryScale,
@@ -54,7 +55,7 @@ export const optionsChart = {
       },
       ticks: {
         callback: function (value, index, ticks) {
-          return value + " $";
+          return value;
         },
         suggestedMin: 0,
         padding: 10,
@@ -132,15 +133,15 @@ function getStartDate(data) {
   }
 }
 
-function getTotalIncome(totalPrices) {
+function getTotalIncome(totalPrices, symbol) {
   if (totalPrices) {
     const values = Object.values(totalPrices);
     const sum = values.reduce(function (prev, currentValue) {
       return prev + currentValue;
     }, 0);
-    return "$" + formatUSDBalance(sum);
+    return symbol + formatUSDBalance(sum);
   } else {
-    return "$0";
+    return symbol + "0";
   }
 }
 
@@ -155,6 +156,7 @@ function getEndDate(data) {
 
 const IncomeCardAdmin = ({ data }) => {
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
   const [period, setPeriod] = useState(t("graph.choosePeriod"));
 
   const months = [
@@ -218,7 +220,9 @@ const IncomeCardAdmin = ({ data }) => {
       <div className={styles.info}>
         <div className={styles.left}>
           <div className={styles.label}>{t("dashboard.refIncome")}</div>
-          <div className={styles.graphAmount}>{getTotalIncome(graphData)}</div>
+          <div className={styles.graphAmount}>
+            {getTotalIncome(graphData, currencyRate.symbol)}
+          </div>
         </div>
 
         <div className={styles.dropdownWrap}>

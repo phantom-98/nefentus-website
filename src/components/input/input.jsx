@@ -9,6 +9,10 @@ import { useTheme } from "../../context/themeContext/themeContext";
 import WalletAddressFormatter from "../../func/walletAddressFormatter";
 import CopyAddress from "../../assets/icon/copy.png";
 import { MessageContext } from "../../context/message";
+import DropDownIcon from "../../assets/icon/dropdown.svg";
+import CheckedIcon from "../../assets/icon/checked.svg";
+import USD from "../../assets/icon/usd.png";
+import EUR from "../../assets/icon/eur.png";
 
 const Input = ({
   label,
@@ -77,6 +81,14 @@ export const Options = ({
   showOnTop,
 }) => {
   const [open, setOpen] = useState(false);
+  const [display, setDisplay] = useState("");
+
+  useEffect(() => {
+    if (value) {
+      const d = options.find((item) => item.value && value === item.value);
+      d && setDisplay(d.display);
+    }
+  }, [value]);
 
   const { t } = useTranslation();
 
@@ -105,7 +117,7 @@ export const Options = ({
               bottom: 0,
             }}
           >
-            {value ? value : t("signUp.selectLabel")}
+            {display ? display : value ? value : t("signUp.selectLabel")}
           </div>
         }{" "}
         <img src={dropDown} alt="dropdown" />
@@ -113,10 +125,16 @@ export const Options = ({
           <div
             className={`card ${styles.body} ${showOnTop && styles.reverseOpen}`}
           >
-            {options.length > 0 ? (
+            {options?.length > 0 &&
               options.map((item) =>
                 item.value ? (
-                  <p key={item.value} onClick={() => setValue(item.value)}>
+                  <p
+                    key={item.value}
+                    onClick={() => {
+                      setValue(item.value);
+                      setDisplay && setDisplay(item.display);
+                    }}
+                  >
                     {item.display}
                   </p>
                 ) : (
@@ -124,23 +142,7 @@ export const Options = ({
                     {item}
                   </p>
                 ),
-              )
-            ) : (
-              <>
-                <p key={"vendor"} onClick={() => setValue("Vendor")}>
-                  {t("signUp.option1")}
-                </p>
-                <p key={"affiliate"} onClick={() => setValue("Affiliate")}>
-                  {t("signUp.option2")}
-                </p>
-                <p
-                  key={"vendoraffiliate"}
-                  onClick={() => setValue("Vendor / Affiliate")}
-                >
-                  {t("signUp.option1")} / {t("signUp.option2")}
-                </p>
-              </>
-            )}
+              )}
           </div>
         )}
       </div>
@@ -449,8 +451,11 @@ export const OptionsWithImage = ({
         </div>
         <img src={dropDown} alt="dropdown" />
         {open && options.length > 1 && (
-          <div className={`card ${styles.body}`} style={{ opacity: "1" }}>
-            {options.length > 0 ? (
+          <div
+            className={`card ${styles.walletDropdownBody}`}
+            style={{ opacity: "1" }}
+          >
+            {options?.length > 0 &&
               options.map((item) =>
                 item?.name ? (
                   <p
@@ -471,26 +476,83 @@ export const OptionsWithImage = ({
                     {item}
                   </p>
                 ),
-              )
-            ) : (
-              <>
-                <p key={"vendor"} onClick={() => setValue("Vendor")}>
-                  {t("signUp.option1")}
-                </p>
-                <p key={"affiliate"} onClick={() => setValue("Affiliate")}>
-                  {t("signUp.option2")}
-                </p>
-                <p
-                  key={"vendoraffiliate"}
-                  onClick={() => setValue("Vendor / Affiliate")}
-                >
-                  {t("signUp.option1")} / {t("signUp.option2")}
-                </p>
-              </>
-            )}
+              )}
           </div>
         )}
       </div>
+    </div>
+  );
+};
+
+export const CurrencySelect = ({ selectedIndex, setSelectedIndex }) => {
+  const data = [
+    { title: "USD $", icon: USD, alt: "" },
+    { title: "EUR €", icon: EUR, alt: "" },
+  ];
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <div
+        className={`${styles.currencySelect}`}
+        onClick={() => setOpen((prev) => !prev)}
+        // onMouseLeave={() => setOpen(false)}
+        // onMouseEnter={() => setOpen(true)}
+      >
+        <CurrencyOption
+          icon={data[selectedIndex]?.icon}
+          optionTitle={data[selectedIndex]?.title}
+          alt={data[selectedIndex]?.alt}
+          dropdown
+        />
+        <div
+          className={`${styles.selectBody} ${
+            open ? styles.visible : styles.hidden
+          }`}
+        >
+          {data.map((item, index) => {
+            return (
+              <div key={index} onClick={() => setSelectedIndex(index)}>
+                <CurrencyOption
+                  icon={item.icon}
+                  optionTitle={item.title}
+                  alt={item.alt}
+                  selected={selectedIndex === index}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+};
+
+const CurrencyOption = ({ icon, optionTitle, alt, dropdown, selected }) => {
+  return (
+    <div
+      className={styles.optionLineWrapper}
+      style={{
+        borderRadius: dropdown ? "3px" : "0",
+      }}
+    >
+      <div className={styles.optionLine}>
+        <img src={icon} className={styles.icon} alt={alt} />
+        <div className={styles.optionContainer}>
+          <p className={styles.optionTitle}> {optionTitle} </p>
+        </div>
+      </div>
+      {dropdown && (
+        <img src={DropDownIcon} alt="dropdown" width={8} height={4} />
+      )}
+      {selected && (
+        <img
+          className={styles.icon}
+          src={CheckedIcon}
+          alt="checked"
+          width={16}
+          height={11}
+        />
+      )}
     </div>
   );
 };

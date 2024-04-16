@@ -371,13 +371,7 @@
   "footer": {
     "copyright": "© 2023 Nefentus. Alle Rechte vorbehalten.",
     "downloadButton": "JETZT RUNTERLADEN",
-    "content": [
-      "Home",
-      "Zahlung",
-      "Ressourcen",
-      "Affiliate",
-      "Datenschutzrichtlinie"
-    ],
+    "content": ["Home", "Zahlung", "Ressourcen", "Datenschutzrichtlinie"],
     "privacy": "Datenschutzerklärung",
     "imprint": "Impressum",
     "terms": "Bedingungen und Konditionen",
@@ -449,7 +443,7 @@
       "agent": "E-Mail des Agenten",
       "roles": "Rollen",
       "status": "Status",
-      "income ": "Einkommen ($)",
+      "income ": "Einkommen",
       "joinedOn": "Beigetreten am",
       "earnings": "Ergebnis",
       "actions": "Aktionen",
@@ -848,6 +842,7 @@
       "confirmPasswordRequired": "Zur Bestätigung ist ein Passwort erforderlich",
       "phoneNumberRequired": "Telefonnummer ist erforderlich",
       "roleRequired": "Rolle ist erforderlich.",
+      "agentYourself": "Sie dürfen sich nicht als Vermittler aufstellen.",
       "passwordCorrect": "Sie haben nicht das richtige Passwort eingegeben!",
       "currencyCorrect": "Bitte wählen Sie eine korrekte Währung für die Abhebung.",
       "addressWithdraw": "Bitte geben Sie eine Adresse für die Abhebung an.",
@@ -974,7 +969,7 @@
   },
   "payments": {
     "title": "Neue Rechnung erstellen",
-    "enterAmount": "Betrag in $ eingeben",
+    "enterAmount": "Betrag in ",
     "amount": "Anzahl",
     "email": "E-Mail",
     "name": "Name",
@@ -989,7 +984,7 @@
     "downloadReceipt": "Zahlungseingang herunterladen",
     "table": {
       "created": "Erstellt am",
-      "price": "Preis ($)",
+      "price": "Preis",
       "status": "Status",
       "qr": "QR-Code",
       "actions": "Aktionen"
@@ -1033,7 +1028,7 @@
       "currency": "Währung",
       "transaction": "Transaktion",
       "date": "Datum",
-      "earnings": "Betrag ($)",
+      "earnings": "Betrag",
       "action": "Aktion"
     }
   },
