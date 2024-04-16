@@ -200,7 +200,10 @@ const ReceivePayment = ({
     setWallets(
       list.map((wallet) => ({
         ...wallet,
-        title: wallet?.type?.charAt(0)?.toUpperCase() + wallet?.type?.slice(1),
+        title:
+          wallet?.type?.toLowerCase() === "internal"
+            ? "Nefentus wallet"
+            : wallet?.type?.charAt(0)?.toUpperCase() + wallet?.type?.slice(1),
         description: formatWalletAddress(wallet?.address),
         icon: getWalletIcon(wallet?.type),
       })),
@@ -427,13 +430,16 @@ const ReceivePayment = ({
                 display: "flex",
                 alignItems: "center",
                 gap: "0.4rem",
-                padding: "0.5rem 1rem",
+                padding: "0.8rem 2rem",
                 borderRadius: "0.6rem",
+                fontSize: "1.6rem",
                 border: "1px solid var(--border-color, #313131)",
               }}
               onClick={() => openSellerDropdown(!sellerDropdown)}
             >
-              {t("payments.seller")}
+              <span style={{ marginTop: "0.3rem", marginRight: "0.3rem" }}>
+                {t("payments.seller")}
+              </span>
               <img src={DropDownIcon} />
             </div>
           </div>
