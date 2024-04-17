@@ -6,6 +6,18 @@ import WalletConnectLogo from "./assets/logo/WalletConnect.svg";
 import Ethereum from "./assets/icon/crypto/ethereum.svg";
 import CoinbaseLogo from "./assets/logo/coinbase.svg";
 import TrustLogo from "./assets/logo/trust.png";
+import Safe from "./assets/logo/safe.png";
+import Blocto from "./assets/logo/blocto.png";
+import Frame from "./assets/logo/frame.png";
+import Rainbow from "./assets/logo/rainbow.png";
+import Phantom from "./assets/logo/phantom.png";
+import Coin98 from "./assets/logo/coin98.png";
+import CoreWallet from "./assets/logo/corewallet.png";
+import CryptoDefi from "./assets/logo/cryptodefi.png";
+import Okx from "./assets/logo/okx.png";
+import OneKey from "./assets/logo/onekey.png";
+import Rabby from "./assets/logo/rabby.png";
+import XDefi from "./assets/logo/xdefi.png";
 import Cookies from "js-cookie";
 
 export function formatTokenBalance(x, round = 2) {
@@ -154,6 +166,30 @@ export const getWalletIcon = (type) => {
       return CoinbaseLogo;
     case "trust":
       return TrustLogo;
+    case "safe":
+      return Safe;
+    case "blocto":
+      return Blocto;
+    case "frame":
+      return Frame;
+    case "rainbowwallet":
+      return Rainbow;
+    case "phantom":
+      return Phantom;
+    case "coin98":
+      return Coin98;
+    case "corewallet":
+      return CoreWallet;
+    case "cryptodefi":
+      return CryptoDefi;
+    case "okx":
+      return Okx;
+    case "onekey":
+      return OneKey;
+    case "rabby":
+      return Rabby;
+    case "xdefi":
+      return XDefi;
     default:
       return Ethereum;
   }
