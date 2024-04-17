@@ -495,8 +495,8 @@ export const CurrencySelect = ({ selectedIndex, setSelectedIndex }) => {
       <div
         className={`${styles.currencySelect}`}
         onClick={() => setOpen((prev) => !prev)}
-        // onMouseLeave={() => setOpen(false)}
-        // onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+        onMouseEnter={() => setOpen(true)}
       >
         <CurrencyOption
           icon={data[selectedIndex]?.icon}
@@ -504,24 +504,22 @@ export const CurrencySelect = ({ selectedIndex, setSelectedIndex }) => {
           alt={data[selectedIndex]?.alt}
           dropdown
         />
-        <div
-          className={`${styles.selectBody} ${
-            open ? styles.visible : styles.hidden
-          }`}
-        >
-          {data.map((item, index) => {
-            return (
-              <div key={index} onClick={() => setSelectedIndex(index)}>
-                <CurrencyOption
-                  icon={item.icon}
-                  optionTitle={item.title}
-                  alt={item.alt}
-                  selected={selectedIndex === index}
-                />
-              </div>
-            );
-          })}
-        </div>
+        {open && (
+          <div className={`${styles.selectBody}`}>
+            {data.map((item, index) => {
+              return (
+                <div key={index} onClick={() => setSelectedIndex(index)}>
+                  <CurrencyOption
+                    icon={item.icon}
+                    optionTitle={item.title}
+                    alt={item.alt}
+                    selected={selectedIndex === index}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </>
   );
