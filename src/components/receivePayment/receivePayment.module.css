@@ -102,8 +102,9 @@
   width: max-content;
   margin: 4rem 10rem;
   width: 60%;
-  height: 80%;
+  height: 90%;
   max-width: 40rem;
+  max-height: 70rem;
 }
 
 .productImage {
@@ -468,7 +469,7 @@ svg path {
   width: 60%;
 }
 
-.productInfo h1 {
+.productInfo span {
   font-size: 1.6rem;
   color: var(--text-color, #f6f6f6);
 }
