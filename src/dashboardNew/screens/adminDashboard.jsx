@@ -277,7 +277,7 @@ const AdminDashboard = ({ type }) => {
       return;
     }
 
-    if (agentEmail.toLowerCase() === user.email.toLowerCase()) {
+    if (agentEmail && agentEmail.toLowerCase() === user.email.toLowerCase()) {
       setErrorMessage(t("messages.error.agentYourself"));
       return;
     }

@@ -32,3 +32,6 @@ jobs:
 
       - name: Deploy to S3 bucket
         run: aws s3 sync ./dist/ s3://nefentus.comx
+
+      - name: Clear CloudFront Cache / Invalidate Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_CLOUD_FRONT_ID }} --paths "/*"

@@ -27,6 +27,19 @@ import {
   useCreateWalletInstance,
   useSetConnectedWallet,
   ConnectWallet,
+  safeWallet,
+  zerionWallet,
+  bloctoWallet,
+  frameWallet,
+  rainbowWallet,
+  phantomWallet,
+  okxWallet,
+  coin98Wallet,
+  coreWallet,
+  cryptoDefiWallet,
+  oneKeyWallet,
+  rabbyWallet,
+  xdefiWallet,
 } from "@thirdweb-dev/react";
 import useBalances from "../../hooks/balances";
 import usePrices from "../../hooks/prices";
@@ -216,13 +229,38 @@ const ReceivePayment = ({
           })
         : wallet?.type?.toLowerCase() === "coinbase"
         ? coinbaseWallet({ recommended: true, qrmodal: "coinbase" })
-        : // : wallet?.type?.toLowerCase() === "trust"
-          // ? trustWallet({
-          //     projectId: "57e1cfc18509bb9cc4d51638ce8d18ed",
-          //     recommended: true,
-          //     // qrModal: "trust",
-          //   })
-          null;
+        : wallet?.type?.toLowerCase() === "trust"
+        ? trustWallet({
+            projectId: "57e1cfc18509bb9cc4d51638ce8d18ed",
+            recommended: true,
+          })
+        : wallet?.type?.toLowerCase() == "safe"
+        ? safeWallet()
+        : wallet?.type?.toLowerCase() == "zerionwallet"
+        ? zerionWallet()
+        : wallet?.type?.toLowerCase() == "blocto"
+        ? bloctoWallet()
+        : wallet?.type?.toLowerCase() == "frame"
+        ? frameWallet()
+        : wallet?.type?.toLowerCase() == "rainbowwallet"
+        ? rainbowWallet()
+        : wallet?.type?.toLowerCase() == "phantom"
+        ? phantomWallet()
+        : wallet?.type?.toLowerCase() == "okx"
+        ? okxWallet()
+        : wallet?.type?.toLowerCase() == "coin98"
+        ? coin98Wallet()
+        : wallet?.type?.toLowerCase() == "core"
+        ? coreWallet()
+        : wallet?.type?.toLowerCase() == "cryptodefi"
+        ? cryptoDefiWallet()
+        : wallet?.type?.toLowerCase() == "onekey"
+        ? oneKeyWallet()
+        : wallet?.type?.toLowerCase() == "rabby"
+        ? rabbyWallet()
+        : wallet?.type?.toLowerCase() == "xdefi"
+        ? xdefiWallet()
+        : null;
     if (
       connectedWallet === undefined ||
       connectedWallet?.walletId?.toLowerCase() != wallet?.title?.toLowerCase()
