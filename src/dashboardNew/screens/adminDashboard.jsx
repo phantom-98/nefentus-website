@@ -39,7 +39,7 @@ const roleColors = {
 const labels = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "00:00"];
 /**
  *
- * @param type Type of the dashboard (admin or partner)
+ * @param type Type of the dashboard (admin or partner or agent)
  * @returns
  */
 const AdminDashboard = ({ type }) => {
@@ -94,7 +94,7 @@ const AdminDashboard = ({ type }) => {
     fetchAdminUsersData();
 
     clearMessages();
-  }, [isReloadData]);
+  }, [isReloadData, type]);
 
   const fetchAdminData = async () => {
     await checkJwtToken();
@@ -474,14 +474,18 @@ const AdminDashboard = ({ type }) => {
           />
           <Table
             grid={`1.2fr 0.9fr 1.8fr 1fr 0.9fr 1.5fr 1.8fr ${
-              i18n?.language == "en"
+              type === "agent"
+                ? ""
+                : i18n?.language == "en"
                 ? "0.5fr 0.3fr 0.5fr"
                 : i18n?.language == "de"
                 ? "0.8fr 0.8fr 0.8fr"
                 : "1fr 0.8fr 0.8fr"
             }`}
-            label={label}
-            data={tableData}
+            label={type === "agent" ? label.slice(0, -3) : label}
+            data={tableData.map((row) =>
+              type === "agent" ? row.slice(0, -3) : row,
+            )}
           />
 
           <>

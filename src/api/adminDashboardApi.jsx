@@ -4,7 +4,7 @@ import ReactGA from "react-ga4";
 
 export default class adminDashboardApi {
   constructor(type) {
-    if (type !== "admin") type = "partner";
+    if (type !== "admin" && type !== "agent") type = "partner";
     this.baseURL =
       process.env.VITE_REACT_APP_BASE_ENDPOINT_API + `/dashboard/${type}`;
     this.token = Cookies.get("token");
