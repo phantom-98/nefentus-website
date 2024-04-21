@@ -1275,10 +1275,10 @@
     }
   },
   "cookieBanner": {
-    "first": "We use third-party ",
-    "cookies": "cookies ",
-    "second": " in order to ",
-    "last": "personalize your site experience.",
+    "first": "We use third-party cookies to personalize your site experience.",
+    "privacyPolicy1": " Read more about our ",
+    "privacyPolicyLink": "privacy policy",
+    "privacyPolicy2": "!",
     "decline": "Decline",
     "accept": "Accept"
   },

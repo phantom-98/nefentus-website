@@ -1201,10 +1201,10 @@
   },
 
   "cookieBanner": {
-    "first": "Wir nutzen Drittanbieter ",
-    "cookies": "Cookies ",
-    "second": "um zu ",
-    "last": "personalisieren Sie Ihr Website-Erlebnis.",
+    "first": "Wir verwenden Cookies von Drittanbietern, um Ihr Website-Erlebnis zu personalisieren.",
+    "privacyPolicy1": " Lesen Sie mehr über unsere ",
+    "privacyPolicyLink": "Datenschutzbestimmungen",
+    "privacyPolicy2": "lesen.",
     "decline": "Ablehnen",
     "accept": "Akzeptieren"
   },
