@@ -1290,6 +1290,9 @@
     "decline": "Decline",
     "accept": "Accept"
   },
+  "privacyPolicy": {
+    "revoke": "Revoke my consent to the storage of cookies"
+  },
   "languages": {
     "english": "English",
     "deutsch": "Deutsch",

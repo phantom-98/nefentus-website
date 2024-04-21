@@ -1210,6 +1210,9 @@
     "decline": "Ablehnen",
     "accept": "Akzeptieren"
   },
+  "privacyPolicy": {
+    "revoke": "Meine Zustimmung zur Speicherung von Cookies widerrufen"
+  },
   "settingsItem": {
     "title": "Wert ändern"
   },

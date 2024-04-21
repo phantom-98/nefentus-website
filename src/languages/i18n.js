@@ -7,6 +7,7 @@ import translationDE from "./ger.json";
 import translationUK from "./uk.json";
 import privacyPolicyEN from "./privacyPolicy/en.html";
 import privacyPolicyDE from "./privacyPolicy/ger.html";
+import privacyPolicyUK from "./privacyPolicy/uk.html";
 /*
 import translationAR from "./ar.json";
 import translationFR from "./Fr.json";
@@ -33,7 +34,7 @@ i18n
       },
       uk: {
         translation: translationUK,
-        privacy_policy: { contents: privacyPolicyDE },
+        privacy_policy: { contents: privacyPolicyUK },
       },
       /*
       ar: {
