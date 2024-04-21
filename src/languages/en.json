@@ -29,7 +29,7 @@
     "integration": "Integration",
     "imprint": "Imprint",
     "forgotPassword": "Password forgotten",
-    "privacy": "Privacy",
+    "privacy": "Privacy policy",
     "resetPassword": "Reset Password",
     "support": "Support"
   },
@@ -422,13 +422,21 @@
   "footer": {
     "copyright": "© 2023 Nefentus. All rights reserved.",
     "downloadButton": "DOWNLOAD NOW",
-    "content": ["Home", "Payment", "Resources", "Privacy Policy"],
+    "content": ["Home", "Payment", "Resources"],
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
     "terms": "Terms and Condition",
     "contact": "Contact us",
     "contentLabel1": "Overview",
-    "content2": ["Play Store", "Sign In", "App Store", "Sign Up", "Imprint"],
+    "content2": [
+      "",
+      "Play Store",
+      "Sign In",
+      "App Store",
+      "Sign Up",
+      "Imprint",
+      "Privacy Policy"
+    ],
     "contentLabel2": "Action",
     "socialTitle": "Follow us on:",
     "socialDescription": " Go to the top\n of the page"

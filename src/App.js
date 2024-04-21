@@ -68,7 +68,7 @@ const Login = React.lazy(() => import("./pages/Login"));
 const Payment = React.lazy(() => import("./pages/Payment"));
 const Affiliate = React.lazy(() => import("./pages/Affiliate"));
 const Support = React.lazy(() => import("./pages/Support"));
-const Privacy = React.lazy(() => import("./pages/Privacy"));
+const Privacy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const Imprint = React.lazy(() => import("./pages/Imprint"));
 const PasswordForgot = React.lazy(() => import("./pages/PasswordForgot"));
 const Product = React.lazy(() => import("./pages/Product"));

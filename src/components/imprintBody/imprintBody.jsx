@@ -1,13 +1,9 @@
 import styles from "./imprintBody.module.css";
 
-import { useState } from "react";
-
 const ImprintBody = () => {
-  const [active, setActive] = useState(0);
-
   return (
     <div className={`container ${styles.section}`}>
-      <h2>Imprint:</h2>
+      <h2>Imprint</h2>
       <div className={`${styles.body}`}>
         <div className={styles.content}>
           <p>
