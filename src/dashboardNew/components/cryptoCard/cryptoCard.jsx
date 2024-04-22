@@ -4,12 +4,26 @@ import styles from "./cryptoCard.module.css";
 
 import { useContext, useEffect, useState } from "react";
 import {
+  CoreWallet,
+  bloctoWallet,
+  coin98Wallet,
+  coreWallet,
+  cryptoDefiWallet,
+  frameWallet,
   metamaskWallet,
+  okxWallet,
+  oneKeyWallet,
+  phantomWallet,
+  rabbyWallet,
+  rainbowWallet,
+  safeWallet,
   useConnect,
   useNetworkMismatch,
   useSwitchChain,
   useWallet,
   walletConnect,
+  xdefiWallet,
+  zerionWallet,
 } from "@thirdweb-dev/react";
 import useInternalWallet from "../../../hooks/internalWallet";
 import useBalances from "../../../hooks/balances";
@@ -309,12 +323,38 @@ const SendModal = ({
             })
           : wallet?.type?.toLowerCase() === "coinbase"
           ? coinbaseWallet({ recommended: true, qrmodal: "coinbase" })
-          : // : wallet?.type?.toLowerCase() === "trust"
-            // ? trustWallet({
-            //     projectId: "57e1cfc18509bb9cc4d51638ce8d18ed",
-            //     recommended: true,
-            //   })
-            null;
+          : wallet?.type?.toLowerCase() === "trust"
+          ? trustWallet({
+              projectId: "57e1cfc18509bb9cc4d51638ce8d18ed",
+              recommended: true,
+            })
+          : wallet?.type?.toLowerCase() == "safe"
+          ? safeWallet()
+          : wallet?.type?.toLowerCase() == "zerionwallet"
+          ? zerionWallet()
+          : wallet?.type?.toLowerCase() == "blocto"
+          ? bloctoWallet()
+          : wallet?.type?.toLowerCase() == "frame"
+          ? frameWallet()
+          : wallet?.type?.toLowerCase() == "rainbowwallet"
+          ? rainbowWallet()
+          : wallet?.type?.toLowerCase() == "phantom"
+          ? phantomWallet()
+          : wallet?.type?.toLowerCase() == "okx"
+          ? okxWallet()
+          : wallet?.type?.toLowerCase() == "coin98"
+          ? coin98Wallet()
+          : wallet?.type?.toLowerCase() == "core"
+          ? coreWallet()
+          : wallet?.type?.toLowerCase() == "cryptodefi"
+          ? cryptoDefiWallet()
+          : wallet?.type?.toLowerCase() == "onekey"
+          ? oneKeyWallet()
+          : wallet?.type?.toLowerCase() == "rabby"
+          ? rabbyWallet()
+          : wallet?.type?.toLowerCase() == "xdefi"
+          ? xdefiWallet()
+          : null;
       if (
         connectedWallet === undefined ||
         connectedWallet?.walletId?.toLowerCase() != wallet?.name?.toLowerCase()

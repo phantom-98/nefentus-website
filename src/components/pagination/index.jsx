@@ -40,8 +40,10 @@ const Pagination = ({
             ‹
           </li>
           <li>
-            <PageInput value={dataPage + 1} updatePage={updatePage} />{" "}
-            {t("general.of")} {numPages}
+            <PageInput value={dataPage + 1} updatePage={updatePage} />
+            {/* {t("general.of")}  */}
+            {"/ "}
+            {numPages}
           </li>
           <li
             onClick={() => dataPage + 1 < numPages && updatePage(dataPage + 1)}
