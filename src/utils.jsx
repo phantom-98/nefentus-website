@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 import backendAPI from "./api/backendAPI";
+import NefentusLogo from "./assets/logo/logo.svg";
 import MetaMaskLogo from "./assets/logo/MetaMask.svg";
 import WalletConnectLogo from "./assets/logo/WalletConnect.svg";
 import Ethereum from "./assets/icon/crypto/ethereum.svg";
@@ -26,7 +27,7 @@ export function formatTokenBalance(x, round = 2) {
     return "0.0";
   } else {
     return parsedFloat
-      .toFixed(round)
+      .toFixed(!isNaN(round) && parseInt(round) ? parseInt(round) : 2)
       .toString()
       .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -43,6 +44,17 @@ export function formatUSDBalance(x) {
       .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
 }
+
+export const formatWalletAddress = (address, symbolCount = 8) => {
+  isNaN(symbolCount) && (symbolCount = 8);
+  if (!address || address.length <= symbolCount * 2 + 2) {
+    return address;
+  }
+
+  const start = address.substring(0, symbolCount + 2);
+  const end = address.substring(address.length - symbolCount);
+  return `${start}....${end}`;
+};
 
 export function nullToZeroAddress(address) {
   if (address === null) return ethers.constants.AddressZero;
@@ -190,6 +202,8 @@ export const getWalletIcon = (type) => {
       return Rabby;
     case "xdefi":
       return XDefi;
+    case "internal":
+      return NefentusLogo;
     default:
       return Ethereum;
   }
