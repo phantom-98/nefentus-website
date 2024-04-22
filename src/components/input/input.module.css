@@ -249,16 +249,6 @@
   z-index: 100;
 }
 
-.visible {
-  opacity: 100%;
-  transition: 0.1s ease-out;
-}
-
-.hidden {
-  opacity: 0;
-  transition: 0.2s ease-out;
-}
-
 .optionLineWrapper {
   display: flex;
   height: 100%;
