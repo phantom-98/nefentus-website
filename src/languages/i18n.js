@@ -8,6 +8,9 @@ import translationUK from "./uk.json";
 import privacyPolicyEN from "./privacyPolicy/en.html";
 import privacyPolicyDE from "./privacyPolicy/ger.html";
 import privacyPolicyUK from "./privacyPolicy/uk.html";
+import imprintEN from "./imprint/en.html";
+import imprintDE from "./imprint/ger.html";
+import imprintUK from "./imprint/uk.html";
 /*
 import translationAR from "./ar.json";
 import translationFR from "./Fr.json";
@@ -27,14 +30,17 @@ i18n
       en: {
         translation: translationEN,
         privacy_policy: { contents: privacyPolicyEN },
+        imprint: { contents: imprintEN },
       },
       de: {
         translation: translationDE,
         privacy_policy: { contents: privacyPolicyDE },
+        imprint: { contents: imprintDE },
       },
       uk: {
         translation: translationUK,
         privacy_policy: { contents: privacyPolicyUK },
+        imprint: { contents: imprintUK },
       },
       /*
       ar: {

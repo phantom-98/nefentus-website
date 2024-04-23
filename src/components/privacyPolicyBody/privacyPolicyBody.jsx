@@ -8,7 +8,7 @@ const PrivacyPolicyBody = () => {
 
   return (
     <div className={`container ${styles.section}`}>
-      <h2>Privacy Policy</h2>
+      <h2>{t("privacyPolicy.headline")}</h2>
       <div className={`${styles.body}`}>
         <div className={styles.content}>
           <div dangerouslySetInnerHTML={{ __html: tpp("contents") }} />

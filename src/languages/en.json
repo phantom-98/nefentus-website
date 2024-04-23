@@ -1291,7 +1291,11 @@
     "accept": "Accept"
   },
   "privacyPolicy": {
-    "revoke": "Revoke my consent to the storage of cookies"
+    "revoke": "Revoke my consent to the storage of cookies",
+    "headline": "Privacy policy"
+  },
+  "imprint": {
+    "headline": "Imprint"
   },
   "languages": {
     "english": "English",

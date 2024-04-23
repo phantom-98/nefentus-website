@@ -1211,7 +1211,11 @@
     "accept": "Akzeptieren"
   },
   "privacyPolicy": {
-    "revoke": "Meine Zustimmung zur Speicherung von Cookies widerrufen"
+    "revoke": "Meine Zustimmung zur Speicherung von Cookies widerrufen",
+    "headline": "Datenschutzerklärung"
+  },
+  "imprint": {
+    "headline": "Impressum"
   },
   "settingsItem": {
     "title": "Wert ändern"
