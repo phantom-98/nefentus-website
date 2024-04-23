@@ -1025,10 +1025,12 @@
     "amount": "Amount",
     "email": "Email",
     "name": "Name",
+    "number": "Number",
     "company": "Company",
     "address": "Address",
     "addressHint": "Country, City, Street",
-    "taxNumber": "Tax number",
+    "taxNumber": "VAT number",
+    "vat": "VAT",
     "createInvoice": "Create Invoice",
     "scan": "Scan QR Code",
     "scanDescription": "To confirm you need to scan QR code",
@@ -1041,12 +1043,24 @@
       "qr": "QR code",
       "actions": "Actions"
     },
+    "fee": {
+      "quotes": "Quotes",
+      "viewDetails": "View Details",
+      "estimatedGas": "Estimated gas fee",
+      "maxFee": "Maximum fee",
+      "description": "Costs that are inevitably incurred in order to carry out a transaction on a blockchain. The costs ultimately go to the miners who keep the blockchain secure.",
+      "gasPrice": "Gas Price",
+      "gasLimit": "Gas Limit",
+      "total": "Total"
+    },
     "price": "Price",
     "seller": "Seller Info",
-    "total": "Total",
-    "cryptoAmount": "Cryptocurrency amount",
+    "total": "Invoice Amount",
+    "cryptoAmount": "In Crypto",
+    "cryptoDescription": "This amount corresponds to the invoice amount in the selected cryptocurrency. After payment, these funds are sent to the seller.",
     "chooseWallet": "Choose Wallet",
-    "payButton": "Pay",
+    "chooseCoin": "Choose Coin",
+    "payButton": "Pay now",
     "agree": "By clicking on button, you agree to the",
     "terms": "Terms of Service",
     "agree2": "",
@@ -1295,6 +1309,55 @@
   },
   "settingsItem": {
     "title": "Change Value"
+  },
+  "personalDashboard": {
+    "title": "Wallets Management",
+    "balanceTitle": "Total Balance",
+    "wallets": "Wallets",
+    "addWallet": "Add Wallet",
+    "portfolio": "Portfolio",
+    "currencies": "Currencies",
+    "send": "Send",
+    "receive": "Receive",
+    "convert": "Convert",
+    "searchPlaceholder": "Search with name",
+    "profileDropdown": {
+      "setting": "Setting",
+      "support": "Support",
+      "darkMode": "Dark Mode",
+      "logout": "Logout"
+    },
+    "currencyTable": {
+      "coin": "Coin",
+      "amount": "Amount",
+      "price": "Price"
+    },
+    "drawer": {
+      "wallet": "Wallet",
+      "addressTitle": "Wallet Address",
+      "copy": "Copy",
+      "balance": "Balance",
+      "portfolio": "Portfolio",
+      "coinView": "Coin View"
+    },
+    "walletCard": {
+      "addressTitle": "Wallet Address",
+      "balance": "Balance",
+      "detail": "Wallet Details"
+    },
+    "sidebar": {
+      "menu": "Main Menu",
+      "wallets": "Wallets",
+      "payments": "Payments",
+      "createInvoice": "Create Invoice",
+      "sendCrypto": "Send Crypto",
+      "receiveCrypto": "Receive Crypto",
+      "convert": "Convert"
+    },
+    "receiveCrypto": {
+      "heading": "Payment receiving QR code",
+      "description": "Scan this QR-code to receive money to your chosen wallet"
+    }
   },
   "cancel": "Cancel",
   "confirm": "Confirm",

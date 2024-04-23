@@ -1,0 +1,180 @@
+.send-crypto-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.send-modal-title {
+  padding: 20px 24px;
+}
+
+:where(.css-dev-only-do-not-override-1kuana8).send-crypto .ant-modal-content {
+  background-color: var(--card-color, #171717);
+  padding: 0px;
+}
+
+:where(.css-dev-only-do-not-override-1kuana8).send-crypto .ant-modal-header {
+  background: var(--BG2, #171717);
+  padding: 0px;
+}
+
+.send-crypto-content {
+  padding: 16px;
+}
+
+.send-crypto-step2-title {
+  margin: auto;
+}
+
+.send-modal-wallet-title {
+  text-transform: capitalize;
+}
+
+.send-crypto-body {
+  background-color: var(--BG2, #171717);
+}
+
+.send-crypto-logo-container {
+  width: fit-content;
+  padding: 12px;
+  border-radius: 100px;
+  background-color: #d3d3d30d;
+  -webkit-writing-mode: vertical-rl;
+}
+
+.send-crypto-logo {
+  min-width: 17px;
+  max-width: 24px;
+  aspect-ratio: 1;
+}
+
+:where(.css-dev-only-do-not-override-ysyo1).send-crypto .ant-modal-content {
+  padding: 0px !important;
+}
+:where(.css-dev-only-do-not-override-1jknxed).send-crypto .ant-modal-content {
+  padding: 0px !important;
+}
+
+.send-crypto-wallet-container {
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: var(--Dark, #202020);
+}
+
+.send-crypto-full-width {
+  width: 100%;
+}
+
+.send-crypto-drawer-bar {
+  width: 48px;
+  height: 4px;
+  margin: auto;
+  border-radius: 6px;
+  background: var(--Grey, #323232);
+}
+
+.send-crypto-drawer-wallet-logo {
+  width: 64px;
+  height: 38px;
+  border-radius: 4px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+}
+
+.send-crypto-drawer-coin-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+  padding: 8px;
+  border-radius: 50px;
+}
+
+.drawer-connect-wallet-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.send-crypto-drawer-wallet {
+  padding: 6px 8px;
+  border-left: 1px solid #d3d3d30d;
+}
+
+.send-crypto-drawer-wallet:hover {
+  border-left: 1px solid var(--Blue, #078bb9);
+  background: #d3d3d30d;
+}
+
+.send-crypto-selected-wallet {
+  border-left: 1px solid var(--Blue, #078bb9);
+}
+
+:where(.css-dev-only-do-not-override-1jknxed).send-crypto-wallet-address {
+  padding: 12px;
+  background: var(--Dark, #202020);
+}
+
+.crypto-currency-dropdown {
+  padding: 8px;
+  gap: 4px;
+  border-radius: 6px;
+  background-color: var(--Dark, #202020);
+  cursor: pointer;
+}
+
+.send-crypto-footer-button {
+  border-radius: 6px;
+  color: #fff;
+  background: var(
+    --grad,
+    linear-gradient(262deg, #009bd2 -78.58%, #3b6b7c 188.93%)
+  );
+
+  /* Button shadow */
+  box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.05);
+}
+
+.send-crypto-amount {
+  font-size: 36px;
+  font-weight: 500;
+}
+
+.send-crypto-total-amount-row {
+  padding: 12px;
+  background: var(--Dark, #202020);
+}
+
+.total-amount-collapse {
+  margin-top: 16px;
+}
+
+:where(.css-dev-only-do-not-override-1jknxed).total-amount-collapse {
+  border-radius: 0px;
+  background-color: var(--Dark, #202020);
+}
+
+.total-amount-collapse-item {
+  padding: 12px 0px;
+  border-bottom: 1px solid var(--Dark, #202020);
+}
+
+.total-amount-collapse-item:last-child {
+  border-bottom: none;
+}
+
+.crypto-coin-value {
+  text-align: end;
+}
+
+.send-modal-swap-currency {
+  padding: 6px 4px 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+}
+
+.send-modal-percentage-active {
+  color: #1554ad;
+  border-color: #1554ad;
+  /* background: var(--BG2, #202020); */
+}

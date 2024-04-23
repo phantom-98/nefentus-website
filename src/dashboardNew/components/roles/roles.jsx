@@ -114,7 +114,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
         } else if (data["email"]) {
           if (data["email"] == "Please enter email") {
             setErrorMessage(t("messages.validation.email"));
-          } else if (data["email"] == "Please enter valid email") {
+          } else if (data["email"] == "Please enter a valid email") {
             setErrorMessage(t("messages.validation.validEmail"));
           } else {
             setErrorMessage(t("messages.validation.lengthEmail"));

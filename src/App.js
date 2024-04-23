@@ -23,6 +23,8 @@ import { KYC } from "./dashboard/settings/components/KYC";
 import Kyc from "./dashboardNew/components/kyc";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const MainDashboard = React.lazy(() =>
   import("./dashboardNew/screens/mainDashboard"),
@@ -92,11 +94,25 @@ import { ThemeProvider } from "./context/themeContext/themeContext";
 import { AuthProvider } from "./context/auth/authContext";
 import {
   ThirdwebProvider,
+  bloctoWallet,
+  coin98Wallet,
   coinbaseWallet,
+  coreWallet,
+  cryptoDefiWallet,
+  frameWallet,
   metamaskWallet,
+  okxWallet,
+  oneKeyWallet,
+  phantomWallet,
+  rabbyWallet,
+  rainbowWallet,
+  safeWallet,
   trustWallet,
   walletConnect,
+  xdefiWallet,
+  zerionWallet,
 } from "@thirdweb-dev/react";
+import DashboardLayout from "./NEFDashboard/containers/dashboardLayout";
 
 function App() {
   useEffect(() => {
@@ -141,9 +157,34 @@ function App() {
       clientId="639eea2ebcabed7eab90b56aceeed08b"
       supportedWallets={[
         metamaskWallet(),
+        coinbaseWallet({ recommended: true }),
         walletConnect(),
-        // trustWallet(),
-        coinbaseWallet(),
+        safeWallet({
+          personalWallets: [
+            metamaskWallet(),
+            coinbaseWallet({ recommended: true }),
+            walletConnect(),
+            trustWallet(),
+            zerionWallet(),
+            bloctoWallet(),
+            frameWallet(),
+            rainbowWallet(),
+            phantomWallet(),
+          ],
+        }),
+        trustWallet(),
+        zerionWallet(),
+        bloctoWallet(),
+        frameWallet(),
+        rainbowWallet(),
+        phantomWallet(),
+        okxWallet(),
+        coin98Wallet(),
+        coreWallet(),
+        cryptoDefiWallet(),
+        oneKeyWallet(),
+        rabbyWallet(),
+        xdefiWallet(),
       ]}
     >
       <AuthProvider>
@@ -166,6 +207,12 @@ function App() {
                 >
                   <ScrollToTop>
                     <Routes>
+                      <Route
+                        path="/personal-dashboard"
+                        element={
+                          <DashboardLayout>{/* <Home /> */}</DashboardLayout>
+                        }
+                      />
                       <Route
                         path="/"
                         element={
@@ -390,9 +437,9 @@ function App() {
                         path="/pay/:payLink"
                         element={
                           <>
-                            <Navigation />
+                            {/* <Navigation /> */}
                             <Pay />
-                            <Footer />
+                            {/* <Footer /> */}
                           </>
                         }
                       />

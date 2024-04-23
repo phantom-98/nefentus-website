@@ -973,10 +973,12 @@
     "amount": "Anzahl",
     "email": "E-Mail",
     "name": "Name",
+    "number": "Nummer",
     "company": "Firma",
     "address": "Adresse",
     "addressHint": "Land, Stadt, Straße",
-    "taxNumber": "Steuernummer",
+    "taxNumber": "MwSt. Nummer",
+    "vat": "MwSt.",
     "createInvoice": "Rechnung erstellen",
     "scan": "QR-Code scannen",
     "scanDescription": "Zur Bestätigung müssen Sie einen QR-Code scannen",
@@ -989,11 +991,23 @@
       "qr": "QR-Code",
       "actions": "Aktionen"
     },
+    "fee": {
+      "quotes": "Zitate",
+      "viewDetails": "Details anzeigen",
+      "estimatedGas": "Geschätzte Gasgebühr",
+      "maxFee": "Maximale Gebühr",
+      "description": "Kosten, die unweigerlich anfallen, um eine Transaktion auf einer Blockchain auszuführen. Die Kosten gehen letztlich an die Miner, die die Blockchain sicher halten.",
+      "gasPrice": "Gaspreis",
+      "gasLimit": "Gaslimit",
+      "total": "Gesamtbetrag"
+    },
     "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
-    "total": "Gesamtbetrag",
-    "cryptoAmount": "Kryptowährungsbetrag",
+    "total": "Rechnungsbetrag",
+    "cryptoAmount": "In Krypto",
+    "cryptoDescription": "Dieser Betrag entspricht dem Rechnungsbetrag in der ausgewählten Kryptowährung. Nach der Bezahlung werden diese Mittel dem Verkäufer zugeschickt.",
     "chooseWallet": "Wallet auswählen",
+    "chooseCoin": "Kryptowährung auswählen",
     "payButton": "Kaufen",
     "agree": "Durch Anklicken der Schaltfläche erklären Sie sich mit den",
     "terms": "Bedingungen des Dienstes",
@@ -1221,6 +1235,55 @@
     "english": "Englisch",
     "deutsch": "Deutsch",
     "ukrainian": "Ukrainisch"
+  },
+  "personalDashboard": {
+    "title": "Wallet-Verwaltung",
+    "balanceTitle": "Gesamtguthaben",
+    "wallets": "Geldbörsen",
+    "addWallet": "Wallet hinzufügen",
+    "portfolio": "Portfolio",
+    "currencies": "Währungen",
+    "send": "Senden",
+    "receive": "Empfangen",
+    "convert": "Konvertieren",
+    "searchPlaceholder": "Mit Namen suchen",
+    "profileDropdown": {
+      "setting": "Einstellungen",
+      "support": "Unterstützung",
+      "darkMode": "Dunkler Modus",
+      "logout": "Abmelden"
+    },
+    "currencyTable": {
+      "coin": "Münze",
+      "amount": "Betrag",
+      "price": "Preis"
+    },
+    "drawer": {
+      "wallet": "Wallet",
+      "addressTitle": "Wallet-Adresse",
+      "copy": "Kopieren",
+      "balance": "Guthaben",
+      "portfolio": "Portfolio",
+      "coinView": "Münzansicht"
+    },
+    "walletCard": {
+      "addressTitle": "Wallet-Adresse",
+      "balance": "Guthaben",
+      "detail": "Brieftaschendetail"
+    },
+    "sidebar": {
+      "menu": "Hauptmenü",
+      "wallets": "Geldbörsen",
+      "payments": "Zahlungen",
+      "createInvoice": "Rechnung erstellen",
+      "sendCrypto": "Krypto senden",
+      "receiveCrypto": "Krypto empfangen",
+      "convert": "Konvertieren"
+    },
+    "receiveCrypto": {
+      "heading": "QR-Code für den Zahlungseingang",
+      "description": "Scannen Sie diesen QR-Code, um Geld auf die von Ihnen gewählte Wallet zu erhalten"
+    }
   },
   "cancel": "Stornieren",
   "confirm": "Bestätigen",

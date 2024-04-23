@@ -1,0 +1,81 @@
+.receive-modal {
+  width: 271px !important;
+  padding: 16px !important;
+  position: relative;
+}
+
+.receive-modal-container {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 16px;
+  gap: 16px;
+}
+
+.qr-code-section {
+  background-color: #323232;
+  padding: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.receive-modal .ant-modal-content {
+  background-image: url("../../../assets/newDashboardIcons/receiveBackground.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid #202020;
+}
+
+.heading {
+  font-size: 12px;
+  width: 100%;
+  color: rgb(233, 233, 233);
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke: 2px black;
+  paint-order: stroke;
+  text-align: center;
+}
+.send-crypto-drawer-bar {
+  width: 48px;
+  height: 4px;
+  margin: auto;
+  border-radius: 6px;
+  background: var(--Grey, #323232);
+}
+.paragraph {
+  font-size: small;
+  color: #b1b1b1;
+  -webkit-text-fill-color: #b1b1b1;
+  -webkit-text-stroke: 2px black;
+  paint-order: stroke;
+  text-align: center;
+}
+
+.send-crypto-wallet-container {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: var(--Dark, #202020);
+}
+
+.send-crypto-full-width {
+  width: 100%;
+  border: 1px solid #202020;
+}
+.qr-code {
+  padding: 8px;
+  background-color: white;
+  border-radius: 6px;
+}
+.copy-btn {
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+}
+
+.receive-qr-skeleton {
+  width: 180px !important;
+  height: 190px !important;
+}
