@@ -974,6 +974,7 @@
     "email": "E-Mail",
     "name": "Name",
     "number": "Nummer",
+    "person": "Person",
     "company": "Firma",
     "address": "Adresse",
     "addressHint": "Land, Stadt, Straße",

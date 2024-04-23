@@ -163,6 +163,10 @@ body {
   color: rgba(0, 0, 0, 0.42) !important;
 }
 
+input.custom {
+  border: none !important;
+}
+
 svg {
   display: block;
   fill: var(--text-color) !important;

@@ -19,8 +19,11 @@ const ProductBody = ({ product, quantity }) => {
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [company, setCompany] = useState();
+  const [country, setCountry] = useState();
   const [address, setAddress] = useState();
+  const [isPerson, setPerson] = useState();
   const [tax, setTax] = useState();
+  const [percent, setPercent] = useState();
   const [changed, setChanged] = useState(false);
   const [amount, setAmount] = useState(quantity || 1);
   const [link, setLink] = useState(null);
@@ -32,8 +35,11 @@ const ProductBody = ({ product, quantity }) => {
       name,
       email,
       company,
+      country,
       address,
+      isPerson,
       taxNumber: tax,
+      percent,
       productLink: product.link,
       productAmount: amount,
     };
@@ -83,12 +89,18 @@ const ProductBody = ({ product, quantity }) => {
           setFullName={setName}
           email={email}
           setEmail={setEmail}
+          country={country}
+          setCountry={setCountry}
           address={address}
           setAddress={setAddress}
+          isPerson={isPerson}
+          setPerson={setPerson}
           business={company}
           setBusiness={setCompany}
           tax={tax}
           setTax={setTax}
+          percent={percent}
+          setPercent={setPercent}
           setChanged={setChanged}
         />
       }

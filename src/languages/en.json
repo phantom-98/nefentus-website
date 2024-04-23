@@ -1026,6 +1026,7 @@
     "email": "Email",
     "name": "Name",
     "number": "Number",
+    "person": "Person",
     "company": "Company",
     "address": "Address",
     "addressHint": "Country, City, Street",

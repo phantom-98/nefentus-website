@@ -8,6 +8,10 @@ import MetaMaskLogo from "../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../assets/logo/WalletConnect.svg";
 import InfoMarkDark from "../../assets/icon/dark/info.svg";
 import InfoMarkLight from "../../assets/icon/light/info.svg";
+import PersonDark from "../../assets/icon/dark/user-square.svg";
+import PersonLight from "../../assets/icon/light/user-square.svg";
+import BuildingDark from "../../assets/icon/dark/building.svg";
+import BuildingLight from "../../assets/icon/light/building.svg";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
 import backendAPI from "../../api/backendAPI";
 import { uniswapApi, web3Api } from "../../api/web3Api";
@@ -57,6 +61,7 @@ import { useAuth } from "../../context/auth/authContext";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { GasDetails } from "../gasDetails/gasDetails";
 import { useNavigate } from "react-router-dom";
+import { getCountryList, getFlagLink } from "../../countries";
 
 const ReceivePayment = ({
   priceUSD,
@@ -819,6 +824,331 @@ const SelectOption = ({
   );
 };
 
+const CountrySelect = ({
+  setChanged,
+  options,
+  value,
+  setValue,
+  styles,
+  className,
+}) => {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [icon, setIcon] = useState();
+  const [keyword, setKeyword] = useState("");
+  const [filtered, setFiltered] = useState(options);
+  useEffect(() => {
+    const country = getCountryList().find((item) => item.value == value) ?? {
+      value: "Germany",
+      display: "countries.Germany",
+      symbol: "DE",
+    };
+    setIcon(getFlagLink(country.symbol));
+    setKeyword(t(country.display));
+  }, [value]);
+  return (
+    <>
+      <div
+        style={{
+          padding: "0",
+          width: "100%",
+          position: "relative",
+        }}
+        onClick={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+      >
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            padding: "0.7rem 1rem",
+            gap: "1rem",
+            border: "1px solid var(--border-color)",
+            borderRadius: "0.6rem",
+            background: "var(--card-color)",
+            cursor: "pointer",
+            ...styles,
+          }}
+          className={`${className}`}
+        >
+          {icon && (
+            <img
+              src={icon}
+              style={{
+                borderRadius: "0.3rem",
+                width: "3rem",
+                height: "2rem",
+              }}
+            />
+          )}
+          <input
+            className="custom"
+            style={{
+              fontSize: "1.2rem",
+              width: "calc(100% - 6rem)",
+              outline: "0",
+              background: "transparent",
+            }}
+            value={keyword}
+            onChange={(e) => {
+              setOpen(true);
+              setKeyword(e.target.value);
+              setFiltered(
+                options.filter((item) =>
+                  t(item.display)
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase()),
+                ),
+              );
+            }}
+          />
+          <img src={DropDownIcon} />
+        </div>
+        {open && (
+          <div
+            style={{
+              position: "absolute",
+              width: "100%",
+              maxHeight: "30rem",
+              overflow: "auto",
+              background: "var(--card-color)",
+              border: "1px solid var(--border-color)",
+            }}
+          >
+            {filtered.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setValue(item.value);
+                    item.value !== value
+                      ? setChanged(true)
+                      : setKeyword(t(item.display));
+                    setOpen(false);
+                  }}
+                  style={{
+                    padding: "0.4rem",
+                  }}
+                >
+                  <SearchSelectOption
+                    icon={`${getFlagLink(item.symbol)}`}
+                    text={t(item.display)}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+const SearchSelectOption = ({ icon, text, styles, className }) => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        padding: "0.2rem 1rem",
+        gap: "1.4rem",
+        cursor: "pointer",
+        ...styles,
+      }}
+      className={className}
+    >
+      {icon && (
+        <img
+          src={icon}
+          style={{
+            borderRadius: "0.3rem",
+            width: "3rem",
+            height: "2rem",
+          }}
+        />
+      )}
+      {text && (
+        <p
+          style={{
+            marginTop: "0.4rem",
+            fontSize: "1.2rem",
+          }}
+        >
+          {text}
+        </p>
+      )}
+    </div>
+  );
+};
+
+const CombinedInput = ({
+  country,
+  setCountry,
+  value,
+  setValue,
+  setChanged,
+}) => {
+  const { t } = useTranslation();
+  const handleChange = () => {
+    if (setChanged) {
+      setChanged(true);
+    }
+  };
+
+  return (
+    <div className={styles.inputWrapper}>
+      <p className={styles.label}>{t("payments.address")}</p>
+
+      <div
+        style={{
+          padding: "0",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "0",
+        }}
+      >
+        <CountrySelect
+          setChanged={setChanged}
+          value={country}
+          setValue={setCountry}
+          options={getCountryList()}
+          styles={{
+            borderBottom: "none",
+            borderBottomLeftRadius: "0",
+            borderBottomRightRadius: "0",
+          }}
+        />
+        <input
+          className={styles.input}
+          style={{
+            borderTopRightRadius: "0",
+            borderTopLeftRadius: "0",
+          }}
+          placeholder={t("payments.addressHint")}
+          value={value}
+          onChange={(e) => {
+            if (setValue) {
+              setValue(e.target.value);
+            }
+          }}
+          onBlur={(e) => {
+            handleChange();
+          }}
+          onKeyDown={(e) => {
+            if (e.code === "Enter") {
+              handleChange();
+            }
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+const RadioInput = ({ isPerson, setPerson, setChanged }) => {
+  const { theme } = useTheme();
+  const { t } = useTranslation();
+
+  return (
+    <div className={styles.inputWrapper}>
+      <p className={styles.label}>You are a*</p>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          gap: "0.8rem",
+        }}
+      >
+        <div
+          onClick={() => {
+            setPerson(true);
+            setChanged(true);
+          }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "50%",
+            border: `1px solid ${isPerson ? "#28C8F0" : "var(--border-color)"}`,
+            borderRadius: "0.6rem",
+            padding: "0.8rem",
+            background: "var(--card-color)",
+            cursor: "pointer",
+          }}
+        >
+          <div>
+            <img src={theme === "dark" ? PersonDark : PersonLight} />
+            <p style={{ fontSize: "1.2rem" }}>{t("payments.person")}</p>
+          </div>
+          <div
+            style={{
+              width: "1.4rem",
+              height: "1.4rem",
+              padding: "1px",
+              border: `1px solid ${
+                isPerson ? "#28C8F0" : "var(--border-color)"
+              }`,
+              borderRadius: "50%",
+            }}
+          >
+            <div
+              style={{
+                background: `${isPerson ? "#28C8F0" : "none"}`,
+                width: "100%",
+                height: "100%",
+                borderRadius: "50%",
+              }}
+            ></div>
+          </div>
+        </div>
+        <div
+          onClick={() => {
+            setPerson(false);
+            setChanged(true);
+          }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "50%",
+            border: `1px solid ${isPerson ? "var(--border-color)" : "#28C8F0"}`,
+            borderRadius: "0.6rem",
+            padding: "0.8rem",
+            background: "var(--card-color)",
+            cursor: "pointer",
+          }}
+        >
+          <div>
+            <img src={theme === "dark" ? BuildingDark : BuildingLight} />
+            <p style={{ fontSize: "1.2rem" }}>{t("payments.company")}</p>
+          </div>
+          <div
+            style={{
+              width: "1.4rem",
+              height: "1.4rem",
+              padding: "1px",
+              border: `1px solid ${
+                isPerson ? "var(--border-color)" : "#28C8F0"
+              }`,
+              borderRadius: "50%",
+            }}
+          >
+            <div
+              style={{
+                background: `${isPerson ? "none" : "#28C8F0"}`,
+                width: "100%",
+                height: "100%",
+                borderRadius: "50%",
+              }}
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Input = ({ label, placeholder, value, setValue, setChanged, type }) => {
   const handleChange = () => {
     if (setChanged) {
@@ -858,10 +1188,16 @@ export const PaymentInfo = ({
   setFullName,
   email,
   setEmail,
+  country,
+  setCountry,
   address,
   setAddress,
+  isPerson,
+  setPerson,
   tax,
   setTax,
+  percent,
+  setPercent,
   business,
   setBusiness,
   setChanged,
@@ -889,11 +1225,18 @@ export const PaymentInfo = ({
         />
       </div>
       <div className={styles.row}>
-        <Input
-          placeholder={t("payments.addressHint")}
-          label={t("payments.address")}
+        <CombinedInput
+          country={country}
+          setCountry={setCountry}
           value={address}
           setValue={setAddress}
+          setChanged={setChanged}
+        />
+      </div>
+      <div className={styles.row}>
+        <RadioInput
+          isPerson={isPerson}
+          setPerson={setPerson}
           setChanged={setChanged}
         />
       </div>
@@ -916,6 +1259,8 @@ export const PaymentInfo = ({
           <Input
             placeholder={"0.00%"}
             label={t("payments.vat").concat(" %")}
+            value={percent}
+            setValue={setPercent}
             setChanged={setChanged}
           />
         </div>

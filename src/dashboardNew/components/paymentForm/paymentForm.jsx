@@ -123,7 +123,7 @@ const PaymentForm = ({ setLoadingData }) => {
               setVaue={setTaxNumber}
             />
             <Input
-              placeholder={t("payments.taxPercent")}
+              placeholder={t("payments.vat").concat(" %")}
               value={taxPercent}
               setVaue={setTaxPercent}
             />

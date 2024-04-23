@@ -11,8 +11,11 @@ const PayBody = ({ invoice }) => {
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [company, setCompany] = useState();
+  const [country, setCountry] = useState();
   const [address, setAddress] = useState();
+  const [isPerson, setPerson] = useState();
   const [tax, setTax] = useState();
+  const [percent, setPercent] = useState();
   const [changed, setChanged] = useState(false);
   const [amount, setAmount] = useState(1);
   const [imageSource, setImageSource] = useState(null);
@@ -31,8 +34,11 @@ const PayBody = ({ invoice }) => {
     setEmail(invoice.email);
     setName(invoice.name);
     setCompany(invoice.company);
+    setCountry(invoice.country);
     setAddress(invoice.address);
+    setPerson(invoice.isPerson);
     setTax(invoice.taxNumber);
+    setPercent(invoice.percent);
     setAmount(invoice.productAmount);
     if (invoice.product) {
       fetchProductImage(invoice.product);
@@ -64,8 +70,11 @@ const PayBody = ({ invoice }) => {
       name,
       email,
       company,
+      country,
       address,
+      isPerson,
       taxNumber: tax,
+      percent,
       productLink: invoice.product ? invoice.product.link : null,
       productAmount: amount,
     };
@@ -100,12 +109,18 @@ const PayBody = ({ invoice }) => {
           setFullName={setName}
           email={email}
           setEmail={setEmail}
+          country={country}
+          setCountry={setCountry}
           address={address}
           setAddress={setAddress}
+          isPerson={isPerson}
+          setPerson={setPerson}
           business={company}
           setBusiness={setCompany}
           tax={tax}
           setTax={setTax}
+          percent={percent}
+          setPercent={setPercent}
           setChanged={setChanged}
         />
       }
