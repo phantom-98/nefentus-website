@@ -13,6 +13,7 @@ function useBalances() {
   }
 
   async function fetchBalances(address) {
+    setBalances(initBalances());
     address && setBalances(await fetchBalanceForWallet(address));
   }
 
@@ -26,7 +27,7 @@ function useBalances() {
         ),
       ),
     );
-    return balances_list.map((balance) => parseFloat(balance));
+    return balances_list.map((balance) => parseFloat(balance) ?? 0);
   }
 
   return { balances, fetchBalances };

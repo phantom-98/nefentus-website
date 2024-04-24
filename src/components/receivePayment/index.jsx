@@ -108,7 +108,10 @@ const ReceivePayment = ({
     return {
       title: currency.abbr,
       icon: currency.icon,
-      description: formatTokenBalance(balances[index]),
+      description:
+        balances[index] === undefined
+          ? "loading..."
+          : formatTokenBalance(balances[index]),
     };
   });
   const [selectedCryptoIndex, setSelectedCryptoIndex] = useState(0);
@@ -227,6 +230,7 @@ const ReceivePayment = ({
   const connectSelectedWallet = async () => {
     const wallet = wallets[selectedWalletIndex];
 
+    fetchBalances(wallet?.address);
     const currentWalletConfig =
       wallet?.type?.toLowerCase() === "metamask"
         ? metamaskWallet()
@@ -282,7 +286,6 @@ const ReceivePayment = ({
       setConnectedWallet(response);
       setWalletInstance(response);
     }
-    fetchBalances(wallet?.address);
   };
 
   async function doPayment() {
@@ -825,7 +828,14 @@ const SelectOption = ({
         <div className={styles.optionContainer}>
           <p className={styles.optionTitle}> {optionTitle} </p>
           {optionDescription && (
-            <p className={styles.optionDescription}> {optionDescription} </p>
+            <p
+              className={`${styles.optionDescription} ${
+                optionDescription === "loading..." ? styles.skeletonLoader : ""
+              }`}
+            >
+              {" "}
+              {optionDescription !== "loading..." ? optionDescription : ""}{" "}
+            </p>
           )}
         </div>
       </div>
