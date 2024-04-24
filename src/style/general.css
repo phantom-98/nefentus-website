@@ -109,6 +109,10 @@ body {
   -ms-user-select: none;
 }
 
+.fontColor {
+  color: rgba(255, 255, 255, 0.42) !important;
+}
+
 .dark .card {
   background: radial-gradient(
     circle,

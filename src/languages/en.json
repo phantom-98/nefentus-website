@@ -630,6 +630,7 @@
     "or": "or"
   },
   "countries": {
+    "choose": "Choose your country",
     "Afghanistan": "Afghanistan",
     "Albania": "Albania",
     "Algeria": "Algeria",
@@ -834,7 +835,8 @@
     "VirginIslandsUS": "Virgin Islands (US)",
     "Yemen": "Yemen",
     "Zambia": "Zambia",
-    "Zimbabwe": "Zimbabwe"
+    "Zimbabwe": "Zimbabwe",
+    "EuropeanUnion": "European Union"
   },
   "messages": {
     "validation": {
@@ -1029,7 +1031,8 @@
     "person": "Person",
     "company": "Company",
     "address": "Address",
-    "addressHint": "Country, City, Street",
+    "legalStatus": "Legal status",
+    "addressHint": "City, Street",
     "taxNumber": "VAT number",
     "vat": "VAT",
     "showEuro": "Show prices in €",
@@ -1054,7 +1057,8 @@
       "description": "Costs that are inevitably incurred in order to carry out a transaction on a blockchain. The costs ultimately go to the miners who keep the blockchain secure.",
       "gasPrice": "Gas Price",
       "gasLimit": "Gas Limit",
-      "total": "Total"
+      "updating": "Gas price updates every 30s",
+      "total": "Total due"
     },
     "price": "Price",
     "seller": "Seller Info",

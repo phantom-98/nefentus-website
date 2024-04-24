@@ -287,6 +287,11 @@ export function getCountryList() {
     { value: "Yemen", display: "countries.Yemen", symbol: "YE" },
     { value: "Zambia", display: "countries.Zambia", symbol: "ZM" },
     { value: "Zimbabwe", display: "countries.Zimbabwe", symbol: "ZW" },
+    {
+      value: "European Union",
+      display: "countries.EuropeanUnion",
+      symbol: "EU",
+    },
   ].sort((country1, country2) => {
     return country1.value.localeCompare(country2.value);
   });

@@ -577,6 +577,7 @@
     "or": "oder"
   },
   "countries": {
+    "choose": "Wählen Sie Ihr Land",
     "Afghanistan": "Afghanistan",
     "Albania": "Albanien",
     "Algeria": "Algerien",
@@ -781,7 +782,8 @@
     "VirginIslandsUS": "Amerikanische Jungferninseln",
     "Yemen": "Jemen",
     "Zambia": "Sambia",
-    "Zimbabwe": "Simbabwe"
+    "Zimbabwe": "Simbabwe",
+    "EuropeanUnion": "Europäische Union"
   },
   "messages": {
     "validation": {
@@ -977,7 +979,8 @@
     "person": "Person",
     "company": "Firma",
     "address": "Adresse",
-    "addressHint": "Land, Stadt, Straße",
+    "legalStatus": "Rechtsstellung",
+    "addressHint": "Stadt, Straße",
     "taxNumber": "MwSt. Nummer",
     "vat": "MwSt.",
     "createInvoice": "Rechnung erstellen",
@@ -1000,7 +1003,8 @@
       "description": "Kosten, die unweigerlich anfallen, um eine Transaktion auf einer Blockchain auszuführen. Die Kosten gehen letztlich an die Miner, die die Blockchain sicher halten.",
       "gasPrice": "Gaspreis",
       "gasLimit": "Gaslimit",
-      "total": "Gesamtbetrag"
+      "updating": "Gaspreisaktualisierung alle 30 Sekunden",
+      "total": "Gesamtbetrag fällig"
     },
     "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",

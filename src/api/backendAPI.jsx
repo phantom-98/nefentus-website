@@ -1467,4 +1467,24 @@ export default class backendAPI {
       return null; // or return some default value
     }
   }
+  async getTaxInfo(country) {
+    try {
+      const url = `${this.baseURL}/taxInfo/${country}`;
+
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
 }

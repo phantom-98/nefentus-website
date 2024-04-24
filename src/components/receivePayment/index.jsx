@@ -69,6 +69,7 @@ const ReceivePayment = ({
   children,
   info,
   transInfoArg,
+  vatPercent,
   disabled,
   valid,
 }) => {
@@ -89,6 +90,7 @@ const ReceivePayment = ({
   const createWalletInstance = useCreateWalletInstance();
 
   const [cryptoAmount, setCryptoAmount] = useState("0");
+  const [feeUSD, setFeeUSD] = useState(0);
   const [spinner, setSpinner] = useState(false);
   const { balances, fetchBalances } = useBalances();
   const { prices, fetchPrices } = usePrices();
@@ -618,6 +620,10 @@ const ReceivePayment = ({
                 currency={currencies()[selectedCryptoIndex]}
                 cryptoAmount={parseFloat(cryptoAmount)}
                 usdAmount={parseFloat(priceUSD)}
+                vatPercent={vatPercent}
+                vatUSD={(priceUSD * vatPercent) / 100.0}
+                // feeUSD={feeUSD}
+                setFeeUSD={setFeeUSD}
               />
               <div className={styles.paymentWrapper}>
                 <Button
@@ -627,7 +633,7 @@ const ReceivePayment = ({
                   spinner={spinner}
                 >
                   {t("payments.payButton")} {currencyRate.symbol}
-                  {formatUSDBalance(priceUSD * currencyRate.rate)}
+                  {formatUSDBalance((priceUSD + feeUSD) * currencyRate.rate)}
                 </Button>
               </div>
             </div>
@@ -838,13 +844,11 @@ const CountrySelect = ({
   const [keyword, setKeyword] = useState("");
   const [filtered, setFiltered] = useState(options);
   useEffect(() => {
-    const country = getCountryList().find((item) => item.value == value) ?? {
-      value: "Germany",
-      display: "countries.Germany",
-      symbol: "DE",
-    };
-    setIcon(getFlagLink(country.symbol));
-    setKeyword(t(country.display));
+    const country = getCountryList().find((item) => item.value == value);
+    if (country) {
+      setIcon(getFlagLink(country.symbol));
+      setKeyword(t(country.display));
+    }
   }, [value]);
   return (
     <>
@@ -872,7 +876,7 @@ const CountrySelect = ({
           }}
           className={`${className}`}
         >
-          {icon && (
+          {value && icon && (
             <img
               src={icon}
               style={{
@@ -882,27 +886,40 @@ const CountrySelect = ({
               }}
             />
           )}
-          <input
-            className="custom"
-            style={{
-              fontSize: "1.2rem",
-              width: "calc(100% - 6rem)",
-              outline: "0",
-              background: "transparent",
-            }}
-            value={keyword}
-            onChange={(e) => {
-              setOpen(true);
-              setKeyword(e.target.value);
-              setFiltered(
-                options.filter((item) =>
-                  t(item.display)
-                    .toLowerCase()
-                    .includes(e.target.value.toLowerCase()),
-                ),
-              );
-            }}
-          />
+          {value && (
+            <input
+              className="custom"
+              style={{
+                fontSize: "1.2rem",
+                width: "calc(100% - 6rem)",
+                outline: "0",
+                background: "transparent",
+              }}
+              value={keyword}
+              onChange={(e) => {
+                setOpen(true);
+                setKeyword(e.target.value);
+                setFiltered(
+                  options.filter((item) =>
+                    t(item.display)
+                      .toLowerCase()
+                      .includes(e.target.value.toLowerCase()),
+                  ),
+                );
+              }}
+            />
+          )}
+          {!value && (
+            <p
+              style={{
+                fontSize: "1.2rem",
+                width: "calc(100% - 2rem)",
+              }}
+              className="fontColor"
+            >
+              {t("countries.choose")}
+            </p>
+          )}
           <img src={DropDownIcon} />
         </div>
         {open && (
@@ -923,7 +940,7 @@ const CountrySelect = ({
                   onClick={() => {
                     setValue(item.value);
                     item.value !== value
-                      ? setChanged(true)
+                      ? setChanged && setChanged(true)
                       : setKeyword(t(item.display));
                     setOpen(false);
                   }}
@@ -999,7 +1016,7 @@ const CombinedInput = ({
 
   return (
     <div className={styles.inputWrapper}>
-      <p className={styles.label}>{t("payments.address")}</p>
+      <p className={styles.label}>{t("payments.address").concat("*")}</p>
 
       <div
         style={{
@@ -1011,7 +1028,7 @@ const CombinedInput = ({
         }}
       >
         <CountrySelect
-          setChanged={setChanged}
+          // setChanged={setChanged}
           value={country}
           setValue={setCountry}
           options={getCountryList()}
@@ -1054,7 +1071,7 @@ const RadioInput = ({ isPerson, setPerson, setChanged }) => {
 
   return (
     <div className={styles.inputWrapper}>
-      <p className={styles.label}>You are a*</p>
+      <p className={styles.label}>{t("payments.legalStatus").concat("*")}</p>
       <div
         style={{
           width: "100%",
@@ -1065,7 +1082,7 @@ const RadioInput = ({ isPerson, setPerson, setChanged }) => {
         <div
           onClick={() => {
             setPerson(true);
-            setChanged(true);
+            setChanged && setChanged(true);
           }}
           style={{
             display: "flex",
@@ -1106,7 +1123,7 @@ const RadioInput = ({ isPerson, setPerson, setChanged }) => {
         <div
           onClick={() => {
             setPerson(false);
-            setChanged(true);
+            setChanged && setChanged(true);
           }}
           style={{
             display: "flex",
@@ -1183,6 +1200,77 @@ const Input = ({ label, placeholder, value, setValue, setChanged, type }) => {
   );
 };
 
+const SimpleSelect = ({ setChanged, options, value, setValue }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        padding: "0",
+        fontSize: "1.2rem",
+      }}
+      onClick={() => setOpen(!open)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "0.7rem 1rem",
+          gap: "1rem",
+          border: "1px solid var(--border-color)",
+          borderRadius: "0.6rem",
+          background: "var(--card-color)",
+          cursor: "pointer",
+        }}
+      >
+        <p
+          style={{
+            marginTop: "0.2rem",
+          }}
+        >
+          {value}
+        </p>
+        <img src={DropDownIcon} />
+      </div>
+      {open && (
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            maxHeight: "10rem",
+            padding: "0.4rem 1rem",
+            overflow: "auto",
+            background: "var(--card-color)",
+            border: "1px solid var(--border-color)",
+          }}
+        >
+          {options.map((item) => {
+            return (
+              <div
+                style={{
+                  margin: "0.1rem 0 0 0",
+                }}
+                onClick={() => {
+                  setValue(item);
+                  value != item && setChanged(true);
+                  setOpen(false);
+                }}
+              >
+                {item}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const PaymentInfo = ({
   fullName,
   setFullName,
@@ -1200,9 +1288,40 @@ export const PaymentInfo = ({
   setPercent,
   business,
   setBusiness,
+  reverseCharge,
+  setReverseCharge,
+  taxInfo,
   setChanged,
 }) => {
   const { t } = useTranslation();
+  const [vatInfo, setVatInfo] = useState();
+
+  useEffect(() => {
+    if (taxInfo) {
+      let info = taxInfo.find((item) => {
+        return item.buyerCountry == country && item.buyerIsPerson == isPerson;
+      });
+      if (!info) {
+        info = taxInfo.find((item) => item.buyerCountry == country);
+      }
+      if (!info) {
+        info = taxInfo.find((item) => !item.buyerCountry);
+      }
+      if (info) {
+        if (info.reverseCharge) {
+          setReverseCharge(true);
+          setVatInfo(true);
+        } else {
+          setReverseCharge(false);
+          setVatInfo(info.vatPercent ? JSON.parse(info.vatPercent) : null);
+        }
+      } else {
+        setReverseCharge(false);
+        setVatInfo(null);
+      }
+      setChanged(true);
+    }
+  }, [country, isPerson, taxInfo]);
 
   return (
     <div className={styles.payInfoBody}>
@@ -1237,14 +1356,14 @@ export const PaymentInfo = ({
         <RadioInput
           isPerson={isPerson}
           setPerson={setPerson}
-          setChanged={setChanged}
+          // setChanged={setChanged}
         />
       </div>
       <div className={styles.row}>
         <div
           style={{
             display: "flex",
-            gap: "1rem",
+            gap: "0.8rem",
             width: "100%",
           }}
         >
@@ -1256,13 +1375,30 @@ export const PaymentInfo = ({
             type
             setChanged={setChanged}
           />
-          <Input
-            placeholder={"0.00%"}
-            label={t("payments.vat").concat(" %")}
-            value={percent}
-            setValue={setPercent}
-            setChanged={setChanged}
-          />
+          {vatInfo == true ? null : !Array.isArray(vatInfo) ? (
+            <Input
+              placeholder={"0.00%"}
+              label={t("payments.vat").concat(" %")}
+              value={percent}
+              setValue={setPercent}
+              setChanged={setChanged}
+            />
+          ) : vatInfo.length <= 1 ? (
+            <div className={styles.inputWrapper}>
+              <p className={styles.label}>{t("payments.vat").concat(" %")}</p>
+              <p className={styles.input}>{percent}</p>
+            </div>
+          ) : (
+            <div className={styles.inputWrapper}>
+              <p className={styles.label}>{t("payments.vat").concat(" %")}</p>
+              <SimpleSelect
+                setChanged={setChanged}
+                value={percent}
+                setValue={setPercent}
+                options={vatInfo}
+              />
+            </div>
+          )}
         </div>
         <Input
           placeholder={`e.g. Google`}

@@ -15,7 +15,9 @@ const PayBody = ({ invoice }) => {
   const [address, setAddress] = useState();
   const [isPerson, setPerson] = useState();
   const [tax, setTax] = useState();
+  const [taxInfo, setTaxInfo] = useState();
   const [percent, setPercent] = useState();
+  const [reverseCharge, setReverseCharge] = useState();
   const [changed, setChanged] = useState(false);
   const [amount, setAmount] = useState(1);
   const [imageSource, setImageSource] = useState(null);
@@ -29,16 +31,21 @@ const PayBody = ({ invoice }) => {
       if (newImageSource) setImageSource(newImageSource);
     }
   }
+  async function fetchTaxInfo(country) {
+    const info = await backend_API.getTaxInfo(country);
+    setTaxInfo(info);
+  }
 
   useEffect(() => {
+    fetchTaxInfo(invoice.user?.country);
     setEmail(invoice.email);
     setName(invoice.name);
     setCompany(invoice.company);
     setCountry(invoice.country);
     setAddress(invoice.address);
-    setPerson(invoice.isPerson);
+    setPerson(invoice.person);
     setTax(invoice.taxNumber);
-    setPercent(invoice.percent);
+    setPercent(invoice.vatPercent);
     setAmount(invoice.productAmount);
     if (invoice.product) {
       fetchProductImage(invoice.product);
@@ -72,9 +79,10 @@ const PayBody = ({ invoice }) => {
       company,
       country,
       address,
-      isPerson,
+      person: isPerson,
       taxNumber: tax,
-      percent,
+      vatPercent: percent,
+      reverseCharge,
       productLink: invoice.product ? invoice.product.link : null,
       productAmount: amount,
     };
@@ -101,6 +109,7 @@ const PayBody = ({ invoice }) => {
         invoiceLink: invoice.link,
         productLink: invoice.product ? invoice.product.link : null,
       }}
+      vatPercent={reverseCharge ? null : percent}
       valid={name && email}
       disabled={disable}
       info={
@@ -121,6 +130,9 @@ const PayBody = ({ invoice }) => {
           setTax={setTax}
           percent={percent}
           setPercent={setPercent}
+          reverseCharge={reverseCharge}
+          setReverseCharge={setReverseCharge}
+          taxInfo={taxInfo}
           setChanged={setChanged}
         />
       }

@@ -23,7 +23,9 @@ const ProductBody = ({ product, quantity }) => {
   const [address, setAddress] = useState();
   const [isPerson, setPerson] = useState();
   const [tax, setTax] = useState();
+  const [taxInfo, setTaxInfo] = useState();
   const [percent, setPercent] = useState();
+  const [reverseCharge, setReverseCharge] = useState();
   const [changed, setChanged] = useState(false);
   const [amount, setAmount] = useState(quantity || 1);
   const [link, setLink] = useState(null);
@@ -37,9 +39,10 @@ const ProductBody = ({ product, quantity }) => {
       company,
       country,
       address,
-      isPerson,
+      person: isPerson,
       taxNumber: tax,
-      percent,
+      vatPercent: percent,
+      reverseCharge,
       productLink: product.link,
       productAmount: amount,
     };
@@ -51,9 +54,14 @@ const ProductBody = ({ product, quantity }) => {
       console.log("failed");
     }
   };
+  async function fetchTaxInfo(country) {
+    const info = await backend_API.getTaxInfo(country);
+    setTaxInfo(info);
+  }
 
   useEffect(() => {
     if (product) {
+      fetchTaxInfo(product.user?.country);
       fetchProductImage();
       setPrice(product.price * amount);
     }
@@ -82,6 +90,7 @@ const ProductBody = ({ product, quantity }) => {
       priceUSD={price}
       seller={product.user}
       transInfoArg={{ productLink: product.link, invoiceLink: link }}
+      vatPercent={reverseCharge ? null : percent}
       valid={name && email}
       info={
         <PaymentInfo
@@ -101,6 +110,9 @@ const ProductBody = ({ product, quantity }) => {
           setTax={setTax}
           percent={percent}
           setPercent={setPercent}
+          reverseCharge={reverseCharge}
+          setReverseCharge={setReverseCharge}
+          taxInfo={taxInfo}
           setChanged={setChanged}
         />
       }
