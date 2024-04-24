@@ -9,6 +9,8 @@ jobs:
   # To build the project
   build-nefentus-staging:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - name: Checking out code
         uses: actions/checkout@v3
@@ -21,7 +23,6 @@ jobs:
       - name: Create .env file
         run: |
           echo "${{ secrets.DOTENV_STAGING }}" > .env.staging
-          export NODE_OPTIONS="--max_old_space_size=4096"
       - name: Building project
         run: CI=false npm run build:staging
       - name: Configure AWS Credentials
