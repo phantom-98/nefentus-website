@@ -4,7 +4,7 @@ import ReceivePayment from "../receivePayment";
 import backendAPI from "../../api/backendAPI";
 import { useTranslation } from "react-i18next";
 import { PaymentInfo, ProductInfo } from "../receivePayment";
-import { useAuth } from "../../context/auth/authContext";
+// import { useAuth } from "../../context/auth/authContext";
 
 const ProductBody = ({ product, quantity }) => {
   const backend_API = new backendAPI();
@@ -31,7 +31,7 @@ const ProductBody = ({ product, quantity }) => {
   const [amount, setAmount] = useState(quantity || 1);
   const [link, setLink] = useState(null);
   const [price, setPrice] = useState(0);
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   const updateInvoiceData = async () => {
     const req = {
@@ -112,13 +112,13 @@ const ProductBody = ({ product, quantity }) => {
           setBusiness={setCompany}
           tax={tax}
           setTax={setTax}
-          percent={percent}
-          setPercent={setPercent}
-          reverseCharge={reverseCharge}
+          // percent={percent}
+          // setPercent={setPercent}
+          // reverseCharge={reverseCharge}
           setReverseCharge={setReverseCharge}
           taxInfo={taxInfo}
           setChanged={setChanged}
-          isSeller={user && user?.email === product.user.email}
+          // isSeller={user && user?.email === product.user.email}
         />
       }
       children={

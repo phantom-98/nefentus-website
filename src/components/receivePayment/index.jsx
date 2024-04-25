@@ -1293,18 +1293,18 @@ export const PaymentInfo = ({
   setPerson,
   tax,
   setTax,
-  percent,
-  setPercent,
+  // percent,
+  // setPercent,
   business,
   setBusiness,
-  reverseCharge,
+  // reverseCharge,
   setReverseCharge,
   taxInfo,
   setChanged,
-  isSeller,
+  // isSeller,
 }) => {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   useEffect(() => {
     if (taxInfo && country) {
@@ -1368,7 +1368,7 @@ export const PaymentInfo = ({
             setValue={setTax}
             setChanged={setChanged}
           />
-          {taxInfo && isSeller && (
+          {/* {taxInfo && isSeller && (
             <div className={styles.inputWrapper}>
               <p className={styles.label}>{t("payments.vat").concat(" %")}</p>
               <SimpleSelect
@@ -1380,7 +1380,7 @@ export const PaymentInfo = ({
                 options={JSON.parse(taxInfo.vatPercent)}
               />
             </div>
-          )}
+          )} */}
         </div>
         {!isPerson && (
           <Input

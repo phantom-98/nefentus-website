@@ -25,7 +25,7 @@ const PayBody = ({ invoice }) => {
   const [imageSource, setImageSource] = useState(null);
   const [price, setPrice] = useState(0);
   const [disable, setDisable] = useState(false);
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const backend_API = new backendAPI();
 
   async function fetchProductImage(product) {
@@ -137,13 +137,13 @@ const PayBody = ({ invoice }) => {
           setBusiness={setCompany}
           tax={tax}
           setTax={setTax}
-          percent={percent}
-          setPercent={setPercent}
-          reverseCharge={reverseCharge}
+          // percent={percent}
+          // setPercent={setPercent}
+          // reverseCharge={reverseCharge}
           setReverseCharge={setReverseCharge}
           taxInfo={taxInfo}
           setChanged={setChanged}
-          isSeller={user && invoice.user?.email === user?.email}
+          // isSeller={user && invoice.user?.email === user?.email}
         />
       }
       children={
