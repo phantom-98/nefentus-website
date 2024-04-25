@@ -201,10 +201,10 @@ const ReceivePayment = ({
   }, []);
 
   useEffect(() => {
-    if (connectedWallet) {
+    if (activeExternalWalletAddress && !internalWalletAddress) {
       fetchBalances(activeExternalWalletAddress);
     }
-  }, [connectedWallet, activeExternalWalletAddress]);
+  }, [activeExternalWalletAddress]);
 
   const fetchProfile = async () => {
     const data = await backend_API.getProfile();

@@ -586,7 +586,12 @@ svg path {
   width: 6rem;
   height: 1rem;
   margin: 0.4rem 0;
-  background-image: linear-gradient(90deg, #b1b1b1 0, #ddd 3rem, #b1b1b1 6rem);
+  background-image: linear-gradient(
+    90deg,
+    #b1b1b180 0,
+    #ddd8 3rem,
+    #b1b1b180 6rem
+  );
   animation: shine-lines 1.6s linear infinite;
   border-radius: 0.4rem;
 }
