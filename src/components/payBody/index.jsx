@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { PaymentInfo, ProductInfo } from "../receivePayment";
 import backendAPI from "../../api/backendAPI";
+import vendorDashboardApi from "../../api/vendorDashboardApi";
+import { useAuth } from "../../context/auth/authContext";
 
 const PayBody = ({ invoice }) => {
   const { t } = useTranslation();
@@ -23,6 +25,7 @@ const PayBody = ({ invoice }) => {
   const [imageSource, setImageSource] = useState(null);
   const [price, setPrice] = useState(0);
   const [disable, setDisable] = useState(false);
+  const { user } = useAuth();
   const backend_API = new backendAPI();
 
   async function fetchProductImage(product) {
@@ -33,7 +36,9 @@ const PayBody = ({ invoice }) => {
   }
   async function fetchTaxInfo(country) {
     const info = await backend_API.getTaxInfo(country);
-    setTaxInfo(info);
+    if (info && info[0]) {
+      setTaxInfo(info[0]);
+    }
   }
 
   useEffect(() => {
@@ -45,7 +50,11 @@ const PayBody = ({ invoice }) => {
     setAddress(invoice.address);
     setPerson(invoice.person);
     setTax(invoice.taxNumber);
-    setPercent(invoice.vatPercent);
+    if (invoice.vatPercent) {
+      setPercent(invoice.vatPercent);
+    } else {
+      setPercent(invoice.product?.vatPercent);
+    }
     setAmount(invoice.productAmount);
     if (invoice.product) {
       fetchProductImage(invoice.product);
@@ -134,6 +143,7 @@ const PayBody = ({ invoice }) => {
           setReverseCharge={setReverseCharge}
           taxInfo={taxInfo}
           setChanged={setChanged}
+          isSeller={user && invoice.user?.email === user?.email}
         />
       }
       children={

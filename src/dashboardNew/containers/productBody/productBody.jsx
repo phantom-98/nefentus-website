@@ -6,7 +6,11 @@ import SettingsTitle from "../../components/settings/settingsTitle";
 import styles from "./productBody.module.css";
 import { MessageContext } from "../../../context/message";
 import MessageComponent from "../../../components/message";
-import Input, { Textarea, Attachment } from "../../../components/input/input";
+import Input, {
+  Textarea,
+  Attachment,
+  Options,
+} from "../../../components/input/input";
 import CropDialog, {
   dataURLtoFile,
 } from "../../../components/cropDialog/cropDialog";
@@ -21,6 +25,8 @@ const ProductBody = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
+  const [vatPercent, setVatPercent] = useState("");
+  const [taxInfo, setTaxInfo] = useState("");
   const [image, setImage] = useState(null);
   const [imageChanged, setImageChanged] = useState(false);
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
@@ -37,6 +43,7 @@ const ProductBody = () => {
 
   useEffect(() => {
     loadProducts();
+    loadTaxInfo();
   }, []);
 
   async function loadProducts() {
@@ -55,6 +62,13 @@ const ProductBody = () => {
         image: newSignedImagePaths[index],
       }));
       setProducts(productData);
+    }
+  }
+
+  async function loadTaxInfo() {
+    const info = await dashboardApi.getTaxInfo();
+    if (info && info[0]) {
+      setTaxInfo(JSON.parse(info[0].vatPercent));
     }
   }
 
@@ -96,6 +110,10 @@ const ProductBody = () => {
         stockRequest = stockAsInt;
       }
     }
+    if (!vatPercent) {
+      setErrorMessage(t("products.error.chooseVat"));
+      return;
+    }
 
     const resp1 = await dashboardApi.upsertProduct(
       productLink,
@@ -103,7 +121,7 @@ const ProductBody = () => {
       description,
       priceAsFloat,
       stockRequest,
-      image,
+      vatPercent,
     );
 
     let resp2 = true;
@@ -156,6 +174,7 @@ const ProductBody = () => {
       } else {
         setStock("");
       }
+      setVatPercent(product.vatPercent);
       let imageName = null;
       if (product.s3Key) imageName = product?.s3Key?.split("_")[1];
       setImage(imageName);
@@ -167,6 +186,7 @@ const ProductBody = () => {
       setDescription("");
       setPrice("");
       setStock("");
+      setVatPercent("");
       setImage(null);
 
       setOpenModal("add");
@@ -279,6 +299,15 @@ const ProductBody = () => {
                 setState={setStock}
                 number
               />
+              {taxInfo && (
+                <Options
+                  dashboard
+                  label={t("payments.vat").concat(" %")}
+                  value={vatPercent}
+                  setValue={setVatPercent}
+                  options={taxInfo}
+                />
+              )}
             </div>
           </div>
         </Popup>

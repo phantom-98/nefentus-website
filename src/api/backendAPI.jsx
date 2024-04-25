@@ -1473,9 +1473,6 @@ export default class backendAPI {
 
       const options = {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
       };
       const response = await fetch(url, options);
       if (!response.ok) {

@@ -13,6 +13,7 @@ import PersonLight from "../../assets/icon/light/user-square.svg";
 import BuildingDark from "../../assets/icon/dark/building.svg";
 import BuildingLight from "../../assets/icon/light/building.svg";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
+import CheckedIcon from "../../assets/icon/checked.svg";
 import backendAPI from "../../api/backendAPI";
 import { uniswapApi, web3Api } from "../../api/web3Api";
 import Button from "../../components/button/button";
@@ -886,40 +887,29 @@ const CountrySelect = ({
               }}
             />
           )}
-          {value && (
-            <input
-              className="custom"
-              style={{
-                fontSize: "1.2rem",
-                width: "calc(100% - 6rem)",
-                outline: "0",
-                background: "transparent",
-              }}
-              value={keyword}
-              onChange={(e) => {
-                setOpen(true);
-                setKeyword(e.target.value);
-                setFiltered(
-                  options.filter((item) =>
-                    t(item.display)
-                      .toLowerCase()
-                      .includes(e.target.value.toLowerCase()),
-                  ),
-                );
-              }}
-            />
-          )}
-          {!value && (
-            <p
-              style={{
-                fontSize: "1.2rem",
-                width: "calc(100% - 2rem)",
-              }}
-              className="fontColor"
-            >
-              {t("countries.choose")}
-            </p>
-          )}
+          <input
+            className="custom"
+            style={{
+              fontSize: "1.2rem",
+              width: `calc(100% - ${value ? "6" : "2"}rem)`,
+              outline: "0",
+              background: "transparent",
+              height: "2rem",
+            }}
+            placeholder={value ? "" : t("countries.choose")}
+            value={keyword}
+            onChange={(e) => {
+              setOpen(true);
+              setKeyword(e.target.value);
+              setFiltered(
+                options.filter((item) =>
+                  t(item.display)
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase()),
+                ),
+              );
+            }}
+          />
           <img src={DropDownIcon} />
         </div>
         {open && (
@@ -931,6 +921,7 @@ const CountrySelect = ({
               overflow: "auto",
               background: "var(--card-color)",
               border: "1px solid var(--border-color)",
+              zIndex: "10",
             }}
           >
             {filtered.map((item, index) => {
@@ -1200,7 +1191,7 @@ const Input = ({ label, placeholder, value, setValue, setChanged, type }) => {
   );
 };
 
-const SimpleSelect = ({ setChanged, options, value, setValue }) => {
+const SimpleSelect = ({ setChanged, options, value, setValue, RC, setRC }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -1265,6 +1256,24 @@ const SimpleSelect = ({ setChanged, options, value, setValue }) => {
               </div>
             );
           })}
+          <div
+            style={{
+              margin: "0.1rem 0 0 0",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+            onClick={() => {
+              setRC((prev) => !prev);
+              setChanged(true);
+            }}
+          >
+            <span
+              style={{
+                marginTop: "0.1rem",
+              }}
+            >{`RC`}</span>
+            {RC && <img src={CheckedIcon} />}
+          </div>
         </div>
       )}
     </div>
@@ -1292,32 +1301,17 @@ export const PaymentInfo = ({
   setReverseCharge,
   taxInfo,
   setChanged,
+  isSeller,
 }) => {
   const { t } = useTranslation();
-  const [vatInfo, setVatInfo] = useState();
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (taxInfo) {
-      let info = taxInfo.find((item) => {
-        return item.buyerCountry == country && item.buyerIsPerson == isPerson;
-      });
-      if (!info) {
-        info = taxInfo.find((item) => item.buyerCountry == country);
-      }
-      if (!info) {
-        info = taxInfo.find((item) => !item.buyerCountry);
-      }
-      if (info) {
-        if (info.reverseCharge) {
-          setReverseCharge(true);
-          setVatInfo(true);
-        } else {
-          setReverseCharge(false);
-          setVatInfo(info.vatPercent ? JSON.parse(info.vatPercent) : null);
-        }
+    if (taxInfo && country) {
+      if (taxInfo.country !== country && !isPerson) {
+        setReverseCharge(true);
       } else {
         setReverseCharge(false);
-        setVatInfo(null);
       }
       setChanged(true);
     }
@@ -1372,41 +1366,31 @@ export const PaymentInfo = ({
             label={t("payments.taxNumber")}
             value={tax}
             setValue={setTax}
-            type
             setChanged={setChanged}
           />
-          {vatInfo == true ? null : !Array.isArray(vatInfo) ? (
-            <Input
-              placeholder={"0.00%"}
-              label={t("payments.vat").concat(" %")}
-              value={percent}
-              setValue={setPercent}
-              setChanged={setChanged}
-            />
-          ) : vatInfo.length <= 1 ? (
-            <div className={styles.inputWrapper}>
-              <p className={styles.label}>{t("payments.vat").concat(" %")}</p>
-              <p className={styles.input}>{percent}</p>
-            </div>
-          ) : (
+          {taxInfo && isSeller && (
             <div className={styles.inputWrapper}>
               <p className={styles.label}>{t("payments.vat").concat(" %")}</p>
               <SimpleSelect
                 setChanged={setChanged}
                 value={percent}
                 setValue={setPercent}
-                options={vatInfo}
+                RC={reverseCharge}
+                setRC={setReverseCharge}
+                options={JSON.parse(taxInfo.vatPercent)}
               />
             </div>
           )}
         </div>
-        <Input
-          placeholder={`e.g. Google`}
-          label={t("payments.company")}
-          value={business}
-          setValue={setBusiness}
-          setChanged={setChanged}
-        />
+        {!isPerson && (
+          <Input
+            placeholder={`e.g. Google`}
+            label={t("payments.company")}
+            value={business}
+            setValue={setBusiness}
+            setChanged={setChanged}
+          />
+        )}
       </div>
     </div>
   );

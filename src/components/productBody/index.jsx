@@ -4,6 +4,7 @@ import ReceivePayment from "../receivePayment";
 import backendAPI from "../../api/backendAPI";
 import { useTranslation } from "react-i18next";
 import { PaymentInfo, ProductInfo } from "../receivePayment";
+import { useAuth } from "../../context/auth/authContext";
 
 const ProductBody = ({ product, quantity }) => {
   const backend_API = new backendAPI();
@@ -22,7 +23,7 @@ const ProductBody = ({ product, quantity }) => {
   const [country, setCountry] = useState();
   const [address, setAddress] = useState();
   const [isPerson, setPerson] = useState();
-  const [tax, setTax] = useState();
+  const [tax, setTax] = useState(product.vatPercent);
   const [taxInfo, setTaxInfo] = useState();
   const [percent, setPercent] = useState();
   const [reverseCharge, setReverseCharge] = useState();
@@ -30,6 +31,7 @@ const ProductBody = ({ product, quantity }) => {
   const [amount, setAmount] = useState(quantity || 1);
   const [link, setLink] = useState(null);
   const [price, setPrice] = useState(0);
+  const { user } = useAuth();
 
   const updateInvoiceData = async () => {
     const req = {
@@ -56,7 +58,9 @@ const ProductBody = ({ product, quantity }) => {
   };
   async function fetchTaxInfo(country) {
     const info = await backend_API.getTaxInfo(country);
-    setTaxInfo(info);
+    if (info && info[0]) {
+      setTaxInfo(info[0]);
+    }
   }
 
   useEffect(() => {
@@ -114,6 +118,7 @@ const ProductBody = ({ product, quantity }) => {
           setReverseCharge={setReverseCharge}
           taxInfo={taxInfo}
           setChanged={setChanged}
+          isSeller={user && user?.email === product.user.email}
         />
       }
       children={

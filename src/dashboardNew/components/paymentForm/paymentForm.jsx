@@ -4,11 +4,12 @@ import styles from "./paymentForm.module.css";
 import Input from "../../containers/input/input";
 import Button from "../button/button";
 import { QRPopup } from "../popup/popup";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MessageContext } from "../../../context/message";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../context/auth/authContext";
+import { Options } from "../../../components/input/input";
 
 const PaymentForm = ({ setLoadingData }) => {
   const { t } = useTranslation();
@@ -22,6 +23,7 @@ const PaymentForm = ({ setLoadingData }) => {
   const [address, setAddress] = useState("");
   const [taxNumber, setTaxNumber] = useState("");
   const [taxPercent, setTaxPercent] = useState("");
+  const [taxInfo, setTaxInfo] = useState();
   const [showEuro, setShowEuro] = useState(false);
   const [reverseCharge, setReverseCharge] = useState(false);
   const { clearMessages, setErrorMessage, setInfoMessage } =
@@ -34,6 +36,10 @@ const PaymentForm = ({ setLoadingData }) => {
     // Check data
     if (!amount) {
       setErrorMessage(t("messages.error.amountValid"));
+      return;
+    }
+    if (!taxPercent) {
+      setErrorMessage(t("messages.error.taxPercentValid"));
       return;
     }
     // if (!email) {
@@ -81,6 +87,16 @@ const PaymentForm = ({ setLoadingData }) => {
       setErrorMessage(t("messages.error.createInvoice"));
     }
   }
+  async function loadTaxInfo() {
+    const info = await vendorAPI.getTaxInfo();
+    if (info && info[0]) {
+      setTaxInfo(JSON.parse(info[0].vatPercent));
+    }
+  }
+
+  useEffect(() => {
+    loadTaxInfo();
+  }, []);
 
   return (
     <>
@@ -113,7 +129,7 @@ const PaymentForm = ({ setLoadingData }) => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 0.5fr",
+              gridTemplateColumns: "1fr 1fr",
               gap: "1.5rem",
             }}
           >
@@ -122,11 +138,14 @@ const PaymentForm = ({ setLoadingData }) => {
               value={taxNumber}
               setVaue={setTaxNumber}
             />
-            <Input
-              placeholder={t("payments.vat").concat(" %")}
-              value={taxPercent}
-              setVaue={setTaxPercent}
-            />
+            {taxInfo && (
+              <Options
+                dashboard
+                value={taxPercent}
+                setValue={setTaxPercent}
+                options={taxInfo}
+              />
+            )}
           </div>
           <Input
             placeholder={t("payments.address")}

@@ -859,6 +859,7 @@
       "updateData": "Fehler beim Aktualisieren der Daten",
       "uploadPicture": "Fehler beim Hochladen des Profilbildes",
       "amountValid": "Bitte geben Sie einen gültigen Betrag ein",
+      "taxPercentValid": "Bitte wählen Sie die Mehrwertsteuer",
       "nameValid": "Bitte geben Sie einen gültigen Namen ein",
       "companyValid": "Bitte geben Sie ein gültiges Unternehmen ein",
       "addressValid": "Bitte geben Sie eine gültige Adresse ein",
@@ -943,7 +944,8 @@
       "name": "Name ist erforderlich!",
       "description": "Beschreibung ist erforderlich!",
       "price": "Preis ist erforderlich!",
-      "priceAsFloat": "Preis muss positiv sein!"
+      "priceAsFloat": "Preis muss positiv sein!",
+      "chooseVat": "Bitte wählen Sie die Mehrwertsteuer!"
     },
     "createProductModal": {
       "createNewProduct": "Neues Produkt erstellen",

@@ -912,6 +912,7 @@
       "updateData": "Error on updating data",
       "uploadPicture": "Error on uploading the profile picture",
       "amountValid": "Please enter a valid amount",
+      "taxPercentValid": "Please choose VAT percent",
       "nameValid": "Please enter a valid name",
       "companyValid": "Please enter a valid company",
       "addressValid": "Please enter a valid address",
@@ -995,7 +996,8 @@
       "name": "Name is required!",
       "description": "Description is required!",
       "price": "Price is required!",
-      "priceAsFloat": "Price must be a positive!"
+      "priceAsFloat": "Price must be a positive!",
+      "chooseVat": "Please choose VAT percent!"
     },
     "createProductModal": {
       "imageLabel": "Product image",
