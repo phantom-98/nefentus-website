@@ -9,6 +9,8 @@ jobs:
   # To build the project
   build-nefentus-staging:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - name: Checking out code
         uses: actions/checkout@v3
