@@ -296,3 +296,13 @@ export function getCountryList() {
     return country1.value.localeCompare(country2.value);
   });
 }
+
+export function getCurrencySymbol() {
+  return {
+    USD: "$",
+    EUR: "€",
+    CHF: "CHF",
+    UAH: "₴",
+    AED: "د.إ",
+  };
+}

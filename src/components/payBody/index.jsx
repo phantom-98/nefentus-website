@@ -24,6 +24,7 @@ const PayBody = ({ invoice }) => {
   const [amount, setAmount] = useState(1);
   const [imageSource, setImageSource] = useState(null);
   const [price, setPrice] = useState(0);
+  const [currency, setCurrency] = useState("USD");
   const [disable, setDisable] = useState(false);
   // const { user } = useAuth();
   const backend_API = new backendAPI();
@@ -50,6 +51,7 @@ const PayBody = ({ invoice }) => {
     setAddress(invoice.address);
     setPerson(invoice.person);
     setTax(invoice.taxNumber);
+    setCurrency(invoice.currency);
     if (invoice.vatPercent) {
       setPercent(invoice.vatPercent);
     } else {
@@ -82,12 +84,13 @@ const PayBody = ({ invoice }) => {
 
   const updateInvoiceData = async () => {
     const req = {
-      amountUSD: price,
+      amount: price,
       name,
       email,
       company,
       country,
       address,
+      currency,
       person: isPerson,
       taxNumber: tax,
       vatPercent: percent,
@@ -112,7 +115,8 @@ const PayBody = ({ invoice }) => {
 
   return (
     <ReceivePayment
-      priceUSD={price}
+      price={price}
+      currency={invoice.currency}
       seller={invoice.user}
       transInfoArg={{
         invoiceLink: invoice.link,

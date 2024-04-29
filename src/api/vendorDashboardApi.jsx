@@ -130,7 +130,15 @@ export default class vendorDashboardApi {
   /**
    * Upsert a new product (insert if link is null)
    */
-  async upsertProduct(link, name, description, price, stock, vatPercent) {
+  async upsertProduct(
+    link,
+    name,
+    description,
+    price,
+    currency,
+    stock,
+    vatPercent,
+  ) {
     try {
       let stockInt = -1;
       try {
@@ -144,6 +152,7 @@ export default class vendorDashboardApi {
         price,
         stock: stockInt,
         vatPercent,
+        currency,
       };
 
       const url = `${this.baseURL}/products/upsert`;

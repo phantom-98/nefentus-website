@@ -1447,15 +1447,30 @@ export default class backendAPI {
       return null; // or return some default value
     }
   }
-  async getCurrencyRate() {
+  async getCurrencyRate(from, to) {
     try {
-      const url = `${this.baseURL}/currency`;
+      const url = `${this.baseURL}/currency?from=${from}&to=${to}`;
 
       const options = {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async getRateList(base) {
+    try {
+      const url = `${this.baseURL}/currencyList?base=${base}`;
+
+      const options = {
+        method: "GET",
       };
       const response = await fetch(url, options);
       if (!response.ok) {

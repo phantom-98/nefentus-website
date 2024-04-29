@@ -62,10 +62,15 @@ import { useAuth } from "../../context/auth/authContext";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { GasDetails } from "../gasDetails/gasDetails";
 import { useNavigate } from "react-router-dom";
-import { getCountryList, getFlagLink } from "../../countries";
+import {
+  getCountryList,
+  getCurrencySymbol,
+  getFlagLink,
+} from "../../countries";
 
 const ReceivePayment = ({
-  priceUSD,
+  price,
+  currency,
   seller,
   children,
   info,
@@ -115,8 +120,20 @@ const ReceivePayment = ({
 
   // const [show, setShow] = useState(false);
   // const [email, setEmail] = useState("");
+  const [priceUSD, setPriceUSD] = useState();
+  const [rate, setRate] = useState(1);
   const [password, setPassword] = useState("");
   const [pwd, setPwd] = useState(false);
+  useEffect(() => {
+    async function getRate() {
+      const res = await backend_API.getCurrencyRate("USD", currency);
+      if (res) {
+        setRate(res.rate);
+        setPriceUSD(price / res.rate);
+      }
+    }
+    getRate();
+  }, [price]);
   const { handleBuy } = usePayment({
     password,
     priceUSD,
@@ -154,7 +171,7 @@ const ReceivePayment = ({
   useEffect(() => {
     if (
       balances[selectedCryptoIndex] * prices[selectedCryptoIndex] >
-      priceUSD * currencyRate.rate
+      priceUSD
     ) {
       isDisable && setDisable(false || disabled);
     } else {
@@ -179,10 +196,7 @@ const ReceivePayment = ({
         "USDT-BSC": 2,
       };
       setCryptoAmount(
-        formatTokenBalance(
-          (priceUSD * currencyRate.rate) / price,
-          round[currency.abbr],
-        ),
+        formatTokenBalance(priceUSD / price, round[currency.abbr]),
       );
     } else {
       setCryptoAmount("Loading...");
@@ -592,8 +606,8 @@ const ReceivePayment = ({
                 <div className={styles.total}>
                   <p>{t("payments.total")}</p>
                   <p>
-                    {currencyRate.symbol}
-                    {formatUSDBalance(priceUSD * currencyRate.rate)}
+                    {getCurrencySymbol()[currency]}
+                    {formatUSDBalance(price)}
                   </p>
                   <p className={styles.cryptoTitle}>
                     {t("payments.cryptoAmount")}
@@ -633,8 +647,8 @@ const ReceivePayment = ({
                   onClick={() => doPayment()}
                   spinner={spinner}
                 >
-                  {t("payments.payButton")} {currencyRate.symbol}
-                  {formatUSDBalance((priceUSD + feeUSD) * currencyRate.rate)}
+                  {t("payments.payButton").concat(" $")}
+                  {formatUSDBalance(priceUSD + feeUSD)}
                 </Button>
               </div>
             </div>
@@ -716,8 +730,8 @@ const ReceivePayment = ({
                 onClick={() => doPayment()}
                 spinner={spinner}
               >
-                {t("payments.payButton")} {currencyRate.symbol}
-                {formatUSDBalance(priceUSD * currencyRate.rate)}
+                {t("payments.payButton").concat(" $")}
+                {formatUSDBalance(priceUSD)}
               </Button>
             </div>
             <div

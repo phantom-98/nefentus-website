@@ -10,6 +10,11 @@ import Input, {
   Textarea,
   Attachment,
   Options,
+  CurrencySelect,
+  CurrencySelectWithLabel,
+  RadioOption,
+  Spinner,
+  RadioSelect,
 } from "../../../components/input/input";
 import CropDialog, {
   dataURLtoFile,
@@ -18,6 +23,11 @@ import { useTranslation } from "react-i18next";
 import Popup from "../../components/popup/popup";
 import { checkJwtToken, formatUSDBalance } from "../../../utils";
 import { useAuth } from "../../../context/auth/authContext";
+import InfiniteDark from "../../../assets/icon/dark/infinite.svg";
+import InfiniteLight from "../../../assets/icon/light/infinite.svg";
+import BoxDark from "../../../assets/icon/dark/box.svg";
+import BoxLight from "../../../assets/icon/light/box.svg";
+import { useTheme } from "../../../context/themeContext/themeContext";
 
 const ProductBody = () => {
   const [products, setProducts] = useState([]);
@@ -25,6 +35,7 @@ const ProductBody = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
+  const [unlimit, setUnlimit] = useState(true);
   const [vatPercent, setVatPercent] = useState("");
   const [taxInfo, setTaxInfo] = useState("");
   const [image, setImage] = useState(null);
@@ -32,9 +43,10 @@ const ProductBody = () => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [productLink, setProductLink] = useState(null);
-  const { currencyRate } = useAuth();
+  const [currency, setCurrency] = useState("USD");
 
   const { t } = useTranslation();
+  const { theme } = useTheme();
 
   const dashboardApi = new vendorDashboardApi();
 
@@ -90,7 +102,7 @@ const ProductBody = () => {
       return;
     }
     let priceAsFloat = null;
-    priceAsFloat = parseFloat(price) / currencyRate.rate;
+    priceAsFloat = parseFloat(price);
     if (priceAsFloat <= 0) {
       setErrorMessage(t("products.error.priceAsFloat"));
       return;
@@ -120,6 +132,7 @@ const ProductBody = () => {
       name,
       description,
       priceAsFloat,
+      currency ?? "USD",
       stockRequest,
       vatPercent,
     );
@@ -168,16 +181,19 @@ const ProductBody = () => {
       setProductLink(link);
       setName(product.name);
       setDescription(product.description);
-      setPrice((product.price * currencyRate.rate).toFixed(2));
+      setPrice(product.price.toFixed(2));
+      setCurrency(product.currency);
       if (product.stock != "-1") {
         setStock(product.stock);
+        setUnlimit(false);
       } else {
         setStock("");
+        setUnlimit(true);
       }
       setVatPercent(product.vatPercent);
-      let imageName = null;
-      if (product.s3Key) imageName = product?.s3Key?.split("_")[1];
-      setImage(imageName);
+      // let imageName = null;
+      // if (product.s3Key) imageName = product?.s3Key?.split("_")[1];
+      setImage(product.image);
 
       setOpenModal("update");
     } else {
@@ -185,7 +201,9 @@ const ProductBody = () => {
       setName("");
       setDescription("");
       setPrice("");
+      setCurrency("USD");
       setStock("");
+      setUnlimit(true);
       setVatPercent("");
       setImage(null);
 
@@ -262,6 +280,104 @@ const ProductBody = () => {
                 value={image}
                 dashboard
               />
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 0.5fr",
+                  gap: "1rem",
+                }}
+              >
+                <Input
+                  dashboard
+                  label={t("products.createProductModal.priceLabel").concat(
+                    "*",
+                  )}
+                  placeholder={t(
+                    "products.createProductModal.pricePlaceholder",
+                  )}
+                  value={price}
+                  setState={setPrice}
+                  number
+                />
+                <CurrencySelectWithLabel
+                  label={t("products.createProductModal.currency").concat("*")}
+                  value={currency}
+                  setValue={setCurrency}
+                />
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "2fr 1fr",
+                  gap: "1rem",
+                }}
+              >
+                <div>
+                  <p
+                    style={{
+                      fontSize: "1.2rem",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    {t("products.createProductModal.stockLabel")}
+                  </p>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "1rem",
+                    }}
+                  >
+                    <RadioOption
+                      icon={theme === "dark" ? InfiniteDark : InfiniteLight}
+                      content={t("products.createProductModal.limitless")}
+                      value={unlimit}
+                      onClick={() => {
+                        setStock("");
+                        setUnlimit(true);
+                      }}
+                      horizon={true}
+                      style={{
+                        width: "50%",
+                      }}
+                    />
+                    <RadioOption
+                      icon={theme === "dark" ? BoxDark : BoxLight}
+                      content={t("products.createProductModal.quantity")}
+                      value={!unlimit}
+                      onClick={() => {
+                        setUnlimit(false);
+                      }}
+                      horizon={true}
+                      style={{
+                        width: "50%",
+                      }}
+                    />
+                  </div>
+                </div>
+                <Spinner
+                  label={t("products.createProductModal.stockAvailable")}
+                  value={stock}
+                  setValue={setStock}
+                  dashboard
+                  disabled={unlimit}
+                />
+              </div>
+              <RadioSelect
+                label={t("products.createProductModal.vat")}
+                value={vatPercent}
+                setValue={setVatPercent}
+                options={
+                  taxInfo
+                    ? taxInfo.map((tax, index) => {
+                        return {
+                          value: tax,
+                          label: tax + "%",
+                          content: index == 0 ? "Standard" : "Reduced",
+                        };
+                      })
+                    : []
+                }
+              />
               <Input
                 dashboard
                 label={t("products.createProductModal.nameLabel") + "*"}
@@ -279,35 +395,6 @@ const ProductBody = () => {
                 setState={setDescription}
                 rows={2}
               />
-              <Input
-                dashboard
-                label={
-                  t("products.createProductModal.priceLabel").concat(
-                    " (" + currencyRate.symbol + ")",
-                  ) + "*"
-                }
-                placeholder={t("products.createProductModal.pricePlaceholder")}
-                value={price}
-                setState={setPrice}
-                number
-              />
-              <Input
-                dashboard
-                label={t("products.createProductModal.stockLabel")}
-                placeholder={t("products.createProductModal.stockPlaceholder")}
-                value={stock}
-                setState={setStock}
-                number
-              />
-              {taxInfo && (
-                <Options
-                  dashboard
-                  label={t("payments.vat").concat(" %")}
-                  value={vatPercent}
-                  setValue={setVatPercent}
-                  options={taxInfo}
-                />
-              )}
             </div>
           </div>
         </Popup>

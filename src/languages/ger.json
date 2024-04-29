@@ -960,6 +960,13 @@
       "pricePlaceholder": "Preis eingeben",
       "stockLabel": "Lagerbestand",
       "stockPlaceholder": "Lagerbestand eingeben, wenn dieser begrenzt ist",
+      "vat": "Mehrwertsteuer in Prozent",
+      "standard": "Standard",
+      "reduced": "Verringert",
+      "currency": "Zahlungswährung",
+      "limitless": "Grenzenlos",
+      "quantity": "Menge",
+      "stockAvailable": "Einheit verfügbar",
       "add": "Hinzufügen",
       "update": "Aktualisieren",
       "cancel": "Stornieren",
@@ -990,6 +997,27 @@
     "scanDescription": "Zur Bestätigung müssen Sie einen QR-Code scannen",
     "downloadInvoice": "Rechnung herunterladen",
     "downloadReceipt": "Zahlungseingang herunterladen",
+    "subtotal": "Zwischensumme",
+    "vatValue": "Mehrwertsteuer (MwSt.)",
+    "totalDue": "Insgesamt fällig",
+    "note": "Hinweis",
+    "buyer": {
+      "customer": "Informationen für Kunden",
+      "fullName": "Vollständiger Name des Empfängers",
+      "email": "E-Mail des Empfängers"
+    },
+    "tax": {
+      "standard": "Standard",
+      "reduced": "Verringert"
+    },
+    "items": {
+      "title": "Rechnungspositionen",
+      "add": "Artikel hinzufügen",
+      "name": "Artikel",
+      "price": "Preis",
+      "quantity": "Menge",
+      "total": "Preis insgesamt"
+    },
     "table": {
       "created": "Erstellt am",
       "price": "Preis",

@@ -1012,6 +1012,13 @@
       "pricePlaceholder": "Enter price",
       "stockLabel": "Stock",
       "stockPlaceholder": "Enter stock if limited stock",
+      "vat": "Value-added tax percent",
+      "standard": "Standard",
+      "reduced": "Reduced",
+      "currency": "Payment currency",
+      "limitless": "Limitless",
+      "quantity": "Quantity",
+      "stockAvailable": "Unit available",
       "add": "Add",
       "update": "Update",
       "cancel": "Cancel",
@@ -1044,6 +1051,27 @@
     "scanDescription": "To confirm you need to scan QR code",
     "downloadInvoice": "Download invoice",
     "downloadReceipt": "Download receipt",
+    "subtotal": "Subtotal",
+    "vatValue": "Value added tax (VAT)",
+    "totalDue": "Total due",
+    "note": "Note",
+    "buyer": {
+      "customer": "Customer information",
+      "fullName": "Recipient full name",
+      "email": "Recipient email"
+    },
+    "tax": {
+      "standard": "Standard",
+      "reduced": "Reduced"
+    },
+    "items": {
+      "title": "Invoice Items",
+      "add": "Add item",
+      "name": "Item",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total price"
+    },
     "table": {
       "created": "Created at",
       "price": "Price",
