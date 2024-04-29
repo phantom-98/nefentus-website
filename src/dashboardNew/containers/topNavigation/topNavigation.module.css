@@ -199,10 +199,10 @@
 /*  */
 @media (max-width: 900px) {
   .rightSide {
-    gap: 0rem;
+    gap: 0.8rem;
   }
 
-  .rightSide > div {
+  .rightSide > div:nth-last-child(2) {
     display: none;
   }
 
@@ -212,8 +212,8 @@
   }
 
   .rightSide > div:nth-child(3) {
-    margin-right: 4rem;
-    margin-left: 1.5rem;
+    margin-right: 3rem;
+    /* margin-left: 1.5rem; */
   }
 
   .sideWrapper {
