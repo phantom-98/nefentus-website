@@ -371,18 +371,20 @@
   "footer": {
     "copyright": "© 2023 Nefentus. Alle Rechte vorbehalten.",
     "downloadButton": "JETZT RUNTERLADEN",
-    "content": ["Home", "Zahlung", "Ressourcen", "Datenschutzrichtlinie"],
+    "content": ["Home", "Zahlung", "Ressourcen"],
     "privacy": "Datenschutzerklärung",
     "imprint": "Impressum",
     "terms": "Bedingungen und Konditionen",
     "contact": "Kontaktieren Sie uns",
     "contentLabel1": "Übersicht",
     "content2": [
+      "",
       "Play Store",
       "Anmelden",
       "App Store",
-      "Anmeldung",
-      "Impressum"
+      "Registrierung",
+      "Impressum",
+      "Datenschutzerklärung"
     ],
     "contentLabel2": "Aktion",
     "socialTitle": "Folge uns auf:",
@@ -1215,12 +1217,19 @@
   },
 
   "cookieBanner": {
-    "first": "Wir nutzen Drittanbieter ",
-    "cookies": "Cookies ",
-    "second": "um zu ",
-    "last": "personalisieren Sie Ihr Website-Erlebnis.",
+    "first": "Wir verwenden Cookies von Drittanbietern, um Ihr Website-Erlebnis zu personalisieren.",
+    "privacyPolicy1": " Lesen Sie mehr über unsere ",
+    "privacyPolicyLink": "Datenschutzbestimmungen",
+    "privacyPolicy2": "lesen.",
     "decline": "Ablehnen",
     "accept": "Akzeptieren"
+  },
+  "privacyPolicy": {
+    "revoke": "Meine Zustimmung zur Speicherung von Cookies widerrufen",
+    "headline": "Datenschutzerklärung"
+  },
+  "imprint": {
+    "headline": "Impressum"
   },
   "settingsItem": {
     "title": "Wert ändern"

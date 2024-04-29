@@ -1,18 +1,18 @@
 import { t } from "i18next";
-import PrivacyBody from "./../components/privacyBody/privacyBody";
+import PrivacyPolicyBody from "./../components/privacyPolicyBody/privacyPolicyBody";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 
-const Privacy = () => {
+const PrivacyPolicy = () => {
   const { t } = useTranslation();
   return (
     <div>
       <Helmet>
         <title>Nefentus | {t("navigation.privacy")}</title>
       </Helmet>
-      <PrivacyBody />
+      <PrivacyPolicyBody />
     </div>
   );
 };
 
-export default Privacy;
+export default PrivacyPolicy;
