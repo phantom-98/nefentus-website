@@ -14,7 +14,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Error from "../error/error";
-import setCookie from "../setCookie/setCookie";
 import ReCAPTCHA from "react-google-recaptcha";
 import { OneTimeCodeInput } from "../../dashboard/input/input";
 import { Checkmark } from "../../assets/icon/icons";
@@ -23,6 +22,7 @@ import { MessageContext } from "../../context/message";
 import MessageComponent from "../message";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { useAuth } from "../../context/auth/authContext";
+import { setCookie } from "../../func/cookies";
 
 const ConfirmMeEmail = ({
   email,
