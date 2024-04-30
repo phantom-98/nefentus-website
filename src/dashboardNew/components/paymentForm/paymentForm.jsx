@@ -29,6 +29,7 @@ const PaymentForm = ({ setLoadingData }) => {
   // const { currencyRate } = useAuth();
   const [showCreate, setShowCreate] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [invoiceNo, setInvoiceNo] = useState(1000);
   const [amount, setAmount] = useState(0);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -123,6 +124,10 @@ const PaymentForm = ({ setLoadingData }) => {
       setTaxInfo(info[0]);
     }
   }
+  async function loadInvoiceNumber() {
+    const no = await vendorAPI.getInvoiceNumber();
+    no && setInvoiceNo(no);
+  }
 
   useEffect(() => {
     loadTaxInfo();
@@ -165,6 +170,20 @@ const PaymentForm = ({ setLoadingData }) => {
         >{`All Invoices`}</p>
         <Button
           onClick={() => {
+            loadInvoiceNumber();
+            setName("");
+            setEmail("");
+            setCompany("");
+            setCountry("");
+            setAddress("");
+            setPerson(true);
+            setCurrency("USD");
+            setTaxNumber("");
+            setTaxPercent();
+            setItems([{ name: "", price: 0, quantity: 1, total: 0 }]);
+            setAmount("");
+            setReverseCharge(false);
+            setNote("");
             setShowCreate(true);
           }}
           width="16rem"
@@ -176,6 +195,8 @@ const PaymentForm = ({ setLoadingData }) => {
         show={showCreate}
         setShow={setShowCreate}
         title={t("payments.title")}
+        confirmTitle={t("general.confirm")}
+        cancelTitle={t("general.cancel")}
         onClose={() => setShowCreate(false)}
         onConfirm={() => {
           createInvoice();
@@ -184,7 +205,8 @@ const PaymentForm = ({ setLoadingData }) => {
       >
         <div className={styles.row}>
           <p style={{ fontSize: "1.4rem", marginBottom: "0.1rem" }}>
-            {t("invoice.title")} <span style={{ fontSize: "1.6rem" }}>#{}</span>
+            {t("invoice.title")}{" "}
+            <span style={{ fontSize: "1.6rem" }}>#{invoiceNo}</span>
           </p>
           <p style={{ fontSize: "1.2rem" }}>{t("payments.buyer.customer")}</p>
           <div
@@ -269,6 +291,30 @@ const PaymentForm = ({ setLoadingData }) => {
               value={currency}
               setValue={setCurrency}
             />
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: `1fr ${isPerson ? "" : "1fr"}`,
+              gap: "1rem",
+            }}
+          >
+            <Input
+              placeholder={t("payments.taxNumber")}
+              label={t("payments.taxNumber")}
+              value={taxNumber}
+              setState={setTaxNumber}
+              dashboard
+            />
+            {!isPerson && (
+              <Input
+                placeholder={`e.g. Google`}
+                label={t("payments.company")}
+                value={company}
+                setState={setCompany}
+                dashboard
+              />
+            )}
           </div>
           <RadioSelect
             label={t("products.createProductModal.vat")}

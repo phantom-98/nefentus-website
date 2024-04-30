@@ -1041,7 +1041,7 @@
     "company": "Company",
     "address": "Address",
     "legalStatus": "Legal status",
-    "addressHint": "City, Street",
+    "addressHint": "Street, city",
     "taxNumber": "VAT number",
     "vat": "VAT",
     "showEuro": "Show prices in €",

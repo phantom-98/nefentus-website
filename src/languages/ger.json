@@ -989,7 +989,7 @@
     "company": "Firma",
     "address": "Adresse",
     "legalStatus": "Rechtsstellung",
-    "addressHint": "Stadt, Straße",
+    "addressHint": "Straßenstadt",
     "taxNumber": "MwSt. Nummer",
     "vat": "MwSt.",
     "createInvoice": "Rechnung erstellen",

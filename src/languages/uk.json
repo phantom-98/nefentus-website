@@ -1046,7 +1046,7 @@
     "company": "Компанія",
     "address": "Адреса",
     "legalStatus": "Правовий статус",
-    "addressHint": "Mісто, вулиця",
+    "addressHint": "Вулиця, Місто",
     "taxNumber": "ПДВ-номер",
     "vat": "ПДВ",
     "createInvoice": "Створити інвойс",
