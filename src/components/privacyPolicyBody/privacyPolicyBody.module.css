@@ -31,3 +31,7 @@
   color: var(--text2-color);
   margin-bottom: 2rem;
 }
+
+.section a {
+  text-decoration: underline;
+}

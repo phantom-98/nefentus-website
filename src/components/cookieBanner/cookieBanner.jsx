@@ -1,18 +1,19 @@
 import { Link } from "react-router-dom";
 
 import styles from "./cookie.module.css";
-import setCookie from "../setCookie/setCookie";
 import { useTranslation } from "react-i18next";
+import { acceptCookie, declineCookie } from "../../func/cookies";
 
 const CookieBanner = ({ close }) => {
+  const { t } = useTranslation();
+
   const accept = () => {
-    setCookie("acceptCookie", true);
+    acceptCookie();
     close();
   };
 
-  const { t } = useTranslation();
   const decline = () => {
-    setCookie("acceptCookie", false);
+    declineCookie();
     close();
   };
 
@@ -31,9 +32,9 @@ const CookieBanner = ({ close }) => {
 
         <p className={styles.text}>
           {t("cookieBanner.first")}
-          <Link to="/privacy">{t("cookieBanner.cookies")}</Link>
-          {t("cookieBanner.second")} <br />
-          {t("cookieBanner.last")}
+          {t("cookieBanner.privacyPolicy1")}
+          <Link to="/privacy">{t("cookieBanner.privacyPolicyLink")}</Link>
+          {t("cookieBanner.privacyPolicy2")}
         </p>
       </div>
 
