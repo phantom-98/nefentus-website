@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import setCookie from "../components/setCookie/setCookie";
+import { setCookie } from "../func/cookies";
 export default class vendorDashboardApi {
   constructor() {
     //LAUNCH

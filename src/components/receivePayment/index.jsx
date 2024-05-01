@@ -1360,13 +1360,15 @@ export const PaymentInfo = ({
           setChanged={setChanged}
         />
       </div>
-      <div className={styles.row}>
-        <RadioInput
-          isPerson={isPerson}
-          setPerson={setPerson}
-          // setChanged={setChanged}
-        />
-      </div>
+      {setPerson && (
+        <div className={styles.row}>
+          <RadioInput
+            isPerson={isPerson}
+            setPerson={setPerson}
+            // setChanged={setChanged}
+          />
+        </div>
+      )}
       <div className={styles.row}>
         <div
           style={{

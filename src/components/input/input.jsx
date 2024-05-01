@@ -199,11 +199,9 @@ export const Textarea = ({
 
 export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
   const inputRef = useRef(null);
-  const { theme } = useTheme();
 
   const { t } = useTranslation();
 
-  const [text, setText] = useState();
   const [base64, setBase64] = useState();
   useEffect(() => {
     if (!value) {
@@ -263,7 +261,7 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
         style={{
           display: "flex",
           alignItems: "center",
-          border: `2px dashed var(--border-color)`,
+          border: base64 ? "none" : "2px dashed var(--border-color)",
           borderRadius: "1rem",
           overflow: "hidden",
           height: "16rem",

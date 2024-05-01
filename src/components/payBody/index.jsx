@@ -136,7 +136,7 @@ const PayBody = ({ invoice }) => {
           address={address}
           setAddress={setAddress}
           isPerson={isPerson}
-          setPerson={setPerson}
+          setPerson={invoice.product ? setPerson : null}
           business={company}
           setBusiness={setCompany}
           tax={tax}

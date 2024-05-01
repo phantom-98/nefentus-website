@@ -10,10 +10,8 @@ import { useEffect, useState, useContext, useRef } from "react";
 import Logo from "../../assets/logo/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import backend_API from "../../api/backendAPI";
-import Cookies from "universal-cookie";
 import InputComponent, { RawInput } from "../input/input";
 import backendAPI from "../../api/backendAPI";
-import Cookies from "universal-cookie";
 import Header from "../header/header";
 import BlobPicture from "../../components/blobPicture/blobPicture";
 import { KYC } from "./components/KYC";
@@ -111,7 +109,6 @@ const SettingsBody = ({ type }) => {
     }
   }, [requireKyc]);
 
-  const cookies = new Cookies();
   const [link, setLink] = useState("");
   return (
     <div
