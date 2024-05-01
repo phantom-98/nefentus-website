@@ -121,19 +121,19 @@ const ReceivePayment = ({
   // const [show, setShow] = useState(false);
   // const [email, setEmail] = useState("");
   const [priceUSD, setPriceUSD] = useState();
-  const [rate, setRate] = useState(1);
+  // const [rate, setRate] = useState(1);
   const [password, setPassword] = useState("");
   const [pwd, setPwd] = useState(false);
   useEffect(() => {
     async function getRate() {
       const res = await backend_API.getCurrencyRate("USD", currency);
       if (res) {
-        setRate(res.rate);
-        setPriceUSD(price / res.rate);
+        // setRate(res.rate);
+        setPriceUSD((price * (100 + vatPercent ?? 0)) / 100 / res.rate);
       }
     }
     getRate();
-  }, [price]);
+  }, [price, vatPercent]);
   const { handleBuy } = usePayment({
     password,
     priceUSD,
@@ -607,8 +607,20 @@ const ReceivePayment = ({
                   <p>{t("payments.total")}</p>
                   <p>
                     {getCurrencySymbol()[currency]}
-                    {formatUSDBalance(price)}
+                    {formatUSDBalance((price * (100 + vatPercent ?? 0)) / 100)}
                   </p>
+                  {vatPercent && (
+                    <p
+                      style={{
+                        color: "var(--text2-color)",
+                        margin: "-0.8rem 0 0.8rem 0",
+                      }}
+                    >
+                      {t("payments.informVAT1")} {vatPercent}% (
+                      {getCurrencySymbol()[currency]}
+                      {(price * vatPercent) / 100}) {t("payments.informVAT2")}
+                    </p>
+                  )}
                   <p className={styles.cryptoTitle}>
                     {t("payments.cryptoAmount")}
                     <div className={styles.tooltip}>
@@ -635,8 +647,6 @@ const ReceivePayment = ({
                 currency={currencies()[selectedCryptoIndex]}
                 cryptoAmount={parseFloat(cryptoAmount)}
                 usdAmount={parseFloat(priceUSD)}
-                vatPercent={vatPercent}
-                vatUSD={(priceUSD * vatPercent) / 100.0}
                 // feeUSD={feeUSD}
                 setFeeUSD={setFeeUSD}
               />

@@ -239,10 +239,10 @@
   align-self: stretch;
 }
 
-.total > p:nth-child(odd) {
+.total > p {
   font-size: 1.2rem;
 }
-.total > p:nth-child(even) {
+.total > p:nth-child(2) {
   font-size: 3rem;
 }
 

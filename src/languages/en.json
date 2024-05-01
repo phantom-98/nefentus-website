@@ -1101,6 +1101,8 @@
     "price": "Price",
     "seller": "Seller Info",
     "total": "Invoice Amount",
+    "informVAT1": "The VAT of",
+    "informVAT2": "is included in this amount",
     "cryptoAmount": "In Crypto",
     "cryptoDescription": "This amount corresponds to the invoice amount in the selected cryptocurrency. After payment, these funds are sent to the seller.",
     "chooseWallet": "Choose Wallet",

@@ -1041,6 +1041,8 @@
     "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
     "total": "Rechnungsbetrag",
+    "informVAT1": "Die MwSt. von",
+    "informVAT2": "ist in diesem Betrag enthalten",
     "cryptoAmount": "In Krypto",
     "cryptoDescription": "Dieser Betrag entspricht dem Rechnungsbetrag in der ausgewählten Kryptowährung. Nach der Bezahlung werden diese Mittel dem Verkäufer zugeschickt.",
     "chooseWallet": "Wallet auswählen",

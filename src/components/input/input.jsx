@@ -643,15 +643,18 @@ const CurrencyOption = ({
             width: dashboard ? "2.3rem" : "",
           }}
         />
-        <div className={styles.optionContainer}>
-          <p
-            className={styles.optionTitle}
-            style={{ fontSize: dashboard ? "1.2rem" : "" }}
-          >
-            {" "}
-            {optionTitle}{" "}
-          </p>
-        </div>
+        <p
+          className={styles.optionTitle}
+          style={{
+            fontSize: dashboard ? "1.2rem" : "",
+            lineHeight: dashboard ? "1.5rem" : "",
+            marginTop: dashboard ? "0" : "",
+            paddingTop: dashboard ? "0.3rem" : "",
+          }}
+        >
+          {" "}
+          {optionTitle}{" "}
+        </p>
       </div>
       {dropdown && (
         <img
@@ -709,7 +712,7 @@ export const RadioOption = ({
           color: value ? "var(--text-color)" : "var(--text2-color)",
         }}
       >
-        {icon && <img src={icon} height={26} />}
+        {icon && <img src={icon} style={{ width: "2.25rem" }} />}
         {label && <p>{label}</p>}
         <p style={{ fontSize: "1.2rem", marginTop: "0.2rem" }}>{content}</p>
       </div>
@@ -750,7 +753,7 @@ export const Spinner = ({ label, value, setValue, disabled, dashboard }) => {
       <div
         className={styles.spinner}
         style={{
-          padding: dashboard ? "0.9rem" : "",
+          padding: dashboard ? "0.8rem" : "",
           background: dashboard && !disabled ? "var(--bg2-color)" : "",
           width: dashboard ? "100%" : "",
           opacity: disabled ? "50%" : "100%",
