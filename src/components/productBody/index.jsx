@@ -31,7 +31,7 @@ const ProductBody = ({ product, quantity }) => {
   const [amount, setAmount] = useState(quantity || 1);
   const [link, setLink] = useState(null);
   const [price, setPrice] = useState(0);
-  const [currency, setCurrency] = useState("USD");
+  // const [currency, setCurrency] = useState("USD");
   // const { user } = useAuth();
 
   const updateInvoiceData = async () => {
@@ -42,7 +42,7 @@ const ProductBody = ({ product, quantity }) => {
       company,
       country,
       address,
-      currency,
+      currency: product.currency ?? "USD",
       person: isPerson,
       taxNumber: tax,
       vatPercent: percent,
@@ -69,8 +69,9 @@ const ProductBody = ({ product, quantity }) => {
     if (product) {
       fetchTaxInfo(product.user?.country);
       fetchProductImage();
+      setPercent(product.vatPercent);
       setPrice(product.price * amount);
-      setCurrency(product.currency);
+      // setCurrency(product.currency);
     }
   }, [product]);
 
@@ -95,7 +96,7 @@ const ProductBody = ({ product, quantity }) => {
   return (
     <ReceivePayment
       price={price}
-      currency={invoice.currency}
+      currency={product.currency}
       seller={product.user}
       transInfoArg={{ productLink: product.link, invoiceLink: link }}
       vatPercent={reverseCharge ? null : percent}

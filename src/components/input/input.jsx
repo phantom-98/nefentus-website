@@ -739,14 +739,16 @@ export const RadioOption = ({
 };
 
 export const Spinner = ({ label, value, setValue, disabled, dashboard }) => {
-  useEffect(() => {
-    const v = parseInt(value);
-    if (v > 0) {
-      setValue(v);
-    } else {
-      setValue(1);
-    }
-  }, [value]);
+  // useEffect(() => {
+  //   if ( value ) {
+  //     const v = parseInt(value);
+  //     if (v > 0) {
+  //       setValue(v);
+  //     } else {
+  //       setValue(1);
+  //     }
+  //   }
+  // }, [value]);
   return (
     <div className={styles.inputWrapper}>
       {label && <p className={styles.label}>{label}</p>}
@@ -772,10 +774,15 @@ export const Spinner = ({ label, value, setValue, disabled, dashboard }) => {
         <input
           type="number"
           value={value}
-          onChange={(e) => !disabled && setValue(parseInt(e.target.value))}
+          onChange={(e) =>
+            !disabled &&
+            setValue(e.target.value ? parseInt(e.target.value).toString() : 0)
+          }
         />
         <div
-          onClick={() => !disabled && setValue((prev) => parseInt(prev) + 1)}
+          onClick={() =>
+            !disabled && setValue((prev) => (prev ? parseInt(prev) + 1 : 1))
+          }
         >
           +
         </div>

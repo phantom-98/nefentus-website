@@ -110,7 +110,7 @@ const ProductBody = () => {
 
     // Set stock to -1 if not given
     let stockRequest;
-    if (stock === null || stock === "") {
+    if (unlimit || stock === null || stock === "") {
       stockRequest = -1;
     } else {
       const stockAsInt = parseInt(parseFloat(stock).toString());
