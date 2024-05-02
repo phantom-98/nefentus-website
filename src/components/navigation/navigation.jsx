@@ -1,6 +1,7 @@
 import styles from "./navigation.module.css";
 
 import Logo from "../../assets/logo/logo.svg";
+import LogoWide from "../../assets/logo/logo_wide2.svg";
 import LightMode from "../../assets/icon/lightMode2.svg";
 import DarkMode from "../../assets/icon/darkMode2.svg";
 
@@ -8,7 +9,7 @@ import Button from "../button/button";
 import Languages from "./languages.jsx/languages";
 import { useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import backend_API from "../../api/backendAPI";
 import { dashboardLink } from "../../utils";
@@ -26,8 +27,10 @@ const Navigation = () => {
   const [profile, setProfile] = useState({});
   const [height, setHeight] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
   const token = Cookie.get("token");
+  const hideOptions = location?.pathname?.includes("/pay");
 
   const backendAPI = new backend_API();
 
@@ -161,75 +164,87 @@ const Navigation = () => {
   return (
     <nav className={`${styles.navigation} load `} style={{ height }}>
       <div className={` ${styles.contentWrapper}`}>
-        <div className={`container ${styles.content}`}>
+        <div
+          className={`container ${styles.content} ${
+            (hideOptions && styles.contentAlignForPay) || ""
+          }`}
+        >
           <div className={styles.left}>
             <Link className={styles.logoWrapper} to="/">
-              <img className={styles.logo} src={Logo} alt="nefentus logo" />
+              <img
+                className={styles.logo}
+                src={hideOptions ? LogoWide : Logo}
+                alt="nefentus logo"
+              />
             </Link>
 
-            <ul className={styles.navList}>
-              <li className="standard">
-                <Link to="/">
-                  <p>{t("navigation.home")}</p>
-                  <p className={styles.fake}>{t("navigation.home")}</p>
-                </Link>
-              </li>
-              <li className="standard">
-                <Link to="/payment">
-                  <p>{t("navigation.solutions")}</p>
-                  <p className={styles.fake}>{t("navigation.solutions")}</p>
-                </Link>
-              </li>
-              <li className="standard">
-                <Link to="/affiliate">
-                  <p>{t("navigation.affiliate")}</p>
-                  <p className={styles.fake}>{t("navigation.affiliate")}</p>
-                </Link>
-              </li>
-              <li className="standard">
-                <Link to="/support">
-                  <p>{t("navigation.resources")}</p>
-                  <p className={styles.fake}>{t("navigation.resources")}</p>
-                </Link>
-              </li>
-            </ul>
+            {!hideOptions && (
+              <ul className={styles.navList}>
+                <li className="standard">
+                  <Link to="/">
+                    <p>{t("navigation.home")}</p>
+                    <p className={styles.fake}>{t("navigation.home")}</p>
+                  </Link>
+                </li>
+                <li className="standard">
+                  <Link to="/payment">
+                    <p>{t("navigation.solutions")}</p>
+                    <p className={styles.fake}>{t("navigation.solutions")}</p>
+                  </Link>
+                </li>
+                <li className="standard">
+                  <Link to="/support">
+                    <p>{t("navigation.resources")}</p>
+                    <p className={styles.fake}>{t("navigation.resources")}</p>
+                  </Link>
+                </li>
+              </ul>
+            )}
           </div>
 
-          <div className={styles.right}>
-            <div className={styles.rightWrapper}>
-              <QR />
+          {!hideOptions && (
+            <div className={styles.right}>
+              <div className={styles.rightWrapper}>
+                <QR />
 
-              <Languages />
+                <Languages />
 
-              <img
-                onClick={toggleTheme}
-                src={theme === "dark" ? DarkMode : LightMode}
-                className={styles.light}
-                alt=""
-              />
+                <img
+                  onClick={toggleTheme}
+                  src={theme === "dark" ? DarkMode : LightMode}
+                  className={styles.light}
+                  alt=""
+                />
+              </div>
+
+              {loginAndSignupWeb()}
+
+              {loginAndSignupTopButtons()}
+
+              <div className={styles.mobMenu}>
+                <div
+                  className={`${styles.line} ${
+                    openMenu ? styles.openLine : ""
+                  }`}
+                ></div>
+                <div
+                  className={`${styles.line} ${
+                    openMenu ? styles.openLine : ""
+                  }`}
+                ></div>
+                <div
+                  className={`${styles.line} ${
+                    openMenu ? styles.openLine : ""
+                  }`}
+                ></div>
+
+                <div
+                  onClick={() => setOpenMenu((prev) => !prev)}
+                  className={styles.lineButton}
+                ></div>
+              </div>
             </div>
-
-            {loginAndSignupWeb()}
-
-            {loginAndSignupTopButtons()}
-
-            <div className={styles.mobMenu}>
-              <div
-                className={`${styles.line} ${openMenu ? styles.openLine : ""}`}
-              ></div>
-              <div
-                className={`${styles.line} ${openMenu ? styles.openLine : ""}`}
-              ></div>
-              <div
-                className={`${styles.line} ${openMenu ? styles.openLine : ""}`}
-              ></div>
-
-              <div
-                onClick={() => setOpenMenu((prev) => !prev)}
-                className={styles.lineButton}
-              ></div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 

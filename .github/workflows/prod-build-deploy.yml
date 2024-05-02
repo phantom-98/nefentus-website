@@ -9,6 +9,8 @@ jobs:
   # To build the project
   build-nefentus:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - name: Checking out code
         uses: actions/checkout@v3
@@ -18,8 +20,11 @@ jobs:
           node-version: "18"
       - name: Installing dependencies
         run: npm install
+      - name: Create .env file
+        run: |
+          echo "${{ secrets.DOTENV_PROD }}" > .env
       - name: Building project
-        run: CI=false REACT_APP_BASE_ENDPOINT_API=${{ secrets.PROD_ENDPOINT }} npm run build
+        run: npm run build
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -29,3 +34,6 @@ jobs:
 
       - name: Deploy to S3 bucket
         run: aws s3 sync ./dist/ s3://nefentus.comx
+
+      - name: Clear CloudFront Cache / Invalidate Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.PROD_CLOUD_FRONT_ID }} --paths "/*"

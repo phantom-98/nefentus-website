@@ -77,6 +77,12 @@ html {
   }
 }
 
+@media (max-width: 400px) {
+  html {
+    font-size: 2.5vw;
+  }
+}
+
 @media (min-width: 1600px) {
   html {
     font-size: 11.1px;

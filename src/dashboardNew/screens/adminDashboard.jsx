@@ -22,6 +22,8 @@ import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 import { getRole } from "../../utils";
 import { Helmet } from "react-helmet";
 import { useAuth } from "../../context/auth/authContext";
+import Pagination from "../../components/pagination";
+import userEvent from "@testing-library/user-event";
 
 const colSizes = [2, 1, 2, 2, 1, 1, 2, 1, 2];
 
@@ -48,14 +50,14 @@ const AdminDashboard = ({ type }) => {
   const [isReloadData, setIsReloadData] = useState(false);
   const [totalRegUserCnt, setTotalRegUserCnt] = useState(0);
   const { t, i18n } = useTranslation();
-  const { user } = useAuth();
+  const { user, currencyRate } = useAuth();
 
   const label = [
     t("dashboard.tableHeaders.name"),
     t("dashboard.tableHeaders.roles"),
     t("dashboard.tableHeaders.email"),
     t("dashboard.tableHeaders.status"),
-    t("dashboard.tableHeaders.income"),
+    t("dashboard.tableHeaders.income").concat("(" + currencyRate.symbol + ")"),
     t("dashboard.tableHeaders.joinedOn"),
     // t("dashboard.tableHeaders.earnings"),
     t("dashboard.tableHeaders.agent"),
@@ -73,11 +75,11 @@ const AdminDashboard = ({ type }) => {
   const [agentEmail, setAgentEmail] = useState("");
   const [users, setUsers] = useState();
   const [getDataInput, setGetDataInput] = useState("");
-  const [dataPage, setDataPage] = useState(1);
+  const [dataLength, setDataLength] = useState(0);
+  const [dataPage, setDataPage] = useState(0);
   const [dataSize, setDataSize] = useState(10);
-  const [getFilteredUser, setGetFilteredUser] = useState();
-  const [searchTrigger, setSearchTrigger] = useState(false);
   const [spinner, setSpinner] = useState(false);
+  const [graph, setGraph] = useState();
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -118,16 +120,6 @@ const AdminDashboard = ({ type }) => {
         totalPricePerDate,
       ] = await Promise.allSettled(getPromises);
 
-      // console.log(
-      //   dataReg,
-      //   dataClick,
-      //   dataOrders,
-      //   dataInc,
-      //   dataUsers,
-      //   reportResp,
-      //   totalPricePerDate,
-      // );
-
       const cardsContent = [
         {
           title: t("dashboard.admin.cardsContent.totalIncome"),
@@ -163,37 +155,65 @@ const AdminDashboard = ({ type }) => {
       }
 
       let total = 0;
-      const regRoleGraphData = reportResp.value.map((item) => {
-        total = total + item.count;
+      const regRoleGraphData = reportResp.value
+        ?.filter((report) => report.role !== "affiliate")
+        ?.map((item) => {
+          total = total + item.count;
 
-        return {
-          color: roleColors[item.role],
-          legend: ROLE_TO_NAME[item.role],
-          num: item.count,
-          percentage: item.percentage,
-        };
-      });
+          return {
+            color: roleColors[item.role],
+            legend: ROLE_TO_NAME[item.role],
+            num: item.count,
+            percentage: item.percentage,
+          };
+        });
 
       setTotalRegUserCnt(total);
 
       setCardInfo(cardsContent);
 
       setBarContent(regRoleGraphData);
-
-      setGraphData(totalPricePerDate.value);
+      setGraph(totalPricePerDate.value);
+      let _graph = {};
+      Object.keys(totalPricePerDate.value).forEach((key) => {
+        _graph[key] = totalPricePerDate.value[key];
+      });
+      setGraphData(_graph);
     }
   };
 
-  const fetchAdminUsersData = async () => {
+  useEffect(() => {
+    if (graph) {
+      let _graph = {};
+      Object.keys(graph).forEach((key) => {
+        _graph[key] = graph[key] * currencyRate.rate;
+      });
+      setGraphData(_graph);
+    }
+    if (tableData) {
+      const _table = tableData.map((item, index) => {
+        const _item = item;
+        _item[4] = formatUSDBalance(users[index].income * currencyRate.rate);
+        return _item;
+      });
+      setTableData(_table);
+    }
+  }, [currencyRate]);
+
+  const fetchAdminUsersData = async (clear) => {
     const result = await adminApi.checkPermission();
     if (result !== true) {
       navigate("/login");
     } else {
-      const dataUsers = await adminApi.getUsers();
-
-      dataUsers.reverse();
-      setUsers(dataUsers);
-      updateUsers(dataUsers);
+      const res = await adminApi.getUsers(
+        dataPage * dataSize,
+        dataSize,
+        clear ? "" : getDataInput.trim().toLowerCase(),
+      );
+      setDataLength(parseInt(res.count));
+      setUsers(res.users);
+      updateUsers(res.users);
+      return res.users;
     }
   };
 
@@ -214,8 +234,7 @@ const AdminDashboard = ({ type }) => {
   };
 
   const updateUsersTable = async (dataUsers) => {
-    const newUserData = await adminApi.getUsers();
-    newUserData.reverse();
+    const newUserData = await fetchAdminUsersData();
 
     if (dataUsers) {
       const filteredData = newUserData.filter((item) => {
@@ -258,6 +277,11 @@ const AdminDashboard = ({ type }) => {
       return;
     }
 
+    if (agentEmail && agentEmail.toLowerCase() === user.email.toLowerCase()) {
+      setErrorMessage(t("messages.error.agentYourself"));
+      return;
+    }
+
     setSpinner(true);
 
     if (editEmailAddress) {
@@ -272,7 +296,7 @@ const AdminDashboard = ({ type }) => {
       );
       if (resp) {
         if (resp.ok) {
-          fetchAdminData();
+          fetchAdminUsersData();
           setInfoMessage(t("messages.success.updateUser"));
           clearAddUserFields();
           closeModal();
@@ -372,7 +396,7 @@ const AdminDashboard = ({ type }) => {
         ) : (
           <TableStatus color="red">{t("general.notActive")}</TableStatus>
         ),
-        formatUSDBalance(user.income),
+        formatUSDBalance(user.income * currencyRate.rate),
         moment(user.createdAt).format("MMM D YYYY, HH:mm:ss"),
         // `$${user.income}`,
         user.agent,
@@ -395,7 +419,6 @@ const AdminDashboard = ({ type }) => {
         </div>,
       ]);
       setTableData(newDataUsers);
-      setSearchTrigger(false);
     }
   }
 
@@ -407,51 +430,23 @@ const AdminDashboard = ({ type }) => {
     setEditEmailAddress(null);
   };
 
-  useEffect(() => {
-    if (searchTrigger)
-      updateUsers(getFilteredUser?.length > 0 ? getFilteredUser : users);
-  }, [searchTrigger]);
-
-  const findUser = () => {
-    const filteredData = users?.filter((item) => {
-      return (
-        item?.email
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase()) ||
-        item?.agent
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase()) ||
-        item?.firstName
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase()) ||
-        item?.lastName
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase()) ||
-        String(item?.createdAt)?.toLowerCase().includes(getDataInput.trim()) ||
-        String(item?.income)
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase()) ||
-        item?.roles[0]
-          ?.toLowerCase()
-          .includes(getDataInput.trim().toLowerCase())
-      );
-    });
-    setGetFilteredUser(filteredData);
-    setDataPage(0);
-    setSearchTrigger(true);
+  const findUser = async (clear) => {
+    dataPage == 0 ? fetchAdminUsersData(clear) : setDataPage(0);
   };
 
-  const paginatedData = tableData.filter((item, index) => {
-    if (index >= dataPage * dataSize && index < dataPage * dataSize + dataSize)
-      return true;
-    return false;
-  });
+  useEffect(() => {
+    findUser();
+  }, [dataSize]);
+
+  useEffect(() => {
+    fetchAdminUsersData();
+  }, [dataPage]);
 
   const closeModal = () => {
     clearMessages();
     clearAddUserFields();
     setOpenModal(false);
-    updateUsersTable(getFilteredUser);
+    updateUsers(users);
   };
 
   return (
@@ -473,8 +468,6 @@ const AdminDashboard = ({ type }) => {
         <div>
           <TableSearch
             title={t("dashboard.userManagement")}
-            users={tableData}
-            setFiltered={tableData}
             setGetDataInput={setGetDataInput}
             findUser={findUser}
             getDataInput={getDataInput}
@@ -488,18 +481,16 @@ const AdminDashboard = ({ type }) => {
                 : "1fr 0.8fr 0.8fr"
             }`}
             label={label}
-            data={paginatedData}
+            data={tableData}
           />
 
           <>
-            <TablePagination
-              data={tableData}
+            <Pagination
+              dataLength={dataLength}
+              dataSize={dataSize}
               setDataPage={setDataPage}
               setDataSize={setDataSize}
-              colSizes={colSizes}
-              searchTrigger={searchTrigger}
               dataPage={dataPage}
-              striped
             />
           </>
         </div>

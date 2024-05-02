@@ -143,9 +143,6 @@ const SideNavigation = () => {
       case "/dashboard/":
         setActive("Dashboard");
         break;
-      case "/dashboard/affiliate":
-        setActive("Affiliate");
-        break;
       case "/dashboard/products":
         setActive("Products");
         break;
@@ -171,8 +168,7 @@ const SideNavigation = () => {
   }, [query.pathname]);
 
   const getFullSideBar = (active) => {
-    if (active === "Affiliate" || active === "Admin" || active === "Partner")
-      return false;
+    if (active === "Admin" || active === "Partner") return false;
 
     return true;
   };
@@ -222,7 +218,10 @@ const SideNavigation = () => {
         </div>
       </div>
 
-      {userRole !== "vendor" ? (
+      {userRole === "admin" ||
+      userRole === "leader" ||
+      userRole === "seniorbroker" ||
+      userRole === "broker" ? (
         <div className={styles.referral}>
           {/* <AffiliateLink user={user} /> */}
           {getFullSideBar(active) ? (

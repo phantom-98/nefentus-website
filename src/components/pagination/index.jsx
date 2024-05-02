@@ -1,48 +1,27 @@
 import styles from "./pagination.module.css";
-import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { Options } from "../input/input";
 import { useTranslation } from "react-i18next";
 
 const Pagination = ({
-  renderItems,
-  data,
+  dataLength,
+  dataPage,
   setDataPage,
+  dataSize,
   setDataSize,
-  searchTrigger,
 }) => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-
   const { t } = useTranslation();
 
-  const length = data.length;
-  const numPages = Math.ceil(length / pageSize);
+  const numPages = Math.ceil(dataLength / dataSize);
 
   function updatePage(page) {
-    setCurrentPage(page);
-    renderItems(page * pageSize, (page + 1) * pageSize);
+    setDataPage(page);
   }
 
   function updatePageSize(newPageSize) {
-    setPageSize(newPageSize);
-    setCurrentPage(0);
-    renderItems(0, newPageSize);
+    setDataSize(newPageSize);
+    setDataPage(0);
   }
-  useEffect(() => {
-    setDataPage(currentPage);
-    setDataSize(pageSize);
-  }, [currentPage, pageSize]);
-
-  useEffect(() => {
-    if (searchTrigger) {
-      setCurrentPage(0);
-    }
-  }, [searchTrigger]);
-
-  useEffect(() => {
-    renderItems(currentPage * pageSize, (currentPage + 1) * pageSize);
-  }, [data, currentPage, pageSize]);
 
   return (
     <div className={styles.paginationWrapper}>
@@ -50,26 +29,26 @@ const Pagination = ({
         <ul className={styles.pagination}>
           <li
             onClick={() => updatePage(0)}
-            className={classNames({ [styles.hide]: currentPage === 0 })}
+            className={classNames({ [styles.hide]: dataPage === 0 })}
           >
             «
           </li>
           <li
-            onClick={() => currentPage > 0 && updatePage(currentPage - 1)}
-            className={classNames({ [styles.hide]: currentPage === 0 })}
+            onClick={() => dataPage > 0 && updatePage(dataPage - 1)}
+            className={classNames({ [styles.hide]: dataPage === 0 })}
           >
             ‹
           </li>
           <li>
-            <PageInput value={currentPage + 1} updatePage={updatePage} />{" "}
-            {t("general.of")} {numPages}
+            <PageInput value={dataPage + 1} updatePage={updatePage} />
+            {/* {t("general.of")}  */}
+            {"/ "}
+            {numPages}
           </li>
           <li
-            onClick={() =>
-              currentPage + 1 < numPages && updatePage(currentPage + 1)
-            }
+            onClick={() => dataPage + 1 < numPages && updatePage(dataPage + 1)}
             className={classNames({
-              [styles.hide]: currentPage + 1 === numPages,
+              [styles.hide]: dataPage + 1 === numPages,
             })}
           >
             ›
@@ -77,7 +56,7 @@ const Pagination = ({
           <li
             onClick={() => updatePage(numPages - 1)}
             className={classNames({
-              [styles.hide]: currentPage + 1 === numPages,
+              [styles.hide]: dataPage + 1 === numPages,
             })}
           >
             »
@@ -86,7 +65,7 @@ const Pagination = ({
       </nav>
       <Options
         options={[10, 20, 50, 100]}
-        value={pageSize}
+        value={dataSize}
         setValue={updatePageSize}
         showOnTop
       />

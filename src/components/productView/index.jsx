@@ -4,12 +4,15 @@ import styles from "./productView.module.css";
 import backendAPI from "../../api/backendAPI";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../context/auth/authContext";
+import { formatUSDBalance } from "../../utils";
 
 const length = 400;
 
 const ProductView = ({ product }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
   const [pic, setPic] = useState();
   const [more, setMore] = useState(false);
   const [show, setShow] = useState(false);
@@ -50,7 +53,10 @@ const ProductView = ({ product }) => {
           <div className={styles.actionWrapper}>
             <div className={styles.valueWrapper}>
               <p>{t("products.view.price")}</p>
-              <p>${product.price}</p>
+              <p>
+                {currencyRate.symbol}
+                {formatUSDBalance(product.price * currencyRate.rate)}
+              </p>
               <div className={styles.stockWrapper}>
                 <p>{t("products.view.stock").concat(`:`)}&nbsp;</p>
                 <p>
@@ -84,7 +90,12 @@ const ProductView = ({ product }) => {
               </Button>
               <div className={styles.total}>
                 <p>{t("products.view.total")}</p>
-                <p>${product.price * quantity}</p>
+                <p>
+                  {currencyRate.symbol}
+                  {formatUSDBalance(
+                    product.price * currencyRate.rate * quantity,
+                  )}
+                </p>
               </div>
             </div>
           </div>

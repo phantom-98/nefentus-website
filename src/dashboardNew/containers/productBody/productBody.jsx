@@ -12,7 +12,8 @@ import CropDialog, {
 } from "../../../components/cropDialog/cropDialog";
 import { useTranslation } from "react-i18next";
 import Popup from "../../components/popup/popup";
-import { checkJwtToken } from "../../../utils";
+import { checkJwtToken, formatUSDBalance } from "../../../utils";
+import { useAuth } from "../../../context/auth/authContext";
 
 const ProductBody = () => {
   const [products, setProducts] = useState([]);
@@ -25,6 +26,7 @@ const ProductBody = () => {
   const [cropDialogOpen, setCropDialogOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [productLink, setProductLink] = useState(null);
+  const { currencyRate } = useAuth();
 
   const { t } = useTranslation();
 
@@ -49,6 +51,7 @@ const ProductBody = () => {
 
       const productData = newProducts.map((item, index) => ({
         ...item,
+        price: item.price,
         image: newSignedImagePaths[index],
       }));
       setProducts(productData);
@@ -73,7 +76,7 @@ const ProductBody = () => {
       return;
     }
     let priceAsFloat = null;
-    priceAsFloat = parseFloat(price);
+    priceAsFloat = parseFloat(price) / currencyRate.rate;
     if (priceAsFloat <= 0) {
       setErrorMessage(t("products.error.priceAsFloat"));
       return;
@@ -141,14 +144,13 @@ const ProductBody = () => {
   };
 
   function showModal(link) {
-    console.log(products, link);
     if (link) {
       const product = products.find((product) => product.link === link);
 
       setProductLink(link);
       setName(product.name);
       setDescription(product.description);
-      setPrice(product.price);
+      setPrice((product.price * currencyRate.rate).toFixed(2));
       if (product.stock != "-1") {
         setStock(product.stock);
       } else {
@@ -259,7 +261,11 @@ const ProductBody = () => {
               />
               <Input
                 dashboard
-                label={t("products.createProductModal.priceLabel") + "*"}
+                label={
+                  t("products.createProductModal.priceLabel").concat(
+                    " (" + currencyRate.symbol + ")",
+                  ) + "*"
+                }
                 placeholder={t("products.createProductModal.pricePlaceholder")}
                 value={price}
                 setState={setPrice}

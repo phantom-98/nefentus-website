@@ -31,9 +31,3 @@
   color: var(--text2-color);
   margin-bottom: 2rem;
 }
-
-@media (max-width: 900px) {
-  .body {
-    display: none;
-  }
-}

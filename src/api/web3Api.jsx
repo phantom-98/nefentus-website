@@ -28,6 +28,23 @@ const providerMetamask = () => {
 
 export class uniswapApi {
   /**
+   * Get gas Fee
+   * @param {*} native token abbr
+   * @returns Object of gas values
+   */
+  async getGasValues(blockchain) {
+    const feeData = await provider(providerURL(blockchain)).getFeeData();
+    return feeData;
+  }
+  /**
+   * Get the price of Native tokens like ETH, BNB
+   * @param {*} blockchain network symbol like ETH, BNB
+   * @returns price
+   */
+  async getNativeTokenPrice(blockchain) {
+    return this.getUSDCPriceForToken(null, blockchain);
+  }
+  /**
    * Determine the price of the two tokens in the pool
    * See https://blog.uniswap.org/uniswap-v3-math-primer
    * @param {*} sqrtPriceX96 The sqrtPriceX96 of the pool

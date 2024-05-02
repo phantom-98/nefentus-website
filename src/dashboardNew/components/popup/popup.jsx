@@ -12,6 +12,8 @@ import Checkmark from "../../../assets/icon/checkmark.svg";
 import Table from "../../../components/table";
 import CopyValue from "../../../dashboard/copyValue";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../context/auth/authContext";
+import { formatUSDBalance } from "../../../utils";
 
 const Popup = ({
   show,
@@ -108,6 +110,7 @@ export const QRPopup = ({
   const dashboardElement = document.getElementById("dashboard");
   // const { name, email, price, company, address, taxNumber, link } = data;
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
 
   return ReactDOM.createPortal(
     <div
@@ -126,7 +129,7 @@ export const QRPopup = ({
 
         <Table
           data={[
-            [`${t("payments.amount")}:`, `${price} USD`],
+            [`${t("payments.amount")}:`, `${price} ${currencyRate.to}`],
             [`${t("payments.email")}:`, email],
             [`${t("payments.name")}:`, name],
             [`${t("payments.company")}:`, company],
@@ -172,7 +175,7 @@ export const QRPopup = ({
 
 export const TransactionInfo = ({ show, setShow, transaction }) => {
   const { t } = useTranslation();
-  console.log("transaction", transaction);
+  const { currencyRate } = useAuth();
 
   return (
     <Popup
@@ -194,7 +197,10 @@ export const TransactionInfo = ({ show, setShow, transaction }) => {
               style={{ alignItems: "flex-end", textAlign: "right !important;" }}
             >
               <p>{t("transactions.detail.amountTitle")}</p>
-              <p>${transaction.amount}</p>
+              <p>
+                {currencyRate.symbol}
+                {formatUSDBalance(transaction.amount * currencyRate.rate)}
+              </p>
             </div>
           </div>
         </div>
@@ -206,20 +212,36 @@ export const TransactionInfo = ({ show, setShow, transaction }) => {
             <div>
               <div className={styles.fee}>
                 <span>{t("transactions.detail.swap")}</span>
-                <span>${transaction.swapFee}</span>
+                <span>
+                  {currencyRate.symbol}
+                  {formatUSDBalance(transaction.swapFee * currencyRate.rate)}
+                </span>
               </div>
               <div className={styles.fee}>
                 <span>{t("transactions.detail.transaction")}</span>
-                <span>${transaction.transactionFee}</span>
+                <span>
+                  {currencyRate.symbol}
+                  {formatUSDBalance(
+                    transaction.transactionFee * currencyRate.rate,
+                  )}
+                </span>
               </div>
               <div className={styles.fee}>
                 <span>{t("transactions.detail.commission")}</span>
-                <span>${transaction.commissionFee}</span>
+                <span>
+                  {currencyRate.symbol}
+                  {formatUSDBalance(
+                    transaction.commissionFee * currencyRate.rate,
+                  )}
+                </span>
               </div>
             </div>
             <div className={styles.fee}>
               <span>{t("transactions.detail.total")}</span>
-              <span>${transaction.total}</span>
+              <span>
+                {currencyRate.symbol}
+                {formatUSDBalance(transaction.total * currencyRate.rate)}
+              </span>
             </div>
           </div>
         </div>
