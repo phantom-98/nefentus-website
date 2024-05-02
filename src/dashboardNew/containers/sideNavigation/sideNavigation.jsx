@@ -224,9 +224,23 @@ const SideNavigation = () => {
 
       <div className={styles.referral}>
         {isAgent && (
-          <Link to="/dashboard/agent">
-            <Button width="">{t("sidebar.agentDashboard")}</Button>
-          </Link>
+          <>
+            {userRole === "vendor" ? (
+              getFullSideBar(active) ? (
+                <Link to="/dashboard/agent">
+                  <Button width="">{t("sidebar.agentDashboard")}</Button>
+                </Link>
+              ) : (
+                <Link to="/dashboard/">
+                  <Button width="">{t("sidebar.vendorDashboard")}</Button>
+                </Link>
+              )
+            ) : (
+              <Link to="/dashboard/agent">
+                <Button width="">{t("sidebar.agentDashboard")}</Button>
+              </Link>
+            )}
+          </>
         )}
         {userRole !== "vendor" && (
           <>
