@@ -332,7 +332,6 @@ const ProductBody = () => {
                       content={t("products.createProductModal.limitless")}
                       value={unlimit}
                       onClick={() => {
-                        setStock("");
                         setUnlimit(true);
                       }}
                       horizon={true}
@@ -346,6 +345,7 @@ const ProductBody = () => {
                       value={!unlimit}
                       onClick={() => {
                         setUnlimit(false);
+                        setStock(stock ? stock : 1);
                       }}
                       horizon={true}
                       style={{
