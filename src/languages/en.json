@@ -29,7 +29,7 @@
     "integration": "Integration",
     "imprint": "Imprint",
     "forgotPassword": "Password forgotten",
-    "privacy": "Privacy",
+    "privacy": "Privacy policy",
     "resetPassword": "Reset Password",
     "support": "Support"
   },
@@ -422,13 +422,21 @@
   "footer": {
     "copyright": "© 2023 Nefentus. All rights reserved.",
     "downloadButton": "DOWNLOAD NOW",
-    "content": ["Home", "Payment", "Resources", "Privacy Policy"],
+    "content": ["Home", "Payment", "Resources"],
     "privacy": "Privacy Policy",
     "imprint": "Imprint",
     "terms": "Terms and Condition",
     "contact": "Contact us",
     "contentLabel1": "Overview",
-    "content2": ["Play Store", "Sign In", "App Store", "Sign Up", "Imprint"],
+    "content2": [
+      "",
+      "Play Store",
+      "Sign In",
+      "App Store",
+      "Sign Up",
+      "Imprint",
+      "Privacy Policy"
+    ],
     "contentLabel2": "Action",
     "socialTitle": "Follow us on:",
     "socialDescription": " Go to the top\n of the page"
@@ -630,6 +638,7 @@
     "or": "or"
   },
   "countries": {
+    "choose": "Choose your country",
     "Afghanistan": "Afghanistan",
     "Albania": "Albania",
     "Algeria": "Algeria",
@@ -834,7 +843,8 @@
     "VirginIslandsUS": "Virgin Islands (US)",
     "Yemen": "Yemen",
     "Zambia": "Zambia",
-    "Zimbabwe": "Zimbabwe"
+    "Zimbabwe": "Zimbabwe",
+    "EuropeanUnion": "European Union"
   },
   "messages": {
     "validation": {
@@ -910,6 +920,7 @@
       "updateData": "Error on updating data",
       "uploadPicture": "Error on uploading the profile picture",
       "amountValid": "Please enter a valid amount",
+      "taxPercentValid": "Please choose VAT percent",
       "nameValid": "Please enter a valid name",
       "companyValid": "Please enter a valid company",
       "addressValid": "Please enter a valid address",
@@ -993,7 +1004,8 @@
       "name": "Name is required!",
       "description": "Description is required!",
       "price": "Price is required!",
-      "priceAsFloat": "Price must be a positive!"
+      "priceAsFloat": "Price must be a positive!",
+      "chooseVat": "Please choose VAT percent!"
     },
     "createProductModal": {
       "imageLabel": "Product image",
@@ -1008,6 +1020,13 @@
       "pricePlaceholder": "Enter price",
       "stockLabel": "Stock",
       "stockPlaceholder": "Enter stock if limited stock",
+      "vat": "Value-added tax percent",
+      "standard": "Standard",
+      "reduced": "Reduced",
+      "currency": "Payment currency",
+      "limitless": "Limitless",
+      "quantity": "Quantity",
+      "stockAvailable": "Unit available",
       "add": "Add",
       "update": "Update",
       "cancel": "Cancel",
@@ -1026,16 +1045,41 @@
     "email": "Email",
     "name": "Name",
     "number": "Number",
+    "person": "Person",
     "company": "Company",
     "address": "Address",
-    "addressHint": "Country, City, Street",
+    "legalStatus": "Legal status",
+    "addressHint": "Street, city",
     "taxNumber": "VAT number",
     "vat": "VAT",
+    "showEuro": "Show prices in €",
+    "reverseCharge": "Use Reverse Charge process",
     "createInvoice": "Create Invoice",
     "scan": "Scan QR Code",
     "scanDescription": "To confirm you need to scan QR code",
     "downloadInvoice": "Download invoice",
     "downloadReceipt": "Download receipt",
+    "subtotal": "Subtotal",
+    "vatValue": "Value added tax (VAT)",
+    "totalDue": "Total due",
+    "note": "Note",
+    "buyer": {
+      "customer": "Customer information",
+      "fullName": "Recipient full name",
+      "email": "Recipient email"
+    },
+    "tax": {
+      "standard": "Standard",
+      "reduced": "Reduced"
+    },
+    "items": {
+      "title": "Invoice Items",
+      "add": "Add item",
+      "name": "Item",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total price"
+    },
     "table": {
       "created": "Created at",
       "price": "Price",
@@ -1051,11 +1095,14 @@
       "description": "Costs that are inevitably incurred in order to carry out a transaction on a blockchain. The costs ultimately go to the miners who keep the blockchain secure.",
       "gasPrice": "Gas Price",
       "gasLimit": "Gas Limit",
-      "total": "Total"
+      "updating": "Gas price updates every 30s",
+      "total": "Total due"
     },
     "price": "Price",
     "seller": "Seller Info",
     "total": "Invoice Amount",
+    "informVAT1": "The VAT of",
+    "informVAT2": "is included in this amount",
     "cryptoAmount": "In Crypto",
     "cryptoDescription": "This amount corresponds to the invoice amount in the selected cryptocurrency. After payment, these funds are sent to the seller.",
     "chooseWallet": "Choose Wallet",
@@ -1289,12 +1336,19 @@
     }
   },
   "cookieBanner": {
-    "first": "We use third-party ",
-    "cookies": "cookies ",
-    "second": " in order to ",
-    "last": "personalize your site experience.",
+    "first": "We use third-party cookies to personalize your site experience.",
+    "privacyPolicy1": " Read more about our ",
+    "privacyPolicyLink": "privacy policy",
+    "privacyPolicy2": "!",
     "decline": "Decline",
     "accept": "Accept"
+  },
+  "privacyPolicy": {
+    "revoke": "Revoke my consent to the storage of cookies",
+    "headline": "Privacy policy"
+  },
+  "imprint": {
+    "headline": "Imprint"
   },
   "languages": {
     "english": "English",

@@ -51,10 +51,6 @@ const Languages = () => {
     if (query.pathname === "/support") {
       // setLangList(list.slice(0, 2));
       // handleTrans("en");
-    } else if (query.pathname === "/privacy" || query.pathname === "/imprint") {
-      setLangList(list.slice(0, 1));
-
-      handleTrans("en");
     } else {
       setLangList(list);
     }

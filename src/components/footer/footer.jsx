@@ -10,8 +10,16 @@ import FooterArrow from "../../assets/icon/footerArrow.svg";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { NefentusLogo } from "../../assets/icon/logos/logos";
 
-const content = ["/", "/payment", "/support", "/privacy"];
-const content2 = ["/playstore", "/login", "/appstore", "/signup", "/imprint"];
+const content = ["/", "/payment", "/support"];
+const content2 = [
+  "",
+  "/playstore",
+  "/login",
+  "/appstore",
+  "/signup",
+  "/imprint",
+  "/privacy",
+];
 
 const Footer = () => {
   const { theme } = useTheme();

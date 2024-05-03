@@ -50,8 +50,8 @@
     "slick-carousel": "^1.8.1",
     "rollup-plugin-polyfill-node": "^0.13.0",
     "stream": "^0.0.2",
-    "universal-cookie": "^4.0.4",
     "vite": "^5.2.8",
+    "vite-plugin-string": "^1.2.3",
     "web-vitals": "^2.1.4",
     "zod": "^3.22.4"
   },

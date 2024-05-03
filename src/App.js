@@ -1,7 +1,6 @@
 import Footer from "./components/footer/footer";
 import "./style/general.css";
 import Navigation from "./components/navigation/navigation";
-import setCookies from "./components/setCookie/setCookie";
 import React, { useEffect, useState, Suspense } from "react";
 import {
   Route,
@@ -11,7 +10,7 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 import CookieBanner from "./components/cookieBanner/cookieBanner";
-import Cookies from "js-cookie";
+import { getAcceptCookie } from "./func/cookies";
 import { MessageContextProvider } from "./context/message";
 import RingLoader from "react-spinners/RingLoader";
 
@@ -71,7 +70,7 @@ const Login = React.lazy(() => import("./pages/Login"));
 const Payment = React.lazy(() => import("./pages/Payment"));
 const Affiliate = React.lazy(() => import("./pages/Affiliate"));
 const Support = React.lazy(() => import("./pages/Support"));
-const Privacy = React.lazy(() => import("./pages/Privacy"));
+const Privacy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const Imprint = React.lazy(() => import("./pages/Imprint"));
 const PasswordForgot = React.lazy(() => import("./pages/PasswordForgot"));
 const Product = React.lazy(() => import("./pages/Product"));
@@ -149,7 +148,7 @@ function App() {
     };
   }, []);
 
-  const [ck, setCK] = useState(Cookies.get("acceptCookie"));
+  const [ck, setCK] = useState(getAcceptCookie());
 
   return (
     <ThirdwebProvider
@@ -427,9 +426,9 @@ function App() {
                         path="/product/:productLink/pay"
                         element={
                           <>
-                            <Navigation />
+                            {/* <Navigation /> */}
                             <ProductPay />
-                            <Footer />
+                            {/* <Footer /> */}
                           </>
                         }
                       />

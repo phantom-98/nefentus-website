@@ -8,7 +8,12 @@ import MetaMaskLogo from "../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../assets/logo/WalletConnect.svg";
 import InfoMarkDark from "../../assets/icon/dark/info.svg";
 import InfoMarkLight from "../../assets/icon/light/info.svg";
+import PersonDark from "../../assets/icon/dark/user-square.svg";
+import PersonLight from "../../assets/icon/light/user-square.svg";
+import BuildingDark from "../../assets/icon/dark/building.svg";
+import BuildingLight from "../../assets/icon/light/building.svg";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
+import CheckedIcon from "../../assets/icon/checked.svg";
 import backendAPI from "../../api/backendAPI";
 import { uniswapApi, web3Api } from "../../api/web3Api";
 import Button from "../../components/button/button";
@@ -57,13 +62,20 @@ import { useAuth } from "../../context/auth/authContext";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { GasDetails } from "../gasDetails/gasDetails";
 import { useNavigate } from "react-router-dom";
+import {
+  getCountryList,
+  getCurrencySymbol,
+  getFlagLink,
+} from "../../countries";
 
 const ReceivePayment = ({
-  priceUSD,
+  price,
+  currency,
   seller,
   children,
   info,
   transInfoArg,
+  vatPercent,
   disabled,
   valid,
 }) => {
@@ -84,6 +96,7 @@ const ReceivePayment = ({
   const createWalletInstance = useCreateWalletInstance();
 
   const [cryptoAmount, setCryptoAmount] = useState("0");
+  const [feeUSD, setFeeUSD] = useState(0);
   const [spinner, setSpinner] = useState(false);
   const { balances, fetchBalances } = useBalances();
   const { prices, fetchPrices } = usePrices();
@@ -107,8 +120,20 @@ const ReceivePayment = ({
 
   // const [show, setShow] = useState(false);
   // const [email, setEmail] = useState("");
+  const [priceUSD, setPriceUSD] = useState();
+  // const [rate, setRate] = useState(1);
   const [password, setPassword] = useState("");
   const [pwd, setPwd] = useState(false);
+  useEffect(() => {
+    async function getRate() {
+      const res = await backend_API.getCurrencyRate("USD", currency);
+      if (res) {
+        // setRate(res.rate);
+        setPriceUSD((price * (100 + vatPercent ?? 0)) / 100 / res.rate);
+      }
+    }
+    getRate();
+  }, [price, vatPercent]);
   const { handleBuy } = usePayment({
     password,
     priceUSD,
@@ -146,7 +171,7 @@ const ReceivePayment = ({
   useEffect(() => {
     if (
       balances[selectedCryptoIndex] * prices[selectedCryptoIndex] >
-      priceUSD * currencyRate.rate
+      priceUSD
     ) {
       isDisable && setDisable(false || disabled);
     } else {
@@ -171,10 +196,7 @@ const ReceivePayment = ({
         "USDT-BSC": 2,
       };
       setCryptoAmount(
-        formatTokenBalance(
-          (priceUSD * currencyRate.rate) / price,
-          round[currency.abbr],
-        ),
+        formatTokenBalance(priceUSD / price, round[currency.abbr]),
       );
     } else {
       setCryptoAmount("Loading...");
@@ -584,9 +606,21 @@ const ReceivePayment = ({
                 <div className={styles.total}>
                   <p>{t("payments.total")}</p>
                   <p>
-                    {currencyRate.symbol}
-                    {formatUSDBalance(priceUSD * currencyRate.rate)}
+                    {getCurrencySymbol()[currency]}
+                    {formatUSDBalance((price * (100 + vatPercent ?? 0)) / 100)}
                   </p>
+                  {vatPercent && (
+                    <p
+                      style={{
+                        color: "var(--text2-color)",
+                        margin: "-0.8rem 0 0.8rem 0",
+                      }}
+                    >
+                      {t("payments.informVAT1")} {vatPercent}% (
+                      {getCurrencySymbol()[currency]}
+                      {(price * vatPercent) / 100}) {t("payments.informVAT2")}
+                    </p>
+                  )}
                   <p className={styles.cryptoTitle}>
                     {t("payments.cryptoAmount")}
                     <div className={styles.tooltip}>
@@ -613,6 +647,8 @@ const ReceivePayment = ({
                 currency={currencies()[selectedCryptoIndex]}
                 cryptoAmount={parseFloat(cryptoAmount)}
                 usdAmount={parseFloat(priceUSD)}
+                // feeUSD={feeUSD}
+                setFeeUSD={setFeeUSD}
               />
               <div className={styles.paymentWrapper}>
                 <Button
@@ -621,8 +657,8 @@ const ReceivePayment = ({
                   onClick={() => doPayment()}
                   spinner={spinner}
                 >
-                  {t("payments.payButton")} {currencyRate.symbol}
-                  {formatUSDBalance(priceUSD * currencyRate.rate)}
+                  {t("payments.payButton").concat(" $")}
+                  {formatUSDBalance(priceUSD + feeUSD)}
                 </Button>
               </div>
             </div>
@@ -704,8 +740,8 @@ const ReceivePayment = ({
                 onClick={() => doPayment()}
                 spinner={spinner}
               >
-                {t("payments.payButton")} {currencyRate.symbol}
-                {formatUSDBalance(priceUSD * currencyRate.rate)}
+                {t("payments.payButton").concat(" $")}
+                {formatUSDBalance(priceUSD)}
               </Button>
             </div>
             <div
@@ -819,6 +855,332 @@ const SelectOption = ({
   );
 };
 
+const CountrySelect = ({
+  setChanged,
+  options,
+  value,
+  setValue,
+  styles,
+  className,
+}) => {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [icon, setIcon] = useState();
+  const [keyword, setKeyword] = useState("");
+  const [filtered, setFiltered] = useState(options);
+  useEffect(() => {
+    const country = getCountryList().find((item) => item.value == value);
+    if (country) {
+      setIcon(getFlagLink(country.symbol));
+      setKeyword(t(country.display));
+    }
+  }, [value]);
+  return (
+    <>
+      <div
+        style={{
+          padding: "0",
+          width: "100%",
+          position: "relative",
+        }}
+        onClick={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+      >
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            padding: "0.7rem 1rem",
+            gap: "1rem",
+            border: "1px solid var(--border-color)",
+            borderRadius: "0.6rem",
+            background: "var(--card-color)",
+            cursor: "pointer",
+            ...styles,
+          }}
+          className={`${className}`}
+        >
+          {value && icon && (
+            <img
+              src={icon}
+              style={{
+                borderRadius: "0.3rem",
+                width: "3rem",
+                height: "2rem",
+              }}
+            />
+          )}
+          <input
+            className="custom"
+            style={{
+              fontSize: "1.2rem",
+              width: `calc(100% - ${value ? "6" : "2"}rem)`,
+              outline: "0",
+              background: "transparent",
+              height: "2rem",
+            }}
+            placeholder={value ? "" : t("countries.choose")}
+            value={keyword}
+            onChange={(e) => {
+              setOpen(true);
+              setKeyword(e.target.value);
+              setFiltered(
+                options.filter((item) =>
+                  t(item.display)
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase()),
+                ),
+              );
+            }}
+          />
+          <img src={DropDownIcon} />
+        </div>
+        {open && (
+          <div
+            style={{
+              position: "absolute",
+              width: "100%",
+              maxHeight: "30rem",
+              overflow: "auto",
+              background: "var(--card-color)",
+              border: "1px solid var(--border-color)",
+              zIndex: "10",
+            }}
+          >
+            {filtered.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setValue(item.value);
+                    item.value !== value
+                      ? setChanged && setChanged(true)
+                      : setKeyword(t(item.display));
+                    setOpen(false);
+                  }}
+                  style={{
+                    padding: "0.4rem",
+                  }}
+                >
+                  <SearchSelectOption
+                    icon={`${getFlagLink(item.symbol)}`}
+                    text={t(item.display)}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+const SearchSelectOption = ({ icon, text, styles, className }) => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        padding: "0.2rem 1rem",
+        gap: "1.4rem",
+        cursor: "pointer",
+        ...styles,
+      }}
+      className={className}
+    >
+      {icon && (
+        <img
+          src={icon}
+          style={{
+            borderRadius: "0.3rem",
+            width: "3rem",
+            height: "2rem",
+          }}
+        />
+      )}
+      {text && (
+        <p
+          style={{
+            marginTop: "0.4rem",
+            fontSize: "1.2rem",
+          }}
+        >
+          {text}
+        </p>
+      )}
+    </div>
+  );
+};
+
+const CombinedInput = ({
+  country,
+  setCountry,
+  value,
+  setValue,
+  setChanged,
+}) => {
+  const { t } = useTranslation();
+  const handleChange = () => {
+    if (setChanged) {
+      setChanged(true);
+    }
+  };
+
+  return (
+    <div className={styles.inputWrapper}>
+      <p className={styles.label}>{t("payments.address").concat("*")}</p>
+
+      <div
+        style={{
+          padding: "0",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "0",
+        }}
+      >
+        <CountrySelect
+          // setChanged={setChanged}
+          value={country}
+          setValue={setCountry}
+          options={getCountryList()}
+          styles={{
+            borderBottom: "none",
+            borderBottomLeftRadius: "0",
+            borderBottomRightRadius: "0",
+          }}
+        />
+        <input
+          className={styles.input}
+          style={{
+            borderTopRightRadius: "0",
+            borderTopLeftRadius: "0",
+          }}
+          placeholder={t("payments.addressHint")}
+          value={value}
+          onChange={(e) => {
+            if (setValue) {
+              setValue(e.target.value);
+            }
+          }}
+          onBlur={(e) => {
+            handleChange();
+          }}
+          onKeyDown={(e) => {
+            if (e.code === "Enter") {
+              handleChange();
+            }
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+const RadioInput = ({ isPerson, setPerson, setChanged }) => {
+  const { theme } = useTheme();
+  const { t } = useTranslation();
+
+  return (
+    <div className={styles.inputWrapper}>
+      <p className={styles.label}>{t("payments.legalStatus").concat("*")}</p>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          gap: "0.8rem",
+        }}
+      >
+        <div
+          onClick={() => {
+            setPerson(true);
+            setChanged && setChanged(true);
+          }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "50%",
+            border: `1px solid ${isPerson ? "#28C8F0" : "var(--border-color)"}`,
+            borderRadius: "0.6rem",
+            padding: "0.8rem",
+            background: "var(--card-color)",
+            cursor: "pointer",
+          }}
+        >
+          <div>
+            <img src={theme === "dark" ? PersonDark : PersonLight} />
+            <p style={{ fontSize: "1.2rem" }}>{t("payments.person")}</p>
+          </div>
+          <div
+            style={{
+              width: "1.4rem",
+              height: "1.4rem",
+              padding: "1px",
+              border: `1px solid ${
+                isPerson ? "#28C8F0" : "var(--border-color)"
+              }`,
+              borderRadius: "50%",
+            }}
+          >
+            <div
+              style={{
+                background: `${isPerson ? "#28C8F0" : "none"}`,
+                width: "100%",
+                height: "100%",
+                borderRadius: "50%",
+              }}
+            ></div>
+          </div>
+        </div>
+        <div
+          onClick={() => {
+            setPerson(false);
+            setChanged && setChanged(true);
+          }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "50%",
+            border: `1px solid ${isPerson ? "var(--border-color)" : "#28C8F0"}`,
+            borderRadius: "0.6rem",
+            padding: "0.8rem",
+            background: "var(--card-color)",
+            cursor: "pointer",
+          }}
+        >
+          <div>
+            <img src={theme === "dark" ? BuildingDark : BuildingLight} />
+            <p style={{ fontSize: "1.2rem" }}>{t("payments.company")}</p>
+          </div>
+          <div
+            style={{
+              width: "1.4rem",
+              height: "1.4rem",
+              padding: "1px",
+              border: `1px solid ${
+                isPerson ? "var(--border-color)" : "#28C8F0"
+              }`,
+              borderRadius: "50%",
+            }}
+          >
+            <div
+              style={{
+                background: `${isPerson ? "none" : "#28C8F0"}`,
+                width: "100%",
+                height: "100%",
+                borderRadius: "50%",
+              }}
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Input = ({ label, placeholder, value, setValue, setChanged, type }) => {
   const handleChange = () => {
     if (setChanged) {
@@ -853,20 +1215,131 @@ const Input = ({ label, placeholder, value, setValue, setChanged, type }) => {
   );
 };
 
+const SimpleSelect = ({ setChanged, options, value, setValue, RC, setRC }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        padding: "0",
+        fontSize: "1.2rem",
+      }}
+      onClick={() => setOpen(!open)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "0.7rem 1rem",
+          gap: "1rem",
+          border: "1px solid var(--border-color)",
+          borderRadius: "0.6rem",
+          background: "var(--card-color)",
+          cursor: "pointer",
+        }}
+      >
+        <p
+          style={{
+            marginTop: "0.2rem",
+          }}
+        >
+          {value}
+        </p>
+        <img src={DropDownIcon} />
+      </div>
+      {open && (
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            maxHeight: "10rem",
+            padding: "0.4rem 1rem",
+            overflow: "auto",
+            background: "var(--card-color)",
+            border: "1px solid var(--border-color)",
+          }}
+        >
+          {options.map((item) => {
+            return (
+              <div
+                style={{
+                  margin: "0.1rem 0 0 0",
+                }}
+                onClick={() => {
+                  setValue(item);
+                  value != item && setChanged(true);
+                  setOpen(false);
+                }}
+              >
+                {item}
+              </div>
+            );
+          })}
+          <div
+            style={{
+              margin: "0.1rem 0 0 0",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+            onClick={() => {
+              setRC((prev) => !prev);
+              setChanged(true);
+            }}
+          >
+            <span
+              style={{
+                marginTop: "0.1rem",
+              }}
+            >{`RC`}</span>
+            {RC && <img src={CheckedIcon} />}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export const PaymentInfo = ({
   fullName,
   setFullName,
   email,
   setEmail,
+  country,
+  setCountry,
   address,
   setAddress,
+  isPerson,
+  setPerson,
   tax,
   setTax,
+  // percent,
+  // setPercent,
   business,
   setBusiness,
+  // reverseCharge,
+  setReverseCharge,
+  taxInfo,
   setChanged,
+  // isSeller,
 }) => {
   const { t } = useTranslation();
+  // const { user } = useAuth();
+
+  useEffect(() => {
+    if (taxInfo && country) {
+      if (taxInfo.country !== country && !isPerson) {
+        setReverseCharge(true);
+      } else {
+        setReverseCharge(false);
+      }
+      setChanged(true);
+    }
+  }, [country, isPerson, taxInfo]);
 
   return (
     <div className={styles.payInfoBody}>
@@ -889,19 +1362,28 @@ export const PaymentInfo = ({
         />
       </div>
       <div className={styles.row}>
-        <Input
-          placeholder={t("payments.addressHint")}
-          label={t("payments.address")}
+        <CombinedInput
+          country={country}
+          setCountry={setCountry}
           value={address}
           setValue={setAddress}
           setChanged={setChanged}
         />
       </div>
+      {setPerson && (
+        <div className={styles.row}>
+          <RadioInput
+            isPerson={isPerson}
+            setPerson={setPerson}
+            // setChanged={setChanged}
+          />
+        </div>
+      )}
       <div className={styles.row}>
         <div
           style={{
             display: "flex",
-            gap: "1rem",
+            gap: "0.8rem",
             width: "100%",
           }}
         >
@@ -910,22 +1392,31 @@ export const PaymentInfo = ({
             label={t("payments.taxNumber")}
             value={tax}
             setValue={setTax}
-            type
             setChanged={setChanged}
           />
-          <Input
-            placeholder={"0.00%"}
-            label={t("payments.vat").concat(" %")}
-            setChanged={setChanged}
-          />
+          {/* {taxInfo && isSeller && (
+            <div className={styles.inputWrapper}>
+              <p className={styles.label}>{t("payments.vat").concat(" %")}</p>
+              <SimpleSelect
+                setChanged={setChanged}
+                value={percent}
+                setValue={setPercent}
+                RC={reverseCharge}
+                setRC={setReverseCharge}
+                options={JSON.parse(taxInfo.vatPercent)}
+              />
+            </div>
+          )} */}
         </div>
-        <Input
-          placeholder={`e.g. Google`}
-          label={t("payments.company")}
-          value={business}
-          setValue={setBusiness}
-          setChanged={setChanged}
-        />
+        {!isPerson && (
+          <Input
+            placeholder={`e.g. Google`}
+            label={t("payments.company")}
+            value={business}
+            setValue={setBusiness}
+            setChanged={setChanged}
+          />
+        )}
       </div>
     </div>
   );
