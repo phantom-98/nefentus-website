@@ -126,10 +126,11 @@ const ReceivePayment = ({
   const [pwd, setPwd] = useState(false);
   useEffect(() => {
     async function getRate() {
-      const res = await backend_API.getCurrencyRate("USD", currency);
-      if (res) {
-        // setRate(res.rate);
-        setPriceUSD((price * (100 + vatPercent ?? 0)) / 100 / res.rate);
+      if (currency && price) {
+        const res = await backend_API.getCurrencyRate("USD", currency);
+        if (res) {
+          setPriceUSD((price * (100 + (vatPercent ?? 0))) / 100 / res.rate);
+        }
       }
     }
     getRate();
@@ -607,7 +608,9 @@ const ReceivePayment = ({
                   <p>{t("payments.total")}</p>
                   <p>
                     {getCurrencySymbol()[currency]}
-                    {formatUSDBalance((price * (100 + vatPercent ?? 0)) / 100)}
+                    {formatUSDBalance(
+                      (price * (100 + (vatPercent ?? 0))) / 100,
+                    )}
                   </p>
                   {vatPercent && (
                     <p
