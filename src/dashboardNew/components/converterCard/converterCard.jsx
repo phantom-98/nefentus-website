@@ -28,11 +28,15 @@ import {
   getWalletIcon,
 } from "../../../utils";
 import SwingSDK from "@swing.xyz/sdk";
+import { PasswordPopup } from "../popup/popup";
 
 const ConverterCard = () => {
   const { t } = useTranslation();
   // const { theme } = useTheme();
   const backend_API = new backendAPI();
+  const [pwd, setPwd] = useState(false);
+  const [password, setPassword] = useState();
+
   const [wallets, setWallets] = useState([]);
 
   const { balances, fetchBalances } = useBalances();
@@ -200,6 +204,31 @@ const ConverterCard = () => {
 
     setSpinner(false);
   }
+  async function requestSwap() {
+    // console.log("swap", transferParams, transferRoute);
+    const res = await backend_API.httpRequest(
+      "https://swap.prod.swing.xyz/v0/transfer/allowance",
+      "get",
+      {
+        fromChain: transferParams.fromChain,
+        tokenSymbol: transferParams.fromToken,
+        tokenAddress: currencies().find(
+          (currency) => currency.abbr === transferParams.fromToken,
+        ).address,
+        toChain: transferParams.toChain,
+        toTokenSymbol: transferParams.toToken,
+        toTokenAddress: currencies().find(
+          (currency) => currency.abbr === transferParams.toToken,
+        ).address,
+        contractCall: true,
+        fromAddress: "0xcd01a99d2F35D390903E966188dDA0FDCAb069F4", //transferParams.fromUserAddress
+      },
+    );
+    console.log("allowance", res);
+    if (res) {
+    } else {
+    }
+  }
   async function startTransfer() {
     if (!swingSDK) return;
 
@@ -207,6 +236,16 @@ const ConverterCard = () => {
       console.log("transfer route error");
       return;
     }
+
+    if (selectedWalletIndex === 0) {
+      if (password) {
+        requestSwap();
+      } else {
+        setPwd(true);
+      }
+      return;
+    }
+
     setSpinner(true);
     const transferListener = swingSDK.on(
       "TRANSFER",
@@ -241,7 +280,7 @@ const ConverterCard = () => {
   useEffect(() => {
     fetchWallets();
     const swing = new SwingSDK({
-      projectId: "nef",
+      projectId: "nefentus",
       environment: useMainnet() ? "production" : "testnet",
       debug: true,
     });
@@ -416,6 +455,22 @@ const ConverterCard = () => {
           </Button>
         </div>
       </Card>
+      <PasswordPopup
+        show={pwd}
+        setShow={setPwd}
+        password={password}
+        setPassword={setPassword}
+        onConfirm={async () => {
+          const res = await backend_API.checkPassword(password);
+          if (res) {
+            setPwd(false);
+            requestSwap();
+          } else {
+            setPassword("");
+            setErrorMessage(t("messages.error.passwordCorrect"));
+          }
+        }}
+      />
     </div>
   );
 };

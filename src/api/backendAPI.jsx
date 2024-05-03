@@ -1467,4 +1467,49 @@ export default class backendAPI {
       return null; // or return some default value
     }
   }
+  async swap(password, address, params, route) {
+    try {
+      const url = `${this.baseURL}/swap`;
+
+      const options = {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password,
+          address,
+          params,
+          route,
+        }),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async httpRequest(url, method, body, headers) {
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          ...headers,
+        },
+        body: JSON.stringify(body),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null;
+    }
+  }
 }

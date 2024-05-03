@@ -514,25 +514,6 @@ svg path {
   background-color: transparent;
 }
 
-.signinContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  align-self: stretch;
-}
-
-.signinContainer > div:first-child p:first-child {
-  font-size: 1.8rem;
-  color: var(--text-color, #f6f6f6);
-}
-
-.signinContainer > div:first-child p:last-child {
-  font-size: 1.2rem;
-  color: var(--text2-color, #b1b1b1);
-  max-width: 360px;
-}
-
 .tooltip {
   position: relative;
   display: inline-block;
