@@ -5,12 +5,12 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import translationEN from "./en.json";
 import translationDE from "./ger.json";
 import translationUK from "./uk.json";
-import privacyPolicyEN from "./privacyPolicy/en.html";
-import privacyPolicyDE from "./privacyPolicy/ger.html";
-import privacyPolicyUK from "./privacyPolicy/uk.html";
-import imprintEN from "./imprint/en.html";
-import imprintDE from "./imprint/ger.html";
-import imprintUK from "./imprint/uk.html";
+import privacyPolicyEN from "./privacyPolicy/en.html?raw";
+import privacyPolicyDE from "./privacyPolicy/ger.html?raw";
+import privacyPolicyUK from "./privacyPolicy/uk.html?raw";
+import imprintEN from "./imprint/en.html?raw";
+import imprintDE from "./imprint/ger.html?raw";
+import imprintUK from "./imprint/uk.html?raw";
 /*
 import translationAR from "./ar.json";
 import translationFR from "./Fr.json";
