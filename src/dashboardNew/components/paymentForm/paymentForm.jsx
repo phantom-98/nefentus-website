@@ -68,6 +68,7 @@ const PaymentForm = ({ setLoadingData }) => {
       setErrorMessage(t("messages.error.taxPercentValid"));
       return;
     }
+    setShowCreate(false);
     // if (!email) {
     //   setErrorMessage(t("messages.validation.validEmail"));
     //   return;
@@ -200,7 +201,6 @@ const PaymentForm = ({ setLoadingData }) => {
         onClose={() => setShowCreate(false)}
         onConfirm={() => {
           createInvoice();
-          setShowCreate(false);
         }}
       >
         <div className={styles.row}>
@@ -529,6 +529,7 @@ const PaymentForm = ({ setLoadingData }) => {
           show={showPopup}
           setShow={setShowPopup}
           price={amount}
+          currency={currency}
           taxNumber={taxNumber}
           name={name}
           email={email}
