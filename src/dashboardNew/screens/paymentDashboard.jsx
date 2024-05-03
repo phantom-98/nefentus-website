@@ -19,7 +19,14 @@ const PaymentDashboard = () => {
   const [invoices, setInvoices] = useState([]);
   const [isLoadingInvoiceData, setIsLoadingInvoiceData] = useState(false);
   const { t } = useTranslation();
-  const { currencyRate } = useAuth();
+  const { rateList, currencyRate } = useAuth();
+
+  const calcRate = (currency) => {
+    const res = rateList.find((item) => item.to === currency);
+    if (rateList && res) {
+      return res.rate;
+    } else return 1;
+  };
 
   const vendorAPI = new vendorDashboardApi();
   const label = [
@@ -51,18 +58,19 @@ const PaymentDashboard = () => {
       const _invoiceData = invoiceData.map((item, index) => {
         const _row = item;
         _row[1] = formatUSDBalance(
-          parseFloat(invoices[index].price) * currencyRate.rate,
+          parseFloat(invoices[index].price) /
+            calcRate(invoices[index].currency),
         );
         return _row;
       });
       setInvoiceData(_invoiceData);
     }
-  }, [currencyRate]);
+  }, [rateList]);
 
   function invoiceToArray(invoice) {
     return [
       new Date(invoice.createdAt).toLocaleString(),
-      formatUSDBalance(parseFloat(invoice.price) * currencyRate.rate),
+      formatUSDBalance(parseFloat(invoice.price) / calcRate(invoice.currency)),
       <TableStatus color={invoice.paidAt ? "green" : "blue"}>
         {invoice.paidAt ? t("general.paid") : t("general.open")}
       </TableStatus>,
@@ -96,8 +104,15 @@ const PaymentDashboard = () => {
         supportedWallets={[metamaskWallet()]}
         clientId="639eea2ebcabed7eab90b56aceeed08b"
       >
-        <PaymentForm setLoadingData={setIsLoadingInvoiceData} />
-        <Table grid="1fr 1fr 1fr 1fr 1fr" label={label} data={invoiceData} />
+        <div
+          style={{
+            background: "var(--bg2-color)",
+            borderRadius: "1rem",
+          }}
+        >
+          <PaymentForm setLoadingData={setIsLoadingInvoiceData} />
+          <Table grid="1fr 1fr 1fr 1fr 1fr" label={label} data={invoiceData} />
+        </div>
       </ThirdwebProvider>
       <SignupByEmail />
     </div>

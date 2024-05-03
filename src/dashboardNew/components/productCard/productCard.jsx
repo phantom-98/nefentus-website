@@ -4,17 +4,27 @@ import Edit from "../../../assets/icon/edit.svg";
 import Delete from "../../../assets/icon/delete.svg";
 import Button from "../button/button";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../../context/auth/authContext";
 import { formatUSDBalance } from "../../../utils";
+import { getCurrencySymbol } from "../../../countries";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../context/auth/authContext";
+import backendAPI from "../../../api/backendAPI";
 
 const ProductCard = ({
   onClickDelete = () => {},
   onClickEdit = () => {},
   product = {},
-  update,
 }) => {
   const { t } = useTranslation();
-  const { currencyRate } = useAuth();
+  const [rate, setRate] = useState(1);
+  const { rateList, currencyRate } = useAuth();
+
+  useEffect(() => {
+    const res = rateList.find((item) => item.to === product.currency);
+    if (rateList && res) {
+      setRate(res.rate);
+    }
+  }, [rateList]);
 
   return (
     <>
@@ -43,8 +53,8 @@ const ProductCard = ({
         <div className={`${styles.body} ${styles.flex}`}>
           <div>
             <p className={styles.price}>
-              {currencyRate.symbol}
-              {formatUSDBalance(product.price * currencyRate.rate)}
+              {getCurrencySymbol()[currencyRate.to]}
+              {formatUSDBalance(product.price / rate)}
             </p>
             <Button link={`${window.location.origin}/product/${product.link}`}>
               {t("general.openAction")}

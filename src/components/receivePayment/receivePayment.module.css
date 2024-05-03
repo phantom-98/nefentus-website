@@ -239,10 +239,10 @@
   align-self: stretch;
 }
 
-.total > p:nth-child(odd) {
+.total > p {
   font-size: 1.2rem;
 }
-.total > p:nth-child(even) {
+.total > p:nth-child(2) {
   font-size: 3rem;
 }
 
@@ -330,7 +330,7 @@
   width: 4rem;
   height: 4rem;
   border-radius: 2rem;
-  background-color: rgb(40, 196, 243);
+  background-color: #28c8f0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -396,6 +396,7 @@
   font-size: 1.2rem;
   color: var(--text2-color, #b1b1b1);
   font-weight: 500;
+  text-wrap: nowrap;
 }
 
 .inputWrapper {

@@ -10,9 +10,13 @@ import WalletAddressFormatter from "../../func/walletAddressFormatter";
 import CopyAddress from "../../assets/icon/copy.png";
 import { MessageContext } from "../../context/message";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
+import ImageplusDark from "../../assets/icon/dark/image-plus.svg";
+import ImageplusLight from "../../assets/icon/light/image-plus.svg";
 import CheckedIcon from "../../assets/icon/checked.svg";
 import USD from "../../assets/icon/usd.png";
 import EUR from "../../assets/icon/eur.png";
+import { symbol } from "zod";
+import { getCountryList, getFlagLink } from "../../countries";
 
 const Input = ({
   label,
@@ -160,7 +164,7 @@ export const Textarea = ({
   rows = 5,
 }) => {
   const handleChange = (e) => {
-    setState(e.target.value);
+    e.target.value.length <= 5000 && setState(e.target.value);
   };
 
   return (
@@ -179,23 +183,39 @@ export const Textarea = ({
         className={`${styles.textarea} ${
           dashboard ? styles.dashboardTextarea : ""
         }`}
+        style={{
+          resize: "vertical",
+        }}
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
         disabled={disabled}
         rows={rows}
       />
+      <div>{value.length}/5000</div>
     </div>
   );
 };
 
 export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
   const inputRef = useRef(null);
-  const { theme } = useTheme();
 
   const { t } = useTranslation();
 
-  const [text, setText] = useState(value ? value : false);
+  const [base64, setBase64] = useState();
+  useEffect(() => {
+    if (!value) {
+      setBase64(null);
+    } else if (typeof value === "string") {
+      setBase64(value);
+    } else if (value instanceof Blob) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        setBase64(reader.result);
+      });
+      reader.readAsDataURL(value);
+    }
+  }, [value]);
 
   const handleClick = () => {
     inputRef.current.click();
@@ -210,10 +230,15 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
   const handleChange = () => {
     const file = inputRef.current.files[0];
     const fileName = inputRef.current.value.split("\\").pop();
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      setBase64(reader.result);
+    });
+    reader.readAsDataURL(file);
     let extension = fileName.split(".").pop();
-    console.log(extension);
+    // console.log(extension);
     if (checkFileExtension(extension)) {
-      setText(fileName);
+      // setText(fileName);
       onUpload(file);
     } else {
       //todo throw new Error maybe with toast!
@@ -232,24 +257,46 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
         </p>
       )}
       <div
-        className={styles.attachment}
+        onClick={handleClick}
         style={{
-          border: `1px solid ${theme == "dark" ? "#ffffff14" : "#0000001a"}`,
+          display: "flex",
+          alignItems: "center",
+          border: base64 ? "none" : "2px dashed var(--border-color)",
+          borderRadius: "1rem",
+          overflow: "hidden",
+          height: "16rem",
+          cursor: "pointer",
         }}
       >
-        <img src={AttachmentImage} alt="Attachment" onClick={handleClick} />
-        <p style={{ color: "#c4c4c4" }} onClick={handleClick}>
-          {text ? text : t("products.createProductModal.attach")}
-        </p>
-        <img
-          src={Delete}
-          alt="Delete attachment"
-          onClick={() => {
-            onDelete();
-            setText(null);
-          }}
-          className={styles.deleteLogo}
-        />
+        {base64 ? (
+          <img
+            src={base64}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        ) : (
+          <div
+            style={{
+              margin: "auto",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <img src={ImageplusDark} alt="Attachment" />
+            <p style={{ color: "#b1b1b1" }}>
+              {t("products.createProductModal.attach")}
+            </p>
+            {/* <img
+              src={Delete}
+              alt="Delete attachment"
+              onClick={() => {
+                onDelete();
+                setText(null);
+              }}
+              className={styles.deleteLogo}
+            /> */}
+          </div>
+        )}
       </div>
       <input
         accept=".jpeg, .jpg, .png, .gif, .heic"
@@ -484,16 +531,45 @@ export const OptionsWithImage = ({
   );
 };
 
-export const CurrencySelect = ({ selectedIndex, setSelectedIndex }) => {
+export const CurrencySelectWithLabel = ({ label, value, setValue }) => {
+  return (
+    <div className={styles.inputWrapper}>
+      {label && (
+        <p
+          className={`${styles.label} ${
+            dashboard ? styles.dashboardLabel : ""
+          }`}
+        >
+          {label}
+        </p>
+      )}
+      <CurrencySelect value={value} setValue={setValue} dashboard={true} />
+    </div>
+  );
+};
+
+export const CurrencySelect = ({ value, setValue, dashboard }) => {
   const data = [
-    { title: "USD $", icon: USD, alt: "" },
-    { title: "EUR €", icon: EUR, alt: "" },
+    { title: "USD $", icon: "US", symbol: "USD", alt: "" },
+    { title: "EUR €", icon: "EU", symbol: "EUR", alt: "" },
+    { title: "AED د.إ", icon: "AE", symbol: "AED", alt: "" },
+    { title: "UAH ₴", icon: "UA", symbol: "UAH", alt: "" },
+    { title: "CHF", icon: "CH", symbol: "CHF", alt: "" },
   ];
+  const [selectedIndex, setSelectedIndex] = useState();
+  useEffect(() => {
+    setSelectedIndex(data.findIndex((item) => item.symbol === value) ?? 0);
+  }, [value]);
   const [open, setOpen] = useState(false);
   return (
     <>
       <div
         className={`${styles.currencySelect}`}
+        style={{
+          borderRadius: dashboard ? "0.6rem" : "",
+          width: dashboard ? "100%" : "",
+          height: dashboard ? "max-content" : "",
+        }}
         onClick={() => setOpen((prev) => !prev)}
         onMouseLeave={() => setOpen(false)}
         onMouseEnter={() => setOpen(true)}
@@ -502,18 +578,35 @@ export const CurrencySelect = ({ selectedIndex, setSelectedIndex }) => {
           icon={data[selectedIndex]?.icon}
           optionTitle={data[selectedIndex]?.title}
           alt={data[selectedIndex]?.alt}
+          dashboard={dashboard}
           dropdown
         />
         {open && (
-          <div className={`${styles.selectBody}`}>
+          <div
+            className={`${styles.selectBody}`}
+            style={{
+              borderRadius: dashboard ? "1rem" : "",
+              width: dashboard ? "100%" : "",
+            }}
+          >
             {data.map((item, index) => {
               return (
-                <div key={index} onClick={() => setSelectedIndex(index)}>
+                <div
+                  key={index}
+                  onClick={() => {
+                    setSelectedIndex(index);
+                    setValue && setValue(data[index].symbol);
+                  }}
+                  style={{
+                    background: dashboard ? "var(--bg2-color)" : "",
+                  }}
+                >
                   <CurrencyOption
                     icon={item.icon}
                     optionTitle={item.title}
                     alt={item.alt}
                     selected={selectedIndex === index}
+                    dashboard={dashboard}
                   />
                 </div>
               );
@@ -525,22 +618,51 @@ export const CurrencySelect = ({ selectedIndex, setSelectedIndex }) => {
   );
 };
 
-const CurrencyOption = ({ icon, optionTitle, alt, dropdown, selected }) => {
+const CurrencyOption = ({
+  icon,
+  optionTitle,
+  alt,
+  dropdown,
+  selected,
+  dashboard,
+}) => {
   return (
     <div
       className={styles.optionLineWrapper}
       style={{
-        borderRadius: dropdown ? "3px" : "0",
+        borderRadius: dropDown ? (dashboard ? "0.6rem" : "3px") : "0",
+        padding: dashboard ? "1rem" : "",
       }}
     >
       <div className={styles.optionLine}>
-        <img src={icon} className={styles.icon} alt={alt} />
-        <div className={styles.optionContainer}>
-          <p className={styles.optionTitle}> {optionTitle} </p>
-        </div>
+        <img
+          src={getFlagLink(icon)}
+          className={styles.icon}
+          alt={alt}
+          style={{
+            width: dashboard ? "2.3rem" : "",
+          }}
+        />
+        <p
+          className={styles.optionTitle}
+          style={{
+            fontSize: dashboard ? "1.2rem" : "",
+            lineHeight: dashboard ? "1.5rem" : "",
+            marginTop: dashboard ? "0" : "",
+            paddingTop: dashboard ? "0.3rem" : "",
+          }}
+        >
+          {" "}
+          {optionTitle}{" "}
+        </p>
       </div>
       {dropdown && (
-        <img src={DropDownIcon} alt="dropdown" width={8} height={4} />
+        <img
+          src={DropDownIcon}
+          alt="dropdown"
+          width={dashboard ? 16 : 8}
+          height={dashboard ? 8 : 4}
+        />
       )}
       {selected && (
         <img
@@ -550,6 +672,376 @@ const CurrencyOption = ({ icon, optionTitle, alt, dropdown, selected }) => {
           width={16}
           height={11}
         />
+      )}
+    </div>
+  );
+};
+
+export const RadioOption = ({
+  label,
+  icon,
+  content,
+  value,
+  onClick,
+  horizon,
+  style,
+}) => {
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        gap: "1rem",
+        border: `1px solid ${value ? "#28C8F0" : "var(--border-color)"}`,
+        borderRadius: "0.6rem",
+        padding: "0.8rem",
+        background: "var(--bg2-color)",
+        cursor: "pointer",
+        alignItems: horizon ? "center" : "start",
+        ...style,
+      }}
+    >
+      <div
+        style={{
+          fontSize: "1.2rem",
+          display: "flex",
+          flexDirection: horizon ? "row" : "column",
+          alignItems: horizon ? "center" : "start",
+          gap: "1rem",
+          color: value ? "var(--text-color)" : "var(--text2-color)",
+        }}
+      >
+        {icon && <img src={icon} style={{ width: "2.25rem" }} />}
+        {label && <p>{label}</p>}
+        <p style={{ fontSize: "1.2rem", marginTop: "0.2rem" }}>{content}</p>
+      </div>
+      <div
+        style={{
+          width: "1.4rem",
+          height: "1.4rem",
+          padding: "1px",
+          border: `1px solid ${value ? "#28C8F0" : "var(--border-color)"}`,
+          borderRadius: "50%",
+        }}
+      >
+        <div
+          style={{
+            background: `${value ? "#28C8F0" : "none"}`,
+            width: "100%",
+            height: "100%",
+            borderRadius: "50%",
+          }}
+        ></div>
+      </div>
+    </div>
+  );
+};
+
+export const Spinner = ({ label, value, setValue, disabled, dashboard }) => {
+  // useEffect(() => {
+  //   if ( value ) {
+  //     const v = parseInt(value);
+  //     if (v > 0) {
+  //       setValue(v);
+  //     } else {
+  //       setValue(1);
+  //     }
+  //   }
+  // }, [value]);
+  return (
+    <div className={styles.inputWrapper}>
+      {label && <p className={styles.label}>{label}</p>}
+      <div
+        className={styles.spinner}
+        style={{
+          padding: dashboard ? "0.8rem" : "",
+          background: dashboard && !disabled ? "var(--bg2-color)" : "",
+          width: dashboard ? "100%" : "",
+          opacity: disabled ? "50%" : "100%",
+          justifyContent: dashboard ? "space-between" : "flex-start",
+          border: dashboard ? "1px solid var(--border-color)" : "",
+          borderRadius: "0.6rem",
+        }}
+      >
+        <div
+          onClick={() =>
+            !disabled && value > 1 && setValue((prev) => parseInt(prev) - 1)
+          }
+        >
+          -
+        </div>
+        <input
+          type="number"
+          value={value}
+          onChange={(e) =>
+            !disabled &&
+            setValue(e.target.value ? parseInt(e.target.value).toString() : 0)
+          }
+        />
+        <div
+          onClick={() =>
+            !disabled && setValue((prev) => (prev ? parseInt(prev) + 1 : 1))
+          }
+        >
+          +
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const RadioSelect = ({ label, value, setValue, options }) => {
+  return (
+    <div className={styles.inputWrapper}>
+      {label && <p className={styles.label}>{label}</p>}
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+        }}
+      >
+        {options.map((option, index) => {
+          return (
+            <RadioOption
+              label={option.label}
+              content={option.content}
+              value={value == option.value}
+              onClick={() => setValue(option.value)}
+              style={{
+                width: `${100 / options.length}%`,
+              }}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export const CombinedInput = ({
+  country,
+  setCountry,
+  value,
+  setValue,
+  setChanged,
+  dashboard,
+}) => {
+  const { t } = useTranslation();
+  const handleChange = () => {
+    if (setChanged) {
+      setChanged(true);
+    }
+  };
+
+  return (
+    <div className={styles.inputWrapper}>
+      <p className={styles.label}>{t("payments.address").concat("*")}</p>
+
+      <div
+        style={{
+          padding: "0",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "0",
+        }}
+      >
+        <CountrySelect
+          // setChanged={setChanged}
+          value={country}
+          setValue={setCountry}
+          options={getCountryList()}
+          styles={{
+            borderBottom: "none",
+            borderBottomLeftRadius: "0",
+            borderBottomRightRadius: "0",
+          }}
+        />
+        <input
+          className={`${styles.input} ${
+            dashboard ? styles.dashboardInput : ""
+          }`}
+          style={{
+            borderTopRightRadius: "0",
+            borderTopLeftRadius: "0",
+          }}
+          placeholder={t("payments.addressHint")}
+          value={value}
+          onChange={(e) => {
+            if (setValue) {
+              setValue(e.target.value);
+            }
+          }}
+          onBlur={(e) => {
+            handleChange();
+          }}
+          onKeyDown={(e) => {
+            if (e.code === "Enter") {
+              handleChange();
+            }
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+export const CountrySelect = ({
+  setChanged,
+  options,
+  value,
+  setValue,
+  styles,
+  className,
+}) => {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [icon, setIcon] = useState();
+  const [keyword, setKeyword] = useState("");
+  const [filtered, setFiltered] = useState(options);
+  useEffect(() => {
+    const country = getCountryList().find((item) => item.value == value);
+    if (country) {
+      setIcon(getFlagLink(country.symbol));
+      setKeyword(t(country.display));
+    }
+  }, [value]);
+  return (
+    <>
+      <div
+        style={{
+          padding: "0",
+          width: "100%",
+          position: "relative",
+        }}
+        onClick={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+      >
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            padding: "0.7rem 1rem",
+            gap: "1rem",
+            border: "1px solid var(--border-color)",
+            borderRadius: "0.6rem",
+            background: "var(--bg2-color)",
+            cursor: "pointer",
+            ...styles,
+          }}
+          className={`${className}`}
+        >
+          {value && icon && (
+            <img
+              src={icon}
+              style={{
+                borderRadius: "0.3rem",
+                width: "3rem",
+                height: "2rem",
+              }}
+            />
+          )}
+          <input
+            className="custom"
+            style={{
+              fontSize: "1.2rem",
+              width: `calc(100% - ${value ? "6" : "2"}rem)`,
+              outline: "0",
+              background: "transparent",
+              height: "2rem",
+            }}
+            placeholder={value ? "" : t("countries.choose")}
+            value={keyword}
+            onChange={(e) => {
+              setOpen(true);
+              setKeyword(e.target.value);
+              setFiltered(
+                options.filter((item) =>
+                  t(item.display)
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase()),
+                ),
+              );
+            }}
+          />
+          <img src={DropDownIcon} />
+        </div>
+        {open && (
+          <div
+            style={{
+              position: "absolute",
+              width: "100%",
+              maxHeight: "30rem",
+              overflow: "auto",
+              background: "var(--bg2-color)",
+              border: "1px solid var(--border-color)",
+              zIndex: "10",
+            }}
+          >
+            {filtered.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setValue(item.value);
+                    item.value !== value
+                      ? setChanged && setChanged(true)
+                      : setKeyword(t(item.display));
+                    setOpen(false);
+                  }}
+                  style={{
+                    padding: "0.4rem",
+                  }}
+                >
+                  <SearchSelectOption
+                    icon={`${getFlagLink(item.symbol)}`}
+                    text={t(item.display)}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+const SearchSelectOption = ({ icon, text, styles, className }) => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        padding: "0.2rem 1rem",
+        gap: "1.4rem",
+        cursor: "pointer",
+        ...styles,
+      }}
+      className={className}
+    >
+      {icon && (
+        <img
+          src={icon}
+          style={{
+            borderRadius: "0.3rem",
+            width: "3rem",
+            height: "2rem",
+          }}
+        />
+      )}
+      {text && (
+        <p
+          style={{
+            marginTop: "0.4rem",
+            fontSize: "1.2rem",
+          }}
+        >
+          {text}
+        </p>
       )}
     </div>
   );
