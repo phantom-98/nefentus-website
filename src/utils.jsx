@@ -1,11 +1,24 @@
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 import backendAPI from "./api/backendAPI";
+import NefentusLogo from "./assets/logo/logo.svg";
 import MetaMaskLogo from "./assets/logo/MetaMask.svg";
 import WalletConnectLogo from "./assets/logo/WalletConnect.svg";
 import Ethereum from "./assets/icon/crypto/ethereum.svg";
 import CoinbaseLogo from "./assets/logo/coinbase.svg";
 import TrustLogo from "./assets/logo/trust.png";
+import Safe from "./assets/logo/safe.png";
+import Blocto from "./assets/logo/blocto.png";
+import Frame from "./assets/logo/frame.png";
+import Rainbow from "./assets/logo/rainbow.png";
+import Phantom from "./assets/logo/phantom.png";
+import Coin98 from "./assets/logo/coin98.png";
+import CoreWallet from "./assets/logo/corewallet.png";
+import CryptoDefi from "./assets/logo/cryptodefi.png";
+import Okx from "./assets/logo/okx.png";
+import OneKey from "./assets/logo/onekey.png";
+import Rabby from "./assets/logo/rabby.png";
+import XDefi from "./assets/logo/xdefi.png";
 import Cookies from "js-cookie";
 
 export function formatTokenBalance(x, round = 2) {
@@ -14,7 +27,7 @@ export function formatTokenBalance(x, round = 2) {
     return "0.0";
   } else {
     return parsedFloat
-      .toFixed(round)
+      .toFixed(!isNaN(round) && parseInt(round) ? parseInt(round) : 2)
       .toString()
       .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -31,6 +44,17 @@ export function formatUSDBalance(x) {
       .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
 }
+
+export const formatWalletAddress = (address, symbolCount = 8) => {
+  isNaN(symbolCount) && (symbolCount = 8);
+  if (!address || address.length <= symbolCount * 2 + 2) {
+    return address;
+  }
+
+  const start = address.substring(0, symbolCount + 2);
+  const end = address.substring(address.length - symbolCount);
+  return `${start}....${end}`;
+};
 
 export function nullToZeroAddress(address) {
   if (address === null) return ethers.constants.AddressZero;
@@ -52,7 +76,6 @@ export function getRole(user) {
   const roles = user?.roles || [];
   // const roleArray = roles?.split(",");
   const isVendor = roles?.includes("ROLE_VENDOR");
-  const isAffiliate = roles?.includes("ROLE_AFFILIATE");
   const isBroker = roles?.includes("ROLE_BROKER");
   const isSeniorBroker = roles?.includes("ROLE_SENIOR_BROKER");
   const isLeader = roles?.includes("ROLE_LEADER");
@@ -62,15 +85,13 @@ export function getRole(user) {
     return "admin";
   } else if (isVendor) {
     return "vendor";
-  } else if (isAffiliate) {
-    return "affiliate";
   } else if (isBroker) {
     return "broker";
   } else if (isSeniorBroker) {
     return "seniorbroker";
   } else if (isLeader) {
     return "leader";
-  }
+  } else return "";
 }
 
 export function dashboardLink(user) {
@@ -157,6 +178,32 @@ export const getWalletIcon = (type) => {
       return CoinbaseLogo;
     case "trust":
       return TrustLogo;
+    case "safe":
+      return Safe;
+    case "blocto":
+      return Blocto;
+    case "frame":
+      return Frame;
+    case "rainbowwallet":
+      return Rainbow;
+    case "phantom":
+      return Phantom;
+    case "coin98":
+      return Coin98;
+    case "corewallet":
+      return CoreWallet;
+    case "cryptodefi":
+      return CryptoDefi;
+    case "okx":
+      return Okx;
+    case "onekey":
+      return OneKey;
+    case "rabby":
+      return Rabby;
+    case "xdefi":
+      return XDefi;
+    case "internal":
+      return NefentusLogo;
     default:
       return Ethereum;
   }

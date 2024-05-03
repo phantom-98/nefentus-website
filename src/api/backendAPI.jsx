@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import setCookie from "../components/setCookie/setCookie";
+import { setCookie } from "../func/cookies";
 import ReactGA from "react-ga4";
 
 export default class backendAPI {
@@ -1227,12 +1227,11 @@ export default class backendAPI {
   async setTransactionInfo(transactionInfo, buyerAddress, productOrInvoiceId) {
     try {
       const url = `${this.baseURL}/transaction`;
-      let headers = {};
+      let headers = {
+        "Content-Type": "application/json",
+      };
       if (this.token) {
-        headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        };
+        headers.Authorization = `Bearer ${this.token}`;
       }
 
       const body = {
@@ -1321,11 +1320,11 @@ export default class backendAPI {
     try {
       const url = `${this.baseURL}/payment`;
       let headers = {};
+      headers = {
+        "Content-Type": "application/json",
+      };
       if (this.token) {
-        headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        };
+        headers.Authorization = `Bearer ${this.token}`;
       }
 
       const body = {
@@ -1362,11 +1361,11 @@ export default class backendAPI {
     try {
       const url = `${this.baseURL}/wallet/address?address=${ConnectedWallet.address}&name=${ConnectedWallet.name}`;
       let headers = {};
+      headers = {
+        "Content-Type": "application/json",
+      };
       if (this.token) {
-        headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        };
+        headers.Authorization = `Bearer ${this.token}`;
       }
 
       const options = {
@@ -1389,11 +1388,11 @@ export default class backendAPI {
     try {
       const url = `${this.baseURL}/wallet/seedPhrase`;
       let headers = {};
+      headers = {
+        "Content-Type": "application/json",
+      };
       if (this.token) {
-        headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        };
+        headers.Authorization = `Bearer ${this.token}`;
       }
 
       const body = {
@@ -1420,11 +1419,11 @@ export default class backendAPI {
     try {
       const url = `${this.baseURL}/wallet/recoverWallet`;
       let headers = {};
+      headers = {
+        "Content-Type": "application/json",
+      };
       if (this.token) {
-        headers = {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
-        };
+        headers.Authorization = `Bearer ${this.token}`;
       }
 
       const body = {
@@ -1443,6 +1442,58 @@ export default class backendAPI {
       }
       this.updateToken(response);
       const data = await response.text();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async getCurrencyRate(from, to) {
+    try {
+      const url = `${this.baseURL}/currency?from=${from}&to=${to}`;
+
+      const options = {
+        method: "GET",
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async getRateList(base) {
+    try {
+      const url = `${this.baseURL}/currencyList?base=${base}`;
+
+      const options = {
+        method: "GET",
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async getTaxInfo(country) {
+    try {
+      const url = `${this.baseURL}/taxInfo/${country}`;
+
+      const options = {
+        method: "GET",
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
       return data;
     } catch (error) {
       return null; // or return some default value

@@ -1,15 +1,15 @@
 .banner {
   position: fixed;
   bottom: 1rem;
-  left: 1rem;
+  margin-left: auto;
+  margin-right: auto;
 
   display: flex;
   justify-content: space-between;
   padding: 2rem;
   width: 100%;
-  max-width: 85rem;
+  max-width: 111rem;
   align-items: center;
-
   right: 50px;
 }
 

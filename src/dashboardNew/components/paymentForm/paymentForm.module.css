@@ -4,19 +4,36 @@
 }
 
 .row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
 .button {
   display: flex;
-  margin-top: 2rem;
+  margin-top: 0.8rem;
   justify-content: flex-end;
 }
 
 .button > div {
   width: max-content;
+}
+
+th,
+td {
+  text-align: left;
+  text-wrap: nowrap;
+  border: none;
+}
+.items input {
+  background: var(--bg2-color);
+  font-size: 1.2rem;
+  padding: 0.8rem;
+  outline: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 0.6rem;
+  width: 100%;
+  text-align: right;
 }
 
 @media (max-width: 650px) {

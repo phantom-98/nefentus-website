@@ -4,12 +4,26 @@ import styles from "./cryptoCard.module.css";
 
 import { useContext, useEffect, useState } from "react";
 import {
+  CoreWallet,
+  bloctoWallet,
+  coin98Wallet,
+  coreWallet,
+  cryptoDefiWallet,
+  frameWallet,
   metamaskWallet,
+  okxWallet,
+  oneKeyWallet,
+  phantomWallet,
+  rabbyWallet,
+  rainbowWallet,
+  safeWallet,
   useConnect,
   useNetworkMismatch,
   useSwitchChain,
   useWallet,
   walletConnect,
+  xdefiWallet,
+  zerionWallet,
 } from "@thirdweb-dev/react";
 import useInternalWallet from "../../../hooks/internalWallet";
 import useBalances from "../../../hooks/balances";
@@ -28,6 +42,7 @@ import Popup from "../popup/popup";
 import { web3Api } from "../../../api/web3Api";
 import { coinbaseWallet } from "@thirdweb-dev/react";
 import { trustWallet } from "@thirdweb-dev/react";
+import { useAuth } from "../../../context/auth/authContext";
 
 const CryptoCard = ({ wallet }) => {
   const { internalWalletAddress } = useInternalWallet();
@@ -138,6 +153,7 @@ export default CryptoCard;
 const CryptoItem = ({ data }) => {
   let balanceToken = "loading";
   let balanceUSD = "loading";
+  const { currencyRate } = useAuth();
   if (data.value) {
     balanceToken = data.value;
     if (data.price) {
@@ -152,7 +168,10 @@ const CryptoItem = ({ data }) => {
 
         <div>
           <div className={styles.title}>{data.name}</div>
-          <div className={styles.subtitle}>{`${data.price?.toFixed(2)}`}</div>
+          <div className={styles.subtitle}>
+            {currencyRate.symbol}
+            {formatUSDBalance(data.price * currencyRate.rate)}
+          </div>
         </div>
       </div>
       <div className={styles.middle}>
@@ -161,9 +180,11 @@ const CryptoItem = ({ data }) => {
       </div>
       <div className={styles.right}>
         <div className={styles.title}>
-          $
+          {currencyRate.symbol}
           {formatUSDBalance(
-            balanceUSD === "loading" ? balanceUSD : balanceUSD.toString(),
+            balanceUSD === "loading"
+              ? balanceUSD
+              : formatUSDBalance(balanceUSD * currencyRate.rate),
           )}
         </div>
         <div className={styles.tooltip}>
@@ -302,12 +323,38 @@ const SendModal = ({
             })
           : wallet?.type?.toLowerCase() === "coinbase"
           ? coinbaseWallet({ recommended: true, qrmodal: "coinbase" })
-          : // : wallet?.type?.toLowerCase() === "trust"
-            // ? trustWallet({
-            //     projectId: "57e1cfc18509bb9cc4d51638ce8d18ed",
-            //     recommended: true,
-            //   })
-            null;
+          : wallet?.type?.toLowerCase() === "trust"
+          ? trustWallet({
+              projectId: "57e1cfc18509bb9cc4d51638ce8d18ed",
+              recommended: true,
+            })
+          : wallet?.type?.toLowerCase() == "safe"
+          ? safeWallet()
+          : wallet?.type?.toLowerCase() == "zerionwallet"
+          ? zerionWallet()
+          : wallet?.type?.toLowerCase() == "blocto"
+          ? bloctoWallet()
+          : wallet?.type?.toLowerCase() == "frame"
+          ? frameWallet()
+          : wallet?.type?.toLowerCase() == "rainbowwallet"
+          ? rainbowWallet()
+          : wallet?.type?.toLowerCase() == "phantom"
+          ? phantomWallet()
+          : wallet?.type?.toLowerCase() == "okx"
+          ? okxWallet()
+          : wallet?.type?.toLowerCase() == "coin98"
+          ? coin98Wallet()
+          : wallet?.type?.toLowerCase() == "core"
+          ? coreWallet()
+          : wallet?.type?.toLowerCase() == "cryptodefi"
+          ? cryptoDefiWallet()
+          : wallet?.type?.toLowerCase() == "onekey"
+          ? oneKeyWallet()
+          : wallet?.type?.toLowerCase() == "rabby"
+          ? rabbyWallet()
+          : wallet?.type?.toLowerCase() == "xdefi"
+          ? xdefiWallet()
+          : null;
       if (
         connectedWallet === undefined ||
         connectedWallet?.walletId?.toLowerCase() != wallet?.name?.toLowerCase()

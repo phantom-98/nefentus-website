@@ -328,7 +328,7 @@ const Signup = () => {
 
       const requestData = {
         ...data,
-        roles: ["Affiliate"],
+        roles: ["Vendor"],
         country: CountryOption,
         affiliateLink: user?.affiliateJoined,
       };

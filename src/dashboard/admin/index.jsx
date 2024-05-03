@@ -599,10 +599,6 @@ const AdminBody = ({ type }) => {
                     }
                     options={[
                       { value: "Vendor", display: t("dashboard.roles.Vendor") },
-                      {
-                        value: "Affiliate",
-                        display: t("dashboard.roles.Affiliate"),
-                      },
                       { value: "Broker", display: t("dashboard.roles.Broker") },
                       {
                         value: "Senior Broker",
@@ -624,10 +620,6 @@ const AdminBody = ({ type }) => {
                     }
                     options={[
                       { value: "Vendor", display: t("dashboard.roles.Vendor") },
-                      {
-                        value: "Affiliate",
-                        display: t("dashboard.roles.Affiliate"),
-                      },
                       { value: "Broker", display: t("dashboard.roles.Broker") },
                       {
                         value: "Senior Broker",
@@ -648,10 +640,6 @@ const AdminBody = ({ type }) => {
                     }
                     options={[
                       { value: "Vendor", display: t("dashboard.roles.Vendor") },
-                      {
-                        value: "Affiliate",
-                        display: t("dashboard.roles.Affiliate"),
-                      },
                       { value: "Broker", display: t("dashboard.roles.Broker") },
                     ]}
                     dashboard
@@ -668,10 +656,6 @@ const AdminBody = ({ type }) => {
                     }
                     options={[
                       { value: "Vendor", display: t("dashboard.roles.Vendor") },
-                      {
-                        value: "Affiliate",
-                        display: t("dashboard.roles.Affiliate"),
-                      },
                     ]}
                     dashboard
                     setValue={setRole}

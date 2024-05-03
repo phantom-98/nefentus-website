@@ -1,6 +1,6 @@
 import styles from "./footer.module.css";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { separateText } from "../../func/separate";
 import { reformatFooterInfo } from "../../utils";
@@ -10,12 +10,22 @@ import FooterArrow from "../../assets/icon/footerArrow.svg";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { NefentusLogo } from "../../assets/icon/logos/logos";
 
-const content = ["/", "/payment", "/support", "/affiliate", "/privacy"];
-const content2 = ["/playstore", "/login", "/appstore", "/signup", "/imprint"];
+const content = ["/", "/payment", "/support"];
+const content2 = [
+  "",
+  "/playstore",
+  "/login",
+  "/appstore",
+  "/signup",
+  "/imprint",
+  "/privacy",
+];
 
 const Footer = () => {
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const location = useLocation();
+  const hideOptions = location?.pathname?.includes("/pay");
 
   const footerContentTranslation = t("footer.content", { returnObjects: true });
 
@@ -37,63 +47,67 @@ const Footer = () => {
     <footer className={`${styles.footer} `}>
       <div className={`${styles.footerContainer} container`}>
         <div className={styles.leftBox}>
-          <div className={`${styles.left}`}>
-            <NefentusLogo />
-            <div className={styles.content}>
-              <div className={styles.linkWrapper}>
-                <div className={styles.linkBox}>
-                  <p className={styles.contentLabel}>
-                    {t("footer.contentLabel1")}
-                  </p>
-                  {footerContent.map((item, index) => (
-                    <Link key={index} to={item.link}>
-                      <p>{item.text}</p>
-                    </Link>
-                  ))}
-                </div>
-                <div className={styles.linkBox}>
-                  <p className={styles.contentLabel}>
-                    {t("footer.contentLabel2")}
-                  </p>
-                  {footerContent2.map((item, index) => (
-                    <Link key={index} to={item.link}>
-                      <p>{item.text}</p>
-                    </Link>
-                  ))}
+          {!hideOptions && (
+            <div className={`${styles.left}`}>
+              <NefentusLogo />
+              <div className={styles.content}>
+                <div className={styles.linkWrapper}>
+                  <div className={styles.linkBox}>
+                    <p className={styles.contentLabel}>
+                      {t("footer.contentLabel1")}
+                    </p>
+                    {footerContent.map((item, index) => (
+                      <Link key={index} to={item.link}>
+                        <p>{item.text}</p>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className={styles.linkBox}>
+                    <p className={styles.contentLabel}>
+                      {t("footer.contentLabel2")}
+                    </p>
+                    {footerContent2.map((item, index) => (
+                      <Link key={index} to={item.link}>
+                        <p>{item.text}</p>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
           <div className={styles.copyright}>{t("footer.copyright")}</div>
         </div>
 
-        <div className={styles.socialBox}>
-          <h3>{t("footer.socialTitle")}</h3>
+        {!hideOptions && (
+          <div className={styles.socialBox}>
+            <h3>{t("footer.socialTitle")}</h3>
 
-          <div className={styles.icons}>
-            <Link to="https://www.linkedin.com/company/nefentuspay/">
-              <Linkedin />
-            </Link>
-            <Link to="https://www.instagram.com/nefentus/">
-              <Instagram />
-            </Link>
-            <Link to="https://www.youtube.com/channel/UCV1QWqkZXtZvXl6bq3AgkTA">
-              <Youtube />
-            </Link>
-          </div>
+            <div className={styles.icons}>
+              <Link to="https://www.linkedin.com/company/nefentuspay/">
+                <Linkedin />
+              </Link>
+              <Link to="https://www.instagram.com/nefentus/">
+                <Instagram />
+              </Link>
+              <Link to="https://www.youtube.com/channel/UCV1QWqkZXtZvXl6bq3AgkTA">
+                <Youtube />
+              </Link>
+            </div>
 
-          <div className={styles.boxBottom}>
-            <p>{separateText(t("footer.socialDescription"))}</p>
+            <div className={styles.boxBottom}>
+              <p>{separateText(t("footer.socialDescription"))}</p>
 
-            <div className={styles.arrowWrapper} onClick={handleScroll}>
-              <img
-                style={{ filter: theme === "light" ? "invert()" : "" }}
-                src={FooterArrow}
-                alt=""
-              />
+              <div className={styles.arrowWrapper} onClick={handleScroll}>
+                <img
+                  style={{ filter: theme === "light" ? "invert()" : "" }}
+                  src={FooterArrow}
+                  alt=""
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className={`${styles.copyright} ${styles.copyrightMob}`}>
           {t("footer.copyright")}

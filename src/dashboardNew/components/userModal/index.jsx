@@ -109,11 +109,13 @@ const UserModal = ({
               label={t("dashboard.modal.role").concat("*")}
               value={role}
               options={[
-                t("dashboard.roles.Vendor"),
-                t("dashboard.roles.Affiliate"),
-                t("dashboard.roles.Broker"),
-                t("dashboard.roles.SeniorBroker"),
-                t("dashboard.roles.Leader"),
+                { display: t("dashboard.roles.Vendor"), value: "Vendor" },
+                { display: t("dashboard.roles.Broker"), value: "Broker" },
+                {
+                  display: t("dashboard.roles.SeniorBroker"),
+                  value: "Senior Broker",
+                },
+                { display: t("dashboard.roles.Leader"), value: "Leader" },
               ]}
               dashboard
               setValue={setRole}
@@ -124,10 +126,12 @@ const UserModal = ({
               label={t("dashboard.modal.role").concat("*")}
               value={role}
               options={[
-                t("dashboard.roles.Vendor"),
-                t("dashboard.roles.Affiliate"),
-                t("dashboard.roles.Broker"),
-                t("dashboard.roles.SeniorBroker"),
+                { display: t("dashboard.roles.Vendor"), value: "Vendor" },
+                { display: t("dashboard.roles.Broker"), value: "Broker" },
+                {
+                  display: t("dashboard.roles.SeniorBroker"),
+                  value: "Senior Broker",
+                },
               ]}
               dashboard
               setValue={setRole}
@@ -138,9 +142,8 @@ const UserModal = ({
               label={t("dashboard.modal.role").concat("*")}
               value={role}
               options={[
-                t("dashboard.roles.Vendor"),
-                t("dashboard.roles.Affiliate"),
-                t("dashboard.roles.Broker"),
+                { display: t("dashboard.roles.Vendor"), value: "Vendor" },
+                { display: t("dashboard.roles.Broker"), value: "Broker" },
               ]}
               dashboard
               setValue={setRole}
@@ -151,8 +154,7 @@ const UserModal = ({
               label={t("dashboard.modal.role").concat("*")}
               value={role}
               options={[
-                t("dashboard.roles.Vendor"),
-                t("dashboard.roles.Affiliate"),
+                { display: t("dashboard.roles.Vendor"), value: "Vendor" },
               ]}
               dashboard
               setValue={setRole}

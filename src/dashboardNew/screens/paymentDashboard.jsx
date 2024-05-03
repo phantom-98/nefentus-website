@@ -10,20 +10,28 @@ import TableStatus from "../components/tableStatus/tableStatus";
 import vendorDashboardApi from "../../api/vendorDashboardApi";
 import SignupByEmail from "../../components/signupByEmail/signupByEmail";
 import { useTranslation } from "react-i18next";
-import { checkJwtToken } from "../../utils";
+import { checkJwtToken, formatUSDBalance } from "../../utils";
 import { Helmet } from "react-helmet";
-
-const label = ["Created At", "Price ($)", "Status", "QR Code", "Actions"];
+import { useAuth } from "../../context/auth/authContext";
 
 const PaymentDashboard = () => {
   const [invoiceData, setInvoiceData] = useState([]);
+  const [invoices, setInvoices] = useState([]);
   const [isLoadingInvoiceData, setIsLoadingInvoiceData] = useState(false);
   const { t } = useTranslation();
+  const { rateList, currencyRate } = useAuth();
+
+  const calcRate = (currency) => {
+    const res = rateList.find((item) => item.to === currency);
+    if (rateList && res) {
+      return res.rate;
+    } else return 1;
+  };
 
   const vendorAPI = new vendorDashboardApi();
   const label = [
     t("payments.table.created"),
-    t("payments.table.price"),
+    t("payments.table.price").concat("(" + currencyRate.symbol + ")"),
     t("payments.table.status"),
     t("payments.table.qr"),
     t("payments.table.actions"),
@@ -37,18 +45,32 @@ const PaymentDashboard = () => {
     let newInvoices = await vendorAPI.getInvoices();
     // Reverse the array
     newInvoices = newInvoices.reverse();
-    console.log(newInvoices, "newInvoices");
 
     if (newInvoices) {
+      setInvoices(newInvoices);
       const newInvoiceData = newInvoices.map((item) => invoiceToArray(item));
       setInvoiceData(newInvoiceData);
     }
   }
 
+  useEffect(() => {
+    if (invoices) {
+      const _invoiceData = invoiceData.map((item, index) => {
+        const _row = item;
+        _row[1] = formatUSDBalance(
+          parseFloat(invoices[index].price) /
+            calcRate(invoices[index].currency),
+        );
+        return _row;
+      });
+      setInvoiceData(_invoiceData);
+    }
+  }, [rateList]);
+
   function invoiceToArray(invoice) {
     return [
       new Date(invoice.createdAt).toLocaleString(),
-      parseFloat(invoice.price).toFixed(2),
+      formatUSDBalance(parseFloat(invoice.price) / calcRate(invoice.currency)),
       <TableStatus color={invoice.paidAt ? "green" : "blue"}>
         {invoice.paidAt ? t("general.paid") : t("general.open")}
       </TableStatus>,
@@ -82,8 +104,15 @@ const PaymentDashboard = () => {
         supportedWallets={[metamaskWallet()]}
         clientId="639eea2ebcabed7eab90b56aceeed08b"
       >
-        <PaymentForm setLoadingData={setIsLoadingInvoiceData} />
-        <Table grid="1fr 1fr 1fr 1fr 1fr" label={label} data={invoiceData} />
+        <div
+          style={{
+            background: "var(--bg2-color)",
+            borderRadius: "1rem",
+          }}
+        >
+          <PaymentForm setLoadingData={setIsLoadingInvoiceData} />
+          <Table grid="1fr 1fr 1fr 1fr 1fr" label={label} data={invoiceData} />
+        </div>
       </ThirdwebProvider>
       <SignupByEmail />
     </div>

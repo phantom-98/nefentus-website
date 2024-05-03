@@ -3,7 +3,7 @@ import styles from "./loginBox.module.css";
 
 import Button from "./../button/button";
 import { useEffect, useState, useRef, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { dashboardLink, decryptData, encryptData, getRole } from "../../utils";
 
@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Error from "../error/error";
-import setCookie from "../setCookie/setCookie";
+import { setCookie } from "../../func/cookies";
 import ReCAPTCHA from "react-google-recaptcha";
 import { OneTimeCodeInput } from "../../dashboard/input/input";
 import { Checkmark } from "../../assets/icon/icons";
@@ -145,6 +145,8 @@ const LoginBox = () => {
   const navigate = useNavigate();
   const backendAPI = new backend_API();
   const { t } = useTranslation();
+  const { state } = useLocation();
+  const { redirectUrl } = state || {};
   const [checkBox, setCheckBox] = useState(
     Cookies.get("nefentus-remember-me")
       ? JSON.parse(Cookies.get("nefentus-remember-me"))
@@ -198,7 +200,10 @@ const LoginBox = () => {
   const [step, setStep] = useState(false);
 
   function navigateDashboard(response = {}) {
-    if (Object.keys(response)?.length > 0) navigate(dashboardLink(response));
+    if (redirectUrl) {
+      navigate(redirectUrl);
+    } else if (Object.keys(response)?.length > 0)
+      navigate(dashboardLink(response));
     else navigate(dashboardLink(user));
   }
 

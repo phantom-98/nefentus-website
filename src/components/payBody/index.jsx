@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { PaymentInfo, ProductInfo } from "../receivePayment";
 import backendAPI from "../../api/backendAPI";
+import vendorDashboardApi from "../../api/vendorDashboardApi";
+import { useAuth } from "../../context/auth/authContext";
 
 const PayBody = ({ invoice }) => {
   const { t } = useTranslation();
@@ -11,13 +13,20 @@ const PayBody = ({ invoice }) => {
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [company, setCompany] = useState();
+  const [country, setCountry] = useState();
   const [address, setAddress] = useState();
+  const [isPerson, setPerson] = useState();
   const [tax, setTax] = useState();
+  const [taxInfo, setTaxInfo] = useState();
+  const [percent, setPercent] = useState();
+  const [reverseCharge, setReverseCharge] = useState();
   const [changed, setChanged] = useState(false);
   const [amount, setAmount] = useState(1);
   const [imageSource, setImageSource] = useState(null);
   const [price, setPrice] = useState(0);
+  const [currency, setCurrency] = useState("USD");
   const [disable, setDisable] = useState(false);
+  // const { user } = useAuth();
   const backend_API = new backendAPI();
 
   async function fetchProductImage(product) {
@@ -26,13 +35,28 @@ const PayBody = ({ invoice }) => {
       if (newImageSource) setImageSource(newImageSource);
     }
   }
+  async function fetchTaxInfo(country) {
+    const info = await backend_API.getTaxInfo(country);
+    if (info && info[0]) {
+      setTaxInfo(info[0]);
+    }
+  }
 
   useEffect(() => {
+    fetchTaxInfo(invoice.user?.country);
     setEmail(invoice.email);
     setName(invoice.name);
     setCompany(invoice.company);
+    setCountry(invoice.country);
     setAddress(invoice.address);
+    setPerson(invoice.person);
     setTax(invoice.taxNumber);
+    setCurrency(invoice.currency);
+    if (invoice.vatPercent) {
+      setPercent(invoice.vatPercent);
+    } else {
+      setPercent(invoice.product?.vatPercent);
+    }
     setAmount(invoice.productAmount);
     if (invoice.product) {
       fetchProductImage(invoice.product);
@@ -60,12 +84,17 @@ const PayBody = ({ invoice }) => {
 
   const updateInvoiceData = async () => {
     const req = {
-      amountUSD: price,
+      amount: price,
       name,
       email,
       company,
+      country,
       address,
+      currency,
+      person: isPerson,
       taxNumber: tax,
+      vatPercent: percent,
+      reverseCharge,
       productLink: invoice.product ? invoice.product.link : null,
       productAmount: amount,
     };
@@ -86,12 +115,14 @@ const PayBody = ({ invoice }) => {
 
   return (
     <ReceivePayment
-      priceUSD={price}
+      price={price}
+      currency={invoice.currency}
       seller={invoice.user}
       transInfoArg={{
         invoiceLink: invoice.link,
         productLink: invoice.product ? invoice.product.link : null,
       }}
+      vatPercent={reverseCharge ? null : percent}
       valid={name && email}
       disabled={disable}
       info={
@@ -100,13 +131,23 @@ const PayBody = ({ invoice }) => {
           setFullName={setName}
           email={email}
           setEmail={setEmail}
+          country={country}
+          setCountry={setCountry}
           address={address}
           setAddress={setAddress}
+          isPerson={isPerson}
+          setPerson={invoice.product ? setPerson : null}
           business={company}
           setBusiness={setCompany}
           tax={tax}
           setTax={setTax}
+          // percent={percent}
+          // setPercent={setPercent}
+          // reverseCharge={reverseCharge}
+          setReverseCharge={setReverseCharge}
+          taxInfo={taxInfo}
           setChanged={setChanged}
+          // isSeller={user && invoice.user?.email === user?.email}
         />
       }
       children={

@@ -1,7 +1,6 @@
 import Footer from "./components/footer/footer";
 import "./style/general.css";
 import Navigation from "./components/navigation/navigation";
-import setCookies from "./components/setCookie/setCookie";
 import React, { useEffect, useState, Suspense } from "react";
 import {
   Route,
@@ -11,7 +10,7 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 import CookieBanner from "./components/cookieBanner/cookieBanner";
-import Cookies from "js-cookie";
+import { getAcceptCookie } from "./func/cookies";
 import { MessageContextProvider } from "./context/message";
 import RingLoader from "react-spinners/RingLoader";
 
@@ -69,7 +68,7 @@ const Login = React.lazy(() => import("./pages/Login"));
 const Payment = React.lazy(() => import("./pages/Payment"));
 const Affiliate = React.lazy(() => import("./pages/Affiliate"));
 const Support = React.lazy(() => import("./pages/Support"));
-const Privacy = React.lazy(() => import("./pages/Privacy"));
+const Privacy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const Imprint = React.lazy(() => import("./pages/Imprint"));
 const PasswordForgot = React.lazy(() => import("./pages/PasswordForgot"));
 const Product = React.lazy(() => import("./pages/Product"));
@@ -92,10 +91,23 @@ import { ThemeProvider } from "./context/themeContext/themeContext";
 import { AuthProvider } from "./context/auth/authContext";
 import {
   ThirdwebProvider,
+  bloctoWallet,
+  coin98Wallet,
   coinbaseWallet,
+  coreWallet,
+  cryptoDefiWallet,
+  frameWallet,
   metamaskWallet,
+  okxWallet,
+  oneKeyWallet,
+  phantomWallet,
+  rabbyWallet,
+  rainbowWallet,
+  safeWallet,
   trustWallet,
   walletConnect,
+  xdefiWallet,
+  zerionWallet,
 } from "@thirdweb-dev/react";
 
 function App() {
@@ -133,7 +145,7 @@ function App() {
     };
   }, []);
 
-  const [ck, setCK] = useState(Cookies.get("acceptCookie"));
+  const [ck, setCK] = useState(getAcceptCookie());
 
   return (
     <ThirdwebProvider
@@ -141,9 +153,34 @@ function App() {
       clientId="639eea2ebcabed7eab90b56aceeed08b"
       supportedWallets={[
         metamaskWallet(),
+        coinbaseWallet({ recommended: true }),
         walletConnect(),
-        // trustWallet(),
-        coinbaseWallet(),
+        safeWallet({
+          personalWallets: [
+            metamaskWallet(),
+            coinbaseWallet({ recommended: true }),
+            walletConnect(),
+            trustWallet(),
+            zerionWallet(),
+            bloctoWallet(),
+            frameWallet(),
+            rainbowWallet(),
+            phantomWallet(),
+          ],
+        }),
+        trustWallet(),
+        zerionWallet(),
+        bloctoWallet(),
+        frameWallet(),
+        rainbowWallet(),
+        phantomWallet(),
+        okxWallet(),
+        coin98Wallet(),
+        coreWallet(),
+        cryptoDefiWallet(),
+        oneKeyWallet(),
+        rabbyWallet(),
+        xdefiWallet(),
       ]}
     >
       <AuthProvider>
@@ -269,14 +306,6 @@ function App() {
                           </ScreenLayout>
                         }
                       />
-                      <Route
-                        path="/dashboard/affiliate"
-                        element={
-                          <ScreenLayout>
-                            <AffiliateDashboard />
-                          </ScreenLayout>
-                        }
-                      />
 
                       <Route
                         path="/dashboard/profile"
@@ -388,9 +417,9 @@ function App() {
                         path="/product/:productLink/pay"
                         element={
                           <>
-                            <Navigation />
+                            {/* <Navigation /> */}
                             <ProductPay />
-                            <Footer />
+                            {/* <Footer /> */}
                           </>
                         }
                       />
@@ -398,9 +427,9 @@ function App() {
                         path="/pay/:payLink"
                         element={
                           <>
-                            <Navigation />
+                            {/* <Navigation /> */}
                             <Pay />
-                            <Footer />
+                            {/* <Footer /> */}
                           </>
                         }
                       />
