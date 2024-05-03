@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Error from "../error/error";
-import setCookie from "../setCookie/setCookie";
+import { setCookie } from "../../func/cookies";
 import ReCAPTCHA from "react-google-recaptcha";
 import { OneTimeCodeInput } from "../../dashboard/input/input";
 import { Checkmark } from "../../assets/icon/icons";
