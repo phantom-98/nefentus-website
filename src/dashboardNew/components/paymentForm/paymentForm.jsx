@@ -65,7 +65,7 @@ const PaymentForm = ({ setLoadingData }) => {
       setErrorMessage(t("messages.error.amountValid"));
       return;
     }
-    if (!taxPercent) {
+    if (!reverseCharge && !taxPercent) {
       setErrorMessage(t("messages.error.taxPercentValid"));
       return;
     }
