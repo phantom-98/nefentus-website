@@ -372,7 +372,10 @@ const ProductBody = () => {
                         return {
                           value: tax,
                           label: tax + "%",
-                          content: index == 0 ? "Standard" : "Reduced",
+                          content:
+                            index == 0
+                              ? t("products.createProductModal.standard")
+                              : t("products.createProductModal.reduced"),
                         };
                       })
                     : []

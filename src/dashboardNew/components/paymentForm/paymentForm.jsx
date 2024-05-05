@@ -22,6 +22,7 @@ import TrashDark from "../../../assets/icon/dark/trash.svg";
 import TrashLight from "../../../assets/icon/light/trash.svg";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import { formatUSDBalance } from "../../../utils";
+import { getCurrencySymbol } from "../../../countries";
 
 const PaymentForm = ({ setLoadingData }) => {
   const { t } = useTranslation();
@@ -146,6 +147,7 @@ const PaymentForm = ({ setLoadingData }) => {
     if (taxInfo && country) {
       if (taxInfo.country !== country && !isPerson) {
         setReverseCharge(true);
+        setTaxPercent(null);
       } else {
         setReverseCharge(false);
       }
@@ -168,7 +170,9 @@ const PaymentForm = ({ setLoadingData }) => {
           style={{
             fontSize: "2rem",
           }}
-        >{`All Invoices`}</p>
+        >
+          {t("payments.table.title")}
+        </p>
         <Button
           onClick={() => {
             loadInvoiceNumber();
@@ -316,25 +320,38 @@ const PaymentForm = ({ setLoadingData }) => {
               />
             )}
           </div>
-          <RadioSelect
-            label={t("products.createProductModal.vat")}
-            value={taxPercent}
-            setValue={setTaxPercent}
-            options={
-              taxInfo
-                ? JSON.parse(taxInfo.vatPercent).map((tax, index) => {
-                    return {
-                      value: tax,
-                      label: tax + "%",
-                      content:
-                        index == 0
-                          ? t("payments.tax.standard")
-                          : t("payments.tax.reduced"),
-                    };
-                  })
-                : []
-            }
-          />
+          {reverseCharge ? (
+            <>
+              <p
+                style={{
+                  fontSize: "1.2rem",
+                  color: "var(--text2-color)",
+                }}
+              >
+                {t("payments.tax.reverseCharge")}
+              </p>
+            </>
+          ) : (
+            <RadioSelect
+              label={t("products.createProductModal.vat")}
+              value={taxPercent}
+              setValue={setTaxPercent}
+              options={
+                taxInfo
+                  ? JSON.parse(taxInfo.vatPercent).map((tax, index) => {
+                      return {
+                        value: tax,
+                        label: tax + "%",
+                        content:
+                          index == 0
+                            ? t("payments.tax.standard")
+                            : t("payments.tax.reduced"),
+                      };
+                    })
+                  : []
+              }
+            />
+          )}
           <div
             style={{
               display: "flex",
@@ -483,7 +500,10 @@ const PaymentForm = ({ setLoadingData }) => {
             }}
           >
             <p>{t("payments.subtotal")}</p>
-            <p>{formatUSDBalance(amount)}</p>
+            <p>
+              {getCurrencySymbol()[currency]}
+              {formatUSDBalance(amount)}
+            </p>
           </div>
           <div
             style={{
@@ -495,8 +515,13 @@ const PaymentForm = ({ setLoadingData }) => {
           >
             <p>{t("payments.vatValue")}</p>
             <p>
-              {taxPercent && <span>{taxPercent}%</span>}
+              {reverseCharge ? (
+                <span>RC</span>
+              ) : (
+                taxPercent && <span>{taxPercent}%</span>
+              )}
               <span style={{ marginLeft: "3rem" }}>
+                {getCurrencySymbol()[currency]}
                 {formatUSDBalance((amount * taxPercent) / 100)}
               </span>
             </p>
@@ -512,7 +537,10 @@ const PaymentForm = ({ setLoadingData }) => {
             }}
           >
             <p>{t("payments.totalDue")}</p>
-            <p>{formatUSDBalance((amount * (taxPercent + 100)) / 100)}</p>
+            <p>
+              {getCurrencySymbol()[currency]}
+              {formatUSDBalance((amount * ((taxPercent ?? 0) + 100)) / 100)}
+            </p>
           </div>
           <Textarea
             label={t("payments.note").concat(":")}

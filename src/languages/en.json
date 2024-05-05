@@ -1069,6 +1069,7 @@
       "email": "Recipient email"
     },
     "tax": {
+      "reverseCharge": "It will be applied the reverse charge",
       "standard": "Standard",
       "reduced": "Reduced"
     },
@@ -1081,6 +1082,7 @@
       "total": "Total price"
     },
     "table": {
+      "title": "All invoices",
       "created": "Created at",
       "price": "Price",
       "status": "Status",
