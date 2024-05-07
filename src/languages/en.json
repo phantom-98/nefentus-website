@@ -1053,7 +1053,7 @@
     "taxNumber": "VAT number",
     "vat": "VAT",
     "showEuro": "Show prices in €",
-    "reverseCharge": "Use Reverse Charge process",
+    "reverseCharge": "The Reverse Charge process is used. The client is responsable for paying the VAT.",
     "createInvoice": "Create Invoice",
     "scan": "Scan QR Code",
     "scanDescription": "To confirm you need to scan QR code",

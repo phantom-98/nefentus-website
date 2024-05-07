@@ -1009,7 +1009,7 @@
       "email": "E-Mail des Empfängers"
     },
     "tax": {
-      "reverseCharge": "Es wird die umgekehrte Ladung angewendet",
+      "reverseCharge": "Es wird das Reverse Charge Verfahren angewendet. Dabei ist der Kunde für die Umsatzsteuer verantwortlich.",
       "standard": "Standard",
       "reduced": "Verringert"
     },
