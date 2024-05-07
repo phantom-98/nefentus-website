@@ -18,3 +18,41 @@
 .inputWrapper input:focus {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  font-size: 2rem;
+  padding: 0.1rem;
+  border: 1px solid #232323;
+  border-radius: 0.5rem;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 2.4rem;
+  height: 2.4rem;
+  clip-path: polygon(
+    16% 54%,
+    23% 47%,
+    37% 61%,
+    73% 26%,
+    80% 33%,
+    37% 75%,
+    16% 54%
+  );
+  transform: scale(0);
+  background-color: white;
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="checkbox"]:hover {
+  color: black;
+  cursor: pointer;
+}

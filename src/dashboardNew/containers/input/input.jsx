@@ -1,14 +1,18 @@
 import styles from "./input.module.css";
 
-const Input = ({ placeholder, value, setVaue }) => {
+const Input = ({ placeholder, value, setVaue, type }) => {
   const handleChange = (e) => {
-    setVaue(e.target.value);
+    if (type === "checkbox") {
+      setVaue(e.target.checked);
+    } else {
+      setVaue(e.target.value);
+    }
   };
 
   return (
     <div className={styles.inputWrapper}>
       <input
-        type="text"
+        type={type ? type : "text"}
         placeholder={placeholder}
         value={value}
         onChange={handleChange}

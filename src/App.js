@@ -417,9 +417,9 @@ function App() {
                         path="/product/:productLink/pay"
                         element={
                           <>
-                            <Navigation />
+                            {/* <Navigation /> */}
                             <ProductPay />
-                            <Footer />
+                            {/* <Footer /> */}
                           </>
                         }
                       />

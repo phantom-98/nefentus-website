@@ -579,6 +579,7 @@
     "or": "oder"
   },
   "countries": {
+    "choose": "Wählen Sie Ihr Land",
     "Afghanistan": "Afghanistan",
     "Albania": "Albanien",
     "Algeria": "Algerien",
@@ -783,7 +784,8 @@
     "VirginIslandsUS": "Amerikanische Jungferninseln",
     "Yemen": "Jemen",
     "Zambia": "Sambia",
-    "Zimbabwe": "Simbabwe"
+    "Zimbabwe": "Simbabwe",
+    "EuropeanUnion": "Europäische Union"
   },
   "messages": {
     "validation": {
@@ -859,6 +861,7 @@
       "updateData": "Fehler beim Aktualisieren der Daten",
       "uploadPicture": "Fehler beim Hochladen des Profilbildes",
       "amountValid": "Bitte geben Sie einen gültigen Betrag ein",
+      "taxPercentValid": "Bitte wählen Sie die Mehrwertsteuer",
       "nameValid": "Bitte geben Sie einen gültigen Namen ein",
       "companyValid": "Bitte geben Sie ein gültiges Unternehmen ein",
       "addressValid": "Bitte geben Sie eine gültige Adresse ein",
@@ -943,7 +946,8 @@
       "name": "Name ist erforderlich!",
       "description": "Beschreibung ist erforderlich!",
       "price": "Preis ist erforderlich!",
-      "priceAsFloat": "Preis muss positiv sein!"
+      "priceAsFloat": "Preis muss positiv sein!",
+      "chooseVat": "Bitte wählen Sie die Mehrwertsteuer!"
     },
     "createProductModal": {
       "createNewProduct": "Neues Produkt erstellen",
@@ -958,6 +962,13 @@
       "pricePlaceholder": "Preis eingeben",
       "stockLabel": "Lagerbestand",
       "stockPlaceholder": "Lagerbestand eingeben, wenn dieser begrenzt ist",
+      "vat": "Mehrwertsteuer in Prozent",
+      "standard": "Standard",
+      "reduced": "Verringert",
+      "currency": "Zahlungswährung",
+      "limitless": "Grenzenlos",
+      "quantity": "Menge",
+      "stockAvailable": "Einheit verfügbar",
       "add": "Hinzufügen",
       "update": "Aktualisieren",
       "cancel": "Stornieren",
@@ -976,9 +987,11 @@
     "email": "E-Mail",
     "name": "Name",
     "number": "Nummer",
+    "person": "Person",
     "company": "Firma",
-    "address": "Adresse",
-    "addressHint": "Land, Stadt, Straße",
+    "address": "Straße, Stadt",
+    "legalStatus": "Rechtsstellung",
+    "addressHint": "Straße, Stadt",
     "taxNumber": "MwSt. Nummer",
     "vat": "MwSt.",
     "createInvoice": "Rechnung erstellen",
@@ -986,6 +999,27 @@
     "scanDescription": "Zur Bestätigung müssen Sie einen QR-Code scannen",
     "downloadInvoice": "Rechnung herunterladen",
     "downloadReceipt": "Zahlungseingang herunterladen",
+    "subtotal": "Zwischensumme",
+    "vatValue": "Mehrwertsteuer (MwSt.)",
+    "totalDue": "Insgesamt fällig",
+    "note": "Hinweis",
+    "buyer": {
+      "customer": "Informationen für Kunden",
+      "fullName": "Vollständiger Name des Empfängers",
+      "email": "E-Mail des Empfängers"
+    },
+    "tax": {
+      "standard": "Standard",
+      "reduced": "Verringert"
+    },
+    "items": {
+      "title": "Rechnungspositionen",
+      "add": "Artikel hinzufügen",
+      "name": "Artikel",
+      "price": "Preis",
+      "quantity": "Menge",
+      "total": "Preis insgesamt"
+    },
     "table": {
       "created": "Erstellt am",
       "price": "Preis",
@@ -1001,11 +1035,14 @@
       "description": "Kosten, die unweigerlich anfallen, um eine Transaktion auf einer Blockchain auszuführen. Die Kosten gehen letztlich an die Miner, die die Blockchain sicher halten.",
       "gasPrice": "Gaspreis",
       "gasLimit": "Gaslimit",
-      "total": "Gesamtbetrag"
+      "updating": "Gaspreisaktualisierung alle 30 Sekunden",
+      "total": "Gesamtbetrag fällig"
     },
     "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
     "total": "Rechnungsbetrag",
+    "informVAT1": "Die MwSt. von",
+    "informVAT2": "ist in diesem Betrag enthalten",
     "cryptoAmount": "In Krypto",
     "cryptoDescription": "Dieser Betrag entspricht dem Rechnungsbetrag in der ausgewählten Kryptowährung. Nach der Bezahlung werden diese Mittel dem Verkäufer zugeschickt.",
     "chooseWallet": "Wallet auswählen",
