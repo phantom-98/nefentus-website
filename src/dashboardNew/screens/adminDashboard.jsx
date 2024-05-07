@@ -115,7 +115,7 @@ const AdminDashboard = ({ type }) => {
         await Promise.allSettled(getPromises);
 
       setMeasure({
-        total: dataInc?.value?.total,
+        // total: dataInc?.value?.total,
         last24h: dataInc?.value?.last24Hours,
         last30d: dataInc?.value?.last30Days,
         regist: dataReg?.value,
@@ -152,16 +152,16 @@ const AdminDashboard = ({ type }) => {
   useEffect(() => {
     if (measure && currencyRate) {
       const cardsContent = [
-        {
-          title: t("dashboard.earningCards.totalReferral"),
-          value:
-            currencyRate.symbol +
-            formatUSDBalance(
-              parseFloat(measure.total?.number) * currencyRate.rate,
-            ),
-          percentage: measure.total?.percentage,
-          progress: t("dashboard.earningCards.progressLast30d"),
-        },
+        // {
+        //   title: t("dashboard.earningCards.totalReferral"),
+        //   value:
+        //     currencyRate.symbol +
+        //     formatUSDBalance(
+        //       parseFloat(measure.total?.number) * currencyRate.rate,
+        //     ),
+        //   percentage: measure.total?.percentage,
+        //   progress: t("dashboard.earningCards.progressLast30d"),
+        // },
         {
           title: t("dashboard.earningCards.referralOfLast30d"),
           value:
