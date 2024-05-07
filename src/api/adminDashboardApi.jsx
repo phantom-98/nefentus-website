@@ -288,9 +288,9 @@ export default class adminDashboardApi {
 
   async deleteUser(email) {
     try {
-      const url = `${this.baseURL}/users/delete/${email}`;
+      const url = `${this.baseURL}/users/${email}`;
       const options = {
-        method: "GET",
+        method: "Delete",
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
