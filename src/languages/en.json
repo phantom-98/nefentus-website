@@ -531,12 +531,16 @@
       "address": "Address"
     },
     "earningCards": {
-      "first": "Sales: Total",
-      "second": "Sales: Last 24 hours",
-      "third": "Sales: Last 30 days",
-      "progressFirst": "vs last 30 days",
-      "progressSecond": "vs the day before",
-      "progressThird": "vs the month before"
+      "totalSales": "Total sales",
+      "totalReferral": "Total referral income",
+      "salesOfLast24h": "Sales of last 24 hours",
+      "referralOfLast24h": "Referral income of last 24 hours",
+      "progressLast24h": "vs. the day before",
+      "salesOfLast30d": "Sales of last 30 days",
+      "referralOfLast30d": "Referral income of last 30 days",
+      "progressLast30d": "vs. the month before",
+      "payments": "Total number of payments",
+      "registrations": "Total number of registrations"
     },
     "balanceTitle": "Balance this week",
     "cryptoCard": {

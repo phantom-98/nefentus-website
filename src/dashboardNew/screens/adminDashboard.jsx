@@ -80,6 +80,7 @@ const AdminDashboard = ({ type }) => {
   const [dataSize, setDataSize] = useState(10);
   const [spinner, setSpinner] = useState(false);
   const [graph, setGraph] = useState();
+  const [measure, setMeasure] = useState();
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -104,55 +105,23 @@ const AdminDashboard = ({ type }) => {
     } else {
       const getPromises = [
         adminApi.getTotalRegistrations(),
-        adminApi.getTotalClicks(),
         adminApi.getNumOrders(),
         adminApi.getTotalIncome(),
         adminApi.getRoleReport(),
         adminApi.getTotalIncomesPerDay(),
       ];
 
-      const [
-        dataReg,
-        dataClick,
-        dataOrders,
-        dataInc,
-        reportResp,
-        totalPricePerDate,
-      ] = await Promise.allSettled(getPromises);
+      const [dataReg, dataOrders, dataInc, reportResp, totalPricePerDate] =
+        await Promise.allSettled(getPromises);
 
-      const cardsContent = [
-        {
-          title: t("dashboard.admin.cardsContent.totalIncome"),
-          amount: `${parseFloat(dataInc?.value?.number).toFixed(2)}$`,
-          percentage: dataInc?.value?.percentage,
-          isMonetary: true,
-        },
-        {
-          title: t("dashboard.admin.cardsContent.clicks"),
-          amount: dataClick?.value?.number,
-          percentage: dataClick?.value?.percentage,
-          isMonetary: false,
-        },
-        {
-          title: t("dashboard.admin.cardsContent.registrations"),
-          amount: dataReg?.value?.number,
-          percentage: dataReg?.value?.percentage,
-          isMonetary: false,
-        },
-      ];
-      if (
-        userRole === "admin" ||
-        userRole === "leader" ||
-        userRole === "seniorbroker" ||
-        userRole === "broker"
-      ) {
-        cardsContent[1] = {
-          title: t("dashboard.admin.cardsContent.orders"),
-          amount: dataOrders?.value?.number,
-          percentage: dataOrders?.value?.percentage,
-          isMonetary: false,
-        };
-      }
+      setMeasure({
+        total: dataInc?.value?.total,
+        last24h: dataInc?.value?.last24Hours,
+        last30d: dataInc?.value?.last30Days,
+        regist: dataReg?.value,
+        payment: dataOrders?.value,
+      });
+      console.log("orders", dataReg?.value);
 
       let total = 0;
       const regRoleGraphData = reportResp.value
@@ -170,8 +139,6 @@ const AdminDashboard = ({ type }) => {
 
       setTotalRegUserCnt(total);
 
-      setCardInfo(cardsContent);
-
       setBarContent(regRoleGraphData);
       setGraph(totalPricePerDate.value);
       let _graph = {};
@@ -181,6 +148,56 @@ const AdminDashboard = ({ type }) => {
       setGraphData(_graph);
     }
   };
+
+  useEffect(() => {
+    if (measure && currencyRate) {
+      const cardsContent = [
+        {
+          title: t("dashboard.earningCards.totalReferral"),
+          value:
+            currencyRate.symbol +
+            formatUSDBalance(
+              parseFloat(measure.total?.number) * currencyRate.rate,
+            ),
+          percentage: measure.total?.percentage,
+          progress: t("dashboard.earningCards.progressLast30d"),
+        },
+        {
+          title: t("dashboard.earningCards.referralOfLast30d"),
+          value:
+            currencyRate.symbol +
+            formatUSDBalance(
+              parseFloat(measure.last30d?.number) * currencyRate.rate,
+            ),
+          percentage: measure.last30d?.percentage,
+          progress: t("dashboard.earningCards.progressLast30d"),
+        },
+        {
+          title: t("dashboard.earningCards.referralOfLast24h"),
+          value:
+            currencyRate.symbol +
+            formatUSDBalance(
+              parseFloat(measure.last24h?.number) * currencyRate.rate,
+            ),
+          percentage: measure.last24h?.percentage,
+          progress: t("dashboard.earningCards.progressLast24h"),
+        },
+        {
+          title: t("dashboard.earningCards.payments"),
+          value: measure.payment?.number,
+          percentage: measure.payment?.percentage,
+          progress: t("dashboard.earningCards.progressLast30d"),
+        },
+        {
+          title: t("dashboard.earningCards.registrations"),
+          value: measure.regist?.number,
+          percentage: measure.regist?.percentage,
+          progress: t("dashboard.earningCards.progressLast30d"),
+        },
+      ];
+      setCardInfo(cardsContent);
+    }
+  }, [measure, currencyRate]);
 
   useEffect(() => {
     if (graph) {
@@ -456,7 +473,7 @@ const AdminDashboard = ({ type }) => {
           Nefentus | {t(`navigation.${type}`) + " " + t("navigation.dashboard")}
         </title>
       </Helmet>
-      <EarningCards data={cardInfo} />
+      <EarningCards cardInfo={cardInfo} />
       <AdminBody
         data={barContent}
         chartData={graphData}
