@@ -612,7 +612,7 @@ const ReceivePayment = ({
                       (price * (100 + (vatPercent ?? 0))) / 100,
                     )}
                   </p>
-                  {vatPercent && (
+                  {vatPercent != null && parseFloat(vatPercent) > 0 && (
                     <p
                       style={{
                         color: "var(--text2-color)",

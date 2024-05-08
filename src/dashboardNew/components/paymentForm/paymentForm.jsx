@@ -51,7 +51,6 @@ const PaymentForm = ({ setLoadingData }) => {
       total: 0,
     },
   ]);
-  const [showEuro, setShowEuro] = useState(false);
   const [reverseCharge, setReverseCharge] = useState(false);
   const { clearMessages, setErrorMessage, setInfoMessage } =
     useContext(MessageContext);
@@ -99,7 +98,6 @@ const PaymentForm = ({ setLoadingData }) => {
       address,
       taxNumber,
       vatPercent: taxPercent,
-      showEuro,
       items: items.filter((item) => item.total !== 0),
       reverseCharge,
       currency,
@@ -326,6 +324,7 @@ const PaymentForm = ({ setLoadingData }) => {
                 style={{
                   fontSize: "1.2rem",
                   color: "var(--text2-color)",
+                  width: "48rem",
                 }}
               >
                 {t("payments.tax.reverseCharge")}
