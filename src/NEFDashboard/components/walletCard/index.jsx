@@ -29,7 +29,11 @@ const WalletCard = ({ wallet, key, handleWalletDetail }) => {
             <div className="wallet-logo-container">
               <img src={wallet?.logo} className="wallet-logo" />
             </div>
-            <div className="wallet-card-name">{wallet?.name}</div>
+            <div className="wallet-card-name">
+              {wallet?.name?.toLowerCase() == "internal"
+                ? "Nefentus"
+                : wallet?.name}
+            </div>
           </div>
         </Col>
         <Col span={15} className="wallet-card-right">

@@ -112,6 +112,9 @@ import {
   zerionWallet,
 } from "@thirdweb-dev/react";
 import DashboardLayout from "./NEFDashboard/containers/dashboardLayout";
+import PersonalDashboard from "./NEFDashboard/containers/personalDashboard";
+import ReferralDashboard from "./NEFDashboard/containers/referralDashboard";
+import SalesDashboard from "./NEFDashboard/containers/salesDashboard";
 
 function App() {
   useEffect(() => {
@@ -209,7 +212,25 @@ function App() {
                       <Route
                         path="/personal-dashboard"
                         element={
-                          <DashboardLayout>{/* <Home /> */}</DashboardLayout>
+                          <DashboardLayout title={"personalDashboard.title"}>
+                            <PersonalDashboard />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/referral-dashboard"
+                        element={
+                          <DashboardLayout title={"referralDashboard.title"}>
+                            <ReferralDashboard type={"admin"} />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/sales-dashboard"
+                        element={
+                          <DashboardLayout title={"Sales Dashboard"}>
+                            <SalesDashboard />
+                          </DashboardLayout>
                         }
                       />
                       <Route

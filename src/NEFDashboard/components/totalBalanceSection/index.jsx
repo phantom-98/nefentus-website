@@ -23,11 +23,10 @@ const TotalBalanceSection = ({ total }) => {
   };
 
   const handleReceiveCrypto = () => {
-    console.log("hi i'm running on clicking on Submit");
     setOpenReceiveModal(!openReceiveModal);
   };
   return (
-    <div className="total-balance-section">
+    <>
       {openSendModal && (
         <SendCrypto
           openSendModal={openSendModal}
@@ -48,8 +47,8 @@ const TotalBalanceSection = ({ total }) => {
         handleConvertCrypto={handleConvertCrypto}
       />
 
-      <div className="total-balance-value-container"></div>
-      <Flex className="balance-button-container">
+      {/* <div className="total-balance-value-container"></div> */}
+      <Flex justify="space-between" className="balance-button-container">
         <Button
           size="large"
           className="balance-buttons balance-buttons-first"
@@ -79,7 +78,7 @@ const TotalBalanceSection = ({ total }) => {
           {t("personalDashboard.convert")}
         </Button>
       </Flex>
-    </div>
+    </>
   );
 };
 

@@ -20,6 +20,7 @@
 }
 
 .wallet-card-name {
+  font-family: "DM-Sans";
   color: #e9e9e9;
   font-size: 14px;
   text-transform: capitalize;
@@ -36,6 +37,7 @@
 }
 
 .wallet-card-balance {
+  font-family: "DM-Sans";
   color: var(--Light-grey, #e9e9e9);
   font-size: 28px;
   font-weight: 500;

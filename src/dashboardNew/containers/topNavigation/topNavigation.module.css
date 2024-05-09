@@ -202,16 +202,13 @@
     gap: 0.8rem;
   }
 
-  .rightSide > div:nth-last-child(2) {
-    display: none;
-  }
-
   .rightSide > div:nth-child(1),
-  .rightSide > div:nth-child(3) {
+  .rightSide > div:nth-child(3),
+  .rightSide > div:nth-last-child(2) {
     display: flex;
   }
 
-  .rightSide > div:nth-child(3) {
+  .rightSide > div:nth-last-child(2) {
     margin-right: 3rem;
     /* margin-left: 1.5rem; */
   }

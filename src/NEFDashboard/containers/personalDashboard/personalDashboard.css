@@ -15,6 +15,7 @@
 }
 
 .pageTitle {
+  font-family: "DM-Sans";
   color: var(--text2-color, #b1b1b1);
   font-size: 20px;
   font-weight: 500;
@@ -29,45 +30,6 @@
 
 .ant-select-item-option-selected {
   background-color: transparent !important;
-}
-
-.verticalDivider {
-  height: 40px;
-  margin-inline: 0px;
-}
-
-.username-text {
-  color: var(--text2-color, #b1b1b1);
-  font-size: 14px;
-}
-
-.user-role-text {
-  font-size: 14px;
-  text-transform: capitalize;
-}
-
-.user-block {
-  gap: 8px;
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  border-radius: 8px;
-}
-.user-block:hover {
-  background-color: #202020;
-}
-
-.user-block-arrow {
-  margin-left: 8px;
-  width: 20px;
-}
-.user-block-arrow-down {
-  margin-left: 8px;
-  width: 20px;
-}
-
-.divider-without-margin {
-  margin: 0;
 }
 
 .wallets-title-container {
@@ -104,6 +66,7 @@
 }
 
 .portfolio-title {
+  font-family: "DM-Sans";
   color: var(--Light-grey, #e9e9e9);
   font-size: 20px;
   font-weight: 500;
@@ -147,55 +110,43 @@
   height: 50px !important;
 }
 .total-balance-text {
+  font-family: "DM-Sans";
   color: var(--Light-grey, #e9e9e9);
   font-size: 20px;
   font-weight: 500;
-}
-
-.profile-dropdown-width {
-  min-width: 150px;
 }
 
 :where(.searchbar).ant-input-affix-wrapper > input.ant-input {
   border: 0px !important;
 }
 
-.localisation-container {
-  width: 20px;
-}
-
 .dashboard-second-section-divider {
   height: auto;
 }
-.ant-select-single {
+/* .ant-select-single {
   height: 36px !important;
-}
+} */
 .ant-select-selector {
   border: 1px solid #202020 !important;
-}
-
-:where(.css-dev-only-do-not-override-1kuana8).currency-dropdown
-  .ant-select-selector {
-  line-height: 1;
-}
-
-:where(.css-dev-only-do-not-override-1kuana8).currency-dropdown
-  .ant-select-selector
-  .ant-select-selection-item,
-:where(.css-dev-only-do-not-override-1kuana8).currency-dropdown
-  .ant-select-selector
-  .ant-select-selection-placeholder {
-  line-height: 1;
-}
-
-.language-container {
-  border: 1px solid #202020;
-  padding: 8px;
-  border-radius: 6px;
 }
 
 .add-wallet-button {
   position: absolute;
   right: -34px;
   top: 20px;
+}
+
+.personal-dashboard-wallet-title {
+  font-size: 20px;
+}
+
+.personal-dashboard-add-wallet {
+  padding: 6px 24px 6px 12px !important;
+  border-radius: 6px !important;
+  border: 1px solid #111;
+  background: var(--Dark, #202020) !important;
+  color: var(--Light-grey, #e9e9e9) !important;
+  font-size: 14px !important;
+  /* Button shadow */
+  box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15);
 }

@@ -25,6 +25,7 @@
 }
 
 .tooltip-balance {
+  font-family: "DM-Sans";
   color: var(--White-BG, #f7f7f8);
   font-size: 14px;
   font-weight: 500;

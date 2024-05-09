@@ -19,3 +19,17 @@
 .table-skeleton {
   width: 100% !important;
 }
+
+:where(.css-dev-only-do-not-override-1yuxnot).custom-pagination
+  .ant-pagination-item-active,
+:where(.css-dev-only-do-not-override-1yuxnot).custom-pagination
+  .ant-pagination-item-active:hover {
+  font-weight: 600;
+  background: var(--BG2, #171717);
+  border-color: var(--Dark, #202020);
+  color: currentColor;
+}
+
+.custom-table .ant-table {
+  border: 1px solid var(--Dark, #202020);
+}

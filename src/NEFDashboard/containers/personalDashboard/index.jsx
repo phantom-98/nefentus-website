@@ -12,17 +12,10 @@ import {
   Dropdown,
   Skeleton,
 } from "antd";
-import { UserOutlined, PlusOutlined, UpOutlined } from "@ant-design/icons";
-import EuropeFlag from "../../../assets/newDashboardIcons/europe-flag.svg";
-import USAFlag from "../../../assets/newDashboardIcons/usa-flag.svg";
-import DownArrow from "../../../assets/newDashboardIcons/down-arrow.svg";
-import UpArrow from "../../../assets/newDashboardIcons/arrow-up.svg";
+
+import AddIcon from "../../../assets/newDashboardIcons/add.svg";
 import WalletIcon from "../../../assets/newDashboardIcons/wallets-gray.svg";
 import SearchIcon from "../../../assets/newDashboardIcons/search.svg";
-import SettingIcon from "../../../assets/newDashboardIcons/settings.svg";
-import SupportIcon from "../../../assets/newDashboardIcons/support.svg";
-import ThemeModeIcon from "../../../assets/newDashboardIcons/theme-mode.svg";
-import LogoutIcon from "../../../assets/newDashboardIcons/logout.svg";
 import EthereumLogo from "../../../assets/newDashboardIcons/ethereum-logo.svg";
 import Slider from "react-slick";
 import CurrencyChart from "../../components/currencyChart";
@@ -37,6 +30,7 @@ import { blockchainToName, currencies } from "../../../constants";
 import Check from "../../../assets/icon/check.svg";
 import backendAPI from "../../../api/backendAPI";
 import {
+  formatTokenBalance,
   formatUSDBalance,
   getRole,
   getWalleBackground,
@@ -46,6 +40,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../context/auth/authContext";
 import Languages from "../../../components/navigation/languages.jsx/languages";
 import "./personalDashboard.css";
+import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
 
 const COLORS = [
   "#078BB9",
@@ -62,11 +57,11 @@ const COLORS = [
 const PersonalDashboard = () => {
   const { t } = useTranslation();
   const walletRef = useRef(null);
-  const { toggleTheme } = useTheme();
   const currencyList = currencies();
   const backend_API = new backendAPI();
   const { user, setUser } = useAuth();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [backupCryptoList, setBackupCryptoList] = useState([]);
   const [cryptoList, setCryptoList] = useState([]);
   const { balances, fetchBalances, fetchBalanceForWallet } = useBalances();
   const { prices, fetchPrices } = usePrices();
@@ -76,6 +71,7 @@ const PersonalDashboard = () => {
   const [dropDownToggle, setDropDownToggle] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("europe");
   const [loader, setLoader] = useState(true);
+  const disconnect = useDisconnect();
   useEffect(() => {
     updateInfo();
   }, []);
@@ -112,74 +108,62 @@ const PersonalDashboard = () => {
     }
   };
 
-  const options = [
+  const columns = [
     {
-      value: "usa",
-      label: (
-        <Row className="currency-option">
-          <img src={USAFlag} alt="usa-flag" /> <div>USD $</div>
-          {/* {selectedLanguage === "usa" && (
-            <div>
-              <img src={Check} alt="check" />
+      title: t("personalDashboard.currencyTable.coin"),
+      dataIndex: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
+      sortDirections: ["ascend", "descend"],
+      render: (name, record) => {
+        return (
+          <Row align={"middle"} gutter={6}>
+            <Col>
+              <img src={record?.icon} width={24} />
+            </Col>
+            <Col>
+              <div className="default-text">{name}</div>
+              <div className="default-text-gray">{record?.blockchain}</div>
+            </Col>
+          </Row>
+        );
+      },
+    },
+    {
+      title: t("personalDashboard.currencyTable.amount"),
+      dataIndex: "value",
+      sortDirections: ["ascend", "descend"],
+      sorter: (a, b) => a.value - b.value,
+      render: (value, record) => {
+        return (
+          <Col>
+            <div className="default-text">
+              {formatTokenBalance(record?.value, 4) ?? 0}
             </div>
-          )} */}
-        </Row>
-      ),
-    },
-    {
-      value: "europe",
-      label: (
-        <Row className="currency-option">
-          <img src={EuropeFlag} alt="europe-flag" /> <div>EUR €</div>
-          {/* {selectedLanguage === "europe" && (
-            <div>
-              <img src={Check} alt="check" />
+            <div className="default-text-gray">
+              $
+              {formatUSDBalance(
+                record?.price * value || (record?.price * value)?.toString(),
+              )}
             </div>
-          )} */}
-        </Row>
-      ),
-    },
-  ];
-
-  const items = [
-    {
-      key: "1",
-      label: (
-        <div className="profile-dropdown-width">
-          {t("personalDashboard.profileDropdown.setting")}
-        </div>
-      ),
-      icon: <img src={SettingIcon} alt="setting" />,
+          </Col>
+        );
+      },
     },
     {
-      key: "2",
-      label: <div>{t("personalDashboard.profileDropdown.support")}</div>,
-      icon: <img src={SupportIcon} alt="support" />,
-    },
-    {
-      key: "3",
-      label: (
-        <Flex justify="space-between" align="center">
-          <div>{t("personalDashboard.profileDropdown.darkMode")}</div>
-          <Switch defaultChecked onChange={(e) => toggleTheme()} />
-        </Flex>
-      ),
-      icon: <img src={ThemeModeIcon} alt="theme-mode" />,
-    },
-    {
-      type: "divider",
-    },
-    {
-      key: "4",
-      label: <div>{t("personalDashboard.profileDropdown.logout")}</div>,
-      icon: <img src={LogoutIcon} alt="logout" />,
+      title: t("personalDashboard.currencyTable.price"),
+      dataIndex: "price",
+      sortDirections: ["ascend", "descend"],
+      sorter: (a, b) => a.price - b.price,
+      render: (price, record) => {
+        return <div>${price?.toFixed(2)}</div>;
+      },
     },
   ];
 
   const settings = {
     className: "center",
-    centerMode: true,
-    infinite: true,
+    centerMode: walletOptions?.length > 2,
+    infinite: walletOptions?.length > 2,
     centerPadding: "60px",
     slidesToShow: 3,
     speed: 500,
@@ -189,7 +173,7 @@ const PersonalDashboard = () => {
         settings: {
           className: "center",
           centerMode: true,
-          infinite: true,
+          infinite: walletOptions?.length > 1,
           centerPadding: "60px",
           slidesToShow: 2,
           speed: 500,
@@ -200,7 +184,7 @@ const PersonalDashboard = () => {
         settings: {
           className: "center",
           centerMode: true,
-          infinite: true,
+          infinite: walletOptions?.length > 1,
           centerPadding: "60px",
           slidesToShow: 1,
           speed: 500,
@@ -264,6 +248,7 @@ const PersonalDashboard = () => {
               currency?.icon,
           }));
           setCryptoList(data);
+          setBackupCryptoList(data);
         }
         setLoader(false);
       })
@@ -274,17 +259,25 @@ const PersonalDashboard = () => {
       });
   };
 
+  const registerWallet = async (wallet) => {
+    const address = await wallet.getAddress();
+    const result = await backend_API.registerWalletAddress({
+      address: address,
+      name: wallet?.walletId,
+    });
+    if (result) fetchWallets();
+  };
+
+  const onSearch = (value) => {
+    const updatedList = backupCryptoList?.filter((crypto) =>
+      crypto?.name?.toLowerCase()?.includes(value?.toLowerCase()),
+    );
+    setCryptoList(updatedList);
+  };
+
   const handleCloseDrawer = () => {
     setSelectedWallet({});
     setOpenDrawer(false);
-  };
-
-  const handleDropDown = (e) => {
-    setDropDownToggle(e);
-  };
-
-  const handleLanguage = (lng) => {
-    setSelectedLanguage(lng);
   };
 
   return (
@@ -294,162 +287,139 @@ const PersonalDashboard = () => {
         onClose={handleCloseDrawer}
         selectedWallet={selectedWallet}
       />
-      <div className="personal-dashboard-container">
-        <div className="page-title-container">
-          <div className="pageTitle">{t("personalDashboard.title")}</div>
-          <Flex align="center" gap={24}>
-            <Select
-              defaultValue={"europe"}
-              options={options}
-              onChange={handleLanguage}
-              className="currency-dropdown"
-            />
-            <div className="language-container">
-              <div className="localisation-container">
-                <Languages />
+
+      <div className="personal-dashboard-body">
+        <Row>
+          <Col span={8}>
+            <div className="total-balance-container">
+              <div className="total-balance-sub-container">
+                <div className="total-balance-text">
+                  {t("personalDashboard.balanceTitle")}
+                </div>
+                <div>
+                  {loader ? (
+                    <div className="skeleton-title">
+                      <Skeleton.Input active className="balance-skeleton" />
+                    </div>
+                  ) : (
+                    <div className="total-balance-value">{`$${formatUSDBalance(
+                      total,
+                    )}`}</div>
+                  )}
+                </div>
+                <TotalBalanceSection total={total} />
               </div>
             </div>
-
-            <Divider type="vertical" className="verticalDivider" />
-            <Dropdown
-              menu={{
-                items,
-              }}
-              className="profile-dropdown"
-              onOpenChange={handleDropDown}
-            >
-              <Row className="user-block">
-                <Avatar shape="square" size={35} icon={<UserOutlined />} />
-                <Col>
-                  <div className="username-text">
-                    {user?.firstName + " " + user?.lastName}
+          </Col>
+          <Divider
+            type="vertical"
+            className="dashboard-second-section-divider"
+          />
+          <Col span={15}>
+            <div className="block-right">
+              <Row className="wallets-title-container">
+                <Row className="wallets-title">
+                  <div className="default-text-gray personal-dashboard-wallet-title">
+                    {t("personalDashboard.wallets")}
                   </div>
-                  <div className="user-role-text">{getRole(user)}</div>
-                </Col>
-                <img
-                  src={dropDownToggle ? UpArrow : DownArrow}
-                  className={
-                    dropDownToggle
-                      ? `user-block-arrow`
-                      : `user-block-arrow-down`
+                </Row>
+                <div>
+                  {/* <Button
+                    className="add-wallet-button default-text"
+                    icon={<PlusOutlined />}
+                    onClick={() => walletRef?.current?.click()}
+                  >
+                    {t("personalDashboard.addWallet")}
+                  </Button> */}
+                  <ConnectWallet
+                    // theme={"dark"}
+                    modalSize={"wide"}
+                    btnTitle={
+                      <Flex align="center" gap={4}>
+                        <img src={AddIcon} />
+                        <div>Add Wallet</div>
+                      </Flex>
+                    }
+                    onConnect={(wlt) => {
+                      registerWallet(wlt);
+                      disconnect(wlt);
+                    }}
+                    className={"personal-dashboard-add-wallet"}
+                  />
+                </div>
+              </Row>
+              <div className="slider-container">
+                {loader ? (
+                  <Flex gap={10} align="center" justify="center">
+                    <Skeleton.Button active className="slider-skeleton" />
+                    <Skeleton.Button active className="slider-skeleton" />
+                    <Skeleton.Button active className="slider-skeleton" />
+                  </Flex>
+                ) : (
+                  <div>
+                    <Slider {...settings}>
+                      {walletOptions?.length > 0 &&
+                        walletOptions.map((wallet, index) => (
+                          <WalletCard
+                            wallet={wallet}
+                            openDrawer={openDrawer}
+                            setOpenDrawer={setOpenDrawer}
+                            key={index}
+                            handleWalletDetail={(wlt) => {
+                              setSelectedWallet(wlt);
+                            }}
+                          />
+                        ))}
+                    </Slider>
+                  </div>
+                )}
+              </div>
+            </div>
+          </Col>
+        </Row>
+        <Divider className="divider-without-margin third-divider" />
+        <Row gutter={32}>
+          <Col span={8}>
+            <div className="portfolio-container">
+              <div className="portfolio-title">
+                {t("personalDashboard.portfolio")}
+              </div>
+              <div className="currency-chart-container">
+                <CurrencyChart
+                  balances={balances}
+                  prices={prices}
+                  data={cryptoList}
+                  colors={COLORS}
+                  togglebtn={loader}
+                />
+              </div>
+            </div>
+          </Col>
+          <Col span={16}>
+            <div className="portfolio-container">
+              <Row align={"middle"} justify={"space-between"}>
+                <div className="portfolio-title">
+                  {t("personalDashboard.currencies")}
+                </div>
+                <Input
+                  placeholder={t("personalDashboard.searchPlaceholder")}
+                  prefix={<img src={SearchIcon} />}
+                  className="searchbar"
+                  onKeyUp={(e) =>
+                    e?.key == "Enter" && onSearch(e?.target?.value)
                   }
                 />
               </Row>
-            </Dropdown>
-          </Flex>
-        </div>
-        <Divider className="divider-without-margin" />
-        <div className="personal-dashboard-body">
-          <Row>
-            <Col span={8}>
-              <div className="total-balance-container">
-                <div className="total-balance-sub-container">
-                  <div className="total-balance-text">
-                    {t("personalDashboard.balanceTitle")}
-                  </div>
-                  <div>
-                    {loader ? (
-                      <div className="skeleton-title">
-                        <Skeleton.Input active className="balance-skeleton" />
-                      </div>
-                    ) : (
-                      <div className="total-balance-value">{`$${formatUSDBalance(
-                        total,
-                      )}`}</div>
-                    )}
-                  </div>
-                  <TotalBalanceSection total={total} />
-                </div>
-              </div>
-            </Col>
-            <Divider
-              type="vertical"
-              className="dashboard-second-section-divider"
-            />
-            <Col span={15}>
-              <div className="block-right">
-                <Row className="wallets-title-container">
-                  <Row className="wallets-title">
-                    <img src={WalletIcon} />
-                    <div className="default-text-gray">
-                      {t("personalDashboard.wallets")}
-                    </div>
-                  </Row>
-                  <div>
-                    <Button
-                      className="add-wallet-button"
-                      icon={<PlusOutlined />}
-                      onClick={() => walletRef?.current?.click()}
-                    >
-                      {t("personalDashboard.addWallet")}
-                    </Button>
-                  </div>
-                </Row>
-                <div className="slider-container">
-                  {loader ? (
-                    <Flex gap={10} align="center" justify="center">
-                      <Skeleton.Button active className="slider-skeleton" />
-                      <Skeleton.Button active className="slider-skeleton" />
-                      <Skeleton.Button active className="slider-skeleton" />
-                    </Flex>
-                  ) : (
-                    <div>
-                      <Slider {...settings}>
-                        {walletOptions?.length > 0 &&
-                          walletOptions.map((wallet, index) => (
-                            <WalletCard
-                              wallet={wallet}
-                              openDrawer={openDrawer}
-                              setOpenDrawer={setOpenDrawer}
-                              key={index}
-                              handleWalletDetail={(wlt) => {
-                                setSelectedWallet(wlt);
-                              }}
-                            />
-                          ))}
-                      </Slider>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Divider className="divider-without-margin third-divider" />
-          <Row gutter={32}>
-            <Col span={8}>
-              <div className="portfolio-container">
-                <div className="portfolio-title">
-                  {t("personalDashboard.portfolio")}
-                </div>
-                <div className="currency-chart-container">
-                  <CurrencyChart
-                    balances={balances}
-                    prices={prices}
-                    data={cryptoList}
-                    colors={COLORS}
-                    togglebtn={loader}
-                  />
-                </div>
-              </div>
-            </Col>
-            <Col span={16}>
-              <div className="portfolio-container">
-                <Row align={"middle"} justify={"space-between"}>
-                  <div className="portfolio-title">
-                    {t("personalDashboard.currencies")}
-                  </div>
-                  <Input
-                    placeholder={t("personalDashboard.searchPlaceholder")}
-                    prefix={<img src={SearchIcon} />}
-                    className="searchbar"
-                  />
-                </Row>
-                <TableData data={cryptoList} togglebtn={loader} />
-              </div>
-            </Col>
-          </Row>
-        </div>
+              <TableData
+                data={cryptoList}
+                togglebtn={loader}
+                columns={columns}
+              />
+            </div>
+          </Col>
+        </Row>
       </div>
+      {/* </div> */}
     </>
   );
 };

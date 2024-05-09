@@ -4,13 +4,13 @@
 }
 
 .send-modal-title {
-  padding: 20px 24px;
+  padding: 16px;
 }
 
-:where(.css-dev-only-do-not-override-1kuana8).send-crypto .ant-modal-content {
+/* :where(.css-dev-only-do-not-override-1kuana8).send-crypto .ant-modal-content {
   background-color: var(--card-color, #171717);
   padding: 0px;
-}
+} */
 
 :where(.css-dev-only-do-not-override-1kuana8).send-crypto .ant-modal-header {
   background: var(--BG2, #171717);
@@ -47,10 +47,10 @@
   aspect-ratio: 1;
 }
 
-:where(.css-dev-only-do-not-override-ysyo1).send-crypto .ant-modal-content {
+.send-crypto .ant-modal-content {
   padding: 0px !important;
 }
-:where(.css-dev-only-do-not-override-1jknxed).send-crypto .ant-modal-content {
+.send-crypto .ant-modal-content {
   padding: 0px !important;
 }
 
@@ -110,7 +110,7 @@
   border-left: 1px solid var(--Blue, #078bb9);
 }
 
-:where(.css-dev-only-do-not-override-1jknxed).send-crypto-wallet-address {
+.send-crypto-wallet-address {
   padding: 12px;
   background: var(--Dark, #202020);
 }
@@ -130,8 +130,6 @@
     --grad,
     linear-gradient(262deg, #009bd2 -78.58%, #3b6b7c 188.93%)
   );
-
-  /* Button shadow */
   box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.05);
 }
 
@@ -149,7 +147,7 @@
   margin-top: 16px;
 }
 
-:where(.css-dev-only-do-not-override-1jknxed).total-amount-collapse {
+.total-amount-collapse {
   border-radius: 0px;
   background-color: var(--Dark, #202020);
 }
@@ -176,5 +174,50 @@
 .send-modal-percentage-active {
   color: #1554ad;
   border-color: #1554ad;
-  /* background: var(--BG2, #202020); */
+}
+
+.send-gas-price-container {
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG, #171717);
+  padding: 16px;
+}
+
+.gas-price-note {
+  font-size: 12px;
+}
+
+.send-crypto .ant-modal-content {
+  position: relative;
+  background-color: #1f1f1f;
+  background-clip: padding-box;
+  border: 0;
+  border-radius: 8px;
+  box-shadow:
+    0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  pointer-events: auto;
+  padding: 0 !important;
+}
+
+.send-crypto .ant-modal-header {
+  margin-bottom: 0px;
+}
+
+.amount-percentage {
+  width: 25%;
+}
+
+.amount-percentage {
+  background: var(--Dark, #202020);
+  border-color: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0px 0 rgba(255, 255, 255, 0.04);
+}
+
+.amount-percentage:not(:disabled):not(.ant-btn-disabled):hover {
+  color: currentColor;
+  border-color: #3c89e8;
+  background: #141414;
 }

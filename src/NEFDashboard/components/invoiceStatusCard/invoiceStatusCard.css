@@ -1,0 +1,44 @@
+.invoice-status-card {
+  width: 33.33%;
+}
+.invoice-status-card .ant-card-body {
+  padding: 16px;
+  border-radius: 0 0 8px 8px;
+}
+
+.sales-invoice-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.invoice-line-bar-graph {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.invoice-line-bar-graph-section {
+  height: 10px;
+}
+
+.invoice-line-bar-graph .invoice-line-bar-graph-section:first-child {
+  border-radius: 6px 0px 0px 6px;
+}
+
+.invoice-line-bar-graph .invoice-line-bar-graph-section:last-child {
+  border-radius: 0px 6px 6px 0px;
+}
+
+.invoice-status-container {
+  width: 100%;
+}
+
+.invoice-row-color {
+  border-radius: 2px;
+  height: 26px;
+  width: 4px;
+}
+
+.invoice-status-text {
+  text-transform: capitalize;
+}

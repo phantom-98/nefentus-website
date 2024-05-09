@@ -469,7 +469,10 @@
       "role": "Rolle",
       "name": "Name",
       "company": "Firma",
-      "address": "Adresse"
+      "address": "Adresse",
+      "service_fee": "Servicegebühr",
+      "companyPlaceholder": "Unternehmen eingeben",
+      "service_fee_description": "Der Prozentsatz, den der Benutzer von jeder Transaktion erhält"
     },
     "earningCards": {
       "first": "Verkäufe: Insgesamt",
@@ -1285,7 +1288,7 @@
   "personalDashboard": {
     "title": "Wallet-Verwaltung",
     "balanceTitle": "Gesamtguthaben",
-    "wallets": "Geldbörsen",
+    "wallets": "Wallets",
     "addWallet": "Wallet hinzufügen",
     "portfolio": "Portfolio",
     "currencies": "Währungen",
@@ -1300,7 +1303,7 @@
       "logout": "Abmelden"
     },
     "currencyTable": {
-      "coin": "Münze",
+      "coin": "Währung",
       "amount": "Betrag",
       "price": "Preis"
     },
@@ -1310,16 +1313,16 @@
       "copy": "Kopieren",
       "balance": "Guthaben",
       "portfolio": "Portfolio",
-      "coinView": "Münzansicht"
+      "coinView": "Währungen"
     },
     "walletCard": {
       "addressTitle": "Wallet-Adresse",
       "balance": "Guthaben",
-      "detail": "Brieftaschendetail"
+      "detail": "Walletdetails"
     },
     "sidebar": {
       "menu": "Hauptmenü",
-      "wallets": "Geldbörsen",
+      "wallets": "Wallets",
       "payments": "Zahlungen",
       "createInvoice": "Rechnung erstellen",
       "sendCrypto": "Krypto senden",
@@ -1329,6 +1332,32 @@
     "receiveCrypto": {
       "heading": "QR-Code für den Zahlungseingang",
       "description": "Scannen Sie diesen QR-Code, um Geld auf die von Ihnen gewählte Wallet zu erhalten"
+    }
+  },
+  "referralDashboard": {
+    "title": "Empfehlungs-Dashboard",
+    "graphTitle": "Gesamtes Empfehlungseinkommen",
+    "rolesTitle": "Rollen",
+    "addRole": "Rolle hinzufügen",
+    "role": "Rolle",
+    "amount": "Betrag",
+    "addUser": "Benutzer hinzufügen",
+    "userManagement": "Benutzerverwaltung",
+    "incomeCards": {
+      "last30DaysTitle": "Einkommen der letzten 30 Tage",
+      "last30DaysSubText": "vs. letzte 30 Tage",
+      "last24HoursTitle": "Einkommen der letzten 24 Stunden",
+      "last24HoursSubText": "vs. Vortag",
+      "paymentCardTitle": "Gesamtanzahl der Zahlungen",
+      "paymentCardSubText": "vs. letzte 30 Tage",
+      "registrationCardTitle": "Gesamtanzahl der Registrierungen",
+      "registrationCardSubText": "vs. letzte 30 Tage"
+    },
+    "userTableMenu": {
+      "activate": "Aktivieren",
+      "deactivate": "Deaktivieren",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
     }
   },
   "cancel": "Stornieren",

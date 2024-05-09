@@ -17,6 +17,30 @@
   font-weight: 600;
 }
 
+@font-face {
+  font-family: DM-Sans;
+  src: url("../assets/fonts/DMSans.ttf");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: DM-Sans;
+  src: url("../assets/fonts/DMSans.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: DM-Sans;
+  src: url("../assets/fonts/DMSans.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: DM-Sans;
+  src: url("../assets/fonts/DMSans.ttf");
+  font-weight: 600;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -722,12 +746,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .default-text {
+  font-family: "DM-Sans";
   color: var(--Light-grey, #e9e9e9);
   font-size: 14px;
   font-weight: 400;
 }
 
 .default-text-gray {
+  font-family: "DM-Sans";
   color: var(--Light-grey2, #b1b1b1);
   font-size: 14px;
 }
@@ -748,6 +774,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .total-balance-value {
+  font-family: "DM-Sans";
   color: var(--Light-grey, #e9e9e9);
   font-size: 46px;
   font-weight: 500;
@@ -758,4 +785,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .wallet-skeleton {
   width: 100% !important;
   height: 75px !important;
+}
+
+.ant-table-column-title {
+  font-family: "DM-Sans";
+}
+
+:where(.css-dev-only-do-not-override-1yuxnot).ant-table-wrapper .ant-table {
+  line-height: normal;
 }

@@ -25,10 +25,16 @@
   background-repeat: no-repeat;
   background-size: contain;
   border: 1px solid #202020;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background-color: var(--BG2, #171717);
+  min-width: 310px;
+  padding: 16px;
 }
 
 .heading {
-  font-size: 12px;
+  font-family: "DM-Sans";
+  font-size: 14px;
   width: 100%;
   color: rgb(233, 233, 233);
   -webkit-text-fill-color: white;
@@ -44,6 +50,7 @@
   background: var(--Grey, #323232);
 }
 .paragraph {
+  font-family: "DM-Sans";
   font-size: small;
   color: #b1b1b1;
   -webkit-text-fill-color: #b1b1b1;
@@ -52,18 +59,20 @@
   text-align: center;
 }
 
-.send-crypto-wallet-container {
+.receive-crypto-wallet-container {
   width: 100%;
-  padding: 12px;
+  padding: 6px;
   border-radius: 6px;
   cursor: pointer;
-  background-color: var(--Dark, #202020);
+  /* background-color: var(--Dark, #202020); */
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
 }
 
-.send-crypto-full-width {
+/* .receive-crypto-full-width {
   width: 100%;
   border: 1px solid #202020;
-}
+} */
 .qr-code {
   padding: 8px;
   background-color: white;
@@ -78,4 +87,38 @@
 .receive-qr-skeleton {
   width: 180px !important;
   height: 190px !important;
+}
+
+.receive-crypto-label {
+  margin-bottom: 6px;
+}
+
+.receive-crypto-description {
+  text-align: center;
+}
+
+.receive-crypto-network {
+  width: 100%;
+}
+
+.deposit-address-field {
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  padding: 6px;
+}
+
+.receive-crypto-network-select.ant-select-lg
+  .ant-select-selector
+  .ant-select-selection-item
+  > div {
+  display: flex;
+  gap: 6px;
+}
+
+.receive-crypto-copy-address {
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: 1px solid #111;
+  background: var(--Dark, #202020);
+  box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15);
 }

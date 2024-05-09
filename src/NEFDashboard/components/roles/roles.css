@@ -1,0 +1,66 @@
+.roles-card {
+  width: 33.33%;
+  border: 1px solid var(--Dark, #202020);
+}
+
+.roles-card-body {
+  margin-block: auto;
+  /* min-height: 240px; */
+  min-height: 272px;
+}
+
+.common-role-style {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.add-role-button {
+  font-weight: 500;
+  background: #202020;
+}
+
+.roles-line-bar-graph {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.roles-line-bar-graph-section {
+  height: 10px;
+}
+
+.roles-line-bar-graph .roles-line-bar-graph-section:first-child {
+  border-radius: 6px 0px 0px 6px;
+}
+
+.roles-line-bar-graph .roles-line-bar-graph-section:last-child {
+  border-radius: 0px 6px 6px 0px;
+}
+
+:where(.css-dev-only-do-not-override-1yuxnot).roles-card .ant-card-body {
+  padding: 16px;
+  border-radius: 0 0 8px 8px;
+  min-height: 270px;
+}
+
+:where(.css-dev-only-do-not-override-1yuxnot).roles-card .ant-card-head {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: -1px;
+  padding: 12px 16px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  font-size: 16px;
+  background: var(--BG2, #171717);
+  border-bottom: 1px solid #303030;
+  border-radius: 8px 8px 0 0;
+}
+
+:where(.css-dev-only-do-not-override-1yuxnot).add-role-button {
+  font-size: 14px;
+  padding: 6px 24px 6px 12px;
+  border-radius: 6px;
+  line-height: normal;
+  height: auto;
+}

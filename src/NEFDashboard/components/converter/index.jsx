@@ -18,8 +18,8 @@ import ArrowRight from "../../../assets/newDashboardIcons/arrow-right.svg";
 import Ethereum from "../../../assets/newDashboardIcons/ethereum-logo.svg";
 import Bitcoin from "../../../assets/icon/crypto/bitcoin.svg";
 import EthereumLogo from "../../../assets/icon/crypto/ethereum.svg";
-import { PlusOutlined } from "@ant-design/icons";
 import SwapHorizontal from "../../../assets/newDashboardIcons/swap-horizontal.svg";
+import AddIcon from "../../../assets/newDashboardIcons/add.svg";
 import SwapVertical from "../../../assets/newDashboardIcons/swap-vertical.svg";
 import InfoIcon from "../../../assets/newDashboardIcons/info-gray.svg";
 import RefreshIcon from "../../../assets/newDashboardIcons/refresh-blue.svg";
@@ -390,7 +390,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
                   Connected Wallets
                 </div>
                 <Button
-                  icon={<PlusOutlined />}
+                  icon={<img src={AddIcon} />}
                   onClick={() => walletRef?.current?.click()}
                 >
                   Add Wallet

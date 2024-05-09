@@ -1,9 +1,11 @@
 .converter-title {
+  font-family: "DM-Sans";
   font-size: 16px;
   font-weight: 500;
 }
 
 .converter-step2-amount {
+  font-family: "DM-Sans";
   font-size: 20px;
   font-weight: 500;
 }
@@ -73,10 +75,7 @@
   aspect-ratio: 1;
 }
 
-:where(.css-dev-only-do-not-override-ysyo1).converter .ant-modal-content {
-  padding: 0px !important;
-}
-:where(.css-dev-only-do-not-override-1jknxed).converter .ant-modal-content {
+.converter .ant-modal-content {
   padding: 0px !important;
 }
 
@@ -118,6 +117,7 @@
 }
 
 .drawer-connect-wallet-title {
+  font-family: "DM-Sans";
   font-size: 16px;
   font-weight: 500;
 }
@@ -132,7 +132,7 @@
   background: #d3d3d30d;
 }
 
-:where(.css-dev-only-do-not-override-1jknxed).converter-wallet-address {
+.converter-wallet-address {
   padding: 12px;
   background: var(--Dark, #202020);
 }
@@ -161,8 +161,7 @@
   margin-top: 16px;
 }
 
-:where(.css-dev-only-do-not-override-1jknxed).converter-total-amount-collapse {
-  /* border-radius: 0px; */
+.converter-total-amount-collapse {
   background-color: var(--Dark, #202020);
   border: none;
 }
@@ -180,13 +179,6 @@
   > .ant-collapse-item {
   border-bottom: 0px;
 }
-/* :where(.css-dev-only-do-not-override-1jknxed).total-amount-collapse
-  > .ant-collapse-item:last-child,
-:where(.css-dev-only-do-not-override-1jknxed).total-amount-collapse
-  > .ant-collapse-item:last-child
-  > .ant-collapse-header {
-  border-radius: 0px;
-} */
 
 :where(.css-dev-only-do-not-override-1kuana8).converter .ant-modal-content {
   padding: 0px;

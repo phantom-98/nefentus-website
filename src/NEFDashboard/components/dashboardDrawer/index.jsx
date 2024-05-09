@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Drawer, Flex, Input, Row } from "antd";
+import { Col, Drawer, Flex, Input, Row } from "antd";
 import Cover from "../../../assets/newDashboardIcons/wallet-detail-cover.png";
 import TotalBalanceSection from "../totalBalanceSection";
 import EthereumLogo from "../../../assets/newDashboardIcons/ethereum-logo.svg";
@@ -13,7 +13,7 @@ import usePrices from "../../../hooks/prices";
 import { MessageContext } from "../../../context/message";
 import { useTranslation } from "react-i18next";
 import WalletAddressFormatter from "../../../func/walletAddressFormatter";
-import { formatUSDBalance } from "../../../utils";
+import { formatTokenBalance, formatUSDBalance } from "../../../utils";
 
 const COLORS = [
   "#078BB9",
@@ -33,6 +33,7 @@ const DashboardDrawer = ({ open, onClose, selectedWallet }) => {
   const { prices } = usePrices();
   const { setSuccessMessage } = useContext(MessageContext);
   const [cryptoList, setCryptoList] = useState([]);
+  const [backupCryptoList, setBackupCryptoList] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [loader, setLoader] = useState(true);
   const { t } = useTranslation();
@@ -45,6 +46,58 @@ const DashboardDrawer = ({ open, onClose, selectedWallet }) => {
   const clearData = () => {
     setCryptoList([]);
   };
+
+  const columns = [
+    {
+      title: t("personalDashboard.currencyTable.coin"),
+      dataIndex: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
+      sortDirections: ["ascend", "descend"],
+      render: (name, record) => {
+        return (
+          <Row align={"middle"} gutter={6}>
+            <Col>
+              <img src={record?.icon} width={24} />
+            </Col>
+            <Col>
+              <div className="default-text">{name}</div>
+              <div className="default-text-gray">{record?.blockchain}</div>
+            </Col>
+          </Row>
+        );
+      },
+    },
+    {
+      title: t("personalDashboard.currencyTable.amount"),
+      dataIndex: "value",
+      sortDirections: ["ascend", "descend"],
+      sorter: (a, b) => a.value - b.value,
+      render: (value, record) => {
+        return (
+          <Col>
+            <div className="default-text">
+              {formatTokenBalance(record?.value, 4) ?? 0}
+            </div>
+            <div className="default-text-gray">
+              $
+              {formatUSDBalance(
+                record?.price * value || (record?.price * value)?.toString(),
+              )}
+            </div>
+          </Col>
+        );
+      },
+    },
+    {
+      title: t("personalDashboard.currencyTable.price"),
+      dataIndex: "price",
+      sortDirections: ["ascend", "descend"],
+      sorter: (a, b) => a.price - b.price,
+      render: (price, record) => {
+        return <div>{price?.toFixed(2)}</div>;
+      },
+    },
+  ];
 
   const fetchWalletDetails = async () => {
     setLoader(true);
@@ -75,9 +128,17 @@ const DashboardDrawer = ({ open, onClose, selectedWallet }) => {
             initialiseCoinIcons(currency.name?.toLowerCase()) ?? currency?.icon,
         }));
         setCryptoList(data);
+        setBackupCryptoList(data);
       }
     });
     setLoader(false);
+  };
+
+  const onSearch = (value) => {
+    const updatedList = backupCryptoList?.filter((crypto) =>
+      crypto?.name?.toLowerCase()?.includes(value?.toLowerCase()),
+    );
+    setCryptoList(updatedList);
   };
 
   const initialiseCoinIcons = (coin) => {
@@ -123,7 +184,9 @@ const DashboardDrawer = ({ open, onClose, selectedWallet }) => {
               {t("personalDashboard.drawer.wallet")}
             </div>
             <div className="default-text drawer-wallet-name">
-              {selectedWallet?.name}
+              {selectedWallet?.name?.toLowerCase() == "internal"
+                ? "Nefentus"
+                : selectedWallet?.name}
             </div>
           </div>
           <div className="drawer-wallet-title-subcontainer">
@@ -195,9 +258,10 @@ const DashboardDrawer = ({ open, onClose, selectedWallet }) => {
               placeholder={t("personalDashboard.searchPlaceholder")}
               prefix={<img src={SearchIcon} />}
               className="drawer-searchbar"
+              onKeyUp={(e) => e?.key == "Enter" && onSearch(e?.target?.value)}
             />
           </Flex>
-          <TableData data={cryptoList} togglebtn={loader} />
+          <TableData data={cryptoList} togglebtn={loader} columns={columns} />
         </Flex>
       </Flex>
     </Drawer>
