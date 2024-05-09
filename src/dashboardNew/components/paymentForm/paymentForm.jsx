@@ -294,21 +294,21 @@ const PaymentForm = ({ setLoadingData }) => {
               setValue={setCurrency}
             />
           </div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: `1fr ${isPerson ? "" : "1fr"}`,
-              gap: "1rem",
-            }}
-          >
-            <Input
-              placeholder={t("payments.taxNumber")}
-              label={t("payments.taxNumber")}
-              value={taxNumber}
-              setState={setTaxNumber}
-              dashboard
-            />
-            {!isPerson && (
+          {!isPerson && (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: `1fr ${isPerson ? "" : "1fr"}`,
+                gap: "1rem",
+              }}
+            >
+              <Input
+                placeholder={t("payments.taxNumber")}
+                label={t("payments.taxNumber")}
+                value={taxNumber}
+                setState={setTaxNumber}
+                dashboard
+              />
               <Input
                 placeholder={`e.g. Google`}
                 label={t("payments.company")}
@@ -316,8 +316,8 @@ const PaymentForm = ({ setLoadingData }) => {
                 setState={setCompany}
                 dashboard
               />
-            )}
-          </div>
+            </div>
+          )}
           {reverseCharge ? (
             <>
               <p
