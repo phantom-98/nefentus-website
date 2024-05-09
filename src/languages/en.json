@@ -30,6 +30,7 @@
     "imprint": "Imprint",
     "forgotPassword": "Password forgotten",
     "privacy": "Privacy policy",
+    "vacancy": "Vacancy",
     "resetPassword": "Reset Password",
     "support": "Support"
   },
@@ -110,6 +111,9 @@
     "helpCard2Title": "FAQs",
     "helpCard2Text": " View FAQs for detailed instructions on specific features",
     "helpCard2Button": "View more"
+  },
+  "vacancy": {
+    "seeDetail": "See details"
   },
   "payment": {
     "customPayment": "Custom Payment",

@@ -75,6 +75,8 @@ const Product = React.lazy(() => import("./pages/Product"));
 const ProductPay = React.lazy(() => import("./pages/ProductPay"));
 const Pay = React.lazy(() => import("./pages/Pay"));
 const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
+const Vacancy = React.lazy(() => import("./pages/Vacancy"));
+const Jobs = React.lazy(() => import("./pages/Jobs"));
 
 // OLD DASHBOARD
 // const AffiliateDashboard = React.lazy(() => import("./dashboard/Affiliate"));
@@ -278,6 +280,26 @@ function App() {
                             <Navigation />
                             <Imprint />
                             <Footer />
+                          </>
+                        }
+                      />
+                      <Route
+                        path="/vacancy"
+                        element={
+                          <>
+                            <Layout>
+                              <Vacancy />
+                            </Layout>
+                          </>
+                        }
+                      />
+                      <Route
+                        path="/jobs"
+                        element={
+                          <>
+                            <Layout>
+                              <Jobs />
+                            </Layout>
                           </>
                         }
                       />

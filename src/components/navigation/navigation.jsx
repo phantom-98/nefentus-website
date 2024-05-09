@@ -198,6 +198,12 @@ const Navigation = () => {
                     <p className={styles.fake}>{t("navigation.resources")}</p>
                   </Link>
                 </li>
+                <li className="standard">
+                  <Link to="/vacancy">
+                    <p>{t("navigation.vacancy")}</p>
+                    <p className={styles.fake}>{t("navigation.vacancy")}</p>
+                  </Link>
+                </li>
               </ul>
             )}
           </div>
@@ -268,6 +274,9 @@ const Navigation = () => {
             </Link>
             <Link to="/support" onClick={() => setOpenMenu(false)}>
               <li className="standard">{t("navigation.resources")}</li>
+            </Link>
+            <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
+              <li className="standard">{t("navigation.vacancy")}</li>
             </Link>
           </ul>
         </div>
