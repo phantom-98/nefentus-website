@@ -60,15 +60,15 @@ const ProductBody = () => {
 
   async function loadProducts() {
     await checkJwtToken();
-    const newProducts = await dashboardApi.getProducts();
+    const newProducts = await dashboardApi.getProducts(0, 1000);
     if (newProducts) {
       const newSignedImagePaths = await Promise.all(
-        newProducts.map((product) =>
+        newProducts?.content?.map((product) =>
           dashboardApi.getSignedImagePath(product.link),
         ),
       );
 
-      const productData = newProducts.map((item, index) => ({
+      const productData = newProducts?.content?.map((item, index) => ({
         ...item,
         price: item.price,
         image: newSignedImagePaths[index],
