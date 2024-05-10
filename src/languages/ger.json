@@ -89,6 +89,19 @@
     "helpCard2Text": " Detaillierte Anleitungen zu allen Funktionen finden Sie in den FAQs.",
     "helpCard2Button": "Jetzt informieren"
   },
+  "vacancy": {
+    "hero1": "Werden Sie ein Teil",
+    "hero2": "unseres ",
+    "hero3": "Teams",
+    "open": "Offene Rollen",
+    "apply": "Für diese Stelle bewerben",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "comment": "Kommentar",
+    "linkedin": "Ihr Linkedin-Link (optional)",
+    "seeDetail": "Siehe Details"
+  },
   "payment": {
     "customPayment": "Benutzerdefinierte Zahlung",
     "heroHeadingGradient": "Der neue Weg",

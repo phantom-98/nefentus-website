@@ -6,33 +6,24 @@ const VacancyBody = () => {
   return (
     <div className={`container ${styles.vacancyBody}`}>
       <div className={styles.heading}>
-        <p>Become a part</p>
+        <p>{t("vacancy.hero1")}</p>
         <p>
-          of our <span className="gradient">team</span>
+          {t("vacancy.hero2")}{" "}
+          <span className="gradient">{t("vacancy.hero3")}</span>
         </p>
       </div>
       <div className={styles.jobs}>
-        <p>Open roles:</p>
+        <p>{t("vacancy.open")}</p>
         <div className={styles.cards}>
           <JobCard
-            head={`Salesman`}
-            text={`Ukrain, Kiev`}
-            link={window.origin + "/jobs"}
+            head={`Sales Manager DACH`}
+            text={`xxx`}
+            link={window.origin + "/jobs?key=sales_manager"}
           />
           <JobCard
-            head={`SMM manager`}
-            text={`Ukrain, Kiev`}
-            link={window.origin + "/jobs"}
-          />
-          <JobCard
-            head={`Full stack developer`}
-            text={`Ukrain, Kiev`}
-            link={window.origin + "/jobs"}
-          />
-          <JobCard
-            head={`Business development manager`}
-            text={`Ukrain, Kiev`}
-            link={window.origin + "/jobs"}
+            head={`Country Manager`}
+            text={`xxx`}
+            link={window.origin + "/jobs?key=country_manager"}
           />
         </div>
       </div>

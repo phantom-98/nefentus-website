@@ -13,7 +13,7 @@
 .heading h1 {
   font-size: 3rem;
 }
-button {
+.heading a {
   font-size: 1.2rem;
   padding: 0.8rem 2rem;
   border-radius: 0.6rem;
@@ -22,7 +22,7 @@ button {
   border: none;
   background: #0784b5;
 }
-button:hover {
+.heading a:hover {
   background: #1595c2;
 }
 
@@ -71,11 +71,6 @@ button:hover {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.6rem;
-}
-
-.contact button {
-  width: 100%;
-  padding: 1.2rem;
 }
 
 @media (max-width: 640px) {
