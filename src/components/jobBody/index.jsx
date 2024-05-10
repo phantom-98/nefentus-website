@@ -271,7 +271,8 @@ const JobBody = () => {
         </div>
         <div className={styles.description}>
           {job.description.split("\n").map((para) => {
-            if (para.trim().endsWith(":")) return <h3>{para.slice(0, -1)}</h3>;
+            if (para.trim().endsWith(":"))
+              return <h3>{para.trim().slice(0, -1)}</h3>;
             else
               return (
                 <span>
