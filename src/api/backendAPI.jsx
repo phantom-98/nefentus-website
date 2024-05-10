@@ -1521,8 +1521,7 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      const data = await response.json();
-      return data;
+      return response;
     } catch (error) {
       return null; // or return some default value
     }
