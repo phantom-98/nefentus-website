@@ -65,7 +65,7 @@ const MainDashboard = () => {
           percentage: measure.total?.percentage
             ? parseFloat(measure.total?.percentage).toFixed(2)
             : "0",
-          progress: t("dashboard.earningCards.progressLast30d"),
+          progress: t("dashboard.earningCards.progressInLast30d"),
         },
         {
           title: t("dashboard.earningCards.salesOfLast24h"),
@@ -97,7 +97,7 @@ const MainDashboard = () => {
           percentage: measure.numberOfPayments?.percentage
             ? parseFloat(measure.numberOfPayments?.percentage).toFixed(2)
             : "0",
-          progress: t("dashboard.earningCards.progressLast30d"),
+          progress: t("dashboard.earningCards.progressInLast30d"),
         },
       ];
 

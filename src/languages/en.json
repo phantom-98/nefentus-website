@@ -533,6 +533,7 @@
     "earningCards": {
       "totalSales": "Total sales",
       "totalReferral": "Total referral income",
+      "progressInLast30d": "in the last 30 days",
       "salesOfLast24h": "Sales of last 24 hours",
       "referralOfLast24h": "Referral income of last 24 hours",
       "progressLast24h": "vs. the day before",

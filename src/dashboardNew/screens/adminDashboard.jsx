@@ -150,6 +150,7 @@ const AdminDashboard = ({ type }) => {
   };
 
   useEffect(() => {
+    console.log("measure", measure);
     if (measure && currencyRate) {
       const cardsContent = [
         // {
@@ -160,7 +161,7 @@ const AdminDashboard = ({ type }) => {
         //       parseFloat(measure.total?.number) * currencyRate.rate,
         //     ),
         //   percentage: measure.total?.percentage,
-        //   progress: t("dashboard.earningCards.progressLast30d"),
+        //   progress: t("dashboard.earningCards.progressInLast30d"),
         // },
         {
           title: t("dashboard.earningCards.referralOfLast30d"),
@@ -186,13 +187,13 @@ const AdminDashboard = ({ type }) => {
           title: t("dashboard.earningCards.payments"),
           value: measure.payment?.number,
           percentage: measure.payment?.percentage,
-          progress: t("dashboard.earningCards.progressLast30d"),
+          progress: t("dashboard.earningCards.progressInLast30d"),
         },
         {
           title: t("dashboard.earningCards.registrations"),
           value: measure.regist?.number,
           percentage: measure.regist?.percentage,
-          progress: t("dashboard.earningCards.progressLast30d"),
+          progress: t("dashboard.earningCards.progressInLast30d"),
         },
       ];
       setCardInfo(cardsContent);

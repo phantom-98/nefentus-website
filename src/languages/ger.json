@@ -474,6 +474,7 @@
     "earningCards": {
       "totalSales": "Gesamtumsatz",
       "totalReferral": "Gesamte Einnahmen aus Überweisungen",
+      "progressInLast30d": "in den letzten 30 Tagen",
       "salesOfLast24h": "Verkäufe der letzten 24 Stunden",
       "referralOfLast24h": "Referral-Einkommen der letzten 24 Stunden",
       "progressLast24h": "gegenüber dem Vortag",
