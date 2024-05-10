@@ -16,14 +16,29 @@ const VacancyBody = () => {
         <p>{t("vacancy.open")}</p>
         <div className={styles.cards}>
           <JobCard
-            head={`Sales Manager DACH`}
-            text={`xxx`}
-            link={window.origin + "/jobs?key=sales_manager"}
+            head={`Sales Manager`}
+            text={`DACH`}
+            link={window.origin + "/jobs?key=sales_manager_DACH"}
+          />
+          <JobCard
+            head={`Sales Manager`}
+            text={`Ukraine`}
+            link={window.origin + "/jobs?key=sales_manager_ukraine"}
           />
           <JobCard
             head={`Country Manager`}
-            text={`xxx`}
-            link={window.origin + "/jobs?key=country_manager"}
+            text={`Ukraine`}
+            link={window.origin + "/jobs?key=country_manager_ukraine"}
+          />
+          <JobCard
+            head={`Sales Manager`}
+            text={`Poland`}
+            link={window.origin + "/jobs?key=sales_manager_poland"}
+          />
+          <JobCard
+            head={`Country Manager`}
+            text={`Poland`}
+            link={window.origin + "/jobs?key=country_manager_poland"}
           />
         </div>
       </div>
