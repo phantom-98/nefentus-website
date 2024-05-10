@@ -118,6 +118,8 @@
     "hero3": "team",
     "open": "Open roles",
     "apply": "Apply for this job",
+    "success": "You have successfully applied",
+    "failed": "Network error",
     "firstName": "First Name",
     "lastName": "Last Name",
     "email": "Email",

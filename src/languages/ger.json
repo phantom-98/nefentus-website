@@ -95,6 +95,8 @@
     "hero3": "Teams",
     "open": "Offene Stellen",
     "apply": "Auf diese Stelle bewerben",
+    "success": "Sie haben sich erfolgreich beworben",
+    "failed": "Netzwerkfehler",
     "firstName": "Vorname",
     "lastName": "Nachname",
     "email": "E-Mail",

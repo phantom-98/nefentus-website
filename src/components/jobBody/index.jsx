@@ -244,13 +244,14 @@ const JobBody = () => {
         comment,
       );
       if (res) {
+        setInfoMessage(t("vacancy.success"));
         setFirstName("");
         setLastName("");
         setEmail("");
         setLinkedin("");
         setComment("");
       } else {
-        setErrorMessage("Network error");
+        setErrorMessage(t("vacancy.failed"));
       }
       setSpinner(false);
     }
@@ -270,7 +271,7 @@ const JobBody = () => {
         </div>
         <div className={styles.description}>
           {job.description.split("\n").map((para) => {
-            if (para.trim().endsWith(":")) return <h3>{para}</h3>;
+            if (para.trim().endsWith(":")) return <h3>{para.slice(0, -1)}</h3>;
             else
               return (
                 <span>
