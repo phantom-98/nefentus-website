@@ -1027,9 +1027,9 @@
       "standard": "Standard",
       "reduced": "Reduced",
       "currency": "Payment currency",
-      "limitless": "Limitless",
-      "quantity": "Quantity",
-      "stockAvailable": "Unit available",
+      "limitless": "Unlimited",
+      "quantity": "Limited",
+      "stockAvailable": "Available stock",
       "add": "Add",
       "update": "Update",
       "cancel": "Cancel",
@@ -1055,8 +1055,6 @@
     "addressHint": "Street, city",
     "taxNumber": "VAT number",
     "vat": "VAT",
-    "showEuro": "Show prices in €",
-    "reverseCharge": "Use Reverse Charge process",
     "createInvoice": "Create Invoice",
     "scan": "Scan QR Code",
     "scanDescription": "To confirm you need to scan QR code",
@@ -1072,6 +1070,7 @@
       "email": "Recipient email"
     },
     "tax": {
+      "reverseCharge": "The Reverse Charge process is used. The client is responsable for paying the VAT.",
       "standard": "Standard",
       "reduced": "Reduced"
     },
@@ -1084,6 +1083,7 @@
       "total": "Total price"
     },
     "table": {
+      "title": "All invoices",
       "created": "Created at",
       "price": "Price",
       "status": "Status",

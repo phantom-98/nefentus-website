@@ -864,7 +864,7 @@
       "updateData": "Fehler beim Aktualisieren der Daten",
       "uploadPicture": "Fehler beim Hochladen des Profilbildes",
       "amountValid": "Bitte geben Sie einen gültigen Betrag ein",
-      "taxPercentValid": "Bitte wählen Sie die Mehrwertsteuer",
+      "taxPercentValid": "Bitte wählen Sie die Umsatzsteuer",
       "nameValid": "Bitte geben Sie einen gültigen Namen ein",
       "companyValid": "Bitte geben Sie ein gültiges Unternehmen ein",
       "addressValid": "Bitte geben Sie eine gültige Adresse ein",
@@ -950,7 +950,7 @@
       "description": "Beschreibung ist erforderlich!",
       "price": "Preis ist erforderlich!",
       "priceAsFloat": "Preis muss positiv sein!",
-      "chooseVat": "Bitte wählen Sie die Mehrwertsteuer!"
+      "chooseVat": "Bitte wählen Sie die Umsatzsteuer!"
     },
     "createProductModal": {
       "createNewProduct": "Neues Produkt erstellen",
@@ -965,13 +965,13 @@
       "pricePlaceholder": "Preis eingeben",
       "stockLabel": "Lagerbestand",
       "stockPlaceholder": "Lagerbestand eingeben, wenn dieser begrenzt ist",
-      "vat": "Mehrwertsteuer in Prozent",
+      "vat": "Umsatzsteuer in Prozent",
       "standard": "Standard",
-      "reduced": "Verringert",
-      "currency": "Zahlungswährung",
-      "limitless": "Grenzenlos",
-      "quantity": "Menge",
-      "stockAvailable": "Einheit verfügbar",
+      "reduced": "Reduziert",
+      "currency": "Währung",
+      "limitless": "Unbegrenzt",
+      "quantity": "Begrenzt",
+      "stockAvailable": "Verfügbarer Lagerbestand",
       "add": "Hinzufügen",
       "update": "Aktualisieren",
       "cancel": "Stornieren",
@@ -991,19 +991,19 @@
     "name": "Name",
     "number": "Nummer",
     "person": "Person",
-    "company": "Firma",
+    "company": "Unternehmen",
     "address": "Straße, Stadt",
     "legalStatus": "Rechtsstellung",
     "addressHint": "Straße, Stadt",
-    "taxNumber": "MwSt. Nummer",
-    "vat": "MwSt.",
+    "taxNumber": "UmSt. Nummer",
+    "vat": "UmSt.",
     "createInvoice": "Rechnung erstellen",
     "scan": "QR-Code scannen",
     "scanDescription": "Zur Bestätigung müssen Sie einen QR-Code scannen",
     "downloadInvoice": "Rechnung herunterladen",
     "downloadReceipt": "Zahlungseingang herunterladen",
     "subtotal": "Zwischensumme",
-    "vatValue": "Mehrwertsteuer (MwSt.)",
+    "vatValue": "Umsatzsteuer (UmSt.)",
     "totalDue": "Insgesamt fällig",
     "note": "Hinweis",
     "buyer": {
@@ -1012,6 +1012,7 @@
       "email": "E-Mail des Empfängers"
     },
     "tax": {
+      "reverseCharge": "Es wird das Reverse Charge Verfahren angewendet. Dabei ist der Kunde für die Umsatzsteuer verantwortlich.",
       "standard": "Standard",
       "reduced": "Verringert"
     },
@@ -1024,6 +1025,7 @@
       "total": "Preis insgesamt"
     },
     "table": {
+      "title": "Alle Rechnungen",
       "created": "Erstellt am",
       "price": "Preis",
       "status": "Status",
