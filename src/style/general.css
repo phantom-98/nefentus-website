@@ -17,6 +17,49 @@
   font-weight: 600;
 }
 
+@font-face {
+  font-family: DM-Sans;
+  src: url("../assets/fonts/DMSans.ttf");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: DM-Sans;
+  src: url("../assets/fonts/DMSans.ttf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: DM-Sans;
+  src: url("../assets/fonts/DMSans.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: DM-Sans;
+  src: url("../assets/fonts/DMSans.ttf");
+  font-weight: 600;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* new dashboard colors 
+
+--Dark: #202020
+--BG2: #171717
+--Light-grey: #E9E9E9
+--Light-grey2: #B1B1B1
+--White-BG: #F7F7F8
+--Color: #111
+--Green: #07B561
+--TrnspGreen: rgba(7, 181, 97, 0.10)
+--Grey: #323232;
+--grad: #009BD2
+
+
+*/
 /* Variable */
 :root .dark {
   --lightBlack-color: rgb(38, 38, 38);
@@ -31,6 +74,12 @@
   --card-color: #272729; /* for card header background */
   --text2-color: #b1b1b1; /* for second text background */
   --border-color: #313131; /* for border */
+  --Light-grey: #e9e9e9;
+  --Dark: #202020;
+  --BG2: #171717;
+  --Light-grey: #e9e9e9;
+  --Light-grey2: #b1b1b1;
+  --White-BG: #f7f7f8;
 }
 
 :root .light {
@@ -46,6 +95,12 @@
   --card-color: #e0e0e0; /* for card header background */
   --text2-color: #565656; /* for second text background */
   --border-color: #dadada; /* for border */
+  --Light-grey: #9e9e9e;
+  --Dark: #f6f6f6;
+  --BG2: #e9e9e9;
+  --Light-grey: #111111;
+  --Light-grey2: #565656;
+  --White-BG: #696969;
 }
 
 :root {
@@ -676,4 +731,66 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .light .affiliate {
   box-shadow: 0.4rem 0.4rem 0.8rem var(--border-color);
+}
+
+:where(.css-dev-only-do-not-override-ysyo1).ant-divider-vertical {
+  position: relative;
+  top: -0.06em;
+  display: inline-block;
+  height: auto;
+  margin-inline: 8px;
+  margin-block: 0;
+  vertical-align: middle;
+  border-top: 0;
+  border-inline-start: 1px solid rgba(253, 253, 253, 0.12);
+}
+
+.default-text {
+  font-family: "DM-Sans";
+  color: var(--Light-grey, #e9e9e9);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.default-text-gray {
+  font-family: "DM-Sans";
+  color: var(--Light-grey2, #b1b1b1);
+  font-size: 14px;
+}
+
+:where(.css-dev-only-do-not-override-ysyo1).add-wallet-button:not(
+    :disabled
+  ):not(.ant-btn-disabled):hover {
+  color: var(--Light-grey, #e9e9e9);
+  border-color: #3c89e8;
+  background: #141414;
+}
+
+:where(.css-dev-only-do-not-override-11xg00t).add-wallet-button:not(
+    :disabled
+  ):not(.ant-btn-disabled):hover {
+  color: var(--Light-grey, rgba(0, 0, 0, 0.88));
+  border-color: #3c89e8;
+}
+
+.total-balance-value {
+  font-family: "DM-Sans";
+  color: var(--Light-grey, #e9e9e9);
+  font-size: 46px;
+  font-weight: 500;
+  width: 100%;
+  height: 20%;
+}
+
+.wallet-skeleton {
+  width: 100% !important;
+  height: 75px !important;
+}
+
+.ant-table-column-title {
+  font-family: "DM-Sans";
+}
+
+:where(.css-dev-only-do-not-override-1yuxnot).ant-table-wrapper .ant-table {
+  line-height: normal;
 }

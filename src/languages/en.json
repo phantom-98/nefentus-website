@@ -528,7 +528,10 @@
       "role": "Role",
       "name": "Name",
       "company": "Company",
-      "address": "Address"
+      "address": "Address",
+      "service_fee": "Service Fee",
+      "companyPlaceholder": "Enter Company",
+      "service_fee_description": "The percentage that the user receives from each transaction"
     },
     "earningCards": {
       "first": "Sales: Total",
@@ -1024,9 +1027,9 @@
       "standard": "Standard",
       "reduced": "Reduced",
       "currency": "Payment currency",
-      "limitless": "Limitless",
-      "quantity": "Quantity",
-      "stockAvailable": "Unit available",
+      "limitless": "Unlimited",
+      "quantity": "Limited",
+      "stockAvailable": "Available stock",
       "add": "Add",
       "update": "Update",
       "cancel": "Cancel",
@@ -1052,8 +1055,6 @@
     "addressHint": "Street, city",
     "taxNumber": "VAT number",
     "vat": "VAT",
-    "showEuro": "Show prices in €",
-    "reverseCharge": "Use Reverse Charge process",
     "createInvoice": "Create Invoice",
     "scan": "Scan QR Code",
     "scanDescription": "To confirm you need to scan QR code",
@@ -1069,6 +1070,7 @@
       "email": "Recipient email"
     },
     "tax": {
+      "reverseCharge": "The Reverse Charge process is used. The client is responsable for paying the VAT.",
       "standard": "Standard",
       "reduced": "Reduced"
     },
@@ -1081,6 +1083,7 @@
       "total": "Total price"
     },
     "table": {
+      "title": "All invoices",
       "created": "Created at",
       "price": "Price",
       "status": "Status",
@@ -1363,6 +1366,81 @@
   },
   "settingsItem": {
     "title": "Change Value"
+  },
+  "personalDashboard": {
+    "title": "Wallets Management",
+    "balanceTitle": "Total Balance",
+    "wallets": "Wallets",
+    "addWallet": "Add Wallet",
+    "portfolio": "Portfolio",
+    "currencies": "Currencies",
+    "send": "Send",
+    "receive": "Receive",
+    "convert": "Convert",
+    "searchPlaceholder": "Search with name",
+    "profileDropdown": {
+      "setting": "Setting",
+      "support": "Support",
+      "darkMode": "Dark Mode",
+      "logout": "Logout"
+    },
+    "currencyTable": {
+      "coin": "Coin",
+      "amount": "Amount",
+      "price": "Price"
+    },
+    "drawer": {
+      "wallet": "Wallet",
+      "addressTitle": "Wallet Address",
+      "copy": "Copy",
+      "balance": "Balance",
+      "portfolio": "Portfolio",
+      "coinView": "Currencies"
+    },
+    "walletCard": {
+      "addressTitle": "Wallet Address",
+      "balance": "Balance",
+      "detail": "Wallet Details"
+    },
+    "sidebar": {
+      "menu": "Main Menu",
+      "wallets": "Wallets",
+      "payments": "Payments",
+      "createInvoice": "Create Invoice",
+      "sendCrypto": "Send Crypto",
+      "receiveCrypto": "Receive Crypto",
+      "convert": "Convert"
+    },
+    "receiveCrypto": {
+      "heading": "Payment receiving QR code",
+      "description": "Scan this QR-code to receive money to your chosen wallet"
+    }
+  },
+  "referralDashboard": {
+    "title": "Referral Dashboard",
+    "graphTitle": "Total Referral Income",
+    "rolesTitle": "Roles",
+    "addRole": "Add Role",
+    "role": "Role",
+    "amount": "Amount",
+    "addUser": "Add User",
+    "userManagement": "User Management",
+    "incomeCards": {
+      "last30DaysTitle": "Income of last 30 days",
+      "last30DaysSubText": "vs last 30 days",
+      "last24HoursTitle": "Income of last 24 hours",
+      "last24HoursSubText": "vs day before",
+      "paymentCardTitle": "Total number of payments",
+      "paymentCardSubText": "vs last 30 days",
+      "registrationCardTitle": "Total number of registrations",
+      "registrationCardSubText": "vs last 30 days"
+    },
+    "userTableMenu": {
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
   },
   "cancel": "Cancel",
   "confirm": "Confirm",

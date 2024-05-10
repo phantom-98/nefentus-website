@@ -1,11 +1,12 @@
 // ThemeContext.js
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { ConfigProvider, theme as AntDTheme } from "antd";
 
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState("dark");
-
+  const { defaultAlgorithm, darkAlgorithm } = AntDTheme;
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
@@ -16,9 +17,15 @@ export const ThemeProvider = ({ children }) => {
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <ConfigProvider
+      theme={{
+        algorithm: theme == "dark" ? darkAlgorithm : defaultAlgorithm,
+      }}
+    >
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        {children}
+      </ThemeContext.Provider>
+    </ConfigProvider>
   );
 };
 

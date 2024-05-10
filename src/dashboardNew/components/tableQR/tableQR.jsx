@@ -40,7 +40,8 @@ const TableQR = ({ link, data }) => {
         email={data.email}
         link={link}
         name={data.name}
-        price={(data.price * currencyRate.rate).toFixed(2)}
+        price={data.price}
+        currency={data.currency}
         taxNumber={data.taxNumber}
         onInvoice={data.email ? () => requestDownload("Invoice") : null}
         onReceipt={

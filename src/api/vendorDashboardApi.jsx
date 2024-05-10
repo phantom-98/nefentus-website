@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import { setCookie } from "../func/cookies";
+
 export default class vendorDashboardApi {
   constructor() {
     //LAUNCH
@@ -106,9 +107,9 @@ export default class vendorDashboardApi {
     }
   }
 
-  async getProducts() {
+  async getProducts(current, dataLength, keyword = "") {
     try {
-      const url = `${this.baseURL}/products`;
+      const url = `${this.baseURL}/products?page=${current}&size=${dataLength}&keyword=${keyword}`;
       const options = {
         method: "GET",
         headers: {
@@ -304,9 +305,33 @@ export default class vendorDashboardApi {
     }
   }
 
-  async getInvoices() {
+  async getInvoices(current, dataLength, keyword = "") {
     try {
-      const url = `${this.baseURL}/invoices`;
+      const url = `${this.baseURL}/invoices?page=${current}&size=${dataLength}&keyword=${keyword}`;
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      this.updateToken(response);
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("There was an error getting the orders", error);
+      return null;
+    }
+  }
+
+  async getInvoiceStatuses() {
+    try {
+      const url = `${this.baseURL}/invoice-statuses`;
       const options = {
         method: "GET",
         headers: {

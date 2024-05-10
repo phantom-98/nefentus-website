@@ -42,13 +42,15 @@ const PaymentDashboard = () => {
 
   async function fetchInvoices() {
     await checkJwtToken();
-    let newInvoices = await vendorAPI.getInvoices();
+    let newInvoices = await vendorAPI.getInvoices(0, 1000);
     // Reverse the array
-    newInvoices = newInvoices.reverse();
+    newInvoices = { ...newInvoices, content: newInvoices?.content.reverse() };
 
-    if (newInvoices) {
-      setInvoices(newInvoices);
-      const newInvoiceData = newInvoices.map((item) => invoiceToArray(item));
+    if (newInvoices?.content) {
+      setInvoices(newInvoices?.content);
+      const newInvoiceData = newInvoices?.content?.map((item) =>
+        invoiceToArray(item),
+      );
       setInvoiceData(newInvoiceData);
     }
   }
