@@ -204,7 +204,7 @@ const SideNavigation = () => {
             )}
           </Link>
         ))}
-
+      {/* 
       <div className={styles.mobItems}>
         <div className={styles.item}>
           <img src={Notification} className={styles.notification} alt="" />
@@ -220,7 +220,7 @@ const SideNavigation = () => {
 
           <p>{theme === "dark" ? "Dark" : "Light"}</p>
         </div>
-      </div>
+      </div> */}
 
       <div className={styles.referral}>
         {isAgent && (

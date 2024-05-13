@@ -8,7 +8,12 @@ import MetaMaskLogo from "../../assets/logo/MetaMask.svg";
 import WalletConnectLogo from "../../assets/logo/WalletConnect.svg";
 import InfoMarkDark from "../../assets/icon/dark/info.svg";
 import InfoMarkLight from "../../assets/icon/light/info.svg";
+import PersonDark from "../../assets/icon/dark/user-square.svg";
+import PersonLight from "../../assets/icon/light/user-square.svg";
+import BuildingDark from "../../assets/icon/dark/building.svg";
+import BuildingLight from "../../assets/icon/light/building.svg";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
+import CheckedIcon from "../../assets/icon/checked.svg";
 import backendAPI from "../../api/backendAPI";
 import { uniswapApi, web3Api } from "../../api/web3Api";
 import Button from "../../components/button/button";
@@ -57,13 +62,21 @@ import { useAuth } from "../../context/auth/authContext";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { GasDetails } from "../gasDetails/gasDetails";
 import { useNavigate } from "react-router-dom";
+import {
+  getCountryList,
+  getCurrencySymbol,
+  getFlagLink,
+} from "../../countries";
+import { CombinedInput } from "../input/input";
 
 const ReceivePayment = ({
-  priceUSD,
+  price,
+  currency,
   seller,
   children,
   info,
   transInfoArg,
+  vatPercent,
   disabled,
   valid,
 }) => {
@@ -84,6 +97,7 @@ const ReceivePayment = ({
   const createWalletInstance = useCreateWalletInstance();
 
   const [cryptoAmount, setCryptoAmount] = useState("0");
+  const [feeUSD, setFeeUSD] = useState(0);
   const [spinner, setSpinner] = useState(false);
   const { balances, fetchBalances } = useBalances();
   const { prices, fetchPrices } = usePrices();
@@ -107,8 +121,21 @@ const ReceivePayment = ({
 
   // const [show, setShow] = useState(false);
   // const [email, setEmail] = useState("");
+  const [priceUSD, setPriceUSD] = useState();
+  // const [rate, setRate] = useState(1);
   const [password, setPassword] = useState("");
   const [pwd, setPwd] = useState(false);
+  useEffect(() => {
+    async function getRate() {
+      if (currency && price) {
+        const res = await backend_API.getCurrencyRate("USD", currency);
+        if (res) {
+          setPriceUSD((price * (100 + (vatPercent ?? 0))) / 100 / res.rate);
+        }
+      }
+    }
+    getRate();
+  }, [price, vatPercent]);
   const { handleBuy } = usePayment({
     password,
     priceUSD,
@@ -146,7 +173,7 @@ const ReceivePayment = ({
   useEffect(() => {
     if (
       balances[selectedCryptoIndex] * prices[selectedCryptoIndex] >
-      priceUSD * currencyRate.rate
+      priceUSD
     ) {
       isDisable && setDisable(false || disabled);
     } else {
@@ -171,10 +198,7 @@ const ReceivePayment = ({
         "USDT-BSC": 2,
       };
       setCryptoAmount(
-        formatTokenBalance(
-          (priceUSD * currencyRate.rate) / price,
-          round[currency.abbr],
-        ),
+        formatTokenBalance(priceUSD / price, round[currency.abbr]),
       );
     } else {
       setCryptoAmount("Loading...");
@@ -584,9 +608,23 @@ const ReceivePayment = ({
                 <div className={styles.total}>
                   <p>{t("payments.total")}</p>
                   <p>
-                    {currencyRate.symbol}
-                    {formatUSDBalance(priceUSD * currencyRate.rate)}
+                    {getCurrencySymbol()[currency]}
+                    {formatUSDBalance(
+                      (price * (100 + (vatPercent ?? 0))) / 100,
+                    )}
                   </p>
+                  {vatPercent != null && parseFloat(vatPercent) > 0 && (
+                    <p
+                      style={{
+                        color: "var(--text2-color)",
+                        margin: "-0.8rem 0 0.8rem 0",
+                      }}
+                    >
+                      {t("payments.informVAT1")} {vatPercent}% (
+                      {getCurrencySymbol()[currency]}
+                      {(price * vatPercent) / 100}) {t("payments.informVAT2")}
+                    </p>
+                  )}
                   <p className={styles.cryptoTitle}>
                     {t("payments.cryptoAmount")}
                     <div className={styles.tooltip}>
@@ -613,6 +651,8 @@ const ReceivePayment = ({
                 currency={currencies()[selectedCryptoIndex]}
                 cryptoAmount={parseFloat(cryptoAmount)}
                 usdAmount={parseFloat(priceUSD)}
+                // feeUSD={feeUSD}
+                setFeeUSD={setFeeUSD}
               />
               <div className={styles.paymentWrapper}>
                 <Button
@@ -621,8 +661,8 @@ const ReceivePayment = ({
                   onClick={() => doPayment()}
                   spinner={spinner}
                 >
-                  {t("payments.payButton")} {currencyRate.symbol}
-                  {formatUSDBalance(priceUSD * currencyRate.rate)}
+                  {t("payments.payButton").concat(" $")}
+                  {formatUSDBalance(priceUSD + feeUSD)}
                 </Button>
               </div>
             </div>
@@ -704,8 +744,8 @@ const ReceivePayment = ({
                 onClick={() => doPayment()}
                 spinner={spinner}
               >
-                {t("payments.payButton")} {currencyRate.symbol}
-                {formatUSDBalance(priceUSD * currencyRate.rate)}
+                {t("payments.payButton").concat(" $")}
+                {formatUSDBalance(priceUSD)}
               </Button>
             </div>
             <div
@@ -819,6 +859,107 @@ const SelectOption = ({
   );
 };
 
+const RadioInput = ({ isPerson, setPerson, setChanged }) => {
+  const { theme } = useTheme();
+  const { t } = useTranslation();
+
+  return (
+    <div className={styles.inputWrapper}>
+      <p className={styles.label}>{t("payments.legalStatus").concat("*")}</p>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          gap: "0.8rem",
+        }}
+      >
+        <div
+          onClick={() => {
+            setPerson(true);
+            setChanged && setChanged(true);
+          }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "50%",
+            border: `1px solid ${isPerson ? "#28C8F0" : "var(--border-color)"}`,
+            borderRadius: "0.6rem",
+            padding: "0.8rem",
+            background: "var(--card-color)",
+            cursor: "pointer",
+          }}
+        >
+          <div>
+            <img src={theme === "dark" ? PersonDark : PersonLight} />
+            <p style={{ fontSize: "1.2rem" }}>{t("payments.person")}</p>
+          </div>
+          <div
+            style={{
+              width: "1.4rem",
+              height: "1.4rem",
+              padding: "1px",
+              border: `1px solid ${
+                isPerson ? "#28C8F0" : "var(--border-color)"
+              }`,
+              borderRadius: "50%",
+            }}
+          >
+            <div
+              style={{
+                background: `${isPerson ? "#28C8F0" : "none"}`,
+                width: "100%",
+                height: "100%",
+                borderRadius: "50%",
+              }}
+            ></div>
+          </div>
+        </div>
+        <div
+          onClick={() => {
+            setPerson(false);
+            setChanged && setChanged(true);
+          }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "50%",
+            border: `1px solid ${isPerson ? "var(--border-color)" : "#28C8F0"}`,
+            borderRadius: "0.6rem",
+            padding: "0.8rem",
+            background: "var(--card-color)",
+            cursor: "pointer",
+          }}
+        >
+          <div>
+            <img src={theme === "dark" ? BuildingDark : BuildingLight} />
+            <p style={{ fontSize: "1.2rem" }}>{t("payments.company")}</p>
+          </div>
+          <div
+            style={{
+              width: "1.4rem",
+              height: "1.4rem",
+              padding: "1px",
+              border: `1px solid ${
+                isPerson ? "var(--border-color)" : "#28C8F0"
+              }`,
+              borderRadius: "50%",
+            }}
+          >
+            <div
+              style={{
+                background: `${isPerson ? "none" : "#28C8F0"}`,
+                width: "100%",
+                height: "100%",
+                borderRadius: "50%",
+              }}
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Input = ({ label, placeholder, value, setValue, setChanged, type }) => {
   const handleChange = () => {
     if (setChanged) {
@@ -858,15 +999,32 @@ export const PaymentInfo = ({
   setFullName,
   email,
   setEmail,
+  country,
+  setCountry,
   address,
   setAddress,
+  isPerson,
+  setPerson,
   tax,
   setTax,
   business,
   setBusiness,
+  setReverseCharge,
+  taxInfo,
   setChanged,
 }) => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (taxInfo && country) {
+      if (taxInfo.country !== country && !isPerson) {
+        setReverseCharge(true);
+      } else {
+        setReverseCharge(false);
+      }
+      setChanged(true);
+    }
+  }, [country, isPerson, taxInfo]);
 
   return (
     <div className={styles.payInfoBody}>
@@ -889,44 +1047,41 @@ export const PaymentInfo = ({
         />
       </div>
       <div className={styles.row}>
-        <Input
-          placeholder={t("payments.addressHint")}
-          label={t("payments.address")}
+        <CombinedInput
+          country={country}
+          setCountry={setCountry}
           value={address}
           setValue={setAddress}
           setChanged={setChanged}
         />
       </div>
-      <div className={styles.row}>
-        <div
-          style={{
-            display: "flex",
-            gap: "1rem",
-            width: "100%",
-          }}
-        >
+      {setPerson && (
+        <div className={styles.row}>
+          <RadioInput
+            isPerson={isPerson}
+            setPerson={setPerson}
+            // setChanged={setChanged}
+          />
+        </div>
+      )}
+      {!isPerson && (
+        <div className={styles.row}>
           <Input
             placeholder={t("payments.taxNumber")}
             label={t("payments.taxNumber")}
             value={tax}
             setValue={setTax}
-            type
             setChanged={setChanged}
           />
           <Input
-            placeholder={"0.00%"}
-            label={t("payments.vat").concat(" %")}
+            placeholder={`e.g. Google`}
+            label={t("payments.company")}
+            value={business}
+            setValue={setBusiness}
             setChanged={setChanged}
           />
         </div>
-        <Input
-          placeholder={`e.g. Google`}
-          label={t("payments.company")}
-          value={business}
-          setValue={setBusiness}
-          setChanged={setChanged}
-        />
-      </div>
+      )}
     </div>
   );
 };
@@ -967,51 +1122,6 @@ export const ProductInfo = ({
     </div>
   );
 };
-
-// const SigninPopup = ({
-//   show,
-//   setShow,
-//   email,
-//   setEmail,
-//   password,
-//   setPassword,
-//   signin,
-// }) => {
-//   const { t } = useTranslation();
-//   return (
-//     <Popup
-//       show={show}
-//       onClose={() => {
-//         setShow(false);
-//         setPassword("");
-//       }}
-//       onConfirm={signin}
-//       confirmTitle={t("login.button")}
-//       cancelTitle={t("general.cancel")}
-//     >
-//       <MessageComponent />
-//       <div className={styles.signinContainer}>
-//         <div>
-//           <p>{t("login.button")}</p>
-//           <p>{t("login.useNefentus")}</p>
-//         </div>
-//         <Input
-//           label={`${t("signUp.emailLabel")}*`}
-//           placeholder={t("signUp.emailPlaceholder")}
-//           value={email}
-//           setValue={setEmail}
-//         />
-//         <Input
-//           label={`${t("signUp.passwordLabel")}*`}
-//           placeholder={t("signUp.passwordPlaceholder")}
-//           value={password}
-//           setValue={setPassword}
-//           type
-//         />
-//       </div>
-//     </Popup>
-//   );
-// };
 
 const PasswordPopup = ({ show, setShow, password, setPassword, onConfirm }) => {
   const { t } = useTranslation();

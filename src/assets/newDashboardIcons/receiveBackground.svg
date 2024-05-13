@@ -1,0 +1,35 @@
+<svg width="274" height="207" viewBox="0 0 274 207" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_1834_21093" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-47" y="-92" width="591" height="299">
+<rect x="-47" y="-91.5" width="591" height="298" fill="url(#paint0_radial_1834_21093)"/>
+</mask>
+<g mask="url(#mask0_1834_21093)">
+<rect x="-42.5" y="-121.5" width="384" height="249" stroke="#202020"/>
+<rect x="-22" y="-1.5" width="42" height="42" fill="#111111" stroke="#202020"/>
+<rect x="21" y="-1.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="64" y="-1.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="107" y="-1.5" width="42" height="42" fill="#202020" stroke="#202020"/>
+<rect x="150" y="-1.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="193" y="-1.5" width="42" height="42" fill="#111111" stroke="#202020"/>
+<rect x="236" y="-1.5" width="42" height="42" fill="#111111" stroke="#202020"/>
+<rect x="-22" y="41.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="21" y="41.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="64" y="41.5" width="42" height="42" fill="#202020" stroke="#202020"/>
+<rect x="107" y="41.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="150" y="41.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="193" y="41.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="236" y="41.5" width="42" height="42" fill="#202020" stroke="#202020"/>
+<rect x="-22" y="84.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="21" y="84.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="64" y="84.5" width="42" height="42" fill="#202020" stroke="#202020"/>
+<rect x="107" y="84.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="150" y="84.5" width="42" height="42" fill="#111111" stroke="#202020"/>
+<rect x="193" y="84.5" width="42" height="42" fill="#171717" stroke="#202020"/>
+<rect x="236" y="84.5" width="42" height="42" fill="#202020" stroke="#202020"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial_1834_21093" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(156 -20) rotate(87.4225) scale(155.657 203.206)">
+<stop/>
+<stop offset="1" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

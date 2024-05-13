@@ -14,6 +14,15 @@ export const AuthProvider = ({ children }) => {
     symbol: "$",
     rate: 1,
   });
+  const [rateList, setRateList] = useState([]);
+  useEffect(() => {
+    async function fetchList() {
+      const res = await new backendAPI().getRateList(currencyRate.to);
+      console.log(res);
+      res && setRateList(res);
+    }
+    fetchList();
+  }, [currencyRate]);
 
   useEffect(() => {
     const checkIfAgent = async () => {
@@ -37,6 +46,8 @@ export const AuthProvider = ({ children }) => {
         currencyRate,
         setCurrencyRate,
         isAgent,
+        rateList,
+        setRateList,
       }}
     >
       {children}

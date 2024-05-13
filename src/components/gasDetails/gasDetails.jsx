@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../context/themeContext/themeContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { currencies } from "../../constants";
 import { uniswapApi } from "../../api/web3Api";
 import { formatTokenBalance, formatUSDBalance } from "../../utils";
@@ -9,8 +9,18 @@ import InfoMarkDark from "../../assets/icon/dark/info.svg";
 import InfoMarkLight from "../../assets/icon/light/info.svg";
 import GasDark from "../../assets/icon/dark/gas.svg";
 import GasLight from "../../assets/icon/light/gas.svg";
+import HourglassDark from "../../assets/icon/dark/hourglass.svg";
+import HourglassLight from "../../assets/icon/light/hourglass.svg";
 
-export const GasDetails = ({ currency, usdAmount, gasLimit = 600_000 }) => {
+export const GasDetails = ({
+  currency,
+  usdAmount,
+  feeUSD,
+  setFeeUSD,
+  vatPercent,
+  vatUSD,
+  gasLimit = 600_000,
+}) => {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const [gasValues, setGasValues] = useState({});
@@ -21,16 +31,27 @@ export const GasDetails = ({ currency, usdAmount, gasLimit = 600_000 }) => {
   );
   const [blockchainPrice, setBlockchainPrice] = useState(0);
   const uniswap = new uniswapApi();
+  const intervalRef = useRef();
 
   const init = async () => {
-    setMaxFee((gasValues.gasPrice * gasLimit) / 10 ** blockchain.decimals);
-    setBlockchainPrice(await uniswap.getNativeTokenPrice(blockchain.abbr));
+    const max = (gasValues.gasPrice * gasLimit) / 10 ** blockchain.decimals;
+    setMaxFee(max);
+    setFeeUSD(max * blockchainPrice);
   };
 
   const fetch = async () => {
-    const res = await uniswap.getGasValues(blockchain.abbr);
-    setGasValues(res);
-    setGasPrice(res.gasPrice);
+    const getPromises = [
+      uniswap.getGasValues(blockchain.abbr),
+      uniswap.getNativeTokenPrice(blockchain.abbr),
+    ];
+    const [gas, tokenPrice] = await Promise.allSettled(getPromises);
+    if (gas) {
+      setGasValues(gas.value);
+      setGasPrice(gas.value.gasPrice);
+    }
+    if (tokenPrice) {
+      setBlockchainPrice(tokenPrice.value);
+    }
   };
 
   useEffect(() => {
@@ -38,7 +59,12 @@ export const GasDetails = ({ currency, usdAmount, gasLimit = 600_000 }) => {
   }, [currency]);
 
   useEffect(() => {
-    fetch();
+    const startTimer = async () => {
+      fetch();
+      clearInterval(intervalRef.current);
+      intervalRef.current = setInterval(fetch, 30000);
+    };
+    startTimer();
   }, [blockchain.abbr]);
 
   useEffect(() => {
@@ -85,16 +111,52 @@ export const GasDetails = ({ currency, usdAmount, gasLimit = 600_000 }) => {
               </div>
               :
             </div>
-            <div>
+            <div
+              style={{
+                display: "flex",
+                width: "16rem",
+                justifyContent: "space-between",
+              }}
+            >
               <span>
                 {formatTokenBalance(maxFee, 8)} {blockchain.abbr}
               </span>
+              <span>${formatUSDBalance(maxFee * blockchainPrice)}</span>
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              padding: "0 0.4rem",
+            }}
+          >
+            <img
+              style={{ width: "1.4rem" }}
+              src={theme === "dark" ? HourglassDark : HourglassLight}
+            />
+            <p style={{ marginTop: "0.2rem" }}>{t("payments.fee.updating")}</p>
+          </div>
+        </div>
+        {parseFloat(vatPercent) > 0 && (
+          <div
+            className={styles.feeRow}
+            style={{
+              padding: "1.2rem",
+              borderTop: "1px solid var(--border-color)",
+              fontSize: "1.4rem",
+            }}
+          >
+            <span>{t("payments.vat")}</span>
+            <div>
+              <span>{vatPercent}%</span>
               <span style={{ marginLeft: "3rem" }}>
-                ${formatUSDBalance(maxFee * blockchainPrice)}
+                ${formatUSDBalance(vatUSD)}
               </span>
             </div>
           </div>
-        </div>
+        )}
         <div
           className={styles.feeRow}
           style={{
@@ -103,7 +165,7 @@ export const GasDetails = ({ currency, usdAmount, gasLimit = 600_000 }) => {
             fontSize: "1.4rem",
           }}
         >
-          <span>{t("payments.fee.total")}:</span>
+          <span>{t("payments.fee.total")}</span>
           <span>${formatUSDBalance(usdAmount + maxFee * blockchainPrice)}</span>
         </div>
       </div>
