@@ -894,10 +894,13 @@ export const CountrySelect = ({
   const [keyword, setKeyword] = useState("");
   const [filtered, setFiltered] = useState(options);
   useEffect(() => {
-    const country = getCountryList().find((item) => item.value == value);
+    const country = getCountryList().find((item) => item.value === value);
     if (country) {
       setIcon(getFlagLink(country.symbol));
       setKeyword(t(country.display));
+    } else {
+      setIcon(null);
+      setKeyword("");
     }
   }, [value]);
   return (

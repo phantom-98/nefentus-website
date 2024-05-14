@@ -622,7 +622,8 @@ const ReceivePayment = ({
                     >
                       {t("payments.informVAT1")} {vatPercent}% (
                       {getCurrencySymbol()[currency]}
-                      {(price * vatPercent) / 100}) {t("payments.informVAT2")}
+                      {formatUSDBalance((price * vatPercent) / 100)}){" "}
+                      {t("payments.informVAT2")}
                     </p>
                   )}
                   <p className={styles.cryptoTitle}>
