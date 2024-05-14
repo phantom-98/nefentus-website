@@ -30,6 +30,7 @@
     "imprint": "Impressum",
     "forgotPassword": "Passwort vergessen",
     "privacy": "Privatsphäre",
+    "vacancy": "Karriere",
     "resetPassword": "Passwort zurücksetzen",
     "support": "Unterstützung"
   },
@@ -87,6 +88,21 @@
     "helpCard2Title": "FAQs",
     "helpCard2Text": " Detaillierte Anleitungen zu allen Funktionen finden Sie in den FAQs.",
     "helpCard2Button": "Jetzt informieren"
+  },
+  "vacancy": {
+    "hero1": "Werden Sie Teil",
+    "hero2": "unseres ",
+    "hero3": "Teams",
+    "open": "Offene Stellen",
+    "apply": "Auf diese Stelle bewerben",
+    "success": "Sie haben sich erfolgreich beworben",
+    "failed": "Netzwerkfehler",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "comment": "Kommentar",
+    "linkedin": "Ihr Linkedin-Link (optional)",
+    "seeDetail": "Siehe Details"
   },
   "payment": {
     "customPayment": "Benutzerdefinierte Zahlung",
@@ -475,12 +491,17 @@
       "service_fee_description": "Der Prozentsatz, den der Benutzer von jeder Transaktion erhält"
     },
     "earningCards": {
-      "first": "Verkäufe: Insgesamt",
-      "second": "Verkäufe: Letzte 24 Stunden",
-      "third": "Verkäufe: Letzte 30 Tage",
-      "progressFirst": "im Vergleich zu den letzten 30 Tagen",
-      "progressSecond": "im Vergleich zum Tag davor",
-      "progressThird": "im Vergleich zum Vormonat"
+      "totalSales": "Gesamtumsatz",
+      "totalReferral": "Gesamte Einnahmen aus Überweisungen",
+      "progressInLast30d": "in den letzten 30 Tagen",
+      "salesOfLast24h": "Verkäufe der letzten 24 Stunden",
+      "referralOfLast24h": "Referral-Einkommen der letzten 24 Stunden",
+      "progressLast24h": "gegenüber dem Vortag",
+      "salesOfLast30d": "Verkäufe der letzten 30 Tage",
+      "referralOfLast30d": "Referral-Einkommen der letzten 30 Tage",
+      "progressLast30d": "gegenüber dem Vormonat",
+      "payments": "Gesamtzahl der Zahlungen",
+      "registrations": "Gesamtzahl der Registrierungen"
     },
     "balanceTitle": "Saldo diese Woche",
     "cryptoCard": {

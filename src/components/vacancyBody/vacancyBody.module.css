@@ -1,0 +1,81 @@
+.vacancyBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin: 16rem auto;
+}
+
+.heading {
+  font-size: 5rem;
+  font-weight: 600;
+  line-height: 8rem;
+}
+
+.jobs {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.jobs > p {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+}
+
+.cards > div {
+  width: 100% !important;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  background: var(--bg2-color);
+}
+
+.card:hover {
+  background: var(--card-color);
+}
+
+.card > div {
+  overflow: hidden;
+}
+
+.card p:first-child {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 3rem;
+}
+
+.card p:nth-child(2) {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--text2-color) !important;
+}
+
+.card a {
+  font-size: 1.3rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .vacancyBody {
+    margin: 8rem auto;
+  }
+  .heading {
+    line-height: 6rem;
+  }
+  .cards {
+    display: flex;
+    flex-direction: column;
+  }
+}

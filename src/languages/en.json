@@ -30,6 +30,7 @@
     "imprint": "Imprint",
     "forgotPassword": "Password forgotten",
     "privacy": "Privacy policy",
+    "vacancy": "Career",
     "resetPassword": "Reset Password",
     "support": "Support"
   },
@@ -110,6 +111,21 @@
     "helpCard2Title": "FAQs",
     "helpCard2Text": " View FAQs for detailed instructions on specific features",
     "helpCard2Button": "View more"
+  },
+  "vacancy": {
+    "hero1": "Become a part",
+    "hero2": "of our",
+    "hero3": "team",
+    "open": "Open roles",
+    "apply": "Apply for this job",
+    "success": "You have successfully applied",
+    "failed": "Network error",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "comment": "Comment",
+    "linkedin": "Your Linkedin link (Optional)",
+    "seeDetail": "See details"
   },
   "payment": {
     "customPayment": "Custom Payment",
@@ -534,12 +550,17 @@
       "service_fee_description": "The percentage that the user receives from each transaction"
     },
     "earningCards": {
-      "first": "Sales: Total",
-      "second": "Sales: Last 24 hours",
-      "third": "Sales: Last 30 days",
-      "progressFirst": "vs last 30 days",
-      "progressSecond": "vs the day before",
-      "progressThird": "vs the month before"
+      "totalSales": "Total sales",
+      "totalReferral": "Total referral income",
+      "progressInLast30d": "in the last 30 days",
+      "salesOfLast24h": "Sales of last 24 hours",
+      "referralOfLast24h": "Referral income of last 24 hours",
+      "progressLast24h": "vs. the day before",
+      "salesOfLast30d": "Sales of last 30 days",
+      "referralOfLast30d": "Referral income of last 30 days",
+      "progressLast30d": "vs. the month before",
+      "payments": "Total number of payments",
+      "registrations": "Total number of registrations"
     },
     "balanceTitle": "Balance this week",
     "cryptoCard": {
