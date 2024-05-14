@@ -22,25 +22,26 @@ const jobs = {
     Wir suchen einen dynamischen und ergebnisorientierten Vertriebsmitarbeiter (m/w/d), der über herausragende Fähigkeiten in der Akquise im B2B Bereich verfügt. In dieser zentralen Rolle liegt der Fokus darauf, neue Geschäftsmöglichkeiten zu identifizieren, potenzielle Kunden zu kontaktieren und erfolgreiche Verkaufstermine zu vereinbaren. Ihre Aufgabe wird es sein, unser Vertriebsteam mit hochwertigen Leads zu versorgen und somit wesentlich zum Wachstum unseres Unternehmens beizutragen.
     
     Aufgaben und Verantwortlichkeiten:
-    Proaktive Identifizierung und Ansprache potenzieller Kunden.
-    Durchführung von gezielten Akquisegesprächen per Telefon, E-Mail und anderen Kommunikationskanälen.
-    Überzeugende Präsentation unseres Unternehmens und unserer Produkte/Dienstleistungen, um Interesse zu wecken.
-    Verhandlung von Terminen mit Entscheidungsträgern auf Führungsebene.
-    Kontinuierliche Pflege und Aktualisierung unserer Kunden- und Interessentendatenbank.
-    Enge Zusammenarbeit mit dem Vertriebsteam, um die generierten Leads in Verkaufschancen umzuwandeln.
-    Regelmäßige Berichterstattung über Akquisetätigkeiten und Ergebnisse.
+    • Proaktive Identifizierung und Ansprache potenzieller Kunden.
+    • Durchführung von gezielten Akquisegesprächen per Telefon, E-Mail und anderen Kommunikationskanälen.
+    • Überzeugende Präsentation unseres Unternehmens und unserer Produkte/Dienstleistungen, um Interesse zu wecken.
+    • Verhandlung von Terminen mit Entscheidungsträgern auf Führungsebene.
+    • Kontinuierliche Pflege und Aktualisierung unserer Kunden- und Interessentendatenbank.
+    • Enge Zusammenarbeit mit dem Vertriebsteam, um die generierten Leads in Verkaufschancen umzuwandeln.
+    • Regelmäßige Berichterstattung über Akquisetätigkeiten und Ergebnisse.
     Anforderungen:
-    Erfahrung im Vertrieb oder in einer ähnlichen Position mit Schwerpunkt auf Akquise und Terminlegung.
-    Ausgezeichnete kommunikative Fähigkeiten und Überzeugungskraft.
-    Beharrlichkeit und Zielstrebigkeit bei der Erreichung von Akquiszielen.
-    Selbstmotivation und Eigeninitiative.
-    Fähigkeit, in einem schnelllebigen Umfeld zu arbeiten und sich schnell anzupassen.
-    Grundlegendes Verständnis für CRM-Systeme.
+    • Erfahrung im Vertrieb oder in einer ähnlichen Position mit Schwerpunkt auf Akquise und Terminlegung.
+    • Ausgezeichnete kommunikative Fähigkeiten und Überzeugungskraft.
+    • Beharrlichkeit und Zielstrebigkeit bei der Erreichung von Akquiszielen.
+    • Selbstmotivation und Eigeninitiative.
+    • Fähigkeit, in einem schnelllebigen Umfeld zu arbeiten und sich schnell anzupassen.
+    • Grundlegendes Verständnis für CRM-Systeme.
     
     Leistungen:
-    Hohe Provisionstruktur.
-    Möglichkeiten zur beruflichen Weiterentwicklung.
-    Dynamische und inklusive Arbeitsumgebung.
+    • Hohe Provisionstruktur.
+    • Möglichkeiten zur beruflichen Weiterentwicklung.
+    • Dynamische und inklusive Arbeitsumgebung.
+    
     Wenn Sie eine spannende Herausforderung in einem wachstumsorientierten Unternehmen suchen und über die genannten Fähigkeiten verfügen, freuen wir uns auf Ihre Bewerbung unter career@nefentus.com`,
   },
   sales_manager_ukraine: {
@@ -55,24 +56,24 @@ const jobs = {
     Responsibilities:
     We are seeking a dynamic and results-oriented sales representative (m/f/d) with outstanding skills in B2B acquisition. In this pivotal role, the focus is on identifying new business opportunities, contacting potential customers, and scheduling successful sales appointments. Your task will be to supply our sales team with high-quality leads, thereby significantly contributing to our company's growth.
     Duties and Responsibilities:
-    Proactively identifying and approaching potential customers.
-    Conducting targeted acquisition conversations via phone, email, and other communication channels.
-    Compelling presentation of our company and our products/services to generate interest.
-    Negotiating appointments with decision-makers at the executive level.
-    Continuously maintaining and updating our customer and prospect database.
-    Close collaboration with the sales team to convert generated leads into sales opportunities.
-    Regular reporting on acquisition activities and results.
+    • Proactively identifying and approaching potential customers.
+    • Conducting targeted acquisition conversations via phone, email, and other communication channels.
+    • Compelling presentation of our company and our products/services to generate interest.
+    • Negotiating appointments with decision-makers at the executive level.
+    • Continuously maintaining and updating our customer and prospect database.
+    • Close collaboration with the sales team to convert generated leads into sales opportunities.
+    • Regular reporting on acquisition activities and results.
     Requirements:
-    Experience in sales or a similar position with a focus on acquisition and appointment setting.
-    Excellent communication skills and persuasiveness.
-    Persistence and determination in achieving acquisition goals.
-    Self-motivation and initiative.
-    Ability to work in a fast-paced environment and adapt quickly.
-    Basic understanding of CRM systems.
+    • Experience in sales or a similar position with a focus on acquisition and appointment setting.
+    • Excellent communication skills and persuasiveness.
+    • Persistence and determination in achieving acquisition goals.
+    • Self-motivation and initiative.
+    • Ability to work in a fast-paced environment and adapt quickly.
+    • Basic understanding of CRM systems.
     Benefits:
-    High commission structure.
-    Opportunities for professional development.
-    Dynamic and inclusive work environment.
+    • High commission structure.
+    • Opportunities for professional development.
+    • Dynamic and inclusive work environment.
     Salary:
     10.000 UAH + High Commission Structure.
     
@@ -116,9 +117,10 @@ const jobs = {
     Comfortable working in a fast-paced and dynamic environment. 
     
     Benefits: 
-    High commission structure
-    Professional development opportunities 
-    Dynamic and inclusive work environment 
+    • High commission structure
+    • Professional development opportunities 
+    • Dynamic and inclusive work environment
+
     If you are a passionate and results-driven individual looking to make a significant impact in the online payment solutions space, we invite you to apply. Join Nefentus and be part of the future of digital payments! 
     
     Salary:
@@ -139,24 +141,25 @@ const jobs = {
     Responsibilities:
     We are seeking a dynamic and results-oriented sales representative (m/f/d) with outstanding skills in B2B acquisition. In this pivotal role, the focus is on identifying new business opportunities, contacting potential customers, and scheduling successful sales appointments. Your task will be to supply our sales team with high-quality leads, thereby significantly contributing to our company's growth.
     Duties and Responsibilities:
-    Proactively identifying and approaching potential customers.
-    Conducting targeted acquisition conversations via phone, email, and other communication channels.
-    Compelling presentation of our company and our products/services to generate interest.
-    Negotiating appointments with decision-makers at the executive level.
-    Continuously maintaining and updating our customer and prospect database.
-    Close collaboration with the sales team to convert generated leads into sales opportunities.
-    Regular reporting on acquisition activities and results.
+    • Proactively identifying and approaching potential customers.
+    • Conducting targeted acquisition conversations via phone, email, and other communication channels.
+    • Compelling presentation of our company and our products/services to generate interest.
+    • Negotiating appointments with decision-makers at the executive level.
+    • Continuously maintaining and updating our customer and prospect database.
+    • Close collaboration with the sales team to convert generated leads into sales opportunities.
+    • Regular reporting on acquisition activities and results.
     Requirements:
-    Experience in sales or a similar position with a focus on acquisition and appointment setting.
-    Excellent communication skills and persuasiveness.
-    Persistence and determination in achieving acquisition goals.
-    Self-motivation and initiative.
-    Ability to work in a fast-paced environment and adapt quickly.
-    Basic understanding of CRM systems.
+    • Experience in sales or a similar position with a focus on acquisition and appointment setting.
+    • Excellent communication skills and persuasiveness.
+    • Persistence and determination in achieving acquisition goals.
+    • Self-motivation and initiative.
+    • Ability to work in a fast-paced environment and adapt quickly.
+    • Basic understanding of CRM systems.
     Benefits:
-    High commission structure.
-    Opportunities for professional development.
-    Dynamic and inclusive work environment.
+    • High commission structure.
+    • Opportunities for professional development.
+    • Dynamic and inclusive work environment.
+
     If you're looking for an exciting challenge in a growth-oriented company and possess the skills mentioned above, we look forward to receiving your application at career@nefentus.com.`,
   },
   country_manager_poland: {
@@ -197,9 +200,10 @@ const jobs = {
     Comfortable working in a fast-paced and dynamic environment. 
     
     Benefits: 
-    High commission structure
-    Professional development opportunities 
-    Dynamic and inclusive work environment 
+    • High commission structure
+    • Professional development opportunities 
+    • Dynamic and inclusive work environment
+
     If you are a passionate and results-driven individual looking to make a significant impact in the online payment solutions space, we invite you to apply. Join Nefentus and be part of the future of digital payments!
      
     How to Apply: 
