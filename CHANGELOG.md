@@ -6,3 +6,8 @@
 - Creating invoices using VAT process depending on the countries, and legal status of buyer
 - Update privacy policy and imprint, and add translations
 - Show gas prices when paying invoices/products
+
+# New changes
+
+- Create career page
+- Add 5 open jobs
