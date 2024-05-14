@@ -1,5 +1,7 @@
 # New changes
 
+- Create career page and add 5 open jobs
+
 # Merged changes
 
 - First version of Personal, referral and sales dashboards, not yet integrated

@@ -30,6 +30,7 @@
     "imprint": "Imprint",
     "forgotPassword": "Password forgotten",
     "privacy": "Privacy policy",
+    "vacancy": "Career",
     "resetPassword": "Reset Password",
     "support": "Support"
   },
@@ -110,6 +111,21 @@
     "helpCard2Title": "FAQs",
     "helpCard2Text": " View FAQs for detailed instructions on specific features",
     "helpCard2Button": "View more"
+  },
+  "vacancy": {
+    "hero1": "Become a part",
+    "hero2": "of our",
+    "hero3": "team",
+    "open": "Open roles",
+    "apply": "Apply for this job",
+    "success": "You have successfully applied",
+    "failed": "Network error",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "comment": "Comment",
+    "linkedin": "Your Linkedin link (Optional)",
+    "seeDetail": "See details"
   },
   "payment": {
     "customPayment": "Custom Payment",

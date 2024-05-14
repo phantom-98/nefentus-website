@@ -30,6 +30,7 @@
     "imprint": "Impressum",
     "forgotPassword": "Passwort vergessen",
     "privacy": "Privatsphäre",
+    "vacancy": "Karriere",
     "resetPassword": "Passwort zurücksetzen",
     "support": "Unterstützung"
   },
@@ -87,6 +88,21 @@
     "helpCard2Title": "FAQs",
     "helpCard2Text": " Detaillierte Anleitungen zu allen Funktionen finden Sie in den FAQs.",
     "helpCard2Button": "Jetzt informieren"
+  },
+  "vacancy": {
+    "hero1": "Werden Sie Teil",
+    "hero2": "unseres ",
+    "hero3": "Teams",
+    "open": "Offene Stellen",
+    "apply": "Auf diese Stelle bewerben",
+    "success": "Sie haben sich erfolgreich beworben",
+    "failed": "Netzwerkfehler",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "comment": "Kommentar",
+    "linkedin": "Ihr Linkedin-Link (optional)",
+    "seeDetail": "Siehe Details"
   },
   "payment": {
     "customPayment": "Benutzerdefinierte Zahlung",
