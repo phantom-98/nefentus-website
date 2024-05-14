@@ -7,9 +7,14 @@
 .languages img:first-child {
   width: 1.3rem;
 }
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .menu img {
-  width: 1.6rem !important;
+  width: 1.7rem !important;
 }
 
 .languages p {

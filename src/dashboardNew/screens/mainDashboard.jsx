@@ -12,9 +12,10 @@ import moment from "moment";
 import backendAPI from "../../api/backendAPI";
 
 import { useTheme } from "../../context/themeContext/themeContext";
-import { checkJwtToken } from "../../utils";
+import { checkJwtToken, formatUSDBalance } from "../../utils";
 import { Helmet } from "react-helmet";
 import { useAuth } from "../../context/auth/authContext";
+import vendorDashboardApi from "../../api/vendorDashboardApi";
 
 const MainDashboard = () => {
   const { t, i18n } = useTranslation();
@@ -36,6 +37,73 @@ const MainDashboard = () => {
   };
   const [chartData, setChartData] = useState();
   const [activeWallet, setActiveWallet] = useState();
+  const [cardInfo, setCardInfo] = useState([]);
+  const [measure, setMeasure] = useState();
+  const dashboardApi = new vendorDashboardApi();
+
+  useEffect(() => {
+    fetchData();
+  }, [language]);
+
+  const fetchData = async () => {
+    const res = await dashboardApi.getTotalIncome();
+    if (res) {
+      setMeasure(res);
+    }
+  };
+
+  useEffect(() => {
+    if (measure && currencyRate) {
+      const cardsContent = [
+        {
+          title: t("dashboard.earningCards.totalSales"),
+          value:
+            currencyRate.symbol +
+            formatUSDBalance(
+              parseFloat(measure.total?.number) * currencyRate.rate,
+            ),
+          percentage: measure.total?.percentage
+            ? parseFloat(measure.total?.percentage).toFixed(2)
+            : "0",
+          progress: t("dashboard.earningCards.progressInLast30d"),
+        },
+        {
+          title: t("dashboard.earningCards.salesOfLast24h"),
+          value:
+            currencyRate.symbol +
+            formatUSDBalance(
+              parseFloat(measure.last24Hours?.number) * currencyRate.rate,
+            ),
+          percentage: measure.last24Hours?.percentage
+            ? parseFloat(measure.last24Hours?.percentage).toFixed(2)
+            : "0",
+          progress: t("dashboard.earningCards.progressLast24h"),
+        },
+        {
+          title: t("dashboard.earningCards.salesOfLast30d"),
+          value:
+            currencyRate.symbol +
+            formatUSDBalance(
+              parseFloat(measure.last30Days?.number) * currencyRate.rate,
+            ),
+          percentage: measure.last30Days?.percentage
+            ? parseFloat(measure.last30Days?.percentage).toFixed(2)
+            : "0",
+          progress: t("dashboard.earningCards.progressLast30d"),
+        },
+        {
+          title: t("dashboard.earningCards.payments"),
+          value: parseFloat(measure.numberOfPayments?.number),
+          percentage: measure.numberOfPayments?.percentage
+            ? parseFloat(measure.numberOfPayments?.percentage).toFixed(2)
+            : "0",
+          progress: t("dashboard.earningCards.progressInLast30d"),
+        },
+      ];
+
+      setCardInfo(cardsContent);
+    }
+  }, [measure, currencyRate]);
 
   useEffect(() => {
     fetchProfile();
@@ -135,7 +203,7 @@ const MainDashboard = () => {
 
       <ProfileCard setActiveWallet={setActiveWallet} wallet={activeWallet} />
       <BalanceCard wallet={activeWallet} />
-      <EarningCards />
+      <EarningCards cardInfo={cardInfo} />
       <IncomeCard data={chartData ?? []} />
       <CryptoCard wallet={activeWallet} />
       <SignupByEmail />

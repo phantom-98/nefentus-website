@@ -22,6 +22,8 @@ import { KYC } from "./dashboard/settings/components/KYC";
 import Kyc from "./dashboardNew/components/kyc";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const MainDashboard = React.lazy(() =>
   import("./dashboardNew/screens/mainDashboard"),
@@ -111,6 +113,10 @@ import {
   xdefiWallet,
   zerionWallet,
 } from "@thirdweb-dev/react";
+import DashboardLayout from "./NEFDashboard/containers/dashboardLayout";
+import PersonalDashboard from "./NEFDashboard/containers/personalDashboard";
+import ReferralDashboard from "./NEFDashboard/containers/referralDashboard";
+import SalesDashboard from "./NEFDashboard/containers/salesDashboard";
 
 function App() {
   useEffect(() => {
@@ -205,6 +211,30 @@ function App() {
                 >
                   <ScrollToTop>
                     <Routes>
+                      <Route
+                        path="/personal-dashboard"
+                        element={
+                          <DashboardLayout title={"personalDashboard.title"}>
+                            <PersonalDashboard />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/referral-dashboard"
+                        element={
+                          <DashboardLayout title={"referralDashboard.title"}>
+                            <ReferralDashboard type={"admin"} />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/sales-dashboard"
+                        element={
+                          <DashboardLayout title={"Sales Dashboard"}>
+                            <SalesDashboard />
+                          </DashboardLayout>
+                        }
+                      />
                       <Route
                         path="/"
                         element={

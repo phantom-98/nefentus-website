@@ -1,12 +1,17 @@
 .cards {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr; */
   gap: 2rem;
+}
+
+.card {
+  overflow: hidden;
 }
 
 .label {
   font-size: 1.4rem;
   opacity: 0.6;
+  text-wrap: nowrap;
 }
 
 .value {
@@ -43,6 +48,7 @@
   display: flex;
   gap: 0.3rem;
   padding-top: 3px;
+  text-wrap: nowrap;
 }
 
 .rest {

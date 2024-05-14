@@ -7,6 +7,18 @@ import WalletConnectLogo from "./assets/logo/WalletConnect.svg";
 import Ethereum from "./assets/icon/crypto/ethereum.svg";
 import CoinbaseLogo from "./assets/logo/coinbase.svg";
 import TrustLogo from "./assets/logo/trust.png";
+import NefentusBackground from "./assets/newDashboardIcons/nefentus-background.png";
+import MetamaskBackground from "./assets/newDashboardIcons/metamask-background.png";
+import WalletConnectBackground from "./assets/newDashboardIcons/walletconnect2-background.png";
+import CoinbaseBackground from "./assets/newDashboardIcons/coinbase-background.png";
+import TrustBackground from "./assets/newDashboardIcons/trust-background.png";
+import PhantomBackground from "./assets/newDashboardIcons/phantom-background.png";
+import ZerionBackground from "./assets/newDashboardIcons/zerion-background.png";
+import BloctoBackground from "./assets/newDashboardIcons/blocto-background.png";
+import RainbowBackground from "./assets/newDashboardIcons/rainbow-background.png";
+import OnekeyBackground from "./assets/newDashboardIcons/onekey-background.png";
+import RabbyBackground from "./assets/newDashboardIcons/rabby-background.png";
+import XDefiBackground from "./assets/newDashboardIcons/xdefi-background.png";
 import Safe from "./assets/logo/safe.png";
 import Blocto from "./assets/logo/blocto.png";
 import Frame from "./assets/logo/frame.png";
@@ -206,5 +218,34 @@ export const getWalletIcon = (type) => {
       return NefentusLogo;
     default:
       return Ethereum;
+  }
+};
+
+export const getWalleBackground = (type) => {
+  switch (type?.toLowerCase()) {
+    case "metamask":
+      return { background: MetamaskBackground, logo: MetaMaskLogo };
+    case "walletconnect":
+      return { background: WalletConnectBackground, logo: WalletConnectLogo };
+    case "coinbase":
+      return { background: CoinbaseBackground, logo: CoinbaseLogo };
+    case "trust":
+      return { background: TrustBackground, logo: TrustLogo };
+    case "blocto":
+      return { background: BloctoBackground, logo: Blocto };
+    case "rainbowwallet":
+      return { background: RainbowBackground, logo: Rainbow };
+    case "phantom":
+      return { background: PhantomBackground, logo: Phantom };
+    case "onekey":
+      return { background: OnekeyBackground, logo: OneKey };
+    case "rabby":
+      return { background: RabbyBackground, logo: Rabby };
+    case "xdefi":
+      return { background: XDefiBackground, logo: XDefi };
+    case "zerion":
+      return { background: ZerionBackground, logo: NefentusLogo };
+    default:
+      return { background: NefentusBackground, logo: NefentusLogo };
   }
 };

@@ -340,6 +340,32 @@ export default class adminDashboardApi {
     }
   }
 
+  async createUser(payload) {
+    try {
+      const url = `${this.baseURL}/create-user`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(payload),
+      };
+      const response = await fetch(url, options);
+      if (response.ok) {
+        ReactGA.event({
+          category: "Registration",
+          action: "registration_passive",
+          label: payload?.email,
+        });
+      }
+      this.updateToken(response);
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async updateUser(firstName, lastName, email, editEmailAddress, roles, agent) {
     try {
       const request = {

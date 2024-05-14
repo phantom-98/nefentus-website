@@ -1,0 +1,35 @@
+:where(.css-dev-only-do-not-override-ysyo1).ant-table-wrapper .ant-table-cell,
+:where(.css-dev-only-do-not-override-ysyo1).custom-table
+  .ant-table-thead
+  > tr
+  > th {
+  padding: 12px 16px !important;
+}
+
+.ant-table {
+  border: 1px solid #303030; /* Add border around the entire table */
+  border-collapse: separate; /* Ensure borders are separate */
+  border-spacing: 0; /* Remove any spacing between cells */
+}
+
+.ant-table-thead > tr:last-child > th,
+.ant-table-tbody > tr:last-child > td {
+  border: none; /* Remove border from last row cells */
+}
+.table-skeleton {
+  width: 100% !important;
+}
+
+:where(.css-dev-only-do-not-override-1yuxnot).custom-pagination
+  .ant-pagination-item-active,
+:where(.css-dev-only-do-not-override-1yuxnot).custom-pagination
+  .ant-pagination-item-active:hover {
+  font-weight: 600;
+  background: var(--BG2, #171717);
+  border-color: var(--Dark, #202020);
+  color: currentColor;
+}
+
+.custom-table .ant-table {
+  border: 1px solid var(--Dark, #202020);
+}

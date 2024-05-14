@@ -1,0 +1,7 @@
+.balance-graph-tooltip-bar {
+  padding-left: 6px;
+  border-radius: 2px;
+  height: 26px;
+  width: 1px;
+  border-left: 1px solid var(--Green, #07b561);
+}

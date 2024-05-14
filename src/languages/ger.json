@@ -485,15 +485,23 @@
       "role": "Rolle",
       "name": "Name",
       "company": "Firma",
-      "address": "Adresse"
+      "address": "Adresse",
+      "service_fee": "Servicegebühr",
+      "companyPlaceholder": "Unternehmen eingeben",
+      "service_fee_description": "Der Prozentsatz, den der Benutzer von jeder Transaktion erhält"
     },
     "earningCards": {
-      "first": "Verkäufe: Insgesamt",
-      "second": "Verkäufe: Letzte 24 Stunden",
-      "third": "Verkäufe: Letzte 30 Tage",
-      "progressFirst": "im Vergleich zu den letzten 30 Tagen",
-      "progressSecond": "im Vergleich zum Tag davor",
-      "progressThird": "im Vergleich zum Vormonat"
+      "totalSales": "Gesamtumsatz",
+      "totalReferral": "Gesamte Einnahmen aus Überweisungen",
+      "progressInLast30d": "in den letzten 30 Tagen",
+      "salesOfLast24h": "Verkäufe der letzten 24 Stunden",
+      "referralOfLast24h": "Referral-Einkommen der letzten 24 Stunden",
+      "progressLast24h": "gegenüber dem Vortag",
+      "salesOfLast30d": "Verkäufe der letzten 30 Tage",
+      "referralOfLast30d": "Referral-Einkommen der letzten 30 Tage",
+      "progressLast30d": "gegenüber dem Vormonat",
+      "payments": "Gesamtzahl der Zahlungen",
+      "registrations": "Gesamtzahl der Registrierungen"
     },
     "balanceTitle": "Saldo diese Woche",
     "cryptoCard": {
@@ -877,7 +885,7 @@
       "updateData": "Fehler beim Aktualisieren der Daten",
       "uploadPicture": "Fehler beim Hochladen des Profilbildes",
       "amountValid": "Bitte geben Sie einen gültigen Betrag ein",
-      "taxPercentValid": "Bitte wählen Sie die Mehrwertsteuer",
+      "taxPercentValid": "Bitte wählen Sie die Umsatzsteuer",
       "nameValid": "Bitte geben Sie einen gültigen Namen ein",
       "companyValid": "Bitte geben Sie ein gültiges Unternehmen ein",
       "addressValid": "Bitte geben Sie eine gültige Adresse ein",
@@ -963,7 +971,7 @@
       "description": "Beschreibung ist erforderlich!",
       "price": "Preis ist erforderlich!",
       "priceAsFloat": "Preis muss positiv sein!",
-      "chooseVat": "Bitte wählen Sie die Mehrwertsteuer!"
+      "chooseVat": "Bitte wählen Sie die Umsatzsteuer!"
     },
     "createProductModal": {
       "createNewProduct": "Neues Produkt erstellen",
@@ -978,13 +986,13 @@
       "pricePlaceholder": "Preis eingeben",
       "stockLabel": "Lagerbestand",
       "stockPlaceholder": "Lagerbestand eingeben, wenn dieser begrenzt ist",
-      "vat": "Mehrwertsteuer in Prozent",
+      "vat": "Umsatzsteuer in Prozent",
       "standard": "Standard",
-      "reduced": "Verringert",
-      "currency": "Zahlungswährung",
-      "limitless": "Grenzenlos",
-      "quantity": "Menge",
-      "stockAvailable": "Einheit verfügbar",
+      "reduced": "Reduziert",
+      "currency": "Währung",
+      "limitless": "Unbegrenzt",
+      "quantity": "Begrenzt",
+      "stockAvailable": "Verfügbarer Lagerbestand",
       "add": "Hinzufügen",
       "update": "Aktualisieren",
       "cancel": "Stornieren",
@@ -1004,19 +1012,19 @@
     "name": "Name",
     "number": "Nummer",
     "person": "Person",
-    "company": "Firma",
+    "company": "Unternehmen",
     "address": "Straße, Stadt",
     "legalStatus": "Rechtsstellung",
     "addressHint": "Straße, Stadt",
-    "taxNumber": "MwSt. Nummer",
-    "vat": "MwSt.",
+    "taxNumber": "UmSt. Nummer",
+    "vat": "UmSt.",
     "createInvoice": "Rechnung erstellen",
     "scan": "QR-Code scannen",
     "scanDescription": "Zur Bestätigung müssen Sie einen QR-Code scannen",
     "downloadInvoice": "Rechnung herunterladen",
     "downloadReceipt": "Zahlungseingang herunterladen",
     "subtotal": "Zwischensumme",
-    "vatValue": "Mehrwertsteuer (MwSt.)",
+    "vatValue": "Umsatzsteuer (UmSt.)",
     "totalDue": "Insgesamt fällig",
     "note": "Hinweis",
     "buyer": {
@@ -1025,6 +1033,7 @@
       "email": "E-Mail des Empfängers"
     },
     "tax": {
+      "reverseCharge": "Es wird das Reverse Charge Verfahren angewendet. Dabei ist der Kunde für die Umsatzsteuer verantwortlich.",
       "standard": "Standard",
       "reduced": "Verringert"
     },
@@ -1037,6 +1046,7 @@
       "total": "Preis insgesamt"
     },
     "table": {
+      "title": "Alle Rechnungen",
       "created": "Erstellt am",
       "price": "Preis",
       "status": "Status",
@@ -1297,6 +1307,81 @@
     "english": "Englisch",
     "deutsch": "Deutsch",
     "ukrainian": "Ukrainisch"
+  },
+  "personalDashboard": {
+    "title": "Wallet-Verwaltung",
+    "balanceTitle": "Gesamtguthaben",
+    "wallets": "Wallets",
+    "addWallet": "Wallet hinzufügen",
+    "portfolio": "Portfolio",
+    "currencies": "Währungen",
+    "send": "Senden",
+    "receive": "Empfangen",
+    "convert": "Konvertieren",
+    "searchPlaceholder": "Mit Namen suchen",
+    "profileDropdown": {
+      "setting": "Einstellungen",
+      "support": "Unterstützung",
+      "darkMode": "Dunkler Modus",
+      "logout": "Abmelden"
+    },
+    "currencyTable": {
+      "coin": "Währung",
+      "amount": "Betrag",
+      "price": "Preis"
+    },
+    "drawer": {
+      "wallet": "Wallet",
+      "addressTitle": "Wallet-Adresse",
+      "copy": "Kopieren",
+      "balance": "Guthaben",
+      "portfolio": "Portfolio",
+      "coinView": "Währungen"
+    },
+    "walletCard": {
+      "addressTitle": "Wallet-Adresse",
+      "balance": "Guthaben",
+      "detail": "Walletdetails"
+    },
+    "sidebar": {
+      "menu": "Hauptmenü",
+      "wallets": "Wallets",
+      "payments": "Zahlungen",
+      "createInvoice": "Rechnung erstellen",
+      "sendCrypto": "Krypto senden",
+      "receiveCrypto": "Krypto empfangen",
+      "convert": "Konvertieren"
+    },
+    "receiveCrypto": {
+      "heading": "QR-Code für den Zahlungseingang",
+      "description": "Scannen Sie diesen QR-Code, um Geld auf die von Ihnen gewählte Wallet zu erhalten"
+    }
+  },
+  "referralDashboard": {
+    "title": "Empfehlungs-Dashboard",
+    "graphTitle": "Gesamtes Empfehlungseinkommen",
+    "rolesTitle": "Rollen",
+    "addRole": "Rolle hinzufügen",
+    "role": "Rolle",
+    "amount": "Betrag",
+    "addUser": "Benutzer hinzufügen",
+    "userManagement": "Benutzerverwaltung",
+    "incomeCards": {
+      "last30DaysTitle": "Einkommen der letzten 30 Tage",
+      "last30DaysSubText": "vs. letzte 30 Tage",
+      "last24HoursTitle": "Einkommen der letzten 24 Stunden",
+      "last24HoursSubText": "vs. Vortag",
+      "paymentCardTitle": "Gesamtanzahl der Zahlungen",
+      "paymentCardSubText": "vs. letzte 30 Tage",
+      "registrationCardTitle": "Gesamtanzahl der Registrierungen",
+      "registrationCardSubText": "vs. letzte 30 Tage"
+    },
+    "userTableMenu": {
+      "activate": "Aktivieren",
+      "deactivate": "Deaktivieren",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    }
   },
   "cancel": "Stornieren",
   "confirm": "Bestätigen",

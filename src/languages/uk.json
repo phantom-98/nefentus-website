@@ -543,15 +543,23 @@
       "role": "Роль",
       "name": "Ім'я",
       "company": "Компанія",
-      "address": "Адреса"
+      "address": "Адреса",
+      "service_fee": "Послуговий збір",
+      "companyPlaceholder": "Введіть назву компанії",
+      "service_fee_description": "Відсоток, який користувач отримує з кожної транзакції"
     },
     "earningCards": {
-      "first": "Продажі: Всього",
-      "second": "Продажі: останні 24 години",
-      "third": "Продажі: останні 30 днів",
-      "progressFirst": "порівняно з останніми 30 днями",
-      "progressSecond": "порівняно з попереднім днем",
-      "progressThird": "порівняно з попереднім місяцем"
+      "totalSales": "Загальний обсяг продажів",
+      "totalReferral": "Загальний дохід від рефералів",
+      "progressInLast30d": "за останні 30 днів",
+      "salesOfLast24h": "Продажі за останні 24 години",
+      "referralOfLast24h": "Реферальний дохід за останні 24 години",
+      "progressLast24h": "порівняно з попереднім днем",
+      "salesOfLast30d": "Продажі за останні 30 днів",
+      "referralOfLast30d": "Реферальний дохід за останні 30 днів",
+      "progressLast30d": "порівняно з попереднім місяцем",
+      "payments": "Загальна кількість платежів",
+      "registrations": "Загальна кількість реєстрацій"
     },
     "balanceTitle": "Баланс на цьому тижні",
     "cryptoCard": {
@@ -1082,6 +1090,7 @@
       "email": "Email одержувача"
     },
     "tax": {
+      "reverseCharge": "Використовується процес зворотного нарахування. Клієнт несе відповідальність за сплату ПДВ.",
       "standard": "Стандартний",
       "reduced": "Зменшено"
     },
@@ -1094,6 +1103,7 @@
       "total": "Загальна ціна"
     },
     "table": {
+      "title": "Всі інвойси",
       "created": "Створено",
       "price": "Ціна",
       "status": "Статус",
@@ -1345,6 +1355,83 @@
     "modalTitle": "Перевірити верифікацію",
     "feedbackModal": "Залиште причину"
   },
+
+  "personalDashboard": {
+    "title": "Управління гаманцями",
+    "balanceTitle": "Загальний баланс",
+    "wallets": "Гаманці",
+    "addWallet": "Додати гаманець",
+    "portfolio": "Портфель",
+    "currencies": "Валюти",
+    "send": "Відправити",
+    "receive": "Отримати",
+    "convert": "Конвертувати",
+    "searchPlaceholder": "Пошук за назвою",
+    "profileDropdown": {
+      "setting": "Налаштування",
+      "support": "Підтримка",
+      "darkMode": "Темний режим",
+      "logout": "Вихід"
+    },
+    "currencyTable": {
+      "coin": "Монета",
+      "amount": "Кількість",
+      "price": "Ціна"
+    },
+    "drawer": {
+      "wallet": "Гаманець",
+      "addressTitle": "Адреса гаманця",
+      "copy": "Копіювати",
+      "balance": "Баланс",
+      "portfolio": "Портфель",
+      "coinView": "Перегляд монет"
+    },
+    "walletCard": {
+      "addressTitle": "Адреса гаманця",
+      "balance": "Баланс",
+      "detail": "Деталі гаманця"
+    },
+    "sidebar": {
+      "menu": "Головне меню",
+      "wallets": "Гаманці",
+      "payments": "Платежі",
+      "createInvoice": "Створити рахунок",
+      "sendCrypto": "Відправити криптовалюту",
+      "receiveCrypto": "Отримати криптовалюту",
+      "convert": "Конвертувати"
+    },
+    "receiveCrypto": {
+      "heading": "QR-код отримання платежу",
+      "description": "Відскануйте цей QR-код, щоб отримати гроші на обраний гаманець"
+    }
+  },
+  "referralDashboard": {
+    "title": "Панель реферальних посилань",
+    "graphTitle": "Загальний дохід від рефералів",
+    "rolesTitle": "Ролі",
+    "addRole": "Додати роль",
+    "role": "Роль",
+    "amount": "Сума",
+    "addUser": "Додати користувача",
+    "userManagement": "Управління користувачами",
+    "incomeCards": {
+      "last30DaysTitle": "Дохід за останні 30 днів",
+      "last30DaysSubText": "порівняно з останніми 30 днями",
+      "last24HoursTitle": "Дохід за останні 24 години",
+      "last24HoursSubText": "порівняно з попереднім днем",
+      "paymentCardTitle": "Загальна кількість платежів",
+      "paymentCardSubText": "порівняно з останніми 30 днями",
+      "registrationCardTitle": "Загальна кількість реєстрацій",
+      "registrationCardSubText": "порівняно з останніми 30 днями"
+    },
+    "userTableMenu": {
+      "activate": "Активувати",
+      "deactivate": "Деактивувати",
+      "edit": "Редагувати",
+      "delete": "Видалити"
+    }
+  },
+
   "cancel": "Скасувати",
   "confirm": "Підтвердити",
   "close": "Закрити",
