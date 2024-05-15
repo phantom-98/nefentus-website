@@ -91,61 +91,65 @@ const AdminDashboard = ({ type }) => {
   const affiliate = type === "affiliate";
 
   useEffect(() => {
-    fetchAdminData();
-    fetchAdminUsersData();
-
-    clearMessages();
-  }, [isReloadData, type]);
+    async function fetchData() {
+      if (!isReloadData) {
+        await checkJwtToken();
+        const result = await adminApi.checkPermission();
+        if (result === false) {
+          navigate("/login");
+        } else {
+          fetchAdminData();
+          fetchAdminUsersData();
+          clearMessages();
+        }
+      }
+    }
+    fetchData();
+  }, [isReloadData]);
 
   const fetchAdminData = async () => {
-    await checkJwtToken();
-    const result = await adminApi.checkPermission();
-    if (result === false) {
-      navigate("/login");
-    } else {
-      const getPromises = [
-        adminApi.getTotalRegistrations(),
-        adminApi.getNumOrders(),
-        adminApi.getTotalIncome(),
-        adminApi.getRoleReport(),
-        adminApi.getTotalIncomesPerDay(),
-      ];
+    const getPromises = [
+      adminApi.getTotalRegistrations(),
+      adminApi.getNumOrders(),
+      adminApi.getTotalIncome(),
+      adminApi.getRoleReport(),
+      adminApi.getTotalIncomesPerDay(),
+    ];
 
-      const [dataReg, dataOrders, dataInc, reportResp, totalPricePerDate] =
-        await Promise.allSettled(getPromises);
+    const [dataReg, dataOrders, dataInc, reportResp, totalPricePerDate] =
+      await Promise.allSettled(getPromises);
 
-      setMeasure({
-        // total: dataInc?.value?.total,
-        last24h: dataInc?.value?.last24Hours,
-        last30d: dataInc?.value?.last30Days,
-        regist: dataReg?.value,
-        payment: dataOrders?.value,
+    setMeasure({
+      // total: dataInc?.value?.total,
+      last24h: dataInc?.value?.last24Hours,
+      last30d: dataInc?.value?.last30Days,
+      regist: dataReg?.value,
+      payment: dataOrders?.value,
+    });
+
+    let total = 0;
+    const regRoleGraphData = reportResp.value
+      ?.filter((report) => report.role !== "affiliate")
+      ?.map((item) => {
+        total = total + item.count;
+
+        return {
+          color: roleColors[item.role],
+          legend: ROLE_TO_NAME[item.role],
+          num: item.count,
+          percentage: item.percentage,
+        };
       });
 
-      let total = 0;
-      const regRoleGraphData = reportResp.value
-        ?.filter((report) => report.role !== "affiliate")
-        ?.map((item) => {
-          total = total + item.count;
+    setTotalRegUserCnt(total);
 
-          return {
-            color: roleColors[item.role],
-            legend: ROLE_TO_NAME[item.role],
-            num: item.count,
-            percentage: item.percentage,
-          };
-        });
-
-      setTotalRegUserCnt(total);
-
-      setBarContent(regRoleGraphData);
-      setGraph(totalPricePerDate.value);
-      let _graph = {};
-      Object.keys(totalPricePerDate.value).forEach((key) => {
-        _graph[key] = totalPricePerDate.value[key];
-      });
-      setGraphData(_graph);
-    }
+    setBarContent(regRoleGraphData);
+    setGraph(totalPricePerDate.value);
+    let _graph = {};
+    Object.keys(totalPricePerDate.value).forEach((key) => {
+      _graph[key] = totalPricePerDate.value[key];
+    });
+    setGraphData(_graph);
   };
 
   useEffect(() => {
@@ -218,20 +222,15 @@ const AdminDashboard = ({ type }) => {
   }, [currencyRate]);
 
   const fetchAdminUsersData = async (clear) => {
-    const result = await adminApi.checkPermission();
-    if (result !== true) {
-      navigate("/login");
-    } else {
-      const res = await adminApi.getUsers(
-        dataPage * dataSize,
-        dataSize,
-        clear ? "" : getDataInput.trim().toLowerCase(),
-      );
-      setDataLength(parseInt(res.count));
-      setUsers(res.users);
-      updateUsers(res.users);
-      return res.users;
-    }
+    const res = await adminApi.getUsers(
+      dataPage * dataSize,
+      dataSize,
+      clear ? "" : getDataInput.trim().toLowerCase(),
+    );
+    setDataLength(parseInt(res.count));
+    setUsers(res.users);
+    updateUsers(res.users);
+    return res.users;
   };
 
   const updateStatusUser = async (userEmail, activated, dataUsers) => {
