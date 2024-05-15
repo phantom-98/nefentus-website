@@ -30,6 +30,7 @@
     "imprint": "Imprint",
     "forgotPassword": "Password forgotten",
     "privacy": "Privacy policy",
+    "vacancy": "Career",
     "resetPassword": "Reset Password",
     "support": "Support"
   },
@@ -110,6 +111,21 @@
     "helpCard2Title": "FAQs",
     "helpCard2Text": " View FAQs for detailed instructions on specific features",
     "helpCard2Button": "View more"
+  },
+  "vacancy": {
+    "hero1": "Become a part",
+    "hero2": "of our",
+    "hero3": "team",
+    "open": "Open roles",
+    "apply": "Apply for this job",
+    "success": "You have successfully applied",
+    "failed": "Network error",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "comment": "Comment",
+    "linkedin": "Your Linkedin link (Optional)",
+    "seeDetail": "See details"
   },
   "payment": {
     "customPayment": "Custom Payment",
@@ -957,7 +973,8 @@
       "accountDisconnect": "No Account Connected",
       "invalidMail": "Email Address is Invalid",
       "invalidPhone": "Phone Number is Invalid",
-      "connectionCancel": "Wallet Connection Failed"
+      "connectionCancel": "Wallet Connection Failed",
+      "allFields": "All Fields are required"
     },
     "info": {
       "transactionNotSaved": "Transaction successfully but could not save transaction info!",
@@ -1333,7 +1350,12 @@
       "title": "Get verified",
       "fullName": "Full Name",
       "address": "Address",
-      "city": "City and Zip Code",
+      "city": "City",
+      "zip": "Zip Code",
+      "country": "Country",
+      "addressPlaceholder": "Enter address",
+      "cityPlaceholder": "Enter City",
+      "zipPlaceholder": "Enter Zip Code",
       "issueId": "Government Issued ID",
       "picture": "Picture with ID in hand",
       "proofAddress": "Proof of Address",
@@ -1341,7 +1363,8 @@
       "enhanced": "Enhanced Diligence",
       "confirm": "Confirm",
       "upload": "Upload",
-      "add": "Add"
+      "add": "Add",
+      "personalDetail": "Personal Details"
     }
   },
   "cookieBanner": {

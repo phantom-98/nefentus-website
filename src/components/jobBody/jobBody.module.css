@@ -1,0 +1,102 @@
+.jobBody {
+  margin: 10rem auto;
+  max-width: 80rem;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.heading h1 {
+  font-size: 3rem;
+  user-select: text;
+}
+.heading a {
+  font-size: 1.2rem;
+  padding: 0.8rem 2rem;
+  border-radius: 0.6rem;
+  color: var(--text-color);
+  cursor: pointer;
+  border: none;
+  background: #0784b5;
+}
+.heading a:hover {
+  background: #1595c2;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 3rem;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  user-select: text;
+}
+
+.feature p:nth-child(odd) {
+  font-size: 1.4rem;
+  color: var(--text2-color);
+}
+
+.feature p:nth-child(even) {
+  font-size: 1.8rem;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--text2-color);
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.feature p:last-child {
+  border-bottom: none;
+}
+
+.description h3 {
+  user-select: text;
+  font-size: 1.8rem;
+  line-height: 3.2rem;
+}
+
+.description span {
+  user-select: text;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--text2-color);
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+}
+
+@media (max-width: 640px) {
+  .jobBody {
+    margin: 8rem auto;
+  }
+  .heading button {
+    display: none;
+  }
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .row {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
