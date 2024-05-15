@@ -46,10 +46,19 @@
 }
 
 .rightUpload {
-  width: 40rem;
+  min-width: 40rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
+}
+
+.personalDetailAddButton {
+  min-width: 40rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
 }
 
 .formItem {

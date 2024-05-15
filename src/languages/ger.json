@@ -914,7 +914,8 @@
       "accountDisconnect": "Kein Konto verbunden",
       "invalidMail": "E-mail Adresse ist nicht korrekt",
       "invalidPhone": "Telefonnummer ist ungültig",
-      "connectionCancel": "Wallet-Verbindung fehlgeschlagen"
+      "connectionCancel": "Wallet-Verbindung fehlgeschlagen",
+      "allFields": "Alle Felder sind erforderlich"
     },
     "info": {
       "transactionNotSaved": "Transaktion erfolgreich, aber Transaktionsinformationen konnten nicht gespeichert werden!",
@@ -1267,7 +1268,12 @@
       "title": "Verifizierung",
       "fullName": "Vollständiger Name",
       "address": "Adresse",
-      "city": "Stadt und Postleitzahl",
+      "city": "Stadt",
+      "zip": "Postleitzahl",
+      "country": "Land",
+      "addressPlaceholder": "Adresse eingeben",
+      "cityPlaceholder": "Stadt eingeben",
+      "zipPlaceholder": "Postleitzahl eingeben",
       "issueId": "Von den Behörden ausgestellter Pass oder Personalausweis",
       "picture": "Bild mit Pass oder Personalausweis in der Hand",
       "proofAddress": "Nachweis der Adresse",
@@ -1275,7 +1281,8 @@
       "enhanced": "Erhöhte Sorgfalt",
       "confirm": "Bestätigen",
       "upload": "Hochladen",
-      "add": "Hinzufügen"
+      "add": "Hinzufügen",
+      "personalDetail": "Persönliche Angaben"
     }
   },
 

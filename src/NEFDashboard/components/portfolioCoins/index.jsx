@@ -19,7 +19,9 @@ const PorfolioCoins = ({ data, useAbbreviations = false }) => {
                     <img src={record?.icon} width={24} />
                   </div>
                 )}
-                <div className="default-text">{useAbbreviations ? record?.abbr : record?.name}</div>
+                <div className="default-text">
+                  {useAbbreviations ? record?.abbr : record?.name}
+                </div>
               </div>
               <div className="default-text">{record?.percentage}%</div>
             </div>

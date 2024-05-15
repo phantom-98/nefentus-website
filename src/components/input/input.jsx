@@ -327,7 +327,7 @@ export const SearchOptions = ({
   const { t } = useTranslation();
 
   const filteredOptions = options.filter((item) =>
-    item.display.toLowerCase().includes(selected.toLowerCase()),
+    item?.display?.toLowerCase()?.includes(selected.toLowerCase()),
   );
 
   return (

@@ -973,7 +973,8 @@
       "accountDisconnect": "No Account Connected",
       "invalidMail": "Email Address is Invalid",
       "invalidPhone": "Phone Number is Invalid",
-      "connectionCancel": "Wallet Connection Failed"
+      "connectionCancel": "Wallet Connection Failed",
+      "allFields": "All Fields are required"
     },
     "info": {
       "transactionNotSaved": "Transaction successfully but could not save transaction info!",
@@ -1348,7 +1349,12 @@
       "title": "Get verified",
       "fullName": "Full Name",
       "address": "Address",
-      "city": "City and Zip Code",
+      "city": "City",
+      "zip": "Zip Code",
+      "country": "Country",
+      "addressPlaceholder": "Enter address",
+      "cityPlaceholder": "Enter City",
+      "zipPlaceholder": "Enter Zip Code",
       "issueId": "Government Issued ID",
       "picture": "Picture with ID in hand",
       "proofAddress": "Proof of Address",
@@ -1356,7 +1362,8 @@
       "enhanced": "Enhanced Diligence",
       "confirm": "Confirm",
       "upload": "Upload",
-      "add": "Add"
+      "add": "Add",
+      "personalDetail": "Personal Details"
     }
   },
   "cookieBanner": {
