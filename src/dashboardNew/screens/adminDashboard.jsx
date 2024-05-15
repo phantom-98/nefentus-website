@@ -100,7 +100,7 @@ const AdminDashboard = ({ type }) => {
   const fetchAdminData = async () => {
     await checkJwtToken();
     const result = await adminApi.checkPermission();
-    if (result !== true) {
+    if (result === false) {
       navigate("/login");
     } else {
       const getPromises = [
@@ -121,7 +121,6 @@ const AdminDashboard = ({ type }) => {
         regist: dataReg?.value,
         payment: dataOrders?.value,
       });
-      console.log("orders", dataReg?.value);
 
       let total = 0;
       const regRoleGraphData = reportResp.value

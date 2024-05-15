@@ -1,6 +1,6 @@
 // ThemeContext.js
 import React, { createContext, useState, useContext, useEffect } from "react";
-import AdminDashboardAPI from "../../api/adminDashboardApi";
+import backend_api from "../../api/backendAPI";
 
 const AuthContext = createContext();
 
@@ -17,8 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [rateList, setRateList] = useState([]);
   useEffect(() => {
     async function fetchList() {
-      const res = await new backendAPI().getRateList(currencyRate.to);
-      console.log(res);
+      const res = await new backend_api().getRateList(currencyRate.to);
       res && setRateList(res);
     }
     fetchList();
@@ -26,11 +25,13 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkIfAgent = async () => {
-      const adminApi = new AdminDashboardAPI("agent");
-      const res = await adminApi.checkPermission();
-      console.log(res, "check if agent");
-      if (res) {
-        setAgent(true);
+      if (user) {
+        const res = await new backend_api().checkIfAgent();
+        if (res) {
+          setAgent(res.isAgent);
+        } else {
+          setAgent(false);
+        }
       }
     };
     checkIfAgent();
