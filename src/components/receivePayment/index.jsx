@@ -122,7 +122,7 @@ const ReceivePayment = ({
   // const [show, setShow] = useState(false);
   // const [email, setEmail] = useState("");
   const [priceUSD, setPriceUSD] = useState();
-  // const [rate, setRate] = useState(1);
+  const [rate, setRate] = useState(1);
   const [password, setPassword] = useState("");
   const [pwd, setPwd] = useState(false);
   useEffect(() => {
@@ -130,6 +130,7 @@ const ReceivePayment = ({
       if (currency && price) {
         const res = await backend_API.getCurrencyRate("USD", currency);
         if (res) {
+          setRate(res.rate);
           setPriceUSD((price * (100 + (vatPercent ?? 0))) / 100 / res.rate);
         }
       }
@@ -649,11 +650,12 @@ const ReceivePayment = ({
                 </div>
               </div>
               <GasDetails
-                currency={currencies()[selectedCryptoIndex]}
+                token={currencies()[selectedCryptoIndex]}
                 cryptoAmount={parseFloat(cryptoAmount)}
                 usdAmount={parseFloat(priceUSD)}
-                // feeUSD={feeUSD}
                 setFeeUSD={setFeeUSD}
+                currency={currency}
+                rate={rate}
               />
               <div className={styles.paymentWrapper}>
                 <Button
@@ -663,7 +665,9 @@ const ReceivePayment = ({
                   spinner={spinner}
                 >
                   {t("payments.payButton").concat(" $")}
-                  {formatUSDBalance(priceUSD + feeUSD)}
+                  {formatUSDBalance(priceUSD + feeUSD)} (
+                  {getCurrencySymbol()[currency]}
+                  {formatUSDBalance((priceUSD + feeUSD) * rate)})
                 </Button>
               </div>
             </div>
