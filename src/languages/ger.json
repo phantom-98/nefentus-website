@@ -1023,7 +1023,7 @@
     "scan": "QR-Code scannen",
     "scanDescription": "Zur Bestätigung müssen Sie einen QR-Code scannen",
     "downloadInvoice": "Rechnung herunterladen",
-    "downloadReceipt": "Zahlungseingang herunterladen",
+    "downloadReceipt": "Zahlungsbeleg herunterladen",
     "subtotal": "Zwischensumme",
     "vatValue": "Umsatzsteuer (UmSt.)",
     "totalDue": "Insgesamt fällig",
