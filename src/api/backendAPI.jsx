@@ -1548,4 +1548,21 @@ export default class backendAPI {
       return null; // or return some default value
     }
   }
+  async getCoinPrice() {
+    try {
+      const url = `${this.baseURL}/coin-price`;
+
+      const options = {
+        method: "GET",
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
 }
