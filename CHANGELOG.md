@@ -1,6 +1,7 @@
 # New changes
 
 - Create career page and add 5 open jobs
+- Show all checkout amounts in invoice currency
 
 # Merged changes
 
