@@ -1,6 +1,7 @@
 # New changes
 
 - Create career page and add 5 open jobs
+- Add agent dashboard similar to partner dashboard for vendor
 
 # Merged changes
 
