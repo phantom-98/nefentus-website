@@ -664,10 +664,9 @@ const ReceivePayment = ({
                   onClick={() => doPayment()}
                   spinner={spinner}
                 >
-                  {t("payments.payButton").concat(" $")}
-                  {formatUSDBalance(priceUSD + feeUSD)} (
+                  {t("payments.payButton").concat(" ")}
                   {getCurrencySymbol()[currency]}
-                  {formatUSDBalance((priceUSD + feeUSD) * rate)})
+                  {formatUSDBalance((priceUSD + feeUSD) * rate)}
                 </Button>
               </div>
             </div>
