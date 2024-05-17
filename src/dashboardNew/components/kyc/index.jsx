@@ -66,7 +66,7 @@ const Table = ({ data, setData }) => {
       {index === 0 && <h5 className={styles.level}>Level 1</h5>}
       <div className={styles.line} key={index}>
         <div className={styles.row}>
-          <p>{item?.type}</p>
+          <p>{item?.type?.split("_")?.join(" ")}</p>
           <p>{item?.verify ? <img src={Correct} alt="" /> : item?.url}</p>
         </div>
         <p>{item?.rejectReason ?? null}</p>
@@ -80,7 +80,7 @@ const Table = ({ data, setData }) => {
       {index === 4 && <h5 className={styles.level}>Level 3</h5>}
       <div className={styles.line} key={index}>
         <div className={styles.row}>
-          <p>{item?.type}</p>
+          <p>{item?.type?.split("_")?.join(" ")}</p>
           {item?.verify && item?.url === null && <img src={Correct} alt="" />}
         </div>
         <p>{item?.rejectReason ?? null}</p>

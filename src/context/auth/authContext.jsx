@@ -13,6 +13,15 @@ export const AuthProvider = ({ children }) => {
     symbol: "$",
     rate: 1,
   });
+  const [rateList, setRateList] = useState([]);
+  useEffect(() => {
+    async function fetchList() {
+      const res = await new backendAPI().getRateList(currencyRate.to);
+      console.log(res);
+      res && setRateList(res);
+    }
+    fetchList();
+  }, [currencyRate]);
 
   return (
     <AuthContext.Provider
@@ -23,6 +32,8 @@ export const AuthProvider = ({ children }) => {
         setUser,
         currencyRate,
         setCurrencyRate,
+        rateList,
+        setRateList,
       }}
     >
       {children}

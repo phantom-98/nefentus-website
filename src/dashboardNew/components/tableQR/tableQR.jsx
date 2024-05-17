@@ -9,17 +9,16 @@ const TableQR = ({ link, data }) => {
   const [show, setShow] = useState(false);
 
   const requestDownload = async (invoice) => {
-    const res = await new vendorDashboardApi().downloadInvoice(data.link);
+    const res = await new vendorDashboardApi().downloadInvoice(
+      invoice,
+      data.link,
+    );
 
     if (res) {
       const element = document.createElement("a");
-      if (!res[invoice]) return;
-
-      const html = new Blob([res[invoice]], {
-        type: "text/html",
-      });
-      element.href = URL.createObjectURL(html);
-      element.download = invoice + ".html";
+      if (!res) return;
+      element.href = URL.createObjectURL(res);
+      element.download = invoice + ".pdf";
       document.body.appendChild(element); // Required for this to work in FireFox
       element.click();
     }
@@ -41,11 +40,12 @@ const TableQR = ({ link, data }) => {
         email={data.email}
         link={link}
         name={data.name}
-        price={(data.price * currencyRate.rate).toFixed(2)}
+        price={data.price}
+        currency={data.currency}
         taxNumber={data.taxNumber}
-        onInvoice={data.email ? () => requestDownload("invoice") : null}
+        onInvoice={data.email ? () => requestDownload("Invoice") : null}
         onReceipt={
-          data.email && data.paidAt ? () => requestDownload("receipt") : null
+          data.email && data.paidAt ? () => requestDownload("Receipt") : null
         }
       />
     </>

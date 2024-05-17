@@ -14,6 +14,7 @@ import CopyValue from "../../../dashboard/copyValue";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../context/auth/authContext";
 import { formatUSDBalance } from "../../../utils";
+import { getCurrencySymbol } from "../../../countries";
 import Input from "../../../components/input/input";
 
 const Popup = ({
@@ -99,6 +100,7 @@ export const QRPopup = ({
   show,
   setShow,
   price,
+  currency,
   taxNumber,
   name,
   email,
@@ -111,7 +113,6 @@ export const QRPopup = ({
   const dashboardElement = document.getElementById("dashboard");
   // const { name, email, price, company, address, taxNumber, link } = data;
   const { t } = useTranslation();
-  const { currencyRate } = useAuth();
 
   return ReactDOM.createPortal(
     <div
@@ -130,7 +131,10 @@ export const QRPopup = ({
 
         <Table
           data={[
-            [`${t("payments.amount")}:`, `${price} ${currencyRate.to}`],
+            [
+              `${t("payments.amount")}:`,
+              `${price} ${getCurrencySymbol()[currency]}`,
+            ],
             [`${t("payments.email")}:`, email],
             [`${t("payments.name")}:`, name],
             [`${t("payments.company")}:`, company],

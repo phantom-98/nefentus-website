@@ -30,6 +30,7 @@
     "imprint": "Imprint",
     "forgotPassword": "Password forgotten",
     "privacy": "Privacy policy",
+    "vacancy": "Career",
     "resetPassword": "Reset Password",
     "support": "Support"
   },
@@ -110,6 +111,21 @@
     "helpCard2Title": "FAQs",
     "helpCard2Text": " View FAQs for detailed instructions on specific features",
     "helpCard2Button": "View more"
+  },
+  "vacancy": {
+    "hero1": "Become a part",
+    "hero2": "of our",
+    "hero3": "team",
+    "open": "Open roles",
+    "apply": "Apply for this job",
+    "success": "You have successfully applied",
+    "failed": "Network error",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "comment": "Comment",
+    "linkedin": "Your Linkedin link (Optional)",
+    "seeDetail": "See details"
   },
   "payment": {
     "customPayment": "Custom Payment",
@@ -528,15 +544,23 @@
       "role": "Role",
       "name": "Name",
       "company": "Company",
-      "address": "Address"
+      "address": "Address",
+      "service_fee": "Service Fee",
+      "companyPlaceholder": "Enter Company",
+      "service_fee_description": "The percentage that the user receives from each transaction"
     },
     "earningCards": {
-      "first": "Sales: Total",
-      "second": "Sales: Last 24 hours",
-      "third": "Sales: Last 30 days",
-      "progressFirst": "vs last 30 days",
-      "progressSecond": "vs the day before",
-      "progressThird": "vs the month before"
+      "totalSales": "Total sales",
+      "totalReferral": "Total referral income",
+      "progressInLast30d": "in the last 30 days",
+      "salesOfLast24h": "Sales of last 24 hours",
+      "referralOfLast24h": "Referral income of last 24 hours",
+      "progressLast24h": "vs. the day before",
+      "salesOfLast30d": "Sales of last 30 days",
+      "referralOfLast30d": "Referral income of last 30 days",
+      "progressLast30d": "vs. the month before",
+      "payments": "Total number of payments",
+      "registrations": "Total number of registrations"
     },
     "balanceTitle": "Balance this week",
     "cryptoCard": {
@@ -638,6 +662,7 @@
     "or": "or"
   },
   "countries": {
+    "choose": "Choose your country",
     "Afghanistan": "Afghanistan",
     "Albania": "Albania",
     "Algeria": "Algeria",
@@ -842,7 +867,8 @@
     "VirginIslandsUS": "Virgin Islands (US)",
     "Yemen": "Yemen",
     "Zambia": "Zambia",
-    "Zimbabwe": "Zimbabwe"
+    "Zimbabwe": "Zimbabwe",
+    "EuropeanUnion": "European Union"
   },
   "messages": {
     "validation": {
@@ -918,6 +944,7 @@
       "updateData": "Error on updating data",
       "uploadPicture": "Error on uploading the profile picture",
       "amountValid": "Please enter a valid amount",
+      "taxPercentValid": "Please choose VAT percent",
       "nameValid": "Please enter a valid name",
       "companyValid": "Please enter a valid company",
       "addressValid": "Please enter a valid address",
@@ -946,7 +973,8 @@
       "accountDisconnect": "No Account Connected",
       "invalidMail": "Email Address is Invalid",
       "invalidPhone": "Phone Number is Invalid",
-      "connectionCancel": "Wallet Connection Failed"
+      "connectionCancel": "Wallet Connection Failed",
+      "allFields": "All Fields are required"
     },
     "info": {
       "transactionNotSaved": "Transaction successfully but could not save transaction info!",
@@ -1001,7 +1029,8 @@
       "name": "Name is required!",
       "description": "Description is required!",
       "price": "Price is required!",
-      "priceAsFloat": "Price must be a positive!"
+      "priceAsFloat": "Price must be a positive!",
+      "chooseVat": "Please choose VAT percent!"
     },
     "createProductModal": {
       "imageLabel": "Product image",
@@ -1016,6 +1045,13 @@
       "pricePlaceholder": "Enter price",
       "stockLabel": "Stock",
       "stockPlaceholder": "Enter stock if limited stock",
+      "vat": "Value-added tax percent",
+      "standard": "Standard",
+      "reduced": "Reduced",
+      "currency": "Payment currency",
+      "limitless": "Unlimited",
+      "quantity": "Limited",
+      "stockAvailable": "Available stock",
       "add": "Add",
       "update": "Update",
       "cancel": "Cancel",
@@ -1034,9 +1070,11 @@
     "email": "Email",
     "name": "Name",
     "number": "Number",
+    "person": "Person",
     "company": "Company",
     "address": "Address",
-    "addressHint": "Country, City, Street",
+    "legalStatus": "Legal status",
+    "addressHint": "Street, city",
     "taxNumber": "VAT number",
     "vat": "VAT",
     "createInvoice": "Create Invoice",
@@ -1044,7 +1082,30 @@
     "scanDescription": "To confirm you need to scan QR code",
     "downloadInvoice": "Download invoice",
     "downloadReceipt": "Download receipt",
+    "subtotal": "Subtotal",
+    "vatValue": "Value added tax (VAT)",
+    "totalDue": "Total due",
+    "note": "Note",
+    "buyer": {
+      "customer": "Customer information",
+      "fullName": "Recipient full name",
+      "email": "Recipient email"
+    },
+    "tax": {
+      "reverseCharge": "The Reverse Charge process is used. The client is responsable for paying the VAT.",
+      "standard": "Standard",
+      "reduced": "Reduced"
+    },
+    "items": {
+      "title": "Invoice Items",
+      "add": "Add item",
+      "name": "Item",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total price"
+    },
     "table": {
+      "title": "All invoices",
       "created": "Created at",
       "price": "Price",
       "status": "Status",
@@ -1059,11 +1120,14 @@
       "description": "Costs that are inevitably incurred in order to carry out a transaction on a blockchain. The costs ultimately go to the miners who keep the blockchain secure.",
       "gasPrice": "Gas Price",
       "gasLimit": "Gas Limit",
-      "total": "Total"
+      "updating": "Gas price updates every 30s",
+      "total": "Total due"
     },
     "price": "Price",
     "seller": "Seller Info",
     "total": "Invoice Amount",
+    "informVAT1": "The VAT of",
+    "informVAT2": "is included in this amount",
     "cryptoAmount": "In Crypto",
     "cryptoDescription": "This amount corresponds to the invoice amount in the selected cryptocurrency. After payment, these funds are sent to the seller.",
     "chooseWallet": "Choose Wallet",
@@ -1287,7 +1351,12 @@
       "title": "Get verified",
       "fullName": "Full Name",
       "address": "Address",
-      "city": "City and Zip Code",
+      "city": "City",
+      "zip": "Zip Code",
+      "country": "Country",
+      "addressPlaceholder": "Enter address",
+      "cityPlaceholder": "Enter City",
+      "zipPlaceholder": "Enter Zip Code",
       "issueId": "Government Issued ID",
       "picture": "Picture with ID in hand",
       "proofAddress": "Proof of Address",
@@ -1295,7 +1364,8 @@
       "enhanced": "Enhanced Diligence",
       "confirm": "Confirm",
       "upload": "Upload",
-      "add": "Add"
+      "add": "Add",
+      "personalDetail": "Personal Details"
     }
   },
   "cookieBanner": {
@@ -1326,6 +1396,81 @@
   },
   "settingsItem": {
     "title": "Change Value"
+  },
+  "personalDashboard": {
+    "title": "Wallets Management",
+    "balanceTitle": "Total Balance",
+    "wallets": "Wallets",
+    "addWallet": "Add Wallet",
+    "portfolio": "Portfolio",
+    "currencies": "Currencies",
+    "send": "Send",
+    "receive": "Receive",
+    "convert": "Convert",
+    "searchPlaceholder": "Search with name",
+    "profileDropdown": {
+      "setting": "Setting",
+      "support": "Support",
+      "darkMode": "Dark Mode",
+      "logout": "Logout"
+    },
+    "currencyTable": {
+      "coin": "Coin",
+      "amount": "Amount",
+      "price": "Price"
+    },
+    "drawer": {
+      "wallet": "Wallet",
+      "addressTitle": "Wallet Address",
+      "copy": "Copy",
+      "balance": "Balance",
+      "portfolio": "Portfolio",
+      "coinView": "Currencies"
+    },
+    "walletCard": {
+      "addressTitle": "Wallet Address",
+      "balance": "Balance",
+      "detail": "Wallet Details"
+    },
+    "sidebar": {
+      "menu": "Main Menu",
+      "wallets": "Wallets",
+      "payments": "Payments",
+      "createInvoice": "Create Invoice",
+      "sendCrypto": "Send Crypto",
+      "receiveCrypto": "Receive Crypto",
+      "convert": "Convert"
+    },
+    "receiveCrypto": {
+      "heading": "Payment receiving QR code",
+      "description": "Scan this QR-code to receive money to your chosen wallet"
+    }
+  },
+  "referralDashboard": {
+    "title": "Referral Dashboard",
+    "graphTitle": "Total Referral Income",
+    "rolesTitle": "Roles",
+    "addRole": "Add Role",
+    "role": "Role",
+    "amount": "Amount",
+    "addUser": "Add User",
+    "userManagement": "User Management",
+    "incomeCards": {
+      "last30DaysTitle": "Income of last 30 days",
+      "last30DaysSubText": "vs last 30 days",
+      "last24HoursTitle": "Income of last 24 hours",
+      "last24HoursSubText": "vs day before",
+      "paymentCardTitle": "Total number of payments",
+      "paymentCardSubText": "vs last 30 days",
+      "registrationCardTitle": "Total number of registrations",
+      "registrationCardSubText": "vs last 30 days"
+    },
+    "userTableMenu": {
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
   },
   "cancel": "Cancel",
   "confirm": "Confirm",

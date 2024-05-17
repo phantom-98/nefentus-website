@@ -1,0 +1,50 @@
+.identification-personal-detail-modal {
+  width: 50rem;
+}
+
+.identification-personal-detail-modal h4 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 3rem;
+}
+
+.identification-detail-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.identification-detail-passwordWrapper {
+  position: relative;
+}
+
+.identification-detail-password {
+  display: flex;
+  flex-direction: column;
+}
+
+.identification-detail-iconEye {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
+.identification-detail-modalButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  cursor: pointer;
+}
+
+.identification-detail-modalButtons > div {
+  width: 100%;
+}
