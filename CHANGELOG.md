@@ -4,6 +4,7 @@
 - fix country issue when creating invoice
 - Show all amounts in invoice currency
 - Show all checkout amounts in invoice currency
+- Fetch crypto price from backend
 
 # Merged changes
 
