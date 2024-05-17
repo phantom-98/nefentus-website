@@ -3,6 +3,7 @@
 - Create career page and add 5 open jobs
 - fix country issue when creating invoice
 - Show all amounts in invoice currency
+- Show all checkout amounts in invoice currency
 
 # Merged changes
 
