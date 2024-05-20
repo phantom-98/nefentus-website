@@ -1548,21 +1548,17 @@ export default class backendAPI {
       return null; // or return some default value
     }
   }
-  async swap(password, address, params, route) {
+  async swap(body) {
     try {
-      const url = `${this.baseURL}/swap`;
+      const url = `${this.baseURL}/auth/swap`;
 
       const options = {
         method: "post",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
         },
-        body: JSON.stringify({
-          password,
-          address,
-          params,
-          route,
-        }),
+        body: JSON.stringify(body),
       };
       const response = await fetch(url, options);
       if (!response.ok) {
@@ -1575,14 +1571,25 @@ export default class backendAPI {
   }
   async httpRequest(url, method, body, headers) {
     try {
-      const response = await fetch(url, {
+      let fetchUrl = url;
+      const option = {
         method,
         headers: {
           "Content-Type": "application/json",
           ...headers,
         },
-        body: JSON.stringify(body),
-      });
+      };
+      if (method.toLowerCase() === "get") {
+        const searchParams = Object.keys(body)
+          .map((key) => key + "=" + body[key])
+          .join("&");
+        if (searchParams) {
+          fetchUrl += "?" + searchParams;
+        }
+      } else {
+        option.body = JSON.stringify(body);
+      }
+      const response = await fetch(fetchUrl, option);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

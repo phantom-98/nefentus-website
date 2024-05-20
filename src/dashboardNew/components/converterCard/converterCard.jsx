@@ -30,6 +30,8 @@ import {
 import SwingSDK from "@swing.xyz/sdk";
 import { PasswordPopup } from "../popup/popup";
 
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
 const ConverterCard = () => {
   const { t } = useTranslation();
   // const { theme } = useTheme();
@@ -44,13 +46,14 @@ const ConverterCard = () => {
   const [price, setPrice] = useState();
   const [insufficient, setInsufficient] = useState(false);
   const [spinner, setSpinner] = useState(false);
-  const [selectedWalletIndex, setSelectedWalletIndex] = useState(1);
+  const [selectedWalletIndex, setSelectedWalletIndex] = useState(0);
   const [fromCryptoIndex, setFromCryptoIndex] = useState(0);
   const [toCryptoIndex, setToCryptoIndex] = useState(3);
   const [swingSDK, setSwingSDK] = useState(null);
   const [receiveAmount, setReceiveAmount] = useState("");
   const [toTokenLocalAmount, setToTokenLocalAmount] = useState("");
   const [amount, setAmount] = useState("");
+  const [bridge, setBridge] = useState("");
   const [transferRoute, setTransferRoute] = useState();
   const [transferParams, setTransferParams] = useState({
     amount: "",
@@ -87,7 +90,10 @@ const ConverterCard = () => {
     setWallets(
       list.map((wallet) => ({
         ...wallet,
-        title: wallet?.type?.charAt(0)?.toUpperCase() + wallet?.type?.slice(1),
+        title:
+          wallet?.type?.toLowerCase() === "internal"
+            ? "Nefentus"
+            : wallet?.type?.charAt(0)?.toUpperCase() + wallet?.type?.slice(1),
         description: formatWalletAddress(wallet?.address),
         icon: getWalletIcon(wallet?.type),
       })),
@@ -160,11 +166,7 @@ const ConverterCard = () => {
   }
   async function getQuote() {
     if (!swingSDK) return;
-    if (fromCryptoIndex == toCryptoIndex) {
-      setReceiveAmount(amount);
-      return;
-    }
-    if (parseFloat(transferParams.amount) <= 0) {
+    if (!transferParams.amount || parseFloat(transferParams.amount) <= 0) {
       return;
     }
 
@@ -186,8 +188,7 @@ const ConverterCard = () => {
       const quoteIntegration = swingSDK.getIntegration(
         bestQuote.quote.integration,
       );
-
-      console.log(bestQuote, "quote");
+      setBridge(bestQuote.quote.integration);
 
       const _amount =
         parseInt(bestQuote?.quote?.amount) / 10 ** bestQuote?.quote?.decimals;
@@ -205,29 +206,96 @@ const ConverterCard = () => {
     setSpinner(false);
   }
   async function requestSwap() {
-    // console.log("swap", transferParams, transferRoute);
-    const res = await backend_API.httpRequest(
-      "https://swap.prod.swing.xyz/v0/transfer/allowance",
-      "get",
-      {
+    setSpinner(true);
+    try {
+      const fromTokenAddress = currencies()[fromCryptoIndex].address;
+      const body = {
+        bridge,
         fromChain: transferParams.fromChain,
         tokenSymbol: transferParams.fromToken,
-        tokenAddress: currencies().find(
-          (currency) => currency.abbr === transferParams.fromToken,
-        ).address,
+        tokenAddress: fromTokenAddress,
         toChain: transferParams.toChain,
         toTokenSymbol: transferParams.toToken,
-        toTokenAddress: currencies().find(
-          (currency) => currency.abbr === transferParams.toToken,
-        ).address,
-        contractCall: true,
-        fromAddress: "0xcd01a99d2F35D390903E966188dDA0FDCAb069F4", //transferParams.fromUserAddress
-      },
-    );
-    console.log("allowance", res);
-    if (res) {
-    } else {
+        toTokenAddress: currencies()[toCryptoIndex].address ?? ZERO_ADDRESS,
+        contractCall: false,
+        fromAddress: transferParams.fromUserAddress,
+      };
+      if (fromTokenAddress) {
+        const resAllow = await backend_API.httpRequest(
+          "https://swap.prod.swing.xyz/v0/transfer/allowance",
+          "get",
+          body,
+        );
+        if (resAllow) {
+          console.log("allowance", resAllow);
+          const allowance = parseInt(resAllow["allowance"]);
+          if (allowance < amount) {
+            //approve
+            const resApprove = await backend_API.httpRequest(
+              "https://swap.prod.swing.xyz/v0/transfer/approve",
+              "get",
+              {
+                ...body,
+                tokenAmount: Math.floor(
+                  amount * 10 ** currencies()[fromCryptoIndex].decimals,
+                ).toString(),
+              },
+            );
+            if (resApprove) {
+              console.log("approve", resApprove);
+              resApprove.tx.forEach(async (tx) => {
+                const approve = await backend_API.swap({ ...tx, password });
+                if (approve) {
+                  console.log("approve result", approve);
+                } else {
+                  throw Error("Approving failed");
+                }
+              });
+            } else {
+              throw Error("Api call failed");
+            }
+          }
+        } else {
+          throw Error("Api call failed");
+        }
+      }
+
+      const resTransfer = await backend_API.httpRequest(
+        "https://swap.prod.swing.xyz/v0/transfer/send",
+        "post",
+        {
+          ...body,
+          tokenAmount: Math.floor(
+            amount * 10 ** currencies()[fromCryptoIndex].decimals,
+          ).toString(),
+          toTokenAmount: transferRoute.quote.amount,
+          fromTokenAddress: fromTokenAddress ?? ZERO_ADDRESS,
+          fromUserAddress: transferParams.fromUserAddress,
+          toUserAddress: transferParams.toUserAddress,
+          route: transferRoute.route,
+          type: "swap",
+        },
+      );
+      if (resTransfer) {
+        console.log("resTransfer", resTransfer);
+        const transfer = await backend_API.swap({
+          ...resTransfer.tx,
+          gasLimit: parseInt(resTransfer.tx.gas),
+          password,
+        });
+        if (transfer) {
+          console.log("transfer result", transfer);
+          setInfoMessage("Success");
+        } else {
+          throw Error("Transfering failed");
+        }
+      } else {
+        throw Error("Api call failed");
+      }
+    } catch (error) {
+      setErrorMessage(error);
     }
+    setSpinner(false);
   }
   async function startTransfer() {
     if (!swingSDK) return;
@@ -319,7 +387,7 @@ const ConverterCard = () => {
     setTransferParams({
       ...transferParams,
       fromChain: _fromChain,
-      fromToken: _fromToken,
+      fromToken: _fromToken === "USDT-BSC" ? "USDT" : _fromToken,
     });
   }, [fromCryptoIndex]);
   useEffect(() => {
@@ -328,7 +396,7 @@ const ConverterCard = () => {
     setTransferParams({
       ...transferParams,
       toChain: _toChain,
-      toToken: _toToken,
+      toToken: _toToken === "USDT-BSC" ? "USDT" : _toToken,
     });
   }, [toCryptoIndex]);
   useEffect(() => {
