@@ -197,14 +197,18 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
             ))}
           </div>
 
-          <Button onClick={modalAddUser}>{t("dashboard.addUser")}</Button>
+          {type !== "agent" && (
+            <>
+              <Button onClick={modalAddUser}>{t("dashboard.addUser")}</Button>
 
-          {type !== "partner" && (
-            <div style={{ marginTop: "1.5rem" }}>
-              <Button color="light" link={"/dashboard/kyc"}>
-                {t("dashboard.KYCRequests")}
-              </Button>
-            </div>
+              {type !== "partner" && (
+                <div style={{ marginTop: "1.5rem" }}>
+                  <Button color="light" link={"/dashboard/kyc"}>
+                    {t("dashboard.KYCRequests")}
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </Card>

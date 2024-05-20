@@ -81,6 +81,9 @@
   left: 1rem;
   bottom: 2rem;
   right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .lightContainer .notification {
