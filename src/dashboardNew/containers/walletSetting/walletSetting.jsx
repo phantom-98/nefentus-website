@@ -32,14 +32,20 @@ const WalletSetting = ({ value, setValue }) => {
         setWalletOptions(
           filteredData?.map((wallet) => ({
             ...wallet,
-            name: wallet?.type,
+            name:
+              wallet?.type.toLowerCase() === "internal"
+                ? "Nefentus"
+                : wallet?.type,
             icon: getWalletIcon(wallet?.type),
           })),
         );
         if (filteredData) {
           setActiveWallet({
             ...filteredData[0],
-            name: filteredData[0]?.type,
+            name:
+              filteredData[0]?.type.toLowerCase() === "internal"
+                ? "Nefentus"
+                : filteredData[0]?.type,
             icon: getWalletIcon(filteredData[0]?.type),
           });
         }
@@ -52,7 +58,7 @@ const WalletSetting = ({ value, setValue }) => {
   }, []);
 
   useEffect(() => {
-    if (!value && !walletOptions?.length) return;
+    if (!value || !walletOptions?.length) return;
     console.log(value);
     const list = value.split("--");
     if (list.length != 2) return;
@@ -91,7 +97,7 @@ const WalletSetting = ({ value, setValue }) => {
             <span className={styles.text}>
               {walletAddress?.address?.length
                 ? WalletAddressFormatter(walletAddress?.address)
-                : "Not available"}
+                : null}
             </span>
           </div>
         </div>
