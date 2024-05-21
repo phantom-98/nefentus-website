@@ -6,6 +6,7 @@
 - Show all checkout amounts in invoice currency
 - Fetch crypto price from backend
 - Add agent dashboard similar to partner dashboard for vendor
+- Add swap feature
 
 # Merged changes
 
