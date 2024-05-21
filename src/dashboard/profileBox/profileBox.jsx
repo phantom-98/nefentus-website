@@ -1,11 +1,8 @@
 import styles from "./profileBox.module.css";
-
 import Arrow from "../../assets/icon/dropdownWhite.svg";
-import { useEffect, useState } from "react";
-import Cookies from "universal-cookie";
-import backendAPI from "../../api/backendAPI";
 import BlobPicture from "../../components/blobPicture/blobPicture";
 import { useAuth } from "../../context/auth/authContext";
+
 const ProfileBox = () => {
   const { user } = useAuth();
   return (
