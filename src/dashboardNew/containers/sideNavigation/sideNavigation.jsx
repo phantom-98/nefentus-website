@@ -16,7 +16,7 @@ const SideNavigation = () => {
   const { t, i18n } = useTranslation();
   const { language } = i18n;
   const query = useLocation();
-  const { user } = useAuth();
+  const { user, isAgent } = useAuth();
   const userRole = getRole(user);
 
   const [active, setActive] = useState(0);
@@ -161,6 +161,9 @@ const SideNavigation = () => {
       case "/dashboard/partner":
         setActive("Partner");
         break;
+      case "/dashboard/agent":
+        setActive("Agent");
+        break;
       default:
         setActive("");
         break;
@@ -168,7 +171,8 @@ const SideNavigation = () => {
   }, [query.pathname]);
 
   const getFullSideBar = (active) => {
-    if (active === "Admin" || active === "Partner") return false;
+    if (active === "Admin" || active === "Partner" || active === "Agent")
+      return false;
 
     return true;
   };
@@ -200,7 +204,7 @@ const SideNavigation = () => {
             )}
           </Link>
         ))}
-
+      {/* 
       <div className={styles.mobItems}>
         <div className={styles.item}>
           <img src={Notification} className={styles.notification} alt="" />
@@ -216,25 +220,34 @@ const SideNavigation = () => {
 
           <p>{theme === "dark" ? "Dark" : "Light"}</p>
         </div>
-      </div>
+      </div> */}
 
-      {userRole === "admin" ||
-      userRole === "leader" ||
-      userRole === "seniorbroker" ||
-      userRole === "broker" ? (
-        <div className={styles.referral}>
-          {/* <AffiliateLink user={user} /> */}
-          {getFullSideBar(active) ? (
-            <Link to={dashboardLink(user)}>
-              <Button width="">{t("sidebar.referral")}</Button>
+      <div className={styles.referral}>
+        {isAgent &&
+          userRole === "vendor" &&
+          (getFullSideBar(active) ? (
+            <Link to="/dashboard/agent">
+              <Button width="">{t("sidebar.agentDashboard")}</Button>
             </Link>
           ) : (
             <Link to="/dashboard/">
               <Button width="">{t("sidebar.vendorDashboard")}</Button>
             </Link>
-          )}
-        </div>
-      ) : null}
+          ))}
+        {userRole !== "vendor" && (
+          <>
+            {getFullSideBar(active) ? (
+              <Link to={dashboardLink(user)}>
+                <Button width="">{t("sidebar.referral")}</Button>
+              </Link>
+            ) : (
+              <Link to="/dashboard/">
+                <Button width="">{t("sidebar.vendorDashboard")}</Button>
+              </Link>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

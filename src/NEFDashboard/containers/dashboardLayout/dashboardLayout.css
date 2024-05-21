@@ -1,0 +1,104 @@
+.page-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 32px;
+}
+
+.personal-dashboard-body {
+  padding: 0px 32px;
+  position: relative;
+}
+
+.pageTitle {
+  font-family: "DM-Sans";
+  color: var(--text2-color, #b1b1b1);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.currency-option {
+  gap: 4px;
+  line-height: 1;
+  /* border: 1px solid red; */
+}
+
+.ant-select-item-option-selected {
+  background-color: transparent !important;
+}
+
+:where(.css-dev-only-do-not-override-1kuana8).currency-dropdown
+  .ant-select-selector {
+  line-height: 1;
+}
+
+:where(.css-dev-only-do-not-override-1kuana8).currency-dropdown
+  .ant-select-selector
+  .ant-select-selection-item,
+:where(.css-dev-only-do-not-override-1kuana8).currency-dropdown
+  .ant-select-selector
+  .ant-select-selection-placeholder {
+  line-height: 1;
+}
+
+.language-container {
+  border: 1px solid #202020;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.localisation-container {
+  width: 20px;
+}
+
+.verticalDivider {
+  height: 40px;
+  margin-inline: 0px;
+}
+
+.profile-dropdown-width {
+  font-family: "DM-Sans";
+  min-width: 150px;
+}
+
+.user-block {
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+}
+.user-block:hover {
+  background-color: #202020;
+}
+
+.user-block-arrow {
+  margin-left: 8px;
+  width: 20px;
+}
+.user-block-arrow-down {
+  margin-left: 8px;
+  width: 20px;
+}
+
+.username-text {
+  font-family: "DM-Sans";
+  color: var(--text2-color, #b1b1b1);
+  font-size: 14px;
+}
+
+.user-role-text {
+  font-family: "DM-Sans";
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.divider-without-margin {
+  margin: 0;
+}
+
+.user-avatar {
+  width: 32px !important;
+  height: 32px !important;
+}

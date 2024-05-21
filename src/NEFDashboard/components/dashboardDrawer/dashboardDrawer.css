@@ -1,0 +1,146 @@
+.drawer-container .ant-drawer-body {
+  background: var(--BG, #111);
+  box-shadow: -7px 0px 26.6px 0px rgba(0, 0, 0, 0.35);
+}
+.drawer-cover-image {
+  width: 100%;
+  height: 117px;
+  border-radius: 6px;
+}
+
+.drawer-wallet-logo-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: fit-content;
+  padding: 12px;
+  border-radius: 40px;
+  border: 2px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+  margin-top: -40px;
+  margin-left: 20px;
+  aspect-ratio: 2;
+}
+
+.drawer-wallet-logo {
+  width: 26.5px;
+  height: 29.624px;
+}
+
+.drawer-wallet-title-subcontainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.drawer-wallet-title {
+  font-size: 16px;
+}
+
+.drawer-wallet-name {
+  text-transform: uppercase;
+  font-size: 28px;
+}
+
+.drawer-wallet-address-container {
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  padding: 6px;
+}
+
+.drawer-copy-button {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 13px;
+  border-radius: 6px;
+  background: var(--Dark, #202020);
+  cursor: pointer;
+}
+
+.drawer-address-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.drawer-balance-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.drawer-total-balance-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.drawer-total-balance {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.total-balance-title {
+  font-size: 16px;
+}
+
+.percentage-tag {
+  color: var(--Green, #07b561);
+  display: flex;
+  align-items: center;
+  border-radius: 6px;
+  background: var(--TrnspGreen, rgba(7, 181, 97, 0.1));
+  padding: 3px 4px;
+}
+
+.drawer-portfolio-title {
+  font-family: "DM-Sans";
+  color: var(--Light-grey, #e9e9e9);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.drawer-table-title {
+  font-family: "DM-Sans";
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.drawer-searchbar {
+  width: fit-content;
+}
+
+:where(.drawer-searchbar).ant-input-affix-wrapper > input.ant-input,
+:where(.css-dev-only-do-not-override-ysyo1).drawer-searchbar > input.ant-input {
+  border: 0px !important;
+}
+
+.copy-icon {
+  background-color: var(--text2-color);
+  -webkit-mask: url(/src/assets/newDashboardIcons/copy.svg) no-repeat center !important;
+  width: 16px;
+  height: 16px;
+}
+
+.line-bar-graph {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.line-bar-graph-section {
+  height: 8px;
+}
+
+.line-bar-graph .line-bar-graph-section:first-child {
+  border-radius: 6px 0px 0px 6px;
+}
+
+.line-bar-graph .line-bar-graph-section:last-child {
+  border-radius: 0px 6px 6px 0px;
+}

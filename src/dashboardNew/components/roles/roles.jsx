@@ -114,7 +114,7 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
         } else if (data["email"]) {
           if (data["email"] == "Please enter email") {
             setErrorMessage(t("messages.validation.email"));
-          } else if (data["email"] == "Please enter valid email") {
+          } else if (data["email"] == "Please enter a valid email") {
             setErrorMessage(t("messages.validation.validEmail"));
           } else {
             setErrorMessage(t("messages.validation.lengthEmail"));
@@ -197,14 +197,18 @@ const Roles = ({ data, userCnt, type, setIsReloadData }) => {
             ))}
           </div>
 
-          <Button onClick={modalAddUser}>{t("dashboard.addUser")}</Button>
+          {type !== "agent" && (
+            <>
+              <Button onClick={modalAddUser}>{t("dashboard.addUser")}</Button>
 
-          {type !== "partner" && (
-            <div style={{ marginTop: "1.5rem" }}>
-              <Button color="light" link={"/dashboard/kyc"}>
-                {t("dashboard.KYCRequests")}
-              </Button>
-            </div>
+              {type !== "partner" && (
+                <div style={{ marginTop: "1.5rem" }}>
+                  <Button color="light" link={"/dashboard/kyc"}>
+                    {t("dashboard.KYCRequests")}
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </Card>

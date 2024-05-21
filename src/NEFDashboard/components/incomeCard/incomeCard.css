@@ -1,0 +1,48 @@
+.income-card-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+.income-card {
+  height: 100%;
+}
+
+:where(.css-dev-only-do-not-override-1yuxnot).income-card .ant-card-body {
+  padding: 12px;
+  border-radius: 0 0 8px 8px;
+  /* min-height: 270px; */
+}
+
+:where(.css-dev-only-do-not-override-1yuxnot).income-card .ant-card-head {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: -1px;
+  padding: 10px 12px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  font-size: 16px;
+  background: var(--BG2, #171717);
+  border-bottom: 1px solid #303030;
+  border-radius: 8px 8px 0 0;
+}
+
+.income-profit {
+  width: fit-content;
+  color: #07b561;
+  padding: 3px 4px;
+  border-radius: 6px;
+  background: var(--TrnspGreen, rgba(7, 181, 97, 0.1));
+}
+
+.income-amount {
+  font-size: 28px;
+  font-weight: 500;
+}
+.income-card-container .ant-card-head {
+  background: #171717;
+  border: 1px solid var(--Dark, #202020);
+}
+
+.income-profit .default-text {
+  color: #07b561;
+}

@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import setCookie from "../components/setCookie/setCookie";
+import { setCookie } from "../func/cookies";
 import ReactGA from "react-ga4";
 
 export default class backendAPI {
@@ -307,6 +307,28 @@ export default class backendAPI {
     const getWallet = JSON.parse(user?.Wallet);
     try {
       const url = `${this.baseURL}/auth/user-balance-wallet?wallet_address=${getWallet?.address}`;
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options)
+        .then((res) => res.json())
+        .catch((err) => {
+          throw new Error("Network response was not ok");
+        });
+
+      return response;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async getUserWalletsBalanceForGraph() {
+    try {
+      const url = `${this.baseURL}/auth/user-balance`;
       const options = {
         method: "GET",
         headers: {
@@ -1447,14 +1469,111 @@ export default class backendAPI {
       return null; // or return some default value
     }
   }
-  async getCurrencyRate() {
+  async getCurrencyRate(from, to) {
     try {
-      const url = `${this.baseURL}/currency`;
+      const url = `${this.baseURL}/currency?from=${from}&to=${to}`;
+
+      const options = {
+        method: "GET",
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async getRateList(base) {
+    try {
+      const url = `${this.baseURL}/currencyList?base=${base}`;
+
+      const options = {
+        method: "GET",
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async getTaxInfo(country) {
+    try {
+      const url = `${this.baseURL}/taxInfo/${country}`;
+
+      const options = {
+        method: "GET",
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async contact(title, firstName, lastName, email, linkedin, comment) {
+    try {
+      const url = `${this.baseURL}/contact`;
+
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          firstName,
+          lastName,
+          email,
+          linkedin,
+          comment,
+        }),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async getCoinPrice() {
+    try {
+      const url = `${this.baseURL}/coin-price`;
+
+      const options = {
+        method: "GET",
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async checkIfAgent() {
+    try {
+      const url = `${this.baseURL}/auth/agent`;
 
       const options = {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
         },
       };
       const response = await fetch(url, options);

@@ -9,7 +9,7 @@ import styles from "./languages.module.css";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useMemo, useState } from "react";
-import { Globe } from "../../../assets/icon/icons";
+import Globe from "../../../assets/icon/globe.svg";
 
 const Languages = () => {
   const query = useLocation();
@@ -51,10 +51,6 @@ const Languages = () => {
     if (query.pathname === "/support") {
       // setLangList(list.slice(0, 2));
       // handleTrans("en");
-    } else if (query.pathname === "/privacy" || query.pathname === "/imprint") {
-      setLangList(list.slice(0, 1));
-
-      handleTrans("en");
     } else {
       setLangList(list);
     }
@@ -63,7 +59,7 @@ const Languages = () => {
   return (
     <div className={styles.languages}>
       <div className={styles.menu}>
-        <Globe />
+        <img src={Globe} alt="globe" />
       </div>
       <div className={`${styles.dropdown}`}>
         <div className={`${styles.body} card`}>

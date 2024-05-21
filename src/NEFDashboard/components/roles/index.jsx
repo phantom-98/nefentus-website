@@ -1,0 +1,154 @@
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, Flex, Row } from "antd";
+import AddIcon from "../../../assets/newDashboardIcons/add.svg";
+import "./roles.css";
+import adminDashboardApi from "../../../api/adminDashboardApi";
+import { ROLE_TO_NAME } from "../../../constants";
+import { useTranslation } from "react-i18next";
+import AddUser from "../addUser";
+
+const role_colors = {
+  leader: "#078BB9",
+  seniorbroker: "#1F7369",
+  broker: "#C09A15",
+  vendor: "#8543DA",
+  admin: "#ED9001",
+};
+
+const Roles = ({ type, fetchUsers }) => {
+  const { t } = useTranslation();
+  const adminApi = new adminDashboardApi(type);
+  const [totalRoles, setTotalRoles] = useState(12);
+  const [roleList, setRoleList] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    fetchUserRoles();
+  }, []);
+
+  const fetchUserRoles = async () => {
+    const response = await adminApi.getRoleReport();
+    // Removing affiliate from role list, colors assign to roles and role list has set in state
+    if (response?.length) {
+      setRoleList(
+        response
+          ?.filter((roleData) => roleData?.role != "affiliate")
+          ?.map((data) => ({
+            ...data,
+            role: ROLE_TO_NAME[data?.role],
+            color: role_colors[data?.role],
+          }))
+          .sort((a, b) => a.role.localeCompare(b.role)),
+      );
+      setTotalRoles(
+        response
+          ?.map((role) => role?.count)
+          ?.reduce((prev, cur) => prev + cur, 0),
+      );
+    }
+  };
+
+  const handleSubmit = async () => {
+    fetchUsers();
+    setOpen(!open);
+  };
+
+  return (
+    <>
+      {open && (
+        <AddUser
+          open={open}
+          handleSubmit={handleSubmit}
+          onClose={() => setOpen(!open)}
+          type={type}
+        />
+      )}
+      <Card
+        className="roles-card"
+        title={
+          <div className="default-text-gray common-role-style">
+            {t("referralDashboard.rolesTitle")}
+          </div>
+        }
+        extra={
+          <Button
+            className=" default-text add-role-button"
+            icon={<img src={AddIcon} />}
+            onClick={() => setOpen(!open)}
+          >
+            {t("referralDashboard.addUser")}
+          </Button>
+        }
+      >
+        <Flex vertical justify="space-between" className="roles-card-body">
+          <Flex vertical justify="center" gap={8}>
+            <Flex
+              align="center"
+              gap={6}
+              className="default-text common-role-style"
+            >
+              <div>{t("dashboard.total")} :</div>
+              <div>{totalRoles}</div>
+            </Flex>
+            <div className="roles-line-bar-graph">
+              {roleList.map((data, index) =>
+                data?.count ? (
+                  <div
+                    className="roles-line-bar-graph-section"
+                    style={{
+                      width: `${data?.percentage}%`,
+                      backgroundColor: data?.color,
+                    }}
+                    key={index}
+                  ></div>
+                ) : null,
+              )}
+            </div>
+          </Flex>
+          <Flex vertical justify="center" gap={16}>
+            <Flex
+              align="center"
+              justify="space-between"
+              className="default-text-gray common-role-style"
+            >
+              <div>{t("referralDashboard.role")}</div>
+              <div>{t("referralDashboard.amount")}</div>
+              <div>%</div>
+            </Flex>
+            <Flex vertical gap={12}>
+              {roleList?.map((data, index) => (
+                <Row
+                  align={"middle"}
+                  justify={"space-between"}
+                  key={index}
+                  className="default-text common-role-style"
+                >
+                  <Col span={10}>
+                    <Flex align="center" gap={8}>
+                      <div
+                        className="network-row-color"
+                        style={{ background: data?.color }}
+                      ></div>
+                      <div>
+                        {" "}
+                        {t(`dashboard.roles.${data?.role.replaceAll(" ", "")}`)}
+                      </div>
+                    </Flex>
+                  </Col>
+                  <Col span={6} align={"middle"}>
+                    {data?.count}
+                  </Col>
+                  <Col span={8} align={"end"}>
+                    {data?.percentage}
+                  </Col>
+                </Row>
+              ))}
+            </Flex>
+          </Flex>
+        </Flex>
+      </Card>
+    </>
+  );
+};
+
+export default Roles;

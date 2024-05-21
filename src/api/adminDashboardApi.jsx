@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import setCookie from "../components/setCookie/setCookie";
+import { setCookie } from "../func/cookies";
 import ReactGA from "react-ga4";
 
 export default class adminDashboardApi {
@@ -288,9 +288,9 @@ export default class adminDashboardApi {
 
   async deleteUser(email) {
     try {
-      const url = `${this.baseURL}/users/delete/${email}`;
+      const url = `${this.baseURL}/users/${email}`;
       const options = {
-        method: "GET",
+        method: "Delete",
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
@@ -331,6 +331,32 @@ export default class adminDashboardApi {
           category: "Registration",
           action: "registration_passive",
           label: email,
+        });
+      }
+      this.updateToken(response);
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
+  async createUser(payload) {
+    try {
+      const url = `${this.baseURL}/create-user`;
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(payload),
+      };
+      const response = await fetch(url, options);
+      if (response.ok) {
+        ReactGA.event({
+          category: "Registration",
+          action: "registration_passive",
+          label: payload?.email,
         });
       }
       this.updateToken(response);

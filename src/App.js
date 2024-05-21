@@ -1,7 +1,6 @@
 import Footer from "./components/footer/footer";
 import "./style/general.css";
 import Navigation from "./components/navigation/navigation";
-import setCookies from "./components/setCookie/setCookie";
 import React, { useEffect, useState, Suspense } from "react";
 import {
   Route,
@@ -11,7 +10,7 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 import CookieBanner from "./components/cookieBanner/cookieBanner";
-import Cookies from "js-cookie";
+import { getAcceptCookie } from "./func/cookies";
 import { MessageContextProvider } from "./context/message";
 import RingLoader from "react-spinners/RingLoader";
 
@@ -23,6 +22,8 @@ import { KYC } from "./dashboard/settings/components/KYC";
 import Kyc from "./dashboardNew/components/kyc";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const MainDashboard = React.lazy(() =>
   import("./dashboardNew/screens/mainDashboard"),
@@ -69,13 +70,15 @@ const Login = React.lazy(() => import("./pages/Login"));
 const Payment = React.lazy(() => import("./pages/Payment"));
 const Affiliate = React.lazy(() => import("./pages/Affiliate"));
 const Support = React.lazy(() => import("./pages/Support"));
-const Privacy = React.lazy(() => import("./pages/Privacy"));
+const Privacy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const Imprint = React.lazy(() => import("./pages/Imprint"));
 const PasswordForgot = React.lazy(() => import("./pages/PasswordForgot"));
 const Product = React.lazy(() => import("./pages/Product"));
 const ProductPay = React.lazy(() => import("./pages/ProductPay"));
 const Pay = React.lazy(() => import("./pages/Pay"));
 const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
+const Vacancy = React.lazy(() => import("./pages/Vacancy"));
+const Jobs = React.lazy(() => import("./pages/Jobs"));
 
 // OLD DASHBOARD
 // const AffiliateDashboard = React.lazy(() => import("./dashboard/Affiliate"));
@@ -110,6 +113,10 @@ import {
   xdefiWallet,
   zerionWallet,
 } from "@thirdweb-dev/react";
+import DashboardLayout from "./NEFDashboard/containers/dashboardLayout";
+import PersonalDashboard from "./NEFDashboard/containers/personalDashboard";
+import ReferralDashboard from "./NEFDashboard/containers/referralDashboard";
+import SalesDashboard from "./NEFDashboard/containers/salesDashboard";
 
 function App() {
   useEffect(() => {
@@ -146,7 +153,7 @@ function App() {
     };
   }, []);
 
-  const [ck, setCK] = useState(Cookies.get("acceptCookie"));
+  const [ck, setCK] = useState(getAcceptCookie());
 
   return (
     <ThirdwebProvider
@@ -204,6 +211,30 @@ function App() {
                 >
                   <ScrollToTop>
                     <Routes>
+                      <Route
+                        path="/personal-dashboard"
+                        element={
+                          <DashboardLayout title={"personalDashboard.title"}>
+                            <PersonalDashboard />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/referral-dashboard"
+                        element={
+                          <DashboardLayout title={"referralDashboard.title"}>
+                            <ReferralDashboard type={"admin"} />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/sales-dashboard"
+                        element={
+                          <DashboardLayout title={"Sales Dashboard"}>
+                            <SalesDashboard />
+                          </DashboardLayout>
+                        }
+                      />
                       <Route
                         path="/"
                         element={
@@ -282,6 +313,26 @@ function App() {
                           </>
                         }
                       />
+                      <Route
+                        path="/vacancy"
+                        element={
+                          <>
+                            <Layout>
+                              <Vacancy />
+                            </Layout>
+                          </>
+                        }
+                      />
+                      <Route
+                        path="/jobs"
+                        element={
+                          <>
+                            <Layout>
+                              <Jobs />
+                            </Layout>
+                          </>
+                        }
+                      />
 
                       <Route
                         path="/dashboard/"
@@ -304,6 +355,14 @@ function App() {
                         element={
                           <ScreenLayout>
                             <AdminDashboard type="partner" />
+                          </ScreenLayout>
+                        }
+                      />
+                      <Route
+                        path="/dashboard/agent"
+                        element={
+                          <ScreenLayout>
+                            <AdminDashboard type="agent" />
                           </ScreenLayout>
                         }
                       />
@@ -418,9 +477,9 @@ function App() {
                         path="/product/:productLink/pay"
                         element={
                           <>
-                            <Navigation />
+                            {/* <Navigation /> */}
                             <ProductPay />
-                            <Footer />
+                            {/* <Footer /> */}
                           </>
                         }
                       />

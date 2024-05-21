@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
-import setCookie from "../components/setCookie/setCookie";
+import { setCookie } from "../func/cookies";
+
 export default class vendorDashboardApi {
   constructor() {
     //LAUNCH
@@ -106,9 +107,9 @@ export default class vendorDashboardApi {
     }
   }
 
-  async getProducts() {
+  async getProducts(current, dataLength, keyword = "") {
     try {
-      const url = `${this.baseURL}/products`;
+      const url = `${this.baseURL}/products?page=${current}&size=${dataLength}&keyword=${keyword}`;
       const options = {
         method: "GET",
         headers: {
@@ -130,7 +131,15 @@ export default class vendorDashboardApi {
   /**
    * Upsert a new product (insert if link is null)
    */
-  async upsertProduct(link, name, description, price, stock) {
+  async upsertProduct(
+    link,
+    name,
+    description,
+    price,
+    currency,
+    stock,
+    vatPercent,
+  ) {
     try {
       let stockInt = -1;
       try {
@@ -139,10 +148,12 @@ export default class vendorDashboardApi {
 
       const request = {
         productLink: link,
-        name: name,
-        description: description,
-        price: price,
+        name,
+        description,
+        price,
         stock: stockInt,
+        vatPercent,
+        currency,
       };
 
       const url = `${this.baseURL}/products/upsert`;
@@ -294,9 +305,33 @@ export default class vendorDashboardApi {
     }
   }
 
-  async getInvoices() {
+  async getInvoices(current, dataLength, keyword = "") {
     try {
-      const url = `${this.baseURL}/invoices`;
+      const url = `${this.baseURL}/invoices?page=${current}&size=${dataLength}&keyword=${keyword}`;
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      this.updateToken(response);
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("There was an error getting the orders", error);
+      return null;
+    }
+  }
+
+  async getInvoiceStatuses() {
+    try {
+      const url = `${this.baseURL}/invoice-statuses`;
       const options = {
         method: "GET",
         headers: {
@@ -368,9 +403,9 @@ export default class vendorDashboardApi {
     }
   }
 
-  async downloadInvoice(invoiceLink) {
+  async downloadInvoice(invoice, invoiceLink) {
     try {
-      const url = `${this.baseURL}/downloadInvoice/${invoiceLink}`;
+      const url = `${this.baseURL}/download${invoice}/${invoiceLink}`;
       const options = {
         method: "GET",
         headers: {
@@ -383,7 +418,7 @@ export default class vendorDashboardApi {
         throw new Error("Network response was not ok");
       }
       this.updateToken(response);
-      const data = await response.json();
+      const data = await response.blob();
       return data;
     } catch (error) {
       console.error("There was an error downloading invoices", error);
@@ -411,6 +446,46 @@ export default class vendorDashboardApi {
     } catch (error) {
       console.error("There was an error getting transaction info", error);
       return null;
+    }
+  }
+  async getTaxInfo() {
+    try {
+      const url = `${this.baseURL}/getTaxInfo`;
+
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async getInvoiceNumber() {
+    try {
+      const url = `${this.baseURL}/getNewInvoiceNumber`;
+
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
     }
   }
 }

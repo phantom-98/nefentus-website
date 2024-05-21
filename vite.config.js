@@ -5,13 +5,20 @@ import { resolve } from "path";
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import { NodeModulesPolyfillPlugin } from "@esbuild-plugins/node-modules-polyfill";
 import nodePolyfills from "rollup-plugin-polyfill-node";
+import string from "vite-plugin-string";
 
 export default ({ mode }) => {
   env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return defineConfig({
     base: "/",
-    plugins: [react()],
+    plugins: [
+      react(),
+      string({
+        include: ["**/languages/**/*.html"],
+        compress: false,
+      }),
+    ],
     esbuild: {
       loader: "jsx",
       include: /src\/.*\.jsx?$/,

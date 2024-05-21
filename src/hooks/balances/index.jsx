@@ -30,7 +30,7 @@ function useBalances() {
     return balances_list.map((balance) => parseFloat(balance) ?? 0);
   }
 
-  return { balances, fetchBalances };
+  return { balances, fetchBalances, fetchBalanceForWallet };
 }
 
 export default useBalances;
