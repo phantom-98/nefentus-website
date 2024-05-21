@@ -1055,11 +1055,18 @@
       "qr": "QR-Code",
       "actions": "Aktionen"
     },
+    "swap": {
+      "success": "Token erfolgreich ausgetauscht",
+      "apiFailed": "Api-Aufruf fehlgeschlagen",
+      "sendFailed": "Übermittlung fehlgeschlagen. Stellen Sie sicher, dass Ihr Token-Guthaben ausreichend ist.",
+      "approveFailed": "Genehmigung gescheitert"
+    },
     "fee": {
       "quotes": "Zitate",
       "viewDetails": "Details anzeigen",
       "estimatedGas": "Geschätzte Gasgebühr",
-      "maxFee": "Maximale Gebühr",
+      "maxFee": "Max. Gebühr",
+      "nefentusFee": "Kostenvoranschläge enthalten 0.5% Nefentus-Gebühr",
       "description": "Kosten, die unweigerlich anfallen, um eine Transaktion auf einer Blockchain auszuführen. Die Kosten gehen letztlich an die Miner, die die Blockchain sicher halten.",
       "gasPrice": "Gaspreis",
       "gasLimit": "Gaslimit",
