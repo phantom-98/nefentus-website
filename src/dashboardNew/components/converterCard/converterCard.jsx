@@ -229,7 +229,10 @@ const ConverterCard = () => {
         if (resAllow) {
           console.log("allowance", resAllow);
           const allowance = parseInt(resAllow["allowance"]);
-          if (allowance < amount) {
+          if (
+            allowance <
+            amount * 10 ** currencies()[fromCryptoIndex].decimals
+          ) {
             //approve
             const resApprove = await backend_API.httpRequest(
               "https://swap.prod.swing.xyz/v0/transfer/approve",
@@ -244,7 +247,11 @@ const ConverterCard = () => {
             if (resApprove) {
               console.log("approve", resApprove);
               resApprove.tx.forEach(async (tx) => {
-                const approve = await backend_API.swap({ ...tx, password });
+                const approve = await backend_API.swap({
+                  ...tx,
+                  password,
+                  token: body.toTokenAddress,
+                });
                 if (approve) {
                   console.log("approve result", approve);
                 } else {
@@ -282,6 +289,7 @@ const ConverterCard = () => {
           ...resTransfer.tx,
           gasLimit: parseInt(resTransfer.tx.gas),
           password,
+          token: body.toTokenAddress,
         });
         if (transfer) {
           console.log("transfer result", transfer);
