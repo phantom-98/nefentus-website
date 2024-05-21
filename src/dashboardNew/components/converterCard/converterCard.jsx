@@ -250,7 +250,7 @@ const ConverterCard = () => {
                 const approve = await backend_API.swap({
                   ...tx,
                   password,
-                  token: body.toTokenAddress,
+                  blockchain: currencies()[fromCryptoIndex].blockchain,
                 });
                 if (approve) {
                   console.log("approve result", approve);
@@ -289,7 +289,7 @@ const ConverterCard = () => {
           ...resTransfer.tx,
           gasLimit: parseInt(resTransfer.tx.gas),
           password,
-          token: body.toTokenAddress,
+          blockchain: currencies()[fromCryptoIndex].blockchain,
         });
         if (transfer) {
           console.log("transfer result", transfer);
