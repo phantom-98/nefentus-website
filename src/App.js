@@ -358,6 +358,14 @@ function App() {
                           </ScreenLayout>
                         }
                       />
+                      <Route
+                        path="/dashboard/agent"
+                        element={
+                          <ScreenLayout>
+                            <AdminDashboard type="agent" />
+                          </ScreenLayout>
+                        }
+                      />
 
                       <Route
                         path="/dashboard/profile"

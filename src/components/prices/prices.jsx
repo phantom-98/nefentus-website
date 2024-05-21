@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import styles from "./prices.module.css";
 import { useAuth } from "../../context/auth/authContext";
 import { formatUSDBalance } from "../../utils";
+import backendAPI from "../../api/backendAPI";
 
 const Prices = () => {
   const [prices, setPrices] = useState([]);
@@ -12,20 +13,19 @@ const Prices = () => {
 
   useEffect(() => {
     const getPrices = async () => {
-      const prices = await Promise.all(
-        coinList.map(async (coin) => {
-          const price = await fetch(
-            `https://api.coingecko.com/api/v3/coins/${coin.url}`,
-          );
-          const priceJson = await price.json();
-          return {
-            ...coin,
-            price: priceJson.market_data.current_price.usd,
-            priceChange: priceJson.market_data.price_change_percentage_24h,
-          };
-        }),
-      );
-      setPrices(prices);
+      const coins = await new backendAPI().getCoinPrice();
+      if (coins) {
+        setPrices(
+          coins.map((coin) => {
+            const c = coinList.find((c) => c.abbr === coin.abbr);
+            return {
+              ...coin,
+              icon: c.icon,
+              name: c.name,
+            };
+          }),
+        );
+      }
     };
     getPrices();
   }, []);

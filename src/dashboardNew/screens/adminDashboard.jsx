@@ -39,7 +39,7 @@ const roleColors = {
 const labels = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "00:00"];
 /**
  *
- * @param type Type of the dashboard (admin or partner)
+ * @param type Type of the dashboard (admin or partner or agent)
  * @returns
  */
 const AdminDashboard = ({ type }) => {
@@ -91,62 +91,65 @@ const AdminDashboard = ({ type }) => {
   const affiliate = type === "affiliate";
 
   useEffect(() => {
-    fetchAdminData();
-    fetchAdminUsersData();
-
-    clearMessages();
+    async function fetchData() {
+      if (!isReloadData) {
+        await checkJwtToken();
+        const result = await adminApi.checkPermission();
+        if (result === false) {
+          navigate("/login");
+        } else {
+          fetchAdminData();
+          fetchAdminUsersData();
+          clearMessages();
+        }
+      }
+    }
+    fetchData();
   }, [isReloadData]);
 
   const fetchAdminData = async () => {
-    await checkJwtToken();
-    const result = await adminApi.checkPermission();
-    if (result !== true) {
-      navigate("/login");
-    } else {
-      const getPromises = [
-        adminApi.getTotalRegistrations(),
-        adminApi.getNumOrders(),
-        adminApi.getTotalIncome(),
-        adminApi.getRoleReport(),
-        adminApi.getTotalIncomesPerDay(),
-      ];
+    const getPromises = [
+      adminApi.getTotalRegistrations(),
+      adminApi.getNumOrders(),
+      adminApi.getTotalIncome(),
+      adminApi.getRoleReport(),
+      adminApi.getTotalIncomesPerDay(),
+    ];
 
-      const [dataReg, dataOrders, dataInc, reportResp, totalPricePerDate] =
-        await Promise.allSettled(getPromises);
+    const [dataReg, dataOrders, dataInc, reportResp, totalPricePerDate] =
+      await Promise.allSettled(getPromises);
 
-      setMeasure({
-        // total: dataInc?.value?.total,
-        last24h: dataInc?.value?.last24Hours,
-        last30d: dataInc?.value?.last30Days,
-        regist: dataReg?.value,
-        payment: dataOrders?.value,
+    setMeasure({
+      // total: dataInc?.value?.total,
+      last24h: dataInc?.value?.last24Hours,
+      last30d: dataInc?.value?.last30Days,
+      regist: dataReg?.value,
+      payment: dataOrders?.value,
+    });
+
+    let total = 0;
+    const regRoleGraphData = reportResp.value
+      ?.filter((report) => report.role !== "affiliate")
+      ?.map((item) => {
+        total = total + item.count;
+
+        return {
+          color: roleColors[item.role],
+          legend: ROLE_TO_NAME[item.role],
+          num: item.count,
+          percentage: item.percentage,
+        };
       });
-      console.log("orders", dataReg?.value);
 
-      let total = 0;
-      const regRoleGraphData = reportResp.value
-        ?.filter((report) => report.role !== "affiliate")
-        ?.map((item) => {
-          total = total + item.count;
+    setTotalRegUserCnt(total);
 
-          return {
-            color: roleColors[item.role],
-            legend: ROLE_TO_NAME[item.role],
-            num: item.count,
-            percentage: item.percentage,
-          };
-        });
-
-      setTotalRegUserCnt(total);
-
-      setBarContent(regRoleGraphData);
-      setGraph(totalPricePerDate.value);
-      let _graph = {};
-      Object.keys(totalPricePerDate.value).forEach((key) => {
-        _graph[key] = totalPricePerDate.value[key];
-      });
-      setGraphData(_graph);
-    }
+    setBarContent(regRoleGraphData);
+    setGraph(totalPricePerDate.value);
+    let _graph = {};
+    Object.keys(totalPricePerDate.value).forEach((key) => {
+      _graph[key] = totalPricePerDate.value[key];
+    });
+    setGraphData(_graph);
   };
 
   useEffect(() => {
@@ -219,20 +222,15 @@ const AdminDashboard = ({ type }) => {
   }, [currencyRate]);
 
   const fetchAdminUsersData = async (clear) => {
-    const result = await adminApi.checkPermission();
-    if (result !== true) {
-      navigate("/login");
-    } else {
-      const res = await adminApi.getUsers(
-        dataPage * dataSize,
-        dataSize,
-        clear ? "" : getDataInput.trim().toLowerCase(),
-      );
-      setDataLength(parseInt(res.count));
-      setUsers(res.users);
-      updateUsers(res.users);
-      return res.users;
-    }
+    const res = await adminApi.getUsers(
+      dataPage * dataSize,
+      dataSize,
+      clear ? "" : getDataInput.trim().toLowerCase(),
+    );
+    setDataLength(parseInt(res.count));
+    setUsers(res.users);
+    updateUsers(res.users);
+    return res.users;
   };
 
   const updateStatusUser = async (userEmail, activated, dataUsers) => {
@@ -492,14 +490,18 @@ const AdminDashboard = ({ type }) => {
           />
           <Table
             grid={`1.2fr 0.9fr 1.8fr 1fr 0.9fr 1.5fr 1.8fr ${
-              i18n?.language == "en"
+              type === "agent"
+                ? ""
+                : i18n?.language == "en"
                 ? "0.5fr 0.3fr 0.5fr"
                 : i18n?.language == "de"
                 ? "0.8fr 0.8fr 0.8fr"
                 : "1fr 0.8fr 0.8fr"
             }`}
-            label={label}
-            data={tableData}
+            label={type === "agent" ? label.slice(0, -3) : label}
+            data={tableData.map((row) =>
+              type === "agent" ? row.slice(0, -3) : row,
+            )}
           />
 
           <>
