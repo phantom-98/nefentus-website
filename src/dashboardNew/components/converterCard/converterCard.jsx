@@ -219,6 +219,7 @@ const ConverterCard = () => {
         toTokenAddress: currencies()[toCryptoIndex].address ?? ZERO_ADDRESS,
         contractCall: false,
         fromAddress: transferParams.fromUserAddress,
+        projectId: "nefentus",
       };
       if (fromTokenAddress) {
         const resAllow = await backend_API.httpRequest(
