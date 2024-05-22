@@ -8,6 +8,10 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import NefentusLogo from "../../../assets/logo/logo_n.png";
 import DropDownIcon from "../../../assets/icon/dropdown.svg";
+import InfoMarkDark from "../../../assets/icon/dark/info.svg";
+import InfoMarkLight from "../../../assets/icon/light/info.svg";
+import GasDark from "../../../assets/icon/dark/gas.svg";
+import GasLight from "../../../assets/icon/light/gas.svg";
 import {
   useSwitchChain,
   useSigner,
@@ -34,7 +38,7 @@ const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 const ConverterCard = () => {
   const { t } = useTranslation();
-  // const { theme } = useTheme();
+  const { theme } = useTheme();
   const backend_API = new backendAPI();
   const [pwd, setPwd] = useState(false);
   const [password, setPassword] = useState();
@@ -51,7 +55,8 @@ const ConverterCard = () => {
   const [toCryptoIndex, setToCryptoIndex] = useState(3);
   const [swingSDK, setSwingSDK] = useState(null);
   const [receiveAmount, setReceiveAmount] = useState("");
-  const [toTokenLocalAmount, setToTokenLocalAmount] = useState("");
+  const [gas, setGas] = useState(0);
+  const [gasUsd, setGasUsd] = useState(0);
   const [amount, setAmount] = useState("");
   const [bridge, setBridge] = useState("");
   const [transferRoute, setTransferRoute] = useState();
@@ -75,7 +80,7 @@ const ConverterCard = () => {
       icon: currency.icon,
     };
   });
-  const formatWalletAddress = (address, symbolCount = 8) => {
+  const formatWalletAddress = (address, symbolCount = 4) => {
     if (!address || address.length <= symbolCount * 2 + 2) {
       return address;
     }
@@ -183,20 +188,20 @@ const ConverterCard = () => {
       }
 
       const bestQuote = _quotes.routes.sort(
-        (a, b) => Number(a.quote.amount) - Number(b.quote.amount),
+        (a, b) => Number(b.quote.amount) - Number(a.quote.amount),
       )[0];
       const quoteIntegration = swingSDK.getIntegration(
         bestQuote.quote.integration,
       );
       setBridge(bestQuote.quote.integration);
+      setGas(parseInt(bestQuote.gas) / 10 ** 18);
+      setGasUsd(parseFloat(bestQuote.gasUSD));
 
       const _amount =
         parseInt(bestQuote?.quote?.amount) / 10 ** bestQuote?.quote?.decimals;
       setReceiveAmount(_amount.toFixed(4).toString());
       setPrice(_amount / parseFloat(amount));
-      // setToTokenLocalAmount(bestQuote?.quote?.amountUSD);
 
-      // setQuotes(_quotes.routes);
       setTransferRoute({ ...bestQuote, ...quoteIntegration });
     } catch (error) {
       console.error("Quote Error:", error);
@@ -219,6 +224,7 @@ const ConverterCard = () => {
         toTokenAddress: currencies()[toCryptoIndex].address ?? ZERO_ADDRESS,
         contractCall: false,
         fromAddress: transferParams.fromUserAddress,
+        projectId: "nefentus",
       };
       if (fromTokenAddress) {
         const resAllow = await backend_API.httpRequest(
@@ -255,15 +261,15 @@ const ConverterCard = () => {
                 if (approve) {
                   console.log("approve result", approve);
                 } else {
-                  throw Error("Approving failed");
+                  throw Error(t("payments.swap.approveFailed"));
                 }
               });
             } else {
-              throw Error("Api call failed");
+              throw Error(t("payments.swap.apiFailed"));
             }
           }
         } else {
-          throw Error("Api call failed");
+          throw Error(t("payments.swap.apiFailed"));
         }
       }
 
@@ -293,15 +299,15 @@ const ConverterCard = () => {
         });
         if (transfer) {
           console.log("transfer result", transfer);
-          setInfoMessage("Success");
+          setInfoMessage(t("payments.swap.success"));
         } else {
-          throw Error("Transfering failed");
+          throw Error(t("payments.swap.sendFailed"));
         }
       } else {
-        throw Error("Api call failed");
+        throw new Error(t("payments.swap.apiFailed"));
       }
     } catch (error) {
-      setErrorMessage(error);
+      setErrorMessage(error.message);
     }
     setSpinner(false);
   }
@@ -326,19 +332,29 @@ const ConverterCard = () => {
     const transferListener = swingSDK.on(
       "TRANSFER",
       async (transferStepStatus, transferResults) => {
-        // setStatus(transferStepStatus);
-        // setResults(transferResults);
-
-        console.log("TRANSFER:", transferStepStatus, transferResults);
-
         switch (transferStepStatus.status) {
           case "CHAIN_SWITCH_REQUIRED":
             await switchChain(transferStepStatus.chain);
             break;
-
           case "WALLET_CONNECTION_REQUIRED":
             await connectWallet();
             break;
+          case "SUCCESS":
+            setSpinner(false);
+            setInfoMessage(t("payments.swap.success"));
+            break;
+          case "FAILED":
+            setSpinner(false);
+            setErrorMessage(
+              t(
+                "payments.swap." +
+                  (transferStepStatus.step === "send" ||
+                  transferStepStatus.step === "approve"
+                    ? transferStepStatus.step
+                    : "api") +
+                  "Failed",
+              ),
+            );
         }
       },
     );
@@ -347,11 +363,11 @@ const ConverterCard = () => {
       await swingSDK.transfer(transferRoute, transferParams);
     } catch (error) {
       setErrorMessage(error.message);
+      setSpinner(false);
     }
 
     // Close the transfer listener
     transferListener();
-    setSpinner(false);
   }
   useEffect(() => {
     fetchWallets();
@@ -465,7 +481,7 @@ const ConverterCard = () => {
               }}
             >
               <span style={{ marginTop: "0.3rem", marginRight: "0.8rem" }}>
-                1{cryptos[fromCryptoIndex].title} ≈ {price}{" "}
+                1{cryptos[fromCryptoIndex].title} ≈ {price.toFixed(6)}{" "}
                 {cryptos[toCryptoIndex].title}
               </span>
               <div style={{ cursor: "pointer" }} onClick={getQuote}>
@@ -492,7 +508,7 @@ const ConverterCard = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              marginTop: "1rem",
+              marginTop: "0.4rem",
               fontSize: "1.4rem",
             }}
           >
@@ -530,6 +546,68 @@ const ConverterCard = () => {
             {t("converter.convert")}
           </Button>
         </div>
+        {!spinner && gas > 0 && (
+          <div
+            style={{
+              width: "100%",
+              marginTop: "1.8rem",
+              fontSize: "1.4rem",
+              border: "1px solid var(--border-color)",
+              borderRadius: "0.6rem",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "1rem",
+                marginTop: "0.3rem",
+              }}
+            >
+              <div
+                style={{ display: "flex", gap: "0.4rem", alignItems: "start" }}
+              >
+                <img
+                  style={{ width: "1.4rem" }}
+                  src={theme === "dark" ? GasDark : GasLight}
+                />
+                <span>{t("payments.fee.maxFee")}</span>:
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  width: "17rem",
+                  justifyContent: "space-between",
+                }}
+              >
+                <span>
+                  {formatTokenBalance(gas, 8)}
+                  {currencies()[fromCryptoIndex].blockchain}
+                </span>
+                <span>${formatUSDBalance(gasUsd)}</span>
+              </div>
+            </div>
+            <div
+              style={{
+                borderTop: "1px solid var(--border-color)",
+                padding: "1rem",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <p style={{ marginTop: "0.3rem", marginRight: "0.5rem" }}>
+                {t("payments.fee.nefentusFee")}
+              </p>
+              <img
+                style={{ width: "1.6rem" }}
+                src={theme === "dark" ? InfoMarkDark : InfoMarkLight}
+              />
+            </div>
+          </div>
+        )}
       </Card>
       <PasswordPopup
         show={pwd}

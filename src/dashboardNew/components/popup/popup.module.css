@@ -252,6 +252,14 @@
   align-self: stretch;
 }
 
+.passwordContainer > div {
+  width: 100%;
+}
+
+.passwordContainer > div input {
+  padding: 1rem !important;
+}
+
 .passwordContainer > div:first-child p:first-child {
   font-size: 1.8rem;
   color: var(--text-color, #f6f6f6);
