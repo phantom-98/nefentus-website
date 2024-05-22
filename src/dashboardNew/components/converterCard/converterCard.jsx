@@ -292,6 +292,7 @@ const ConverterCard = () => {
         if (transfer) {
           console.log("transfer result", transfer);
           setInfoMessage(t("payments.swap.success"));
+          fetchBalances(wallets[selectedWalletIndex].address);
         } else {
           throw Error(t("payments.swap.sendFailed"));
         }
