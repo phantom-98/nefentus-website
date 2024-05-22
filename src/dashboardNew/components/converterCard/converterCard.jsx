@@ -110,64 +110,56 @@ const ConverterCard = () => {
   async function connectWallet(chainId) {
     if (!swingSDK) return;
 
-    try {
-      const wallet = wallets[selectedWalletIndex];
-      const walletConfig =
-        wallet?.type?.toLowerCase() === "metamask"
-          ? metamaskWallet()
-          : wallet?.type?.toLowerCase() === "walletconnect"
-          ? walletConnect({
-              qrModal: "walletConnect",
-              qrModalOptions: {
-                themeMode: "light",
-              },
-              recommended: true,
-            })
-          : wallet?.type?.toLowerCase() === "coinbase"
-          ? coinbaseWallet({ recommended: true, qrmodal: "coinbase" })
-          : null;
-      const connection = await connect(walletConfig, { chainId });
-      // const signer = await connection.getSigner();
-      const _signer = await connection.getSigner();
-      setSigner(_signer);
+    const wallet = wallets[selectedWalletIndex];
+    const walletConfig =
+      wallet?.type?.toLowerCase() === "metamask"
+        ? metamaskWallet()
+        : wallet?.type?.toLowerCase() === "walletconnect"
+        ? walletConnect({
+            qrModal: "walletConnect",
+            qrModalOptions: {
+              themeMode: "light",
+            },
+            recommended: true,
+          })
+        : wallet?.type?.toLowerCase() === "coinbase"
+        ? coinbaseWallet({ recommended: true, qrmodal: "coinbase" })
+        : null;
+    const connection = await connect(walletConfig, { chainId });
+    // const signer = await connection.getSigner();
+    const _signer = await connection.getSigner();
+    setSigner(_signer);
 
-      // Connect wallet signer to Swing SDK
-      const walletAddress = await swingSDK.wallet.connect(
-        _signer,
-        transferParams.fromChain,
-      );
+    // Connect wallet signer to Swing SDK
+    const walletAddress = await swingSDK.wallet.connect(
+      _signer,
+      transferParams.fromChain,
+    );
 
-      setTransferParams((prev) => {
-        return {
-          ...prev,
-          fromUserAddress: walletAddress,
-          toUserAddress: walletAddress,
-        };
-      });
-    } catch (error) {
-      setErrorMessage(error.message);
-    }
+    setTransferParams((prev) => {
+      return {
+        ...prev,
+        fromUserAddress: walletAddress,
+        toUserAddress: walletAddress,
+      };
+    });
   }
   async function switchChain(chain) {
     if (!swingSDK) return;
 
-    try {
-      await walletInstance?.switchChain(chain.chainId);
-      const signer = await walletInstance?.getSigner();
+    await walletInstance?.switchChain(chain.chainId);
+    const signer = await walletInstance?.getSigner();
 
-      // Connect wallet signer to Swing SDK
-      const walletAddress = await swingSDK.wallet.connect(signer, chain.slug);
+    // Connect wallet signer to Swing SDK
+    const walletAddress = await swingSDK.wallet.connect(signer, chain.slug);
 
-      setTransferParams((prev) => {
-        return {
-          ...prev,
-          fromUserAddress: walletAddress,
-          toUserAddress: walletAddress,
-        };
-      });
-    } catch (error) {
-      console.error("Switch Chain Error:", error);
-    }
+    setTransferParams((prev) => {
+      return {
+        ...prev,
+        fromUserAddress: walletAddress,
+        toUserAddress: walletAddress,
+      };
+    });
   }
   async function getQuote() {
     if (!swingSDK) return;
@@ -332,29 +324,26 @@ const ConverterCard = () => {
     const transferListener = swingSDK.on(
       "TRANSFER",
       async (transferStepStatus, transferResults) => {
-        switch (transferStepStatus.status) {
-          case "CHAIN_SWITCH_REQUIRED":
-            await switchChain(transferStepStatus.chain);
-            break;
-          case "WALLET_CONNECTION_REQUIRED":
-            await connectWallet();
-            break;
-          case "SUCCESS":
-            setSpinner(false);
-            setInfoMessage(t("payments.swap.success"));
-            break;
-          case "FAILED":
-            setSpinner(false);
-            setErrorMessage(
-              t(
-                "payments.swap." +
-                  (transferStepStatus.step === "send" ||
-                  transferStepStatus.step === "approve"
-                    ? transferStepStatus.step
-                    : "api") +
-                  "Failed",
-              ),
-            );
+        const transferId = transferResults.transferId;
+        try {
+          switch (transferStepStatus.status) {
+            case "CHAIN_SWITCH_REQUIRED":
+              await switchChain(transferStepStatus.chain);
+              break;
+            case "WALLET_CONNECTION_REQUIRED":
+              await connectWallet();
+              break;
+            case "SUCCESS":
+              if (transferStepStatus.step === "send") {
+                setSpinner(false);
+                setInfoMessage(t("payments.swap.success"));
+                fetchBalances(wallets[selectedWalletIndex].address);
+              }
+              break;
+          }
+        } catch (e) {
+          setSpinner(false);
+          swingSDK.cancelTransfer(transferId);
         }
       },
     );
@@ -362,8 +351,7 @@ const ConverterCard = () => {
     try {
       await swingSDK.transfer(transferRoute, transferParams);
     } catch (error) {
-      setErrorMessage(error.message);
-      setSpinner(false);
+      console.log(error.message);
     }
 
     // Close the transfer listener
@@ -396,6 +384,13 @@ const ConverterCard = () => {
   }, [transferParams]);
   useEffect(() => {
     if (wallets[selectedWalletIndex]) {
+      if (!walletInstance && selectedWalletIndex > 0) {
+        try {
+          connectWallet();
+        } catch (e) {
+          console.log("wallet connect failed");
+        }
+      }
       const address = wallets[selectedWalletIndex].address;
       fetchBalances(address);
       setTransferParams({
@@ -546,7 +541,7 @@ const ConverterCard = () => {
             {t("converter.convert")}
           </Button>
         </div>
-        {!spinner && gas > 0 && (
+        {gas > 0 && (
           <div
             style={{
               width: "100%",
@@ -647,6 +642,12 @@ const WalletBox = ({
       title: c.abbr,
     };
   });
+  useEffect(() => {
+    if (setAlert) {
+      if (parseFloat(value) > balances[selectedCryptoIndex]) setAlert(true);
+      else setAlert(false);
+    }
+  }, [value, selectedCryptoIndex]);
 
   return (
     <div className={styles.walletBox}>
@@ -669,11 +670,6 @@ const WalletBox = ({
             type="number"
             placeholder="0.00"
             onChange={(e) => {
-              if (setAlert) {
-                if (parseFloat(e.target.value) > balances[selectedCryptoIndex])
-                  setAlert(true);
-                else setAlert(false);
-              }
               if (setValue) {
                 setValue(e.target.value);
               }
