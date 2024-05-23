@@ -1114,7 +1114,7 @@
       "actions": "Actions"
     },
     "swap": {
-      "success": "Token swapped successfully",
+      "success": "Swap finished succesfully",
       "apiFailed": "Api call failed",
       "sendFailed": "Transfering failed. Make sure your token balance is sufficient.",
       "approveFailed": "Approving failed"

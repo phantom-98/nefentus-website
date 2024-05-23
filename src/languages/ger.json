@@ -1056,7 +1056,7 @@
       "actions": "Aktionen"
     },
     "swap": {
-      "success": "Token erfolgreich ausgetauscht",
+      "success": "Konvertierung erfolgreich durchgeführt",
       "apiFailed": "Api-Aufruf fehlgeschlagen",
       "sendFailed": "Übermittlung fehlgeschlagen. Stellen Sie sicher, dass Ihr Token-Guthaben ausreichend ist.",
       "approveFailed": "Genehmigung gescheitert"
