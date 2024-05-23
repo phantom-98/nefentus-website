@@ -26,6 +26,7 @@ import {
   useDisconnect,
   walletConnect,
   useSwitchChain,
+  useSwitchAccount,
   coinbaseWallet,
   trustWallet,
   useWallet,
@@ -92,6 +93,7 @@ const ReceivePayment = ({
   const { user, setUser, currencyRate } = useAuth();
   const [wallets, setWallets] = useState([]);
   const connectedWallet = useWallet();
+  const [walletInstance, setWalletInstance] = useState(null);
   const connect = useConnect();
   const disconnect = useDisconnect();
   const setConnectedWallet = useSetConnectedWallet();
@@ -104,6 +106,15 @@ const ReceivePayment = ({
   const { balances, fetchBalances } = useBalances();
   const { prices, fetchPrices } = usePrices();
   const switchNetwork = useSwitchChain();
+  const switchAccount = async (address) => {
+    try {
+      if (activeExternalWalletAddress.toLowerCase() !== address.toLowerCase()) {
+        await walletInstance.switchAccount();
+      }
+    } catch (e) {
+      console.log("switching error: ", e.message);
+    }
+  };
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -113,7 +124,10 @@ const ReceivePayment = ({
     return {
       title: currency.abbr,
       icon: currency.icon,
-      description: formatTokenBalance(balances[index]),
+      description:
+        balances[index] === undefined
+          ? "loading..."
+          : formatTokenBalance(balances[index]),
     };
   });
   const [selectedCryptoIndex, setSelectedCryptoIndex] = useState(0);
@@ -144,6 +158,7 @@ const ReceivePayment = ({
     seller,
     transInfoArg,
     switchNetwork,
+    switchAccount,
   });
 
   const backend_API = new backendAPI();
@@ -211,10 +226,10 @@ const ReceivePayment = ({
   }, []);
 
   useEffect(() => {
-    if (connectedWallet) {
+    if (activeExternalWalletAddress && !internalWalletAddress) {
       fetchBalances(activeExternalWalletAddress);
     }
-  }, [connectedWallet, activeExternalWalletAddress]);
+  }, [activeExternalWalletAddress]);
 
   const fetchProfile = async () => {
     const data = await backend_API.getProfile();
@@ -240,6 +255,7 @@ const ReceivePayment = ({
   const connectSelectedWallet = async () => {
     const wallet = wallets[selectedWalletIndex];
 
+    fetchBalances(wallet?.address);
     const currentWalletConfig =
       wallet?.type?.toLowerCase() === "metamask"
         ? metamaskWallet()
@@ -288,13 +304,13 @@ const ReceivePayment = ({
         : null;
     if (
       connectedWallet === undefined ||
-      connectedWallet?.walletId?.toLowerCase() != wallet?.title?.toLowerCase()
+      connectedWallet?.address?.toLowerCase() != wallet?.address?.toLowerCase()
     ) {
       const response = createWalletInstance(currentWalletConfig);
       await response.connect();
       setConnectedWallet(response);
+      setWalletInstance(response);
     }
-    fetchBalances(wallet?.address);
   };
 
   async function doPayment() {
@@ -327,6 +343,7 @@ const ReceivePayment = ({
       case "success":
         setDisable(true);
         setInfoMessage(t("messages.success.transaction"));
+        fetchBalances(wallets[selectedWalletIndex]?.address);
         break;
       case "failed":
         setErrorMessage(t("messages.error.transactionFailed"));
@@ -339,6 +356,7 @@ const ReceivePayment = ({
       case "not sent":
         setInfoMessage(t("messages.info.transactionNotSaved"));
         setPassword("");
+        fetchBalances(wallets[selectedWalletIndex]?.address);
         break;
       case "invalid price":
         setErrorMessage(t("messages.error.invalidPrice"));
@@ -803,7 +821,14 @@ const SelectOption = ({
         <div className={styles.optionContainer}>
           <p className={styles.optionTitle}> {optionTitle} </p>
           {optionDescription && (
-            <p className={styles.optionDescription}> {optionDescription} </p>
+            <p
+              className={`${styles.optionDescription} ${
+                optionDescription === "loading..." ? styles.skeletonLoader : ""
+              }`}
+            >
+              {" "}
+              {optionDescription !== "loading..." ? optionDescription : ""}{" "}
+            </p>
           )}
         </div>
       </div>

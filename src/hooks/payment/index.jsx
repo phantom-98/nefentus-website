@@ -9,6 +9,7 @@ export const usePayment = ({
   seller,
   transInfoArg,
   switchNetwork,
+  switchAccount,
 }) => {
   async function handleBuy(
     currencyIdx,
@@ -32,6 +33,7 @@ export const usePayment = ({
 
     if (payWithExternalwallet) {
       await switchNetwork(chainId(currency.blockchain));
+      await switchAccount(walletAddress);
 
       const web3API = new web3Api();
 

@@ -1,5 +1,4 @@
 import styles from "./profileBox.module.css";
-
 import Arrow from "../../assets/icon/dropdownWhite.svg";
 import BlobPicture from "../../components/blobPicture/blobPicture";
 import { useAuth } from "../../context/auth/authContext";
