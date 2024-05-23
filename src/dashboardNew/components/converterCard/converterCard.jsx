@@ -126,7 +126,6 @@ const ConverterCard = () => {
         ? coinbaseWallet({ recommended: true, qrmodal: "coinbase" })
         : null;
     const connection = await connect(walletConfig, { chainId });
-    // const signer = await connection.getSigner();
     const _signer = await connection.getSigner();
     setSigner(_signer);
 
@@ -136,13 +135,13 @@ const ConverterCard = () => {
       transferParams.fromChain,
     );
 
-    setTransferParams((prev) => {
-      return {
-        ...prev,
-        fromUserAddress: walletAddress,
-        toUserAddress: walletAddress,
-      };
-    });
+    // setTransferParams((prev) => {
+    //   return {
+    //     ...prev,
+    //     fromUserAddress: walletAddress,
+    //     toUserAddress: walletAddress,
+    //   };
+    // });
   }
   async function switchChain(chain) {
     if (!swingSDK) return;
@@ -153,13 +152,13 @@ const ConverterCard = () => {
     // Connect wallet signer to Swing SDK
     const walletAddress = await swingSDK.wallet.connect(signer, chain.slug);
 
-    setTransferParams((prev) => {
-      return {
-        ...prev,
-        fromUserAddress: walletAddress,
-        toUserAddress: walletAddress,
-      };
-    });
+    // setTransferParams((prev) => {
+    //   return {
+    //     ...prev,
+    //     fromUserAddress: walletAddress,
+    //     toUserAddress: walletAddress,
+    //   };
+    // });
   }
   async function getQuote() {
     if (!swingSDK) return;
@@ -343,7 +342,6 @@ const ConverterCard = () => {
               break;
           }
         } catch (e) {
-          setSpinner(false);
           swingSDK.cancelTransfer(transferId);
         }
       },
@@ -352,6 +350,7 @@ const ConverterCard = () => {
     try {
       await swingSDK.transfer(transferRoute, transferParams);
     } catch (error) {
+      setSpinner(false);
       console.log(error.message);
     }
 
