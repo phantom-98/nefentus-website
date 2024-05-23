@@ -30,6 +30,7 @@
     "imprint": "Imprint",
     "forgotPassword": "Password forgotten",
     "privacy": "Privacy policy",
+    "vacancy": "Career",
     "resetPassword": "Reset Password",
     "support": "Support"
   },
@@ -110,6 +111,21 @@
     "helpCard2Title": "FAQs",
     "helpCard2Text": " View FAQs for detailed instructions on specific features",
     "helpCard2Button": "View more"
+  },
+  "vacancy": {
+    "hero1": "Become a part",
+    "hero2": "of our",
+    "hero3": "team",
+    "open": "Open roles",
+    "apply": "Apply for this job",
+    "success": "You have successfully applied",
+    "failed": "Network error",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "comment": "Comment",
+    "linkedin": "Your Linkedin link (Optional)",
+    "seeDetail": "See details"
   },
   "payment": {
     "customPayment": "Custom Payment",
@@ -534,12 +550,17 @@
       "service_fee_description": "The percentage that the user receives from each transaction"
     },
     "earningCards": {
-      "first": "Sales: Total",
-      "second": "Sales: Last 24 hours",
-      "third": "Sales: Last 30 days",
-      "progressFirst": "vs last 30 days",
-      "progressSecond": "vs the day before",
-      "progressThird": "vs the month before"
+      "totalSales": "Total sales",
+      "totalReferral": "Total referral income",
+      "progressInLast30d": "in the last 30 days",
+      "salesOfLast24h": "Sales of last 24 hours",
+      "referralOfLast24h": "Referral income of last 24 hours",
+      "progressLast24h": "vs. the day before",
+      "salesOfLast30d": "Sales of last 30 days",
+      "referralOfLast30d": "Referral income of last 30 days",
+      "progressLast30d": "vs. the month before",
+      "payments": "Total number of payments",
+      "registrations": "Total number of registrations"
     },
     "balanceTitle": "Balance this week",
     "cryptoCard": {
@@ -952,7 +973,8 @@
       "accountDisconnect": "No Account Connected",
       "invalidMail": "Email Address is Invalid",
       "invalidPhone": "Phone Number is Invalid",
-      "connectionCancel": "Wallet Connection Failed"
+      "connectionCancel": "Wallet Connection Failed",
+      "allFields": "All Fields are required"
     },
     "info": {
       "transactionNotSaved": "Transaction successfully but could not save transaction info!",
@@ -974,6 +996,7 @@
     "soon": "Coming Soon",
     "referral": "Referral",
     "vendorDashboard": "Vendor Dashboard",
+    "agentDashboard": "Agent Dashboard",
     "notification": "Notification"
   },
   "products": {
@@ -1027,9 +1050,9 @@
       "standard": "Standard",
       "reduced": "Reduced",
       "currency": "Payment currency",
-      "limitless": "Limitless",
-      "quantity": "Quantity",
-      "stockAvailable": "Unit available",
+      "limitless": "Unlimited",
+      "quantity": "Limited",
+      "stockAvailable": "Available stock",
       "add": "Add",
       "update": "Update",
       "cancel": "Cancel",
@@ -1055,8 +1078,6 @@
     "addressHint": "Street, city",
     "taxNumber": "VAT number",
     "vat": "VAT",
-    "showEuro": "Show prices in €",
-    "reverseCharge": "Use Reverse Charge process",
     "createInvoice": "Create Invoice",
     "scan": "Scan QR Code",
     "scanDescription": "To confirm you need to scan QR code",
@@ -1072,6 +1093,7 @@
       "email": "Recipient email"
     },
     "tax": {
+      "reverseCharge": "The Reverse Charge process is used. The client is responsable for paying the VAT.",
       "standard": "Standard",
       "reduced": "Reduced"
     },
@@ -1084,17 +1106,25 @@
       "total": "Total price"
     },
     "table": {
+      "title": "All invoices",
       "created": "Created at",
       "price": "Price",
       "status": "Status",
       "qr": "QR code",
       "actions": "Actions"
     },
+    "swap": {
+      "success": "Swap finished successfully",
+      "apiFailed": "Api call failed",
+      "sendFailed": "Transfering failed. Make sure your token balance is sufficient.",
+      "approveFailed": "Approving failed"
+    },
     "fee": {
       "quotes": "Quotes",
       "viewDetails": "View Details",
       "estimatedGas": "Estimated gas fee",
-      "maxFee": "Maximum fee",
+      "maxFee": "Max fee",
+      "nefentusFee": "Quotes include 0.5% Nefentus fee",
       "description": "Costs that are inevitably incurred in order to carry out a transaction on a blockchain. The costs ultimately go to the miners who keep the blockchain secure.",
       "gasPrice": "Gas Price",
       "gasLimit": "Gas Limit",
@@ -1150,6 +1180,8 @@
   "converter": {
     "wallet": "Wallet",
     "from": "From",
+    "to": "To",
+    "insufficient": "Insufficient",
     "balance": "Balance",
     "convert": "Convert"
   },
@@ -1327,7 +1359,12 @@
       "title": "Get verified",
       "fullName": "Full Name",
       "address": "Address",
-      "city": "City and Zip Code",
+      "city": "City",
+      "zip": "Zip Code",
+      "country": "Country",
+      "addressPlaceholder": "Enter address",
+      "cityPlaceholder": "Enter City",
+      "zipPlaceholder": "Enter Zip Code",
       "issueId": "Government Issued ID",
       "picture": "Picture with ID in hand",
       "proofAddress": "Proof of Address",
@@ -1335,7 +1372,8 @@
       "enhanced": "Enhanced Diligence",
       "confirm": "Confirm",
       "upload": "Upload",
-      "add": "Add"
+      "add": "Add",
+      "personalDetail": "Personal Details"
     }
   },
   "cookieBanner": {

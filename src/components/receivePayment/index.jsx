@@ -26,6 +26,7 @@ import {
   useDisconnect,
   walletConnect,
   useSwitchChain,
+  useSwitchAccount,
   coinbaseWallet,
   trustWallet,
   useWallet,
@@ -57,7 +58,9 @@ import {
   getWalletIcon,
 } from "../../utils";
 import { useTranslation } from "react-i18next";
-import Popup from "../../dashboardNew/components/popup/popup";
+import Popup, {
+  PasswordPopup,
+} from "../../dashboardNew/components/popup/popup";
 import { useAuth } from "../../context/auth/authContext";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { GasDetails } from "../gasDetails/gasDetails";
@@ -67,6 +70,7 @@ import {
   getCurrencySymbol,
   getFlagLink,
 } from "../../countries";
+import { CombinedInput } from "../input/input";
 
 const ReceivePayment = ({
   price,
@@ -89,6 +93,7 @@ const ReceivePayment = ({
   const { user, setUser, currencyRate } = useAuth();
   const [wallets, setWallets] = useState([]);
   const connectedWallet = useWallet();
+  const [walletInstance, setWalletInstance] = useState(null);
   const connect = useConnect();
   const disconnect = useDisconnect();
   const setConnectedWallet = useSetConnectedWallet();
@@ -101,6 +106,15 @@ const ReceivePayment = ({
   const { balances, fetchBalances } = useBalances();
   const { prices, fetchPrices } = usePrices();
   const switchNetwork = useSwitchChain();
+  const switchAccount = async (address) => {
+    try {
+      if (activeExternalWalletAddress.toLowerCase() !== address.toLowerCase()) {
+        await walletInstance.switchAccount();
+      }
+    } catch (e) {
+      console.log("switching error: ", e.message);
+    }
+  };
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -110,18 +124,20 @@ const ReceivePayment = ({
     return {
       title: currency.abbr,
       icon: currency.icon,
-      description: formatTokenBalance(balances[index]),
+      description:
+        balances[index] === undefined
+          ? "loading..."
+          : formatTokenBalance(balances[index]),
     };
   });
   const [selectedCryptoIndex, setSelectedCryptoIndex] = useState(0);
 
   const [isDisable, setDisable] = useState(true);
-  const [onPageLogin, setOnPageLogin] = useState(false);
 
   // const [show, setShow] = useState(false);
   // const [email, setEmail] = useState("");
   const [priceUSD, setPriceUSD] = useState();
-  // const [rate, setRate] = useState(1);
+  const [rate, setRate] = useState(1);
   const [password, setPassword] = useState("");
   const [pwd, setPwd] = useState(false);
   useEffect(() => {
@@ -129,6 +145,7 @@ const ReceivePayment = ({
       if (currency && price) {
         const res = await backend_API.getCurrencyRate("USD", currency);
         if (res) {
+          setRate(res.rate);
           setPriceUSD((price * (100 + (vatPercent ?? 0))) / 100 / res.rate);
         }
       }
@@ -141,6 +158,7 @@ const ReceivePayment = ({
     seller,
     transInfoArg,
     switchNetwork,
+    switchAccount,
   });
 
   const backend_API = new backendAPI();
@@ -152,7 +170,6 @@ const ReceivePayment = ({
 
   useEffect(() => {
     if (internalWalletAddress) {
-      // setShow(false);
       fetchBalances(internalWalletAddress);
     }
   }, [internalWalletAddress]);
@@ -209,10 +226,10 @@ const ReceivePayment = ({
   }, []);
 
   useEffect(() => {
-    if (connectedWallet) {
+    if (activeExternalWalletAddress && !internalWalletAddress) {
       fetchBalances(activeExternalWalletAddress);
     }
-  }, [connectedWallet, activeExternalWalletAddress]);
+  }, [activeExternalWalletAddress]);
 
   const fetchProfile = async () => {
     const data = await backend_API.getProfile();
@@ -238,6 +255,7 @@ const ReceivePayment = ({
   const connectSelectedWallet = async () => {
     const wallet = wallets[selectedWalletIndex];
 
+    fetchBalances(wallet?.address);
     const currentWalletConfig =
       wallet?.type?.toLowerCase() === "metamask"
         ? metamaskWallet()
@@ -286,13 +304,13 @@ const ReceivePayment = ({
         : null;
     if (
       connectedWallet === undefined ||
-      connectedWallet?.walletId?.toLowerCase() != wallet?.title?.toLowerCase()
+      connectedWallet?.address?.toLowerCase() != wallet?.address?.toLowerCase()
     ) {
       const response = createWalletInstance(currentWalletConfig);
       await response.connect();
       setConnectedWallet(response);
+      setWalletInstance(response);
     }
-    fetchBalances(wallet?.address);
   };
 
   async function doPayment() {
@@ -325,6 +343,7 @@ const ReceivePayment = ({
       case "success":
         setDisable(true);
         setInfoMessage(t("messages.success.transaction"));
+        fetchBalances(wallets[selectedWalletIndex]?.address);
         break;
       case "failed":
         setErrorMessage(t("messages.error.transactionFailed"));
@@ -337,6 +356,7 @@ const ReceivePayment = ({
       case "not sent":
         setInfoMessage(t("messages.info.transactionNotSaved"));
         setPassword("");
+        fetchBalances(wallets[selectedWalletIndex]?.address);
         break;
       case "invalid price":
         setErrorMessage(t("messages.error.invalidPrice"));
@@ -349,32 +369,12 @@ const ReceivePayment = ({
     setSpinner(false);
   }
 
-  // async function signin() {
-  //   try {
-  //     const response = await backend_API.login(email, password, false);
-  //     if (response == null) {
-  //       setErrorMessage(t("messages.error.loginData"));
-  //       return;
-  //     } else {
-  //       await disconnect();
-  //       setUser(response);
-  //       // setShow(false);
-  //       setOnPageLogin(true);
-  //       fetchInternalWalletAddress();
-  //       fetchWallets();
-  //     }
-  //   } catch (error) {
-  //     setErrorMessage(t("messages.error.login"));
-  //   }
-  // }
-
   const selectInternalWallet = async () => {
     if (!Object.keys(user)?.length) {
       navigate("/login", {
         state: { redirectUrl: `/pay/${transInfoArg.invoiceLink}` },
       });
-    } //setShow(true);
-    else {
+    } else {
       await disconnect();
       setSelectedWalletIndex(0);
     }
@@ -519,36 +519,15 @@ const ReceivePayment = ({
                       <p>{t("payments.chooseWallet")}</p>
                     </div>
                     <div className={styles.fullWidthBox}>
-                      {internalWalletAddress /*&& !onPageLogin*/ && (
+                      {internalWalletAddress && (
                         <Select
                           data={wallets}
                           selectedIndex={selectedWalletIndex}
                           setSelectedIndex={setSelectedWalletIndex}
                         />
                       )}
-                      {/* {((!onPageLogin && !Object.keys(user)?.length) ||
-                        (onPageLogin && Object.keys(user)?.length)) && ( */}
                       {!Object.keys(user)?.length && (
                         <div className={styles.unlogged}>
-                          {/* {onPageLogin && selectedWalletIndex == 0 ? (
-                            <div className={styles.internalWalletContainer}>
-                              <img
-                                src={NefentusLogo}
-                                alt="logo"
-                                style={{ width: "2.4rem" }}
-                              />
-                              <div>
-                                <div className={styles.internalWalletTitle}>
-                                  {wallets[selectedWalletIndex]?.title}
-                                </div>
-                                <div className={styles.internalWalletAddress}>
-                                  {formatWalletAddress(
-                                    wallets[selectedWalletIndex]?.address,
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          ) : ( */}
                           <div
                             className={styles.connectInternalButton}
                             onClick={selectInternalWallet}
@@ -562,7 +541,6 @@ const ReceivePayment = ({
                               {t("payments.pay.internalWalletButtonTitle")}
                             </span>
                           </div>
-                          {/* )} */}
 
                           {connectedWallet == undefined ? (
                             <div className={styles.connectWalletContainer}>
@@ -612,7 +590,7 @@ const ReceivePayment = ({
                       (price * (100 + (vatPercent ?? 0))) / 100,
                     )}
                   </p>
-                  {vatPercent && (
+                  {vatPercent != null && parseFloat(vatPercent) > 0 && (
                     <p
                       style={{
                         color: "var(--text2-color)",
@@ -621,7 +599,8 @@ const ReceivePayment = ({
                     >
                       {t("payments.informVAT1")} {vatPercent}% (
                       {getCurrencySymbol()[currency]}
-                      {(price * vatPercent) / 100}) {t("payments.informVAT2")}
+                      {formatUSDBalance((price * vatPercent) / 100)}){" "}
+                      {t("payments.informVAT2")}
                     </p>
                   )}
                   <p className={styles.cryptoTitle}>
@@ -647,11 +626,12 @@ const ReceivePayment = ({
                 </div>
               </div>
               <GasDetails
-                currency={currencies()[selectedCryptoIndex]}
+                token={currencies()[selectedCryptoIndex]}
                 cryptoAmount={parseFloat(cryptoAmount)}
                 usdAmount={parseFloat(priceUSD)}
-                // feeUSD={feeUSD}
                 setFeeUSD={setFeeUSD}
+                currency={currency}
+                rate={rate}
               />
               <div className={styles.paymentWrapper}>
                 <Button
@@ -660,8 +640,9 @@ const ReceivePayment = ({
                   onClick={() => doPayment()}
                   spinner={spinner}
                 >
-                  {t("payments.payButton").concat(" $")}
-                  {formatUSDBalance(priceUSD + feeUSD)}
+                  {t("payments.payButton").concat(" ")}
+                  {getCurrencySymbol()[currency]}
+                  {formatUSDBalance((priceUSD + feeUSD) * rate)}
                 </Button>
               </div>
             </div>
@@ -760,15 +741,6 @@ const ReceivePayment = ({
           </div>
         </div>
       </div>
-      {/* <SigninPopup
-        show={show}
-        setShow={setShow}
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        signin={signin}
-      /> */}
       <PasswordPopup
         show={pwd}
         setShow={setPwd}
@@ -849,236 +821,18 @@ const SelectOption = ({
         <div className={styles.optionContainer}>
           <p className={styles.optionTitle}> {optionTitle} </p>
           {optionDescription && (
-            <p className={styles.optionDescription}> {optionDescription} </p>
+            <p
+              className={`${styles.optionDescription} ${
+                optionDescription === "loading..." ? styles.skeletonLoader : ""
+              }`}
+            >
+              {" "}
+              {optionDescription !== "loading..." ? optionDescription : ""}{" "}
+            </p>
           )}
         </div>
       </div>
       {dropdown && <img src={DropDownIcon} alt="dropdown" />}
-    </div>
-  );
-};
-
-const CountrySelect = ({
-  setChanged,
-  options,
-  value,
-  setValue,
-  styles,
-  className,
-}) => {
-  const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
-  const [icon, setIcon] = useState();
-  const [keyword, setKeyword] = useState("");
-  const [filtered, setFiltered] = useState(options);
-  useEffect(() => {
-    const country = getCountryList().find((item) => item.value == value);
-    if (country) {
-      setIcon(getFlagLink(country.symbol));
-      setKeyword(t(country.display));
-    }
-  }, [value]);
-  return (
-    <>
-      <div
-        style={{
-          padding: "0",
-          width: "100%",
-          position: "relative",
-        }}
-        onClick={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-      >
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            padding: "0.7rem 1rem",
-            gap: "1rem",
-            border: "1px solid var(--border-color)",
-            borderRadius: "0.6rem",
-            background: "var(--card-color)",
-            cursor: "pointer",
-            ...styles,
-          }}
-          className={`${className}`}
-        >
-          {value && icon && (
-            <img
-              src={icon}
-              style={{
-                borderRadius: "0.3rem",
-                width: "3rem",
-                height: "2rem",
-              }}
-            />
-          )}
-          <input
-            className="custom"
-            style={{
-              fontSize: "1.2rem",
-              width: `calc(100% - ${value ? "6" : "2"}rem)`,
-              outline: "0",
-              background: "transparent",
-              height: "2rem",
-            }}
-            placeholder={value ? "" : t("countries.choose")}
-            value={keyword}
-            onChange={(e) => {
-              setOpen(true);
-              setKeyword(e.target.value);
-              setFiltered(
-                options.filter((item) =>
-                  t(item.display)
-                    .toLowerCase()
-                    .includes(e.target.value.toLowerCase()),
-                ),
-              );
-            }}
-          />
-          <img src={DropDownIcon} />
-        </div>
-        {open && (
-          <div
-            style={{
-              position: "absolute",
-              width: "100%",
-              maxHeight: "30rem",
-              overflow: "auto",
-              background: "var(--card-color)",
-              border: "1px solid var(--border-color)",
-              zIndex: "10",
-            }}
-          >
-            {filtered.map((item, index) => {
-              return (
-                <div
-                  key={index}
-                  onClick={() => {
-                    setValue(item.value);
-                    item.value !== value
-                      ? setChanged && setChanged(true)
-                      : setKeyword(t(item.display));
-                    setOpen(false);
-                  }}
-                  style={{
-                    padding: "0.4rem",
-                  }}
-                >
-                  <SearchSelectOption
-                    icon={`${getFlagLink(item.symbol)}`}
-                    text={t(item.display)}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </>
-  );
-};
-
-const SearchSelectOption = ({ icon, text, styles, className }) => {
-  return (
-    <div
-      style={{
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        padding: "0.2rem 1rem",
-        gap: "1.4rem",
-        cursor: "pointer",
-        ...styles,
-      }}
-      className={className}
-    >
-      {icon && (
-        <img
-          src={icon}
-          style={{
-            borderRadius: "0.3rem",
-            width: "3rem",
-            height: "2rem",
-          }}
-        />
-      )}
-      {text && (
-        <p
-          style={{
-            marginTop: "0.4rem",
-            fontSize: "1.2rem",
-          }}
-        >
-          {text}
-        </p>
-      )}
-    </div>
-  );
-};
-
-const CombinedInput = ({
-  country,
-  setCountry,
-  value,
-  setValue,
-  setChanged,
-}) => {
-  const { t } = useTranslation();
-  const handleChange = () => {
-    if (setChanged) {
-      setChanged(true);
-    }
-  };
-
-  return (
-    <div className={styles.inputWrapper}>
-      <p className={styles.label}>{t("payments.address").concat("*")}</p>
-
-      <div
-        style={{
-          padding: "0",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          gap: "0",
-        }}
-      >
-        <CountrySelect
-          // setChanged={setChanged}
-          value={country}
-          setValue={setCountry}
-          options={getCountryList()}
-          styles={{
-            borderBottom: "none",
-            borderBottomLeftRadius: "0",
-            borderBottomRightRadius: "0",
-          }}
-        />
-        <input
-          className={styles.input}
-          style={{
-            borderTopRightRadius: "0",
-            borderTopLeftRadius: "0",
-          }}
-          placeholder={t("payments.addressHint")}
-          value={value}
-          onChange={(e) => {
-            if (setValue) {
-              setValue(e.target.value);
-            }
-          }}
-          onBlur={(e) => {
-            handleChange();
-          }}
-          onKeyDown={(e) => {
-            if (e.code === "Enter") {
-              handleChange();
-            }
-          }}
-        />
-      </div>
     </div>
   );
 };
@@ -1218,95 +972,6 @@ const Input = ({ label, placeholder, value, setValue, setChanged, type }) => {
   );
 };
 
-const SimpleSelect = ({ setChanged, options, value, setValue, RC, setRC }) => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        padding: "0",
-        fontSize: "1.2rem",
-      }}
-      onClick={() => setOpen(!open)}
-      onMouseLeave={() => setOpen(false)}
-    >
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "0.7rem 1rem",
-          gap: "1rem",
-          border: "1px solid var(--border-color)",
-          borderRadius: "0.6rem",
-          background: "var(--card-color)",
-          cursor: "pointer",
-        }}
-      >
-        <p
-          style={{
-            marginTop: "0.2rem",
-          }}
-        >
-          {value}
-        </p>
-        <img src={DropDownIcon} />
-      </div>
-      {open && (
-        <div
-          style={{
-            position: "absolute",
-            width: "100%",
-            maxHeight: "10rem",
-            padding: "0.4rem 1rem",
-            overflow: "auto",
-            background: "var(--card-color)",
-            border: "1px solid var(--border-color)",
-          }}
-        >
-          {options.map((item) => {
-            return (
-              <div
-                style={{
-                  margin: "0.1rem 0 0 0",
-                }}
-                onClick={() => {
-                  setValue(item);
-                  value != item && setChanged(true);
-                  setOpen(false);
-                }}
-              >
-                {item}
-              </div>
-            );
-          })}
-          <div
-            style={{
-              margin: "0.1rem 0 0 0",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-            onClick={() => {
-              setRC((prev) => !prev);
-              setChanged(true);
-            }}
-          >
-            <span
-              style={{
-                marginTop: "0.1rem",
-              }}
-            >{`RC`}</span>
-            {RC && <img src={CheckedIcon} />}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
 export const PaymentInfo = ({
   fullName,
   setFullName,
@@ -1320,18 +985,13 @@ export const PaymentInfo = ({
   setPerson,
   tax,
   setTax,
-  // percent,
-  // setPercent,
   business,
   setBusiness,
-  // reverseCharge,
   setReverseCharge,
   taxInfo,
   setChanged,
-  // isSeller,
 }) => {
   const { t } = useTranslation();
-  // const { user } = useAuth();
 
   useEffect(() => {
     if (taxInfo && country) {
@@ -1382,14 +1042,8 @@ export const PaymentInfo = ({
           />
         </div>
       )}
-      <div className={styles.row}>
-        <div
-          style={{
-            display: "flex",
-            gap: "0.8rem",
-            width: "100%",
-          }}
-        >
+      {!isPerson && (
+        <div className={styles.row}>
           <Input
             placeholder={t("payments.taxNumber")}
             label={t("payments.taxNumber")}
@@ -1397,21 +1051,6 @@ export const PaymentInfo = ({
             setValue={setTax}
             setChanged={setChanged}
           />
-          {/* {taxInfo && isSeller && (
-            <div className={styles.inputWrapper}>
-              <p className={styles.label}>{t("payments.vat").concat(" %")}</p>
-              <SimpleSelect
-                setChanged={setChanged}
-                value={percent}
-                setValue={setPercent}
-                RC={reverseCharge}
-                setRC={setReverseCharge}
-                options={JSON.parse(taxInfo.vatPercent)}
-              />
-            </div>
-          )} */}
-        </div>
-        {!isPerson && (
           <Input
             placeholder={`e.g. Google`}
             label={t("payments.company")}
@@ -1419,8 +1058,8 @@ export const PaymentInfo = ({
             setValue={setBusiness}
             setChanged={setChanged}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -1459,76 +1098,5 @@ export const ProductInfo = ({
         </div>
       </div>
     </div>
-  );
-};
-
-// const SigninPopup = ({
-//   show,
-//   setShow,
-//   email,
-//   setEmail,
-//   password,
-//   setPassword,
-//   signin,
-// }) => {
-//   const { t } = useTranslation();
-//   return (
-//     <Popup
-//       show={show}
-//       onClose={() => {
-//         setShow(false);
-//         setPassword("");
-//       }}
-//       onConfirm={signin}
-//       confirmTitle={t("login.button")}
-//       cancelTitle={t("general.cancel")}
-//     >
-//       <MessageComponent />
-//       <div className={styles.signinContainer}>
-//         <div>
-//           <p>{t("login.button")}</p>
-//           <p>{t("login.useNefentus")}</p>
-//         </div>
-//         <Input
-//           label={`${t("signUp.emailLabel")}*`}
-//           placeholder={t("signUp.emailPlaceholder")}
-//           value={email}
-//           setValue={setEmail}
-//         />
-//         <Input
-//           label={`${t("signUp.passwordLabel")}*`}
-//           placeholder={t("signUp.passwordPlaceholder")}
-//           value={password}
-//           setValue={setPassword}
-//           type
-//         />
-//       </div>
-//     </Popup>
-//   );
-// };
-
-const PasswordPopup = ({ show, setShow, password, setPassword, onConfirm }) => {
-  const { t } = useTranslation();
-  return (
-    <Popup
-      show={show}
-      onClose={() => {
-        setShow(false);
-        setPassword("");
-      }}
-      onConfirm={onConfirm}
-      confirmTitle={t("general.confirm")}
-      cancelTitle={t("general.cancel")}
-    >
-      <div className={styles.signinContainer}>
-        <Input
-          label={`${t("signUp.passwordLabel")}*`}
-          placeholder={t("signUp.passwordPlaceholder")}
-          value={password}
-          setValue={setPassword}
-          type
-        />
-      </div>
-    </Popup>
   );
 };

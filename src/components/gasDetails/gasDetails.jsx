@@ -11,14 +11,16 @@ import GasDark from "../../assets/icon/dark/gas.svg";
 import GasLight from "../../assets/icon/light/gas.svg";
 import HourglassDark from "../../assets/icon/dark/hourglass.svg";
 import HourglassLight from "../../assets/icon/light/hourglass.svg";
+import { getCurrencySymbol } from "../../countries";
 
 export const GasDetails = ({
-  currency,
+  token,
   usdAmount,
-  feeUSD,
   setFeeUSD,
   vatPercent,
   vatUSD,
+  currency = "USD",
+  rate = 1,
   gasLimit = 600_000,
 }) => {
   const { t } = useTranslation();
@@ -27,7 +29,7 @@ export const GasDetails = ({
   const [gasPriceAsWei, setGasPrice] = useState(0);
   const [maxFee, setMaxFee] = useState(0);
   const [blockchain, setBlockchain] = useState(
-    currencies().find((c) => currency.blockchain === c.abbr),
+    currencies().find((c) => token.blockchain === c.abbr),
   );
   const [blockchainPrice, setBlockchainPrice] = useState(0);
   const uniswap = new uniswapApi();
@@ -55,15 +57,15 @@ export const GasDetails = ({
   };
 
   useEffect(() => {
-    setBlockchain(currencies().find((c) => currency.blockchain === c.abbr));
-  }, [currency]);
+    setBlockchain(currencies().find((c) => token.blockchain === c.abbr));
+  }, [token]);
 
+  const startTimer = async () => {
+    fetch();
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(fetch, 30000);
+  };
   useEffect(() => {
-    const startTimer = async () => {
-      fetch();
-      clearInterval(intervalRef.current);
-      intervalRef.current = setInterval(fetch, 30000);
-    };
     startTimer();
   }, [blockchain.abbr]);
 
@@ -121,7 +123,10 @@ export const GasDetails = ({
               <span>
                 {formatTokenBalance(maxFee, 8)} {blockchain.abbr}
               </span>
-              <span>${formatUSDBalance(maxFee * blockchainPrice)}</span>
+              <span>
+                {getCurrencySymbol()[currency]}
+                {formatUSDBalance(maxFee * blockchainPrice * rate)}
+              </span>
             </div>
           </div>
           <div
@@ -152,22 +157,28 @@ export const GasDetails = ({
             <div>
               <span>{vatPercent}%</span>
               <span style={{ marginLeft: "3rem" }}>
-                ${formatUSDBalance(vatUSD)}
+                {getCurrencySymbol()[currency]}
+                {formatUSDBalance(vatUSD * rate)}
               </span>
             </div>
           </div>
         )}
-        <div
-          className={styles.feeRow}
-          style={{
-            padding: "1.2rem",
-            borderTop: "1px solid var(--border-color)",
-            fontSize: "1.4rem",
-          }}
-        >
-          <span>{t("payments.fee.total")}</span>
-          <span>${formatUSDBalance(usdAmount + maxFee * blockchainPrice)}</span>
-        </div>
+        {usdAmount && (
+          <div
+            className={styles.feeRow}
+            style={{
+              padding: "1.2rem",
+              borderTop: "1px solid var(--border-color)",
+              fontSize: "1.4rem",
+            }}
+          >
+            <span>{t("payments.fee.total")}</span>
+            <span>
+              {getCurrencySymbol()[currency]}{" "}
+              {formatUSDBalance((usdAmount + maxFee * blockchainPrice) * rate)}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

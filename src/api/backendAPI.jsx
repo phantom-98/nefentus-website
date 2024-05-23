@@ -1521,4 +1521,120 @@ export default class backendAPI {
       return null; // or return some default value
     }
   }
+  async contact(title, firstName, lastName, email, linkedin, comment) {
+    try {
+      const url = `${this.baseURL}/contact`;
+
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          firstName,
+          lastName,
+          email,
+          linkedin,
+          comment,
+        }),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async getCoinPrice() {
+    try {
+      const url = `${this.baseURL}/coin-price`;
+
+      const options = {
+        method: "GET",
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async checkIfAgent() {
+    try {
+      const url = `${this.baseURL}/auth/agent`;
+
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async swap(body) {
+    try {
+      const url = `${this.baseURL}/auth/swap`;
+
+      const options = {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(body),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async httpRequest(url, method, body, headers) {
+    try {
+      let fetchUrl = url;
+      const option = {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          ...headers,
+        },
+      };
+      if (method.toLowerCase() === "get") {
+        const searchParams = Object.keys(body)
+          .map((key) => key + "=" + body[key])
+          .join("&");
+        if (searchParams) {
+          fetchUrl += "?" + searchParams;
+        }
+      } else {
+        option.body = JSON.stringify(body);
+      }
+      const response = await fetch(fetchUrl, option);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null;
+    }
+  }
 }

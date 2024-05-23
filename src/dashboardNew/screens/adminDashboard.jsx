@@ -39,7 +39,7 @@ const roleColors = {
 const labels = ["00:00", "04:00", "08:00", "12:00", "16:00", "20:00", "00:00"];
 /**
  *
- * @param type Type of the dashboard (admin or partner)
+ * @param type Type of the dashboard (admin or partner or agent)
  * @returns
  */
 const AdminDashboard = ({ type }) => {
@@ -80,6 +80,7 @@ const AdminDashboard = ({ type }) => {
   const [dataSize, setDataSize] = useState(10);
   const [spinner, setSpinner] = useState(false);
   const [graph, setGraph] = useState();
+  const [measure, setMeasure] = useState();
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
@@ -90,97 +91,117 @@ const AdminDashboard = ({ type }) => {
   const affiliate = type === "affiliate";
 
   useEffect(() => {
-    fetchAdminData();
-    fetchAdminUsersData();
-
-    clearMessages();
+    async function fetchData() {
+      if (!isReloadData) {
+        await checkJwtToken();
+        const result = await adminApi.checkPermission();
+        if (result === false) {
+          navigate("/login");
+        } else {
+          fetchAdminData();
+          fetchAdminUsersData();
+          clearMessages();
+        }
+      }
+    }
+    fetchData();
   }, [isReloadData]);
 
   const fetchAdminData = async () => {
-    await checkJwtToken();
-    const result = await adminApi.checkPermission();
-    if (result !== true) {
-      navigate("/login");
-    } else {
-      const getPromises = [
-        adminApi.getTotalRegistrations(),
-        adminApi.getTotalClicks(),
-        adminApi.getNumOrders(),
-        adminApi.getTotalIncome(),
-        adminApi.getRoleReport(),
-        adminApi.getTotalIncomesPerDay(),
-      ];
+    const getPromises = [
+      adminApi.getTotalRegistrations(),
+      adminApi.getNumOrders(),
+      adminApi.getTotalIncome(),
+      adminApi.getRoleReport(),
+      adminApi.getTotalIncomesPerDay(),
+    ];
 
-      const [
-        dataReg,
-        dataClick,
-        dataOrders,
-        dataInc,
-        reportResp,
-        totalPricePerDate,
-      ] = await Promise.allSettled(getPromises);
+    const [dataReg, dataOrders, dataInc, reportResp, totalPricePerDate] =
+      await Promise.allSettled(getPromises);
 
-      const cardsContent = [
-        {
-          title: t("dashboard.admin.cardsContent.totalIncome"),
-          amount: `${parseFloat(dataInc?.value?.number).toFixed(2)}$`,
-          percentage: dataInc?.value?.percentage,
-          isMonetary: true,
-        },
-        {
-          title: t("dashboard.admin.cardsContent.clicks"),
-          amount: dataClick?.value?.number,
-          percentage: dataClick?.value?.percentage,
-          isMonetary: false,
-        },
-        {
-          title: t("dashboard.admin.cardsContent.registrations"),
-          amount: dataReg?.value?.number,
-          percentage: dataReg?.value?.percentage,
-          isMonetary: false,
-        },
-      ];
-      if (
-        userRole === "admin" ||
-        userRole === "leader" ||
-        userRole === "seniorbroker" ||
-        userRole === "broker"
-      ) {
-        cardsContent[1] = {
-          title: t("dashboard.admin.cardsContent.orders"),
-          amount: dataOrders?.value?.number,
-          percentage: dataOrders?.value?.percentage,
-          isMonetary: false,
+    setMeasure({
+      // total: dataInc?.value?.total,
+      last24h: dataInc?.value?.last24Hours,
+      last30d: dataInc?.value?.last30Days,
+      regist: dataReg?.value,
+      payment: dataOrders?.value,
+    });
+
+    let total = 0;
+    const regRoleGraphData = reportResp.value
+      ?.filter((report) => report.role !== "affiliate")
+      ?.map((item) => {
+        total = total + item.count;
+
+        return {
+          color: roleColors[item.role],
+          legend: ROLE_TO_NAME[item.role],
+          num: item.count,
+          percentage: item.percentage,
         };
-      }
-
-      let total = 0;
-      const regRoleGraphData = reportResp.value
-        ?.filter((report) => report.role !== "affiliate")
-        ?.map((item) => {
-          total = total + item.count;
-
-          return {
-            color: roleColors[item.role],
-            legend: ROLE_TO_NAME[item.role],
-            num: item.count,
-            percentage: item.percentage,
-          };
-        });
-
-      setTotalRegUserCnt(total);
-
-      setCardInfo(cardsContent);
-
-      setBarContent(regRoleGraphData);
-      setGraph(totalPricePerDate.value);
-      let _graph = {};
-      Object.keys(totalPricePerDate.value).forEach((key) => {
-        _graph[key] = totalPricePerDate.value[key];
       });
-      setGraphData(_graph);
-    }
+
+    setTotalRegUserCnt(total);
+
+    setBarContent(regRoleGraphData);
+    setGraph(totalPricePerDate.value);
+    let _graph = {};
+    Object.keys(totalPricePerDate.value).forEach((key) => {
+      _graph[key] = totalPricePerDate.value[key];
+    });
+    setGraphData(_graph);
   };
+
+  useEffect(() => {
+    console.log("measure", measure);
+    if (measure && currencyRate) {
+      const cardsContent = [
+        // {
+        //   title: t("dashboard.earningCards.totalReferral"),
+        //   value:
+        //     currencyRate.symbol +
+        //     formatUSDBalance(
+        //       parseFloat(measure.total?.number) * currencyRate.rate,
+        //     ),
+        //   percentage: measure.total?.percentage,
+        //   progress: t("dashboard.earningCards.progressInLast30d"),
+        // },
+        {
+          title: t("dashboard.earningCards.referralOfLast30d"),
+          value:
+            currencyRate.symbol +
+            formatUSDBalance(
+              parseFloat(measure.last30d?.number) * currencyRate.rate,
+            ),
+          percentage: measure.last30d?.percentage,
+          progress: t("dashboard.earningCards.progressLast30d"),
+        },
+        {
+          title: t("dashboard.earningCards.referralOfLast24h"),
+          value:
+            currencyRate.symbol +
+            formatUSDBalance(
+              parseFloat(measure.last24h?.number) * currencyRate.rate,
+            ),
+          percentage: measure.last24h?.percentage,
+          progress: t("dashboard.earningCards.progressLast24h"),
+        },
+        {
+          title: t("dashboard.earningCards.payments"),
+          value: measure.payment?.number,
+          percentage: measure.payment?.percentage,
+          progress: t("dashboard.earningCards.progressInLast30d"),
+        },
+        {
+          title: t("dashboard.earningCards.registrations"),
+          value: measure.regist?.number,
+          percentage: measure.regist?.percentage,
+          progress: t("dashboard.earningCards.progressInLast30d"),
+        },
+      ];
+      setCardInfo(cardsContent);
+    }
+  }, [measure, currencyRate]);
 
   useEffect(() => {
     if (graph) {
@@ -201,20 +222,15 @@ const AdminDashboard = ({ type }) => {
   }, [currencyRate]);
 
   const fetchAdminUsersData = async (clear) => {
-    const result = await adminApi.checkPermission();
-    if (result !== true) {
-      navigate("/login");
-    } else {
-      const res = await adminApi.getUsers(
-        dataPage * dataSize,
-        dataSize,
-        clear ? "" : getDataInput.trim().toLowerCase(),
-      );
-      setDataLength(parseInt(res.count));
-      setUsers(res.users);
-      updateUsers(res.users);
-      return res.users;
-    }
+    const res = await adminApi.getUsers(
+      dataPage * dataSize,
+      dataSize,
+      clear ? "" : getDataInput.trim().toLowerCase(),
+    );
+    setDataLength(parseInt(res.count));
+    setUsers(res.users);
+    updateUsers(res.users);
+    return res.users;
   };
 
   const updateStatusUser = async (userEmail, activated, dataUsers) => {
@@ -456,7 +472,7 @@ const AdminDashboard = ({ type }) => {
           Nefentus | {t(`navigation.${type}`) + " " + t("navigation.dashboard")}
         </title>
       </Helmet>
-      <EarningCards data={cardInfo} />
+      <EarningCards cardInfo={cardInfo} />
       <AdminBody
         data={barContent}
         chartData={graphData}
@@ -474,14 +490,18 @@ const AdminDashboard = ({ type }) => {
           />
           <Table
             grid={`1.2fr 0.9fr 1.8fr 1fr 0.9fr 1.5fr 1.8fr ${
-              i18n?.language == "en"
+              type === "agent"
+                ? ""
+                : i18n?.language == "en"
                 ? "0.5fr 0.3fr 0.5fr"
                 : i18n?.language == "de"
                 ? "0.8fr 0.8fr 0.8fr"
                 : "1fr 0.8fr 0.8fr"
             }`}
-            label={label}
-            data={tableData}
+            label={type === "agent" ? label.slice(0, -3) : label}
+            data={tableData.map((row) =>
+              type === "agent" ? row.slice(0, -3) : row,
+            )}
           />
 
           <>

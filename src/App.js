@@ -77,6 +77,8 @@ const Product = React.lazy(() => import("./pages/Product"));
 const ProductPay = React.lazy(() => import("./pages/ProductPay"));
 const Pay = React.lazy(() => import("./pages/Pay"));
 const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
+const Vacancy = React.lazy(() => import("./pages/Vacancy"));
+const Jobs = React.lazy(() => import("./pages/Jobs"));
 
 // OLD DASHBOARD
 // const AffiliateDashboard = React.lazy(() => import("./dashboard/Affiliate"));
@@ -311,6 +313,26 @@ function App() {
                           </>
                         }
                       />
+                      <Route
+                        path="/vacancy"
+                        element={
+                          <>
+                            <Layout>
+                              <Vacancy />
+                            </Layout>
+                          </>
+                        }
+                      />
+                      <Route
+                        path="/jobs"
+                        element={
+                          <>
+                            <Layout>
+                              <Jobs />
+                            </Layout>
+                          </>
+                        }
+                      />
 
                       <Route
                         path="/dashboard/"
@@ -333,6 +355,14 @@ function App() {
                         element={
                           <ScreenLayout>
                             <AdminDashboard type="partner" />
+                          </ScreenLayout>
+                        }
+                      />
+                      <Route
+                        path="/dashboard/agent"
+                        element={
+                          <ScreenLayout>
+                            <AdminDashboard type="agent" />
                           </ScreenLayout>
                         }
                       />

@@ -15,13 +15,6 @@ import {
   useWallet,
   walletConnect,
 } from "@thirdweb-dev/react";
-import useBalances from "../../../hooks/balances";
-import usePrices from "../../../hooks/prices";
-import MetaMaskLogo from "../../../assets/logo/MetaMask.svg";
-import WalletConnectLogo from "../../../assets/logo/WalletConnect.svg";
-import Ethereum from "../../../assets/icon/crypto/ethereum.svg";
-import CoinbaseLogo from "../../../assets/logo/coinbase.svg";
-import TrustLogo from "../../../assets/logo/trust.png";
 import backendAPI from "../../../api/backendAPI";
 import { useAuth } from "../../../context/auth/authContext";
 import { getWalletIcon } from "../../../utils";
@@ -43,7 +36,7 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
   const wallets = [
     {
       connect: walletConnect(),
-      icon: WalletConnectLogo,
+      icon: getWalletIcon("walletconnect"),
       name: "WalletConnect",
       address: useAddress(),
       status: useConnectionStatus(),
@@ -51,16 +44,13 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
     },
     {
       connect: metamaskWallet(),
-      icon: MetaMaskLogo,
+      icon: getWalletIcon("metamask"),
       name: "MetaMask",
       address: useAddress(),
       status: useConnectionStatus(),
       walletDetail: useWallet(),
     },
   ];
-
-  const { balances, fetchBalances } = useBalances(wallet);
-  const { prices, fetchPrices } = usePrices(wallet);
 
   useEffect(() => {
     if (Object.keys(user)?.length) {
@@ -72,11 +62,6 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
   }, [user]);
 
   useEffect(() => {
-    fetchBalances();
-    fetchPrices();
-  }, [wallet]);
-
-  useEffect(() => {
     if (!Object.keys(wallet).length && internalWalletAddress) {
       fetchWallets();
     }
@@ -86,14 +71,14 @@ const ProfileCard = ({ type, setActiveWallet = (val) => {}, wallet = {} }) => {
     const list = await backend_API.getWalletAddresses();
 
     const internalWallet = {
-      name: "Internal Wallet",
+      name: "Nefentus",
       address: internalWalletAddress,
-      icon: Ethereum,
+      icon: getWalletIcon("internal"),
     };
     setWalletOptions(
       list.map((wallet) => ({
         ...wallet,
-        name: wallet?.type,
+        name: wallet?.type === "internal" ? "Nefentus" : wallet?.type,
         icon: getWalletIcon(wallet?.type),
       })),
     );

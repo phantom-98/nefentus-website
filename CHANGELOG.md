@@ -1,3 +1,16 @@
+# New changes
+
+# Merged changes
+
+- Create career page and add 5 open jobs
+- fix country issue when creating invoice
+- Show all amounts in invoice currency
+- Show all checkout amounts in invoice currency
+- Fetch crypto price from backend
+- Add agent dashboard similar to partner dashboard for vendor
+- Add swap feature
+- Add skeleton loader when switching wallet, fix loop issue in ProfileCard
+
 # v1.0.0
 
 - First version of Personal, referral and sales dashboards, not yet integrated

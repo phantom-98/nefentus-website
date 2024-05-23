@@ -515,25 +515,6 @@ svg path {
   background-color: transparent;
 }
 
-.signinContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  align-self: stretch;
-}
-
-.signinContainer > div:first-child p:first-child {
-  font-size: 1.8rem;
-  color: var(--text-color, #f6f6f6);
-}
-
-.signinContainer > div:first-child p:last-child {
-  font-size: 1.2rem;
-  color: var(--text2-color, #b1b1b1);
-  max-width: 360px;
-}
-
 .tooltip {
   position: relative;
   display: inline-block;
@@ -581,6 +562,29 @@ svg path {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+}
+
+.skeletonLoader {
+  width: 6rem;
+  height: 1rem;
+  margin: 0.4rem 0;
+  background-image: linear-gradient(
+    90deg,
+    #b1b1b180 0,
+    #ddd8 3rem,
+    #b1b1b180 6rem
+  );
+  animation: shine-lines 1.6s linear infinite;
+  border-radius: 0.4rem;
+}
+
+@keyframes shine-lines {
+  0% {
+    background-position: -6rem;
+  }
+  100% {
+    background-position: 6rem;
+  }
 }
 
 @media screen and (max-width: 900px) {

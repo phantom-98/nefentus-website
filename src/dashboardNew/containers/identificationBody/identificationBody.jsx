@@ -16,17 +16,7 @@ import { MessageContext } from "../../../context/message";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import { checkJwtToken } from "../../../utils";
 import { useAuth } from "../../../context/auth/authContext";
-
-const KYC_TYPE = {
-  FULL_NAME: "FULL_NAME",
-  ADRESS: "ADRESS",
-  CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
-  GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
-  PICTURE_WIDTH_ID_IN_HAND: "PICTURE_WIDTH_ID_IN_HAND",
-  PROOF_OF_ADRESS: "PROOF_OF_ADRESS",
-  PROOF_OF_COMPANY: "PROOF_OF_COMPANY",
-  ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
-};
+import IdentificationPersonalDetail from "../../components/identificationPersonalDetail";
 
 const KYC_TYPE_FILE = {
   GOVERNMENT_ISSUES_ID: "GOVERNMENT_ISSUES_ID",
@@ -36,30 +26,22 @@ const KYC_TYPE_FILE = {
   ENHANCED_DILIGENCE: "ENHANCED_DILIGENCE",
 };
 
-const KYC_TYPE_TEXT = {
-  FULL_NAME: "FULL_NAME",
-  ADRESS: "ADRESS",
-  CITY_AND_ZIP_CODE: "CITY_AND_ZIP_CODE",
+const KYC_TEXT_TYPES = {
+  firstName: "FIRST_NAME",
+  lastName: "LAST_NAME",
+  address: "ADRESS",
+  city: "CITY",
+  zip: "ZIP_CODE",
+  country: "COUNTRY",
 };
 
 const KYCContent = [
   {
-    id: KYC_TYPE_TEXT.FULL_NAME,
-    label: "identification.verification.fullName",
-    type: "text",
+    id: "PERSONAL_DETAIL_MODAL",
+    label: "identification.verification.personalDetail",
+    type: "modal",
     level: 0,
-  },
-  {
-    id: KYC_TYPE_TEXT.ADRESS,
-    label: "identification.verification.address",
-    type: "text",
-    level: 0,
-  },
-  {
-    id: KYC_TYPE_TEXT.CITY_AND_ZIP_CODE,
-    label: "identification.verification.city",
-    type: "text",
-    level: 0,
+    notRequired: false,
   },
   {
     id: KYC_TYPE_FILE.GOVERNMENT_ISSUES_ID,
@@ -94,20 +76,6 @@ const KYCContent = [
   },
 ];
 
-const INITIAL_FILES = {
-  [KYC_TYPE.GOVERNMENT_ISSUES_ID]: null,
-  [KYC_TYPE.PICTURE_WIDTH_ID_IN_HAND]: null,
-  [KYC_TYPE.PROOF_OF_ADRESS]: null,
-  [KYC_TYPE.PROOF_OF_COMPANY]: null,
-  [KYC_TYPE.ENHANCED_DILIGENCE]: null,
-};
-
-const INITIAL_TEXT = {
-  [KYC_TYPE.FULL_NAME]: null,
-  [KYC_TYPE.ADRESS]: null,
-  [KYC_TYPE.CITY_AND_ZIP_CODE]: null,
-};
-
 const IdentificationBody = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -119,17 +87,70 @@ const IdentificationBody = () => {
   const [getText, setGetText] = useState([]);
   const [declineResponse, setDeclineResponse] = useState(null);
   const [spinner, setSpinner] = useState(false);
+  const [personalDetail, setPersonalDetail] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    zip: "",
+    country: "",
+  });
+  const [showPersonalDetail, setShowPersonalDetail] = useState(true);
+
+  useEffect(() => {
+    if (Object.keys(user)?.length) {
+      setPersonalDetail({
+        ...personalDetail,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        country: user?.country,
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    setShowPersonalDetail(
+      personalDetail?.address != "" ||
+        personalDetail?.city != "" ||
+        personalDetail?.zip != "" ||
+        personalDetail?.firstName != user?.firstName ||
+        personalDetail?.lastName != user?.lastName ||
+        personalDetail?.country != user?.country,
+    );
+  }, [personalDetail]);
+
+  useEffect(() => {
+    const init = async () => {
+      const getLevel = async () => {
+        await checkJwtToken();
+        const BackendAPI = new backend_API();
+        const { data } = await BackendAPI.getKYCLevel();
+        if (data) {
+          setLevel(data.kycLevel);
+        }
+      };
+
+      await getLevel();
+    };
+    init();
+  }, [user.email]);
+
+  useEffect(() => {
+    if (level != null) fetchKYC();
+  }, [level]);
 
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
 
-  const fetchFYC = async () => {
+  const fetchKYC = async () => {
     const userKYCData = await Promise.all(
       Object.values(KYC_TYPE_FILE).map((type) => BackendAPI.getByKYC(type)),
     );
 
     const userKYCDataText = await Promise.all(
-      Object.values(KYC_TYPE_TEXT).map((type) => BackendAPI.getByKYCText(type)),
+      Object.values(KYC_TEXT_TYPES).map((type) =>
+        BackendAPI.getByKYCText(type),
+      ),
     );
 
     const transformedResults = userKYCData
@@ -146,6 +167,48 @@ const IdentificationBody = () => {
       })
       .reduce((acc, curr) => ({ ...acc, ...curr }), {});
 
+    const updatedKeys = {
+      FIRST_NAME: "firstName",
+      LAST_NAME: "lastName",
+      ADRESS: "address",
+      ZIP_CODE: "zip",
+      COUNTRY: "country",
+      CITY: "city",
+    };
+
+    if (
+      Object.keys(personalDetail)
+        ?.map((type) => transformedResultsText[KYC_TEXT_TYPES[type]]?.url)
+        .some((data) => data != null)
+    ) {
+      const personDetail = Object.keys(transformedResultsText).reduce(
+        (acc, key) => {
+          const renamedKey = updatedKeys[key] || key;
+          return {
+            ...acc,
+            [renamedKey]: transformedResultsText[key]?.url,
+            verify: transformedResultsText[key]?.verify,
+          };
+        },
+        {},
+      );
+      setPersonalDetail({
+        ...personDetail,
+        verify: Object.keys(personalDetail)
+          ?.map((type) => transformedResultsText[KYC_TEXT_TYPES[type]]?.verify)
+          ?.filter((filteredData) => filteredData != undefined)
+          .every((isVerify) => isVerify),
+        // handling pending case
+        pending: Object.keys(personalDetail)
+          ?.map(
+            (type) =>
+              transformedResultsText[KYC_TEXT_TYPES[type]]?.rejectReason ==
+                null && !transformedResultsText[KYC_TEXT_TYPES[type]]?.verify,
+          )
+          .every((isPending) => isPending),
+      });
+    }
+
     const filteredArray = KYCContent.map((item) => {
       if (item.id in transformedResults) {
         if (
@@ -157,8 +220,8 @@ const IdentificationBody = () => {
               transformedResults[KYC_TYPE_FILE.PROOF_OF_ADRESS].url &&
               !transformedResults[item.id].url))
         ) {
-          item.verify = true;
-          item.url = "notRequired";
+          item.verify = transformedResults[item.id].verify;
+          item.url = transformedResults[item.id].url;
           item.rejectReason = "notRequired";
         } else {
           item.rejectReason = transformedResults[item.id].rejectReason;
@@ -192,22 +255,16 @@ const IdentificationBody = () => {
     setUploadingFiles(filteredArray);
   };
 
-  useEffect(() => {
-    const init = async () => {
-      const getLevel = async () => {
-        await checkJwtToken();
-        const BackendAPI = new backend_API();
-        const { data } = await BackendAPI.getKYCLevel();
-        if (data) {
-          setLevel(data.kycLevel);
-        }
-      };
-
-      await getLevel();
-      fetchFYC();
-    };
-    init();
-  }, [user.email]);
+  const checkPersonalDetail = (item) => {
+    return (
+      item?.id === "PERSONAL_DETAIL_MODAL" &&
+      (personalDetail?.firstName === "" ||
+        personalDetail?.lastName === "" ||
+        personalDetail?.zip === "" ||
+        personalDetail?.country === "" ||
+        personalDetail?.address === "")
+    );
+  };
 
   const checkUploadingData = () => {
     let res = false,
@@ -222,11 +279,13 @@ const IdentificationBody = () => {
         confirm = false;
       }
       if (
-        item.level == level &&
-        item.notRequired == undefined &&
-        !item.verify &&
-        !item.url &&
-        !(getData[item.id] || getText[item.id])
+        (item.level == level &&
+          item.notRequired == undefined &&
+          !item.verify &&
+          !item.url &&
+          !(getData[item.id] || getText[item.id]) &&
+          item?.id != "PERSONAL_DETAIL_MODAL") ||
+        (item?.id === "PERSONAL_DETAIL_MODAL" && checkPersonalDetail(item))
       ) {
         res = true;
         setErrorMessage(t(item.label) + t("identification.fieldRequired"));
@@ -256,8 +315,11 @@ const IdentificationBody = () => {
 
     if (getText) {
       const arrayWithResultsText = await Promise.allSettled(
-        Object.keys(getText).map((type) =>
-          BackendAPI.uploadKYCByText(type, getText[type]),
+        Object.keys(personalDetail)?.map((type) =>
+          BackendAPI.uploadKYCByText(
+            KYC_TEXT_TYPES[type],
+            personalDetail[type],
+          ),
         ),
       );
 
@@ -269,11 +331,15 @@ const IdentificationBody = () => {
     }
     setInfoMessage(t("identification.uploadSuccess"));
     setDeclineResponse(null);
-    fetchFYC();
+    fetchKYC();
     setSpinner(false);
   };
 
   const { theme } = useTheme();
+
+  const handlePersonalDetail = (payload) => {
+    setPersonalDetail({ ...payload });
+  };
 
   return (
     <>
@@ -440,6 +506,16 @@ const IdentificationBody = () => {
                     />
                   );
                 }
+                if (item.type == "modal" && item.level === 0)
+                  return (
+                    <AddPersonalDetail
+                      item={item}
+                      personalDetail={personalDetail}
+                      handlePersonalDetail={handlePersonalDetail}
+                      declineResponse={declineResponse}
+                      showPersonalDetail={showPersonalDetail}
+                    />
+                  );
               })}
             </div>
             <div className={styles.uploadItem}>
@@ -824,6 +900,111 @@ const AddFile = ({
           )}
         </div>
       </div>
+    </>
+  );
+};
+
+const AddPersonalDetail = ({
+  item,
+  personalDetail,
+  handlePersonalDetail,
+  declineResponse,
+  showPersonalDetail,
+}) => {
+  const [openModal, setOpenModal] = useState(false);
+  const { t } = useTranslation();
+
+  const closeModal = () => {
+    setOpenModal(!openModal);
+  };
+
+  return (
+    <>
+      <div className={`${styles.row} ${styles.formItem}`}>
+        <div className={styles.rowLeft}>
+          <span>{t(item?.label)}</span>
+          {personalDetail?.verify ? (
+            <div style={{ paddingLeft: 10 }}>
+              <img src={Correct} alt="" />
+            </div>
+          ) : personalDetail?.pending ? (
+            <>
+              <span style={{ paddingLeft: 20, color: "gray" }}>
+                {declineResponse &&
+                declineResponse != "" &&
+                !personalDetail?.pending
+                  ? ""
+                  : t("identification.beingChecked")}
+              </span>
+            </>
+          ) : null}
+        </div>
+
+        <div
+          className={`${styles.rowRight} ${
+            showPersonalDetail && !personalDetail?.verify
+              ? styles.rightUpload
+              : styles.personalDetailAddButton
+          }`}
+        >
+          {!personalDetail?.verify ? (
+            <div>
+              {showPersonalDetail &&
+                Object.keys(personalDetail)
+                  ?.filter(
+                    (key) => personalDetail[key] != "" && key != "pending",
+                  )
+                  ?.map((detail) =>
+                    " " + personalDetail[detail]?.length > 70
+                      ? personalDetail[detail]?.substring(0, 70) + "..."
+                      : personalDetail[detail],
+                  )
+                  ?.toString()}
+            </div>
+          ) : null}
+          {personalDetail?.verify ? (
+            <Button color="gray" fontSize="1rem" width="10rem">
+              <span style={{ color: "grey" }}>
+                {t("identification.verification.add")}
+              </span>
+            </Button>
+          ) : declineResponse && declineResponse != "" ? (
+            <Button
+              onClick={() => setOpenModal(true)}
+              color="gray"
+              fontSize="1rem"
+              width="10rem"
+            >
+              {t("identification.verification.add")}
+            </Button>
+          ) : personalDetail?.pending ? (
+            <Button color="gray" fontSize="1rem" width="10rem">
+              <span style={{ color: "grey" }}>
+                {t("identification.verification.add")}
+              </span>
+            </Button>
+          ) : (
+            <Button
+              onClick={() => setOpenModal(true)}
+              color="gray"
+              fontSize="1rem"
+              width="10rem"
+            >
+              {t("identification.verification.add")}
+            </Button>
+          )}
+        </div>
+      </div>
+
+      <IdentificationPersonalDetail
+        openModal={openModal}
+        closeModal={closeModal}
+        spinner={false}
+        personalDetail={personalDetail}
+        handlePersonalDetail={handlePersonalDetail}
+        // setValue={setValue}
+        id={item?.id}
+      />
     </>
   );
 };

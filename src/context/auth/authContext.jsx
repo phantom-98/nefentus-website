@@ -1,12 +1,13 @@
 // ThemeContext.js
 import React, { createContext, useState, useContext, useEffect } from "react";
-import backendAPI from "../../api/backendAPI";
+import backend_api from "../../api/backendAPI";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [user, setUser] = useState({});
+  const [isAgent, setAgent] = useState(false);
   const [currencyRate, setCurrencyRate] = useState({
     from: "USD",
     to: "USD",
@@ -16,12 +17,25 @@ export const AuthProvider = ({ children }) => {
   const [rateList, setRateList] = useState([]);
   useEffect(() => {
     async function fetchList() {
-      const res = await new backendAPI().getRateList(currencyRate.to);
-      console.log(res);
+      const res = await new backend_api().getRateList(currencyRate.to);
       res && setRateList(res);
     }
     fetchList();
   }, [currencyRate]);
+
+  useEffect(() => {
+    const checkIfAgent = async () => {
+      if (user) {
+        const res = await new backend_api().checkIfAgent();
+        if (res) {
+          setAgent(res.isAgent);
+        } else {
+          setAgent(false);
+        }
+      }
+    };
+    checkIfAgent();
+  }, [user]);
 
   return (
     <AuthContext.Provider
@@ -32,6 +46,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         currencyRate,
         setCurrencyRate,
+        isAgent,
         rateList,
         setRateList,
       }}

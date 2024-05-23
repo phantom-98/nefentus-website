@@ -327,7 +327,7 @@ export const SearchOptions = ({
   const { t } = useTranslation();
 
   const filteredOptions = options.filter((item) =>
-    item.display.toLowerCase().includes(selected.toLowerCase()),
+    item?.display?.toLowerCase()?.includes(selected.toLowerCase()),
   );
 
   return (
@@ -739,16 +739,6 @@ export const RadioOption = ({
 };
 
 export const Spinner = ({ label, value, setValue, disabled, dashboard }) => {
-  // useEffect(() => {
-  //   if ( value ) {
-  //     const v = parseInt(value);
-  //     if (v > 0) {
-  //       setValue(v);
-  //     } else {
-  //       setValue(1);
-  //     }
-  //   }
-  // }, [value]);
   return (
     <div className={styles.inputWrapper}>
       {label && <p className={styles.label}>{label}</p>}
@@ -835,7 +825,7 @@ export const CombinedInput = ({
   };
 
   return (
-    <div className={styles.inputWrapper}>
+    <div className={styles.inputWrapper} style={{ width: "100%" }}>
       <p className={styles.label}>{t("payments.address").concat("*")}</p>
 
       <div
@@ -845,6 +835,8 @@ export const CombinedInput = ({
           display: "flex",
           flexDirection: "column",
           gap: "0",
+          borderRadius: "0.6rem",
+          background: dashboard ? "var(--bg2-color)" : "var(--card-color)",
         }}
       >
         <CountrySelect
@@ -856,11 +848,12 @@ export const CombinedInput = ({
             borderBottom: "none",
             borderBottomLeftRadius: "0",
             borderBottomRightRadius: "0",
+            background: dashboard ? "var(--bg2-color)" : "var(--card-color)",
           }}
         />
         <input
           className={`${styles.input} ${
-            dashboard ? styles.dashboardInput : ""
+            dashboard ? styles.dashboardInput : styles.checkoutInput
           }`}
           style={{
             borderTopRightRadius: "0",
@@ -901,10 +894,13 @@ export const CountrySelect = ({
   const [keyword, setKeyword] = useState("");
   const [filtered, setFiltered] = useState(options);
   useEffect(() => {
-    const country = getCountryList().find((item) => item.value == value);
+    const country = getCountryList().find((item) => item.value === value);
     if (country) {
       setIcon(getFlagLink(country.symbol));
       setKeyword(t(country.display));
+    } else {
+      setIcon(null);
+      setKeyword("");
     }
   }, [value]);
   return (
@@ -915,7 +911,7 @@ export const CountrySelect = ({
           width: "100%",
           position: "relative",
         }}
-        onClick={() => setOpen(true)}
+        onClick={() => setOpen(!open)}
         onMouseLeave={() => setOpen(false)}
       >
         <div
@@ -955,7 +951,7 @@ export const CountrySelect = ({
             placeholder={value ? "" : t("countries.choose")}
             value={keyword}
             onChange={(e) => {
-              setOpen(true);
+              !open && setOpen(true);
               setKeyword(e.target.value);
               setFiltered(
                 options.filter((item) =>
@@ -978,6 +974,7 @@ export const CountrySelect = ({
               background: "var(--bg2-color)",
               border: "1px solid var(--border-color)",
               zIndex: "10",
+              ...styles,
             }}
           >
             {filtered.map((item, index) => {
@@ -989,7 +986,6 @@ export const CountrySelect = ({
                     item.value !== value
                       ? setChanged && setChanged(true)
                       : setKeyword(t(item.display));
-                    setOpen(false);
                   }}
                   style={{
                     padding: "0.4rem",
