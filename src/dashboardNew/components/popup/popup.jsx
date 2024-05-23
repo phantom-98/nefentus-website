@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../context/auth/authContext";
 import { formatUSDBalance } from "../../../utils";
 import { getCurrencySymbol } from "../../../countries";
+import Input from "../../../components/input/input";
 
 const Popup = ({
   show,
@@ -249,6 +250,38 @@ export const TransactionInfo = ({ show, setShow, transaction }) => {
             </div>
           </div>
         </div>
+      </div>
+    </Popup>
+  );
+};
+
+export const PasswordPopup = ({
+  show,
+  setShow,
+  password,
+  setPassword,
+  onConfirm,
+}) => {
+  const { t } = useTranslation();
+  return (
+    <Popup
+      show={show}
+      onClose={() => {
+        setShow(false);
+        setPassword("");
+      }}
+      onConfirm={onConfirm}
+      confirmTitle={t("general.confirm")}
+      cancelTitle={t("general.cancel")}
+    >
+      <div className={styles.passwordContainer}>
+        <Input
+          label={`${t("signUp.passwordLabel")}*`}
+          placeholder={t("signUp.passwordPlaceholder")}
+          value={password}
+          setState={setPassword}
+          secure
+        />
       </div>
     </Popup>
   );

@@ -1113,11 +1113,18 @@
       "qr": "QR code",
       "actions": "Actions"
     },
+    "swap": {
+      "success": "Swap finished successfully",
+      "apiFailed": "Api call failed",
+      "sendFailed": "Transfering failed. Make sure your token balance is sufficient.",
+      "approveFailed": "Approving failed"
+    },
     "fee": {
       "quotes": "Quotes",
       "viewDetails": "View Details",
       "estimatedGas": "Estimated gas fee",
-      "maxFee": "Maximum fee",
+      "maxFee": "Max fee",
+      "nefentusFee": "Quotes include 0.5% Nefentus fee",
       "description": "Costs that are inevitably incurred in order to carry out a transaction on a blockchain. The costs ultimately go to the miners who keep the blockchain secure.",
       "gasPrice": "Gas Price",
       "gasLimit": "Gas Limit",
@@ -1173,6 +1180,8 @@
   "converter": {
     "wallet": "Wallet",
     "from": "From",
+    "to": "To",
+    "insufficient": "Insufficient",
     "balance": "Balance",
     "convert": "Convert"
   },

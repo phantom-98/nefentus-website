@@ -57,7 +57,9 @@ import {
   getWalletIcon,
 } from "../../utils";
 import { useTranslation } from "react-i18next";
-import Popup from "../../dashboardNew/components/popup/popup";
+import Popup, {
+  PasswordPopup,
+} from "../../dashboardNew/components/popup/popup";
 import { useAuth } from "../../context/auth/authContext";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { GasDetails } from "../gasDetails/gasDetails";
@@ -117,7 +119,6 @@ const ReceivePayment = ({
   const [selectedCryptoIndex, setSelectedCryptoIndex] = useState(0);
 
   const [isDisable, setDisable] = useState(true);
-  const [onPageLogin, setOnPageLogin] = useState(false);
 
   // const [show, setShow] = useState(false);
   // const [email, setEmail] = useState("");
@@ -154,7 +155,6 @@ const ReceivePayment = ({
 
   useEffect(() => {
     if (internalWalletAddress) {
-      // setShow(false);
       fetchBalances(internalWalletAddress);
     }
   }, [internalWalletAddress]);
@@ -351,32 +351,12 @@ const ReceivePayment = ({
     setSpinner(false);
   }
 
-  // async function signin() {
-  //   try {
-  //     const response = await backend_API.login(email, password, false);
-  //     if (response == null) {
-  //       setErrorMessage(t("messages.error.loginData"));
-  //       return;
-  //     } else {
-  //       await disconnect();
-  //       setUser(response);
-  //       // setShow(false);
-  //       setOnPageLogin(true);
-  //       fetchInternalWalletAddress();
-  //       fetchWallets();
-  //     }
-  //   } catch (error) {
-  //     setErrorMessage(t("messages.error.login"));
-  //   }
-  // }
-
   const selectInternalWallet = async () => {
     if (!Object.keys(user)?.length) {
       navigate("/login", {
         state: { redirectUrl: `/pay/${transInfoArg.invoiceLink}` },
       });
-    } //setShow(true);
-    else {
+    } else {
       await disconnect();
       setSelectedWalletIndex(0);
     }
@@ -521,36 +501,15 @@ const ReceivePayment = ({
                       <p>{t("payments.chooseWallet")}</p>
                     </div>
                     <div className={styles.fullWidthBox}>
-                      {internalWalletAddress /*&& !onPageLogin*/ && (
+                      {internalWalletAddress && (
                         <Select
                           data={wallets}
                           selectedIndex={selectedWalletIndex}
                           setSelectedIndex={setSelectedWalletIndex}
                         />
                       )}
-                      {/* {((!onPageLogin && !Object.keys(user)?.length) ||
-                        (onPageLogin && Object.keys(user)?.length)) && ( */}
                       {!Object.keys(user)?.length && (
                         <div className={styles.unlogged}>
-                          {/* {onPageLogin && selectedWalletIndex == 0 ? (
-                            <div className={styles.internalWalletContainer}>
-                              <img
-                                src={NefentusLogo}
-                                alt="logo"
-                                style={{ width: "2.4rem" }}
-                              />
-                              <div>
-                                <div className={styles.internalWalletTitle}>
-                                  {wallets[selectedWalletIndex]?.title}
-                                </div>
-                                <div className={styles.internalWalletAddress}>
-                                  {formatWalletAddress(
-                                    wallets[selectedWalletIndex]?.address,
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          ) : ( */}
                           <div
                             className={styles.connectInternalButton}
                             onClick={selectInternalWallet}
@@ -564,7 +523,6 @@ const ReceivePayment = ({
                               {t("payments.pay.internalWalletButtonTitle")}
                             </span>
                           </div>
-                          {/* )} */}
 
                           {connectedWallet == undefined ? (
                             <div className={styles.connectWalletContainer}>
@@ -765,15 +723,6 @@ const ReceivePayment = ({
           </div>
         </div>
       </div>
-      {/* <SigninPopup
-        show={show}
-        setShow={setShow}
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        signin={signin}
-      /> */}
       <PasswordPopup
         show={pwd}
         setShow={setPwd}
@@ -1124,31 +1073,5 @@ export const ProductInfo = ({
         </div>
       </div>
     </div>
-  );
-};
-
-const PasswordPopup = ({ show, setShow, password, setPassword, onConfirm }) => {
-  const { t } = useTranslation();
-  return (
-    <Popup
-      show={show}
-      onClose={() => {
-        setShow(false);
-        setPassword("");
-      }}
-      onConfirm={onConfirm}
-      confirmTitle={t("general.confirm")}
-      cancelTitle={t("general.cancel")}
-    >
-      <div className={styles.signinContainer}>
-        <Input
-          label={`${t("signUp.passwordLabel")}*`}
-          placeholder={t("signUp.passwordPlaceholder")}
-          value={password}
-          setValue={setPassword}
-          type
-        />
-      </div>
-    </Popup>
   );
 };

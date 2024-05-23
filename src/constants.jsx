@@ -25,7 +25,7 @@ export const ROLE_TO_NAME = {
   admin: "Admin",
 };
 
-const useMainnet = () => {
+export const useMainnet = () => {
   return process.env.VITE_REACT_APP_USE_MAINNET === "true";
 };
 
@@ -184,7 +184,7 @@ export const currencies = () => {
         blockchain: "ETH",
         icon: Ethereum,
         abbr: "WETH",
-        address: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
+        address: "0x7b79995e5f793A07Bc00c21412e50Ecae098E7f9",
         decimals: 18,
       },
       {
@@ -192,7 +192,7 @@ export const currencies = () => {
         blockchain: "ETH",
         icon: Tether,
         abbr: "USDT",
-        address: "0xC2C527C0CACF457746Bd31B2a698Fe89de2b6d49",
+        address: "0x7169D38820dfd117C3FA1f22a697dBA58d90BA06",
         decimals: 6,
       },
       {
@@ -200,7 +200,7 @@ export const currencies = () => {
         blockchain: "ETH",
         icon: USDC,
         abbr: "USDC",
-        address: "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
+        address: "0xf08A50178dfcDe18524640EA6618a1f965821715",
         decimals: 6,
       },
       /*
@@ -244,14 +244,14 @@ export const currencies = () => {
         blockchain: "ETH",
         icon: DAI,
         abbr: "DAI",
-        address: "0xdc31Ee1784292379Fbb2964b3B9C4124D8F89C60",
+        address: "0x3e622317f8C93f7328350cF0B56d9eD4C620C5d6",
         decimals: 18,
       },
       {
-        name: "Tether (BSC)",
+        name: "Binance USD",
         blockchain: "BNB",
         icon: BSC,
-        abbr: "USDT-BSC",
+        abbr: "BUSD",
         address: "0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee",
         decimals: 18,
       },
@@ -319,7 +319,7 @@ export const providerURL = (blockchain) => {
     if (useMainnet()) {
       return "https://ethereum.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
     } else {
-      return "https://goerli.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
+      return "https://11155111.rpc.thirdweb.com/" + THIRDWEB_CLIENT_ID;
     }
   } else if (blockchain === "BNB") {
     if (useMainnet()) {
@@ -367,7 +367,7 @@ export const blockchainToName = (blockchain) => {
     if (useMainnet()) {
       return "Ethereum";
     } else {
-      return "Görli Testnet";
+      return "Sepolia Testnet";
     }
   } else if (blockchain === "BNB") {
     if (useMainnet()) {
@@ -648,3 +648,13 @@ export const countryList = [
 ].sort((country1, country2) => {
   return country1.value?.localeCompare(country2.value);
 });
+
+export const getChainSlug = (blockchain) => {
+  if (useMainnet()) {
+    if (blockchain === "ETH") return "ethereum";
+    else return "bsc";
+  } else {
+    if (blockchain === "ETH") return "sepolia";
+    else return "bsc-test";
+  }
+};

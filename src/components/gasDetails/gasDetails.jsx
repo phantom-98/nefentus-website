@@ -163,20 +163,22 @@ export const GasDetails = ({
             </div>
           </div>
         )}
-        <div
-          className={styles.feeRow}
-          style={{
-            padding: "1.2rem",
-            borderTop: "1px solid var(--border-color)",
-            fontSize: "1.4rem",
-          }}
-        >
-          <span>{t("payments.fee.total")}</span>
-          <span>
-            {getCurrencySymbol()[currency]}{" "}
-            {formatUSDBalance((usdAmount + maxFee * blockchainPrice) * rate)}
-          </span>
-        </div>
+        {usdAmount && (
+          <div
+            className={styles.feeRow}
+            style={{
+              padding: "1.2rem",
+              borderTop: "1px solid var(--border-color)",
+              fontSize: "1.4rem",
+            }}
+          >
+            <span>{t("payments.fee.total")}</span>
+            <span>
+              {getCurrencySymbol()[currency]}{" "}
+              {formatUSDBalance((usdAmount + maxFee * blockchainPrice) * rate)}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
