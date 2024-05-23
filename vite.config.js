@@ -50,8 +50,6 @@ export default ({ mode }) => {
         // by node-globals-polyfill
         util: "util",
         sys: "util",
-        buffer: "rollup-plugin-node-polyfills/polyfills/buffer",
-        process: "rollup-plugin-node-polyfills/polyfills/process",
         events: "rollup-plugin-node-polyfills/polyfills/events",
         stream: "rollup-plugin-node-polyfills/polyfills/stream",
         path: "rollup-plugin-node-polyfills/polyfills/path",
