@@ -214,7 +214,7 @@ function App() {
                   <ScrollToTop>
                     <Routes>
                       <Route
-                        path="/new-setting"
+                        path="/new-settings"
                         element={
                           <SettingLayout>
                             <SettingPage />
