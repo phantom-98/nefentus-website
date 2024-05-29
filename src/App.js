@@ -117,6 +117,8 @@ import DashboardLayout from "./NEFDashboard/containers/dashboardLayout";
 import PersonalDashboard from "./NEFDashboard/containers/personalDashboard";
 import ReferralDashboard from "./NEFDashboard/containers/referralDashboard";
 import SalesDashboard from "./NEFDashboard/containers/salesDashboard";
+import SettingLayout from "./NEFDashboard/containers/settingLayout";
+import SettingPage from "./NEFDashboard/containers/settings";
 
 function App() {
   useEffect(() => {
@@ -211,6 +213,14 @@ function App() {
                 >
                   <ScrollToTop>
                     <Routes>
+                      <Route
+                        path="/new-setting"
+                        element={
+                          <SettingLayout>
+                            <SettingPage />
+                          </SettingLayout>
+                        }
+                      />
                       <Route
                         path="/personal-dashboard"
                         element={

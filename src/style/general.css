@@ -199,7 +199,7 @@ body {
 .dark input,
 .dark textarea,
 .dark .option {
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
   color: var(--text-color);
 }
@@ -793,4 +793,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 :where(.css-dev-only-do-not-override-1yuxnot).ant-table-wrapper .ant-table {
   line-height: normal;
+}
+
+.ant-btn {
+  line-height: normal;
+  height: auto;
+}
+
+.password-modal-forgot {
+  color: var(--Blue, var(--Blue, #078bb9));
+}
+
+.seed-modal-padding {
+  padding: 0px 20px;
 }

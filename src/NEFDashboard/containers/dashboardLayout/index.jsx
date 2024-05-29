@@ -19,7 +19,7 @@ import ThemeModeIcon from "../../../assets/newDashboardIcons/theme-mode.svg";
 import LogoutIcon from "../../../assets/newDashboardIcons/logout.svg";
 import EuropeFlag from "../../../assets/newDashboardIcons/europe-flag.svg";
 import USAFlag from "../../../assets/newDashboardIcons/usa-flag.svg";
-import DownArrow from "../../../assets/newDashboardIcons/down-arrow.svg";
+import DownArrow from "../../../assets/newDashboardIcons/down-arrow-gray.svg";
 import UpArrow from "../../../assets/newDashboardIcons/arrow-up.svg";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import { useAuth } from "../../../context/auth/authContext";
