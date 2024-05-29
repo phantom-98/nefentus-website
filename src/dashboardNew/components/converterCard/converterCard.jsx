@@ -185,8 +185,15 @@ const ConverterCard = () => {
         bestQuote.quote.integration,
       );
       setBridge(bestQuote.quote.integration);
-      setGas(parseInt(bestQuote.gas) / 10 ** 18);
-      setGasUsd(parseFloat(bestQuote.gasUSD));
+      setGas(
+        (parseInt(bestQuote.gas) +
+          parseInt(bestQuote.quote.bridgeFeeInNativeToken)) /
+          10 ** 18,
+      );
+      setGasUsd(
+        parseFloat(bestQuote.gasUSD) +
+          parseFloat(bestQuote.quote.bridgeFeeInNativeTokenUSD),
+      );
 
       const _amount =
         parseInt(bestQuote?.quote?.amount) / 10 ** bestQuote?.quote?.decimals;
@@ -340,6 +347,11 @@ const ConverterCard = () => {
                 fetchBalances(wallets[selectedWalletIndex].address);
               }
               break;
+            case "FAILED":
+              if (transferStepStatus.step === "send") {
+                setSpinner(false);
+                setErrorMessage(t("payments.swap.sendFailed"));
+              }
           }
         } catch (e) {
           swingSDK.cancelTransfer(transferId);

@@ -8,6 +8,7 @@
 - Add agent dashboard similar to partner dashboard for vendor
 - Add swap feature
 - Add skeleton loader when switching wallet, fix loop issue in ProfileCard
+- Fix gas fee in cross swap
 
 # Merged changes
 
