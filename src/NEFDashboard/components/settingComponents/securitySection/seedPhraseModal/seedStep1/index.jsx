@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import NefentusLogo from "../../../../../../assets/logo/logo_n.png";
 import CopyIcon from "../../../../../../assets/newDashboardIcons/copy-gray.svg";
 import { Button, Flex } from "antd";
 import "./seedStep1.css";
 import InputField from "../../inputField";
 
-const SeedStep1 = ({ onNext }) => {
+const SeedStep1 = ({ onNext, password, setPassword }) => {
   return (
     <Flex
       vertical
@@ -28,12 +28,20 @@ const SeedStep1 = ({ onNext }) => {
         To see your seed phrase, please enter your password first
       </div>
       <Flex vertical gap={4}>
-        <InputField type={"password"} label={"Password"} />
+        <InputField
+          type={"password"}
+          label={"Password"}
+          value={password}
+          setValue={setPassword}
+        />
         <div className="default-text password-modal-forgot cursor-pointer">
           Forgot Password?
         </div>
       </Flex>
-      <Button className="seed-step1-continue" onClick={onNext}>
+      <Button
+        className="seed-step1-continue"
+        onClick={() => password?.length > 0 && onNext()}
+      >
         Continue
       </Button>
     </Flex>

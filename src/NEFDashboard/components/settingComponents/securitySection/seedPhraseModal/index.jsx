@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Flex, Modal } from "antd";
 import SeedStep1 from "./seedStep1";
 import SeedStep2 from "./seedStep2";
 import SeedStep3 from "./seedStep3";
 import SeedStep4 from "./seedStep4";
+import { MessageContext } from "../../../../../context/message";
+import backend_API from "../../../../../api/backendAPI";
 import "./seedPhraseModal.css";
+import { useTranslation } from "react-i18next";
 
 const SeedPhraseModal = ({ open, onClose }) => {
+  const { t } = useTranslation();
+  const { setErrorMessage, clearMessages } = useContext(MessageContext);
+  const backendAPI = new backend_API();
   const [step, setStep] = useState(1);
   const [seedPhrases, setSeedPhrases] = useState([]);
+  const [password, setPassword] = useState("");
 
   const steps = [
     {
@@ -49,35 +56,39 @@ const SeedPhraseModal = ({ open, onClose }) => {
   // };
 
   const getSeedPhrases = async () => {
-    const seed = await backendAPI.getSeedPhrase(currentPassword);
+    const seed = await backendAPI.getSeedPhrase(password);
+
     if (seed) {
+      console.log(seed.split(" "));
       setSeedPhrases(seed.split(" "));
-      setInput(false);
       clearMessages();
-      setAddSeedPhrases("step1");
+      setStep(step + 1);
     } else {
       setErrorMessage(t("messages.error.passwordCorrect"));
     }
-    setCurrentPassword("");
+    setPassword("");
   };
-  const handleCloseSeedModal = () => {
-    setAddSeedPhrases(false);
-    clearMessages();
-    setCurrentPassword("");
-    setCheckedSeedPhrases(emptyArray);
-  };
-  const checkPhrase = (value, index) => {
-    const copyPhrases = [...checkedSeedPhrases];
-    copyPhrases[index] = value;
-    setCheckedSeedPhrases(copyPhrases);
-    return;
-  };
+
+  // const handleCloseSeedModal = () => {
+  //   setAddSeedPhrases(false);
+  //   clearMessages();
+  //   setCurrentPassword("");
+  //   setCheckedSeedPhrases(emptyArray);
+  // };
+
+  // const checkPhrase = (value, index) => {
+  //   const copyPhrases = [...checkedSeedPhrases];
+  //   copyPhrases[index] = value;
+  //   setCheckedSeedPhrases(copyPhrases);
+  //   return;
+  // };
   const checkPassword = async () => {
-    const res = await backendAPI.checkPassword(currentPassword);
+    const res = await backendAPI.checkPassword(password);
     if (res) {
-      setInput(false);
+      // setInput(false);
       clearMessages();
-      setAddSeedPhrases("step2");
+      // setAddSeedPhrases("step2");
+      setStep(step + 1);
     } else {
       setErrorMessage(t("messages.error.passwordCorrect"));
     }
@@ -86,11 +97,17 @@ const SeedPhraseModal = ({ open, onClose }) => {
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <SeedStep1 onNext={() => setStep(step + 1)} />;
+        return (
+          <SeedStep1
+            onNext={() => checkPassword()}
+            password={password}
+            setPassword={setPassword}
+          />
+        );
       case 2:
         return (
           <SeedStep2
-            onNext={() => setStep(step + 1)}
+            onNext={() => getSeedPhrases()}
             onClose={() => onClose()}
           />
         );
@@ -99,6 +116,7 @@ const SeedPhraseModal = ({ open, onClose }) => {
           <SeedStep3
             onNext={() => setStep(step + 1)}
             onClose={() => onClose()}
+            seeds={seedPhrases}
           />
         );
       case 4:

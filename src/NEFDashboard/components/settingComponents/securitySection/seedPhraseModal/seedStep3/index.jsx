@@ -4,22 +4,19 @@ import SeedModalFooter from "../seedModalFooter";
 import ListLockIcon from "../../../../../../assets/newDashboardIcons/list-lock.svg";
 import CopyIcon from "../../../../../../assets/newDashboardIcons/copy-gray.svg";
 import "./seedStep3.css";
+import { useContext } from "react";
+import { MessageContext } from "../../../../../../context/message";
+import { useTranslation } from "react-i18next";
 
-const SeedStep3 = ({ onNext, onClose }) => {
-  const seeds = [
-    "World",
-    "Horizon",
-    "Kaleidoscope",
-    "Ripple",
-    "Quicksilver",
-    "Ember",
-    "Zenith",
-    "Whisper",
-    "Labyrinth",
-    "Serendipity",
-    "Eclipse",
-    "Cascade",
-  ];
+const SeedStep3 = ({ onNext, onClose, seeds }) => {
+  const { setSuccessMessage } = useContext(MessageContext);
+  const { t } = useTranslation();
+
+  const handleCopy = (value) => {
+    navigator.clipboard.writeText(value);
+    setSuccessMessage(t("general.copied"));
+  };
+
   return (
     <>
       <Flex vertical gap={16} className="seed-modal-padding">
@@ -45,6 +42,7 @@ const SeedStep3 = ({ onNext, onClose }) => {
           align="center"
           justify="center"
           className="default-text seed-step3-copy"
+          onClick={() => handleCopy(seeds?.toString())}
         >
           <div>Copy to Clipboard</div>
           <div>
