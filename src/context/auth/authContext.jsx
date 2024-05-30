@@ -6,6 +6,8 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const backend_API = new backend_api();
+  // avatarUrl is not needed because user.profileImage is the same
+  // TODO This is legacy to support the old dashboard. Delete once new dashboard is fully implemented
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [user, setUser] = useState({});
   const [isAgent, setAgent] = useState(false);
