@@ -59,7 +59,6 @@ const SeedPhraseModal = ({ open, onClose }) => {
     const seed = await backendAPI.getSeedPhrase(password);
 
     if (seed) {
-      console.log(seed.split(" "));
       setSeedPhrases(seed.split(" "));
       clearMessages();
       setStep(step + 1);
@@ -120,7 +119,13 @@ const SeedPhraseModal = ({ open, onClose }) => {
           />
         );
       case 4:
-        return <SeedStep4 onNext={() => onClose()} onClose={() => onClose()} />;
+        return (
+          <SeedStep4
+            onNext={() => onClose()}
+            onClose={() => onClose()}
+            seeds={seedPhrases}
+          />
+        );
     }
   };
   return (

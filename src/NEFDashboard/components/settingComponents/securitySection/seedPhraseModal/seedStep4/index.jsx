@@ -1,24 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Flex, Input } from "antd";
 import SeedModalFooter from "../seedModalFooter";
 import ShieldIcon from "../../../../../../assets/newDashboardIcons/shield.svg";
 import "./seedStep4.css";
 
-const SeedStep4 = ({ onNext, onClose }) => {
-  const seeds = [
-    "World",
-    "Horizon",
-    "Kaleidoscope",
-    "Ripple",
-    "Quicksilver",
-    "Ember",
-    "Zenith",
-    "Whisper",
-    "Labyrinth",
-    "Serendipity",
-    "Eclipse",
-    "Cascade",
-  ];
+const SeedStep4 = ({ onNext, onClose, seeds }) => {
+  const [seedInputs, setSeedInputs] = useState(Array(12).fill(""));
+  console.log(seedInputs);
+  // const checkPhrase = (value, index) => {
+  //   const copyPhrases = [...checkedSeedPhrases];
+  //   copyPhrases[index] = value;
+  //   setCheckedSeedPhrases(copyPhrases);
+  //   return;
+  // };
   return (
     <>
       <Flex vertical gap={16} className="seed-modal-padding">
@@ -32,10 +26,17 @@ const SeedStep4 = ({ onNext, onClose }) => {
           </div>
         </Flex>
         <Flex gap={8} wrap>
-          {seeds?.map((seed, index) => (
+          {seedInputs?.map((seed, index) => (
             <Flex gap={6} align="center" className="seed-step4-value-container">
               <div>{index + 1}</div>
-              <Input defaultValue={seed} />
+              <Input
+                value={seed}
+                onChange={(e) => {
+                  let updatedSeed = seedInputs;
+                  updatedSeed[index] = e.target.value;
+                  setSeedInputs([...updatedSeed]);
+                }}
+              />
             </Flex>
           ))}
         </Flex>
