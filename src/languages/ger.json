@@ -1366,7 +1366,7 @@
       "menu": "Hauptmenü",
       "wallets": "Wallets",
       "payments": "Zahlungen",
-      "referral": "Empfehlungs",
+      "referral": "Referral",
       "createInvoice": "Rechnung erstellen",
       "sendCrypto": "Krypto senden",
       "receiveCrypto": "Krypto empfangen",
@@ -1406,7 +1406,7 @@
   },
   "salesDashboard": {
     "title": "Vertriebs-Dashboard",
-    "salesIncomeTitle": "Gesamte Verkaufserlöse",
+    "salesIncomeTitle": "Verkaufserlöse",
     "invoiceCard": {
       "title": "Rechnungen",
       "open": "Offen",
@@ -1416,7 +1416,7 @@
     "product": "Produkt",
     "invoice": "Rechnung",
     "details": "Details",
-    "sales": "Vertrieb",
+    "sales": "Verkauf",
     "products": "Produkte",
     "createInvoice": "Rechnung erstellen",
     "productTable": {
