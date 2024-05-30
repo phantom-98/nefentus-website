@@ -27,14 +27,15 @@ import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import "./referralDashboard.css";
 import userColumns from "./userColumns";
 
-const ReferralDashboard = ({ type }) => {
+const ReferralDashboard = () => {
   const { t, i18n } = useTranslation();
   const { language } = i18n;
   const { theme } = useTheme();
   const backend_Api = new backendAPI();
+  const { user, setUser, currencyRate } = useAuth();
+  const type = user.roles && user.roles[0];
   const adminApi = new adminDashboardApi(type);
   const dashboardApi = new vendorDashboardApi();
-  const { user, setUser, currencyRate } = useAuth();
   const [users, setUsers] = useState([]);
   const [income, setIncome] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);

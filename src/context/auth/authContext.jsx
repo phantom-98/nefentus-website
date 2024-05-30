@@ -5,6 +5,7 @@ import backend_api from "../../api/backendAPI";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const backend_API = new backend_api();
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [user, setUser] = useState({});
   const [isAgent, setAgent] = useState(false);
@@ -22,6 +23,15 @@ export const AuthProvider = ({ children }) => {
     }
     fetchList();
   }, [currencyRate]);
+
+  const fetchProfile = async () => {
+    const response = await backend_API.getProfile();
+    if (response) setUser({ ...response });
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   useEffect(() => {
     const checkIfAgent = async () => {

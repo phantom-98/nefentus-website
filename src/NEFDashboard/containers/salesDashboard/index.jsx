@@ -33,11 +33,11 @@ const incomeCards = [
     subText: "referralDashboard.incomeCards.paymentCardSubText",
   },
 ];
-const SalesDashboard = ({ type }) => {
+const SalesDashboard = () => {
   const { t } = useTranslation();
   const dashboardApi = new vendorDashboardApi();
-  const adminApi = new adminDashboardApi(type);
-  const { currencyRate } = useAuth();
+  const { currencyRate, user } = useAuth();
+  const adminApi = new adminDashboardApi(user.roles && user.roles[0]);
   const [activeSegment, setActiveSegment] = useState("product");
   const [products, setProducts] = useState([]);
   const [dataLength, setDataLength] = useState(6);
