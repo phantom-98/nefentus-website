@@ -27,14 +27,14 @@ import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import "./referralDashboard.css";
 import userColumns from "./userColumns";
 
-const ReferralDashboard = ({ type }) => {
+const ReferralDashboard = () => {
   const { t, i18n } = useTranslation();
   const { language } = i18n;
   const { theme } = useTheme();
   const backend_Api = new backendAPI();
-  const adminApi = new adminDashboardApi(type);
-  const dashboardApi = new vendorDashboardApi();
   const { user, setUser, currencyRate } = useAuth();
+  const adminApi = new adminDashboardApi(user.roles && user.roles[0]);
+  const dashboardApi = new vendorDashboardApi();
   const [users, setUsers] = useState([]);
   const [income, setIncome] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -218,13 +218,13 @@ const ReferralDashboard = ({ type }) => {
           {/* </div> */}
         </Flex>
         <div className="roles-card-container">
-          <Roles type={type} fetchUsers={fetchUsers} />
+          <Roles fetchUsers={fetchUsers} />
         </div>
       </Flex>
       {/** Income container that is viewed only for tab and mobile view */}
       <Flex gap={20} className="tab-view-income-container">
         <div className="tabview-roles-card">
-          <Roles type={type} fetchUsers={fetchUsers} />
+          <Roles fetchUsers={fetchUsers} />
         </div>
         <div>
           {Array.from({ length: Math.ceil(cardDetails?.length / 2) }).map(
