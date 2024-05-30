@@ -1105,6 +1105,29 @@ export default class backendAPI {
     }
   }
 
+  async getInternalWallet() {
+    try {
+      const url = `${this.baseURL}/wallet/internal-wallet`;
+      this.token = Cookies.get("token");
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      debugger;
+      this.updateToken(response);
+      const data = response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async send(
     tokenAddress,
     blockchain,

@@ -5,6 +5,7 @@ import RecoverWalletStep1 from "./RecoverWalletStep1";
 import RecoverWalletStep2 from "./RecoverWalletStep2";
 
 const RecoverWalletModal = ({ open, onClose }) => {
+  const [password, setPassword] = useState("");
   const [step, setStep] = useState(1);
   const steps = [
     {
@@ -21,13 +22,16 @@ const RecoverWalletModal = ({ open, onClose }) => {
   const renderStep = () => {
     switch (step) {
       case 1:
-        return <RecoverWalletStep1 onNext={() => setStep(step + 1)} />;
+        return (
+          <RecoverWalletStep1
+            onNext={() => setStep(step + 1)}
+            password={password}
+            setPassword={setPassword}
+          />
+        );
       case 2:
         return (
-          <RecoverWalletStep2
-            onNext={() => onClose()}
-            onClose={() => onClose()}
-          />
+          <RecoverWalletStep2 onClose={() => onClose()} password={password} />
         );
     }
   };

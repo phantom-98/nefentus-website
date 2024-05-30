@@ -29,3 +29,7 @@
   box-shadow: none;
   padding: 4px 0px;
 }
+
+.seed-error-container {
+  border: 1px solid var(--red, #a43c3c) !important;
+}

@@ -4,8 +4,9 @@ import CopyIcon from "../../../../../../assets/newDashboardIcons/copy-gray.svg";
 import { Button, Flex } from "antd";
 import "./seedStep1.css";
 import InputField from "../../inputField";
+import WalletAddressFormatter from "../../../../../../func/walletAddressFormatter";
 
-const SeedStep1 = ({ onNext, password, setPassword }) => {
+const SeedStep1 = ({ onNext, password, setPassword, wallet }) => {
   return (
     <Flex
       vertical
@@ -19,7 +20,7 @@ const SeedStep1 = ({ onNext, password, setPassword }) => {
         <div className="default-text">Nefentus</div>
         <Flex align="center" gap={4}>
           <div className="default-text-gray seed-phrase-address">
-            0xabcd...1234
+            {WalletAddressFormatter(wallet?.address)}
           </div>
           <img src={CopyIcon} alt="icon" className="seed-phrase-modal-copy" />
         </Flex>

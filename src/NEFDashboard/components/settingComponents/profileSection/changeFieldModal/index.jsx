@@ -38,9 +38,15 @@ const changeFields = [
   },
 ];
 
-const ChangeFieldModal = ({ open, onClose, keyField, onSubmit }) => {
-  const [value, setValue] = useState("");
-  const [activeField, setActiveField] = useState(
+const ChangeFieldModal = ({
+  open,
+  onClose,
+  keyField,
+  onSubmit,
+  autoFilledValue,
+}) => {
+  const [value, setValue] = useState(autoFilledValue);
+  const [activeField] = useState(
     changeFields?.find((field) => field?.key == keyField),
   );
 
@@ -76,7 +82,9 @@ const ChangeFieldModal = ({ open, onClose, keyField, onSubmit }) => {
         <Button
           size="large"
           className="change-email-submit-button"
-          onClick={() => onSubmit(value)}
+          onClick={() =>
+            autoFilledValue === value ? onClose() : onSubmit(value)
+          }
         >
           Change
         </Button>

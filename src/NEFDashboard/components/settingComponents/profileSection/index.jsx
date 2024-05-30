@@ -262,6 +262,7 @@ const ProfileSection = () => {
           open={fieldModal?.length > 0}
           onClose={() => setFieldModal("")}
           keyField={fieldModal}
+          autoFilledValue={user[fieldModal]}
           onSubmit={(value) => {
             updateUser({ ...user, [fieldModal]: value });
           }}
