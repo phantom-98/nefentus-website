@@ -117,6 +117,8 @@ import DashboardLayout from "./NEFDashboard/containers/dashboardLayout";
 import PersonalDashboard from "./NEFDashboard/containers/personalDashboard";
 import ReferralDashboard from "./NEFDashboard/containers/referralDashboard";
 import SalesDashboard from "./NEFDashboard/containers/salesDashboard";
+import Products from "./NEFDashboard/containers/products";
+import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
 
 function App() {
   useEffect(() => {
@@ -214,7 +216,10 @@ function App() {
                       <Route
                         path="/personal-dashboard"
                         element={
-                          <DashboardLayout title={"personalDashboard.title"}>
+                          <DashboardLayout
+                            title={"personalDashboard.title"}
+                            type={"admin"}
+                          >
                             <PersonalDashboard />
                           </DashboardLayout>
                         }
@@ -222,7 +227,10 @@ function App() {
                       <Route
                         path="/referral-dashboard"
                         element={
-                          <DashboardLayout title={"referralDashboard.title"}>
+                          <DashboardLayout
+                            title={"referralDashboard.title"}
+                            type={"admin"}
+                          >
                             <ReferralDashboard type={"admin"} />
                           </DashboardLayout>
                         }
@@ -230,8 +238,44 @@ function App() {
                       <Route
                         path="/sales-dashboard"
                         element={
-                          <DashboardLayout title={"Sales Dashboard"}>
-                            <SalesDashboard />
+                          <DashboardLayout
+                            title={"salesDashboard.title"}
+                            type={"admin"}
+                          >
+                            <SalesDashboard type={"admin"} />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/products-dashboard"
+                        element={
+                          <DashboardLayout
+                            title={"productsDashboard.title"}
+                            type={"admin"}
+                          >
+                            <Products />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/create-invoice"
+                        element={
+                          <DashboardLayout
+                            title={"payments.createInvoice"}
+                            type={"admin"}
+                          >
+                            <CreateInvoice />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/product-detail/:productLink"
+                        element={
+                          <DashboardLayout
+                            title={"productsDashboard.productDetail"}
+                            type={"admin"}
+                          >
+                            <Product />
                           </DashboardLayout>
                         }
                       />

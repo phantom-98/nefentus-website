@@ -25,10 +25,10 @@ import adminDashboardApi from "../../../api/adminDashboardApi";
 import { ROLE_TO_NAME } from "../../../constants";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import "./referralDashboard.css";
+import userColumns from "./userColumns";
 
 const ReferralDashboard = ({ type }) => {
   const { t, i18n } = useTranslation();
-
   const { language } = i18n;
   const { theme } = useTheme();
   const backend_Api = new backendAPI();
@@ -36,7 +36,6 @@ const ReferralDashboard = ({ type }) => {
   const dashboardApi = new vendorDashboardApi();
   const { user, setUser, currencyRate } = useAuth();
   const [users, setUsers] = useState([]);
-  const [limitedList, setLimitedList] = useState([]);
   const [income, setIncome] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
   const [dataLength, setDataLength] = useState(6);
@@ -45,16 +44,6 @@ const ReferralDashboard = ({ type }) => {
   const [search, setSearch] = useState("");
   const [cardDetails, setCardDetails] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
-
-  const labels = {
-    Monday: t("dashboard.charts.days.monday"),
-    Tuesday: t("dashboard.charts.days.tuesday"),
-    Wednesday: t("dashboard.charts.days.wednesday"),
-    Thursday: t("dashboard.charts.days.thursday"),
-    Friday: t("dashboard.charts.days.friday"),
-    Saturday: t("dashboard.charts.days.saturday"),
-    Sunday: t("dashboard.charts.days.sunday"),
-  };
 
   const incomeCards = [
     {
@@ -86,7 +75,7 @@ const ReferralDashboard = ({ type }) => {
 
   useEffect(() => {
     fetchGraphData();
-  }, [language, theme, user]);
+  }, [language, theme, user, currencyRate]);
 
   const fetchProfile = async () => {
     const response = await backend_Api.getProfile();
@@ -130,6 +119,7 @@ const ReferralDashboard = ({ type }) => {
     setGraphData(
       limitedDateList?.map((value) => ({
         ...value,
+        amount: value?.amount * currencyRate?.rate,
         label: moment(value?.createdAt).format("MMM DD"),
       })),
     );
@@ -147,22 +137,23 @@ const ReferralDashboard = ({ type }) => {
 
   const fetchIncomeDetails = async () => {
     const getPromises = [
-      dashboardApi.getTotalIncome(),
-      adminApi.getTotalIncome(),
-      adminApi.getNumOrders(),
       adminApi.getTotalRegistrations(),
+      adminApi.getNumOrders(),
+      adminApi.getTotalIncome(),
+      // adminApi.getTotalIncomesPerDay(),
     ];
 
-    const [totalIncomes, dataInc, dataOrders, dataReg] =
+    const [dataReg, dataOrders, dataInc] =
       await Promise.allSettled(getPromises);
-    setIncome(totalIncomes?.value["total"]?.number);
+
+    setIncome(dataInc?.value["total"]?.number);
     setCardDetails(
       incomeCards?.map((card, index) => ({
         ...card,
         ...(index == 0
-          ? totalIncomes?.value["last30Days"]
+          ? dataInc?.value["last30Days"]
           : index == 1
-          ? totalIncomes?.value["last24Hours"]
+          ? dataInc?.value["last24Hours"]
           : index == 2
           ? dataOrders?.value
           : dataReg?.value),
@@ -185,151 +176,13 @@ const ReferralDashboard = ({ type }) => {
     }
   };
 
-  const items = [
-    {
-      key: "2",
-      label: (
-        <div className="default-text user-table-menu-width">
-          {" "}
-          {t("referralDashboard.userTableMenu.edit")}
-        </div>
-      ),
-      icon: <img src={EditIcon} alt="edit" />,
-    },
-    {
-      key: "3",
-      label: (
-        <div
-          className="default-text user-table-menu-width"
-          onClick={deleteUser}
-        >
-          {" "}
-          {t("referralDashboard.userTableMenu.delete")}
-        </div>
-      ),
-      icon: <img src={DeleteIcon} alt="delete" />,
-    },
-  ];
-
-  const columns = [
-    {
-      title: t("dashboard.tableHeaders.name"),
-      dataIndex: "firstName",
-      sorter: (a, b) => a.firstName.length - b.firstName.length,
-      sortDirections: ["ascend", "descend"],
-      render: (_, record) => {
-        return (
-          <Row align={"middle"} gutter={6}>
-            <Col>
-              <div className="default-text">
-                {record?.firstName + " " + record?.lastName}
-              </div>
-              <div className="default-text-gray">{record?.email}</div>
-            </Col>
-          </Row>
-        );
-      },
-    },
-    {
-      title: t("dashboard.tableHeaders.roles"),
-      dataIndex: "roles",
-      sortDirections: ["ascend", "descend"],
-      sorter: (a, b) => a.roles - b.roles,
-      render: (roles, record) => {
-        return <div className="default-text">{ROLE_TO_NAME[roles[0]]}</div>;
-      },
-    },
-    {
-      title: t("dashboard.tableHeaders.status"),
-      dataIndex: "activated",
-      sortDirections: ["ascend", "descend"],
-      sorter: (a, b) => a.activated - b.activated,
-      render: (activated, record) => {
-        return activated ? (
-          <Flex align="center" gap={3} className="status-container">
-            <img src={ActiveIcon} />
-            <div>Active</div>
-          </Flex>
-        ) : (
-          <Flex align="center" gap={3} className="status-container">
-            <img src={InactiveIcon} />
-            <div>Inactive</div>
-          </Flex>
-        );
-      },
-    },
-    {
-      title: t("dashboard.tableHeaders.income"),
-      dataIndex: "income",
-      sortDirections: ["ascend", "descend"],
-      sorter: (a, b) => a.income - b.income,
-      render: (income, record) => {
-        return <div>${income}</div>;
-      },
-    },
-    {
-      title: t("dashboard.tableHeaders.agent"),
-      dataIndex: "agent",
-      sortDirections: ["ascend", "descend"],
-      sorter: (a, b) => a.agent - b.agent,
-      render: (agent, record) => {
-        return <div>{agent}</div>;
-      },
-    },
-    {
-      title: t("dashboard.tableHeaders.joinedOn"),
-      dataIndex: "createdAt",
-      sortDirections: ["ascend", "descend"],
-      sorter: (a, b) => a.createdAt - b.createdAt,
-      render: (createdAt, record) => {
-        return (
-          <div>
-            <div>{moment(createdAt).format("MMM DD YYYY")}</div>
-            <div className="default-text-gray">
-              {moment(createdAt).format("hh:mm A")}
-            </div>
-          </div>
-        );
-      },
-    },
-    {
-      title: "",
-      render: (_, record) => {
-        return (
-          <Dropdown
-            menu={{
-              items: [
-                {
-                  key: "1",
-                  label: (
-                    <div
-                      className="default-text user-table-menu-width"
-                      onClick={updateStatus}
-                    >
-                      {t(
-                        `referralDashboard.userTableMenu.${
-                          record?.activated ? "deactivate" : "activate"
-                        }`,
-                      )}
-                    </div>
-                  ),
-                  icon: <img src={DeactivateIcon} alt="deactivate" />,
-                },
-                ...items,
-              ],
-            }}
-            overlayClassName="user-table-menu"
-            trigger={["click"]}
-            onOpenChange={(e) => setSelectedUser(record)}
-          >
-            <div className="table-menu-icon cursor-pointer">
-              <img src={MenuIcon} alt="menu" width={20} height={20} />
-            </div>
-          </Dropdown>
-        );
-      },
-    },
-  ];
+  const columns = userColumns(
+    t,
+    updateStatus,
+    deleteUser,
+    setSelectedUser,
+    currencyRate,
+  );
 
   return (
     <Flex vertical gap={32} className="referral-dashboard">
@@ -340,20 +193,62 @@ const ReferralDashboard = ({ type }) => {
           gap={16}
           className="referral-income-container"
         >
-          <Flex align="center" justify="space-between" flex={2}>
+          <Flex
+            align="center"
+            justify="space-between"
+            flex={2}
+            className="referral-dashboard-income-title"
+          >
             <div className="referral-income-title">
               {t("referralDashboard.graphTitle")}
             </div>
             <div className="referral-income-value">
-              ${formatUSDBalance(income)}
+              {currencyRate?.symbol +
+                formatUSDBalance(+income * currencyRate?.rate)}
             </div>
           </Flex>
           {/* <div> */}
-          <BalanceGraph graphData={graphData} />
+          <BalanceGraph
+            graphData={
+              graphData?.length > 0
+                ? graphData
+                : [{ label: moment().format("MMM DD"), amount: 0 }]
+            }
+          />
           {/* </div> */}
         </Flex>
-
-        <Roles type={type} fetchUsers={fetchUsers} />
+        <div className="roles-card-container">
+          <Roles type={type} fetchUsers={fetchUsers} />
+        </div>
+      </Flex>
+      {/** Income container that is viewed only for tab and mobile view */}
+      <Flex gap={20} className="tab-view-income-container">
+        <div className="tabview-roles-card">
+          <Roles type={type} fetchUsers={fetchUsers} />
+        </div>
+        <div>
+          {Array.from({ length: Math.ceil(cardDetails?.length / 2) }).map(
+            (_, rowIndex) => (
+              <Row
+                key={rowIndex}
+                gutter={[16, 16]}
+                className="tabview-income-card-container"
+              >
+                {cardDetails
+                  ?.slice(rowIndex * 2, (rowIndex + 1) * 2)
+                  .map((record, index) => (
+                    <Col key={`cell-${index}`} span={12}>
+                      <IncomeCard
+                        card={record}
+                        key={index}
+                        isLast={rowIndex == 1}
+                      />
+                    </Col>
+                  ))}
+              </Row>
+            ),
+          )}
+        </div>
       </Flex>
       {/* Income Component*/}
       <Flex
@@ -364,7 +259,14 @@ const ReferralDashboard = ({ type }) => {
       >
         {cardDetails?.length > 0 &&
           cardDetails?.map((card, index) => (
-            <IncomeCard card={card} key={index} />
+            <IncomeCard
+              card={card}
+              key={index}
+              isLast={
+                index === cardDetails?.length - 1 ||
+                index === cardDetails?.length - 2
+              }
+            />
           ))}
       </Flex>
 

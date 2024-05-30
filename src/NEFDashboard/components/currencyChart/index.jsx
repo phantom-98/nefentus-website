@@ -3,6 +3,8 @@ import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import { Tooltip as AntToolTip, Col, Flex, Row, Skeleton } from "antd";
 import PorfolioCoins from "../portfolioCoins";
 import "./currency-chart.css";
+import { useAuth } from "../../../context/auth/authContext";
+import { formatUSDBalance } from "../../../utils";
 
 const COLORS = [
   "#078BB9",
@@ -28,6 +30,7 @@ const checkPrices = (priceList) => {
 
 const CurrencyChart = ({ balances, prices, data, colors, togglebtn }) => {
   const [percentages, setPercentages] = useState([0, 0, 0, 0, 0]);
+  const { currencyRate } = useAuth();
   useEffect(() => {
     if (checkBalances(balances) && checkPrices(prices)) {
       let totalBalance = balances
@@ -64,7 +67,10 @@ const CurrencyChart = ({ balances, prices, data, colors, togglebtn }) => {
             </Col>
             <Col className="default-text">{data?.payload?.percentage}%</Col>
           </Row>
-          <div className="tooltip-balance">${data?.value}</div>
+          <div className="tooltip-balance">
+            {currencyRate?.symbol +
+              formatUSDBalance(data?.value * currencyRate?.rate)}
+          </div>
         </div>
       </AntToolTip>
     );
@@ -93,16 +99,19 @@ const CurrencyChart = ({ balances, prices, data, colors, togglebtn }) => {
             paddingAngle={5}
             dataKey="amount_dollar"
           >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-                className="test-cell"
-                cornerRadius={100}
-                style={{ outline: "none" }}
-                stroke="0"
-              />
-            ))}
+            {data.map((entry, index) => {
+              console.log(entry, index % COLORS.length);
+              return (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={entry?.color}
+                  className="test-cell"
+                  cornerRadius={100}
+                  style={{ outline: "none" }}
+                  stroke="0"
+                />
+              );
+            })}
             {/* <LabelList /> */}
           </Pie>
           <Tooltip content={<CustomToolTip />} />

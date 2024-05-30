@@ -30,7 +30,7 @@
 }
 
 .send-crypto-body {
-  background-color: var(--BG2, #171717);
+  background: var(--BG, #111);
 }
 
 .send-crypto-logo-container {
@@ -56,9 +56,10 @@
 
 .send-crypto-wallet-container {
   padding: 12px;
-  border-radius: 6px;
   cursor: pointer;
-  background-color: var(--Dark, #202020);
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
 }
 
 .send-crypto-full-width {
@@ -112,15 +113,24 @@
 
 .send-crypto-wallet-address {
   padding: 12px;
-  background: var(--Dark, #202020);
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020) !important;
+  background: var(--BG2, #171717);
 }
 
 .crypto-currency-dropdown {
   padding: 8px;
   gap: 4px;
   border-radius: 6px;
-  background-color: var(--Dark, #202020);
+  border: 1px solid var(--Dark, #202020);
+  background-color: var(--BG2, #171717);
   cursor: pointer;
+}
+
+.crypto-amount-input {
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020) !important;
+  background: var(--BG2, #171717);
 }
 
 .send-crypto-footer-button {
@@ -131,6 +141,10 @@
     linear-gradient(262deg, #009bd2 -78.58%, #3b6b7c 188.93%)
   );
   box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.05);
+  padding: 11.5px 0px;
+  border: none;
+  line-height: normal;
+  height: auto;
 }
 
 .send-crypto-amount {
@@ -203,6 +217,8 @@
 
 .send-crypto .ant-modal-header {
   margin-bottom: 0px;
+  background: var(--BG2, #171717);
+  border-bottom: 1px solid var(--Dark, #202020);
 }
 
 .amount-percentage {
@@ -220,4 +236,16 @@
   color: currentColor;
   border-color: #3c89e8;
   background: #141414;
+}
+
+.send-crypto-drawer .ant-drawer-body {
+  background: var(--BG2, #171717);
+}
+
+.send-crypto-add-wallet {
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  display: flex;
+  align-items: center;
+  box-shadow: none;
 }

@@ -12,6 +12,7 @@
 
 .converter-content {
   padding: 16px;
+  background: var(--BG2, #171717);
 }
 
 .converter-step2-title {
@@ -19,17 +20,18 @@
 }
 
 .converter-body {
-  background-color: var(--BG2, #171717);
+  background: var(--BG, #111);
 }
 
 .converter-item {
-  background-color: var(--Dark, #202020);
   border-radius: 6px;
+  background: var(--BG2, #171717);
 }
 
 .converter-currency-dropdown-row {
   border-radius: 6px;
   border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
   box-shadow: 0px 2px 9.9px 0px rgba(0, 0, 0, 0.19);
   padding: 4px;
 }
@@ -51,10 +53,14 @@
   position: relative;
   padding: 6px;
   border-radius: 6px;
-  border: 1px solid var(--border-color, #d3d3d30d);
-  background: var(--Dark, #202020);
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
   width: fit-content;
   margin: -10px auto;
+}
+
+.converter-crypto-value {
+  padding: 0px 6px;
 }
 
 .crypto-coin-block {
@@ -62,10 +68,13 @@
 }
 
 .converter-logo-container {
-  width: fit-content;
-  padding: 12px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 100px;
-  background-color: #d3d3d30d;
+  background-color: #202020;
   z-index: 3;
 }
 
@@ -83,7 +92,7 @@
   padding: 12px;
   border-radius: 6px;
   cursor: pointer;
-  background-color: var(--Dark, #202020);
+  background: var(--BG2, #171717);
 }
 
 .converter-full-width {
@@ -155,6 +164,8 @@
   );
 
   box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.05);
+  padding: 13px 0 !important;
+  height: auto;
 }
 
 .total-amount-collapse {
@@ -199,4 +210,8 @@
 
 .step3-block-item {
   border: 1px solid var(--Dark, #202020);
+}
+
+.converter .ant-modal-header {
+  margin-bottom: 0px;
 }

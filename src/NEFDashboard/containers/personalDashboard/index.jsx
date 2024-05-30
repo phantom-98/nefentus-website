@@ -41,6 +41,7 @@ import { useAuth } from "../../../context/auth/authContext";
 import Languages from "../../../components/navigation/languages.jsx/languages";
 import "./personalDashboard.css";
 import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
+import PorfolioCoins from "../../components/portfolioCoins";
 
 const COLORS = [
   "#078BB9",
@@ -59,7 +60,7 @@ const PersonalDashboard = () => {
   const walletRef = useRef(null);
   const currencyList = currencies();
   const backend_API = new backendAPI();
-  const { user, setUser } = useAuth();
+  const { user, setUser, currencyRate } = useAuth();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [backupCryptoList, setBackupCryptoList] = useState([]);
   const [cryptoList, setCryptoList] = useState([]);
@@ -113,6 +114,7 @@ const PersonalDashboard = () => {
       title: t("personalDashboard.currencyTable.coin"),
       dataIndex: "name",
       sorter: (a, b) => a.name.length - b.name.length,
+      fixed: "left",
       sortDirections: ["ascend", "descend"],
       render: (name, record) => {
         return (
@@ -140,10 +142,8 @@ const PersonalDashboard = () => {
               {formatTokenBalance(record?.value, 4) ?? 0}
             </div>
             <div className="default-text-gray">
-              $
-              {formatUSDBalance(
-                record?.price * value || (record?.price * value)?.toString(),
-              )}
+              {currencyRate?.symbol +
+                formatUSDBalance(record?.price * value * currencyRate?.rate)}
             </div>
           </Col>
         );
@@ -155,7 +155,12 @@ const PersonalDashboard = () => {
       sortDirections: ["ascend", "descend"],
       sorter: (a, b) => a.price - b.price,
       render: (price, record) => {
-        return <div>${price?.toFixed(2)}</div>;
+        return (
+          <div>
+            {currencyRate?.symbol +
+              formatUSDBalance(price * currencyRate?.rate)}
+          </div>
+        );
       },
     },
   ];
@@ -171,23 +176,53 @@ const PersonalDashboard = () => {
       {
         breakpoint: 2090,
         settings: {
-          className: "center",
-          centerMode: true,
           infinite: walletOptions?.length > 1,
-          centerPadding: "60px",
           slidesToShow: 2,
-          speed: 500,
         },
       },
       {
         breakpoint: 1530,
         settings: {
-          className: "center",
-          centerMode: true,
           infinite: walletOptions?.length > 1,
-          centerPadding: "60px",
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 1311,
+        settings: {
+          infinite: walletOptions?.length > 1,
           slidesToShow: 1,
-          speed: 500,
+        },
+      },
+      {
+        breakpoint: 1199,
+        settings: {
+          infinite: walletOptions?.length > 1,
+          slidesToShow: 3,
+        },
+      },
+
+      {
+        breakpoint: 940,
+        settings: {
+          infinite: walletOptions?.length > 1,
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 700,
+        settings: {
+          infinite: walletOptions?.length > 1,
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 450,
+        settings: {
+          centerMode: false,
+          infinite: walletOptions?.length > 1,
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
       },
     ],
@@ -280,17 +315,24 @@ const PersonalDashboard = () => {
     setOpenDrawer(false);
   };
 
+  const onDeleteWallet = () => {
+    setSelectedWallet({});
+    setOpenDrawer(false);
+    fetchWallets();
+  };
+
   return (
     <>
       <DashboardDrawer
         open={openDrawer}
         onClose={handleCloseDrawer}
         selectedWallet={selectedWallet}
+        onDeleteWallet={() => onDeleteWallet()}
       />
 
       <div className="personal-dashboard-body">
-        <Row>
-          <Col span={8}>
+        <Row className="personal-dashboard-sub-container-one">
+          <Col span={8} xs={4} md={7}>
             <div className="total-balance-container">
               <div className="total-balance-sub-container">
                 <div className="total-balance-text">
@@ -302,9 +344,10 @@ const PersonalDashboard = () => {
                       <Skeleton.Input active className="balance-skeleton" />
                     </div>
                   ) : (
-                    <div className="total-balance-value">{`$${formatUSDBalance(
-                      total,
-                    )}`}</div>
+                    <div className="total-balance-value">{`${
+                      currencyRate?.symbol +
+                      formatUSDBalance(total * currencyRate?.rate)
+                    }`}</div>
                   )}
                 </div>
                 <TotalBalanceSection total={total} />
@@ -315,11 +358,11 @@ const PersonalDashboard = () => {
             type="vertical"
             className="dashboard-second-section-divider"
           />
-          <Col span={15}>
+          <Col span={15} xs={24} md={24} lg={24} xl={16} xxl={16}>
             <div className="block-right">
               <Row className="wallets-title-container">
                 <Row className="wallets-title">
-                  <div className="default-text-gray personal-dashboard-wallet-title">
+                  <div className="default-text personal-dashboard-wallet-title">
                     {t("personalDashboard.wallets")}
                   </div>
                 </Row>
@@ -337,12 +380,12 @@ const PersonalDashboard = () => {
                     btnTitle={
                       <Flex align="center" gap={4}>
                         <img src={AddIcon} />
-                        <div>Add Wallet</div>
+                        <div>{t("personalDashboard.addWallet")}</div>
                       </Flex>
                     }
-                    onConnect={(wlt) => {
-                      registerWallet(wlt);
-                      disconnect(wlt);
+                    onConnect={async (wlt) => {
+                      await disconnect(wlt);
+                      await registerWallet(wlt);
                     }}
                     className={"personal-dashboard-add-wallet"}
                   />
@@ -378,8 +421,36 @@ const PersonalDashboard = () => {
           </Col>
         </Row>
         <Divider className="divider-without-margin third-divider" />
+        {/** Added Flex for mobile view Porfolio component  */}
+        <Flex
+          vertical
+          gap={10}
+          justify="center"
+          className="personal-dashboard-line-graph-container"
+        >
+          <div className="drawer-portfolio-title">
+            {" "}
+            {t("personalDashboard.drawer.portfolio")}
+          </div>
+          <div className="line-bar-graph">
+            {cryptoList.map((data, index) =>
+              data?.amount_dollar > 0 ? (
+                <div
+                  className="line-bar-graph-section"
+                  style={{
+                    width: `${data?.percentage}%`,
+                    backgroundColor: data?.color,
+                  }}
+                ></div>
+              ) : null,
+            )}
+          </div>
+          <div>
+            <PorfolioCoins data={cryptoList} isDashboard />
+          </div>
+        </Flex>
         <Row gutter={32}>
-          <Col span={8}>
+          <Col span={8} className="webview-portfolio-container">
             <div className="portfolio-container">
               <div className="portfolio-title">
                 {t("personalDashboard.portfolio")}
@@ -395,9 +466,13 @@ const PersonalDashboard = () => {
               </div>
             </div>
           </Col>
-          <Col span={16}>
+          <Col span={16} xs={24} md={24} lg={24} xl={16}>
             <div className="portfolio-container">
-              <Row align={"middle"} justify={"space-between"}>
+              <Row
+                align={"middle"}
+                justify={"space-between"}
+                className="currencies-table-title-container"
+              >
                 <div className="portfolio-title">
                   {t("personalDashboard.currencies")}
                 </div>

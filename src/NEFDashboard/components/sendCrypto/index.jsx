@@ -116,7 +116,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
         ? handleAmountPercentage(percentage)
         : handleAmount(selectedCoin?.amount);
     }
-  }, [gasValues]);
+  }, [gasValues, step, selectedCoin]);
 
   const startGasPriceInterval = (coin = selectedCoin) => {
     setDisable(false);
@@ -299,7 +299,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
             //   })
             null;
 
-      setInfoMessage(t("messages.success.connecting"));
+      // setInfoMessage(t("messages.success.connecting"));
       // if (
       //   selectedWallet?.name?.toLowerCase() === "walletconnect" ||
       //   selectedWallet?.name?.toLowerCase() === "coinbase"
@@ -307,7 +307,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
       //   setShow(false);
       const response = await connect(currentWalletConfig)
         .then(async (res) => {
-          setInfoMessage(t("messages.success.connected"));
+          // setInfoMessage(t("messages.success.connected"));
           // setShow(true);
           return true;
         })
@@ -371,9 +371,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
         step == 1 ? (
           <Flex align={"center"} gap={4} className="send-modal-title">
             <img src={ArrowUpLeft} />
-            <div className="default-text-gray send-crypto-title">
-              Send Crypto
-            </div>
+            <div className="default-text send-crypto-title">Send Crypto</div>
           </Flex>
         ) : (
           <Flex align={"center"} gap={4} className="send-modal-title">
@@ -504,6 +502,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
                     }
                     disabled={disable}
                     onChange={(e) => handleAmount(e.target.value, true)}
+                    className="crypto-amount-input"
                   />
                   <Flex
                     align="center"
@@ -520,7 +519,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
                     ) : (
                       <>
                         <img src={selectedCoin?.icon} width={24} />
-                        <div>{selectedCoin?.name}</div>
+                        <div>{selectedCoin?.abbr}</div>
                         <img src={ArrowDown} />
                       </>
                     )}
@@ -560,6 +559,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
                 gasLimit={gasLimit}
                 gasValues={gasValues}
                 selectedCoin={selectedCoin}
+                selectedCurrency={selectedCurrency}
               />
             )}
           </>
@@ -612,6 +612,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
         open={openDrawer || openCryptoDrawer}
         getContainer={false}
         height={300}
+        className="send-crypto-drawer"
       >
         <Flex vertical gap={8} justify="center">
           <div className="send-crypto-drawer-bar"></div>
@@ -625,6 +626,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
                 <Button
                   icon={<img src={AddIcon} />}
                   onClick={() => walletRef?.current?.click()}
+                  className="send-crypto-add-wallet"
                 >
                   Add Wallet
                 </Button>
@@ -702,9 +704,9 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
                         <Flex
                           align="center"
                           justify="center"
-                          className="send-crypto-drawer-coin-logo"
+                          // className="send-crypto-drawer-coin-logo"
                         >
-                          <img src={cryptoCoin?.icon} />
+                          <img src={cryptoCoin?.icon} width={36} height={36} />
                         </Flex>
                         <div>
                           <div className="default-text">{cryptoCoin?.name}</div>

@@ -1,22 +1,15 @@
 .roles-card {
-  width: 33.33%;
   border: 1px solid var(--Dark, #202020);
 }
 
 .roles-card-body {
   margin-block: auto;
-  /* min-height: 240px; */
   min-height: 272px;
 }
 
 .common-role-style {
   font-size: 16px;
   font-weight: 500;
-}
-
-.add-role-button {
-  font-weight: 500;
-  background: #202020;
 }
 
 .roles-line-bar-graph {
@@ -57,10 +50,29 @@
   border-radius: 8px 8px 0 0;
 }
 
-:where(.css-dev-only-do-not-override-1yuxnot).add-role-button {
+.add-role-button {
   font-size: 14px;
   padding: 6px 24px 6px 12px;
   border-radius: 6px;
-  line-height: normal;
   height: auto;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  gap: 2px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+  box-shadow: none;
+}
+
+.add-role-button .ant-btn-icon {
+  margin-inline-end: 0px !important;
+}
+
+@media screen and (max-width: 1200px) {
+  .roles-card-body {
+    gap: 22px;
+  }
+  .roles-card {
+    height: 100%;
+  }
 }

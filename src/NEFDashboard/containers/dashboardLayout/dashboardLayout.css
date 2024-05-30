@@ -42,7 +42,7 @@
   line-height: 1;
 }
 
-.language-container {
+.dashboard-language-container {
   border: 1px solid #202020;
   padding: 8px;
   border-radius: 6px;
@@ -58,7 +58,6 @@
 }
 
 .profile-dropdown-width {
-  font-family: "DM-Sans";
   min-width: 150px;
 }
 
@@ -101,4 +100,94 @@
 .user-avatar {
   width: 32px !important;
   height: 32px !important;
+}
+.pageTitleMobile {
+  padding: 24px 32px;
+  font-size: 24px !important;
+  padding-bottom: 4px;
+}
+
+.nefentus-logo {
+  display: block;
+}
+.nefentus-logo-mobile {
+  display: none;
+}
+.notificationIconMobileBtn {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+.sideBarHide .notificationIconMobileBtn {
+  display: none;
+}
+
+.switch-theme-mode.ant-switch-checked,
+.switch-theme-mode.ant-switch-checked:hover {
+  background: var(
+    --Blue-gradient,
+    linear-gradient(254deg, #078bb9 -56.92%, #52c8f1 148.25%)
+  ) !important;
+}
+
+@media screen and (min-width: 1200px) {
+  .pageTitleMobile,
+  .mobileBtn,
+  .nefentus-logo,
+  .nefentus-logo-mobile {
+    display: none;
+  }
+}
+@media screen and (max-width: 1199px) {
+  .pageTitleDesktop,
+  .verticalDivider,
+  .profile-dropdown,
+  .personal-dashboard-container .currency-dropdown,
+  .personal-dashboard-container .language-container {
+    display: none;
+  }
+
+  .mobileBtn {
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    height: 24px;
+  }
+  .sideBarHide {
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    max-width: 350px !important;
+    flex: 0 0 350px !important;
+    width: 100% !important;
+    z-index: 9;
+    transition: transform 0.3s;
+    height: 100%;
+  }
+  .sideBarShow {
+    transform: translateX(0);
+  }
+  .pageTitleMobile {
+    padding: 24px 32px;
+    font-size: 24px !important;
+    padding-bottom: 4px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .nefentus-logo,
+  .sidebar-nefentus-logo {
+    display: none;
+  }
+  .nefentus-logo-mobile {
+    display: block;
+  }
+  .sideBarHide .notificationIconMobileBtn {
+    display: flex;
+  }
+  .sideBarHide {
+    max-width: 100% !important;
+  }
 }

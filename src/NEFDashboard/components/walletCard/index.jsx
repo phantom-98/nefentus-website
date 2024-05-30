@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Card, Col, Row } from "antd";
+import { Card, Col, Flex, Row, Typography } from "antd";
 import ArrowRight from "../../../assets/newDashboardIcons/arrow-right-gray.svg";
 import CopyIcon from "../../../assets/newDashboardIcons/copy-blue.svg";
 import "./walletCard.css";
@@ -7,11 +7,13 @@ import { formatUSDBalance } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import WalletAddressFormatter from "../../../func/walletAddressFormatter";
 import { MessageContext } from "../../../context/message";
+import { useAuth } from "../../../context/auth/authContext";
 
 const WalletCard = ({ wallet, key, handleWalletDetail }) => {
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
   const { setSuccessMessage } = useContext(MessageContext);
-
+  const { Text } = Typography;
   const onCopyAddress = () => {
     navigator.clipboard.writeText(wallet?.address);
     setSuccessMessage(t("general.copied"));
@@ -44,25 +46,25 @@ const WalletCard = ({ wallet, key, handleWalletDetail }) => {
                   <div className="default-text-gray">
                     {t("personalDashboard.walletCard.addressTitle")}
                   </div>
-                  <Row gutter={4}>
-                    <Col className="default-text">
+                  <Flex align="center" gap={4}>
+                    <Text className="default-text wallet-card-address">
                       {WalletAddressFormatter(wallet?.address)}
-                    </Col>
-                    <Col>
-                      <img
-                        src={CopyIcon}
-                        onClick={onCopyAddress}
-                        className="cursor-pointer"
-                      />
-                    </Col>
-                  </Row>
+                    </Text>
+
+                    <img
+                      src={CopyIcon}
+                      onClick={onCopyAddress}
+                      className="wallet-card-copy-address cursor-pointer"
+                    />
+                  </Flex>
                 </div>
                 <div>
                   <div className="default-text-gray">
                     {t("personalDashboard.walletCard.balance")}
                   </div>
                   <div className="wallet-card-balance">
-                    ${formatUSDBalance(wallet?.balance)}
+                    {currencyRate?.symbol +
+                      formatUSDBalance(wallet?.balance * currencyRate?.rate)}
                   </div>
                 </div>
               </div>

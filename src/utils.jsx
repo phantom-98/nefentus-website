@@ -249,3 +249,7 @@ export const getWalleBackground = (type) => {
       return { background: NefentusBackground, logo: NefentusLogo };
   }
 };
+
+export const isFloat = (n) => {
+  return Number(n) === n && n % 1 !== 0;
+};
