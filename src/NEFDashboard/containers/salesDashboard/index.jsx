@@ -1,7 +1,7 @@
 import { Card, Col, Flex, Input, Row, Segmented } from "antd";
 import React, { useEffect, useState } from "react";
 import BalanceGraph from "../../components/balanceGraph";
-import { formatUSDBalance } from "../../../utils";
+import { formatUSDBalance, checkJwtToken } from "../../../utils";
 
 import ProductDetailIcon from "../../../assets/newDashboardIcons/product-detail.svg";
 import OpenIcon from "../../../assets/newDashboardIcons/pending.svg";
@@ -18,6 +18,8 @@ import InvoiceStatusCard from "../../components/invoiceStatusCard";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import adminDashboardApi from "../../../api/adminDashboardApi";
 import { useAuth } from "../../../context/auth/authContext";
+import { useTheme } from "../../../context/themeContext/themeContext";
+import { graphDataToList } from "../../../utils";
 
 const incomeCards = [
   {
@@ -34,7 +36,9 @@ const incomeCards = [
   },
 ];
 const SalesDashboard = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { language } = i18n;
+  const { theme } = useTheme();
   const dashboardApi = new vendorDashboardApi();
   const { currencyRate, user } = useAuth();
   const adminApi = new adminDashboardApi(user.roles && user.roles[0]);
@@ -46,17 +50,18 @@ const SalesDashboard = () => {
   const [invoices, setInvoices] = useState([]);
   const [openTransaction, setOpenTransaction] = useState(false);
   const [selectedData, setSelectedData] = useState({});
+  const [graphData, setGraphData] = useState();
   const [search, setSearch] = useState("");
   const [income, setIncome] = useState(0);
   const [cardDetails, setCardDetails] = useState([]);
 
   useEffect(() => {
-    fetchIncomeDetails();
-  }, []);
+    if (user.roles) fetchIncomeDetails();
+  }, [user]);
 
   useEffect(() => {
-    fetchProducts();
-  }, [currentPage, dataLength]);
+    if (user.roles) fetchProducts();
+  }, [user, currentPage, dataLength]);
 
   useEffect(() => {
     if (Object.keys(selectedData)?.length) setOpenTransaction(true);
@@ -68,25 +73,31 @@ const SalesDashboard = () => {
     else setCurrentPage(1);
   }, [activeSegment]);
 
+  useEffect(() => {
+    if (user.roles) fetchGraphData();
+  }, [user, language, theme, currencyRate]);
+
   const fetchIncomeDetails = async () => {
-    const getPromises = [
-      adminApi.getTotalRegistrations(),
-      adminApi.getTotalIncome(),
-    ];
+    const dataInc = await dashboardApi.getTotalIncome();
+    if (!dataInc) return;
 
-    const [dataReg, dataInc] = await Promise.allSettled(getPromises);
-
-    setIncome(dataInc?.value["total"]?.number);
+    setIncome(dataInc["total"]?.number);
     setCardDetails(
       incomeCards?.map((card, index) => ({
         ...card,
         ...(index == 0
-          ? dataInc?.value["last30Days"]
+          ? dataInc["last30Days"]
           : index == 1
-          ? dataInc?.value["last24Hours"]
-          : dataReg?.value),
+          ? dataInc["last24Hours"]
+          : dataInc["numberOfPayments"]),
       })),
     );
+  };
+
+  const fetchGraphData = async () => {
+    await checkJwtToken();
+    const data = await dashboardApi.getTotalIncomesPerDay();
+    setGraphData(graphDataToList(data));
   };
 
   const fetchProducts = async (
@@ -388,7 +399,11 @@ const SalesDashboard = () => {
           </Flex>
           <div>
             <BalanceGraph
-              graphData={[{ label: moment().format("MMM DD"), amount: 0 }]}
+              graphData={
+                graphData?.length > 0
+                  ? graphData
+                  : [{ label: moment().format("MMM DD"), amount: 0 }]
+              }
             />
           </div>
         </Flex>

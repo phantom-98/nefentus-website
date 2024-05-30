@@ -22,10 +22,9 @@ import moment from "moment";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import { useAuth } from "../../../context/auth/authContext";
 import adminDashboardApi from "../../../api/adminDashboardApi";
-import { ROLE_TO_NAME } from "../../../constants";
-import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import "./referralDashboard.css";
 import userColumns from "./userColumns";
+import { graphDataToList } from "../../../utils";
 
 const ReferralDashboard = () => {
   const { t, i18n } = useTranslation();
@@ -34,7 +33,6 @@ const ReferralDashboard = () => {
   const backend_Api = new backendAPI();
   const { user, setUser, currencyRate } = useAuth();
   const adminApi = new adminDashboardApi(user.roles && user.roles[0]);
-  const dashboardApi = new vendorDashboardApi();
   const [users, setUsers] = useState([]);
   const [income, setIncome] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -65,64 +63,21 @@ const ReferralDashboard = () => {
   ];
 
   useEffect(() => {
-    fetchProfile();
-    fetchIncomeDetails();
-  }, []);
+    if (user.roles) fetchIncomeDetails();
+  }, [user]);
 
   useEffect(() => {
-    fetchUsers();
-  }, [dataLength, page]);
+    if (user.roles) fetchUsers();
+  }, [user, dataLength, page]);
 
   useEffect(() => {
-    fetchGraphData();
-  }, [language, theme, user, currencyRate]);
-
-  const fetchProfile = async () => {
-    const response = await backend_Api.getProfile();
-    setUser({ ...response });
-  };
+    if (user.roles) fetchGraphData();
+  }, [user, language, theme, currencyRate]);
 
   const fetchGraphData = async () => {
     await checkJwtToken();
-    const response = await backend_Api.getUserWalletsBalanceForGraph();
-    response.sort((a, b) => {
-      const dateA = new Date(a.createdAt);
-      const dateB = new Date(b.createdAt);
-      return dateA - dateB;
-    });
-
-    // Object to store aggregated results
-    const aggregatedData = {};
-
-    // Iterate through the array
-    response.forEach((item) => {
-      const { createdAt, amount } = item;
-
-      if (aggregatedData[moment(createdAt).format("DD-MM-YYYY")]) {
-        // If the date exists, add the amounts
-        aggregatedData[moment(createdAt).format("DD-MM-YYYY")].amount += amount;
-      } else {
-        // If the date doesn't exist, create a new entry
-        aggregatedData[moment(createdAt).format("DD-MM-YYYY")] = {
-          createdAt,
-          amount,
-        };
-      }
-    });
-
-    // Convert the aggregated data back to an array
-    const result = Object.values(aggregatedData);
-
-    // If the length of user balances array is greater than 7 then it should be slice
-    const limitedDateList = result?.length > 7 ? result.splice(0, 7) : result;
-
-    setGraphData(
-      limitedDateList?.map((value) => ({
-        ...value,
-        amount: value?.amount * currencyRate?.rate,
-        label: moment(value?.createdAt).format("MMM DD"),
-      })),
-    );
+    const data = await adminApi.getTotalIncomesPerDay();
+    setGraphData(graphDataToList(data));
   };
 
   const fetchUsers = async (keyword = search, current = page) => {
@@ -138,13 +93,10 @@ const ReferralDashboard = () => {
   const fetchIncomeDetails = async () => {
     const getPromises = [
       adminApi.getTotalRegistrations(),
-      adminApi.getNumOrders(),
       adminApi.getTotalIncome(),
-      // adminApi.getTotalIncomesPerDay(),
     ];
 
-    const [dataReg, dataOrders, dataInc] =
-      await Promise.allSettled(getPromises);
+    const [dataReg, dataInc] = await Promise.allSettled(getPromises);
 
     setIncome(dataInc?.value["total"]?.number);
     setCardDetails(
@@ -155,7 +107,7 @@ const ReferralDashboard = () => {
           : index == 1
           ? dataInc?.value["last24Hours"]
           : index == 2
-          ? dataOrders?.value
+          ? dataInc?.value["numberOfPayments"]
           : dataReg?.value),
       })),
     );
