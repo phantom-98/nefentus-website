@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Button, Flex, Input, Modal } from "antd";
 import AntiPhishingCover from "../../../../../assets/newDashboardIcons/anti-phishing-cover.svg";
 import ListLockIcon from "../../../../../assets/newDashboardIcons/list-lock.svg";
 import "./antiPhishingModal.css";
+import backend_API from "../../../../../api/backendAPI";
+import { useNavigate } from "react-router-dom";
+import { MessageContext } from "../../../../../context/message";
+import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../../../context/auth/authContext";
 
 const AntiPhishingModal = ({ open, onClose }) => {
+  const backendAPI = new backend_API();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { setInfoMessage, clearMessages } = useContext(MessageContext);
+  const [code, setCode] = useState(user?.antiPhishingCode);
+  const onChangeAntiPhishing = async () => {
+    if (code == "") return;
+    const requestData = {
+      code,
+    };
+    const response2 = await backendAPI.setPhishingCode(requestData);
+
+    if (response2 == null) {
+      await backendAPI.signout();
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+      setCode("");
+    } else {
+      setInfoMessage(t("messages.success.updateSettings"));
+      onClose();
+      clearMessages();
+    }
+  };
   return (
     <Modal
       open={open}
@@ -35,9 +65,11 @@ const AntiPhishingModal = ({ open, onClose }) => {
           size="large"
           placeholder="Marcus Aurelius"
           className="anti-phishing-input"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
         />
       </Flex>
-      <Button className="anti-phishing-save" onClick={onClose}>
+      <Button className="anti-phishing-save" onClick={onChangeAntiPhishing}>
         Save
       </Button>
     </Modal>

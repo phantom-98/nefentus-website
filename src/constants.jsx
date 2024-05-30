@@ -609,7 +609,6 @@ export const countryList = [
   { value: "Spain", display: "countries.Spain" },
   { value: "Sri Lanka", display: "countries.SriLanka" },
   { value: "St Kitts & Nevis", display: "countries.StKittsNevis" },
-  { value: "St Lucia", display: "countries.StLucia" },
   { value: "St Vincent", display: "countries.StVincent" },
   { value: "St. Lucia", display: "countries.StLucia" },
   { value: "Sudan", display: "countries.Sudan" },

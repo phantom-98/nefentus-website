@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Flex, Switch } from "antd";
 import "./securitySection.css";
 import PasswordModal from "./passwordModal";
@@ -6,13 +6,30 @@ import SeedPhraseModal from "./seedPhraseModal";
 import AuthenticatorModal from "./AuthenticatorModal";
 import AntiPhishingModal from "./AntiPhishingModal";
 import RecoverWalletModal from "./RecoverWalletModal";
+import backend_API from "../../../../api/backendAPI";
+import { useTranslation } from "react-i18next";
+import { MessageContext } from "../../../../context/message";
+import { useAuth } from "../../../../context/auth/authContext";
 
 const SecuritySection = () => {
+  const backendAPI = new backend_API();
+  const { t } = useTranslation();
+  const { user, setUser } = useAuth();
+  const { setInfoMessage } = useContext(MessageContext);
   const [passwordModal, setPasswordModal] = useState(false);
   const [seedModal, setSeedModal] = useState(false);
   const [authenticatorModal, setAuthenticatorModal] = useState(false);
   const [antiPhishingModal, setAntiPhishingModal] = useState(false);
   const [recoverWalletModal, setRecoverWalletModal] = useState(false);
+
+  const handleOtp = async (status) => {
+    const response = await backendAPI.setupOtp({ active: status });
+    if (response.status === 200) {
+      setUser({ ...user, hasOtp: status });
+      setInfoMessage(t("messages.success.updateSettings"));
+    }
+  };
+
   const list = [
     {
       title: "Password",
@@ -36,7 +53,13 @@ const SecuritySection = () => {
       title: "One-time passwords via email",
       subTitle:
         "Setup Multi-Factor-Authentication based on one-time password sent via email.",
-      actionItem: <Switch className="security-switch" />,
+      actionItem: (
+        <Switch
+          className="security-switch"
+          checked={user?.hasOtp}
+          onChange={(value) => handleOtp(value)}
+        />
+      ),
     },
     {
       title: "Anti-Phishing Code",
@@ -65,6 +88,7 @@ const SecuritySection = () => {
       ),
     },
   ];
+
   return (
     <>
       {passwordModal && (

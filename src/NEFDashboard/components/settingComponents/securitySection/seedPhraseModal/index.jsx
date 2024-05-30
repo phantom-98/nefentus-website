@@ -8,6 +8,8 @@ import "./seedPhraseModal.css";
 
 const SeedPhraseModal = ({ open, onClose }) => {
   const [step, setStep] = useState(1);
+  const [seedPhrases, setSeedPhrases] = useState([]);
+
   const steps = [
     {
       count: 1,
@@ -30,6 +32,57 @@ const SeedPhraseModal = ({ open, onClose }) => {
       modalWidth: 390,
     },
   ];
+
+  // const comparePhrases = () => {
+  //   let checked = true;
+  //   seedPhrases.forEach((phrase, index) => {
+  //     if (checkedSeedPhrases[index] != phrase) checked = false;
+  //   });
+  //   if (!checked) {
+  //     setErrorMessage(t("security.items.seedErrorMessage"));
+  //     return;
+  //   }
+  //   setInfoMessage(t("security.items.seedInfoMessage"));
+  //   setCheckedSeedPhrases(emptyArray);
+  //   setAddSeedPhrases(false);
+  //   clearMessages();
+  // };
+
+  const getSeedPhrases = async () => {
+    const seed = await backendAPI.getSeedPhrase(currentPassword);
+    if (seed) {
+      setSeedPhrases(seed.split(" "));
+      setInput(false);
+      clearMessages();
+      setAddSeedPhrases("step1");
+    } else {
+      setErrorMessage(t("messages.error.passwordCorrect"));
+    }
+    setCurrentPassword("");
+  };
+  const handleCloseSeedModal = () => {
+    setAddSeedPhrases(false);
+    clearMessages();
+    setCurrentPassword("");
+    setCheckedSeedPhrases(emptyArray);
+  };
+  const checkPhrase = (value, index) => {
+    const copyPhrases = [...checkedSeedPhrases];
+    copyPhrases[index] = value;
+    setCheckedSeedPhrases(copyPhrases);
+    return;
+  };
+  const checkPassword = async () => {
+    const res = await backendAPI.checkPassword(currentPassword);
+    if (res) {
+      setInput(false);
+      clearMessages();
+      setAddSeedPhrases("step2");
+    } else {
+      setErrorMessage(t("messages.error.passwordCorrect"));
+    }
+  };
+
   const renderStep = () => {
     switch (step) {
       case 1:

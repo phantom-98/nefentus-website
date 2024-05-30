@@ -1,54 +1,81 @@
-import React, { useState } from "react";
-import { Button, Flex, Input, Select, Typography } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { Avatar, Button, Flex, Input, Select, Typography } from "antd";
 import ProfileImage from "../../../../assets/newDashboardIcons/user.png";
 import UploadIcon from "../../../../assets/newDashboardIcons/upload.svg";
 import deleteIcon from "../../../../assets/newDashboardIcons/delete-red.svg";
+import ProfileImg from "../../../../assets/icon/user.svg";
+import EmailIcon from "../../../../assets/newDashboardIcons/email.svg";
 import { getFlagLink } from "../../../../countries";
 import { useTranslation } from "react-i18next";
-import "./profileSection.css";
 import NotificationSection from "./notificationSection";
-import ChangeEmailModal from "./changeEmailModal";
-
-const countries = [
-  {
-    title: "USA",
-    value: "usa",
-    icon: "US",
-  },
-  {
-    title: "Ukraine",
-    value: "ukraine",
-    icon: "UA",
-  },
-  {
-    title: "Pakistan",
-    value: "pak",
-    icon: "PK",
-  },
-  {
-    title: "Germany",
-    value: "germany",
-    icon: "DE",
-  },
-];
+import ChangeFieldModal from "./changeFieldModal";
+import backend_API from "../../../../api/backendAPI";
+import "./profileSection.css";
+import { countryList } from "../../../../constants";
+import CropDialog, {
+  dataURLtoFile,
+} from "../../../../components/cropDialog/cropDialog";
+import { MessageContext } from "../../../../context/message";
+import { validateEmail, validatePhoneNumber } from "../../../../utils";
+import { useNavigate } from "react-router-dom";
 
 const ProfileSection = () => {
   const { t } = useTranslation();
   const { Text } = Typography;
-  const [emailModal, setEmailModal] = useState(false);
+  const backendAPI = new backend_API();
+  const navigate = useNavigate();
+  const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
+  const [fieldModal, setFieldModal] = useState("");
+  const [cropDialogOpen, setCropDialogOpen] = useState(false);
+  const [file, setFile] = useState(null);
+  const [cropFile, setCropFile] = useState({});
+  const [user, setUser] = useState({});
+  const [countries] = useState(
+    countryList?.map((country) => ({
+      label: t(country?.display),
+      value: country?.value,
+    })),
+  );
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    if (file) uploadAvatar();
+  }, [file]);
+
   const profile_options = [
     {
-      title: "Name",
-      value: "Mykola Kisl",
-      actionItem: <Button className="default-text-gray">Change</Button>,
-    },
-    {
-      title: "Email",
-      value: "mykolakisl@gmail.com",
+      title: "First Name",
+      key: "firstName",
       actionItem: (
         <Button
           className="default-text-gray"
-          onClick={() => setEmailModal(true)}
+          onClick={() => setFieldModal("firstName")}
+        >
+          Change
+        </Button>
+      ),
+    },
+    {
+      title: "Last Name",
+      key: "lastName",
+      actionItem: (
+        <Button
+          className="default-text-gray"
+          onClick={() => setFieldModal("lastName")}
+        >
+          Change
+        </Button>
+      ),
+    },
+    {
+      title: "Email",
+      key: "email",
+      actionItem: (
+        <Button
+          className="default-text-gray"
+          onClick={() => setFieldModal("email")}
         >
           Change
         </Button>
@@ -56,43 +83,203 @@ const ProfileSection = () => {
     },
     {
       title: "Phone",
+      key: "phoneNumber",
       value: "+38(066)111-59-21",
-      actionItem: <Button className="default-text-gray">Change</Button>,
+      actionItem: (
+        <Button
+          className="default-text-gray"
+          onClick={() => setFieldModal("phoneNumber")}
+        >
+          Change
+        </Button>
+      ),
     },
     {
       title: "Country",
       actionItem: (
         <Select
+          showSearch
+          value={user?.country}
           className="country-select-field"
-          defaultValue={"usa"}
-          options={countries?.map((country) => ({
-            value: country?.value,
-            label: (
-              <Flex align="center" gap={6}>
-                <img
-                  src={getFlagLink(country?.icon)}
-                  alt="flag"
-                  className="profile-country-icon"
-                />
-                <Text>{t(country?.title)}</Text>
-              </Flex>
-            ),
-          }))}
+          options={countries}
+          onChange={(value) => {
+            setUser({ ...user, country: value });
+            updateUser({ ...user, country: value });
+          }}
         />
       ),
     },
     {
       title: "Business",
-      value: "Meta",
-      actionItem: <Button className="business-save-button">Save</Button>,
+      key: "business",
+      actionItem: (
+        <Button
+          className="business-save-button"
+          onClick={() => updateUser(user)}
+        >
+          Save
+        </Button>
+      ),
     },
   ];
+
+  const fetchUser = async () => {
+    const data = await backendAPI.getProfile();
+    if (data) setUser(data);
+  };
+
+  const handleChangeImage = () => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
+    fileInput.click();
+
+    fileInput.addEventListener("change", (e) => {
+      const selectedFile = e.target.files[0];
+      if (selectedFile) {
+        setCropFile(selectedFile);
+        setCropDialogOpen(true);
+      }
+    });
+  };
+
+  const uploadAvatar = async () => {
+    let resp2;
+    if (file) {
+      resp2 = await backendAPI.uploadFile(file);
+    } else {
+      resp2 = await backendAPI.deleteProfileImage(file);
+    }
+    setUser({ ...user, profileImage: file ? resp2 : null });
+    if (resp2 == null) {
+      setErrorMessage(t("messages.error.uploadPicture"));
+    } else {
+      setInfoMessage(t("messages.success.updatePicture"));
+    }
+    setFile(null);
+  };
+
+  const updateUser = async (userData = user) => {
+    if (!validateEmail(userData?.email)) {
+      setErrorMessage(t("messages.error.invalidMail"));
+      return;
+    }
+    if (userData?.phoneNumber && !validatePhoneNumber(userData?.phoneNumber)) {
+      setErrorMessage(t("messages.error.invalidPhone"));
+      return;
+    }
+    const requestData = {
+      firstName: userData?.firstName,
+      lastName: userData?.lastName,
+      phoneNumber: userData?.phoneNumber,
+      email: userData?.email,
+      country: userData?.country,
+      business: userData?.business || "",
+      marketingUpdates: userData?.marketingUpdates,
+      emailNotifications: userData?.emailNotifications,
+      appNotifications: userData?.appNotifications,
+      notificationLanguage: userData?.notificationLanguage,
+    };
+
+    const response = await backendAPI.update(requestData);
+    if (response == null) {
+      setErrorMessage(t("messages.error.updateData"));
+      await backendAPI.signout();
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } else if (response.status == 400) {
+      const data = await response.json();
+      if (data["firstName"]) {
+        if (
+          data["firstName"] == "First name must be between 2 and 70 characters"
+        ) {
+          setErrorMessage(t("messages.validation.validFirstName"));
+        } else {
+          setErrorMessage(t("messages.validation.firstName"));
+        }
+      } else if (data["lastName"]) {
+        if (
+          data["lastName"] == "Last name must be between 2 and 70 characters"
+        ) {
+          setErrorMessage(t("messages.validation.validLastName"));
+        } else {
+          setErrorMessage(t("messages.validation.lastName"));
+        }
+      } else if (data["country"]) {
+        setErrorMessage(t("messages.error.country"));
+      } else if (data["email"]) {
+        if (data["email"] == "Email is already used") {
+          setErrorMessage(t("messages.error.emailUsed"));
+        } else if (data["email"] == "Please enter your email") {
+          setErrorMessage(t("messages.validation.email"));
+        } else if (
+          data["email"] == "Email must be less than or equal to 70 characters"
+        ) {
+          setErrorMessage(t("messages.validation.lengthEmail"));
+        } else if (data["email"] == "Please enter a valid email") {
+          setErrorMessage(t("messages.validation.validEmail"));
+        }
+      } else {
+        setErrorMessage(t("messages.error.updateData"));
+        await backendAPI.signout();
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      }
+      fetchUser();
+    } else if (response.ok) {
+      const data = await response.json();
+      if (data["email"] != data["contactEmail"]) {
+        setInfoMessage(t("messages.success.email"));
+        await backendAPI.signout();
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } else {
+        setInfoMessage(t("messages.success.updateSettings"));
+      }
+    } else {
+      setErrorMessage(t("messages.error.updateData"));
+      await backendAPI.signout();
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    }
+    fetchUser();
+    setFieldModal("");
+  };
+
+  const onUserChange = (value, key) => {
+    setUser({ ...user, [key]: value });
+    updateUser({ ...user, [key]: value });
+  };
+
   return (
     <>
-      {emailModal && (
-        <ChangeEmailModal
-          open={emailModal}
-          onClose={() => setEmailModal(false)}
+      {fieldModal && (
+        <ChangeFieldModal
+          open={fieldModal?.length > 0}
+          onClose={() => setFieldModal("")}
+          keyField={fieldModal}
+          onSubmit={(value) => {
+            updateUser({ ...user, [fieldModal]: value });
+          }}
+        />
+      )}
+      {cropDialogOpen && (
+        <CropDialog
+          open={cropDialogOpen}
+          file={cropFile}
+          aspect={1}
+          onClose={() => {
+            setCropDialogOpen(false);
+          }}
+          onSave={(croppedImageData) => {
+            setCropDialogOpen(false);
+            if (!croppedImageData) return;
+            setFile(dataURLtoFile(croppedImageData, cropFile.name));
+          }}
         />
       )}
       <div>
@@ -105,17 +292,29 @@ const ProfileSection = () => {
               </div>
             </div>
             <Flex align="center" gap={24}>
-              <img src={ProfileImage} className="user-profile-image" />
+              <Avatar
+                shape="circle"
+                size={54}
+                icon={
+                  user?.profileImage ? (
+                    <img src={user?.profileImage} width={54} />
+                  ) : (
+                    <img src={ProfileImg} width={54} />
+                  )
+                }
+              />
               <Flex align="center" gap={8}>
                 <Button
                   icon={<img src={UploadIcon} />}
                   className="default-text-gray profile-image-upload"
+                  onClick={() => handleChangeImage()}
                 >
                   Upload New Picture
                 </Button>
                 <Button
                   icon={<img src={deleteIcon} />}
                   className="default-text-gray delete-picture-button"
+                  onClick={() => uploadAvatar()}
                 >
                   Delete Picture
                 </Button>
@@ -146,7 +345,10 @@ const ProfileSection = () => {
                   >
                     <Input
                       className="business-input-field"
-                      defaultValue={data?.value}
+                      value={user?.business}
+                      onChange={(e) =>
+                        setUser({ ...user, business: e.target.value })
+                      }
                     />
                     {data?.actionItem}
                   </Flex>
@@ -158,9 +360,9 @@ const ProfileSection = () => {
                     className="profile-option-subcontainer"
                   >
                     {" "}
-                    {data?.value && (
+                    {user[data?.key] && (
                       <Text className="default-text-gray profile-option-value">
-                        {data?.value}
+                        {user[data?.key]}
                       </Text>
                     )}
                     {data?.actionItem}
@@ -170,7 +372,7 @@ const ProfileSection = () => {
             ))}
           </Flex>
         </Flex>
-        <NotificationSection />
+        <NotificationSection user={user} onSubmit={onUserChange} />
       </div>
     </>
   );
