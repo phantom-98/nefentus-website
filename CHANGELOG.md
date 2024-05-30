@@ -2,6 +2,8 @@
 
 # Merged changes
 
+# v1.1.0
+
 - Create career page and add 5 open jobs
 - fix country issue when creating invoice
 - Show all amounts in invoice currency
