@@ -3,6 +3,7 @@ import { Card, Flex } from "antd";
 import InfoMark from "../../../assets/newDashboardIcons/info-circle.svg";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import "./invoiceStatusCard.css";
+import { useTranslation } from "react-i18next";
 
 const statusColor = {
   paid: "#07B561",
@@ -13,6 +14,7 @@ const statusColor = {
 const InvoiceStatusCard = () => {
   const [invoiceStatuses, setInvoiceStatuses] = useState({});
   const dashboardApi = new vendorDashboardApi();
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchInvoiceStatuses();
@@ -32,7 +34,9 @@ const InvoiceStatusCard = () => {
     <Card className="invoice-status-card">
       <Flex vertical gap={12}>
         <Flex align="center" gap={12}>
-          <div className="default-text-gray sales-invoice-title">Invoices</div>
+          <div className="default-text-gray sales-invoice-title">
+            {t("salesDashboard.invoiceCard.title")}
+          </div>
           <img src={InfoMark} alt="info" width={20} height={20} />
         </Flex>
         <div className="invoice-line-bar-graph">
@@ -51,17 +55,22 @@ const InvoiceStatusCard = () => {
             )}
         </div>
 
-        <Flex vertical className="invoice-status-container" gap={12}>
+        <Flex className="invoice-status-container" gap={12}>
           {invoiceStatuses?.length > 0 &&
             invoiceStatuses?.map((status, index) => (
-              <Flex align="center" justify="space-between" gap={8}>
+              <Flex
+                align="center"
+                justify="space-between"
+                gap={8}
+                className="invoice-status-content"
+              >
                 <Flex align="center" gap={8} key={index}>
                   <div
                     className="invoice-row-color"
                     style={{ background: status?.color }}
                   ></div>
                   <div className="default-text invoice-status-text">
-                    {status?.statusType}
+                    {t("salesDashboard.invoiceCard." + status?.statusType)}
                   </div>
                 </Flex>
                 <Flex align="center" gap={8}>

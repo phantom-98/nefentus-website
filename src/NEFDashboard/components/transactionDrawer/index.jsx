@@ -1,5 +1,5 @@
-import { Button, Drawer, Flex, Typography, Divider } from "antd";
-import React, { useState } from "react";
+import { Button, Drawer, Flex, Typography, Divider, Anchor } from "antd";
+import React, { useEffect, useState } from "react";
 import EthereumIcon from "../../../assets/icon/crypto/ethereum.svg";
 import LocalGasStationFill from "../../../assets/newDashboardIcons/local_gas_station_filled.svg";
 import CompanyIcon from "../../../assets/newDashboardIcons/company.svg";
@@ -8,11 +8,15 @@ import ProcessingIcon from "../../../assets/newDashboardIcons/processing.svg";
 import PaidIcon from "../../../assets/newDashboardIcons/paid.svg";
 import FilesIcon from "../../../assets/newDashboardIcons/filesIcon.svg";
 import QRicon from "../../../assets/newDashboardIcons/qrIcon.svg";
+import SaveReceiptIcon from "../../../assets/newDashboardIcons/save-receipt.svg";
 import CopyIcon from "../../../assets/newDashboardIcons/copyIcon.svg";
-import CloseIcon from "../../../assets/icon/close.svg";
 import WatchImg from "../../../assets/newDashboardIcons/watchImg.png";
 
 import TableData from "../tableData";
+import useResponsive from "../../../hooks/useResponsive";
+import { useAuth } from "../../../context/auth/authContext";
+import { useTranslation } from "react-i18next";
+import moment from "moment";
 
 const columns = [
   {
@@ -54,12 +58,26 @@ const data = [
 
 const TransactionDrawer = ({ open, onClose, selectedData }) => {
   const { Title, Text, Paragraph } = Typography;
+  const { Link } = Anchor;
+  let { screenWidth } = useResponsive();
+  const [isMobile, setIsMobile] = useState(false);
+  const { user, currencyRate } = useAuth();
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    onScreenWidthChange();
+  }, [screenWidth]);
+
+  const onScreenWidthChange = () => {
+    if (screenWidth <= 767) setIsMobile(true);
+    else setIsMobile(false);
+  };
   return (
     <Drawer
       title={
         <Flex justify={"space-between"} align={"center"}>
           <Title level={4} style={{ margin: "0" }}>
-            Transaction Details
+            {t("transactionDrawer.title")}
           </Title>
           <Button type="text" onClick={() => onClose()}>
             {/* <img src={CloseIcon} alt="CloseIcon" /> */}
@@ -78,7 +96,7 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
           </Button>
         </Flex>
       }
-      width={500}
+      width={isMobile ? 390 : 500}
       closable={false}
       onClose={onClose}
       open={open}
@@ -88,13 +106,13 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
         {selectedData?.isProduct && (
           <>
             <Flex gap={"12px"}>
-              <img src={WatchImg} alt="WatchImg" />
+              <img src={WatchImg} alt="WatchImg" width={58} height={58} />
               <Flex vertical>
                 <Text
                   className="default-text-gray"
                   style={{ fontSize: "16px", fontWeight: 500 }}
                 >
-                  Product
+                  {t("transactionDrawer.product")}
                 </Text>
                 <Text
                   className="default=text "
@@ -103,7 +121,7 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                     fontWeight: 500,
                   }}
                 >
-                  Edox SKYDIVER Neptunian 80120 3NM VDN
+                  {selectedData?.description}
                 </Text>
               </Flex>
             </Flex>
@@ -118,11 +136,12 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                 className="default-text-gray"
                 style={{ fontSize: "16px", fontWeight: 500 }}
               >
-                Invoice amount
+                {t("transactionDrawer.invoiceAmount")}
               </Text>
               <Title style={{ margin: "0" }}>$30.900,00</Title>
               <Text className="default-text-gray">
-                The VAT of 19% (900$) is included in this amount
+                {t("transactionDrawer.taxText1")}19% (900$)
+                {t("transactionDrawer.taxText2")}
               </Text>
             </Flex>
             <Flex vertical gap={"4px"}>
@@ -130,16 +149,21 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                 className="default-text-gray"
                 style={{ fontSize: "16px", fontWeight: 500 }}
               >
-                In crypto
+                {t("transactionDrawer.crypto")}
               </Text>
               <Flex align="center" gap={"16px"}>
                 <Title level={4} style={{ margin: "0" }}>
                   0.076311321
                 </Title>
                 <Flex align="center" gap={"4px"}>
-                  <img src={EthereumIcon} alt="Ethereum-icon" />
+                  <img
+                    src={EthereumIcon}
+                    alt="Ethereum-icon"
+                    width={24}
+                    height={24}
+                  />
                   <Text className="default-text" style={{ fontWeight: 500 }}>
-                    In crypto
+                    {t("transactionDrawer.crypto")}
                   </Text>
                 </Flex>
               </Flex>
@@ -151,7 +175,7 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                 className="default-text-gray"
                 style={{ fontSize: "16px", fontWeight: 500 }}
               >
-                Invoice items
+                {t("transactionDrawer.invoiceItems")}
               </Text>
               <TableData columns={columns} data={data} hidePagination={true} />
               <Flex vertical>
@@ -162,7 +186,9 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                 >
                   <Flex align="center" gap={"5px"}>
                     <img src={LocalGasStationFill} alt="Ethereum-icon" />
-                    <Text className="default-text-gray">Gas price</Text>
+                    <Text className="default-text-gray">
+                      {t("transactionDrawer.gasPrice")}
+                    </Text>
                   </Flex>
                   <Flex align="center" gap={"5px"}>
                     <Text className="default-text-gray">0.0005112 BNB</Text>
@@ -176,7 +202,7 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                 >
                   <Flex align="center" gap={"5px"}>
                     <Text style={{ fontSize: "16px", fontWeight: 500 }}>
-                      Total due
+                      {t("transactionDrawer.total")}
                     </Text>
                   </Flex>
                   <Flex align="center" gap={"5px"}>
@@ -196,11 +222,13 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
             className="default-text-gray"
             style={{ fontSize: "16px", fontWeight: 500 }}
           >
-            Invoice Info
+            {t("transactionDrawer.invoiceInfo")}
           </Text>
           <Flex gap={"16px"}>
             <Flex vertical gap={"12px"} flex={1}>
-              <Text className="default-text-gray">Invoice From</Text>
+              <Text className="default-text-gray">
+                {t("transactionDrawer.invoiceFrom")}
+              </Text>
               <Flex gap={"8px"}>
                 <Divider
                   type="vertical"
@@ -208,19 +236,21 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                 />
                 <Flex vertical gap={"8px"}>
                   <Text className="default-text" style={{ fontWeight: 500 }}>
-                    My watch shop
+                    {user?.business}
                   </Text>
                   <Flex vertical gap={"4px"}>
                     <Text className="default-text-gray">
-                      +38(066) 111-59-20
+                      {user?.phoneNumber}
                     </Text>
-                    <Text className="default-text-gray">mymail@gmail.com</Text>
+                    <Text className="default-text-gray">{user?.email}</Text>
                   </Flex>
                 </Flex>
               </Flex>
             </Flex>
             <Flex vertical gap={"12px"} flex={1}>
-              <Text className="default-text-gray">Invoice To</Text>
+              <Text className="default-text-gray">
+                {t("transactionDrawer.invoiceTo")}
+              </Text>
               <Flex gap={"8px"}>
                 <Divider
                   type="vertical"
@@ -228,13 +258,17 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                 />
                 <Flex vertical gap={"8px"}>
                   <Text className="default-text" style={{ fontWeight: 500 }}>
-                    Mykola Kisl
+                    {selectedData?.name || "Mykola Kisl"}
                   </Text>
                   <Flex vertical gap={"4px"}>
-                    <Text className="default-text-gray">mymail@gmail.com</Text>
+                    <Text className="default-text-gray">
+                      {selectedData?.email || "mymail@gmail.com"}
+                    </Text>
                     <Flex align="center" gap={"4px"}>
                       <img src={CompanyIcon} alt="company-icon" />
-                      <Text className="default-text-gray">Google</Text>
+                      <Text className="default-text-gray">
+                        {selectedData?.company || "Google"}
+                      </Text>
                     </Flex>
                   </Flex>
                 </Flex>
@@ -243,7 +277,9 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
           </Flex>
           <Flex vertical gap={"8px"}>
             <Flex align="center" justify="space-between">
-              <Text className="default-text-gray">Status</Text>
+              <Text className="default-text-gray">
+                {t("transactionDrawer.status")}
+              </Text>
               <Flex gap={"5px"}>
                 <img
                   src={selectedData?.paidAt == null ? OpenIcon : PaidIcon}
@@ -253,21 +289,35 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
               </Flex>
             </Flex>
             <Flex align="center" justify="space-between">
-              <Text className="default-text-gray">Created on</Text>
+              <Text className="default-text-gray">
+                {t("transactionDrawer.created")}
+              </Text>
               <Flex gap={"5px"}>
-                <Text>Jan 22 2023</Text>
-                <Text>17:42</Text>
+                <Text>
+                  {selectedData?.createdAt
+                    ? moment(selectedData?.createdAt)?.format("MMM DD YY")
+                    : "Jan 22 2023"}
+                </Text>
+                <Text>
+                  {selectedData?.createdAt
+                    ? moment(selectedData?.createdAt)?.format("hh:mm")
+                    : "17:42"}
+                </Text>
               </Flex>
             </Flex>
             <Flex align="center" justify="space-between">
-              <Text className="default-text-gray">Completed on</Text>
+              <Text className="default-text-gray">
+                {t("transactionDrawer.completed")}
+              </Text>
               <Flex gap={"5px"}>
                 <Text>Jan 22 2023</Text>
                 <Text>12:12</Text>
               </Flex>
             </Flex>
             <Flex align="center" justify="space-between">
-              <Text className="default-text-gray">Invoice ID</Text>
+              <Text className="default-text-gray">
+                {t("transactionDrawer.invoiceId")}
+              </Text>
               <Text>DA11425</Text>
             </Flex>
           </Flex>
@@ -282,14 +332,22 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                   className="default-text-gray"
                   style={{ fontSize: "16px", fontWeight: 500 }}
                 >
-                  Checkout page link:
+                  {t("transactionDrawer.checkoutPage")}:
                 </Text>
                 <Flex vertical gap={"8px"}>
-                  <Text>https://nefentus.com/pay/L6yaeBWrvX8jEOK2eUJID6dq</Text>
+                  <Link
+                    href={`https://nefentus.com/pay/${selectedData?.link}`}
+                    title={`https://nefentus.com/pay/${selectedData?.link?.substring(
+                      0,
+                      15,
+                    )}...`}
+                    className="invoice-link-container"
+                  />
+
                   <Paragraph style={{ margin: 0 }}>
                     <Button>
                       <Flex gap={"3px"} align="center">
-                        <Text>Copy</Text>
+                        <Text>{t("transactionDrawer.copy")}</Text>
                         <img src={CopyIcon} alt="copy-icon" />
                       </Flex>
                     </Button>
@@ -302,19 +360,24 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
 
         <Divider style={{ margin: 0 }} />
         <Flex vertical gap={"6px"}>
-          <Text style={{ fontSize: "16px", fontWeight: 500 }}>Note:</Text>
+          <Text style={{ fontSize: "16px", fontWeight: 500 }}>
+            {t("transactionDrawer.note")}:
+          </Text>
           <Paragraph className="default-text-gray" style={{ margin: 0 }}>
-            "Thank you for your business! We appreciate your prompt payment. If
-            you have any questions or concerns regarding this invoice, please
-            don't hesitate to contact us. We look forward to serving you again
-            in the future."
+            {t("transactionDrawer.drawerDescription")}
           </Paragraph>
         </Flex>
         <Flex gap={"6px"} justify="flex-end">
           <Button>
             <Flex gap={"4px"}>
-              <Text>Save as PDF</Text>
+              <Text>{t("transactionDrawer.saveInvoice")}</Text>
               <img src={FilesIcon} alt="FilesIcon" />
+            </Flex>
+          </Button>
+          <Button>
+            <Flex gap={"4px"}>
+              <Text>{t("transactionDrawer.saveReceipt")}</Text>
+              <img src={SaveReceiptIcon} alt="FilesIcon" />
             </Flex>
           </Button>
         </Flex>

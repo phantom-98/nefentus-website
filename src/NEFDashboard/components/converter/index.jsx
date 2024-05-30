@@ -122,7 +122,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
           <>
             <Col>
               <Flex vertical justify="center" gap={6}>
-                <div className="default-text-gray">From</div>
+                <div className="default-text-gray">Wallet</div>
                 <Flex
                   className="converter-wallet-container converter-full-width"
                   align="center"
@@ -138,14 +138,13 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
                       <div className="default-text-gray">fx43fwrwftg..fref</div>
                     </div>
                   </Flex>
-                  <img />
-                  <Col>
+                  <Col style={{ display: "flex", alignItems: "center" }}>
                     <img src={ArrowDown} />
                   </Col>
                 </Flex>
               </Flex>
             </Col>
-            <Col>
+            {/* <Col>
               <Flex vertical justify="center" gap={6}>
                 <div className="default-text-gray">To</div>
                 <Input
@@ -153,90 +152,91 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
                   className="converter-wallet-address"
                 />
               </Flex>
-            </Col>
-            <div>
-              <Flex
-                vertical
-                gap={8}
-                justify="center"
-                className="converter-content converter-item"
-              >
-                <Flex align="center" justify="space-between" gap={8}>
-                  <div className="default-text-gray">From</div>
+            </Col> */}
+            <Flex vertical gap={"12px"}>
+              <div>
+                <Flex
+                  vertical
+                  gap={8}
+                  justify="center"
+                  className="converter-content converter-item"
+                >
+                  <Flex align="center" justify="space-between" gap={8}>
+                    <div className="default-text-gray">From</div>
 
-                  <div>
-                    <span className="default-text-gray">Available: </span>
-                    <span className="default-text">0.5 BTC</span>
-                  </div>
+                    <div>
+                      <span className="default-text-gray">Available: </span>
+                      <span className="default-text">0.5 BTC</span>
+                    </div>
+                  </Flex>
+
+                  <Flex
+                    align="center"
+                    justify="space-between"
+                    className="converter-currency-dropdown-row"
+                  >
+                    <Flex
+                      align="center"
+                      gap={4}
+                      className="converter-crypto-currency-dropdown"
+                      onClick={() => setOpenCryptoDrawer(!openCryptoDrawer)}
+                    >
+                      <img src={Ethereum} />
+                      <div>ETH</div>
+                      <img src={ArrowDown} />
+                    </Flex>
+                    <div className="converter-crypto-value">0.005</div>
+                  </Flex>
+                </Flex>
+                <Flex
+                  align="center"
+                  justify="center"
+                  className="swap-between-items"
+                >
+                  <img src={SwapVertical} alt="swap" />
                 </Flex>
 
                 <Flex
-                  align="center"
-                  justify="space-between"
-                  className="converter-currency-dropdown-row"
+                  vertical
+                  gap={8}
+                  justify="center"
+                  className="converter-content converter-item"
                 >
+                  <Flex align="center" justify="space-between" gap={8}>
+                    <div className="default-text-gray">To</div>
+
+                    <div>
+                      <span className="default-text-gray">Balance: </span>
+                      <span className="default-text">0.0341 ETH</span>
+                    </div>
+                  </Flex>
+
                   <Flex
                     align="center"
-                    gap={4}
-                    className="converter-crypto-currency-dropdown"
-                    onClick={() => setOpenCryptoDrawer(!openCryptoDrawer)}
+                    justify="space-between"
+                    className="converter-currency-dropdown-row"
                   >
-                    <img src={Ethereum} />
-                    <div>ETH</div>
-                    <img src={ArrowDown} />
+                    <Flex
+                      align="center"
+                      gap={4}
+                      className="converter-crypto-currency-dropdown"
+                      onClick={() => setOpenCryptoDrawer(!openCryptoDrawer)}
+                    >
+                      <img src={Ethereum} />
+                      <div>ETH</div>
+                      <img src={ArrowDown} />
+                    </Flex>
+                    <div className="converter-crypto-value">0.005432</div>
                   </Flex>
-                  <div>0.005</div>
                 </Flex>
-              </Flex>
-              <Flex
-                align="center"
-                justify="center"
-                className="swap-between-items"
-              >
-                <img src={SwapVertical} alt="swap" />
-              </Flex>
-
-              <Flex
-                vertical
-                gap={8}
-                justify="center"
-                className="converter-content converter-item"
-              >
-                <Flex align="center" justify="space-between" gap={8}>
-                  <div className="default-text-gray">To</div>
-
-                  <div>
-                    <span className="default-text-gray">Balance: </span>
-                    <span className="default-text">0.0341 ETH</span>
-                  </div>
+              </div>
+              <Col>
+                <Flex align="center" justify="center" gap={4}>
+                  <div className="default-text-gray">1BTC ≈ 12.041241 ETH</div>
+                  <img src={RefreshIcon} alt="refresh" />
                 </Flex>
-
-                <Flex
-                  align="center"
-                  justify="space-between"
-                  className="converter-currency-dropdown-row"
-                >
-                  <Flex
-                    align="center"
-                    gap={4}
-                    className="converter-crypto-currency-dropdown"
-                    onClick={() => setOpenCryptoDrawer(!openCryptoDrawer)}
-                  >
-                    <img src={Ethereum} />
-                    <div>ETH</div>
-                    <img src={ArrowDown} />
-                  </Flex>
-                  <div>0.005432</div>
-                </Flex>
-              </Flex>
-            </div>
-
-            <Col>
-              <Flex align="center" justify="center" gap={4}>
-                <div className="default-text-gray">1BTC ≈ 12.041241 ETH</div>
-                <img src={RefreshIcon} alt="refresh" />
-              </Flex>
-            </Col>
+              </Col>
+            </Flex>
           </>
         ) : step == 2 ? (
           <div>
@@ -352,7 +352,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
             className="converter-footer-button"
             onClick={() => setStep(step + 1)}
           >
-            Next
+            Get quotes
           </Button>
         ) : step == 2 ? (
           <Button

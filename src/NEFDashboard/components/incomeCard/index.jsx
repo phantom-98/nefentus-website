@@ -2,12 +2,14 @@ import React from "react";
 import { Card, Flex, Row } from "antd";
 import ArrowUp from "../../../assets/newDashboardIcons/arrow-up-green.svg";
 import InfoMark from "../../../assets/newDashboardIcons/info-circle.svg";
-import "./incomeCard.css";
 import { formatTokenBalance } from "../../../utils";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../context/auth/authContext";
+import "./incomeCard.css";
 
-const IncomeCard = ({ card, key }) => {
+const IncomeCard = ({ card, key, isLast = false }) => {
   const { t } = useTranslation();
+  const { currencyRate } = useAuth();
   return (
     <Card
       title={
@@ -23,9 +25,12 @@ const IncomeCard = ({ card, key }) => {
     >
       <Flex vertical gap={6}>
         <div className="default-text income-amount">
-          {formatTokenBalance(card?.number, 2)}
+          {!isLast
+            ? currencyRate?.symbol +
+              formatTokenBalance(card?.number * currencyRate?.rate, 2)
+            : card?.number}
         </div>
-        <Flex align={"center"} gap={8}>
+        <Flex align={"center"} gap={8} className="income-profit-container">
           <Row align={"middle"} className="income-profit">
             <div className="default-text">
               +

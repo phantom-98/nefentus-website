@@ -10,8 +10,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Tooltip as AntToolTip, Row, Col } from "antd";
-import "./balanceGraph.css";
 import { formatUSDBalance } from "../../../utils";
+import { useAuth } from "../../../context/auth/authContext";
+import "./balanceGraph.css";
 
 const data = [
   { name: "Page A", uv: 4000 },
@@ -24,8 +25,8 @@ const data = [
 ];
 
 const BalanceGraph = ({ graphData }) => {
+  const { currencyRate } = useAuth();
   const CustomToolTip = ({ payload }) => {
-    console.log(payload);
     if (!payload?.length) return;
     const data = payload[0];
     return (
@@ -41,7 +42,8 @@ const BalanceGraph = ({ graphData }) => {
             {/* <Col className="default-text">{data?.payload?.percentage}%</Col> */}
           </Row>
           <div className="tooltip-balance">
-            ${formatUSDBalance(data?.value)}
+            {currencyRate?.symbol +
+              formatUSDBalance(+data?.value * currencyRate?.rate)}
           </div>
         </div>
       </AntToolTip>
@@ -70,7 +72,7 @@ const BalanceGraph = ({ graphData }) => {
         <YAxis
           axisLine={false}
           dataKey={`amount`}
-          tickFormatter={(value) => "$" + value}
+          tickFormatter={(value) => currencyRate?.symbol + value}
         />
         <Tooltip
           content={<CustomToolTip />}

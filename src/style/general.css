@@ -19,25 +19,25 @@
 
 @font-face {
   font-family: DM-Sans;
-  src: url("../assets/fonts/DMSans.ttf");
+  src: url("../assets/fonts/DMSans-Regular.ttf");
   font-weight: 300;
 }
 
 @font-face {
   font-family: DM-Sans;
-  src: url("../assets/fonts/DMSans.ttf");
+  src: url("../assets/fonts/DMSans-Regular.ttf");
   font-weight: 400;
 }
 
 @font-face {
   font-family: DM-Sans;
-  src: url("../assets/fonts/DMSans.ttf");
+  src: url("../assets/fonts/DMSans-Regular.ttf");
   font-weight: 500;
 }
 
 @font-face {
   font-family: DM-Sans;
-  src: url("../assets/fonts/DMSans.ttf");
+  src: url("../assets/fonts/DMSans-Regular.ttf");
   font-weight: 600;
 }
 
@@ -199,7 +199,7 @@ body {
 .dark input,
 .dark textarea,
 .dark .option {
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
   color: var(--text-color);
 }
@@ -779,7 +779,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-size: 46px;
   font-weight: 500;
   width: 100%;
-  height: 20%;
 }
 
 .wallet-skeleton {
@@ -791,6 +790,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-family: "DM-Sans";
 }
 
-:where(.css-dev-only-do-not-override-1yuxnot).ant-table-wrapper .ant-table {
+.ant-table-wrapper .ant-table {
   line-height: normal;
+}
+
+.toggle-theme-button.ant-switch-checked {
+  background: var(
+    --Blue-gradient,
+    linear-gradient(254deg, #078bb9 -56.92%, #52c8f1 148.25%)
+  );
+}
+
+.ant-modal > div {
+  border: 1px solid var(--Dark, #202020);
+  border-radius: 8px;
+}
+
+.ant-modal .ant-modal-header {
+  margin-bottom: 0px;
+}
+
+.ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+  color: currentColor;
+  border-color: currentColor;
 }

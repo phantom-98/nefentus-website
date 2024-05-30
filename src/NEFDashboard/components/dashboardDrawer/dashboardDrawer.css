@@ -11,15 +11,17 @@
 .drawer-wallet-logo-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   position: relative;
-  width: fit-content;
+  width: 76px;
+  height: 76px;
   padding: 12px;
   border-radius: 40px;
   border: 2px solid var(--Dark, #202020);
   background: var(--BG2, #171717);
-  margin-top: -40px;
-  margin-left: 20px;
-  aspect-ratio: 2;
+  /* margin-top: -40px; */
+  /* margin-left: 20px; */
+  /* aspect-ratio: 1; */
 }
 
 .drawer-wallet-logo {
@@ -30,7 +32,7 @@
 .drawer-wallet-title-subcontainer {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
 }
 
 .drawer-wallet-title {
@@ -39,7 +41,7 @@
 
 .drawer-wallet-name {
   text-transform: uppercase;
-  font-size: 28px;
+  font-size: 24px;
 }
 
 .drawer-wallet-address-container {
@@ -121,8 +123,9 @@
 }
 
 .copy-icon {
-  background-color: var(--text2-color);
-  -webkit-mask: url(/src/assets/newDashboardIcons/copy.svg) no-repeat center !important;
+  background-color: #078bb9;
+  -webkit-mask: url(/src/assets/newDashboardIcons/copy-blue.svg) no-repeat
+    center !important;
   width: 16px;
   height: 16px;
 }
@@ -143,4 +146,36 @@
 
 .line-bar-graph .line-bar-graph-section:last-child {
   border-radius: 0px 6px 6px 0px;
+}
+
+.drawer-container .ant-drawer-header {
+  border-bottom: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+}
+
+.mobile-view-remove-wallet {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .wallet-drawer-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .remove-wallet-with-balance {
+    display: none;
+  }
+  .mobile-view-remove-wallet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--Dark, #202020);
+    background: var(--BG2, #171717);
+    padding: 6px 16px;
+    line-height: normal;
+    height: auto;
+  }
 }
