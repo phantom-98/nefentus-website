@@ -7,6 +7,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [user, setUser] = useState({});
+  const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [isAgent, setAgent] = useState(false);
   const [currencyRate, setCurrencyRate] = useState({
     from: "USD",
@@ -49,6 +50,8 @@ export const AuthProvider = ({ children }) => {
         isAgent,
         rateList,
         setRateList,
+        isWalletConnected,
+        setIsWalletConnected,
       }}
     >
       {children}

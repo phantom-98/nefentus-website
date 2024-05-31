@@ -157,8 +157,47 @@ const DashboardDrawer = ({ open, onClose, selectedWallet, onDeleteWallet }) => {
         icon:
           initialiseCoinIcons(currency.name?.toLowerCase()) ?? currency?.icon,
       }));
-      setCryptoList(data);
-      setBackupCryptoList(data);
+      let updatedArray = data
+        .filter((item) => item.amount_dollar > 0)
+        .sort((a, b) => b.amount_dollar - a.amount_dollar);
+      let otherCoins;
+      if (updatedArray?.length > 5) {
+        const lastCoins = updatedArray?.slice(5, currencyList?.length);
+        otherCoins = lastCoins.reduce((acc, obj) => {
+          // Initialize the accumulator with the structure if it's empty
+          if (!acc.name) acc.name = "Other";
+          if (!acc.blockchain) acc.blockchain = "";
+          if (!acc.icon) acc.icon = "";
+          if (!acc.abbr) acc.abbr = "Other";
+          if (!acc.address) acc.address = null;
+          if (!acc.decimals) acc.decimals = 0;
+          if (!acc.middleName) acc.middleName = "";
+          if (!acc.middleInfo) acc.middleInfo = "";
+          if (!acc.price) acc.price = 0;
+          if (!acc.value) acc.value = 0;
+          if (!acc.amount_dollar) acc.amount_dollar = 0;
+          if (!acc.percentage) acc.percentage = "0.00";
+          if (!acc.color) acc.color = "#A43C3C";
+
+          // Sum the numerical values
+          acc.value += obj.value;
+          acc.amount_dollar += obj.amount_dollar;
+
+          // For percentage, we should calculate the weighted average if needed, but here we can sum for simplicity
+          acc.percentage = (
+            parseFloat(acc.percentage) + parseFloat(obj.percentage)
+          ).toFixed(2);
+
+          return acc;
+        }, {});
+      }
+
+      const finalisedData =
+        updatedArray?.length > 5
+          ? [...updatedArray?.slice(0, 5), { ...otherCoins }]
+          : updatedArray;
+      setCryptoList(finalisedData);
+      setBackupCryptoList(finalisedData);
     });
     setLoader(false);
   };
