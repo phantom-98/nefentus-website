@@ -804,7 +804,7 @@ export const RadioSelect = ({
   createInvoice,
 }) => {
   return (
-    <div className={styles.inputWrapper}>
+    <div className={styles.inputWrapper} style={{ width: "100%" }}>
       {label && <p className={styles.label}>{label}</p>}
       <div
         style={{
