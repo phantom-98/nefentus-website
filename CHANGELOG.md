@@ -4,6 +4,7 @@
 
 - Fix performance measures of sales and referral dashboards
 - Fix issues with partners and rework authContext
+- Update invoicing && converter in new dashboard
 
 # v1.1.0
 
@@ -17,7 +18,6 @@
 - Products Dashboard is functional
 - Add swap feature
 - Add skeleton loader when switching wallet, fix loop issue in ProfileCard
-- Update invoicing && converter in new dashboard
 
 # v1.0.0
 
