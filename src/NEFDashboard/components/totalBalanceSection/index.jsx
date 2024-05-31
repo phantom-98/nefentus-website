@@ -8,9 +8,11 @@ import SendCrypto from "../sendCrypto";
 import Converter from "../converter";
 import { useTranslation } from "react-i18next";
 import ReceiveCrypto from "../receiveCrypto";
+import { useAuth } from "../../../context/auth/authContext";
 
 const TotalBalanceSection = ({ total }) => {
   const { t } = useTranslation();
+  const { setIsWalletConnected } = useAuth();
   const [openSendModal, setOpenSendModal] = useState(false);
   const [openConvertModal, setOpenConvertModal] = useState(false);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
@@ -31,7 +33,13 @@ const TotalBalanceSection = ({ total }) => {
         <SendCrypto
           openSendModal={openSendModal}
           handleSubmitCrypto={handleSubmitCrypto}
-          onCloseModal={() => setOpenSendModal(false)}
+          onCloseModal={() => {
+            setIsWalletConnected(false);
+            setOpenSendModal(false);
+          }}
+          onWalletSuccess={(toggle) => {
+            setIsWalletConnected(toggle);
+          }}
         />
       )}
       {openReceiveModal && (

@@ -40,12 +40,35 @@ import {
   metamaskWallet,
   useConnect,
   useSwitchChain,
+  useConnectedWallet,
+  useSetConnectedWallet,
   walletConnect,
+  useDisconnect,
+  useCreateWalletInstance,
+  xdefiWallet,
+  rabbyWallet,
+  oneKeyWallet,
+  cryptoDefiWallet,
+  coreWallet,
+  coin98Wallet,
+  okxWallet,
+  phantomWallet,
+  rainbowWallet,
+  frameWallet,
+  bloctoWallet,
+  zerionWallet,
+  safeWallet,
+  trustWallet,
 } from "@thirdweb-dev/react";
 import { useTranslation } from "react-i18next";
 import GasDetail from "./gasDetails";
 
-const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
+const SendCrypto = ({
+  openSendModal,
+  onCloseModal,
+  handleSubmitCrypto,
+  onWalletSuccess,
+}) => {
   const { setInfoMessage, setErrorMessage, clearMessages } =
     useContext(MessageContext);
   const { t } = useTranslation();
@@ -55,6 +78,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
   const [step, setStep] = useState(1);
   const [selectedWallet, setSelectedWallet] = useState({});
   const [wallets, setWallets] = useState([]);
+  const [password, setPassword] = useState("");
   const [total, setTotal] = useState(0);
   const [cryptoList, setCryptoList] = useState([]);
   const [selectedCoin, setSelectedCoin] = useState({});
@@ -78,7 +102,11 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
   const { fetchBalanceForWallet } = useBalances();
   const { prices } = usePrices();
   const connect = useConnect();
+  const disconnect = useDisconnect();
   const switchNetwork = useSwitchChain();
+  const setConnectedWallet = useSetConnectedWallet();
+  const createWalletInstance = useCreateWalletInstance();
+  const wallet = useConnectedWallet();
 
   useEffect(() => {
     if (prices.every((amount) => amount != undefined)) fetchWallets();
@@ -88,13 +116,6 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
     if (currencyItems?.length) setSelectedCurrency(currencyItems[0]);
   }, [currencyItems]);
 
-  // useEffect(() => {
-  //   setTotal(
-  //     +(selectedCoin?.price * selectedCoin?.amount * +selectedCurrency?.price) +
-  //       Math.round(gasValues?.gasPrice / 10 ** 9) * 0.0003,
-  //   );
-  // }, [selectedCoin]);
-
   // handling intervals through step state
   useEffect(() => {
     if (step == 1 && Object.keys(selectedCoin)?.length) startGasPriceInterval();
@@ -103,7 +124,45 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
   }, [step]);
 
   // This useeffect is useful for handling amount when gasPrice changes every 30 seconds
-  useEffect(() => {
+  // useEffect(() => {
+  //   fetchGasValues();
+  // }, [gasValues, step, selectedCoin]);
+
+  const handleAmountPercentage = (percentage) => {
+    if (selectedCoin?.value == 0) return;
+    const updatedAmount =
+      selectedCoin?.value -
+      (gasValues?.gasPrice * gasLimit) / 10 ** selectedCoin?.decimals;
+    if (updatedAmount > 0) {
+      handleAmount(
+        toggleCurrency
+          ? (
+              (selectedCoin?.price *
+                updatedAmount *
+                +selectedCurrency?.price *
+                percentage) /
+              100
+            )?.toFixed(9)
+          : ((updatedAmount * percentage) / 100)?.toFixed(9),
+      );
+      setPercentage(percentage);
+    } else handleAmount(0, true);
+  };
+
+  const handleAmount = (value, isChanged = false) => {
+    setSelectedCoin({
+      ...selectedCoin,
+      amount: toggleCurrency
+        ? value / (+selectedCurrency?.price * selectedCoin?.price)
+        : value,
+      amount_for_currency: toggleCurrency
+        ? value
+        : selectedCoin?.price * value * +selectedCurrency?.price,
+    });
+    isChanged && setPercentage(0);
+  };
+
+  useMemo(() => {
     if (Object.keys(gasValues)?.length && selectedCoin?.amount != "") {
       if (step == 1) {
         const updatedAmount =
@@ -114,9 +173,13 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
       }
       percentage
         ? handleAmountPercentage(percentage)
-        : handleAmount(selectedCoin?.amount);
+        : handleAmount(
+            toggleCurrency
+              ? selectedCoin?.amount_for_currency
+              : selectedCoin?.amount,
+          );
     }
-  }, [gasValues, step, selectedCoin]);
+  }, [gasValues, step]);
 
   const startGasPriceInterval = (coin = selectedCoin) => {
     setDisable(false);
@@ -132,7 +195,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
     setLoader(true);
     const list = await backend_API.getWalletAddresses();
 
-    const balance = await getWalletCryptoList(list[1]);
+    const balance = await getWalletCryptoList(list[0]);
 
     const modifiedList = list.map((wallet, index) => ({
       ...wallet,
@@ -146,7 +209,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
       ...getWalleBackground(wallet?.type),
     }));
 
-    setSelectedWallet(modifiedList[1]);
+    setSelectedWallet(modifiedList[0]);
     setWallets([...modifiedList]);
     setLoader(false);
   };
@@ -173,35 +236,34 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
           .map((balance, index) => balance * prices[index])
           .reduce((pre, cur) => parseFloat(cur) + parseFloat(pre), 0);
 
-        if (totalBalance > 0) {
-          const pers = cryptoBalances?.map((balance, index) =>
-            parseFloat(
-              ((balance * prices[index]) / (totalBalance * 1.0)) * 100,
-            ).toFixed(2),
-          );
-          const data = currencyList.map((currency, index) => ({
-            ...currency,
-            middleName: blockchainToName(currency.blockchain),
-            middleInfo: "Network",
-            price: prices[index],
-            value: cryptoBalances[index],
-            amount_dollar: parseFloat(
-              (prices[index] * cryptoBalances[index]).toFixed(4),
-            ),
-            amount_euro:
-              +euroCurrency?.rate * prices[index] * cryptoBalances[index],
-            percentage: pers[index],
-            icon:
-              currency.name?.toLowerCase() == "ethereum" ||
-              currency.name?.toLowerCase() == "wrapped ethereum"
-                ? Ethereum
-                : currency?.icon,
-          }));
-          setCryptoList(data);
-          setSelectedCoin({ ...data[0], amount: "" });
-          fetchGasPrice(data[0]?.abbr);
-          startGasPriceInterval(data[0]);
-        }
+        const pers = cryptoBalances?.map((balance, index) =>
+          parseFloat(
+            ((balance * prices[index]) / (totalBalance * 1.0)) * 100,
+          ).toFixed(2),
+        );
+        const data = currencyList.map((currency, index) => ({
+          ...currency,
+          middleName: blockchainToName(currency.blockchain),
+          middleInfo: "Network",
+          price: prices[index],
+          value: cryptoBalances[index],
+          amount_dollar: parseFloat(
+            (prices[index] * cryptoBalances[index]).toFixed(4),
+          ),
+          amount_euro:
+            +euroCurrency?.rate * prices[index] * cryptoBalances[index],
+          percentage: pers[index],
+          icon:
+            currency.name?.toLowerCase() == "ethereum" ||
+            currency.name?.toLowerCase() == "wrapped ethereum"
+              ? Ethereum
+              : currency?.icon,
+        }));
+        setCryptoList(data);
+        setSelectedCoin({ ...data[0], amount: "" });
+        fetchGasPrice(data[0]?.abbr);
+        startGasPriceInterval(data[0]);
+
         return cryptoBalances;
       })
       .catch((e) => {
@@ -231,6 +293,61 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
         .reduce((pre, cur) => parseFloat(cur) + parseFloat(pre), 0),
     });
     onCloseDrawer();
+    await onWalletConnect(wlt);
+  };
+
+  const onWalletConnect = async (wlt = selectedWallet) => {
+    const currentWalletConfig =
+      wlt?.type?.toLowerCase() === "metamask"
+        ? metamaskWallet()
+        : wlt?.type?.toLowerCase() === "walletconnect"
+        ? walletConnect({
+            // projectId: "4b9cb6ce8bcff9cedc49607dd34435e5",
+            qrModal: "walletConnect", // or "walletConnect"
+            qrModalOptions: {
+              themeMode: "light",
+            },
+            recommended: true,
+          })
+        : wlt?.type?.toLowerCase() === "coinbase"
+        ? coinbaseWallet({ recommended: true, qrmodal: "coinbase" })
+        : wlt?.type?.toLowerCase() === "trust"
+        ? trustWallet({
+            projectId: "57e1cfc18509bb9cc4d51638ce8d18ed",
+            recommended: true,
+          })
+        : wlt?.type?.toLowerCase() == "safe"
+        ? safeWallet()
+        : wlt?.type?.toLowerCase() == "zerionwallet"
+        ? zerionWallet()
+        : wlt?.type?.toLowerCase() == "blocto"
+        ? bloctoWallet()
+        : wlt?.type?.toLowerCase() == "frame"
+        ? frameWallet()
+        : wlt?.type?.toLowerCase() == "rainbowwallet"
+        ? rainbowWallet()
+        : wlt?.type?.toLowerCase() == "phantom"
+        ? phantomWallet()
+        : wlt?.type?.toLowerCase() == "okx"
+        ? okxWallet()
+        : wlt?.type?.toLowerCase() == "coin98"
+        ? coin98Wallet()
+        : wlt?.type?.toLowerCase() == "core"
+        ? coreWallet()
+        : wlt?.type?.toLowerCase() == "cryptodefi"
+        ? cryptoDefiWallet()
+        : wlt?.type?.toLowerCase() == "onekey"
+        ? oneKeyWallet()
+        : wlt?.type?.toLowerCase() == "rabby"
+        ? rabbyWallet()
+        : wlt?.type?.toLowerCase() == "xdefi"
+        ? xdefiWallet()
+        : null;
+
+    const response = createWalletInstance(currentWalletConfig);
+    await response.connect();
+    setConnectedWallet(response);
+    onWalletSuccess(true);
   };
 
   const handleSelectedCoin = async (coin) => {
@@ -242,22 +359,6 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
   const onCloseDrawer = () => {
     setOpenDrawer(false);
     setOpenCryptoDrawer(false);
-  };
-
-  const handleAmount = (value, isChanged = false) => {
-    setSelectedCoin({ ...selectedCoin, amount: value });
-    isChanged && setPercentage(0);
-  };
-
-  const handleAmountPercentage = (percentage) => {
-    if (selectedCoin?.value == 0) return;
-    const updatedAmount =
-      selectedCoin?.value -
-      (gasValues?.gasPrice * gasLimit) / 10 ** selectedCoin?.decimals;
-    if (updatedAmount > 0) {
-      handleAmount(((updatedAmount * percentage) / 100)?.toFixed(9));
-      setPercentage(percentage);
-    } else handleAmount(0, true);
   };
 
   const exchangeCurrency = () => {
@@ -279,52 +380,12 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
     // Withdraw
     const tokenAddress = selectedCoin?.address;
     if (!selectedWallet?.internal) {
-      const currentWalletConfig =
-        selectedWallet?.type?.toLowerCase() === "metamask"
-          ? metamaskWallet()
-          : selectedWallet?.type?.toLowerCase() === "walletconnect"
-          ? walletConnect({
-              qrModal: "walletConnect",
-              qrModalOptions: {
-                themeMode: "light",
-              },
-              recommended: true,
-            })
-          : selectedWallet?.type?.toLowerCase() === "coinbase"
-          ? coinbaseWallet({ recommended: true, qrmodal: "coinbase" })
-          : // : selectedWallet?.type?.toLowerCase() === "trust"
-            // ? trustWallet({
-            //     projectId: "57e1cfc18509bb9cc4d51638ce8d18ed",
-            //     recommended: true,
-            //   })
-            null;
-
-      // setInfoMessage(t("messages.success.connecting"));
-      // if (
-      //   selectedWallet?.name?.toLowerCase() === "walletconnect" ||
-      //   selectedWallet?.name?.toLowerCase() === "coinbase"
-      // )
-      //   setShow(false);
-      const response = await connect(currentWalletConfig)
-        .then(async (res) => {
-          // setInfoMessage(t("messages.success.connected"));
-          // setShow(true);
-          return true;
-        })
-        .catch(() => {
-          setErrorMessage(t("messages.error.connectionCancel"));
-          // setIsWithdrawing(false);
-          return false;
-        });
-      if (!response) return;
-
       setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawing"));
 
       const web3API = new web3Api();
 
       try {
         await switchNetwork(chainId(selectedCoin?.blockchain));
-
         const txReceipt = await web3API.send(
           tokenAddress,
           selectedCoin?.blockchain,
@@ -339,7 +400,6 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
           setErrorMessage(t("messages.error.withdraw"));
         }
       } catch (error) {
-        console.log(error);
         setErrorMessage(t("messages.error.withdraw"));
       }
     } else {
@@ -350,7 +410,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
         selectedCoin?.amount,
         selectedWallet?.address,
         receiverAddress,
-        "",
+        password,
       );
       if (ret) {
         setInfoMessage(t("messages.success.withdrawal"));
@@ -359,9 +419,10 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
         setErrorMessage(t("messages.error.withdraw"));
       }
     }
-
+    await disconnect();
     // setPassword("");
     // setIsWithdrawing(false);
+    onWalletSuccess(false);
     handleSubmitCrypto();
   };
 
@@ -387,8 +448,11 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
         )
       }
       open={openSendModal}
-      onOk={handleSubmitCrypto}
-      onCancel={onCloseModal}
+      onCancel={async () => {
+        await disconnect();
+        onWalletSuccess(false);
+        onCloseModal();
+      }}
       width={380}
       className="send-crypto"
       footer={null}
@@ -449,6 +513,19 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
             />
           </Flex>
         </Col>
+        {selectedWallet?.type === "internal" && step == 1 && (
+          <Col>
+            <Flex vertical justify="center" gap={6}>
+              <div className="default-text-gray">Password</div>
+              <Input.Password
+                placeholder={"Enter wallet address (0x) "}
+                className="send-crypto-wallet-address"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Flex>
+          </Col>
+        )}
         {step == 1 ? (
           <>
             <Col>
@@ -464,15 +541,16 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
                           width={14}
                           height={14}
                         />
-                        <div> {selectedCoin?.amount}</div>
+                        <div>
+                          {" "}
+                          {formatTokenBalance(selectedCoin?.amount, 4)}
+                        </div>
                       </Flex>
                     ) : (
                       <div>
                         {(selectedCurrency?.icon ?? "$") +
                           formatTokenBalance(
-                            selectedCoin?.price *
-                              selectedCoin?.amount *
-                              +selectedCurrency?.price,
+                            selectedCoin?.amount_for_currency,
                             2,
                           )}
                       </div>
@@ -495,9 +573,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
                     type="number"
                     value={
                       toggleCurrency
-                        ? selectedCoin?.price *
-                          selectedCoin?.amount *
-                          +selectedCurrency?.price
+                        ? selectedCoin?.amount_for_currency
                         : selectedCoin?.amount
                     }
                     disabled={disable}
@@ -608,7 +684,10 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
         title={null}
         placement="bottom"
         closable={false}
-        onClose={onCloseDrawer}
+        onClose={() => {
+          onCloseModal();
+          disconnect();
+        }}
         open={openDrawer || openCryptoDrawer}
         getContainer={false}
         height={300}

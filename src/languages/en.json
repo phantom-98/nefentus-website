@@ -1440,8 +1440,9 @@
       "balance": "Balance",
       "portfolio": "Portfolio",
       "coinView": "Currencies",
-      "deleteWallet": "Are you sure you want to delete this wallet?",
-      "removeWallet": "Remove Wallet"
+      "deleteWallet": "Are you sure you want to remove this wallet?",
+      "removeWallet": "Remove Wallet",
+      "remove": "Remove"
     },
     "walletCard": {
       "addressTitle": "Wallet Address",

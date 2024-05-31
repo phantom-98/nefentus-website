@@ -1,9 +1,11 @@
 import React from "react";
 import { Flex, Modal, Typography } from "antd";
 import "./deleteModal.css";
+import { useTranslation } from "react-i18next";
 
 const DeleteModal = ({ open, onClose, icon, description, onDelete }) => {
   const { Text } = Typography;
+  const { t } = useTranslation();
   return (
     <Modal
       open={open}
@@ -34,13 +36,13 @@ const DeleteModal = ({ open, onClose, icon, description, onDelete }) => {
           className="delete-modal-cancel cursor-pointer"
           onClick={() => onClose()}
         >
-          Cancel
+          {t("general.cancel")}
         </Text>
         <Text
           className="delete-modal-submit cursor-pointer"
           onClick={() => onDelete()}
         >
-          Delete
+          {t("personalDashboard.drawer.remove")}
         </Text>
       </Flex>
     </Modal>

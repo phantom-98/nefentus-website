@@ -57,7 +57,7 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
   const { toggleTheme } = useTheme();
 
   const { t, i18n } = useTranslation();
-  const { user, setUser } = useAuth();
+  const { user, setUser, setIsWalletConnected } = useAuth();
   const [selectedLanguage, setSelectedLanguage] = useState("en");
 
   const [openSendModal, setOpenSendModal] = useState(false);
@@ -282,7 +282,13 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
         <SendCrypto
           openSendModal={openSendModal}
           handleSubmitCrypto={handleSubmitCrypto}
-          onCloseModal={() => setOpenSendModal(false)}
+          onCloseModal={() => {
+            setIsWalletConnected(false);
+            setOpenSendModal(false);
+          }}
+          onWalletSuccess={(toggle) => {
+            setIsWalletConnected(toggle);
+          }}
         />
       )}
       {openReceiveModal && (

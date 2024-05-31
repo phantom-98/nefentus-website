@@ -1361,7 +1361,8 @@
       "portfolio": "Portfolio",
       "coinView": "Währungen",
       "deleteWallet": "Sind Sie sicher, dass Sie diese Brieftasche löschen möchten?",
-      "removeWallet": "Wallet entfernen"
+      "removeWallet": "Wallet entfernen",
+      "remove": "Entfernen"
     },
     "walletCard": {
       "addressTitle": "Wallet-Adresse",
