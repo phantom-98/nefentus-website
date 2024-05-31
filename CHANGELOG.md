@@ -10,6 +10,7 @@
 - Products Dashboard is functional
 - Add swap feature
 - Add skeleton loader when switching wallet, fix loop issue in ProfileCard
+- Send modal is functional for external
 
 # Merged changes
 
@@ -19,4 +20,3 @@
 - Show gas prices when paying invoices/products
 - Modify Personal Details of Level 1 in identification process
 - Implemented all new dashboards with their respective functionalities
-- Send modal is functional for external
