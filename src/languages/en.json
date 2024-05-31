@@ -899,6 +899,7 @@
       "deleteProduct": "Product deleted successfully!",
       "addUser": "User added successfully!",
       "updateUser": "User updated successfully!",
+      "createInvoice": "Invoice created successfully!",
       "deleteInvoice": "Invoice deleted!",
       "passwordChange": "Password successfully changed!",
       "updatePicture": "Profile picture successfully changed!",
@@ -1095,7 +1096,8 @@
     "tax": {
       "reverseCharge": "The Reverse Charge process is used. The client is responsable for paying the VAT.",
       "standard": "Standard",
-      "reduced": "Reduced"
+      "reduced": "Reduced",
+      "zero": "Zero"
     },
     "items": {
       "title": "Invoice Items",

@@ -840,6 +840,7 @@
       "deleteProduct": "Produkt erfolgreich gelöscht!",
       "addUser": "Benutzer erfolgreich hinzugefügt!",
       "updateUser": "Benutzer erfolgreich aktualisiert!",
+      "createInvoice": "Rechnung erfolgreich erstellt!",
       "deleteInvoice": "Rechnung gelöscht!",
       "passwordChange": "Passwort erfolgreich geändert!",
       "updatePicture": "Profilbild erfolgreich geändert!",
@@ -1037,7 +1038,8 @@
     "tax": {
       "reverseCharge": "Es wird das Reverse Charge Verfahren angewendet. Dabei ist der Kunde für die Umsatzsteuer verantwortlich.",
       "standard": "Standard",
-      "reduced": "Verringert"
+      "reduced": "Verringert",
+      "zero": "Zero"
     },
     "items": {
       "title": "Rechnungspositionen",

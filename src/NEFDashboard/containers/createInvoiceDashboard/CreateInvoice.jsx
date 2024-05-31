@@ -52,7 +52,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
       setErrorMessage(t("messages.error.amountValid"));
       return;
     }
-    if (!invoice?.reverseCharge && !invoice?.taxPercent) {
+    if (!invoice?.reverseCharge && isNaN(invoice?.taxPercent)) {
       setErrorMessage(t("messages.error.taxPercentValid"));
       return;
     }
@@ -100,7 +100,33 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
       const invoiceLink = window.location.origin + "/pay/" + invoiceLinkPart;
       setInvoice({ ...invoice, qrValue: invoiceLink });
       // setQRValue(invoiceLink);
-      setShowPopup("qrcode");
+      // setShowPopup("qrcode");
+      setInfoMessage(t("messages.success.createInvoice"));
+      setInvoice({
+        name: "",
+        email: "",
+        address: "",
+        country: "",
+        company: "",
+        invoiceNo: "",
+        taxNumber: "",
+        taxPercent: "",
+        currency: "USD",
+        qrValue: "",
+        reverseCharge: false,
+        isPerson: true,
+        amount: "",
+        note: "",
+        taxInfo: 0,
+        items: [
+          {
+            name: "",
+            price: 0,
+            quantity: 1,
+            total: 0,
+          },
+        ],
+      });
     } else {
       setErrorMessage(t("messages.error.createInvoice"));
     }
@@ -286,13 +312,15 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                 }
                 options={
                   invoice?.taxInfo
-                    ? [...JSON.parse(invoice?.taxInfo?.vatPercent)].map(
+                    ? [...JSON.parse(invoice?.taxInfo?.vatPercent), 0].map(
                         (tax, index) => {
                           return {
                             value: tax,
                             label: tax + "%",
                             content:
-                              index == 0
+                              tax == 0
+                                ? t("payments.tax.zero")
+                                : index == 0
                                 ? t("payments.tax.standard")
                                 : t("payments.tax.reduced"),
                           };
