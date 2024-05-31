@@ -840,6 +840,7 @@
       "deleteProduct": "Produkt erfolgreich gelöscht!",
       "addUser": "Benutzer erfolgreich hinzugefügt!",
       "updateUser": "Benutzer erfolgreich aktualisiert!",
+      "createInvoice": "Rechnung erfolgreich erstellt!",
       "deleteInvoice": "Rechnung gelöscht!",
       "passwordChange": "Passwort erfolgreich geändert!",
       "updatePicture": "Profilbild erfolgreich geändert!",
@@ -1037,7 +1038,8 @@
     "tax": {
       "reverseCharge": "Es wird das Reverse Charge Verfahren angewendet. Dabei ist der Kunde für die Umsatzsteuer verantwortlich.",
       "standard": "Standard",
-      "reduced": "Verringert"
+      "reduced": "Verringert",
+      "zero": "Zero"
     },
     "items": {
       "title": "Rechnungspositionen",
@@ -1121,6 +1123,10 @@
     }
   },
   "converter": {
+    "title": "Währungsswap",
+    "swap": "Tauschen Sie",
+    "success": "Erfolgreicher Währungsumtausch",
+    "close": "Schließen",
     "wallet": "Wallet",
     "from": "Von",
     "to": "Nach",
@@ -1367,7 +1373,7 @@
       "menu": "Hauptmenü",
       "wallets": "Wallets",
       "payments": "Zahlungen",
-      "referral": "Empfehlungs",
+      "referral": "Referral",
       "createInvoice": "Rechnung erstellen",
       "sendCrypto": "Krypto senden",
       "receiveCrypto": "Krypto empfangen",
@@ -1407,7 +1413,7 @@
   },
   "salesDashboard": {
     "title": "Vertriebs-Dashboard",
-    "salesIncomeTitle": "Gesamte Verkaufserlöse",
+    "salesIncomeTitle": "Verkaufserlöse",
     "invoiceCard": {
       "title": "Rechnungen",
       "open": "Offen",
@@ -1417,7 +1423,7 @@
     "product": "Produkt",
     "invoice": "Rechnung",
     "details": "Details",
-    "sales": "Vertrieb",
+    "sales": "Verkauf",
     "products": "Produkte",
     "createInvoice": "Rechnung erstellen",
     "productTable": {
@@ -1474,8 +1480,9 @@
     "swapCost": "Tauschkosten",
     "transactionCost": "Transaktionskosten",
     "totalDue": "Gesamtbetrag",
-    "currencyConversionText1": "Preise in € werden mit dem Wechselkurs vom ",
-    "currencyConversionText2": "berechnet",
+    "rateDescription1": "Preise in ",
+    "rateDescription2": " sind mit dem Wechselkurs vom ",
+    "rateDescription3": " für 1USD berechnet",
     "vatDescription": "Mehrwertsteuer: Umkehrung des Steuerschuldverhältnisses, die Steuerpflicht wird auf den Leistungsempfänger übertragen. Lokale Mehrwertsteuer anwendbar.",
     "payInvoice": "Rechnung bezahlen",
     "description": "Beschreibung",

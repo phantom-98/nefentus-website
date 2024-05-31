@@ -10,18 +10,31 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 const InvoicePreview = ({ invoice }) => {
-  const [euroValue, setEuroValue] = useState(0);
+  const [rateList, setRateList] = useState([]);
+  const [rate, setRate] = useState({});
   const backend_API = new backendAPI();
   const { user } = useAuth();
   const { Text } = Typography;
   const { t } = useTranslation();
   const currencyFetch = async () => {
-    const euroCurrency = await backend_API.getCurrencyRate();
-    setEuroValue(euroCurrency);
+    const res = await backend_API.getRateList("USD");
+    setRateList(res);
+    console.log("rate", res);
   };
   useEffect(() => {
     currencyFetch();
   }, []);
+
+  useEffect(() => {
+    if (invoice?.currency) {
+      setRate(
+        rateList.find((r) => r.to === invoice?.currency) ?? {
+          rate: 1,
+          date: Date.now(),
+        },
+      );
+    }
+  }, [invoice?.currency]);
 
   const columns = [
     {
@@ -32,7 +45,13 @@ const InvoicePreview = ({ invoice }) => {
     {
       title: "Price",
       dataIndex: "price",
-      render: (price, record) => <div>{price}</div>,
+      render: (price, record) => (
+        <div>
+          ${formatUSDBalance(price / rate?.rate)} (
+          {getCurrencySymbol()[invoice?.currency]}
+          {price})
+        </div>
+      ),
     },
     {
       title: "Qty",
@@ -42,7 +61,13 @@ const InvoicePreview = ({ invoice }) => {
     {
       title: "Total price",
       dataIndex: "total",
-      render: (_, record) => <div>{record?.total}</div>,
+      render: (_, record) => (
+        <div>
+          ${formatUSDBalance(record?.total / rate?.rate)} (
+          {getCurrencySymbol()[invoice?.currency]}
+          {record?.total})
+        </div>
+      ),
     },
   ];
 
@@ -74,7 +99,7 @@ const InvoicePreview = ({ invoice }) => {
               <Text className="default-text-gray">
                 {t("invoicePreview.invoice")}:
               </Text>
-              <Text className="default-text">{invoice.invoiceNo}</Text>
+              <Text className="default-text">#{invoice.invoiceNo}</Text>
             </Flex>
           </Flex>
         }
@@ -93,9 +118,9 @@ const InvoicePreview = ({ invoice }) => {
                 <Flex vertical gap={"4px"}>
                   <Text className="default-text-gray">{user?.phoneNumber}</Text>
                   <Text className="default-text-gray">{user?.email}</Text>
-                  <Text className="default-text-gray">
+                  {/* <Text className="default-text-gray">
                     {t("invoicePreview.vatTitle")} {user?.vatNumber}
-                  </Text>
+                  </Text> */}
                 </Flex>
               </Flex>
             </Flex>
@@ -111,11 +136,12 @@ const InvoicePreview = ({ invoice }) => {
                   {invoice.name}
                 </Text>
                 <Flex vertical gap={"4px"}>
-                  {/* <Text className="default-text-gray">XXXX-XXX-XX</Text> */}
                   <Text className="default-text-gray">{invoice.email}</Text>
-                  <Text className="default-text-gray">
-                    {t("invoicePreview.vatTitle")} {invoice.taxNumber}
-                  </Text>
+                  {!invoice.isPerson && (
+                    <Text className="default-text-gray">
+                      {t("invoicePreview.vatTitle")} {invoice.taxNumber}
+                    </Text>
+                  )}
                 </Flex>
               </Flex>
             </Flex>
@@ -138,16 +164,15 @@ const InvoicePreview = ({ invoice }) => {
               {t("invoicePreview.vat")} ({invoice.taxPercent}%)
             </Text>
             <Text className="default-text">
-              {getCurrencySymbol()[invoice?.currency]}
+              $
               {formatUSDBalance(
-                (+invoice?.amount * +invoice?.taxPercent) / 100,
-              )}{" "}
-              (€
-              {formatUSDBalance(
-                (euroValue?.rate * (+invoice?.amount * +invoice?.taxPercent)) /
-                  100,
+                (+invoice?.amount * +invoice?.taxPercent) / rate?.rate / 100,
               )}
-              )
+              {invoice?.currency !== "USD" &&
+                `(${getCurrencySymbol()[invoice?.currency]}
+                ${formatUSDBalance(
+                  (+invoice?.amount * +invoice?.taxPercent) / 100,
+                )})`}
             </Text>
           </Flex>
           <Divider style={{ margin: 0 }} />
@@ -162,39 +187,14 @@ const InvoicePreview = ({ invoice }) => {
               className="default-text"
               style={{ fontSize: "16px", fontWeight: 500 }}
             >
-              {getCurrencySymbol()[invoice?.currency]}
-              {invoice?.amount} (€
-              {formatUSDBalance(euroValue?.rate * invoice?.amount)})
+              ${formatUSDBalance(invoice?.amount / rate?.rate)}
+              {invoice?.currency !== "USD" &&
+                ` (${getCurrencySymbol()[invoice?.currency]}
+                ${formatUSDBalance(invoice?.amount)})`}
             </Text>
           </Flex>
           <Divider style={{ margin: 0 }} />
-          <Flex vertical gap={"8px"}>
-            <Flex align="center" justify="space-between">
-              <Text className="default-text-gray">
-                {t("invoicePreview.swapCost")}
-              </Text>
-              <Text className="default-text">
-                ${formatUSDBalance(invoice?.swapCost)} (€
-                {formatUSDBalance(euroValue?.rate * invoice?.swapCost)})
-              </Text>
-            </Flex>
-            <Flex align="center" justify="space-between">
-              <Text className="default-text-gray">
-                {t("invoicePreview.transactionCost")}{" "}
-              </Text>
-              <Text className="default-text-gray">
-                ({invoice?.transactionCost?.cryptoValue} BNB)
-              </Text>
-              <Text className="default-text">
-                ${formatUSDBalance(invoice?.transactionCost?.amount_dollar)} (€
-                {formatUSDBalance(
-                  euroValue?.rate * invoice?.transactionCost?.amount_dollar,
-                )}
-                )
-              </Text>
-            </Flex>
-            <Divider style={{ margin: 0 }} />
-          </Flex>
+
           <Flex align="center" justify="space-between">
             <Text
               className="default-text"
@@ -206,24 +206,39 @@ const InvoicePreview = ({ invoice }) => {
               className="default-text"
               style={{ fontSize: "16px", fontWeight: 500 }}
             >
-              ${formatUSDBalance(invoice?.totalDue)}
-              (€
-              {formatUSDBalance(euroValue?.rate * invoice?.totalDue)})
+              $
+              {formatUSDBalance(
+                (+invoice?.amount * (+invoice?.taxPercent + 100)) /
+                  rate?.rate /
+                  100,
+              )}
+              {invoice?.currency !== "USD" &&
+                ` (${getCurrencySymbol()[invoice?.currency]}
+                ${formatUSDBalance(
+                  (+invoice?.amount * (+invoice?.taxPercent + 100)) / 100,
+                )})`}
             </Text>
           </Flex>
           <Divider style={{ margin: 0 }} />
         </Flex>
         <Flex vertical gap={"8px"}>
-          <Text className="default-text-gray">
-            {t("invoicePreview.currencyConversionText1")}
-            {moment(euroValue?.data)?.format("DD.MM.YYYY") +
-              " " +
-              euroValue?.rate?.toFixed(2)}
-            € {t("invoicePreview.currencyConversionText2")} (1USD)
-          </Text>
-          <Text className="default-text-gray">
-            {t("invoicePreview.vatDescription")}
-          </Text>
+          {invoice?.currency !== "USD" && (
+            <Text className="default-text-gray">
+              {t("invoicePreview.rateDescription1")}
+              {invoice?.currency}
+              {t("invoicePreview.rateDescription2")}
+              {moment(rate?.date)?.format("YYYY.MM.DD") +
+                " " +
+                rate?.rate?.toFixed(2)}
+              {invoice?.currency}
+              {t("invoicePreview.rateDescription3")}
+            </Text>
+          )}
+          {invoice?.reverseCharge && (
+            <Text className="default-text-gray">
+              {t("invoicePreview.vatDescription")}
+            </Text>
+          )}
         </Flex>
         <Card>
           <Flex gap={"10px"} align="flex-start">

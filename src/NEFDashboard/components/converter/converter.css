@@ -57,10 +57,16 @@
   background: var(--BG2, #171717);
   width: fit-content;
   margin: -10px auto;
+  cursor: pointer;
 }
 
 .converter-crypto-value {
-  padding: 0px 6px;
+  padding: 8px 6px;
+  font-size: 16px;
+  border: none !important;
+  outline: none;
+  background: transparent;
+  text-align: right;
 }
 
 .crypto-coin-block {

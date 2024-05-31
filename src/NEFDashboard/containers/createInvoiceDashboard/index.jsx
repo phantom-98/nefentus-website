@@ -1,28 +1,25 @@
-import react, { useEffect, useState } from "react";
+import { useState } from "react";
 import CreateInvoice from "./CreateInvoice";
 import { Col, Row } from "antd";
 import InvoicePreview from "./invoicePreview";
-import { currencies } from "../../../constants";
-import usePrices from "../../../hooks/prices";
 
 const CreateInvoiceDashboard = () => {
-  let { prices, fetchPrices } = usePrices();
   const [invoice, setInvoice] = useState({
     name: "",
     email: "",
     address: "",
     country: "",
     company: "",
-    invoiceNo: 1000,
+    invoiceNo: "",
     taxNumber: "",
     taxPercent: "",
     currency: "USD",
     qrValue: "",
     reverseCharge: false,
     isPerson: true,
-    amount: 0,
+    amount: "",
     note: "",
-    taxInfo: "",
+    taxInfo: 0,
     items: [
       {
         name: "",
@@ -31,33 +28,7 @@ const CreateInvoiceDashboard = () => {
         total: 0,
       },
     ],
-    transactionCost: {
-      cryptoValue: 0.000589584,
-      amount_dollar: 0,
-    },
-    swapCost: 0,
-    totalDue: 0,
   });
-
-  useEffect(() => {
-    fetchPrices();
-  }, []);
-  useEffect(() => {
-    TransactionPriceInDollar();
-  }, [prices]);
-  const TransactionPriceInDollar = async () => {
-    const index = currencies()?.findIndex(
-      (currency) => currency?.blockchain == "BNB" && currency?.abbr == "BNB",
-    );
-
-    setInvoice({
-      ...invoice,
-      transactionCost: {
-        ...invoice?.transactionCost,
-        amount_dollar: invoice?.transactionCost?.cryptoValue * prices[index],
-      },
-    });
-  };
 
   return (
     <>

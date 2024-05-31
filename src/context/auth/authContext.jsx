@@ -5,6 +5,9 @@ import backend_api from "../../api/backendAPI";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const backend_API = new backend_api();
+  // avatarUrl is not needed because user.profileImage is the same
+  // TODO This is legacy to support the old dashboard. Delete once new dashboard is fully implemented
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [user, setUser] = useState({});
   const [isWalletConnected, setIsWalletConnected] = useState(false);
@@ -23,6 +26,15 @@ export const AuthProvider = ({ children }) => {
     }
     fetchList();
   }, [currencyRate]);
+
+  const fetchProfile = async () => {
+    const response = await backend_API.getProfile();
+    if (response) setUser({ ...response });
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   useEffect(() => {
     const checkIfAgent = async () => {

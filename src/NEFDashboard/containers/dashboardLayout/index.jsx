@@ -35,7 +35,7 @@ import LogoWide from "../../../assets/logo/logo_wide2.svg";
 import Logo from "../../../assets/logo/logo.svg";
 import { getCurrencySymbol, getFlagLink } from "../../../countries";
 
-const DashboardLayout = ({ children, title, type }) => {
+const DashboardLayout = ({ children, title }) => {
   const [sideBarShow, setSideBarShow] = useState(false);
   const [dropDownToggle, setDropDownToggle] = useState(false);
   const { toggleTheme } = useTheme();
@@ -207,7 +207,6 @@ const DashboardLayout = ({ children, title, type }) => {
           title={title}
           sideBarShow={sideBarShow}
           setSideBarShow={setSideBarShow}
-          type={type}
         />
       </Col>
 

@@ -53,7 +53,7 @@ function getItem(label, key, icon, children, type) {
   };
 }
 
-const SidebarNew = ({ title, setSideBarShow, sideBarShow, type }) => {
+const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
   const { toggleTheme } = useTheme();
 
   const { t, i18n } = useTranslation();
@@ -311,7 +311,6 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow, type }) => {
           open={openAddModal}
           handleSubmit={handleAddUserSuccess}
           onClose={() => setOpenAddModal(!openAddModal)}
-          type={type}
         />
       )}
       <div className="sidebar-container">

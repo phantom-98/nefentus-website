@@ -85,15 +85,6 @@ const PersonalDashboard = () => {
     if (Object.keys(selectedWallet)?.length) setOpenDrawer(!openDrawer);
   }, [selectedWallet]);
 
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  const fetchProfile = async () => {
-    const response = await backend_API.getProfile();
-    if (response) setUser({ ...response });
-  };
-
   const updateInfo = () => {
     fetchBalances();
     fetchPrices();
