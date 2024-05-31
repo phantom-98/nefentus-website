@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   // TODO This is legacy to support the old dashboard. Delete once new dashboard is fully implemented
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [user, setUser] = useState({});
+  const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [isAgent, setAgent] = useState(false);
   const [currencyRate, setCurrencyRate] = useState({
     from: "USD",
@@ -61,6 +62,8 @@ export const AuthProvider = ({ children }) => {
         isAgent,
         rateList,
         setRateList,
+        isWalletConnected,
+        setIsWalletConnected,
       }}
     >
       {children}
