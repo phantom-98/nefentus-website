@@ -41,6 +41,7 @@ import {
   useConnect,
   useSwitchChain,
   walletConnect,
+  useDisconnect,
 } from "@thirdweb-dev/react";
 import { useTranslation } from "react-i18next";
 import GasDetail from "./gasDetails";
@@ -78,6 +79,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
   const { fetchBalanceForWallet } = useBalances();
   const { prices } = usePrices();
   const connect = useConnect();
+  const disconnect = useDisconnect();
   const switchNetwork = useSwitchChain();
 
   useEffect(() => {
@@ -88,13 +90,6 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
     if (currencyItems?.length) setSelectedCurrency(currencyItems[0]);
   }, [currencyItems]);
 
-  // useEffect(() => {
-  //   setTotal(
-  //     +(selectedCoin?.price * selectedCoin?.amount * +selectedCurrency?.price) +
-  //       Math.round(gasValues?.gasPrice / 10 ** 9) * 0.0003,
-  //   );
-  // }, [selectedCoin]);
-
   // handling intervals through step state
   useEffect(() => {
     if (step == 1 && Object.keys(selectedCoin)?.length) startGasPriceInterval();
@@ -103,7 +98,46 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
   }, [step]);
 
   // This useeffect is useful for handling amount when gasPrice changes every 30 seconds
-  useEffect(() => {
+  // useEffect(() => {
+  //   fetchGasValues();
+  // }, [gasValues, step, selectedCoin]);
+
+  const handleAmountPercentage = (percentage) => {
+    if (selectedCoin?.value == 0) return;
+    const updatedAmount =
+      selectedCoin?.value -
+      (gasValues?.gasPrice * gasLimit) / 10 ** selectedCoin?.decimals;
+    if (updatedAmount > 0) {
+      handleAmount(
+        toggleCurrency
+          ? (
+              (selectedCoin?.price *
+                updatedAmount *
+                +selectedCurrency?.price *
+                percentage) /
+              100
+            )?.toFixed(9)
+          : ((updatedAmount * percentage) / 100)?.toFixed(9),
+      );
+      setPercentage(percentage);
+    } else handleAmount(0, true);
+  };
+
+  const handleAmount = (value, isChanged = false) => {
+    console.log(selectedCurrency, selectedCoin, toggleCurrency);
+    setSelectedCoin({
+      ...selectedCoin,
+      amount: toggleCurrency
+        ? value / (+selectedCurrency?.price * selectedCoin?.price)
+        : value,
+      amount_for_currency: toggleCurrency
+        ? value
+        : selectedCoin?.price * value * +selectedCurrency?.price,
+    });
+    isChanged && setPercentage(0);
+  };
+
+  useMemo(() => {
     if (Object.keys(gasValues)?.length && selectedCoin?.amount != "") {
       if (step == 1) {
         const updatedAmount =
@@ -114,9 +148,13 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
       }
       percentage
         ? handleAmountPercentage(percentage)
-        : handleAmount(selectedCoin?.amount);
+        : handleAmount(
+            toggleCurrency
+              ? selectedCoin?.amount_for_currency
+              : selectedCoin?.amount,
+          );
     }
-  }, [gasValues, step, selectedCoin]);
+  }, [gasValues, step]);
 
   const startGasPriceInterval = (coin = selectedCoin) => {
     setDisable(false);
@@ -173,35 +211,34 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
           .map((balance, index) => balance * prices[index])
           .reduce((pre, cur) => parseFloat(cur) + parseFloat(pre), 0);
 
-        if (totalBalance > 0) {
-          const pers = cryptoBalances?.map((balance, index) =>
-            parseFloat(
-              ((balance * prices[index]) / (totalBalance * 1.0)) * 100,
-            ).toFixed(2),
-          );
-          const data = currencyList.map((currency, index) => ({
-            ...currency,
-            middleName: blockchainToName(currency.blockchain),
-            middleInfo: "Network",
-            price: prices[index],
-            value: cryptoBalances[index],
-            amount_dollar: parseFloat(
-              (prices[index] * cryptoBalances[index]).toFixed(4),
-            ),
-            amount_euro:
-              +euroCurrency?.rate * prices[index] * cryptoBalances[index],
-            percentage: pers[index],
-            icon:
-              currency.name?.toLowerCase() == "ethereum" ||
-              currency.name?.toLowerCase() == "wrapped ethereum"
-                ? Ethereum
-                : currency?.icon,
-          }));
-          setCryptoList(data);
-          setSelectedCoin({ ...data[0], amount: "" });
-          fetchGasPrice(data[0]?.abbr);
-          startGasPriceInterval(data[0]);
-        }
+        const pers = cryptoBalances?.map((balance, index) =>
+          parseFloat(
+            ((balance * prices[index]) / (totalBalance * 1.0)) * 100,
+          ).toFixed(2),
+        );
+        const data = currencyList.map((currency, index) => ({
+          ...currency,
+          middleName: blockchainToName(currency.blockchain),
+          middleInfo: "Network",
+          price: prices[index],
+          value: cryptoBalances[index],
+          amount_dollar: parseFloat(
+            (prices[index] * cryptoBalances[index]).toFixed(4),
+          ),
+          amount_euro:
+            +euroCurrency?.rate * prices[index] * cryptoBalances[index],
+          percentage: pers[index],
+          icon:
+            currency.name?.toLowerCase() == "ethereum" ||
+            currency.name?.toLowerCase() == "wrapped ethereum"
+              ? Ethereum
+              : currency?.icon,
+        }));
+        setCryptoList(data);
+        setSelectedCoin({ ...data[0], amount: "" });
+        fetchGasPrice(data[0]?.abbr);
+        startGasPriceInterval(data[0]);
+
         return cryptoBalances;
       })
       .catch((e) => {
@@ -244,22 +281,6 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
     setOpenCryptoDrawer(false);
   };
 
-  const handleAmount = (value, isChanged = false) => {
-    setSelectedCoin({ ...selectedCoin, amount: value });
-    isChanged && setPercentage(0);
-  };
-
-  const handleAmountPercentage = (percentage) => {
-    if (selectedCoin?.value == 0) return;
-    const updatedAmount =
-      selectedCoin?.value -
-      (gasValues?.gasPrice * gasLimit) / 10 ** selectedCoin?.decimals;
-    if (updatedAmount > 0) {
-      handleAmount(((updatedAmount * percentage) / 100)?.toFixed(9));
-      setPercentage(percentage);
-    } else handleAmount(0, true);
-  };
-
   const exchangeCurrency = () => {
     setToggleCurrency(!toggleCurrency);
   };
@@ -279,6 +300,8 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
     // Withdraw
     const tokenAddress = selectedCoin?.address;
     if (!selectedWallet?.internal) {
+      console.log(selectedWallet);
+      debugger;
       const currentWalletConfig =
         selectedWallet?.type?.toLowerCase() === "metamask"
           ? metamaskWallet()
@@ -309,6 +332,8 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
         .then(async (res) => {
           // setInfoMessage(t("messages.success.connected"));
           // setShow(true);
+          console.log(res);
+          debugger;
           return true;
         })
         .catch(() => {
@@ -323,8 +348,9 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
       const web3API = new web3Api();
 
       try {
+        debugger;
         await switchNetwork(chainId(selectedCoin?.blockchain));
-
+        debugger;
         const txReceipt = await web3API.send(
           tokenAddress,
           selectedCoin?.blockchain,
@@ -340,6 +366,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
         }
       } catch (error) {
         console.log(error);
+        disconnect();
         setErrorMessage(t("messages.error.withdraw"));
       }
     } else {
@@ -464,15 +491,16 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
                           width={14}
                           height={14}
                         />
-                        <div> {selectedCoin?.amount}</div>
+                        <div>
+                          {" "}
+                          {formatTokenBalance(selectedCoin?.amount, 4)}
+                        </div>
                       </Flex>
                     ) : (
                       <div>
                         {(selectedCurrency?.icon ?? "$") +
                           formatTokenBalance(
-                            selectedCoin?.price *
-                              selectedCoin?.amount *
-                              +selectedCurrency?.price,
+                            selectedCoin?.amount_for_currency,
                             2,
                           )}
                       </div>
@@ -495,9 +523,7 @@ const SendCrypto = ({ openSendModal, onCloseModal, handleSubmitCrypto }) => {
                     type="number"
                     value={
                       toggleCurrency
-                        ? selectedCoin?.price *
-                          selectedCoin?.amount *
-                          +selectedCurrency?.price
+                        ? selectedCoin?.amount_for_currency
                         : selectedCoin?.amount
                     }
                     disabled={disable}

@@ -149,6 +149,7 @@
 
 .send-crypto-amount {
   font-size: 36px;
+  max-width: 90%;
   font-weight: 500;
 }
 
