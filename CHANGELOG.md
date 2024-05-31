@@ -19,3 +19,4 @@
 - Show gas prices when paying invoices/products
 - Modify Personal Details of Level 1 in identification process
 - Implemented all new dashboards with their respective functionalities
+- Send modal is functional for external
