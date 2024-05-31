@@ -2,10 +2,12 @@
 
 # Merged changes
 
+- Fix income cards in case of loss
 - Fix performance measures of sales and referral dashboards
 - Fix issues with partners and rework authContext
 - Update invoicing && converter in new dashboard
 - Send modal is functional for external
+- CreateInvoice UI fixes completed
 
 # v1.1.0
 

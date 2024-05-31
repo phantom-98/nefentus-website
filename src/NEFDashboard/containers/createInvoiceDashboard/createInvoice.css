@@ -72,6 +72,8 @@
 }
 
 .create-invoice-personal-detail input {
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
   background-color: var(--BG2, #171717) !important;
 }
 
