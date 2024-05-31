@@ -10,6 +10,7 @@
 - Products Dashboard is functional
 - Add swap feature
 - Add skeleton loader when switching wallet, fix loop issue in ProfileCard
+- Update invoicing && converter in new dashboard
 
 # Merged changes
 

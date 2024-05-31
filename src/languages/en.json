@@ -1178,6 +1178,10 @@
     }
   },
   "converter": {
+    "title": "Currency Swap",
+    "swap": "Swap",
+    "success": "Successful Currency Exchanged",
+    "close": "Close",
     "wallet": "Wallet",
     "from": "From",
     "to": "To",
@@ -1553,8 +1557,9 @@
     "swapCost": "Swap Costs",
     "transactionCost": "Transaction Cost",
     "totalDue": "Total Due",
-    "currencyConversionText1": "Prices in € are calculated with the exchange rate on ",
-    "currencyConversionText2": "for",
+    "rateDescription1": "Prices in ",
+    "rateDescription2": " are calculated with the exchange rate on ",
+    "rateDescription3": " for 1USD",
     "vatDescription": "VAT: Reverse-charge system, the tax liability is shifted to the recipient of the services. Local VAT applicable.",
     "payInvoice": "Pay the Invoice",
     "description": "Description",

@@ -222,14 +222,18 @@ const InvoicePreview = ({ invoice }) => {
           <Divider style={{ margin: 0 }} />
         </Flex>
         <Flex vertical gap={"8px"}>
-          <Text className="default-text-gray">
-            {t("invoicePreview.currencyConversionText1")}
-            {moment(rate?.date)?.format("YYYY.MM.DD") +
-              " " +
-              rate?.rate?.toFixed(2)}
-            {getCurrencySymbol()[invoice?.currency] + " "}
-            {t("invoicePreview.currencyConversionText2")} (1USD)
-          </Text>
+          {invoice?.currency !== "USD" && (
+            <Text className="default-text-gray">
+              {t("invoicePreview.rateDescription1")}
+              {invoice?.currency}
+              {t("invoicePreview.rateDescription2")}
+              {moment(rate?.date)?.format("YYYY.MM.DD") +
+                " " +
+                rate?.rate?.toFixed(2)}
+              {invoice?.currency}
+              {t("invoicePreview.rateDescription3")}
+            </Text>
+          )}
           {invoice?.reverseCharge && (
             <Text className="default-text-gray">
               {t("invoicePreview.vatDescription")}

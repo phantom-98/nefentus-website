@@ -1121,6 +1121,10 @@
     }
   },
   "converter": {
+    "title": "Währungsswap",
+    "swap": "Tauschen Sie",
+    "success": "Erfolgreicher Währungsumtausch",
+    "close": "Schließen",
     "wallet": "Wallet",
     "from": "Von",
     "to": "Nach",
@@ -1473,8 +1477,9 @@
     "swapCost": "Tauschkosten",
     "transactionCost": "Transaktionskosten",
     "totalDue": "Gesamtbetrag",
-    "currencyConversionText1": "Preise in € werden mit dem Wechselkurs vom ",
-    "currencyConversionText2": "berechnet",
+    "rateDescription1": "Preise in ",
+    "rateDescription2": " sind mit dem Wechselkurs vom ",
+    "rateDescription3": " für 1USD berechnet",
     "vatDescription": "Mehrwertsteuer: Umkehrung des Steuerschuldverhältnisses, die Steuerpflicht wird auf den Leistungsempfänger übertragen. Lokale Mehrwertsteuer anwendbar.",
     "payInvoice": "Rechnung bezahlen",
     "description": "Beschreibung",

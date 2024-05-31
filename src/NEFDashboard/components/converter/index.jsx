@@ -493,7 +493,6 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
       const native = currencies().findIndex(
         (item) => item.abbr === currencies()[fromCryptoIndex].blockchain,
       );
-      console.log("gas fe", gas, balances[native]);
       if (
         parseFloat(amount) > balances[fromCryptoIndex] ||
         parseFloat(gas) > balances[native]
@@ -515,7 +514,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
           <Flex align={"center"} gap={4} className="converter-content">
             <img src={ConverterIcon} />
             <div className="default-text-gray converter-title">
-              Currency Swap
+              {t("converter.title")}
             </div>
           </Flex>
         ) : step == 2 ? (
@@ -889,7 +888,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
               >
                 <img src={SuccessIcon} alt="success" />
                 <div className="default-text converter-title">
-                  Successful Currency Exchanged
+                  {t("converter.success")}
                 </div>
               </Flex>
             </div>
@@ -951,7 +950,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
             disabled={insufficient || fromCryptoIndex == toCryptoIndex}
             loading={spinner}
           >
-            Swap
+            {t("converter.swap")}
           </Button>
         ) : step == 2 ? (
           <Button
@@ -965,7 +964,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
             className="converter-footer-button back-to-home"
             onClick={handleConvertCrypto}
           >
-            Back to Home
+            {t("converter.close")}
           </Button>
         )}
       </Flex>
