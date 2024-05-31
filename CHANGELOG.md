@@ -1,5 +1,6 @@
 # New changes
 
+- Fix income cards in case of loss
 - Fix performance measures of sales and referral dashboards
 - Create career page and add 5 open jobs
 - fix country issue when creating invoice

@@ -29,12 +29,18 @@
   border-radius: 8px 8px 0 0;
 }
 
-.income-profit {
+.income-profit,
+.income-loss {
   width: fit-content;
   color: #07b561;
   padding: 3px 4px;
   border-radius: 6px;
   background: var(--TrnspGreen, rgba(7, 181, 97, 0.1));
+}
+
+.income-loss {
+  color: #d41212 !important;
+  background: var(--TrnspGreen, rgba(245, 106, 87, 0.1)) !important;
 }
 
 .income-amount {
@@ -48,6 +54,10 @@
 
 .income-profit .default-text {
   color: #07b561;
+}
+
+.income-loss .default-text {
+  color: #d41212;
 }
 
 @media screen and (max-width: 1200px) {
