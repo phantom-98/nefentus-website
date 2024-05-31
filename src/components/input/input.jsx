@@ -174,7 +174,7 @@ export const Textarea = ({
         <p
           className={`${styles.label} ${
             dashboard ? styles.dashboardLabel : ""
-          }`}
+          } default-text`}
         >
           {label}
         </p>
@@ -697,7 +697,7 @@ export const RadioOption = ({
         display: "flex",
         justifyContent: "space-between",
         gap: "1rem",
-        border: `1px solid ${value ? "#28C8F0" : "var(--border-color)"}`,
+        border: `1px solid ${value ? "#28C8F0" : "var(--Dark)"}`,
         borderRadius: "0.6rem",
         padding: "0.8rem",
         background: createInvoice ? "var(--BG2, #171717)" : "var(--bg2-color)",
@@ -725,7 +725,7 @@ export const RadioOption = ({
           width: "1.4rem",
           height: "1.4rem",
           padding: "1px",
-          border: `1px solid ${value ? "#28C8F0" : "var(--border-color)"}`,
+          border: `1px solid ${value ? "#28C8F0" : "var(--Dark)"}`,
           borderRadius: "50%",
         }}
       >

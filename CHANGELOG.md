@@ -13,6 +13,7 @@
 - Add skeleton loader when switching wallet, fix loop issue in ProfileCard
 - Update invoicing && converter in new dashboard
 - Send modal is functional for external
+- CreateInvoice UI fixes completed
 
 # Merged changes
 

@@ -345,10 +345,11 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
           <p
             style={{
               fontSize: "1.2rem",
-              padding: "0.4rem 2rem 0.2rem",
-              border: "1px solid var(--border-color)",
-              borderRadius: "0.6rem",
+              padding: "6px 24px 6px 12px",
+              border: "1px solid var(--Dark)",
+              borderRadius: "6px",
               cursor: "pointer",
+              background: "var(--BG2, #171717)",
             }}
             onClick={() => {
               setInvoice({
@@ -424,6 +425,9 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                       style={{
                         textAlign: "left",
                         background: "var(--BG2, #171717)",
+                        padding: "6px 24px 6px 12px",
+                        border: "1px solid var(--Dark)",
+                        height: "40px",
                       }}
                     />
                   </td>
@@ -445,6 +449,13 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                           }),
                         });
                       }}
+                      style={{
+                        textAlign: "left",
+                        background: "var(--BG2, #171717)",
+                        padding: "6px 24px 6px 12px",
+                        border: "1px solid var(--Dark)",
+                        height: "40px",
+                      }}
                     />
                   </td>
                   <td>
@@ -465,10 +476,27 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                           }),
                         });
                       }}
+                      style={{
+                        textAlign: "left",
+                        background: "var(--BG2, #171717)",
+                        padding: "6px 24px 6px 12px",
+                        border: "1px solid var(--Dark)",
+                        height: "40px",
+                      }}
                     />
                   </td>
                   <td>
-                    <input readOnly value={item.total} />
+                    <input
+                      readOnly
+                      value={item.total}
+                      style={{
+                        textAlign: "left",
+                        background: "var(--BG2, #171717)",
+                        padding: "6px 24px 6px 12px",
+                        border: "1px solid var(--Dark)",
+                        height: "40px",
+                      }}
+                    />
                   </td>
                   <td>
                     <img
@@ -499,8 +527,8 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
             fontSize: "1.2rem",
           }}
         >
-          <p>{t("payments.subtotal")}</p>
-          <p>
+          <p className="default-text-gray">{t("payments.subtotal")}</p>
+          <p className="default-text">
             {getCurrencySymbol()[invoice?.currency]}
             {formatUSDBalance(invoice?.amount)}
           </p>
@@ -513,8 +541,8 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
             fontSize: "1.2rem",
           }}
         >
-          <p>{t("payments.vatValue")}</p>
-          <p>
+          <p className="default-text-gray">{t("payments.vatValue")}</p>
+          <p className="default-text">
             {invoice?.reverseCharge ? (
               <span>RC</span>
             ) : (
@@ -535,7 +563,8 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
             paddingRight: "3rem",
             paddingTop: "2rem",
             fontSize: "1.2rem",
-            borderTop: "1px solid var(--border-color)",
+            borderTop: "1px solid var(--Dark)",
+            color: "var(--White, #FAFAFA)",
           }}
         >
           <p>{t("payments.totalDue")}</p>
