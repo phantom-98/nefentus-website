@@ -227,32 +227,23 @@ function App() {
                       <Route
                         path="/referral-dashboard"
                         element={
-                          <DashboardLayout
-                            title={"referralDashboard.title"}
-                            type={"admin"}
-                          >
-                            <ReferralDashboard type={"admin"} />
+                          <DashboardLayout title={"referralDashboard.title"}>
+                            <ReferralDashboard />
                           </DashboardLayout>
                         }
                       />
                       <Route
                         path="/sales-dashboard"
                         element={
-                          <DashboardLayout
-                            title={"salesDashboard.title"}
-                            type={"admin"}
-                          >
-                            <SalesDashboard type={"admin"} />
+                          <DashboardLayout title={"salesDashboard.title"}>
+                            <SalesDashboard />
                           </DashboardLayout>
                         }
                       />
                       <Route
                         path="/products-dashboard"
                         element={
-                          <DashboardLayout
-                            title={"productsDashboard.title"}
-                            type={"admin"}
-                          >
+                          <DashboardLayout title={"productsDashboard.title"}>
                             <Products />
                           </DashboardLayout>
                         }
@@ -260,10 +251,7 @@ function App() {
                       <Route
                         path="/create-invoice"
                         element={
-                          <DashboardLayout
-                            title={"payments.createInvoice"}
-                            type={"admin"}
-                          >
+                          <DashboardLayout title={"payments.createInvoice"}>
                             <CreateInvoice />
                           </DashboardLayout>
                         }
@@ -273,7 +261,6 @@ function App() {
                         element={
                           <DashboardLayout
                             title={"productsDashboard.productDetail"}
-                            type={"admin"}
                           >
                             <Product />
                           </DashboardLayout>

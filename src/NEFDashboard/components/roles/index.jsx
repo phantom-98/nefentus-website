@@ -6,6 +6,7 @@ import adminDashboardApi from "../../../api/adminDashboardApi";
 import { ROLE_TO_NAME } from "../../../constants";
 import { useTranslation } from "react-i18next";
 import AddUser from "../addUser";
+import { useAuth } from "../../../context/auth/authContext";
 
 const role_colors = {
   leader: "#078BB9",
@@ -15,9 +16,10 @@ const role_colors = {
   admin: "#ED9001",
 };
 
-const Roles = ({ type, fetchUsers }) => {
+const Roles = ({ fetchUsers }) => {
   const { t } = useTranslation();
-  const adminApi = new adminDashboardApi(type);
+  const { user } = useAuth();
+  const adminApi = new adminDashboardApi(user.roles && user.roles[0]);
   const [totalRoles, setTotalRoles] = useState(12);
   const [roleList, setRoleList] = useState([]);
   const [open, setOpen] = useState(false);
@@ -60,7 +62,6 @@ const Roles = ({ type, fetchUsers }) => {
           open={open}
           handleSubmit={handleSubmit}
           onClose={() => setOpen(!open)}
-          type={type}
         />
       )}
       <Card

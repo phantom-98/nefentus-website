@@ -10,8 +10,9 @@ import { getRole } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import "./addUser.css";
 
-const AddUser = ({ open, handleSubmit, onClose, type }) => {
-  const adminApi = new adminDashboardApi(type);
+const AddUser = ({ open, handleSubmit, onClose }) => {
+  const { user } = useAuth();
+  const adminApi = new adminDashboardApi(user.roles && user.roles[0]);
   const { t } = useTranslation();
   const [roles, setRoles] = useState([
     { value: "Vendor", label: t("dashboard.roles.Vendor") },
@@ -23,7 +24,6 @@ const AddUser = ({ open, handleSubmit, onClose, type }) => {
     { value: "Leader", label: t("dashboard.roles.Leader") },
   ]);
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
-  const { user } = useAuth();
   const [userDetail, setUserDetail] = useState({
     firstName: "",
     lastName: "",
