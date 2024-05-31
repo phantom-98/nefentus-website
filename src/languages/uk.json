@@ -1403,7 +1403,8 @@
       "portfolio": "Портфель",
       "coinView": "Перегляд монет",
       "deleteWallet": "Ви впевнені, що хочете видалити цей гаманець?",
-      "removeWallet": "Видалити гаманець"
+      "removeWallet": "Видалити гаманець",
+      "remove": "Видалити"
     },
     "walletCard": {
       "addressTitle": "Адреса гаманця",
