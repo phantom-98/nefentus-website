@@ -27,7 +27,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
   const { t } = useTranslation();
   const { theme } = useTheme();
 
-  const [showCreate, setShowCreate] = useState(false);
+  // const [showCreate, setShowCreate] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const { clearMessages, setErrorMessage, setInfoMessage } =
     useContext(MessageContext);
@@ -56,7 +56,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
       setErrorMessage(t("messages.error.taxPercentValid"));
       return;
     }
-    setShowCreate(false);
+    // setShowCreate(false);
     // if (!email) {
     //   setErrorMessage(t("messages.validation.validEmail"));
     //   return;
@@ -79,7 +79,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
     // }
 
     const data = {
-      amount: parseFloat(invoice?.totalDue),
+      amount: parseFloat(invoice?.amount),
       email: invoice?.email,
       name: invoice?.name,
       company: invoice?.company,
@@ -93,7 +93,6 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
       country: invoice?.country,
       person: invoice?.isPerson,
     };
-
     // Create invoice
     const invoiceLinkPart = await vendorAPI.createInvoice(data);
 
@@ -121,13 +120,13 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
   }, [invoice?.country, invoice?.isPerson, invoice?.taxInfo]);
 
   useEffect(() => {
-    loadInvoiceNumber();
-    loadTaxInfo();
-    return () => {
-      setInvoice({ ...invoice, invoiceNo: "NEF1000" });
-      // setInvoiceNo(1000);
-    };
-  }, []);
+    if (!invoice?.invoiceNo) {
+      loadInvoiceNumber();
+    }
+    if (!invoice?.taxInfo) {
+      loadTaxInfo();
+    }
+  }, [invoice]);
 
   useEffect(() => {
     const itemsAmount = invoice?.items.reduce((prev, current) => {
@@ -136,11 +135,11 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
     setInvoice({
       ...invoice,
       amount: itemsAmount,
-      swapCost: itemsAmount * 0.05,
-      totalDue:
-        (itemsAmount || 0) +
-        (invoice?.transactionCost?.amount_dollar || 0) +
-        (itemsAmount * 0.05 || 0),
+      // swapCost: itemsAmount * 0.05,
+      // totalDue:
+      // (itemsAmount || 0) +
+      // (invoice?.transactionCost?.amount_dollar || 0) +
+      // (itemsAmount * 0.05 || 0),
     });
   }, [invoice?.items]);
 
@@ -287,7 +286,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                 }
                 options={
                   invoice?.taxInfo
-                    ? JSON.parse(invoice?.taxInfo?.vatPercent).map(
+                    ? [...JSON.parse(invoice?.taxInfo?.vatPercent)].map(
                         (tax, index) => {
                           return {
                             value: tax,
@@ -301,20 +300,6 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                       )
                     : []
                 }
-                createInvoice={true}
-              />
-              <RadioSelect
-                value={invoice.taxPercent}
-                setValue={(value) =>
-                  setInvoice({ ...invoice, taxPercent: value })
-                }
-                options={[
-                  {
-                    value: 0,
-                    label: 0 + "%",
-                    content: t("payments.tax.reduced"),
-                  },
-                ]}
                 createInvoice={true}
               />
             </div>
@@ -542,8 +527,10 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
           createInvoice
         />
         <div className="invoice-btn-wrapper">
-          <Button>Cancel</Button>
-          <Button onClick={() => createInvoice()}>Create invoice</Button>
+          <Button>{t("general.cancel")}</Button>
+          <Button onClick={() => createInvoice()}>
+            {t("payments.createInvoice")}
+          </Button>
         </div>
       </div>
       {showPopup === "qrcode" && (
