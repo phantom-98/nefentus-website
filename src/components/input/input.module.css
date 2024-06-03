@@ -319,5 +319,5 @@
 .checkoutInput {
   font-size: 1.2rem !important;
   padding: 1rem !important;
-  background-color: var(--card-color) !important;
+  background-color: var(--card-color);
 }

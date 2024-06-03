@@ -1,7 +1,7 @@
 import { Card, Col, Flex, Input, Row, Segmented } from "antd";
 import React, { useEffect, useState } from "react";
 import BalanceGraph from "../../components/balanceGraph";
-import { formatUSDBalance } from "../../../utils";
+import { formatUSDBalance, checkJwtToken } from "../../../utils";
 
 import ProductDetailIcon from "../../../assets/newDashboardIcons/product-detail.svg";
 import OpenIcon from "../../../assets/newDashboardIcons/pending.svg";
@@ -13,33 +13,35 @@ import { useTranslation } from "react-i18next";
 import IncomeCard from "../../components/incomeCard";
 import SearchIcon from "../../../assets/newDashboardIcons/search.svg";
 import TableData from "../../components/tableData";
-import vendorDashboardApi from "../../../api/vendorDashboardApi";
 import TransactionDrawer from "../../components/transactionDrawer";
 import InvoiceStatusCard from "../../components/invoiceStatusCard";
+import vendorDashboardApi from "../../../api/vendorDashboardApi";
+import adminDashboardApi from "../../../api/adminDashboardApi";
+import { useAuth } from "../../../context/auth/authContext";
+import { useTheme } from "../../../context/themeContext/themeContext";
+import { graphDataToList } from "../../../utils";
 
 const incomeCards = [
   {
     title: "referralDashboard.incomeCards.last30DaysTitle",
     subText: "referralDashboard.incomeCards.last30DaysSubText",
-    number: "32.44",
-    percentage: "3.4",
   },
   {
     title: "referralDashboard.incomeCards.last24HoursTitle",
     subText: "referralDashboard.incomeCards.last24HoursSubText",
-    number: "32.44",
-    percentage: "3.4",
   },
   {
     title: "referralDashboard.incomeCards.paymentCardTitle",
     subText: "referralDashboard.incomeCards.paymentCardSubText",
-    number: "64",
-    percentage: "3.4",
   },
 ];
 const SalesDashboard = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { language } = i18n;
+  const { theme } = useTheme();
   const dashboardApi = new vendorDashboardApi();
+  const { currencyRate, user } = useAuth();
+  const adminApi = new adminDashboardApi(user.roles && user.roles[0]);
   const [activeSegment, setActiveSegment] = useState("product");
   const [products, setProducts] = useState([]);
   const [dataLength, setDataLength] = useState(6);
@@ -48,21 +50,55 @@ const SalesDashboard = () => {
   const [invoices, setInvoices] = useState([]);
   const [openTransaction, setOpenTransaction] = useState(false);
   const [selectedData, setSelectedData] = useState({});
+  const [graphData, setGraphData] = useState();
   const [search, setSearch] = useState("");
+  const [income, setIncome] = useState(0);
+  const [cardDetails, setCardDetails] = useState([]);
 
   useEffect(() => {
-    fetchProducts();
-  }, [currentPage, dataLength]);
+    if (user.roles) fetchIncomeDetails();
+  }, [user]);
+
+  useEffect(() => {
+    if (user.roles) fetchProducts();
+  }, [user, currentPage, dataLength]);
 
   useEffect(() => {
     if (Object.keys(selectedData)?.length) setOpenTransaction(true);
     else setOpenTransaction(false);
-  });
+  }, [selectedData]);
 
   useEffect(() => {
     if (currentPage == 1) fetchProducts();
     else setCurrentPage(1);
   }, [activeSegment]);
+
+  useEffect(() => {
+    if (user.roles) fetchGraphData();
+  }, [user, language, theme, currencyRate]);
+
+  const fetchIncomeDetails = async () => {
+    const dataInc = await dashboardApi.getTotalIncome();
+    if (!dataInc) return;
+
+    setIncome(dataInc["total"]?.number);
+    setCardDetails(
+      incomeCards?.map((card, index) => ({
+        ...card,
+        ...(index == 0
+          ? dataInc["last30Days"]
+          : index == 1
+          ? dataInc["last24Hours"]
+          : dataInc["numberOfPayments"]),
+      })),
+    );
+  };
+
+  const fetchGraphData = async () => {
+    await checkJwtToken();
+    const data = await dashboardApi.getTotalIncomesPerDay();
+    setGraphData(graphDataToList(data));
+  };
 
   const fetchProducts = async (
     search = "",
@@ -71,9 +107,9 @@ const SalesDashboard = () => {
   ) => {
     if (activeSegment == "product") {
       const newProducts = await dashboardApi.getProducts(
-        current - 1,
-        length,
-        search,
+        current - 1, // 0
+        length, // 1000
+        search, // ""
       );
       if (newProducts) {
         const newSignedImagePaths = await Promise.all(
@@ -108,8 +144,9 @@ const SalesDashboard = () => {
 
   const columns = [
     {
-      title: "Product Name",
+      title: t("salesDashboard.productTable.productName"),
       dataIndex: "name",
+      fixed: "left",
       sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ["ascend", "descend"],
       render: (name, record) => {
@@ -132,7 +169,7 @@ const SalesDashboard = () => {
       },
     },
     {
-      title: "Client",
+      title: t("salesDashboard.productTable.client"),
       dataIndex: "user",
       sorter: (a, b) => a.user?.firstName.length - b.user?.firstName.length,
       sortDirections: ["ascend", "descend"],
@@ -150,23 +187,16 @@ const SalesDashboard = () => {
       },
     },
     {
-      title: "Invoice ID",
+      title: t("salesDashboard.productTable.invoiceId"),
       dataIndex: "link",
       sorter: (a, b) => a.link.length - b.link.length,
       sortDirections: ["ascend", "descend"],
       render: (link, record) => {
-        return (
-          <Row align={"middle"} gutter={6}>
-            <Col>
-              <div className="default-text">{link}</div>
-              {/* <div className="default-text-gray">{record?.email}</div> */}
-            </Col>
-          </Row>
-        );
+        return <div className="default-text invoice-id-column">{link}</div>;
       },
     },
     {
-      title: "Amount",
+      title: t("salesDashboard.productTable.amount"),
       dataIndex: "price",
       sorter: (a, b) => a.price.length - b.price.length,
       sortDirections: ["ascend", "descend"],
@@ -174,7 +204,10 @@ const SalesDashboard = () => {
         return (
           <Row align={"middle"} gutter={6}>
             <Col>
-              <div className="default-text">${price}</div>
+              <div className="default-text">
+                {currencyRate?.symbol +
+                  formatUSDBalance(+price * currencyRate?.rate)}
+              </div>
               {/* <div className="default-text-gray">{record?.email}</div> */}
             </Col>
           </Row>
@@ -182,7 +215,7 @@ const SalesDashboard = () => {
       },
     },
     {
-      title: "Date",
+      title: t("salesDashboard.productTable.date"),
       dataIndex: "updatedAt",
       sorter: (a, b) => a.updatedAt.length - b.updatedAt.length,
       sortDirections: ["ascend", "descend"],
@@ -203,9 +236,8 @@ const SalesDashboard = () => {
       },
     },
     {
-      title: "Action",
+      title: t("salesDashboard.productTable.action"),
       dataIndex: "action",
-
       render: (_, record) => {
         return (
           <Flex
@@ -217,7 +249,7 @@ const SalesDashboard = () => {
           >
             <img src={ProductDetailIcon} />
 
-            <div className="default-text">Details</div>
+            <div className="default-text">{t("salesDashboard.details")}</div>
           </Flex>
         );
       },
@@ -226,8 +258,9 @@ const SalesDashboard = () => {
 
   const invoiceColumns = [
     {
-      title: "Billed To",
+      title: t("salesDashboard.invoiceTable.billedTo"),
       dataIndex: "company",
+      fixed: "left",
       sorter: (a, b) => a.company.length - b.company.length,
       sortDirections: ["ascend", "descend"],
       render: (company, record) => {
@@ -240,25 +273,34 @@ const SalesDashboard = () => {
       },
     },
     {
-      title: "Invoice ID",
-      dataIndex: "link",
-      sorter: (a, b) => a.link.length - b.link.length,
+      title: t("salesDashboard.invoiceTable.invoiceId"),
+      dataIndex: "invoiceNumber",
+      sorter: (a, b) => a.invoiceNumber.length - b.invoiceNumber.length,
       sortDirections: ["ascend", "descend"],
-      render: (link, record) => {
-        return <div className="default-text">{link}</div>;
+      render: (invoiceNumber, record) => {
+        return (
+          <div className="default-text invoice-id-column">
+            {"NEF" + invoiceNumber}
+          </div>
+        );
       },
     },
     {
-      title: "Amount",
+      title: t("salesDashboard.invoiceTable.amount"),
       dataIndex: "price",
       sorter: (a, b) => a.price.length - b.price.length,
       sortDirections: ["ascend", "descend"],
       render: (price, record) => {
-        return <div className="default-text">${price}</div>;
+        return (
+          <div className="default-text">
+            {currencyRate?.symbol +
+              formatUSDBalance(+price * currencyRate?.rate)}
+          </div>
+        );
       },
     },
     {
-      title: "Status",
+      title: t("salesDashboard.invoiceTable.status"),
       dataIndex: "paidAt",
       sorter: (a, b) => a.paidAt?.length - b.paidAt?.length,
       sortDirections: ["ascend", "descend"],
@@ -280,7 +322,7 @@ const SalesDashboard = () => {
     },
 
     {
-      title: "Date",
+      title: t("salesDashboard.invoiceTable.date"),
       dataIndex: "createdAt",
       sorter: (a, b) => a.createdAt.length - b.createdAt.length,
       sortDirections: ["ascend", "descend"],
@@ -301,9 +343,8 @@ const SalesDashboard = () => {
       },
     },
     {
-      title: "Action",
+      title: t("salesDashboard.invoiceTable.action"),
       dataIndex: "action",
-
       render: (_, record) => {
         return (
           <Flex
@@ -315,7 +356,7 @@ const SalesDashboard = () => {
           >
             <img src={ProductDetailIcon} />
 
-            <div className="default-text">Details</div>
+            <div className="default-text">{t("salesDashboard.details")}</div>
           </Flex>
         );
       },
@@ -349,28 +390,37 @@ const SalesDashboard = () => {
         >
           <Flex align="center" justify="space-between" flex={2}>
             <div className="default-text-gray sales-income-title">
-              Total Sales Income
+              {t("salesDashboard.salesIncomeTitle")}
             </div>
             <div className="default-text sales-income-value">
-              ${formatUSDBalance("8198.45")}
+              {currencyRate?.symbol +
+                formatUSDBalance(+income * currencyRate?.rate)}
             </div>
           </Flex>
           <div>
             <BalanceGraph
-              graphData={[{ label: moment().format("MMM DD"), amount: 0 }]}
+              graphData={
+                graphData?.length > 0
+                  ? graphData
+                  : [{ label: moment().format("MMM DD"), amount: 0 }]
+              }
             />
           </div>
         </Flex>
-        <Flex gap={12}>
+        <Flex gap={12} wrap>
           <InvoiceStatusCard />
-
-          <Row className="sales-income-card-container" gutter={16}>
-            {incomeCards?.map((card, index) => (
-              <Col span={8}>
-                <IncomeCard card={card} key={index} />
-              </Col>
+          <Flex
+            className="sales-income-card-container"
+            justify={"space-between"}
+          >
+            {cardDetails?.map((card, index) => (
+              <IncomeCard
+                card={card}
+                key={index}
+                isLast={index === cardDetails?.length - 1}
+              />
             ))}
-          </Row>
+          </Flex>
         </Flex>
 
         {/** Transaction Table */}
@@ -379,7 +429,7 @@ const SalesDashboard = () => {
           <Row align={"middle"} justify={"space-between"}>
             <Flex align="center" gap={36}>
               <div className="default-text sales-income-title">
-                Transactions
+                {t("salesDashboard.transactionTitle")}
               </div>
               <Flex
                 align="center"
@@ -394,7 +444,7 @@ const SalesDashboard = () => {
                   }`}
                   onClick={() => handleSegment("product")}
                 >
-                  Product
+                  {t("salesDashboard.product")}
                 </div>
                 <div
                   className={`transaction-segment cursor-pointer ${
@@ -404,14 +454,14 @@ const SalesDashboard = () => {
                   }`}
                   onClick={() => handleSegment("invoice")}
                 >
-                  Invoice
+                  {t("salesDashboard.invoice")}
                 </div>
               </Flex>
             </Flex>
             <Input
               placeholder={t("personalDashboard.searchPlaceholder")}
               prefix={<img src={SearchIcon} />}
-              className="user-table-searchbar"
+              className="sales-dashboard-table-searchbar"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyUp={(e) => e?.key == "Enter" && onSearch(e?.target?.value)}

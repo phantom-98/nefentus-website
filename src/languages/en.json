@@ -899,6 +899,7 @@
       "deleteProduct": "Product deleted successfully!",
       "addUser": "User added successfully!",
       "updateUser": "User updated successfully!",
+      "createInvoice": "Invoice created successfully!",
       "deleteInvoice": "Invoice deleted!",
       "passwordChange": "Password successfully changed!",
       "updatePicture": "Profile picture successfully changed!",
@@ -1095,7 +1096,8 @@
     "tax": {
       "reverseCharge": "The Reverse Charge process is used. The client is responsable for paying the VAT.",
       "standard": "Standard",
-      "reduced": "Reduced"
+      "reduced": "Reduced",
+      "zero": "Zero"
     },
     "items": {
       "title": "Invoice Items",
@@ -1178,6 +1180,10 @@
     }
   },
   "converter": {
+    "title": "Currency Swap",
+    "swap": "Swap",
+    "success": "Successful Currency Exchanged",
+    "close": "Close",
     "wallet": "Wallet",
     "from": "From",
     "to": "To",
@@ -1433,7 +1439,10 @@
       "copy": "Copy",
       "balance": "Balance",
       "portfolio": "Portfolio",
-      "coinView": "Currencies"
+      "coinView": "Currencies",
+      "deleteWallet": "Are you sure you want to remove this wallet?",
+      "removeWallet": "Remove Wallet",
+      "remove": "Remove"
     },
     "walletCard": {
       "addressTitle": "Wallet Address",
@@ -1443,6 +1452,7 @@
     "sidebar": {
       "menu": "Main Menu",
       "wallets": "Wallets",
+      "referral": "Referral",
       "payments": "Payments",
       "createInvoice": "Create Invoice",
       "sendCrypto": "Send Crypto",
@@ -1477,8 +1487,101 @@
       "activate": "Activate",
       "deactivate": "Deactivate",
       "edit": "Edit",
-      "delete": "Delete"
+      "delete": "Delete",
+      "noData": "No Data"
     }
+  },
+  "salesDashboard": {
+    "title": "Sales Dashboard",
+    "salesIncomeTitle": "Total Sales Income",
+    "invoiceCard": {
+      "title": "Invoices",
+      "open": "Open",
+      "paid": "Paid"
+    },
+    "transactionTitle": "Transactions",
+    "product": "Product",
+    "invoice": "Invoice",
+    "details": "Details",
+    "sales": "Sales",
+    "products": "Products",
+    "createInvoice": "Create Invoice",
+    "productTable": {
+      "productName": "Product Name",
+      "client": "Client",
+      "invoiceId": "Invoice ID",
+      "amount": "Amount",
+      "date": "Date",
+      "action": "Action"
+    },
+    "invoiceTable": {
+      "billedTo": "Billed To",
+      "invoiceId": "Invoice ID",
+      "amount": "Amount",
+      "status": "Status",
+      "date": "Date",
+      "action": "Action"
+    }
+  },
+  "transactionDrawer": {
+    "title": "Transaction Details",
+    "product": "Product",
+    "invoiceAmount": "Invoice Amount",
+    "taxText1": "The VAT of ",
+    "taxText2": " is included in this amount",
+    "crypto": "In Crypto",
+    "invoiceItems": " Invoice Items",
+    "gasPrice": "Gas Price",
+    "total": "Total Due",
+    "invoiceInfo": "Invoice Info",
+    "invoiceFrom": "Invoice From",
+    "invoiceTo": "Invoice To",
+    "status": "Status",
+    "created": "Created on",
+    "completed": "Completed on",
+    "invoiceId": "Invoice ID",
+    "checkoutPage": "Checkout page link",
+    "copy": "Copy",
+    "note": "Note",
+    "drawerDescription": "Thank you for your business! We appreciate your prompt payment. If you have any questions or concerns regarding this invoice, please don't hesitate to contact us. We look forward to serving you again in the future.",
+    "savePdf": "Save as PDF",
+    "saveReceipt": "Save Receipt",
+    "saveInvoice": "Save Invoice"
+  },
+  "invoicePreview": {
+    "title": "Invoice Preview",
+    "date": "Date",
+    "invoice": "Invoice",
+    "invoiceFrom": "Invoice From",
+    "invoiceTo": "Invoice To",
+    "invoiceItems": " Invoice Items",
+    "vat": "Value Added Tax",
+    "invoiceAmount": "Invoice Amount",
+    "swapCost": "Swap Costs",
+    "transactionCost": "Transaction Cost",
+    "totalDue": "Total Due",
+    "rateDescription1": "Prices in ",
+    "rateDescription2": " are calculated with the exchange rate on ",
+    "rateDescription3": " for 1USD",
+    "vatDescription": "VAT: Reverse-charge system, the tax liability is shifted to the recipient of the services. Local VAT applicable.",
+    "payInvoice": "Pay the Invoice",
+    "description": "Description",
+    "price": "Price",
+    "qty": "Qty",
+    "totalPrice": "Total Price",
+    "vatTitle": "VAT"
+  },
+  "productsDashboard": {
+    "title": "Your Products and Services",
+    "unit": "Unit Price",
+    "stock": "In Stock",
+    "share": "Share Link",
+    "edit": "Edit",
+    "addProduct": "Add Product",
+    "copyLink": "Copy Link",
+    "addProductDescription": "Add your product or service to send the link to buyers.",
+    "deleteProductConfirmation": "Are you sure you want to delete this product?",
+    "productDetail": "Product Detail"
   },
   "cancel": "Cancel",
   "confirm": "Confirm",

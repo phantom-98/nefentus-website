@@ -1,0 +1,60 @@
+.delete-modal .ant-modal-content {
+  background-image: url("../../../assets/newDashboardIcons/receiveBackground.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid #202020;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background-color: var(--BG2, #171717);
+  min-width: 310px;
+  padding: 0px;
+}
+
+.delete-modal-cancel {
+  width: 125px;
+  padding: 6px 12px;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+
+  /* Button shadow */
+  box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15);
+}
+
+.delete-modal-submit {
+  width: 123px;
+  padding: 6px 12px;
+  text-align: center;
+  border-radius: 6px;
+  background: var(--red, #a43c3c);
+
+  /* Button shadow */
+  box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15);
+}
+
+.delete-modal-container {
+  padding: 12px 20px;
+}
+
+.delete-modal-icon {
+  text-align: center;
+  /* padding: 48px 16px 0px 16px; */
+}
+
+.delete-modal .ant-modal-header {
+  background: transparent;
+}
+
+.delete-modal-description {
+  text-align: center;
+}
+
+.delete-modal-title {
+  text-align: end;
+  padding: 16px 16px 0px 16px;
+}
+
+.delete-modal-buttons {
+  padding: 20px;
+}

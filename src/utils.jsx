@@ -249,3 +249,21 @@ export const getWalleBackground = (type) => {
       return { background: NefentusBackground, logo: NefentusLogo };
   }
 };
+
+export const isFloat = (n) => {
+  return Number(n) === n && n % 1 !== 0;
+};
+
+export const graphDataToList = (data) => {
+  const dataList = Object.entries(data).map(([key, value]) => ({
+    label: key,
+    amount: value,
+  }));
+  // Sort it
+  dataList.sort((a, b) => {
+    const dateA = new Date(a.label);
+    const dateB = new Date(b.label);
+    return dateA - dateB;
+  });
+  return dataList;
+};

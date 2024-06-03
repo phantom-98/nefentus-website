@@ -10,8 +10,9 @@ import { getRole } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import "./addUser.css";
 
-const AddUser = ({ open, handleSubmit, onClose, type }) => {
-  const adminApi = new adminDashboardApi(type);
+const AddUser = ({ open, handleSubmit, onClose }) => {
+  const { user } = useAuth();
+  const adminApi = new adminDashboardApi(user.roles && user.roles[0]);
   const { t } = useTranslation();
   const [roles, setRoles] = useState([
     { value: "Vendor", label: t("dashboard.roles.Vendor") },
@@ -23,7 +24,6 @@ const AddUser = ({ open, handleSubmit, onClose, type }) => {
     { value: "Leader", label: t("dashboard.roles.Leader") },
   ]);
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
-  const { user } = useAuth();
   const [userDetail, setUserDetail] = useState({
     firstName: "",
     lastName: "",
@@ -39,16 +39,25 @@ const AddUser = ({ open, handleSubmit, onClose, type }) => {
   };
 
   const handleSubmitUser = async () => {
-    if (Object.keys(userDetail)?.some((key) => userDetail[key] == "")) {
+    if (
+      Object.keys(userDetail)?.some(
+        (key) => userDetail[key] == "" && key != "company",
+      )
+    ) {
       setErrorMessage("All fields are required");
       return;
     }
 
-    const resp = await adminApi.createUser({
+    const payload = {
       ...userDetail,
       roles: [userDetail?.role],
       serviceFee: userDetail?.service_fee?.toString(),
-    });
+    };
+
+    delete payload.role;
+    delete payload.service_fee;
+
+    const resp = await adminApi.createUser(payload);
     if (resp) {
       if (resp.ok) {
         setInfoMessage(t("messages.success.addUser"));
@@ -118,7 +127,7 @@ const AddUser = ({ open, handleSubmit, onClose, type }) => {
       className="add-user-modal"
       footer={null}
     >
-      <Flex>
+      <Flex className="add-user-detail-field-container">
         <Flex vertical gap={12} className="add-user-left-row">
           <Flex align="center" gap={8}>
             <Flex vertical gap={4}>
@@ -173,7 +182,7 @@ const AddUser = ({ open, handleSubmit, onClose, type }) => {
           </Flex>
           <Flex vertical gap={6}>
             <div className="default-text-gray">
-              {t("dashboard.modal.company").concat("*")}
+              {t("dashboard.modal.company")}
             </div>
             <Input
               placeholder={t("dashboard.modal.companyPlaceholder")}
@@ -263,7 +272,10 @@ const AddUser = ({ open, handleSubmit, onClose, type }) => {
         justify="space-between"
         className="add-user-footer-button"
       >
-        <div className="default-text add-user-cancel-button cursor-pointer">
+        <div
+          className="default-text add-user-cancel-button cursor-pointer"
+          onClick={onClose}
+        >
           {t("general.cancel")}
         </div>
         <div

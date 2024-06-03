@@ -67,3 +67,32 @@
   border: 1px solid var(--Dark, #202020);
   width: fit-content;
 }
+
+.sales-dashboard-table-searchbar {
+  max-width: 222px;
+  border: 1px solid var(--Dark, #202020);
+}
+
+:where(.sales-dashboard-table-searchbar).ant-input-affix-wrapper
+  > input.ant-input {
+  border: 0px !important;
+}
+
+@media screen and (max-width: 991px) {
+  .sales-income-card-container {
+    width: 100%;
+    margin: 0 !important;
+  }
+  .invoice-id-column {
+    width: 150px;
+    text-wrap: balance;
+  }
+}
+@media screen and (max-width: 767px) {
+  .sales-dashboard {
+    padding: 20px;
+  }
+  .sales-dashboard-table-searchbar {
+    display: none;
+  }
+}

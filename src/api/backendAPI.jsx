@@ -1105,6 +1105,28 @@ export default class backendAPI {
     }
   }
 
+  async deleteWallet(address) {
+    try {
+      const url = `${this.baseURL}/wallet/delete-wallet?address=${address}`;
+      this.token = Cookies.get("token");
+      const options = {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      this.updateToken(response);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+
   async send(
     tokenAddress,
     blockchain,

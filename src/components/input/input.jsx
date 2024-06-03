@@ -162,6 +162,7 @@ export const Textarea = ({
   disabled,
   dashboard,
   rows = 5,
+  createInvoice,
 }) => {
   const handleChange = (e) => {
     e.target.value.length <= 5000 && setState(e.target.value);
@@ -173,7 +174,7 @@ export const Textarea = ({
         <p
           className={`${styles.label} ${
             dashboard ? styles.dashboardLabel : ""
-          }`}
+          } default-text`}
         >
           {label}
         </p>
@@ -185,6 +186,7 @@ export const Textarea = ({
         }`}
         style={{
           resize: "vertical",
+          background: createInvoice ? "var(--BG2, #171717)" : "",
         }}
         placeholder={placeholder}
         value={value}
@@ -632,6 +634,7 @@ const CurrencyOption = ({
       style={{
         borderRadius: dropDown ? (dashboard ? "0.6rem" : "3px") : "0",
         padding: dashboard ? "1rem" : "",
+        backgroundColor: dashboard ? "#171717" : "",
       }}
     >
       <div className={styles.optionLine}>
@@ -685,6 +688,7 @@ export const RadioOption = ({
   onClick,
   horizon,
   style,
+  createInvoice,
 }) => {
   return (
     <div
@@ -693,10 +697,10 @@ export const RadioOption = ({
         display: "flex",
         justifyContent: "space-between",
         gap: "1rem",
-        border: `1px solid ${value ? "#28C8F0" : "var(--border-color)"}`,
+        border: `1px solid ${value ? "#28C8F0" : "var(--Dark)"}`,
         borderRadius: "0.6rem",
         padding: "0.8rem",
-        background: "var(--bg2-color)",
+        background: createInvoice ? "var(--BG2, #171717)" : "var(--bg2-color)",
         cursor: "pointer",
         alignItems: horizon ? "center" : "start",
         ...style,
@@ -721,7 +725,7 @@ export const RadioOption = ({
           width: "1.4rem",
           height: "1.4rem",
           padding: "1px",
-          border: `1px solid ${value ? "#28C8F0" : "var(--border-color)"}`,
+          border: `1px solid ${value ? "#28C8F0" : "var(--Dark)"}`,
           borderRadius: "50%",
         }}
       >
@@ -738,14 +742,21 @@ export const RadioOption = ({
   );
 };
 
-export const Spinner = ({ label, value, setValue, disabled, dashboard }) => {
+export const Spinner = ({
+  label,
+  value,
+  setValue,
+  disabled,
+  dashboard,
+  isDrawer,
+}) => {
   return (
     <div className={styles.inputWrapper}>
       {label && <p className={styles.label}>{label}</p>}
       <div
         className={styles.spinner}
         style={{
-          padding: dashboard ? "0.8rem" : "",
+          padding: dashboard && isDrawer ? "1rem" : dashboard ? "0.8rem" : "",
           background: dashboard && !disabled ? "var(--bg2-color)" : "",
           width: dashboard ? "100%" : "",
           opacity: disabled ? "50%" : "100%",
@@ -755,24 +766,28 @@ export const Spinner = ({ label, value, setValue, disabled, dashboard }) => {
         }}
       >
         <div
-          onClick={() =>
-            !disabled && value > 1 && setValue((prev) => parseInt(prev) - 1)
-          }
+          onClick={() => {
+            const updatedValue = value ? parseInt(value) - 1 : 0;
+            !disabled && value > 1 && setValue(updatedValue);
+          }}
         >
           -
         </div>
         <input
           type="number"
           value={value}
-          onChange={(e) =>
-            !disabled &&
-            setValue(e.target.value ? parseInt(e.target.value).toString() : 0)
-          }
+          onChange={(e) => {
+            const updatedValue = e.target.value
+              ? parseInt(e.target.value) + 1
+              : 0;
+            !disabled && setValue(updatedValue);
+          }}
         />
         <div
-          onClick={() =>
-            !disabled && setValue((prev) => (prev ? parseInt(prev) + 1 : 1))
-          }
+          onClick={() => {
+            const updatedValue = value ? parseInt(value) + 1 : 1;
+            !disabled && setValue(updatedValue);
+          }}
         >
           +
         </div>
@@ -781,9 +796,15 @@ export const Spinner = ({ label, value, setValue, disabled, dashboard }) => {
   );
 };
 
-export const RadioSelect = ({ label, value, setValue, options }) => {
+export const RadioSelect = ({
+  label,
+  value,
+  setValue,
+  options,
+  createInvoice,
+}) => {
   return (
-    <div className={styles.inputWrapper}>
+    <div className={styles.inputWrapper} style={{ width: "100%" }}>
       {label && <p className={styles.label}>{label}</p>}
       <div
         style={{
@@ -794,6 +815,7 @@ export const RadioSelect = ({ label, value, setValue, options }) => {
         {options.map((option, index) => {
           return (
             <RadioOption
+              createInvoice={createInvoice ? true : false}
               label={option.label}
               content={option.content}
               value={value == option.value}
@@ -816,6 +838,7 @@ export const CombinedInput = ({
   setValue,
   setChanged,
   dashboard,
+  createInvoice,
 }) => {
   const { t } = useTranslation();
   const handleChange = () => {
@@ -836,7 +859,11 @@ export const CombinedInput = ({
           flexDirection: "column",
           gap: "0",
           borderRadius: "0.6rem",
-          background: dashboard ? "var(--bg2-color)" : "var(--card-color)",
+          background: dashboard
+            ? "var(--bg2-color)"
+            : createInvoice
+            ? "var(--BG2, #171717)"
+            : "var(--card-color)",
         }}
       >
         <CountrySelect
@@ -848,7 +875,11 @@ export const CombinedInput = ({
             borderBottom: "none",
             borderBottomLeftRadius: "0",
             borderBottomRightRadius: "0",
-            background: dashboard ? "var(--bg2-color)" : "var(--card-color)",
+            background: dashboard
+              ? "var(--bg2-color)"
+              : createInvoice
+              ? "var(--BG2, #171717)"
+              : "var(--card-color)",
           }}
         />
         <input
@@ -858,6 +889,7 @@ export const CombinedInput = ({
           style={{
             borderTopRightRadius: "0",
             borderTopLeftRadius: "0",
+            backgroundColor: createInvoice ? "var(--BG2, #171717)" : "",
           }}
           placeholder={t("payments.addressHint")}
           value={value}

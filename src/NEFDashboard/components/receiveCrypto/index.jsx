@@ -177,8 +177,8 @@ const ReceiveCrypto = ({ openReceiveModal, onCloseModal }) => {
                   gap={3}
                   onClick={(e) => copyToClipboard(e, selectedWallet?.address)}
                 >
-                  <div>Copy</div>
                   <img src={CopyIcon} alt="copy" />
+                  <div>Copy</div>
                 </Flex>
               </Flex>
             )}
