@@ -4,6 +4,7 @@ import "./setting.css";
 import SecuritySection from "../../components/settingComponents/securitySection";
 import ProfileSection from "../../components/settingComponents/profileSection";
 import InvoiceSection from "../../components/settingComponents/invoiceSection";
+import IdentificationSection from "../../components/settingComponents/identificationSection";
 
 const SettingPage = () => {
   const tabs = ["General", "Security", "Identification", "Invoice"];
@@ -16,7 +17,7 @@ const SettingPage = () => {
       case "Security":
         return <SecuritySection />;
       case "Identification":
-        return;
+        return <IdentificationSection />;
       case "Invoice":
         return <InvoiceSection segment={activeTab} />;
     }
