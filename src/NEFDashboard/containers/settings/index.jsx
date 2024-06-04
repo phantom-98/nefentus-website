@@ -7,7 +7,7 @@ import InvoiceSection from "../../components/settingComponents/invoiceSection";
 
 const SettingPage = () => {
   const tabs = ["General", "Security", "Identification", "Invoice"];
-  const [activeTab, setActiveTab] = useState("Security");
+  const [activeTab, setActiveTab] = useState("General");
 
   const renderSection = () => {
     switch (activeTab) {
