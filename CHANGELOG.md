@@ -2,7 +2,7 @@
 
 # Merged changes
 
-# v1.2.0
+# v1.1.1
 
 - Fix income cards in case of loss
 - Fix performance measures of sales and referral dashboards
