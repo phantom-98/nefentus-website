@@ -8,6 +8,8 @@ import {
   Dropdown,
   Avatar,
   Switch,
+  Button,
+  Typography,
 } from "antd";
 import SidebarNew from "../../components/sidebarNew";
 import Languages from "../../../components/navigation/languages.jsx/languages";
@@ -21,29 +23,58 @@ import EuropeFlag from "../../../assets/newDashboardIcons/europe-flag.svg";
 import USAFlag from "../../../assets/newDashboardIcons/usa-flag.svg";
 import DownArrow from "../../../assets/newDashboardIcons/down-arrow-gray.svg";
 import UpArrow from "../../../assets/newDashboardIcons/arrow-up.svg";
+import MobileBtnIcon from "../../../assets/newDashboardIcons/mobileBtnIcon.svg";
+import NotificationIcon from "../../../assets/newDashboardIcons/notificationIcon.svg";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import { useAuth } from "../../../context/auth/authContext";
 import { useTranslation } from "react-i18next";
 import backendAPI from "../../../api/backendAPI";
 import "./dashboardLayout.css";
 import { useNavigate } from "react-router-dom";
+import LogoWide from "../../../assets/logo/logo_wide2.svg";
+import Logo from "../../../assets/logo/logo.svg";
+import { getCurrencySymbol, getFlagLink } from "../../../countries";
 
 const DashboardLayout = ({ children, title }) => {
+  const [sideBarShow, setSideBarShow] = useState(false);
   const [dropDownToggle, setDropDownToggle] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("europe");
   const { toggleTheme } = useTheme();
   const { t } = useTranslation();
-  const { user, setUser } = useAuth();
+  const { user, setUser, setCurrencyRate } = useAuth();
   const backend_API = new backendAPI();
   const navigate = useNavigate();
+  const [currency, setCurrency] = useState("USD");
 
   useEffect(() => {
     fetchProfile();
   }, []);
 
+  useEffect(() => {
+    if (currency !== "USD") {
+      fetchRate("USD", currency);
+    } else {
+      setCurrencyRate({
+        from: "USD",
+        to: "USD",
+        rate: 1,
+        symbol: "$",
+      });
+    }
+  }, [currency]);
+
   const fetchProfile = async () => {
     const response = await backend_API.getProfile();
     if (response) setUser({ ...response });
+  };
+
+  const fetchRate = async (from, to) => {
+    const res = await backend_API.getCurrencyRate(from, to);
+    if (res) {
+      setCurrencyRate({
+        ...res,
+        symbol: getCurrencySymbol()[to],
+      });
+    }
   };
 
   const logOut = async () => {
@@ -57,28 +88,52 @@ const DashboardLayout = ({ children, title }) => {
 
   const options = [
     {
-      value: "usa",
+      value: "USD",
       label: (
         <Row className="currency-option">
-          <img src={USAFlag} alt="usa-flag" /> <div>USD $</div>
-          {/* {selectedLanguage === "usa" && (
-            <div>
-              <img src={Check} alt="check" />
-            </div>
-          )} */}
+          <img src={getFlagLink("US")} alt="usa-flag" width={18} height={14} />
+          <div>USD $</div>
         </Row>
       ),
     },
     {
-      value: "europe",
+      value: "EUR",
       label: (
         <Row className="currency-option">
-          <img src={EuropeFlag} alt="europe-flag" /> <div>EUR €</div>
-          {/* {selectedLanguage === "europe" && (
-            <div>
-              <img src={Check} alt="check" />
-            </div>
-          )} */}
+          <img
+            src={getFlagLink("EU")}
+            alt="europe-flag"
+            width={18}
+            height={14}
+          />{" "}
+          <div>EUR €</div>
+        </Row>
+      ),
+    },
+    {
+      value: "AED",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("AE")} alt="flag" width={18} height={14} />{" "}
+          <div>{"AED د.إ"}</div>
+        </Row>
+      ),
+    },
+    {
+      value: "UAH",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("UA")} alt="flag" width={18} height={14} />{" "}
+          <div>UAH ₴</div>
+        </Row>
+      ),
+    },
+    {
+      value: "CHF",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("CH")} alt="flag" width={18} height={14} />{" "}
+          <div>CHF</div>
         </Row>
       ),
     },
@@ -88,7 +143,7 @@ const DashboardLayout = ({ children, title }) => {
     {
       key: "1",
       label: (
-        <div className="profile-dropdown-width">
+        <div className="default-text profile-dropdown-width">
           {t("personalDashboard.profileDropdown.setting")}
         </div>
       ),
@@ -97,7 +152,7 @@ const DashboardLayout = ({ children, title }) => {
     {
       key: "2",
       label: (
-        <div className="profile-dropdown-width">
+        <div className="default-text profile-dropdown-width">
           {t("personalDashboard.profileDropdown.support")}
         </div>
       ),
@@ -109,10 +164,14 @@ const DashboardLayout = ({ children, title }) => {
         <Flex
           justify="space-between"
           align="center"
-          className="profile-dropdown-width"
+          className="default-text profile-dropdown-width"
         >
           <div>{t("personalDashboard.profileDropdown.darkMode")}</div>
-          <Switch defaultChecked onChange={(e) => toggleTheme()} />
+          <Switch
+            defaultChecked
+            onChange={(e) => toggleTheme()}
+            className="switch-theme-mode"
+          />
         </Flex>
       ),
       icon: <img src={ThemeModeIcon} alt="theme-mode" />,
@@ -123,7 +182,10 @@ const DashboardLayout = ({ children, title }) => {
     {
       key: "4",
       label: (
-        <div className="profile-dropdown-width" onClick={() => logOut()}>
+        <div
+          className="default-text profile-dropdown-width"
+          onClick={() => logOut()}
+        >
           {t("personalDashboard.profileDropdown.logout")}
         </div>
       ),
@@ -151,26 +213,52 @@ const DashboardLayout = ({ children, title }) => {
 
   return (
     <Row>
-      <Col span={4}>
-        <SidebarNew title={title} />
+      <Col
+        span={4}
+        className={sideBarShow ? "sideBarHide sideBarShow" : "sideBarHide"}
+      >
+        <SidebarNew
+          title={title}
+          sideBarShow={sideBarShow}
+          setSideBarShow={setSideBarShow}
+        />
       </Col>
 
-      <Col span={20}>
+      <Col span={24} xl={20}>
         <div className="personal-dashboard-container">
           <div className="page-title-container">
-            <div className="pageTitle">{t(title)}</div>
+            <div className="nefentus-logo">
+              <img src={LogoWide} alt="logo" />
+            </div>
+            {/** Add logo for mobile view */}
+            <div className="nefentus-logo-mobile">
+              <img src={Logo} alt="logo" />
+            </div>
+            <div className="pageTitle pageTitleDesktop">{t(title)}</div>
             <Flex align="center" gap={24}>
               <Select
                 defaultValue={"europe"}
                 options={options}
-                onChange={handleLanguage}
+                value={currency}
+                onChange={setCurrency}
                 className="currency-dropdown"
               />
-              <div className="language-container">
+              <div className="dashboard-language-container">
                 <div className="localisation-container">
                   <Languages />
                 </div>
               </div>
+              <Button className="notificationIconMobileBtn">
+                <img src={NotificationIcon} alt="MobileBtnIcon" />
+              </Button>
+              <Button
+                className="mobileBtn"
+                onClick={() => {
+                  setSideBarShow(!sideBarShow);
+                }}
+              >
+                <img src={MobileBtnIcon} alt="MobileBtnIcon" />
+              </Button>
 
               <Divider type="vertical" className="verticalDivider" />
               <Dropdown
@@ -186,7 +274,7 @@ const DashboardLayout = ({ children, title }) => {
                     shape="square"
                     size={35}
                     icon={
-                      !user?.profileImage ? (
+                      user?.profileImage ? (
                         <img src={user?.profileImage} className="user-avatar" />
                       ) : (
                         <img src={ProfileImg} className="user-avatar" />
@@ -213,6 +301,8 @@ const DashboardLayout = ({ children, title }) => {
           </div>
           <Divider className="divider-without-margin" />
         </div>
+        <div className="pageTitle pageTitleMobile">{t(title)}</div>
+
         {children}
       </Col>
     </Row>

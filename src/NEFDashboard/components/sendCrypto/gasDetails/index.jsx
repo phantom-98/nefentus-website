@@ -2,9 +2,9 @@ import React from "react";
 import { Flex } from "antd";
 import LocalGasStationFilled from "../../../../assets/newDashboardIcons/local_gas_station_filled.svg";
 import "../sendCrypto.css";
+import { formatUSDBalance } from "../../../../utils";
 
-const GasDetail = ({ gasLimit, gasValues, selectedCoin }) => {
-  console.log(gasLimit, gasValues, selectedCoin);
+const GasDetail = ({ gasLimit, gasValues, selectedCoin, selectedCurrency }) => {
   return (
     <Flex vertical gap={8} className="send-gas-price-container">
       <Flex align="center" justify="space-between">
@@ -32,12 +32,13 @@ const GasDetail = ({ gasLimit, gasValues, selectedCoin }) => {
             {selectedCoin?.blockchain}
           </div>
           <div>
-            {(
+            {formatUSDBalance(
               ((gasValues?.gasPrice * gasLimit) /
                 10 ** selectedCoin?.decimals) *
-              selectedCoin?.price
-            )?.toFixed(2)}
-            $
+                selectedCoin?.price *
+                +selectedCurrency?.price,
+            )}
+            {selectedCurrency?.icon}
           </div>
         </Flex>
       </Flex>

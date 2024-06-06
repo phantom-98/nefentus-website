@@ -119,6 +119,8 @@ import ReferralDashboard from "./NEFDashboard/containers/referralDashboard";
 import SalesDashboard from "./NEFDashboard/containers/salesDashboard";
 import SettingLayout from "./NEFDashboard/containers/settingLayout";
 import SettingPage from "./NEFDashboard/containers/settings";
+import Products from "./NEFDashboard/containers/products";
+import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
 
 function App() {
   useEffect(() => {
@@ -233,15 +235,41 @@ function App() {
                         path="/referral-dashboard"
                         element={
                           <DashboardLayout title={"referralDashboard.title"}>
-                            <ReferralDashboard type={"admin"} />
+                            <ReferralDashboard />
                           </DashboardLayout>
                         }
                       />
                       <Route
                         path="/sales-dashboard"
                         element={
-                          <DashboardLayout title={"Sales Dashboard"}>
+                          <DashboardLayout title={"salesDashboard.title"}>
                             <SalesDashboard />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/products-dashboard"
+                        element={
+                          <DashboardLayout title={"productsDashboard.title"}>
+                            <Products />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/create-invoice"
+                        element={
+                          <DashboardLayout title={"payments.createInvoice"}>
+                            <CreateInvoice />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/product-detail/:productLink"
+                        element={
+                          <DashboardLayout
+                            title={"productsDashboard.productDetail"}
+                          >
+                            <Product />
                           </DashboardLayout>
                         }
                       />

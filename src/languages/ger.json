@@ -470,7 +470,7 @@
     "modal": {
       "create_user": "Benutzer hinzufügen",
       "edit_user": "Benutzer bearbeiten",
-      "titleCreate": "Benutzer hinzufügen",
+      "titleCreate": "Hinzufügen",
       "titleEdit": "Benutzer bearbeiten",
       "firstName": "Vorname",
       "firstNamePlaceholder": "Geben Sie den Vornamen ein",
@@ -840,6 +840,7 @@
       "deleteProduct": "Produkt erfolgreich gelöscht!",
       "addUser": "Benutzer erfolgreich hinzugefügt!",
       "updateUser": "Benutzer erfolgreich aktualisiert!",
+      "createInvoice": "Rechnung erfolgreich erstellt!",
       "deleteInvoice": "Rechnung gelöscht!",
       "passwordChange": "Passwort erfolgreich geändert!",
       "updatePicture": "Profilbild erfolgreich geändert!",
@@ -1037,7 +1038,8 @@
     "tax": {
       "reverseCharge": "Es wird das Reverse Charge Verfahren angewendet. Dabei ist der Kunde für die Umsatzsteuer verantwortlich.",
       "standard": "Standard",
-      "reduced": "Verringert"
+      "reduced": "Verringert",
+      "zero": "Zero"
     },
     "items": {
       "title": "Rechnungspositionen",
@@ -1121,6 +1123,10 @@
     }
   },
   "converter": {
+    "title": "Währungsswap",
+    "swap": "Tauschen Sie",
+    "success": "Erfolgreicher Währungsumtausch",
+    "close": "Schließen",
     "wallet": "Wallet",
     "from": "Von",
     "to": "Nach",
@@ -1353,7 +1359,10 @@
       "copy": "Kopieren",
       "balance": "Guthaben",
       "portfolio": "Portfolio",
-      "coinView": "Währungen"
+      "coinView": "Währungen",
+      "deleteWallet": "Sind Sie sicher, dass Sie diese Brieftasche löschen möchten?",
+      "removeWallet": "Wallet entfernen",
+      "remove": "Entfernen"
     },
     "walletCard": {
       "addressTitle": "Wallet-Adresse",
@@ -1364,6 +1373,7 @@
       "menu": "Hauptmenü",
       "wallets": "Wallets",
       "payments": "Zahlungen",
+      "referral": "Referral",
       "createInvoice": "Rechnung erstellen",
       "sendCrypto": "Krypto senden",
       "receiveCrypto": "Krypto empfangen",
@@ -1397,8 +1407,101 @@
       "activate": "Aktivieren",
       "deactivate": "Deaktivieren",
       "edit": "Bearbeiten",
-      "delete": "Löschen"
+      "delete": "Löschen",
+      "noData": "keine Daten"
     }
+  },
+  "salesDashboard": {
+    "title": "Vertriebs-Dashboard",
+    "salesIncomeTitle": "Verkaufserlöse",
+    "invoiceCard": {
+      "title": "Rechnungen",
+      "open": "Offen",
+      "paid": "Bezahlt"
+    },
+    "transactionTitle": "Transaktionen",
+    "product": "Produkt",
+    "invoice": "Rechnung",
+    "details": "Details",
+    "sales": "Verkauf",
+    "products": "Produkte",
+    "createInvoice": "Rechnung erstellen",
+    "productTable": {
+      "productName": "Produktname",
+      "client": "Kunde",
+      "invoiceId": "Rechnungs-ID",
+      "amount": "Betrag",
+      "date": "Datum",
+      "action": "Aktion"
+    },
+    "invoiceTable": {
+      "billedTo": "Rechnungsempfänger",
+      "invoiceId": "Rechnungsnummer",
+      "amount": "Betrag",
+      "status": "Status",
+      "date": "Datum",
+      "action": "Aktion"
+    }
+  },
+  "transactionDrawer": {
+    "title": "Transaktionsdetails",
+    "product": "Produkt",
+    "invoiceAmount": "Rechnungsbetrag",
+    "taxText1": "Die MwSt. von ",
+    "taxText2": " ist in diesem Betrag enthalten",
+    "crypto": "In Krypto",
+    "invoiceItems": "Rechnungspositionen",
+    "gasPrice": "Gaspreis",
+    "total": "Gesamtbetrag",
+    "invoiceInfo": "Rechnungsinformationen",
+    "invoiceFrom": "Rechnung von",
+    "invoiceTo": "Rechnung an",
+    "status": "Status",
+    "created": "Erstellt am",
+    "completed": "Abgeschlossen am",
+    "invoiceId": "Rechnungs-ID",
+    "checkoutPage": "Checkout-Seitenlink",
+    "copy": "Kopieren",
+    "note": "Hinweis",
+    "drawerDescription": "Vielen Dank für Ihr Geschäft! Wir schätzen Ihre prompten Zahlungen. Wenn Sie Fragen oder Bedenken zu dieser Rechnung haben, zögern Sie bitte nicht, uns zu kontaktieren. Wir freuen uns darauf, Ihnen auch in Zukunft zu dienen.",
+    "savePdf": "Als PDF speichern",
+    "saveReceipt": "Quittung speichern",
+    "saveInvoice": "Rechnung speichern"
+  },
+  "invoicePreview": {
+    "title": "Rechnungsvorschau",
+    "date": "Datum",
+    "invoice": "Rechnung",
+    "invoiceFrom": "Rechnung von",
+    "invoiceTo": "Rechnung an",
+    "invoiceItems": "Rechnungspositionen",
+    "vat": "Mehrwertsteuer",
+    "invoiceAmount": "Rechnungsbetrag",
+    "swapCost": "Tauschkosten",
+    "transactionCost": "Transaktionskosten",
+    "totalDue": "Gesamtbetrag",
+    "rateDescription1": "Preise in ",
+    "rateDescription2": " sind mit dem Wechselkurs vom ",
+    "rateDescription3": " für 1USD berechnet",
+    "vatDescription": "Mehrwertsteuer: Umkehrung des Steuerschuldverhältnisses, die Steuerpflicht wird auf den Leistungsempfänger übertragen. Lokale Mehrwertsteuer anwendbar.",
+    "payInvoice": "Rechnung bezahlen",
+    "description": "Beschreibung",
+    "price": "Preis",
+    "qty": "Menge",
+    "totalPrice": "Gesamtpreis",
+    "vatTitle": "VAT"
+  },
+  "productsDashboard": {
+    "title": "Ihre Produkte und Dienstleistungen",
+    "unit": "Einzelpreis",
+    "stock": "Auf Lager",
+    "share": "Link teilen",
+    "edit": "Bearbeiten",
+    "addProduct": "Produkt hinzufügen",
+    "copyLink": "Link kopieren",
+    "addProductDescription": "Fügen Sie Ihr Produkt oder Ihre Dienstleistung hinzu, um den Link an Käufer zu senden.",
+    "deleteProductConfirmation": "Sind Sie sicher, dass Sie dieses Produkt löschen möchten?",
+    "productDetail": "Produktdetails"
   },
   "cancel": "Stornieren",
   "confirm": "Bestätigen",

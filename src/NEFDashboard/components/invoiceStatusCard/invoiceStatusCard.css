@@ -1,5 +1,5 @@
 .invoice-status-card {
-  width: 33.33%;
+  width: 32%;
 }
 .invoice-status-card .ant-card-body {
   padding: 16px;
@@ -41,4 +41,39 @@
 
 .invoice-status-text {
   text-transform: capitalize;
+}
+@media screen and (min-width: 992px) {
+  .invoice-status-container {
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 991px) {
+  .invoice-status-card {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .invoice-status-container {
+    flex-direction: column;
+  }
+  .invoice-status-content {
+    justify-content: flex-start;
+  }
+
+  .income-card {
+    min-width: 47.8%;
+    height: auto;
+  }
+
+  .income-card:last-child {
+    flex-grow: 3;
+  }
+
+  .sales-income-card-container {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .income-card-title {
+    text-wrap: wrap;
+  }
 }

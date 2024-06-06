@@ -27,7 +27,7 @@
   border: 1px solid #202020;
   border-radius: 6px;
   border: 1px solid var(--Dark, #202020);
-  background-color: var(--BG2, #171717);
+  background-color: var(--BG, #111);
   min-width: 310px;
   padding: 16px;
 }
@@ -59,12 +59,21 @@
   text-align: center;
 }
 
+.receive-crypto-logo-container {
+  border-radius: 40px;
+  background: var(--Grey, #323232);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+}
+
 .receive-crypto-wallet-container {
   width: 100%;
   padding: 6px;
   border-radius: 6px;
   cursor: pointer;
   /* background-color: var(--Dark, #202020); */
+  background: var(--BG2, #171717);
   border-radius: 6px;
   border: 1px solid var(--Dark, #202020);
 }
@@ -105,6 +114,7 @@
   border-radius: 6px;
   border: 1px solid var(--Dark, #202020);
   padding: 6px;
+  background: var(--BG2, #171717);
 }
 
 .receive-crypto-network-select.ant-select-lg
@@ -115,10 +125,21 @@
   gap: 6px;
 }
 
+.receive-crypto-network-select .ant-select-selector {
+  border-radius: 6px !important;
+  border: 1px solid var(--Dark, #202020) !important;
+  background: var(--BG2, #171717) !important;
+  box-shadow: 0px 3px 10.2px 0px rgba(0, 0, 0, 0.03);
+}
+
 .receive-crypto-copy-address {
   padding: 6px 16px;
   border-radius: 6px;
-  border: 1px solid #111;
-  background: var(--Dark, #202020);
+  border-radius: 6px;
+  background: var(
+    --grad,
+    linear-gradient(262deg, #009bd2 -78.58%, #3b6b7c 188.93%)
+  );
+  /* Button shadow */
   box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15);
 }

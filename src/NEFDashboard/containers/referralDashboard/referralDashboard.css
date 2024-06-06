@@ -89,3 +89,58 @@
   background: var(--BG2, #171717) !important;
   border-bottom: 1px solid var(--Dark, #202020);
 }
+
+.roles-card-container {
+  width: 33.33%;
+}
+
+.tab-view-income-container {
+  display: none;
+}
+
+.user-table-empty-column {
+  min-width: 40px;
+}
+
+@media screen and (max-width: 1200px) {
+  .roles-card-container {
+    display: none;
+  }
+  .referral-income-container {
+    width: 100%;
+  }
+  .income-card-container {
+    display: none;
+  }
+  .tabview-income-card-container {
+    margin-bottom: 16px;
+  }
+  .tabview-income-card-container:last-child {
+    margin-bottom: 0px;
+  }
+  .tab-view-income-container {
+    display: flex;
+  }
+  .tabview-roles-card {
+    width: 62.5%;
+  }
+  .tabview-roles-card .ant-card-body {
+    height: 85%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .referral-dashboard {
+    padding: 20px;
+  }
+  .tab-view-income-container {
+    flex-direction: column;
+  }
+  .tabview-roles-card {
+    width: 100%;
+  }
+  .referral-dashboard-income-title {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

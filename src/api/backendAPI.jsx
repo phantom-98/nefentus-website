@@ -1105,12 +1105,12 @@ export default class backendAPI {
     }
   }
 
-  async getInternalWallet() {
+  async deleteWallet(address) {
     try {
-      const url = `${this.baseURL}/wallet/internal-wallet`;
+      const url = `${this.baseURL}/wallet/delete-wallet?address=${address}`;
       this.token = Cookies.get("token");
       const options = {
-        method: "GET",
+        method: "DELETE",
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
@@ -1119,9 +1119,8 @@ export default class backendAPI {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      debugger;
       this.updateToken(response);
-      const data = response.json();
+      const data = await response.json();
       return data;
     } catch (error) {
       return null; // or return some default value

@@ -102,3 +102,34 @@
 .ant-menu-root {
   font-family: "DM-Sans";
 }
+@media screen and (min-width: 1200px) {
+  .user-block-mobile,
+  .sidebar-menu-mobile,
+  .logo-divider-mobile,
+  .currency-block,
+  .language-container {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 1199px) {
+  .language-container,
+  .currency-block {
+    border: none !important;
+    padding: 4px 8px 4px 16px !important;
+  }
+  .currency-block .ant-select-selector,
+  .language-container .ant-select-selector {
+    border: none !important;
+    background: none !important;
+  }
+  .localisation-container {
+    width: 100% !important;
+  }
+  .sidebar-header {
+    padding: 0 8px;
+  }
+  .sidebar-body {
+    overflow: auto;
+    height: 100%;
+  }
+}
