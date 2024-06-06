@@ -794,6 +794,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   line-height: normal;
 }
 
+.ant-btn {
+  line-height: normal;
+  height: auto;
+}
+
+.password-modal-forgot {
+  color: var(--Blue, var(--Blue, #078bb9));
+}
+
+.seed-modal-padding {
+  padding: 0px 20px;
+}
+
 .toggle-theme-button.ant-switch-checked {
   background: var(
     --Blue-gradient,

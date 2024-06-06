@@ -1,0 +1,15 @@
+.input-field-container {
+  width: 100%;
+}
+
+.custom-input-field-label {
+  text-transform: capitalize;
+  margin-bottom: 4px;
+}
+
+.custom-input-field {
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020) !important;
+  background: var(--BG2, #171717);
+  box-shadow: none;
+}

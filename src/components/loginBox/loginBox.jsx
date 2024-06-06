@@ -203,8 +203,8 @@ const LoginBox = () => {
     if (redirectUrl) {
       navigate(redirectUrl);
     } else if (Object.keys(response)?.length > 0)
-      navigate(dashboardLink(response));
-    else navigate(dashboardLink(user));
+      navigate("/personal-dashboard");
+    else navigate("/personal-dashboard");
   }
 
   useEffect(() => {
@@ -252,7 +252,7 @@ const LoginBox = () => {
           setTotp(response.hasTotp);
           setEmail(response.email);
         } else if (response.resetPassword) {
-          navigate("/dashboard/security", {
+          navigate("/new-settings", {
             state: { recommendRecover: true },
           });
         } else {

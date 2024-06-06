@@ -33,11 +33,8 @@
   height: 32px;
 }
 
-:where(.css-dev-only-do-not-override-1yuxnot).user-table-menu
-  .ant-dropdown-menu
-  .ant-dropdown-menu-item,
-:where(.css-dev-only-do-not-override-1yuxnot).user-table-menu
-  .ant-dropdown-menu {
+.user-table-menu .ant-dropdown-menu .ant-dropdown-menu-item,
+.user-table-menu .ant-dropdown-menu {
   padding: 6px;
 }
 
