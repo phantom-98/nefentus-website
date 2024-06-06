@@ -2,6 +2,8 @@
 
 # Merged changes
 
+# v1.2.0
+
 - Fix income cards in case of loss
 - Fix performance measures of sales and referral dashboards
 - Fix issues with partners and rework authContext
