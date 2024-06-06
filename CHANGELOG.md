@@ -2,6 +2,8 @@
 
 # Merged changes
 
+- Settings Page is implemented (MAJOR)
+
 # v1.1.1
 
 - Fix income cards in case of loss

@@ -1,0 +1,13 @@
+.seed-step2-comment-icon {
+  padding: 6px;
+  border-radius: 6px;
+  background: var(--red, #a43c3c);
+  height: 28px;
+}
+
+.seed-step2-subcontainer {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+}

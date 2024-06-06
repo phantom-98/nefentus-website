@@ -1,0 +1,46 @@
+.seed-step1-container {
+  width: 100%;
+}
+
+.seed-phrase-modal-copy {
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid var(--Grey, #323232);
+}
+
+.seed-phrase-address {
+  padding: 0px 6px;
+  border-radius: 4px;
+  background: var(--Dark, #202020);
+}
+
+.seed-phrase-nefentus {
+  padding: 12.5px 12.7px 11.9px 13.5px;
+  border-radius: 47px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+  width: 48px;
+  height: 46px;
+}
+
+.seed-step1-description {
+  text-align: center;
+  width: 210px;
+}
+
+.seed-step1-continue {
+  width: 100%;
+  padding: 10.75px 0px;
+  border: none;
+  border-radius: 6px;
+  background: var(
+    --grad,
+    linear-gradient(262deg, #009bd2 -78.58%, #3b6b7c 188.93%)
+  );
+  box-shadow:
+    0px 51px 14px 0px rgba(0, 0, 0, 0),
+    0px 33px 13px 0px rgba(0, 0, 0, 0.01),
+    0px 19px 11px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+}

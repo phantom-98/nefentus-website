@@ -1,0 +1,81 @@
+.identification-input-field,
+.identification-input-field:active,
+.identification-input-field:hover,
+.identification-input-field:focus {
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020) !important;
+  background: var(--BG2, #171717);
+  padding: 8px 12px;
+  box-shadow:
+    0px 191px 53px 0px rgba(0, 0, 0, 0),
+    0px 122px 49px 0px rgba(0, 0, 0, 0.01),
+    0px 69px 41px 0px rgba(0, 0, 0, 0.02),
+    0px 30px 30px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 17px 0px rgba(0, 0, 0, 0.04);
+}
+
+.identification-name-container {
+  width: 50%;
+}
+
+.identification-country-select,
+.identification-country-select:focus,
+.identification-country-select:hover,
+.identification-country-select:active {
+  border-radius: 6px 6px 0px 0px;
+  border: 1px solid var(--Dark, #202020) !important;
+  background: var(--BG2, #171717) !important;
+  box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15) !important;
+  padding: 8px 12px !important;
+  height: 40px !important;
+}
+
+.identification-country-select .ant-select-selector,
+.identification-country-select .ant-select-selector:hover,
+.identification-country-select .ant-select-selector:focus,
+.identification-country-select .ant-select-selector:active {
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  padding: 0px !important;
+}
+
+.street-field,
+.street-field:focus,
+.street-field:hover,
+.street-field:active {
+  border-top: none !important;
+  border-bottom: 1px solid var(--Dark, #202020) !important;
+  border-right: 1px solid var(--Dark, #202020) !important;
+  border-left: 1px solid var(--Dark, #202020) !important;
+  background: var(--BG2, #171717);
+  box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15) !important;
+  border-radius: 0px;
+  padding: 8px 12px;
+  height: 40px !important;
+}
+
+.identification-city-zip {
+  border-top: none !important;
+  border-bottom: 1px solid var(--Dark, #202020) !important;
+  border-right: 1px solid var(--Dark, #202020) !important;
+  border-left: 1px solid var(--Dark, #202020) !important;
+  border-radius: 0px 0px 6px 6px;
+  overflow: hidden;
+}
+
+.identification-city-zip input,
+.identification-city-zip input:hover,
+.identification-city-zip input:focus,
+.identification-city-zip input:active {
+  border: none !important;
+  border-radius: 0px;
+  padding: 8px 12px;
+  background: var(--BG2, #171717);
+  box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15) !important;
+  height: 40px !important;
+}
+
+.identification-city-zip input:first-child {
+  border-right: 1px solid var(--Dark, #202020) !important;
+}

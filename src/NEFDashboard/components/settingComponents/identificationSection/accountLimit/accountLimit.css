@@ -1,0 +1,75 @@
+.AccountLimit {
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+  box-shadow: 0px 3px 10.2px 0px rgba(0, 0, 0, 0.03);
+}
+
+.account-limit-section-title {
+  display: inline-flex;
+  padding: 3px 6px;
+  gap: 6px;
+  border-radius: 6px;
+  background: var(--Dark, #202020);
+  color: var(--Light-grey2, var(--Light-grey2, #b1b1b1));
+  font-size: 14px;
+  text-transform: capitalize;
+  margin-bottom: 8px;
+}
+
+.account-limit-section-title.verified {
+  background: var(--TrnspGreen, rgba(7, 181, 97, 0.1));
+  color: var(--Green, #07b561);
+}
+
+.account-limit-section-title.pending {
+  background: #28251f;
+  color: var(--Yellow, #f9c43c);
+}
+
+.limit-wrapper {
+  min-width: 31%;
+}
+
+.level-main-wrapper {
+  width: 69%;
+}
+
+.level-main-wrapper .level-wrapper {
+  width: 33.33%;
+}
+
+.limit-label-wrapper {
+  border-radius: 6px 0px 0px 6px;
+  background: var(--Dark, #202020);
+  border-top: 1px solid var(--Dark, #202020);
+}
+
+.limit-label-wrapper .limit-label {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--Dark, #202020);
+  border-radius: 6px 0px 0px 6px;
+}
+
+.level-wrapper .level-label-wrapper .level-label {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--Dark, #202020);
+  border-right: 1px solid var(--Dark, #202020);
+}
+
+.level-wrapper .level-label-wrapper .level-label:first-child {
+  border-top: 1px solid var(--Dark, #202020);
+}
+
+.limit-title {
+  margin-bottom: 13px;
+}
+
+.level3-wrapper .level-label:first-child {
+  border-radius: 0px 6px 0px 0px;
+}
+
+.level3-wrapper .level-label:last-child {
+  border-radius: 0px 0px 6px 0px;
+}

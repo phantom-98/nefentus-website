@@ -1,0 +1,18 @@
+.IdentificationSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.account-limit-title {
+  font-family: "DM-Sans";
+  color: var(--White, #ffffff);
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* .identification-card-wrapper .pending .card-btn {
+  background: var(--Green, #07b561);
+  color: #e9e9e9;
+} */
