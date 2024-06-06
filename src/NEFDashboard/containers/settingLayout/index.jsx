@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SidebarNew from "../../components/sidebarNew";
 import backendAPI from "../../../api/backendAPI";
 import { useAuth } from "../../../context/auth/authContext";
@@ -7,6 +7,7 @@ import { useAuth } from "../../../context/auth/authContext";
 const SettingLayout = ({ children }) => {
   const backend_API = new backendAPI();
   const { setUser } = useAuth();
+  const [sideBarShow, setSideBarShow] = useState(false);
   useEffect(() => {
     fetchProfile();
   }, []);
@@ -17,8 +18,15 @@ const SettingLayout = ({ children }) => {
   };
   return (
     <Row>
-      <Col span={4}>
-        <SidebarNew title="" />
+      <Col
+        span={4}
+        className={sideBarShow ? "sideBarHide sideBarShow" : "sideBarHide"}
+      >
+        <SidebarNew
+          title=""
+          sideBarShow={sideBarShow}
+          setSideBarShow={setSideBarShow}
+        />
       </Col>
       <Col span={20}>{children}</Col>
     </Row>
