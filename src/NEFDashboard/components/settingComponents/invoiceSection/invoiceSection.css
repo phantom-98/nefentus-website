@@ -17,7 +17,6 @@
   border-radius: 6px;
   border: 1px solid var(--Dark, #202020);
   background: var(--BG2, #171717);
-
   /* Input shadow */
   box-shadow:
     0px 191px 53px 0px rgba(0, 0, 0, 0),

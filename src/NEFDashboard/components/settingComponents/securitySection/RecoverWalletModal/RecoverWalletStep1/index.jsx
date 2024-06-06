@@ -12,7 +12,8 @@ import { useTranslation } from "react-i18next";
 const RecoverWalletStep1 = ({ onNext, password, setPassword }) => {
   const backendAPI = new backend_API();
   const { t } = useTranslation();
-  const { setErrorMessage, clearMessages } = useContext(MessageContext);
+  const { setErrorMessage, setSuccessMessage, clearMessages } =
+    useContext(MessageContext);
   const [internalWallet, setInternalWallet] = useState({});
 
   useEffect(() => {
@@ -33,6 +34,11 @@ const RecoverWalletStep1 = ({ onNext, password, setPassword }) => {
     } else {
       setErrorMessage(t("messages.error.passwordCorrect"));
     }
+  };
+
+  const onCopy = () => {
+    navigator.clipboard.writeText(internalWallet?.address);
+    setSuccessMessage(t("general.copied"));
   };
 
   return (
@@ -57,7 +63,8 @@ const RecoverWalletStep1 = ({ onNext, password, setPassword }) => {
           <img
             src={CopyIcon}
             alt="icon"
-            className="recover-wallet-modal-copy"
+            className="recover-wallet-modal-copy cursor-pointer"
+            onClick={onCopy}
           />
         </Flex>
       </Flex>

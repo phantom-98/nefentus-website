@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Flex, Switch } from "antd";
 import "./securitySection.css";
 import PasswordModal from "./passwordModal";
@@ -21,6 +21,14 @@ const SecuritySection = () => {
   const [authenticatorModal, setAuthenticatorModal] = useState(false);
   const [antiPhishingModal, setAntiPhishingModal] = useState(false);
   const [recoverWalletModal, setRecoverWalletModal] = useState(false);
+  const [status, setStatus] = useState(false);
+  const [secretToken, setSecretToken] = useState("");
+
+  useEffect(() => {
+    if (Object.keys(user)?.length > 0) {
+      setStatus(user?.hasTotp);
+    }
+  }, [user]);
 
   const handleOtp = async (status) => {
     const response = await backendAPI.setupOtp({ active: status });
@@ -28,6 +36,30 @@ const SecuritySection = () => {
       setUser({ ...user, hasOtp: status });
       setInfoMessage(t("messages.success.updateSettings"));
     }
+  };
+
+  const disableTotp = async () => {
+    const response = await backendAPI.setupTotp({
+      active: false,
+    });
+    if (response?.ok) setStatus(false);
+  };
+
+  const handleTotp = async (toggle) => {
+    if (toggle) {
+      const response = await backendAPI.setupTotp({ active: toggle });
+      if (toggle) setInfoMessage(t("messages.success.updateSettings"));
+      if (response.status === 200) {
+        setStatus(toggle);
+      }
+    }
+    if (toggle) handleTotpSecretKey();
+  };
+  const handleTotpSecretKey = async () => {
+    backendAPI.getTotpToken().then(async (token) => {
+      setSecretToken(token);
+      setAuthenticatorModal(true);
+    });
   };
 
   const list = [
@@ -45,7 +77,17 @@ const SecuritySection = () => {
       actionItem: (
         <Switch
           className="security-switch"
-          onChange={(e) => setAuthenticatorModal(e)}
+          checked={authenticatorModal || status}
+          onChange={(e) => {
+            if (e) {
+              handleTotpSecretKey();
+            } else {
+              disableTotp();
+              setAuthenticatorModal(e);
+            }
+
+            console.log(e);
+          }}
         />
       ),
     },
@@ -100,10 +142,20 @@ const SecuritySection = () => {
       {seedModal && (
         <SeedPhraseModal open={seedModal} onClose={() => setSeedModal(false)} />
       )}
-      {authenticatorModal && (
+      {authenticatorModal && secretToken?.length > 0 && (
         <AuthenticatorModal
           open={authenticatorModal}
-          onClose={() => setAuthenticatorModal(false)}
+          onClose={() => {
+            setAuthenticatorModal(false);
+            setStatus(user?.hasTotp);
+            setSecretToken("");
+          }}
+          onSuccess={() => {
+            setAuthenticatorModal(false);
+            setSecretToken("");
+          }}
+          secretToken={secretToken}
+          handleTotp={handleTotp}
         />
       )}
       {antiPhishingModal && (

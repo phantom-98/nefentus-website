@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import NefentusLogo from "../../../../../../assets/logo/logo_n.png";
 import CopyIcon from "../../../../../../assets/newDashboardIcons/copy-gray.svg";
 import { Button, Flex } from "antd";
-import "./seedStep1.css";
 import InputField from "../../inputField";
 import WalletAddressFormatter from "../../../../../../func/walletAddressFormatter";
+import { MessageContext } from "../../../../../../context/message";
+import "./seedStep1.css";
+import { useTranslation } from "react-i18next";
 
 const SeedStep1 = ({ onNext, password, setPassword, wallet }) => {
+  const { setSuccessMessage } = useContext(MessageContext);
+  const { t } = useTranslation();
+  const onCopy = () => {
+    navigator.clipboard.writeText(wallet?.address);
+    setSuccessMessage(t("general.copied"));
+  };
   return (
     <Flex
       vertical
@@ -22,7 +30,12 @@ const SeedStep1 = ({ onNext, password, setPassword, wallet }) => {
           <div className="default-text-gray seed-phrase-address">
             {WalletAddressFormatter(wallet?.address)}
           </div>
-          <img src={CopyIcon} alt="icon" className="seed-phrase-modal-copy" />
+          <img
+            src={CopyIcon}
+            alt="icon"
+            className="seed-phrase-modal-copy cursor-pointer"
+            onClick={onCopy}
+          />
         </Flex>
       </Flex>
       <div className="seed-step1-description">

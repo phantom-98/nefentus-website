@@ -139,6 +139,16 @@ const DashboardLayout = ({ children, title }) => {
     setSelectedLanguage(lng);
   };
 
+  const onOptionClick = (e) => {
+    switch (+e?.key) {
+      case 1:
+        navigate("/new-settings");
+        break;
+      default:
+        return;
+    }
+  };
+
   return (
     <Row>
       <Col span={4}>
@@ -166,6 +176,7 @@ const DashboardLayout = ({ children, title }) => {
               <Dropdown
                 menu={{
                   items,
+                  onClick: (e) => onOptionClick(e),
                 }}
                 className="profile-dropdown"
                 onOpenChange={handleDropDown}
