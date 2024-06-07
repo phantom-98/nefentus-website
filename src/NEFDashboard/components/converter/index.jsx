@@ -122,7 +122,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
   const [toCryptoIndex, setToCryptoIndex] = useState(3);
   const [swingSDK, setSwingSDK] = useState(null);
   const [receiveAmount, setReceiveAmount] = useState("");
-  const [gas, setGas] = useState(0);
+  const [gas, setGas] = useState(-1);
   const [gasUsd, setGasUsd] = useState(0);
   const [amount, setAmount] = useState("");
   const [bridge, setBridge] = useState("");
@@ -488,19 +488,30 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
       amount: amount,
     });
   }, [amount]);
+
   useEffect(() => {
-    if (setInsufficient && gas) {
-      const native = currencies().findIndex(
-        (item) => item.abbr === currencies()[fromCryptoIndex].blockchain,
-      );
-      if (
-        parseFloat(amount) > balances[fromCryptoIndex] ||
-        parseFloat(gas) > balances[native]
-      )
-        setInsufficient(true);
-      else setInsufficient(false);
+    const chain = currencies()[fromCryptoIndex];
+    console.log("gas", gas, amount);
+    if (
+      (chain.abbr === "ETH" || chain.abbr === "BNB") &&
+      parseFloat(amount) + parseFloat(gas) > balances[fromCryptoIndex]
+    ) {
+      setInsufficient(true);
+      return;
     }
-  }, [amount, gas]);
+    const native = currencies().findIndex(
+      (item) => item.abbr === chain.blockchain,
+    );
+    if (
+      parseFloat(amount) > balances[fromCryptoIndex] ||
+      parseFloat(gas) > balances[native]
+    ) {
+      setInsufficient(true);
+      return;
+    }
+
+    setInsufficient(false);
+  }, [transferParams, gas, balances]);
 
   const onCloseDrawer = () => {
     setOpenDrawer(false);
@@ -754,7 +765,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
                   </span>
                 </div>
               )}
-              {gas > 0 && (
+              {gas >= 0 && (
                 <div
                   style={{
                     width: "100%",
