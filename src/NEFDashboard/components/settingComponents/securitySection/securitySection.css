@@ -1,0 +1,22 @@
+.security-switch.ant-switch-checked,
+.security-switch.ant-switch-checked:hover {
+  background: var(
+    --Blue-gradient,
+    linear-gradient(254deg, #078bb9 -56.92%, #52c8f1 148.25%)
+  ) !important;
+}
+
+.option-container {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--Dark, #202020);
+}
+
+.option-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.option-subtitle {
+  font-size: 12px;
+  font-weight: 500;
+}

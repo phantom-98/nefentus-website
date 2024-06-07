@@ -15,6 +15,7 @@
 - Update invoicing && converter in new dashboard
 - Send modal is functional for external
 - CreateInvoice UI fixes completed
+- Settings Page is implemented (MAJOR)
 - Fix gas fee in cross swap
 
 # Merged changes
