@@ -119,6 +119,7 @@ import ReferralDashboard from "./NEFDashboard/containers/referralDashboard";
 import SalesDashboard from "./NEFDashboard/containers/salesDashboard";
 import Products from "./NEFDashboard/containers/products";
 import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
+import NewLanding from "./pages/Landing";
 
 function App() {
   useEffect(() => {
@@ -268,6 +269,14 @@ function App() {
                         element={
                           <Layout>
                             <Home />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path="/landing"
+                        element={
+                          <Layout>
+                            <NewLanding />
                           </Layout>
                         }
                       />
