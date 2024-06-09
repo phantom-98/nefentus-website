@@ -1,6 +1,6 @@
 # New changes
 
-# Merged changes
+# v1.2.0
 
 - Settings Page is implemented (MAJOR)
 
