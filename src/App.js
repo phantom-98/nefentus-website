@@ -119,6 +119,11 @@ import ReferralDashboard from "./NEFDashboard/containers/referralDashboard";
 import SalesDashboard from "./NEFDashboard/containers/salesDashboard";
 import Products from "./NEFDashboard/containers/products";
 import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
+import AuthLayout from "./NEFDashboard/containers/authLayout";
+import LoginForm from "./NEFDashboard/containers/login";
+import SignForm from "./NEFDashboard/containers/signUp";
+import ForgotPassword from "./NEFDashboard/containers/forgotPassword";
+import SetPasswordForm from "./NEFDashboard/containers/setPassword";
 
 function App() {
   useEffect(() => {
@@ -213,6 +218,38 @@ function App() {
                 >
                   <ScrollToTop>
                     <Routes>
+                      <Route
+                        path="/login"
+                        element={
+                          <AuthLayout>
+                            <LoginForm />
+                          </AuthLayout>
+                        }
+                      />
+                      <Route
+                        path="/sign-up"
+                        element={
+                          <AuthLayout>
+                            <SignForm />
+                          </AuthLayout>
+                        }
+                      />
+                      <Route
+                        path="/forgot-password"
+                        element={
+                          <AuthLayout>
+                            <ForgotPassword />
+                          </AuthLayout>
+                        }
+                      />
+                      <Route
+                        path="/set-password"
+                        element={
+                          <AuthLayout>
+                            <SetPasswordForm />
+                          </AuthLayout>
+                        }
+                      />
                       <Route
                         path="/personal-dashboard"
                         element={
