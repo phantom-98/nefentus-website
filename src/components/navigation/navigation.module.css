@@ -40,6 +40,10 @@
   gap: 5rem;
 }
 
+.logoWrapper {
+  margin-top: 0.4rem;
+}
+
 .logo {
   height: 2.5rem;
   cursor: pointer;
@@ -140,29 +144,31 @@
   font-size: 1.4rem;
 }
 
-.button > a {
-  border-radius: 1rem;
-  font-size: 1.4rem;
-  pointer-events: initial;
-  cursor: pointer;
-  padding: 1rem 3rem;
+.login,
+.button {
   transition: 0.2s ease-out;
-  color: var(--text-color);
-  background-color: var(--bg2-color);
+  color: var(--background-color);
+  background: var(--text-color);
+  font-size: 1.2rem;
+  padding: 0.6rem 2rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .login {
-  overflow: hidden;
-  position: relative;
+  color: var(--text-color);
+  background: var(--background-color);
 }
-
+/* 
 .login p {
   transition: 0.2s ease-out;
 }
 
 .login:hover p {
   transform: translateY(-100%);
-}
+} */
 
 .dashboardButton {
   font-size: 1rem;

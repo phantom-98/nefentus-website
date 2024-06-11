@@ -1,29 +1,35 @@
 import "./landing.css";
 import Hero1 from "../../assets/landing/hero1.png";
 import Hero2 from "../../assets/landing/hero2.png";
+import HeroLine1 from "../../assets/landing/hero-line-top-left.svg";
+import HeroLine2 from "../../assets/landing/hero-line-bottom-left.svg";
+import VerticalLine from "../../assets/landing/hero lines 2.svg";
+import VerticalDashedLine from "../../assets/landing/VerticalDashedLine.svg";
+import HorizontalDashedLine from "../../assets/landing/HorizontalDashedLine.svg";
+import DashedLine from "../../assets/landing/DashedLine.svg";
+import BlueLine from "../../assets/landing/BlueLine.svg";
 import Plus from "../../assets/landing/plus.svg";
 import Minus from "../../assets/landing/minus.svg";
-import Send from "../../assets/landing/send.png";
-import Swap from "../../assets/landing/swap.png";
+import Help1 from "../../assets/landing/help 1.png";
+import Help2 from "../../assets/landing/help 2.png";
+import Help3 from "../../assets/landing/help 3.png";
+import Help4 from "../../assets/landing/help 4.png";
+import WalletsPng from "../../assets/landing/wallets.png";
+import Benefit1 from "../../assets/landing/benefit 1.png";
+import Benefit2 from "../../assets/landing/benefit 2.png";
+import ServiceLine1 from "../../assets/landing/service line left.svg";
+import ServiceLine2 from "../../assets/landing/service line right.svg";
+import GettingStarted1 from "../../assets/landing/started left.svg";
+import GettingStarted2 from "../../assets/landing/started right.svg";
 import HeartSquare from "../../assets/landing/heart-square.svg";
 import HeartChecked from "../../assets/landing/heart-checked.svg";
 import Smile from "../../assets/landing/smile.svg";
 import PC from "../../assets/landing/pc.svg";
 import Dollar from "../../assets/landing/dollar.svg";
 import Chain from "../../assets/landing/chain.svg";
-import Copy from "../../assets/icon/copy.png";
 import NefentusLogo from "../../assets/logo/logo.svg";
-import CoinbaseLogo from "../../assets/logo/coinbase.svg";
-import WalletconnectLogo from "../../assets/logo/WalletConnect.svg";
-import MetamaskLogo from "../../assets/logo/MetaMask.svg";
-import BloctoLogo from "../../assets/logo/blocto.png";
-import TrustLogo from "../../assets/logo/trust.png";
 import WalletSvg from "../../assets/landing/wallet.svg";
 import ShoppingCartSvg from "../../assets/landing/shopping-cart.svg";
-import CheckSquareSvg from "../../assets/landing/check-square.svg";
-import SendModalPng from "../../assets/landing/send-modal.png";
-import CheckoutPng from "../../assets/landing/checkout.png";
-import SuccessPng from "../../assets/landing/success.png";
 import FitnessSvg from "../../assets/landing/fitness.svg";
 import RealEstateSvg from "../../assets/landing/real-estate.svg";
 import FoodSvg from "../../assets/landing/food.svg";
@@ -39,11 +45,10 @@ import Main3 from "../../assets/landing/main3.png";
 import Logos from "../logos/logos";
 
 import { useEffect, useState } from "react";
-import { useENS } from "@thirdweb-dev/react";
 
 const Landing = () => {
   return (
-    <div className="landing-layout container">
+    <div className="landing-layout home container">
       <Hero />
 
       <Logos />
@@ -52,11 +57,18 @@ const Landing = () => {
 
       <Benefits />
 
-      <MainFeatures />
+      <MainFeaturesHead />
+
+      <MainFeaturesBody />
 
       <Industries />
 
-      <GettingStarted />
+      <Conclusion
+        icon={NefentusLogo}
+        title={`Start accepting payments in crypto right now`}
+        subtitle={`Our support team will answer all your questions so you feel safe on your journey`}
+        button={`Get Started`}
+      />
     </div>
   );
 };
@@ -65,42 +77,104 @@ export default Landing;
 
 const Hero = () => {
   return (
-    <div className="layout-horizontal">
-      <div className="hero-layout">
-        <h1 className="title">
-          Integrate{" "}
-          <span
-            style={{
-              color: "#4BA6C5",
-            }}
-          >
-            cryptocurrency payments
-          </span>{" "}
-          into your business
-        </h1>
-        <p className="sub-title">
-          Create and receive payments. Manage all wallets and the sales process
-          in one place.
-        </p>
-        <button>Get Started</button>
+    <div className="layout-paragraph hero">
+      <img
+        src={HeroLine1}
+        style={{
+          top: "0",
+          width: "91%",
+        }}
+        className="translate-left"
+      />
+      <img
+        src={HeroLine2}
+        style={{
+          bottom: "0",
+          width: "91%",
+        }}
+        className="translate-left"
+      />
+      <div className="layout-horizontal">
+        <div className="hero-layout">
+          <h1 className="title">
+            Integrate{" "}
+            <span
+              style={{
+                color: "#4BA6C5",
+              }}
+            >
+              cryptocurrency payments
+            </span>{" "}
+            into your business
+          </h1>
+          <p className="sub-title">
+            Create and receive payments. Manage all wallets and the sales
+            process in one place.
+          </p>
+          <a href="/signup">
+            <button>Get Started</button>
+          </a>
+        </div>
+        <div className="hero-img">
+          <img src={Hero1} />
+          <img src={Hero2} />
+        </div>
       </div>
-      <div className="hero-img">
-        <img src={Hero1} style={{ width: "24rem" }} />
-        <img
-          src={Hero2}
-          style={{
-            width: "24rem",
-            position: "absolute",
-            top: "4.4rem",
-            right: "-2rem",
-          }}
-        />
-      </div>
+      <img
+        src={VerticalLine}
+        style={{
+          right: "24rem",
+          bottom: "0",
+          height: "100%",
+        }}
+        className="hide-in-tablet"
+      />
+      <img
+        src={VerticalLine}
+        style={{
+          position: "absolute",
+          right: "0",
+          bottom: "0",
+          height: "100%",
+          zIndex: "-1",
+        }}
+        className="hide-in-tablet"
+      />
+      <img
+        src={VerticalLine}
+        style={{
+          position: "absolute",
+          right: "18rem",
+          bottom: "0",
+          height: "100%",
+          zIndex: "-1",
+        }}
+        className="hide-in-tablet"
+      />
+      <img
+        src={VerticalLine}
+        style={{
+          position: "absolute",
+          right: "42rem",
+          bottom: "0",
+          height: "100%",
+          zIndex: "-1",
+        }}
+        className="hide-in-tablet"
+      />
+      <hr
+        style={{
+          position: "absolute",
+          top: "0",
+          width: "100vw",
+          border: "1px solid #202020",
+        }}
+      />
     </div>
   );
 };
 
-const Heading = ({ title, subtitle }) => {
+export const Heading = ({ title, subtitle }) => {
   return (
     <div className="layout-title">
       <h1 className="title">{title}</h1>
@@ -113,26 +187,30 @@ const helps = [
   {
     title: "Invoices",
     body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
+    element: <img src={Help2} style={{ width: "100%" }} />,
   },
   {
     title: "Product payment links",
     body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
+    element: <img src={Help3} style={{ width: "100%" }} />,
   },
   {
     title: "All types of financial transactions with cryptocurrency",
     body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
+    element: <img src={Help1} style={{ width: "100%" }} />,
   },
   {
     title: "Analytics of your sales",
     body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
+    element: <img src={Help4} style={{ width: "100%" }} />,
   },
 ];
 
 const Helps = () => {
-  const [expands, setExpands] = useState(helps.map((item) => false));
+  const [expands, setExpands] = useState(helps.map((_, index) => !index));
 
   return (
-    <div className="layout-paragraph">
+    <div className="layout-paragraph help">
       <Heading
         title={`How our platform can help your business`}
         subtitle={`All the cryptocurrency tools your business needs in one place`}
@@ -145,6 +223,7 @@ const Helps = () => {
                 title={help.title}
                 description={help.body}
                 index={index}
+                element={help.element}
                 expands={expands}
                 setExpands={setExpands}
               />
@@ -152,37 +231,86 @@ const Helps = () => {
           })}
         </div>
         <div className="layout-feature-img">
-          <div>
-            <img
-              src={Send}
-              style={{
-                width: "22rem",
-                transform: "translateY(1rem)",
-              }}
-            />
-            <img
-              src={Swap}
-              style={{
-                width: "24rem",
-                position: "absolute",
-                top: "6rem",
-                right: "-17rem",
-              }}
-            />
-          </div>
+          {helps.map((help, index) => {
+            return expands[index] ? help.element : null;
+          })}
         </div>
       </div>
+      <img
+        src={VerticalDashedLine}
+        style={{
+          position: "absolute",
+          right: "0",
+          top: "2rem",
+          zIndex: "-1",
+        }}
+      />
+      <img
+        src={DashedLine}
+        style={{
+          position: "absolute",
+          right: "18rem",
+          top: "0",
+          zIndex: "-1",
+        }}
+        className="hide-in-tablet"
+      />
+      <img
+        src={BlueLine}
+        style={{
+          position: "absolute",
+          right: "18rem",
+          top: "28rem",
+          zIndex: "1",
+        }}
+        className="hide-in-tablet"
+      />
+      <img
+        src={BlueLine}
+        style={{
+          position: "absolute",
+          left: "0",
+          top: "10rem",
+          zIndex: "1",
+        }}
+      />
+      <img
+        src={VerticalLine}
+        style={{
+          position: "absolute",
+          left: "0",
+          top: "0",
+          height: "100%",
+          zIndex: "-1",
+        }}
+      />
+      <img
+        src={HorizontalDashedLine}
+        style={{
+          position: "absolute",
+          bottom: "16rem",
+          zIndex: "-1",
+        }}
+      />
     </div>
   );
 };
 
-const Feature = ({ title, description, setExpands, expands, index }) => {
+const Feature = ({
+  title,
+  description,
+  element,
+  setExpands,
+  expands,
+  index,
+}) => {
   return (
     <div className="feature">
       <div
         className="feature-header title"
         onClick={() => {
           setExpands &&
+            !expands[index] &&
             index !== undefined &&
             setExpands(
               expands.map((item, i) => {
@@ -203,6 +331,7 @@ const Feature = ({ title, description, setExpands, expands, index }) => {
       {expands && expands[index] && (
         <div className="feature-body sub-title">
           <p>{description}</p>
+          <div className="feature-img">{element}</div>
         </div>
       )}
     </div>
@@ -223,180 +352,23 @@ const IcoGroup = ({ icons }) => {
   );
 };
 
-const WalletCard = ({
-  color1,
-  color2,
-  icon,
-  bgColor,
-  name,
-  address,
-  balance,
-  x,
-  y,
-  rot,
-}) => {
-  return (
-    <div
-      className="wallet-card"
-      style={{
-        transform: `translate(${x}, ${y}) rotate(${rot})`,
-      }}
-    >
-      <div className="wallet-banner">
-        <div
-          className="logo-wrapper"
-          style={{
-            background: bgColor,
-          }}
-        >
-          <img src={icon} />
-        </div>
-        <p>{name}</p>
-        <div
-          className="banner-back"
-          style={{
-            background: `radial-gradient(90% 80% at 20% 35%, ${color1}, ${color2})`,
-          }}
-        >
-          <svg
-            className="banner-back"
-            width="134"
-            height="159"
-            viewBox="0 0 134 159"
-          >
-            <path
-              d="M139.041 -84.7168C135.23 -68.0345 122.3 -21.182 101.061 32.7692C74.5133 100.208 46.6767 121.306 6.99764 103.404C-24.7456 89.0826 -23.1996 60.9586 -19.7008 47.8482C-14.5105 31.1731 9.37897 -7.06968 51.1638 10.2573C92.9486 27.5843 107.27 71.3332 75.1075 122.226C65.5278 138.814 41.3411 148.452 19.3375 156.761"
-              stroke={color2}
-              stroke-width="3"
-            />
-          </svg>
-        </div>
-      </div>
-      <div className="wallet-body">
-        <div>
-          <p>Wallet address</p>
-          <p
-            style={{
-              fontSize: "1.2rem",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            {address}{" "}
-            <img src={Copy} style={{ width: "2rem", marginLeft: "1rem" }} />
-          </p>
-          <p>Balance</p>
-          <p style={{ fontSize: "1.6rem" }}>{balance}</p>
-        </div>
-        <div className="detail">{`Wallet details >`}</div>
-      </div>
-    </div>
-  );
-};
-
-const wallets = [
-  {
-    color1: "#42256d",
-    color2: "#25506d",
-    icon: NefentusLogo,
-    bgColor: "#202020",
-    name: "NEFENTUS",
-    address: "0xf7635...d70D7",
-    balance: "€5.478,35",
-    x: "-2%",
-    y: "10%",
-    rot: "-20deg",
-  },
-  {
-    color1: "#6e4418",
-    color2: "#2b1b09",
-    icon: MetamaskLogo,
-    bgColor: "#202020",
-    name: "MetaMask",
-    address: "0xf7635...d70D7",
-    balance: "€15.724,50",
-    x: "359%",
-    y: "179%",
-    rot: "14deg",
-  },
-  {
-    color1: "#12385c",
-    color2: "#0c1c2b",
-    icon: WalletconnectLogo,
-    bgColor: "#e9e9e9",
-    name: "Wallet Connect",
-    address: "0xf7635...d70D7",
-    balance: "€65125",
-    x: "206%",
-    y: "168%",
-    rot: "-15deg",
-  },
-  {
-    color1: "#0a4d5c",
-    color2: "#0b252b",
-    icon: BloctoLogo,
-    bgColor: "#e9e9e9",
-    name: "Blocto Wallet",
-    address: "0xf7635...d70D7",
-    balance: "€56",
-    x: "130%",
-    y: "20%",
-    rot: "24deg",
-  },
-  {
-    color1: "#0e2b75",
-    color2: "#2e5266",
-    icon: TrustLogo,
-    bgColor: "#e9e9e9",
-    name: "Trust Wallet",
-    address: "0xf7635...d70D7",
-    balance: "€162.478",
-    x: "264%",
-    y: "2%",
-    rot: "-16deg",
-  },
-  {
-    color1: "#143263",
-    color2: "#3d4757",
-    icon: CoinbaseLogo,
-    bgColor: "#e9e9e9",
-    name: "Coinbase",
-    address: "0xf7635...d70D7",
-    balance: "€5.478",
-    x: "396%",
-    y: "18%",
-    rot: "10deg",
-  },
-];
-
-const IcoCard = ({ icon, name, x, y }) => {
-  return (
-    <div
-      className="ico-card"
-      style={{
-        top: `${y}rem`,
-        left: `${x}rem`,
-      }}
-    >
-      <img src={icon} />
-      <p>{name}</p>
-    </div>
-  );
-};
-
 const Benefits = () => {
   return (
-    <div className="layout-paragraph">
+    <div
+      className="layout-paragraph"
+      style={{
+        borderTop: "1px solid #202020",
+        paddingTop: "5rem",
+      }}
+    >
       <IcoGroup icons={[HeartSquare, Smile, HeartChecked]} />
       <Heading
         title={`Why your customers will love it`}
         subtitle={`Nefentus was designed with your customers' convenience in mind`}
       />
       <div className="layout-benefits">
-        <div>
-          {wallets.map((wallet) => {
-            return <WalletCard {...wallet} />;
-          })}
+        <div style={{ objectFit: "cover" }}>
+          <img src={WalletsPng} style={{ height: "100%" }} />
           <div className="outlook">
             <p>Hundreds of currencies, all Web3 wallets</p>
             <p className="sub-title">
@@ -408,49 +380,7 @@ const Benefits = () => {
         <div className="benefits">
           <div>
             <p>Pre-configured payment.</p>
-            <div
-              style={{
-                background: "#202020",
-                position: "absolute",
-                top: "14rem",
-                left: "7rem",
-                width: "4.2rem",
-                height: "4.2rem",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                src={NefentusLogo}
-                style={{
-                  width: "2.4rem",
-                  height: "2.4rem",
-                }}
-              />
-            </div>
-            <img
-              src={SendModalPng}
-              style={{
-                width: "45%",
-                position: "absolute",
-                right: "2rem",
-                bottom: "0",
-              }}
-            />
-            <IcoCard icon={WalletSvg} name={"Client's wallet"} x={35} y={5} />
-            <IcoCard
-              icon={ShoppingCartSvg}
-              name={"Nefentus checkout"}
-              x={3}
-              y={10}
-            />
-            <IcoCard
-              icon={CheckSquareSvg}
-              name={"Payment data"}
-              x={14}
-              y={18}
-            />
+            <img src={Benefit1} />
             <p className="sub-title">
               Commerce shares payment information directly with their wallet,
               removing any need for manual data entry.
@@ -458,26 +388,7 @@ const Benefits = () => {
           </div>
           <div>
             <p>Online checkout</p>
-            <img
-              src={SuccessPng}
-              style={{
-                position: "absolute",
-                width: "38%",
-                border: "1px solid #202020",
-                borderRadius: "0.4rem",
-                transform: "translate(5rem, 6.4rem)",
-              }}
-            />
-            <img
-              src={CheckoutPng}
-              style={{
-                position: "absolute",
-                width: "52%",
-                border: "0.8rem solid #202020",
-                borderRadius: "1.2rem",
-                transform: "translate(26rem, -4rem) rotate(-16deg)",
-              }}
-            />
+            <img src={Benefit2} />
             <p className="sub-title">
               Integrate a ready-made payment page to your website and attract
               clients who prefer paying in crypto
@@ -485,6 +396,35 @@ const Benefits = () => {
           </div>
         </div>
       </div>
+
+      <img
+        src={VerticalLine}
+        style={{
+          position: "absolute",
+          left: "0",
+          top: "0",
+          zIndex: "-1",
+        }}
+      />
+      <img
+        src={BlueLine}
+        style={{
+          position: "absolute",
+          left: "0",
+          top: "6rem",
+          zIndex: "1",
+        }}
+      />
+      <hr
+        style={{
+          border: "1px solid #202020",
+          width: "100vw",
+          position: "absolute",
+          bottom: "8rem",
+          zIndex: "-1",
+        }}
+        className="hide-in-tablet"
+      />
     </div>
   );
 };
@@ -492,27 +432,33 @@ const Benefits = () => {
 const features = [
   {
     icon: WalletSvg,
+    img: Main1,
     title: `Multi-wallet management`,
     subtitle: `Hundreds of currencies, all Web3 wallets. Customers can pay with their preferred wallet and currency across Bitcoin, Ethereum, and other networks`,
   },
   {
     icon: WalletSvg,
+    img: Main2,
     title: `Multi-wallet management`,
     subtitle: `Hundreds of currencies, all Web3 wallets. Customers can pay with their preferred wallet and currency across Bitcoin, Ethereum, and other networks`,
   },
   {
     icon: WalletSvg,
+    img: Main3,
     title: `Multi-wallet management`,
     subtitle: `Hundreds of currencies, all Web3 wallets. Customers can pay with their preferred wallet and currency across Bitcoin, Ethereum, and other networks`,
   },
 ];
 
 const ScrollAnimation = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [pos, setPos] = useState(0);
 
-  const handleScroll = () => {
-    const position = window.scrollY;
-    setScrollPosition(position);
+  const handleScroll = (e) => {
+    const position =
+      (100 * document.documentElement.scrollTop) /
+      document.documentElement.offsetHeight;
+    console.log("scroll >", position);
+    setPos(position < 51.2 ? 0 : position < 60 ? 1 : 2);
   };
 
   useEffect(() => {
@@ -522,13 +468,6 @@ const ScrollAnimation = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    console.log("scroll position ----->", scrollPosition);
-  }, [scrollPosition]);
-  const betScroll = (from, to) =>
-    scrollPosition > from && scrollPosition < to ? true : false;
-
   //   2260, 2927, 3927
   return (
     <div className="scroll-container">
@@ -540,68 +479,168 @@ const ScrollAnimation = () => {
                 <img src={item.icon} />
               </div>
               <p>{item.title}</p>
+              <img
+                src={HorizontalDashedLine}
+                style={{
+                  position: "absolute",
+                  top: "0",
+                  left: "-32rem",
+                }}
+                className="hide-in-tablet"
+              />
+              <hr
+                style={{
+                  position: "absolute",
+                  bottom: "0",
+                  width: "200vw",
+                  left: "-32rem",
+                  border: "1px solid #202020",
+                }}
+                className="hide-in-tablet"
+              />
               <p className="sub-title">{item.subtitle}</p>
+              <img src={item.img} />
             </div>
           );
         })}
       </div>
-      <div className="img-part">
-        <img
-          alt="scroll_image"
-          className="image-transition"
-          style={
-            betScroll(2260, 2800)
-              ? { opacity: 1, position: "sticky", top: "100px" }
-              : { opacity: 0 }
-          }
-          src={Main1}
-          width={500}
-        />
-        <img
-          alt="scroll_image"
-          className="image-transition"
-          style={
-            betScroll(2800, 3400)
-              ? { opacity: 1, position: "sticky", top: "100px" }
-              : { opacity: 0 }
-          }
-          src={Main2}
-          width={500}
-        />
-        <img
-          alt="scroll_image"
-          className="image-transition"
-          style={
-            betScroll(3400, 3927)
-              ? { opacity: 1, position: "sticky", top: "100px" }
-              : { opacity: 0 }
-          }
-          src={Main3}
-          width={500}
-        />
+      <div
+        className="img-part"
+        style={{
+          position: "sticky",
+          top: "20rem",
+        }}
+      >
+        <div style={{ position: "relative", width: "100%" }}>
+          <img
+            className="image-transition"
+            style={{ opacity: pos == 0 ? "1" : "0" }}
+            src={Main1}
+          />
+          <img
+            className="image-transition"
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              opacity: pos == 1 ? "1" : "0",
+            }}
+            src={Main2}
+          />
+          <img
+            className="image-transition"
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              opacity: pos == 2 ? "1" : "0",
+            }}
+            src={Main3}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
-const MainFeatures = () => {
+const MainFeaturesHead = () => {
   return (
-    <div className="layout-paragraph">
+    <div
+      className="layout-paragraph"
+      style={{
+        marginTop: "8rem",
+        paddingBlock: "5rem",
+        background: "#171717",
+        width: "100vw",
+        borderBlock: "1px solid #343434",
+        overflow: "hidden",
+      }}
+    >
       <IcoGroup icons={[PC, Dollar, Chain]} />
       <Heading
         title={`Why your customers will love it`}
         subtitle={`Nefentus was designed with your customers' convenience in mind`}
       />
+      <img
+        src={VerticalLine}
+        style={{
+          position: "absolute",
+          right: "25%",
+          width: "2px",
+          top: "0",
+          zIndex: "1",
+        }}
+        className="hide-in-tablet"
+      />
+      <img
+        src={BlueLine}
+        style={{
+          position: "absolute",
+          right: "25%",
+          top: "6rem",
+          zIndex: "1",
+        }}
+        className="hide-in-tablet"
+      />
+      <img
+        src={VerticalDashedLine}
+        style={{
+          position: "absolute",
+          left: "25%",
+          width: "2px",
+          top: "0",
+          zIndex: "1",
+        }}
+        className="hide-in-tablet"
+      />
+    </div>
+  );
+};
+const MainFeaturesBody = () => {
+  return (
+    <div className="layout-paragraph main-feature">
       <ScrollAnimation />
+      <img
+        src={VerticalLine}
+        style={{
+          position: "absolute",
+          bottom: "0",
+          right: "0",
+          height: "101%",
+          zIndex: "-1",
+        }}
+        className="hide-in-tablet"
+      />
+      <img
+        src={VerticalLine}
+        style={{
+          position: "absolute",
+          bottom: "0",
+          right: "63%",
+          height: "101%",
+          zIndex: "-1",
+        }}
+        className="hide-in-tablet"
+      />
+      <hr
+        style={{
+          position: "absolute",
+          bottom: "0",
+          width: "200vw",
+          left: "-32rem",
+          border: "1px solid #202020",
+        }}
+        className="hide-in-tablet"
+      />
     </div>
   );
 };
 
 const industries = [
-  {
-    name: "Fitnesss",
-    icon: FitnessSvg,
-  },
+  //   {
+  //     name: "Fitnesss",
+  //     icon: FitnessSvg,
+  //   },
   {
     name: "E-commerce",
     icon: ECommerceSvg,
@@ -622,14 +661,14 @@ const industries = [
     name: "Marcketing and Advertising",
     icon: MarketSvg,
   },
-  {
-    name: "Logistics and Transportation",
-    icon: TransportSvg,
-  },
-  {
-    name: "Restaurant and Food",
-    icon: FoodSvg,
-  },
+  //   {
+  //     name: "Logistics and Transportation",
+  //     icon: TransportSvg,
+  //   },
+  //   {
+  //     name: "Restaurant and Food",
+  //     icon: FoodSvg,
+  //   },
 ];
 
 const IndustryCard = ({ icon, name }) => {
@@ -676,11 +715,47 @@ const Industries = () => {
           </div>
         </div>
       </div>
+      <img
+        src={ServiceLine1}
+        style={{
+          position: "absolute",
+          left: "0",
+          top: "0",
+          width: "42%",
+          zIndex: "1",
+        }}
+      />
+      <img
+        src={ServiceLine2}
+        style={{
+          position: "absolute",
+          right: "0",
+          top: "0",
+          width: "36%",
+          zIndex: "1",
+        }}
+      />
+      <hr
+        style={{
+          border: "1px solid #202020",
+          width: "100vw",
+          position: "absolute",
+          bottom: "0",
+        }}
+      />
+      <hr
+        style={{
+          border: "1px solid #202020",
+          width: "100vw",
+          position: "absolute",
+          top: "0",
+        }}
+      />
     </div>
   );
 };
 
-const GettingStarted = () => {
+export const Conclusion = ({ icon, title, subtitle, button }) => {
   return (
     <div className="layout-paragraph layout-getting-started">
       <div
@@ -693,21 +768,42 @@ const GettingStarted = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          boxShadow: "5px 5px 32px #070707",
         }}
       >
         <img
-          src={NefentusLogo}
+          src={icon}
           style={{
             width: "4rem",
             height: "4rem",
           }}
         />
       </div>
-      <Heading
-        title={`Start accepting payments in crypto right now`}
-        subtitle={`Our support team will answer all your questions so you feel safe on your journey`}
+      <Heading title={title} subtitle={subtitle} />
+      <a href="/signup">
+        <button>Get Started</button>
+      </a>
+
+      <img
+        src={GettingStarted1}
+        style={{
+          position: "absolute",
+          bottom: "0",
+          left: "0",
+          width: "40%",
+          zIndex: "1",
+        }}
       />
-      <button>Get started</button>
+      <img
+        src={GettingStarted2}
+        style={{
+          position: "absolute",
+          right: "0",
+          top: "0",
+          width: "40%",
+          zIndex: "1",
+        }}
+      />
     </div>
   );
 };
