@@ -48,8 +48,8 @@ const B2C = () => {
 
       <Conclusion
         icon={NefentusLogo}
-        title={`No hidden fees or monthly subscription`}
-        subtitle={`Creating and using an account for personal purposes is absolutely free`}
+        title={`Transparent Pricing, No Strings Attached`}
+        subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating and using an account for personal use is completely free. Get started today!`}
         button={`Create an account`}
       />
     </div>
@@ -78,10 +78,11 @@ const Hero = () => {
             width: "50%",
           }}
         >
-          <h1 className="title">Manage your crypto with Nefentus</h1>
+          <h1 className="title">Take charge of your crypto with Nefentus</h1>
           <p className="sub-title">
-            Create and receive payments. Manage all wallets and the sales
-            process in one place.
+            Simplify your crypto experience. Easily send & receive payments,
+            manage all your wallets and handle sales—all in one convenient
+            place.
           </p>
           <a href="/signup">
             <button>Get Started</button>
@@ -290,8 +291,8 @@ const MultiWallets = () => {
       }}
     >
       <Heading
-        title={`Multiwallet management`}
-        subtitle={`Use our internal wallet or connect an unlimited number of external wallets`}
+        title={`Juggle multiple wallets seamlessly`}
+        subtitle={`Effortlessly handle multiple wallets with our platform. Choose our built-in wallet or link countless external wallets for ultimate flexibility.`}
       />
 
       <div className="multi-wallet-management">
@@ -339,14 +340,13 @@ const MultiWallets = () => {
               fontSize: "2rem",
             }}
           >
-            Use our internal <br />
-            Nefentus wallet
+            Utilize our trusted Nefentus wallet
           </p>
           <p className="sub-title">
-            Internal wallets often employ advanced security measures to protect
-            your digital assets. They may use encryption, multi-factor
-            authentication, and other security protocols to safeguard your
-            funds.
+            Rely on our internal Nefentus Wallet, fortified with advanced
+            security features. Benefit from encryption, multi-factor
+            authentication and other robust protocols, ensuring the safety of
+            your digital assets.
           </p>
           <div
             className="ico-card-wallet"
@@ -360,9 +360,7 @@ const MultiWallets = () => {
           </div>
         </div>
         <div className="wallet-external">
-          <p>
-            Or connect an unlimited <br /> number of external wallets
-          </p>
+          <p>Or connect an unlimited number of external wallets</p>
           <div className="wallet-club">
             {wallets.map((item) => (
               <div
@@ -436,10 +434,10 @@ const MultiWallets = () => {
             <img src={RainbowCard} />
           </div>
           <p className="sub-title">
-            Having an internal wallet integrated into your platform or service
-            can make transactions more convenient. You can easily send and
-            receive payments without having to use external wallets or
-            exchanges.
+            Integrating an external wallet into your platform or service
+            enhances transaction convenience. Seamlessly send & receive payments
+            without the need for external wallets or exchanges, simplifying the
+            process for you.
           </p>
         </div>
       </div>
@@ -456,8 +454,8 @@ const Transactions = () => {
       }}
     >
       <Heading
-        title={`Any financial transactions with your wallets`}
-        subtitle={`A cryptocurrency conversion function is a tool or software feature designed to facilitate the conversion of one cryptocurrency into another. `}
+        title={`All financial transactions involving your wallets`}
+        subtitle={`A cryptocurrency conversion function serves as a tool or software capability crafted to simplify the transformation of one cryptocurrency into another.`}
       />
       <div className="layout-transactions first">
         <hr
@@ -510,12 +508,12 @@ const Transactions = () => {
               fontSize: "2rem",
             }}
           >
-            Send/Receive
+            Send/Receive with Ease
           </p>
           <p className="sub-title">
-            Hundreds of currencies, all Web3 wallets. Customers can pay with
-            their preferred wallet and currency across Bitcoin, Ethereum, and
-            other networks
+            Access hundreds of currencies across all Web3 wallets. Customers can
+            pay using their preferred wallet & currency, spanning Bitcoin,
+            Ethereum and various other networks.
           </p>
         </div>
       </div>
@@ -571,12 +569,12 @@ const Transactions = () => {
               fontSize: "2rem",
             }}
           >
-            Converter
+            Currency converter
           </p>
           <p className="sub-title">
-            Hundreds of currencies, all Web3 wallets. Customers can pay with
-            their preferred wallet and currency across Bitcoin, Ethereum, and
-            other networks
+            Explore a wide array of currencies compatible with all Web3 wallets.
+            Customers can conveniently pay using their preferred wallet and
+            currency including Bitcoin, Ethereum & other networks.
           </p>
         </div>
         <div className="transaction-img">

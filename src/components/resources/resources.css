@@ -48,13 +48,25 @@
 
 .contents {
   width: 76%;
-  padding: 4rem 0 1rem 3rem;
+  padding: 2rem 0 0rem 3rem;
   display: flex;
   flex-direction: column;
   gap: 0;
   align-items: start;
   border-left: 1px solid #202020;
   position: relative;
+  overflow-y: auto;
+  height: calc(100vh - 7rem);
+}
+
+.contents::-webkit-scrollbar {
+  display: none;
+}
+
+.contents h1,
+.contents h2,
+.contents p {
+  z-index: 5;
 }
 
 .contents h1 {

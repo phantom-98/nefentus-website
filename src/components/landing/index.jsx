@@ -65,8 +65,8 @@ const Landing = () => {
 
       <Conclusion
         icon={NefentusLogo}
-        title={`Start accepting payments in crypto right now`}
-        subtitle={`Our support team will answer all your questions so you feel safe on your journey`}
+        title={`Begin Crypto Payments Today`}
+        subtitle={`Start accepting cryptocurrency payments immediately. Our dedicated support team is here to address all your inquiries, ensuring you feel secure every step of the way.`}
         button={`Get Started`}
       />
     </div>
@@ -97,19 +97,12 @@ const Hero = () => {
       <div className="layout-horizontal">
         <div className="hero-layout">
           <h1 className="title">
-            Integrate{" "}
-            <span
-              style={{
-                color: "#4BA6C5",
-              }}
-            >
-              cryptocurrency payments
-            </span>{" "}
-            into your business
+            Revolutionize Your Business with Crypto Payment Integration
           </h1>
           <p className="sub-title">
-            Create and receive payments. Manage all wallets and the sales
-            process in one place.
+            Effortlessly generate & receive payments. Consolidate wallet
+            management and streamline the sales process, all within a single
+            platform.
           </p>
           <a href="/signup">
             <button>Get Started</button>
@@ -186,22 +179,22 @@ export const Heading = ({ title, subtitle }) => {
 const helps = [
   {
     title: "Invoices",
-    body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
+    body: "Streamline your billing process with easy-to-create & track invoices. Generate invoices, monitor payment statuses and send reminders effortlessly.",
     element: <img src={Help2} style={{ width: "100%" }} />,
   },
   {
     title: "Product payment links",
-    body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
+    body: "Simplify transactions with direct product payment links. Provide customers with convenient payment options, ensuring seamless & secure purchases.",
     element: <img src={Help3} style={{ width: "100%" }} />,
   },
   {
-    title: "All types of financial transactions with cryptocurrency",
+    title: "Different ways to use cryptocurrency",
     body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
     element: <img src={Help1} style={{ width: "100%" }} />,
   },
   {
-    title: "Analytics of your sales",
-    body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
+    title: "Sales analytics",
+    body: "Gain valuable insights into your sales performance. Analyze key metrics, track trends and make informed decisions to optimize your business strategy & drive growth.",
     element: <img src={Help4} style={{ width: "100%" }} />,
   },
 ];
@@ -212,8 +205,8 @@ const Helps = () => {
   return (
     <div className="layout-paragraph help">
       <Heading
-        title={`How our platform can help your business`}
-        subtitle={`All the cryptocurrency tools your business needs in one place`}
+        title={`Transform your business with our all-in-one cryptocurrency platform`}
+        subtitle={`Empower your business with a comprehensive suite of cryptocurrency tools conveniently housed under one roof.`}
       />
       <div className="layout-horizontal layout-help">
         <div className="layout-feature">
@@ -363,17 +356,18 @@ const Benefits = () => {
     >
       <IcoGroup icons={[HeartSquare, Smile, HeartChecked]} />
       <Heading
-        title={`Why your customers will love it`}
-        subtitle={`Nefentus was designed with your customers' convenience in mind`}
+        title={`Here's why your customers will love it`}
+        subtitle={`Nefentus prioritizes your customers' convenience at every step.`}
       />
       <div className="layout-benefits">
         <div style={{ objectFit: "cover" }}>
           <img src={WalletsPng} style={{ height: "100%" }} />
           <div className="outlook">
-            <p>Hundreds of currencies, all Web3 wallets</p>
+            <p>Access a diverse range of currencies & wallets</p>
             <p className="sub-title">
-              Customers can pay with their preferred wallet
-              <br /> and currency across Bitcoin, Ethereum, and other networks
+              Customers have the flexibility to pay using their preferred wallet
+              & currency, spanning across Bitcoin, Ethereum and numerous other
+              networks.
             </p>
           </div>
         </div>
@@ -387,11 +381,12 @@ const Benefits = () => {
             </p>
           </div>
           <div>
-            <p>Online checkout</p>
+            <p>Streamline Your Online Checkout Experience</p>
             <img src={Benefit2} />
             <p className="sub-title">
-              Integrate a ready-made payment page to your website and attract
-              clients who prefer paying in crypto
+              Easily complete payments online with a successful transaction of
+              $5 via Payme. Integrate a pre-built payment page into your website
+              to attract clients who favor cryptocurrency payments.
             </p>
           </div>
         </div>
@@ -437,16 +432,16 @@ const features = [
     subtitle: `Hundreds of currencies, all Web3 wallets. Customers can pay with their preferred wallet and currency across Bitcoin, Ethereum, and other networks`,
   },
   {
-    icon: WalletSvg,
+    icon: ShoppingCartSvg,
     img: Main2,
-    title: `Multi-wallet management`,
-    subtitle: `Hundreds of currencies, all Web3 wallets. Customers can pay with their preferred wallet and currency across Bitcoin, Ethereum, and other networks`,
+    title: `Product creation`,
+    subtitle: `Creating product payment links simplifies the purchasing process for your customers by allowing them to buy products directly through a unique, secure link.`,
   },
   {
-    icon: WalletSvg,
+    icon: Chain,
     img: Main3,
-    title: `Multi-wallet management`,
-    subtitle: `Hundreds of currencies, all Web3 wallets. Customers can pay with their preferred wallet and currency across Bitcoin, Ethereum, and other networks`,
+    title: `Insightful sales analytics`,
+    subtitle: `Access a high-level summary of your key sales metrics, including total sales, total revenue, and number of transactions over selectable time periods (daily, weekly, monthly, etc.).`,
   },
 ];
 
@@ -558,8 +553,8 @@ const MainFeaturesHead = () => {
     >
       <IcoGroup icons={[PC, Dollar, Chain]} />
       <Heading
-        title={`Why your customers will love it`}
-        subtitle={`Nefentus was designed with your customers' convenience in mind`}
+        title={`Insightful dashboards`}
+        subtitle={`Nefentus prioritizes customer convenience through thoughtfully designed dashboards`}
       />
       <img
         src={VerticalLine}
@@ -686,8 +681,8 @@ const Industries = () => {
   return (
     <div className="layout-paragraph layout-industry">
       <Heading
-        title={`Industries we serve`}
-        subtitle={`Small, medium, and large businesses in any niche. Whether offline or online, we will be useful to everyone.`}
+        title={`Who we serve`}
+        subtitle={`We cater to businesses of all sizes & industries, both online & offline, ensuring usefulness across the board.`}
       />
       <div class="slider">
         <div class="animation-wrapper">
@@ -781,7 +776,7 @@ export const Conclusion = ({ icon, title, subtitle, button }) => {
       </div>
       <Heading title={title} subtitle={subtitle} />
       <a href="/signup">
-        <button>Get Started</button>
+        <button>{button}</button>
       </a>
 
       <img

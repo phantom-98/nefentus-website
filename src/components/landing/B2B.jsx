@@ -51,8 +51,8 @@ const B2B = () => {
 
       <Conclusion
         icon={NefentusLogo}
-        title={`No hidden fees or monthly subscription`}
-        subtitle={`Creating and using an account for personal purposes is absolutely free`}
+        title={`Transparent Pricing, No Strings Attached`}
+        subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating & using an account for personal use is completely free. Get started today!`}
         button={`Create an account`}
       />
     </div>
@@ -82,11 +82,11 @@ const Hero = () => {
           }}
         >
           <h1 className="title">
-            Empower Your Business with Seamless Crypto Payments Integration
+            Revolutionize Your Business with Effortless Crypto Payments
           </h1>
           <p className="sub-title">
-            Create and receive payments. Manage all wallets and the sales
-            process in one place.
+            Seamlessly create & receive payments. Manage all your wallets and
+            streamline your sales process—all from a single platform.
           </p>
           <a href="/signup">
             <button>Get Started</button>
@@ -185,29 +185,29 @@ const steps = [
   {
     icon: CreateSvg,
     abbr: `New Invoice`,
-    title: `Create a new Invoice`,
-    subtitle: `The system generates the invoice and assigns a unique invoice number if not provided. User reviews the entered details for accuracy.`,
+    title: `Generate a new invoice`,
+    subtitle: `Our system creates the invoice & assigns a unique number if needed. Simply review the details for accuracy`,
     img: Invoicing1Png,
   },
   {
     icon: EmailSvg,
     abbr: `Share Invoice`,
-    title: `Email the invoice directly from the platform`,
-    subtitle: `Email the invoice directly from the platform. Download the invoice as a PDF. Share a link to the invoice.`,
+    title: `Email invoices instantly`,
+    subtitle: `Send invoices directly from our platform, download them as PDFs or share a link`,
     img: Invoicing2Png,
   },
   {
     icon: TrackingSvg,
-    abbr: `Payment Tracking`,
-    title: `Payment Tracking`,
-    subtitle: `User can view the status of the sent invoice (paid, pending, overdue). Notifications for payment status changes.`,
+    abbr: `Track Payment`,
+    title: `Track payments effortlessly`,
+    subtitle: `Monitor invoice status (paid, pending, overdue) & receive notifications for any changes.`,
     img: Invoicing3Png,
   },
   {
     icon: CheckoutSvg,
     abbr: `Post-Payment`,
     title: `Post-Payment Actions`,
-    subtitle: `User can generate a receipt for the payment. Options to send the receipt to the recipient.`,
+    subtitle: `Quickly generate & send receipts to your clients after payment.`,
     img: Invoicing4Png,
   },
 ];
@@ -217,8 +217,8 @@ const Invoicing = () => {
   return (
     <div className="layout-paragraph">
       <Heading
-        title={`Invoice creation`}
-        subtitle={`Use our internal wallet or connect an unlimited number of external wallets`}
+        title={`Effortless invoice creation`}
+        subtitle={`Use our built-in wallet or link an unlimited number of external wallets for seamless transactions.`}
       />
       <div className="invoicing-step-container" style={{ display: "none" }}>
         {steps.map((item, id) => (
@@ -308,17 +308,17 @@ const Invoicing = () => {
 const products = [
   {
     title: `Create product`,
-    subtitle: `CreatVendor is presented with a form to fill in the details of the product.e product. Product name. Description. Category. Tags (optional)`,
+    subtitle: `Fill out a simple form with product details like name, description, category & optional tags.`,
     img: Product1Png,
   },
   {
-    title: `Client visits the product catalog page`,
-    subtitle: `Client can filter and sort products based on categories, price and other attributes.`,
+    title: `Explore the product catalog`,
+    subtitle: `Clients can browse, filter & sort products by categories, price and other attributes.`,
     img: Product2Png,
   },
   {
-    title: `Checkout`,
-    subtitle: `Client enters billing and shipping information. The system displays the payment amount in the selected cryptocurrency and provides a wallet address or QR code for payment.`,
+    title: `Seamless checkout`,
+    subtitle: `Clients enter billing & shipping info. The system shows the payment amount in their chosen cryptocurrency and provides a wallet address or QR code for easy payment.`,
     img: Product3Png,
   },
 ];
@@ -345,8 +345,8 @@ const Product = () => {
   return (
     <div className="layout-paragraph product">
       <Heading
-        title={`Product creation`}
-        subtitle={`use our internal wallet or connect an unlimited number of external wallets`}
+        title={`Simplified product creation`}
+        subtitle={`Utilize our internal wallet or link an unlimited number of external wallets for hassle-free product creation.`}
       />
       <div className="layout-product">
         <div
@@ -446,22 +446,22 @@ const safeties = [
   {
     icon: ShoppingCartSvg,
     title: `Payment Initiation`,
-    subtitle: `The buyer selects their preferred cryptocurrency (e.g., BTC) for the transaction. `,
+    subtitle: `Buyers choose their preferred cryptocurrency (e.g., BTC) for the transaction.`,
   },
   {
     icon: CheckSvg,
     title: `Transaction Completion`,
-    subtitle: `The buyer sends the payment in their selected cryptocurrency.`,
+    subtitle: `Buyers send their payment in the selected cryptocurrency.`,
   },
   {
     icon: SwapIcon,
-    title: `Automatic Conversion`,
-    subtitle: `The received cryptocurrency is converted to the stablecoin in real-time.`,
+    title: `Real-Time Conversion`,
+    subtitle: `Received cryptocurrency is instantly converted to stablecoins`,
   },
   {
     icon: Dollar,
     title: `Stablecoin Deposit`,
-    subtitle: `The converted stablecoin amount (e.g., USDT) is then deposited into the seller’s account.`,
+    subtitle: `The converted stablecoin amount (e.g., USDT) is then securely deposited into the seller's account.`,
   },
 ];
 
@@ -491,13 +491,12 @@ const Safe = () => {
               marginBottom: "1rem",
             }}
           />
-          <p style={{ fontSize: "2.8rem" }}>Ensuring security of your funds</p>
+          <p style={{ fontSize: "2.8rem" }}>Safeguarding your funds</p>
         </div>
         <p className="sub-title" style={{ width: "50%" }}>
-          To mitigate the risks associated with fluctuating crypto prices, a
-          secure and reliable solution is to convert cryptocurrencies into
-          stablecoins upon transaction completion. This process helps safeguard
-          client funds, providing stability and peace of mind.
+          To protect against crypto price fluctuations, we convert
+          cryptocurrencies into stablecoins upon transaction completion,
+          ensuring stability & peace of mind.
         </p>
       </div>
       <div className="safe-bottom">
@@ -580,8 +579,8 @@ const Analytics = () => {
       }}
     >
       <Heading
-        title={`Sales analytics`}
-        subtitle={`Use our internal wallet or connect an unlimited number of external wallets`}
+        title={`Insightful sales analytics`}
+        subtitle={`Harness the power of our internal wallet or connect an unlimited number of external wallets for comprehensive sales analytics.`}
       />
 
       <img
@@ -600,8 +599,8 @@ const Analytics = () => {
           width: "70%",
         }}
       >
-        By leveraging these insights, you can make data-driven decisions,
-        optimize your operations, and grow your business{" "}
+        Harness these insights to make informed decisions, streamline your
+        operations & drive business growth
       </p>
     </div>
   );
@@ -610,18 +609,18 @@ const Analytics = () => {
 const securities = [
   {
     img: Security1Png,
-    title: `We are not holding your assets`,
-    subtitle: `All transactions on our platform occur directly between your cryptocurrency wallet and the recipient's wallet. We do not intermediate or hold funds at any point during the transaction process.`,
+    title: `Your assets, your control`,
+    subtitle: `Rest assured, your assets remain in your hands. Every transaction on our platform is direct, between your cryptocurrency wallet & the recipient's—no intermediaries, no fund-holding.`,
   },
   {
     img: Security2Png,
     title: `Data Encryption`,
-    subtitle: `All data transmitted between your device and our platform is encrypted using industry-standard SSL/TLS protocols.`,
+    subtitle: `Your security is paramount. All data transmitted between your device and our platform is shielded with industry-standard SSL/TLS encryption.`,
   },
   {
     img: Security3Png,
     title: `Biometric Authentication`,
-    subtitle: `For added security, we support biometric authentication methods such as fingerprint and facial recognition on compatible devices.`,
+    subtitle: `For an extra layer of defense, enjoy the added security of biometric authentication including fingerprint & facial recognition on compatible devices`,
   },
 ];
 
@@ -634,8 +633,8 @@ const Security = () => {
       }}
     >
       <Heading
-        title={`Security`}
-        subtitle={`Use our internal wallet or connect an unlimited number of external wallets`}
+        title={`Fortified protection`}
+        subtitle={`Employ our internal wallet or link limitless external wallets for enhanced security measures.`}
       />
       <div
         className="layout-security"

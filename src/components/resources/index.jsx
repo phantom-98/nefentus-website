@@ -1,16 +1,15 @@
-import { Link } from "react-router-dom";
 import "./resources.css";
 import LineLeft from "../../assets/resources/line-left.svg";
 import LineRight from "../../assets/resources/line-right.svg";
-import Dashboard from "../../assets/resources/dashboard.png";
 import X from "../../assets/resources/x.svg";
 import In from "../../assets/resources/in.svg";
 import Github from "../../assets/resources/github.svg";
 import Telegram from "../../assets/resources/telegram.svg";
+import { useState } from "react";
 
 const sidebar = [
   {
-    title: "Getting started",
+    title: "Frequently Asked Questions about Nefentus",
     subtitle: [
       {
         name: "What is Nefentus?",
@@ -18,101 +17,129 @@ const sidebar = [
       },
       {
         name: "How does Nefentus work?",
-        link: "#how-does-nefentus-work",
+        link: "#how-it-works",
       },
       {
         name: "Is Nefentus secure?",
-        link: "#is-nefentus-secure",
+        link: "#is-it-secure",
       },
       {
         name: "What cryptocurrencies does Nefentus support?",
-        link: "#supported-cryptocurrencies",
+        link: "#supported-currency",
       },
-    ],
-  },
-  {
-    title: "Integration and Setup",
-    subtitle: [
       {
         name: "How do I integrate Nefentus with my business?",
-        link: "#what-is-nefentus",
+        link: "#how-to-integrate",
       },
       {
         name: "Do I need any special hardware or software to use Nefentus?",
-        link: "#how-does-nefentus-work",
+        link: "#special-needs",
       },
       {
         name: "How long does it take to set up Nefentus?",
-        link: "#is-nefentus-secure",
+        link: "#how-long-to-setup",
       },
       {
         name: "What cryptocurrencies does Nefentus support?",
-        link: "#supported-cryptocurrencies",
-      },
-    ],
-  },
-  {
-    title: "Payments and Transactions",
-    subtitle: [
-      {
-        name: "How are crypto payments processed?",
-        link: "#what-is-nefentus",
+        link: "#currenies",
       },
       {
         name: "Can customers pay with any cryptocurrency?",
-        link: "#how-does-nefentus-work",
+        link: "#pay-any-token",
       },
       {
         name: "How long do transactions take to complete?",
-        link: "#is-nefentus-secure",
+        link: "#transaction-completion-time",
       },
       {
         name: "Are there any fees associated with using Nefentus?",
-        link: "#supported-cryptocurrencies",
+        link: "#fees",
       },
     ],
   },
 ];
 const contents = [
-  <h1 id="what-is-nefentus">What is Nefentus?</h1>,
+  <h1>Frequently Asked Questions about Nefentus</h1>,
+  <h2 id="what-is-nefentus">What is Nefentus?</h2>,
   <p>
-    Nefentus is a comprehensive solution that allows businesses to integrate
-    cryptocurrency payments into their existing systems seamlessly. We support a
-    wide range of popular cryptocurrencies including Bitcoin (BTC), Ethereum
-    (ETH), Litecoin (LTC), and many others. For a full list, please refer to our
-    supported currencies page. Yes, security is our top priority. We use
-    advanced encryption techniques and comply with industry best practices to
-    ensure that all transactions and data are secure.{" "}
+    Nefentus is a cutting-edge platform designed to facilitate secure and
+    efficient cryptocurrency transactions for businesses. It allows merchants to
+    accept multiple cryptocurrencies as payment, providing a seamless and
+    user-friendly experience for both sellers and buyers.
   </p>,
-  <h2>What is Nefentus?</h2>,
+  <h2 id="how-it-works">How does Nefentus work?</h2>,
   <p>
-    Integration is straightforward. You can use our API documentation to
-    integrate crypto payments into your website, mobile app, or point-of-sale
-    system. Additionally, we offer plugins for popular e-commerce platforms.
+    Nefentus works by integrating with your business to provide a streamlined
+    process for accepting cryptocurrency payments. When a customer makes a
+    purchase, they can choose from supported cryptocurrencies to complete the
+    transaction. Nefentus processes the payment, converts it to stablecoins if
+    desired, and ensures the funds are securely transferred to the merchant's
+    account.
   </p>,
+  <h2 id="is-it-secure">Is Nefentus secure?</h2>,
   <p>
-    Nefentus is a comprehensive solution that allows businesses to integrate
-    cryptocurrency payments into their existing systems seamlessly. We support a
-    wide range of popular cryptocurrencies including Bitcoin (BTC), Ethereum
-    (ETH), Litecoin (LTC), and many others. For a full list, please refer to our
-    supported currencies page. Yes, security is our top priority. We use
-    advanced encryption techniques and comply with industry best practices to
-    ensure that all transactions and data are secure.{" "}
+    Yes, Nefentus is highly secure. It uses advanced encryption protocols,
+    blockchain technology, and a non-custodial model to ensure the safety and
+    integrity of your transactions and funds. Additionally, features like
+    two-factor authentication and real-time monitoring further enhance security.
   </p>,
+  <h2 id="supported-currency">What cryptocurrencies does Nefentus support?</h2>,
   <p>
-    Ready to start? <a>Begin the tutorial</a>
+    Nefentus supports a wide range of popular cryptocurrencies, including
+    Bitcoin (BTC), Ethereum (ETH), and Tether (USDT). The platform is
+    continuously expanding its list of supported cryptocurrencies to meet market
+    demands.
   </p>,
-  <hr />,
-  <h1>What is Nefentus?</h1>,
-  <img src={Dashboard} />,
+  <h2 id="how-to-integrate">How do I integrate Nefentus with my business?</h2>,
   <p>
-    Nefentus is a comprehensive solution that allows businesses to integrate
-    cryptocurrency payments into their existing systems seamlessly. We support a
-    wide range of popular cryptocurrencies including Bitcoin (BTC), Ethereum
-    (ETH), Litecoin (LTC), and many others. For a full list, please refer to our
-    supported currencies page. Yes, security is our top priority. We use
-    advanced encryption techniques and comply with industry best practices to
-    ensure that all transactions and data are secure.{" "}
+    Integrating Nefentus with your business is straightforward. You can use our
+    API or plugins to connect your online store or payment system to Nefentus.
+    Detailed documentation and support are provided to guide you through the
+    integration process.
+  </p>,
+  <h2 id="special-needs">
+    Do I need any special hardware or software to use Nefentus?
+  </h2>,
+  <p>
+    No special hardware is required to use Nefentus. You only need access to an
+    internet-enabled device to manage your account and transactions. Our
+    platform is web-based and compatible with most major e-commerce platforms
+    and payment systems.
+  </p>,
+  <h2 id="how-long-to-setup">How long does it take to set up Nefentus?</h2>,
+  <p>
+    Setting up Nefentus is quick and easy. The initial registration and basic
+    setup can be completed in a few minutes. Full integration with your business
+    systems may take a few hours, depending on your specific requirements and
+    the complexity of your setup.
+  </p>,
+  <h2 id="currenies">What cryptocurrencies does Nefentus support?</h2>,
+  <p>
+    Nefentus supports a variety of cryptocurrencies, including but not limited
+    to Bitcoin (BTC), Ethereum (ETH), and Tether (USDT). We continually add new
+    cryptocurrencies to our platform to provide more options for our users.
+  </p>,
+  <h2 id="pay-any-token">Can customers pay with any cryptocurrency?</h2>,
+  <p>
+    Customers can pay with any of the cryptocurrencies supported by Nefentus.
+    The list of supported cryptocurrencies is regularly updated to include the
+    most popular and widely used digital currencies.
+  </p>,
+  <h2 id="transaction-completion-time">
+    How long do transactions take to complete?
+  </h2>,
+  <p>
+    Transaction times vary depending on the specific cryptocurrency used and the
+    network's current load. Generally, transactions are processed within a few
+    minutes. Nefentus ensures that all transactions are completed as quickly and
+    efficiently as possible.
+  </p>,
+  <h2 id="fees">Are there any fees associated with using Nefentus?</h2>,
+  <p>
+    Yes, there are nominal fees associated with using Nefentus. These fees cover
+    transaction processing and platform maintenance. The exact fee structure is
+    transparent and detailed in our pricing policy, which is available on our
+    website.
   </p>,
 ];
 const socials = [
@@ -134,6 +161,11 @@ const socials = [
   },
 ];
 const Resources = () => {
+  const [hash, setHash] = useState(window.location.hash);
+  const select = (h) => {
+    window.location.hash = h;
+    setHash(h);
+  };
   return (
     <div className="resources-layout container">
       <hr
@@ -153,8 +185,15 @@ const Resources = () => {
               <div className="sidebar-item-body">
                 {item.subtitle.map((subitem) => {
                   return (
-                    <div className="sidebar-subitem">
-                      <Link to={subitem.link}>{subitem.name}</Link>
+                    <div
+                      onClick={() => {
+                        select(subitem.link);
+                      }}
+                      className={`sidebar-subitem ${
+                        hash == subitem.link && "sidebar-subitem-selected"
+                      }`}
+                    >
+                      {subitem.name}
                     </div>
                   );
                 })}

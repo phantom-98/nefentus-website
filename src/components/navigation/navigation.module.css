@@ -22,8 +22,7 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-block: 0.96rem;
   max-width: 111rem !important;
 }
 

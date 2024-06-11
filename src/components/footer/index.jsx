@@ -55,11 +55,11 @@ const sitemap = [
     body: [
       {
         subtitle: "FAQ",
-        link: "/faq",
+        link: "/resources",
       },
       {
         subtitle: "Ask a question",
-        link: "/ask-question",
+        link: "#",
       },
     ],
   },
