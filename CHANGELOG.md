@@ -1,7 +1,20 @@
 # New changes
 
+# v1.2.0
+
+- Settings Page is implemented (MAJOR)
+
+# v1.1.1
+
 - Fix income cards in case of loss
 - Fix performance measures of sales and referral dashboards
+- Fix issues with partners and rework authContext
+- Update invoicing && converter in new dashboard
+- Send modal is functional for external
+- CreateInvoice UI fixes completed
+
+# v1.1.0
+
 - Create career page and add 5 open jobs
 - fix country issue when creating invoice
 - Show all amounts in invoice currency
@@ -23,7 +36,8 @@
 - Identification Process implemented in Settings Page (MAJOR)
 - Add Portfolio coins zero balance case (MINOR)
 
-# Merged changes
+
+# v1.0.0
 
 - First version of Personal, referral and sales dashboards, not yet integrated
 - Creating invoices using VAT process depending on the countries, and legal status of buyer
