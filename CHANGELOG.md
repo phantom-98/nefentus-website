@@ -16,6 +16,7 @@
 - Send modal is functional for external
 - CreateInvoice UI fixes completed
 - Settings Page is implemented (MAJOR)
+- Implement new Landing, B2C, B2B, Resources pages
 
 # Merged changes
 
