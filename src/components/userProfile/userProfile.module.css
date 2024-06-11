@@ -97,3 +97,9 @@
 .item:hover p {
   opacity: 0.8;
 }
+
+@media (max-width: 900px) {
+  .profileWrapper {
+    display: none;
+  }
+}
