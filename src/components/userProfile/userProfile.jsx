@@ -3,13 +3,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import {
-  Identification,
-  Invoice,
-  Logout,
-  Security,
-  User2,
-} from "../../assets/icon/icons";
+import SettingSvg from "../../assets/newDashboardIcons/settings.svg";
+import SupportSvg from "../../assets/newDashboardIcons/support.svg";
+import LogoutSvg from "../../assets/newDashboardIcons/logout.svg";
 import { useAuth } from "../../context/auth/authContext";
 import backend_API from "../../api/backendAPI";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
@@ -60,13 +56,9 @@ const UserProfile = ({ web, logOut, requireKYC }) => {
       <div className={`${styles.profileDropdown}`}>
         <div className={`${styles.profileBody} card`}>
           <Link to="/new-settings" className={styles.profileItem}>
-            <User2 />
-            <p>{t("navigation.profile")}</p>
+            <img src={SettingSvg} />
+            <p>{t("personalDashboard.profileDropdown.setting")}</p>
           </Link>
-          {/* <Link to="/dashboard/invoices" className={styles.profileItem}>
-            <Invoice />
-            <p>{t("navigation.invoice")}</p>
-          </Link> */}
           {web && (
             <Link to="/personal-dashboard" className={styles.profileItem}>
               <svg
@@ -81,19 +73,9 @@ const UserProfile = ({ web, logOut, requireKYC }) => {
               <p>{t("navigation.dashboard")}</p>
             </Link>
           )}
-          {/* <Link to="/dashboard/security" className={styles.profileItem}>
-            <Security />
-            <p>{t("navigation.security")}</p>
-          </Link> */}
-          {/* {user?.isRequireKyc && (
-            <Link to="/dashboard/identification" className={styles.profileItem}>
-              <Identification />
-              <p>{t("navigation.identification")}</p>
-            </Link>
-          )} */}
           <hr style={{ border: "1px solid #202020" }} />
           <Link onClick={logOut} className={styles.profileItem}>
-            <Logout />
+            <img src={LogoutSvg} />
             <p>{t("navigation.logOut")}</p>
           </Link>
         </div>

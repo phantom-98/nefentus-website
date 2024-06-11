@@ -1,9 +1,9 @@
 .profileImage img,
 .profileImage svg {
-  border-radius: 50%;
+  border-radius: 0.4rem;
   object-fit: cover;
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 3rem;
+  width: 3rem;
 }
 
 .profileImage {
@@ -54,10 +54,6 @@
 
 .profileItem:hover {
   background: #202020;
-}
-
-.profileItem p {
-  transform: translateY(2px);
 }
 
 .profileItem img,
