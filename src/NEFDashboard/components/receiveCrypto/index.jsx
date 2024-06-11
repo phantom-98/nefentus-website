@@ -127,7 +127,7 @@ const ReceiveCrypto = ({ openReceiveModal, onCloseModal }) => {
 
           <div className="receive-crypto-network">
             <div className="default-text-gray receive-crypto-label">
-              Select Network
+              {t("personalDashboard.receiveCrypto.selectNetwork")}
             </div>
             <Select
               defaultValue="eth"
@@ -139,7 +139,9 @@ const ReceiveCrypto = ({ openReceiveModal, onCloseModal }) => {
                   label: (
                     <div>
                       <div className="default-text">ETH</div>
-                      <div className="default-text-gray">Ethereum (ERC20)</div>
+                      <div className="default-text-gray">
+                        {t("personalDashboard.receiveCrypto.ethereumNetwork")}
+                      </div>
                     </div>
                   ),
                 },
@@ -149,7 +151,7 @@ const ReceiveCrypto = ({ openReceiveModal, onCloseModal }) => {
                     <div>
                       <div className="default-text">BSC</div>
                       <div className="default-text-gray">
-                        BNB Smart Chain (BEP20)
+                        {t("personalDashboard.receiveCrypto.binanceNetwork")}
                       </div>
                     </div>
                   ),
@@ -160,7 +162,7 @@ const ReceiveCrypto = ({ openReceiveModal, onCloseModal }) => {
 
           <div className="receive-crypto-network">
             <div className="default-text-gray receive-crypto-label">
-              Deposit Address
+              {t("personalDashboard.receiveCrypto.deposit")}
             </div>
             {loader ? (
               <Skeleton.Input active className="wallet-skeleton" />
@@ -178,7 +180,7 @@ const ReceiveCrypto = ({ openReceiveModal, onCloseModal }) => {
                   onClick={(e) => copyToClipboard(e, selectedWallet?.address)}
                 >
                   <img src={CopyIcon} alt="copy" />
-                  <div>Copy</div>
+                  <div>{t("general.copy")}</div>
                 </Flex>
               </Flex>
             )}
@@ -194,20 +196,6 @@ const ReceiveCrypto = ({ openReceiveModal, onCloseModal }) => {
               <QRCode size={160} value={selectedWallet?.address || "-"} />
             </div>
           )}
-
-          {/* <Flex align="center">
-            {loader ? (
-              <Skeleton.Button active />
-            ) : (
-              <Button
-                className="copy-btn"
-                icon={<LinkOutlined />}
-                onClick={(e) => copyToClipboard(e, selectedWallet?.address)}
-              >
-                {t("personalDashboard.drawer.copy")}
-              </Button>
-            )}
-          </Flex> */}
         </Flex>
       </div>
       <Drawer

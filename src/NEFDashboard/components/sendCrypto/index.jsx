@@ -445,7 +445,9 @@ const SendCrypto = ({
         step == 1 ? (
           <Flex align={"center"} gap={4} className="send-modal-title">
             <img src={ArrowUpLeft} />
-            <div className="default-text send-crypto-title">Send Crypto</div>
+            <div className="default-text send-crypto-title">
+              {t("sendModal.step1-title")}
+            </div>
           </Flex>
         ) : (
           <Flex align={"center"} gap={4} className="send-modal-title">
@@ -456,7 +458,9 @@ const SendCrypto = ({
               onClick={() => setStep(() => step - 1)}
             />
             {/* <div>Cancel</div> */}
-            <div className="send-crypto-step2-title">Confirm Payment</div>
+            <div className="send-crypto-step2-title">
+              {t("sendModal.step2-title")}
+            </div>
           </Flex>
         )
       }
@@ -478,7 +482,7 @@ const SendCrypto = ({
       >
         <Col>
           <Flex vertical justify="center" gap={6}>
-            <div className="default-text-gray">From</div>
+            <div className="default-text-gray">{t("sendModal.from")}</div>
             {loader ? (
               <Skeleton.Input active className="wallet-skeleton" />
             ) : (
@@ -516,9 +520,9 @@ const SendCrypto = ({
         </Col>
         <Col>
           <Flex vertical justify="center" gap={6}>
-            <div className="default-text-gray">To</div>
+            <div className="default-text-gray">{t("sendModal.to")}</div>
             <Input
-              placeholder={"Enter wallet address (0x) "}
+              placeholder={t("sendModal.walletAddressPlaceholder")}
               className="send-crypto-wallet-address"
               value={receiverAddress}
               disabled={disable}
@@ -529,9 +533,9 @@ const SendCrypto = ({
         {selectedWallet?.type === "internal" && step == 1 && (
           <Col>
             <Flex vertical justify="center" gap={6}>
-              <div className="default-text-gray">Password</div>
+              <div className="default-text-gray">{t("sendModal.password")}</div>
               <Input.Password
-                placeholder={"Enter wallet address (0x) "}
+                placeholder={t("sendModal.passwordPlaceholder")}
                 className="send-crypto-wallet-address"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -544,7 +548,9 @@ const SendCrypto = ({
             <Col>
               <Flex vertical justify="center" gap={8}>
                 <Flex align="center" justify="space-between">
-                  <div className="default-text-gray">Enter Amount</div>
+                  <div className="default-text-gray">
+                    {t("sendModal.amountTitle")}
+                  </div>
                   <Flex align="center" className="send-modal-swap-currency">
                     {toggleCurrency ? (
                       <Flex align="center">
@@ -634,7 +640,9 @@ const SendCrypto = ({
             </Col>
             <Col>
               <Flex align="center" justify="space-between">
-                <div className="default-text-gray">Balance</div>
+                <div className="default-text-gray">
+                  {t("sendModal.balance")}
+                </div>
                 <Flex align="center" gap={6}>
                   <div>{formatTokenBalance(selectedCoin?.value, 4)}</div>
                   <div>{selectedCoin?.abbr}</div>
@@ -655,7 +663,9 @@ const SendCrypto = ({
         ) : (
           <Flex vertical justify="center" gap={16}>
             <Flex vertical align="center" justify="center" gap={8}>
-              <div className="default-text-gray send-crypto-title">Amount</div>
+              <div className="default-text-gray send-crypto-title">
+                {t("sendModal.amount")}
+              </div>
               <div className="send-crypto-amount default-text">
                 {step2Amount + " " + selectedCoin?.abbr}{" "}
               </div>
@@ -684,11 +694,11 @@ const SendCrypto = ({
               selectedCoin?.amount == 0
             }
           >
-            Next
+            {t("sendModal.next")}
           </Button>
         ) : (
           <Button className="send-crypto-footer-button" onClick={handlePayment}>
-            Confirm
+            {t("confirm")}
           </Button>
         )}
       </Flex>
@@ -713,14 +723,14 @@ const SendCrypto = ({
             <>
               <Flex align="center" justify="space-between">
                 <div className="default-text-gray drawer-connect-wallet-title">
-                  Connected Wallets
+                  {t("sendModal.connectedWallets")}
                 </div>
                 <Button
                   icon={<img src={AddIcon} />}
                   onClick={() => walletRef?.current?.click()}
                   className="send-crypto-add-wallet"
                 >
-                  Add Wallet
+                  {t("sendModal.addWallet")}
                 </Button>
               </Flex>
               <Flex vertical>

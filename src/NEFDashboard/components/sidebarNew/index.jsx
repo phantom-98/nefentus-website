@@ -275,7 +275,6 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
   const handleAddUserSuccess = () => {
     setOpenAddModal(!openAddModal);
   };
-
   return (
     <>
       {openSendModal && (

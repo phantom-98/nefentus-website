@@ -267,7 +267,7 @@ const PersonalDashboard = () => {
           amount_dollar: parseFloat(
             (prices[index] * balanceSum[index]).toFixed(4),
           ),
-          percentage: pers[index],
+          percentage: isNaN(pers[index]) ? "0.00" : pers[index],
           color: COLORS[index],
           icon:
             initialiseCoinIcons(currency.name?.toLowerCase()) ?? currency?.icon,

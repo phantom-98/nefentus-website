@@ -9,7 +9,7 @@ import TrashDark from "../../../assets/icon/dark/trash.svg";
 import "./createInvoice.css";
 import TrashLight from "../../../assets/icon/light/trash.svg";
 import vendorDashboardApi from "../../../api/vendorDashboardApi";
-import { Button } from "antd";
+import { Button, Flex } from "antd";
 import Input, {
   CombinedInput,
   CurrencySelectWithLabel,
@@ -171,439 +171,500 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
 
   return (
     <div className="CreateInvoiceContainer">
-      <div className={styles.row}>
-        <p style={{ fontSize: "1.4rem", marginBottom: "0.1rem" }}>
+      <Flex vertical gap={8} className="CreateInvoiceContainer-header">
+        <h3>Invoice details</h3>
+        <p>
           {t("invoice.title")}{" "}
           <span style={{ fontSize: "1.6rem" }}>#{invoice?.invoiceNo}</span>
         </p>
-        <p style={{ fontSize: "1.2rem" }}>{t("payments.buyer.customer")}</p>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "1rem",
-          }}
-          className="create-invoice-personal-detail"
-        >
-          <Input
-            label={t("payments.buyer.fullName").concat("*")}
-            placeholder={"John Doe"}
-            value={invoice?.name}
-            setState={(value) => setInvoice({ ...invoice, name: value })}
-            dashboard
-          />
-          <Input
-            label={t("payments.buyer.email").concat("*")}
-            placeholder={"receiver@email.com"}
-            value={invoice?.email}
-            setState={(value) => setInvoice({ ...invoice, email: value })}
-            dashboard
-          />
-        </div>
-        <CombinedInput
-          country={invoice?.country}
-          setCountry={(value) => setInvoice({ ...invoice, country: value })}
-          value={invoice?.address}
-          setValue={(value) => setInvoice({ ...invoice, address: value })}
-          // dashboard
-          createInvoice
-        />
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr",
-            gap: "1rem",
-          }}
-        >
-          <div>
-            <p
-              style={{
-                fontSize: "1.2rem",
-                marginBottom: "0.5rem",
-              }}
-            >
-              {t("payments.legalStatus")}
-            </p>
-            <div
-              style={{
-                display: "flex",
-                gap: "1rem",
-              }}
-            >
-              <RadioOption
-                icon={theme === "dark" ? PersonDark : PersonLight}
-                content={t("payments.person")}
-                value={invoice?.isPerson}
-                onClick={() => {
-                  setInvoice({ ...invoice, isPerson: true });
-                }}
-                horizon={true}
-                style={{
-                  width: "50%",
-                }}
-                createInvoice
-              />
-              <RadioOption
-                icon={theme === "dark" ? BuildingDark : BuildingLight}
-                content={t("payments.company")}
-                value={!invoice?.isPerson}
-                onClick={() => {
-                  setInvoice({ ...invoice, isPerson: false });
-                }}
-                horizon={true}
-                style={{
-                  width: "50%",
-                }}
-                createInvoice
-              />
-            </div>
-          </div>
-          <CurrencySelectWithLabel
-            label={t("products.createProductModal.currency").concat("*")}
-            value={invoice?.currency}
-            setValue={(value) => setInvoice({ ...invoice, currency: value })}
-          />
-        </div>
-        {!invoice?.isPerson && (
+      </Flex>
+      <Flex vertical gap={32} className="CreateInvoiceContainer-body">
+        <Flex vertical gap={16} className="customer-info">
+          <p className="customer-info-heading">
+            {t("payments.buyer.customer")}
+          </p>
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: `1fr ${invoice?.isPerson ? "" : "1fr"}`,
-              gap: "1rem",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "16px",
             }}
             className="create-invoice-personal-detail"
           >
             <Input
-              placeholder={t("payments.taxNumber")}
-              label={t("payments.taxNumber")}
-              value={invoice?.taxNumber}
-              setState={(value) => setInvoice({ ...invoice, taxNumber: value })}
+              label={t("payments.buyer.fullName").concat("*")}
+              placeholder={"John Doe"}
+              value={invoice?.name}
+              setState={(value) => setInvoice({ ...invoice, name: value })}
               dashboard
             />
             <Input
-              placeholder={`e.g. Google`}
-              label={t("payments.company")}
-              value={invoice?.company}
-              setState={(value) => setInvoice({ ...invoice, company: value })}
+              label={t("payments.buyer.email").concat("*")}
+              placeholder={"receiver@email.com"}
+              value={invoice?.email}
+              setState={(value) => setInvoice({ ...invoice, email: value })}
               dashboard
             />
           </div>
-        )}
-        {invoice?.reverseCharge ? (
-          <>
-            <p
+          <CombinedInput
+            country={invoice?.country}
+            setCountry={(value) => setInvoice({ ...invoice, country: value })}
+            value={invoice?.address}
+            setValue={(value) => setInvoice({ ...invoice, address: value })}
+            // dashboard
+            createInvoice
+          />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "2fr 1fr",
+              gap: "1rem",
+            }}
+          >
+            <Flex vertical gap={6}>
+              <p className="default-text-gray">{t("payments.legalStatus")}</p>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "6px",
+                }}
+              >
+                <RadioOption
+                  icon={theme === "dark" ? PersonDark : PersonLight}
+                  content={t("payments.person")}
+                  value={invoice?.isPerson}
+                  onClick={() => {
+                    setInvoice({ ...invoice, isPerson: true });
+                  }}
+                  horizon={true}
+                  style={{
+                    width: "50%",
+                  }}
+                  createInvoice
+                />
+                <RadioOption
+                  icon={theme === "dark" ? BuildingDark : BuildingLight}
+                  content={t("payments.company")}
+                  value={!invoice?.isPerson}
+                  onClick={() => {
+                    setInvoice({ ...invoice, isPerson: false });
+                  }}
+                  horizon={true}
+                  style={{
+                    width: "50%",
+                  }}
+                  createInvoice
+                />
+              </div>
+            </Flex>
+            <CurrencySelectWithLabel
+              label={t("products.createProductModal.currency").concat("*")}
+              value={invoice?.currency}
+              setValue={(value) => setInvoice({ ...invoice, currency: value })}
+            />
+          </div>
+          {!invoice?.isPerson && (
+            <div
               style={{
-                fontSize: "1.2rem",
-                color: "var(--text2-color)",
-                width: "48rem",
+                display: "grid",
+                gridTemplateColumns: `1fr ${invoice?.isPerson ? "" : "1fr"}`,
+                gap: "16px",
               }}
+              className="create-invoice-personal-detail"
             >
-              {t("payments.tax.reverseCharge")}
-            </p>
-          </>
-        ) : (
-          <>
-            <div className="tax-value-section">
-              <RadioSelect
-                label={t("products.createProductModal.vat")}
-                value={invoice?.taxPercent}
-                setValue={(value) =>
-                  setInvoice({ ...invoice, taxPercent: value })
+              <Input
+                placeholder={t("payments.taxNumber")}
+                label={t("payments.taxNumber")}
+                value={invoice?.taxNumber}
+                setState={(value) =>
+                  setInvoice({ ...invoice, taxNumber: value })
                 }
-                options={
-                  invoice?.taxInfo
-                    ? [...JSON.parse(invoice?.taxInfo?.vatPercent), 0].map(
-                        (tax, index) => {
-                          return {
-                            value: tax,
-                            label: tax + "%",
-                            content:
-                              tax == 0
-                                ? t("payments.tax.zero")
-                                : index == 0
-                                ? t("payments.tax.standard")
-                                : t("payments.tax.reduced"),
-                          };
-                        },
-                      )
-                    : []
-                }
-                createInvoice={true}
+                dashboard
+              />
+              <Input
+                placeholder={`e.g. Google`}
+                label={t("payments.company")}
+                value={invoice?.company}
+                setState={(value) => setInvoice({ ...invoice, company: value })}
+                dashboard
               />
             </div>
-          </>
-        )}
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <p style={{ fontSize: "1.2rem" }}>{t("payments.items.title")}</p>
-          <p
+          )}
+          {invoice?.reverseCharge ? (
+            <>
+              <p
+                style={{
+                  fontSize: "1.2rem",
+                  color: "var(--text2-color)",
+                  width: "48rem",
+                }}
+              >
+                {t("payments.tax.reverseCharge")}
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="tax-value-section">
+                <RadioSelect
+                  label={t("products.createProductModal.vat")}
+                  value={invoice?.taxPercent}
+                  setValue={(value) =>
+                    setInvoice({ ...invoice, taxPercent: value })
+                  }
+                  options={
+                    invoice?.taxInfo
+                      ? [...JSON.parse(invoice?.taxInfo?.vatPercent), 0].map(
+                          (tax, index) => {
+                            return {
+                              value: tax,
+                              label: tax + "%",
+                              content:
+                                tax == 0
+                                  ? t("payments.tax.zero")
+                                  : index == 0
+                                  ? t("payments.tax.standard")
+                                  : t("payments.tax.reduced"),
+                            };
+                          },
+                        )
+                      : []
+                  }
+                  createInvoice={true}
+                />
+              </div>
+            </>
+          )}
+        </Flex>
+        <Flex vertical gap={16} className="invoice-item-wrapper">
+          <div
             style={{
-              fontSize: "1.2rem",
-              padding: "6px 24px 6px 12px",
-              border: "1px solid var(--Dark)",
-              borderRadius: "6px",
-              cursor: "pointer",
-              background: "var(--BG2, #171717)",
-            }}
-            onClick={() => {
-              setInvoice({
-                ...invoice,
-                items: [
-                  ...invoice?.items,
-                  {
-                    name: "",
-                    price: 0,
-                    quantity: 1,
-                    total: 0,
-                  },
-                ],
-              });
-              // setItems((prev) => [
-              //   ...prev,
-              //   {
-              //     name: "",
-              //     price: 0,
-              //     quantity: 1,
-              //     total: 0,
-              //   },
-              // ]);
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            + {t("payments.items.add")}
-          </p>
-        </div>
-        <table
-          style={{
-            borderSpacing: "1rem",
-            margin: "-1rem",
-          }}
-        >
-          <thead
+            <p
+              style={{
+                fontSize: "16px",
+                fontWeight: 500,
+                lineHeight: "140%",
+                color: "var(--White, #FAFAFA)",
+              }}
+            >
+              {t("payments.items.title")}
+            </p>
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: 500,
+                color: " var(--light-grey, #E9E9E9)",
+                padding: "6px 24px 6px 12px",
+                border: "1px solid var(--Dark)",
+                borderRadius: "6px",
+                cursor: "pointer",
+                background: "var(--BG2, #171717)",
+              }}
+              onClick={() => {
+                setInvoice({
+                  ...invoice,
+                  items: [
+                    ...invoice?.items,
+                    {
+                      name: "",
+                      price: 0,
+                      quantity: 1,
+                      total: 0,
+                    },
+                  ],
+                });
+                // setItems((prev) => [
+                //   ...prev,
+                //   {
+                //     name: "",
+                //     price: 0,
+                //     quantity: 1,
+                //     total: 0,
+                //   },
+                // ]);
+              }}
+            >
+              + {t("payments.items.add")}
+            </p>
+          </div>
+          <table
             style={{
-              fontSize: "1.2rem",
-              textAlign: "left",
-              overflowWrap: "nowrap",
+              borderSpacing: "1rem",
+              margin: "-1rem",
             }}
           >
-            <th>{t("payments.items.name")}</th>
-            <th style={{ width: "10rem" }}>{t("payments.items.price")}</th>
-            <th style={{ width: "8rem" }}>{t("payments.items.quantity")}</th>
-            <th style={{ width: "12rem" }}>{t("payments.items.total")}</th>
-            <th style={{ width: "2rem" }}></th>
-          </thead>
-          <tbody className="invoice-items-table-input">
-            {invoice?.items?.map((item, index) => {
-              return (
-                <tr
-                  style={{
-                    fontSize: "1.2rem",
-                  }}
-                  className={styles.items}
-                >
-                  <td>
-                    <input
-                      value={item.name}
-                      onChange={(e) => {
-                        setInvoice({
-                          ...invoice,
-                          items: invoice?.items?.map((t, i) => {
-                            if (i === index)
-                              return {
-                                ...t,
-                                name: e.target.value,
-                              };
-                            else return t;
-                          }),
-                        });
-                      }}
-                      style={{
-                        textAlign: "left",
-                        background: "var(--BG2, #171717)",
-                        padding: "6px 24px 6px 12px",
-                        border: "1px solid var(--Dark)",
-                        height: "40px",
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={item.price}
-                      onChange={(e) => {
-                        setInvoice({
-                          ...invoice,
-                          items: invoice?.items?.map((t, i) => {
-                            if (i === index)
-                              return {
-                                ...t,
-                                price: e.target.value,
-                                total: e.target.value * t.quantity,
-                              };
-                            else return t;
-                          }),
-                        });
-                      }}
-                      style={{
-                        textAlign: "left",
-                        background: "var(--BG2, #171717)",
-                        padding: "6px 24px 6px 12px",
-                        border: "1px solid var(--Dark)",
-                        height: "40px",
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      onChange={(e) => {
-                        setInvoice({
-                          ...invoice,
-                          items: invoice?.items?.map((t, i) => {
-                            if (i === index)
-                              return {
-                                ...t,
-                                quantity: e.target.value,
-                                total: e.target.value * t.price,
-                              };
-                            else return t;
-                          }),
-                        });
-                      }}
-                      style={{
-                        textAlign: "left",
-                        background: "var(--BG2, #171717)",
-                        padding: "6px 24px 6px 12px",
-                        border: "1px solid var(--Dark)",
-                        height: "40px",
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <input
-                      readOnly
-                      value={item.total}
-                      style={{
-                        textAlign: "left",
-                        background: "var(--BG2, #171717)",
-                        padding: "6px 24px 6px 12px",
-                        border: "1px solid var(--Dark)",
-                        height: "40px",
-                      }}
-                    />
-                  </td>
-                  <td>
-                    <img
-                      onClick={() => {
-                        setInvoice({
-                          ...invoice,
-                          items: invoice?.items?.filter((t, i) => i !== index),
-                        });
-                      }}
-                      src={theme === "dark" ? TrashDark : TrashLight}
-                      style={{
-                        cursor: "pointer",
-                        width: "100%",
-                        height: "100%",
-                      }}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            paddingRight: "3rem",
-            fontSize: "1.2rem",
-          }}
-        >
-          <p className="default-text-gray">{t("payments.subtotal")}</p>
-          <p className="default-text">
-            {getCurrencySymbol()[invoice?.currency]}
-            {formatUSDBalance(invoice?.amount)}
-          </p>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            paddingRight: "3rem",
-            fontSize: "1.2rem",
-          }}
-        >
-          <p className="default-text-gray">{t("payments.vatValue")}</p>
-          <p className="default-text">
-            {invoice?.reverseCharge ? (
-              <span>RC</span>
-            ) : (
-              invoice?.taxPercent && <span>{invoice?.taxPercent}%</span>
-            )}
-            <span style={{ marginLeft: "3rem" }}>
+            <thead
+              style={{
+                fontSize: "14px",
+                fontWeight: 400,
+                color: " var(--Light-grey2, #B1B1B1)",
+                textAlign: "left",
+                overflowWrap: "nowrap",
+              }}
+            >
+              <th>{t("payments.items.name")}</th>
+              <th style={{ width: "10rem" }}>{t("payments.items.price")}</th>
+              <th style={{ width: "8rem" }}>{t("payments.items.quantity")}</th>
+              <th style={{ width: "12rem" }}>{t("payments.items.total")}</th>
+              <th style={{ width: "2rem" }}></th>
+            </thead>
+            <tbody className="invoice-items-table-input">
+              {invoice?.items?.map((item, index) => {
+                return (
+                  <tr
+                    style={{
+                      fontSize: "1.2rem",
+                    }}
+                    className={styles.items}
+                  >
+                    <td>
+                      <input
+                        value={item.name}
+                        onChange={(e) => {
+                          setInvoice({
+                            ...invoice,
+                            items: invoice?.items?.map((t, i) => {
+                              if (i === index)
+                                return {
+                                  ...t,
+                                  name: e.target.value,
+                                };
+                              else return t;
+                            }),
+                          });
+                        }}
+                        style={{
+                          textAlign: "left",
+                          background: "var(--BG2, #171717)",
+                          padding: "6px 24px 6px 12px",
+                          border: "1px solid var(--Dark)",
+                          height: "40px",
+                          color: " var(--light-grey, #E9E9E9) ",
+                          fontSize: "14px",
+                          fontWeight: 500,
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        value={item.price}
+                        onChange={(e) => {
+                          setInvoice({
+                            ...invoice,
+                            items: invoice?.items?.map((t, i) => {
+                              if (i === index)
+                                return {
+                                  ...t,
+                                  price: e.target.value,
+                                  total: e.target.value * t.quantity,
+                                };
+                              else return t;
+                            }),
+                          });
+                        }}
+                        style={{
+                          textAlign: "left",
+                          background: "var(--BG2, #171717)",
+                          padding: "6px 24px 6px 12px",
+                          border: "1px solid var(--Dark)",
+                          height: "40px",
+                          color: " var(--light-grey, #E9E9E9) ",
+                          fontSize: "14px",
+                          fontWeight: 500,
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        value={item.quantity}
+                        onChange={(e) => {
+                          setInvoice({
+                            ...invoice,
+                            items: invoice?.items?.map((t, i) => {
+                              if (i === index)
+                                return {
+                                  ...t,
+                                  quantity: e.target.value,
+                                  total: e.target.value * t.price,
+                                };
+                              else return t;
+                            }),
+                          });
+                        }}
+                        style={{
+                          textAlign: "left",
+                          background: "var(--BG2, #171717)",
+                          padding: "6px 24px 6px 12px",
+                          border: "1px solid var(--Dark)",
+                          height: "40px",
+                          color: " var(--light-grey, #E9E9E9) ",
+                          fontSize: "14px",
+                          fontWeight: 500,
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        readOnly
+                        value={item.total}
+                        style={{
+                          textAlign: "left",
+                          background: "var(--BG2, #171717)",
+                          padding: "6px 24px 6px 12px",
+                          border: "1px solid var(--Dark)",
+                          height: "40px",
+                          color: " var(--light-grey, #E9E9E9) ",
+                          fontSize: "14px",
+                          fontWeight: 500,
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <img
+                        onClick={() => {
+                          setInvoice({
+                            ...invoice,
+                            items: invoice?.items?.filter(
+                              (t, i) => i !== index,
+                            ),
+                          });
+                        }}
+                        src={theme === "dark" ? TrashDark : TrashLight}
+                        style={{
+                          cursor: "pointer",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              paddingRight: "3rem",
+            }}
+          >
+            <p
+              className="default-text-gray"
+              style={{ fontSize: "16px", fontWeight: 500 }}
+            >
+              {t("payments.subtotal")}
+            </p>
+            <p
+              className="default-text"
+              style={{ fontSize: "16px", fontWeight: 500 }}
+            >
+              {getCurrencySymbol()[invoice?.currency]}
+              {formatUSDBalance(invoice?.amount)}
+            </p>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              paddingRight: "3rem",
+              fontSize: "1.2rem",
+            }}
+          >
+            <p
+              className="default-text-gray"
+              style={{ fontSize: "16px", fontWeight: 500 }}
+            >
+              {t("payments.vatValue")}
+            </p>
+            <p
+              className="default-text"
+              style={{ fontSize: "16px", fontWeight: 500 }}
+            >
+              {invoice?.reverseCharge ? (
+                <span>RC</span>
+              ) : (
+                invoice?.taxPercent && <span>{invoice?.taxPercent}%</span>
+              )}
+              <span style={{ marginLeft: "3rem" }}>
+                {getCurrencySymbol()[invoice?.currency]}
+                {formatUSDBalance(
+                  (+invoice?.amount * +invoice?.taxPercent) / 100,
+                )}
+              </span>
+            </p>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              paddingRight: "3rem",
+              paddingTop: "2rem",
+              fontSize: "1.2rem",
+              borderTop: "1px solid var(--Dark)",
+              color: "var(--White, #FAFAFA)",
+            }}
+          >
+            <p
+              style={{
+                color: "var(--White, #FAFAFA)",
+                fontSize: "16px",
+                fontWeight: 500,
+                lineHeight: "140%",
+              }}
+            >
+              {t("payments.totalDue")}
+            </p>
+            <p
+              style={{
+                color: "var(--White, #FAFAFA)",
+                fontSize: "16px",
+                fontWeight: 500,
+                lineHeight: "140%",
+              }}
+            >
               {getCurrencySymbol()[invoice?.currency]}
               {formatUSDBalance(
-                (+invoice?.amount * +invoice?.taxPercent) / 100,
+                (invoice?.amount * ((+invoice?.taxPercent || 0) + 100)) / 100,
               )}
-            </span>
-          </p>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            paddingRight: "3rem",
-            paddingTop: "2rem",
-            fontSize: "1.2rem",
-            borderTop: "1px solid var(--Dark)",
-            color: "var(--White, #FAFAFA)",
-          }}
-        >
-          <p>{t("payments.totalDue")}</p>
-          <p>
-            {getCurrencySymbol()[invoice?.currency]}
-            {formatUSDBalance(
-              (invoice?.amount * ((+invoice?.taxPercent || 0) + 100)) / 100,
-            )}
-          </p>
-        </div>
-        <Textarea
-          label={t("payments.note").concat(":")}
-          placeholder={"receiver@mail.com"}
-          value={invoice?.note}
-          setState={(value) => setInvoice({ ...invoice, note: value })}
-          dashboard
-          createInvoice
-        />
+            </p>
+          </div>
+          <Textarea
+            label={t("payments.note").concat(":")}
+            placeholder={"receiver@mail.com"}
+            value={invoice?.note}
+            setState={(value) => setInvoice({ ...invoice, note: value })}
+            dashboard
+            createInvoice
+          />
+        </Flex>
         <div className="invoice-btn-wrapper">
           <Button>{t("general.cancel")}</Button>
           <Button onClick={() => createInvoice()}>
             {t("payments.createInvoice")}
           </Button>
         </div>
-      </div>
-      {showPopup === "qrcode" && (
-        <QRPopup
-          show={showPopup}
-          setShow={setShowPopup}
-          price={invoice?.amount}
-          currency={invoice?.currency}
-          taxNumber={invoice?.taxNumber}
-          name={invoice?.name}
-          email={invoice?.email}
-          company={invoice?.company}
-          address={invoice?.address}
-          link={invoice?.qrValue}
-        />
-      )}
+        {showPopup === "qrcode" && (
+          <QRPopup
+            show={showPopup}
+            setShow={setShowPopup}
+            price={invoice?.amount}
+            currency={invoice?.currency}
+            taxNumber={invoice?.taxNumber}
+            name={invoice?.name}
+            email={invoice?.email}
+            company={invoice?.company}
+            address={invoice?.address}
+            link={invoice?.qrValue}
+          />
+        )}
+      </Flex>
     </div>
   );
 };

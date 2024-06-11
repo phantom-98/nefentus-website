@@ -39,6 +39,7 @@ const CurrencyChart = ({
   total,
   onEmptyChartClick,
 }) => {
+  console.log(data);
   const [percentages, setPercentages] = useState([0, 0, 0, 0, 0]);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
   const { currencyRate } = useAuth();
