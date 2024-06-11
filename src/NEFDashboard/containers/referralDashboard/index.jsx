@@ -9,6 +9,7 @@ import {
   checkJwtToken,
   formatTokenBalance,
   formatUSDBalance,
+  getRole,
 } from "../../../utils";
 import DeactivateIcon from "../../../assets/newDashboardIcons/deactivate-gray.svg";
 import EditIcon from "../../../assets/newDashboardIcons/edit-gray.svg";
@@ -32,7 +33,7 @@ const ReferralDashboard = () => {
   const { theme } = useTheme();
   const backend_Api = new backendAPI();
   const { user, setUser, currencyRate } = useAuth();
-  const adminApi = new adminDashboardApi(user.roles && user.roles[0]);
+  const adminApi = new adminDashboardApi(user.roles && getRole(user));
   const [users, setUsers] = useState([]);
   const [income, setIncome] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -42,6 +43,7 @@ const ReferralDashboard = () => {
   const [search, setSearch] = useState("");
   const [cardDetails, setCardDetails] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
+  const [update, setUpdate] = useState(false);
 
   const incomeCards = [
     {
@@ -65,6 +67,10 @@ const ReferralDashboard = () => {
   useEffect(() => {
     if (user.roles) fetchIncomeDetails();
   }, [user]);
+
+  useEffect(() => {
+    if (!update) setSelectedUser({});
+  }, [update]);
 
   useEffect(() => {
     if (user.roles) fetchUsers();
@@ -128,12 +134,15 @@ const ReferralDashboard = () => {
     }
   };
 
+  const updateUser = () => setUpdate(true);
+
   const columns = userColumns(
     t,
     updateStatus,
     deleteUser,
     setSelectedUser,
     currencyRate,
+    updateUser,
   );
 
   return (
@@ -170,13 +179,23 @@ const ReferralDashboard = () => {
           {/* </div> */}
         </Flex>
         <div className="roles-card-container">
-          <Roles fetchUsers={fetchUsers} />
+          <Roles
+            fetchUsers={fetchUsers}
+            selectedUser={selectedUser}
+            update={update}
+            setUpdate={setUpdate}
+          />
         </div>
       </Flex>
       {/** Income container that is viewed only for tab and mobile view */}
       <Flex gap={20} className="tab-view-income-container">
         <div className="tabview-roles-card">
-          <Roles fetchUsers={fetchUsers} />
+          <Roles
+            fetchUsers={fetchUsers}
+            selectedUser={selectedUser}
+            update={update}
+            setUpdate={setUpdate}
+          />
         </div>
         <div>
           {Array.from({ length: Math.ceil(cardDetails?.length / 2) }).map(

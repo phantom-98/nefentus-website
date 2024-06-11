@@ -748,7 +748,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .default-text {
   font-family: "DM-Sans";
-  color: var(--Light-grey, #e9e9e9);
+  color: var(--Light-grey, #e9e9e9) !important;
   font-size: 14px;
   font-weight: 400;
 }
@@ -827,4 +827,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
   color: currentColor;
   border-color: currentColor;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: var(--Light-grey, #e9e9e9);
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px #23232329;
 }

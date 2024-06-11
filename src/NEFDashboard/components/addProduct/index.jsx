@@ -163,7 +163,9 @@ const AddProduct = ({
       title={
         <Flex justify={"space-between"} align={"center"}>
           <Title level={4} style={{ margin: "0" }}>
-            Create New Product
+            {Object.keys(selectedProduct)?.length > 0
+              ? t("products.createProductModal.updateProduct")
+              : t("products.createProductModal.createProduct")}
           </Title>
           <Button type="text" onClick={() => onClose()}>
             {/* <img src={CloseIcon} alt="CloseIcon" /> */}
@@ -323,7 +325,7 @@ const AddProduct = ({
             onClick={onClose}
             disabled={loading}
           >
-            Cancel
+            {t("products.createProductModal.cancel")}
           </Button>
           <Button
             className="product-drawer-save"
@@ -331,7 +333,9 @@ const AddProduct = ({
             loading={loading}
             disabled={loading}
           >
-            Save
+            {Object.keys(selectedProduct)?.length > 0
+              ? t("products.createProductModal.update")
+              : t("products.createProductModal.add")}
           </Button>
         </Flex>
       </div>

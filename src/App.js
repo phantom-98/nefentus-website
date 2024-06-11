@@ -228,7 +228,10 @@ function App() {
                       <Route
                         path="/personal-dashboard"
                         element={
-                          <DashboardLayout title={"personalDashboard.title"}>
+                          <DashboardLayout
+                            title={"personalDashboard.title"}
+                            type={"admin"}
+                          >
                             <PersonalDashboard />
                           </DashboardLayout>
                         }

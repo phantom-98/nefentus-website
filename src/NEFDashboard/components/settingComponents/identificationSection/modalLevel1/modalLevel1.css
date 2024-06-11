@@ -40,6 +40,12 @@
   padding: 0px !important;
 }
 
+.identification-country-select
+  .ant-select-selector
+  .ant-select-selection-search {
+  width: 100%;
+}
+
 .street-field,
 .street-field:focus,
 .street-field:hover,
@@ -64,18 +70,37 @@
   overflow: hidden;
 }
 
-.identification-city-zip input,
+.identification-city-zip input {
+  border: none;
+  border-radius: 0px;
+  padding: 8px 12px;
+  background: var(--BG2, #171717);
+  box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15);
+  height: 40px !important;
+}
+
 .identification-city-zip input:hover,
 .identification-city-zip input:focus,
 .identification-city-zip input:active {
   border: none !important;
-  border-radius: 0px;
-  padding: 8px 12px;
-  background: var(--BG2, #171717);
   box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15) !important;
-  height: 40px !important;
+  background: var(--BG2, #171717) !important;
 }
 
 .identification-city-zip input:first-child {
   border-right: 1px solid var(--Dark, #202020) !important;
+}
+
+.identification-field-container {
+  position: relative;
+}
+
+.identification-error-field,
+.identification-error-field:hover {
+  border: 1px solid var(--red, #a43c3c) !important;
+}
+
+.identification-error-text {
+  color: var(--red, #a43c3c);
+  position: absolute;
 }

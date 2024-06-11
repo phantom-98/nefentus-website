@@ -285,7 +285,9 @@ const DashboardLayout = ({ children, title }) => {
                     <div className="username-text">
                       {user?.firstName + " " + user?.lastName}
                     </div>
-                    <div className="user-role-text">{getRole(user)}</div>
+                    <div className="user-role-text">
+                      {getRole(user) || (user?.roles && user?.roles[0])}
+                    </div>
                   </Col>
                   <img
                     src={dropDownToggle ? UpArrow : DownArrow}

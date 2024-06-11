@@ -69,10 +69,14 @@
 .business-option-container {
   padding: 2px 5px;
   border-radius: 6px;
-  border: 1px solid var(--Blue, #078bb9);
-  background: var(--BG2, #171717);
   box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15);
   height: 40px;
+}
+
+.business-option-container:focus,
+.business-option-container:hover {
+  border: 1px solid var(--Blue, #078bb9);
+  background: var(--BG2, #171717);
 }
 
 .business-save-button {

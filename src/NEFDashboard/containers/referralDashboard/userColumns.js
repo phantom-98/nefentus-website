@@ -17,6 +17,7 @@ const userColumns = (
   deleteUser,
   setSelectedUser,
   currencyRate,
+  updateUser,
 ) => [
   {
     title: t("dashboard.tableHeaders.name"),
@@ -122,7 +123,10 @@ const userColumns = (
             {
               key: "2",
               label: (
-                <div className="default-text user-table-menu-width">
+                <div
+                  className="default-text user-table-menu-width"
+                  onClick={updateUser}
+                >
                   {t("referralDashboard.userTableMenu.edit")}
                 </div>
               ),

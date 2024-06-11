@@ -8,6 +8,7 @@ import { getCurrencySymbol } from "../../../countries";
 import backendAPI from "../../../api/backendAPI";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
+import "./createInvoice.css";
 
 const InvoicePreview = ({ invoice }) => {
   const [rateList, setRateList] = useState([]);
@@ -38,12 +39,12 @@ const InvoicePreview = ({ invoice }) => {
 
   const columns = [
     {
-      title: "Description",
+      title: t("invoicePreview.description"),
       dataIndex: "name",
       render: (name, record) => <div>{name}</div>,
     },
     {
-      title: "Price",
+      title: t("invoicePreview.price"),
       dataIndex: "price",
       render: (price, record) => (
         <div>
@@ -54,12 +55,12 @@ const InvoicePreview = ({ invoice }) => {
       ),
     },
     {
-      title: "Qty",
+      title: t("invoicePreview.qty"),
       dataIndex: "quantity",
       render: (_, record) => <div>{record?.quantity}</div>,
     },
     {
-      title: "Total price",
+      title: t("invoicePreview.totalPrice"),
       dataIndex: "total",
       render: (_, record) => (
         <div>
@@ -103,6 +104,7 @@ const InvoicePreview = ({ invoice }) => {
             </Flex>
           </Flex>
         }
+        className="invoice-preview-card"
       >
         <Flex gap={"16px"}>
           <Flex vertical gap={"12px"} flex={1}>
@@ -150,7 +152,11 @@ const InvoicePreview = ({ invoice }) => {
         <Flex vertical gap={"16px"}>
           <Text
             className="default-text-gray"
-            style={{ fontSize: "16px", fontWeight: 500 }}
+            style={{
+              fontSize: "16px",
+              fontWeight: 500,
+              color: " var(--White, #FAFAFA)",
+            }}
           >
             {t("invoicePreview.invoiceItems")}
           </Text>
@@ -160,10 +166,14 @@ const InvoicePreview = ({ invoice }) => {
             hidePagination={true}
           />
           <Flex align="center" justify="space-between">
-            <Text className="default-text-gray">
+            <Text className="default-text">
               {t("invoicePreview.vat")} ({invoice.taxPercent}%)
             </Text>
-            <Text className="default-text">
+            <Text
+              style={{
+                color: " var(--White, #FAFAFA) ",
+              }}
+            >
               $
               {formatUSDBalance(
                 (+invoice?.amount * +invoice?.taxPercent) / rate?.rate / 100,
@@ -178,14 +188,17 @@ const InvoicePreview = ({ invoice }) => {
           <Divider style={{ margin: 0 }} />
           <Flex align="center" justify="space-between">
             <Text
-              className="default-text-gray"
+              className="default-text"
               style={{ fontSize: "16px", fontWeight: 500 }}
             >
               {t("invoicePreview.invoiceAmount")}
             </Text>
             <Text
-              className="default-text"
-              style={{ fontSize: "16px", fontWeight: 500 }}
+              style={{
+                fontSize: "16px",
+                fontWeight: 500,
+                color: " var(--White, #FAFAFA) ",
+              }}
             >
               ${formatUSDBalance(invoice?.amount / rate?.rate)}
               {invoice?.currency !== "USD" &&
@@ -203,8 +216,11 @@ const InvoicePreview = ({ invoice }) => {
               {t("invoicePreview.totalDue")}
             </Text>
             <Text
-              className="default-text"
-              style={{ fontSize: "16px", fontWeight: 500 }}
+              style={{
+                fontSize: "16px",
+                fontWeight: 500,
+                color: " var(--White, #FAFAFA) ",
+              }}
             >
               $
               {formatUSDBalance(

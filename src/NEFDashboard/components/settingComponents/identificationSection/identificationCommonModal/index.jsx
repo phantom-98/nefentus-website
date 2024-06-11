@@ -2,7 +2,14 @@ import React from "react";
 import { Button, Flex, Modal } from "antd";
 import "./identificationCommonModal.css";
 
-const IdentificationCommonModal = ({ open, onClose, children, title }) => {
+const IdentificationCommonModal = ({
+  open,
+  onClose,
+  children,
+  title,
+  onUpload,
+  loading,
+}) => {
   return (
     <Modal
       open={open}
@@ -18,7 +25,14 @@ const IdentificationCommonModal = ({ open, onClose, children, title }) => {
           <Button className="identification-modal-cancel" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="identification-modal-upload">Upload</Button>
+          <Button
+            className="identification-modal-upload"
+            onClick={onUpload}
+            loading={loading}
+            disabled={loading}
+          >
+            Upload
+          </Button>
         </Flex>
       </Flex>
     </Modal>

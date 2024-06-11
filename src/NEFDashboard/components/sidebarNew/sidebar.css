@@ -3,6 +3,7 @@
   border-right: 1px solid var(--border-color, #202020);
   height: 100%;
 }
+
 .sidebar-menu {
   background-color: transparent;
   border-inline-end: none !important;
@@ -103,6 +104,14 @@
   font-family: "DM-Sans";
 }
 @media screen and (min-width: 1200px) {
+  .sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    flex: 0 0 16.666666666666664%;
+    max-width: 16.666666666666664%;
+    width: 100%;
+  }
   .user-block-mobile,
   .sidebar-menu-mobile,
   .logo-divider-mobile,
