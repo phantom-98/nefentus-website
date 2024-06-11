@@ -27,14 +27,12 @@ const Logos = () => {
   }, []);
 
   return (
-    <div className={` ${styles.logos}`}>
-      <div className={styles.line}>
-        <img
-          src={Line}
-          alt="line"
-          style={{ filter: theme === "light" ? "invert()" : "" }}
-        />
-      </div>
+    <div
+      className={` ${styles.logos}`}
+      style={{
+        borderBlock: "1px solid #202020",
+      }}
+    >
       <div className={styles.logoImage}>
         <div className={`${styles.line1} line1`}>
           {list.map((logo, index) => (
@@ -46,13 +44,6 @@ const Logos = () => {
             <>{logo}</>
           ))}
         </div>
-      </div>
-      <div className={styles.line}>
-        <img
-          src={Line}
-          alt="line"
-          style={{ filter: theme === "light" ? "invert()" : "" }}
-        />
       </div>
     </div>
   );

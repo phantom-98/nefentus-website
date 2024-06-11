@@ -1,8 +1,8 @@
 .logos {
-  padding: 5.5rem 0;
+  padding: 4rem 0;
   position: relative;
 
-  width: 100vw;
+  width: 100vw !important;
   overflow: hidden;
 }
 

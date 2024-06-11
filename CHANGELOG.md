@@ -1,5 +1,7 @@
 # New changes
 
+- Implement new Landing, B2C, B2B, Resources pages
+
 # v1.2.0
 
 - Settings Page is implemented (MAJOR)
@@ -35,7 +37,6 @@
 - Settings Page is implemented (MAJOR)
 - Identification Process implemented in Settings Page (MAJOR)
 - Add Portfolio coins zero balance case (MINOR)
-
 
 # v1.0.0
 
