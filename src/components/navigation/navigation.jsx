@@ -105,13 +105,17 @@ const Navigation = () => {
     if (token?.length) {
       return (
         <>
-          <Button
-            link={profile.dashboardLink}
-            onClick={() => setOpenMenu(false)}
-            style={{ width: "100%" }}
-          >
-            {dashboardString(profile)}
-          </Button>
+          <Link to={"/new-settings"} onClick={() => setOpenMenu(false)}>
+            <li className="standard">
+              {t("personalDashboard.profileDropdown.setting")}
+            </li>
+          </Link>
+          <Link to={"/personal-dashboard"} onClick={() => setOpenMenu(false)}>
+            <li className="standard">{t("navigation.dashboard")}</li>
+          </Link>
+          <Link onClick={logOut}>
+            <li className="standard">{t("navigation.logOut")}</li>
+          </Link>
         </>
       );
     } else {
@@ -271,10 +275,9 @@ const Navigation = () => {
             <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
               <li className="standard">{t("navigation.vacancy")}</li>
             </Link>
+            {loginAndSignupMobile()}
           </ul>
         </div>
-
-        <div>{loginAndSignupMobile()}</div>
       </div>
     </nav>
   );
