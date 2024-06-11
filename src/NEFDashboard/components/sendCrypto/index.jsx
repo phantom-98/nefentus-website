@@ -385,7 +385,19 @@ const SendCrypto = ({
       const web3API = new web3Api();
 
       try {
-        await switchNetwork(chainId(selectedCoin?.blockchain));
+        console.log(chainId(selectedCoin?.blockchain));
+        debugger;
+        await switchNetwork(chainId(selectedCoin?.blockchain))
+          .then((res) => {
+            console.log(res);
+            debugger;
+          })
+          .catch((e) => {
+            console.log(e);
+            debugger;
+          });
+        console.log(chainId(selectedCoin?.blockchain));
+        debugger;
         const txReceipt = await web3API.send(
           tokenAddress,
           selectedCoin?.blockchain,
@@ -400,6 +412,7 @@ const SendCrypto = ({
           setErrorMessage(t("messages.error.withdraw"));
         }
       } catch (error) {
+        console.log(error);
         setErrorMessage(t("messages.error.withdraw"));
       }
     } else {

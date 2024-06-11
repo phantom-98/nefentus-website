@@ -16,6 +16,8 @@
 - Send modal is functional for external
 - CreateInvoice UI fixes completed
 - Settings Page is implemented (MAJOR)
+- Identification Process implemented in Settings Page (MAJOR)
+- Add Portfolio coins zero balance case (MINOR)
 
 # Merged changes
 

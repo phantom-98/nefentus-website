@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import { Tooltip as AntToolTip, Col, Flex, Row, Skeleton } from "antd";
+import EmptyChartImage from "../../../assets/newDashboardIcons/empty-coin-chart.svg";
 import PorfolioCoins from "../portfolioCoins";
 import "./currency-chart.css";
 import { useAuth } from "../../../context/auth/authContext";
 import { formatUSDBalance } from "../../../utils";
+import ReceiveCrypto from "../receiveCrypto";
 
 const COLORS = [
   "#078BB9",
@@ -28,8 +30,17 @@ const checkPrices = (priceList) => {
   return priceList?.length && priceList.every((price) => price != undefined);
 };
 
-const CurrencyChart = ({ balances, prices, data, colors, togglebtn }) => {
+const CurrencyChart = ({
+  balances,
+  prices,
+  data,
+  colors,
+  togglebtn,
+  total,
+  onEmptyChartClick,
+}) => {
   const [percentages, setPercentages] = useState([0, 0, 0, 0, 0]);
+  const [openReceiveModal, setOpenReceiveModal] = useState(false);
   const { currencyRate } = useAuth();
   useEffect(() => {
     if (checkBalances(balances) && checkPrices(prices)) {
@@ -77,59 +88,74 @@ const CurrencyChart = ({ balances, prices, data, colors, togglebtn }) => {
   };
 
   return (
-    <Row gutter={[0, 24]} className="currency-chart">
-      {togglebtn ? (
-        <Flex align="center" justify="center">
-          <Skeleton.Avatar active className="portfolio-image-skeleton" />
-        </Flex>
-      ) : (
-        <PieChart
-          width={300}
-          height={145}
-          className="pie-chart-container"
-          defaultShowTooltip={false}
-        >
-          <Pie
-            data={data}
-            cx={140}
-            cy={"50%"}
-            innerRadius={55}
-            outerRadius={65}
-            fill="#8884d8"
-            paddingAngle={5}
-            dataKey="amount_dollar"
-          >
-            {data.map((entry, index) => {
-              console.log(entry, index % COLORS.length);
-              return (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={entry?.color}
-                  className="test-cell"
-                  cornerRadius={100}
-                  style={{ outline: "none" }}
-                  stroke="0"
-                />
-              );
-            })}
-            {/* <LabelList /> */}
-          </Pie>
-          <Tooltip content={<CustomToolTip />} />
-        </PieChart>
+    <>
+      {openReceiveModal && (
+        <ReceiveCrypto
+          openReceiveModal={openReceiveModal}
+          handleReceiveCrypto={() => setOpenReceiveModal(false)}
+          onCloseModal={() => setOpenReceiveModal(false)}
+        />
       )}
-
-      <div className="network-rows-container">
+      <Row gutter={[0, 24]} className="currency-chart">
         {togglebtn ? (
-          <Flex align="center" justify="center" gap={10} wrap="wrap">
-            {[...Array(8)].map((e, i) => (
-              <Skeleton.Input active />
-            ))}
+          <Flex align="center" justify="center">
+            <Skeleton.Avatar active className="portfolio-image-skeleton" />
           </Flex>
+        ) : total ? (
+          <PieChart
+            width={300}
+            height={145}
+            className="pie-chart-container"
+            defaultShowTooltip={false}
+          >
+            <Pie
+              data={data}
+              cx={140}
+              cy={"50%"}
+              innerRadius={55}
+              outerRadius={65}
+              fill="#8884d8"
+              paddingAngle={5}
+              dataKey="amount_dollar"
+            >
+              {data.map((entry, index) => {
+                console.log(entry, index % COLORS.length);
+                return (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={entry?.color}
+                    className="test-cell"
+                    cornerRadius={100}
+                    style={{ outline: "none" }}
+                    stroke="0"
+                  />
+                );
+              })}
+              {/* <LabelList /> */}
+            </Pie>
+            <Tooltip content={<CustomToolTip />} />
+          </PieChart>
         ) : (
-          <PorfolioCoins data={data} useAbbreviations />
+          <img
+            src={EmptyChartImage}
+            onClick={() => setOpenReceiveModal(true)}
+            className="cursor-pointer"
+          />
         )}
-      </div>
-    </Row>
+
+        <div className="network-rows-container">
+          {togglebtn ? (
+            <Flex align="center" justify="center" gap={10} wrap="wrap">
+              {[...Array(8)].map((e, i) => (
+                <Skeleton.Input active />
+              ))}
+            </Flex>
+          ) : (
+            <PorfolioCoins data={data} useAbbreviations />
+          )}
+        </div>
+      </Row>
+    </>
   );
 };
 
