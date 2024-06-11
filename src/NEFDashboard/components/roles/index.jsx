@@ -7,6 +7,7 @@ import { ROLE_TO_NAME } from "../../../constants";
 import { useTranslation } from "react-i18next";
 import AddUser from "../addUser";
 import { useAuth } from "../../../context/auth/authContext";
+import { getRole } from "../../../utils";
 
 const role_colors = {
   leader: "#078BB9",
@@ -16,10 +17,10 @@ const role_colors = {
   admin: "#ED9001",
 };
 
-const Roles = ({ fetchUsers }) => {
+const Roles = ({ fetchUsers, selectedUser, update, setUpdate }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const adminApi = new adminDashboardApi(user.roles && user.roles[0]);
+  const adminApi = new adminDashboardApi(user.roles && getRole(user));
   const [totalRoles, setTotalRoles] = useState(12);
   const [roleList, setRoleList] = useState([]);
   const [open, setOpen] = useState(false);
@@ -27,6 +28,10 @@ const Roles = ({ fetchUsers }) => {
   useEffect(() => {
     fetchUserRoles();
   }, []);
+
+  useEffect(() => {
+    setOpen(update);
+  }, [update]);
 
   const fetchUserRoles = async () => {
     const response = await adminApi.getRoleReport();
@@ -53,6 +58,7 @@ const Roles = ({ fetchUsers }) => {
   const handleSubmit = async () => {
     fetchUsers();
     setOpen(!open);
+    setUpdate(false);
   };
 
   return (
@@ -61,7 +67,11 @@ const Roles = ({ fetchUsers }) => {
         <AddUser
           open={open}
           handleSubmit={handleSubmit}
-          onClose={() => setOpen(!open)}
+          onClose={() => {
+            setUpdate(false);
+            setOpen(!open);
+          }}
+          selectedUser={selectedUser}
         />
       )}
       <Card

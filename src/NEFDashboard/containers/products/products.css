@@ -6,16 +6,17 @@
 }
 
 .add-product-card {
-  background-image: url("../../../assets/newDashboardIcons/add-product-background2.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  justify-content: center;
+  background-image: url("../../../assets/newDashboardIcons/add-product-background2.svg") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  justify-content: flex-end;
   align-items: center;
-  gap: 12px;
+  gap: 19.11px;
   height: 220px;
-  border-radius: 12px;
-  border: 1px dashed #323232;
-  padding: 24px;
+  border-radius: 12px !important;
+  border: 1px dashed var(--Dark, #202020) !important;
+  padding: 16px;
+  border-radius: 12px !important;
 }
 .add-product-card-description {
   text-align: center;
@@ -31,17 +32,20 @@
 }
 
 .add-product-card-icon {
-  padding: 6px;
   border-radius: 6px;
   border: 1px solid var(--Dark, #202020);
   background: var(--Dark, #202020);
-  /* Input shadow */
   box-shadow:
     0px 191px 53px 0px rgba(0, 0, 0, 0),
     0px 122px 49px 0px rgba(0, 0, 0, 0.01),
     0px 69px 41px 0px rgba(0, 0, 0, 0.02),
     0px 30px 30px 0px rgba(0, 0, 0, 0.03),
     0px 8px 17px 0px rgba(0, 0, 0, 0.04);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .add-product-card-button {

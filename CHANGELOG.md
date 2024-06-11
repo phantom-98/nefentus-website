@@ -25,6 +25,17 @@
 - Products Dashboard is functional
 - Add swap feature
 - Add skeleton loader when switching wallet, fix loop issue in ProfileCard
+- Update invoicing && converter in new dashboard
+- Send modal is functional for external
+- Product UI issue Fixed
+- CreateInvoice UI fixes completed
+- Transaction Drawer UI fixes (MINOR)
+- Sidebar UI Fixes (MINOR)
+- Tables UI fixes (MINOR)
+- Settings Page is implemented (MAJOR)
+- Identification Process implemented in Settings Page (MAJOR)
+- Add Portfolio coins zero balance case (MINOR)
+
 
 # v1.0.0
 
@@ -34,3 +45,10 @@
 - Show gas prices when paying invoices/products
 - Modify Personal Details of Level 1 in identification process
 - Implemented all new dashboards with their respective functionalities
+- CreateInvoice UI fixes completed
+- Transaction Drawer UI fixes (MINOR)
+- Sidebar UI Fixes (MINOR)
+- Tables UI fixes (MINOR)
+- Settings Page is implemented (MAJOR)
+- Identification Process implemented in Settings Page (MAJOR)
+- Add Portfolio coins zero balance case (MINOR)

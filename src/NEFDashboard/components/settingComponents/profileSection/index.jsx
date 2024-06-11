@@ -5,7 +5,7 @@ import UploadIcon from "../../../../assets/newDashboardIcons/upload.svg";
 import deleteIcon from "../../../../assets/newDashboardIcons/delete-red.svg";
 import ProfileImg from "../../../../assets/icon/user.svg";
 import EmailIcon from "../../../../assets/newDashboardIcons/email.svg";
-import { getFlagLink } from "../../../../countries";
+import { getCountryList, getFlagLink } from "../../../../countries";
 import { useTranslation } from "react-i18next";
 import NotificationSection from "./notificationSection";
 import ChangeFieldModal from "./changeFieldModal";
@@ -30,10 +30,12 @@ const ProfileSection = () => {
   const [file, setFile] = useState(null);
   const [cropFile, setCropFile] = useState({});
   const [user, setUser] = useState({});
+  const [selectedField, setSelectedField] = useState("");
   const [countries] = useState(
-    countryList?.map((country) => ({
+    getCountryList()?.map((country) => ({
       label: t(country?.display),
       value: country?.value,
+      icon: country?.symbol,
     })),
   );
   useEffect(() => {
@@ -51,7 +53,7 @@ const ProfileSection = () => {
       actionItem: (
         <Button
           className="default-text-gray"
-          onClick={() => setFieldModal("firstName")}
+          onClick={() => setSelectedField("firstName")}
         >
           Change
         </Button>
@@ -63,7 +65,7 @@ const ProfileSection = () => {
       actionItem: (
         <Button
           className="default-text-gray"
-          onClick={() => setFieldModal("lastName")}
+          onClick={() => setSelectedField("lastName")}
         >
           Change
         </Button>
@@ -75,7 +77,7 @@ const ProfileSection = () => {
       actionItem: (
         <Button
           className="default-text-gray"
-          onClick={() => setFieldModal("email")}
+          onClick={() => setSelectedField("email")}
         >
           Change
         </Button>
@@ -88,7 +90,7 @@ const ProfileSection = () => {
       actionItem: (
         <Button
           className="default-text-gray"
-          onClick={() => setFieldModal("phoneNumber")}
+          onClick={() => setSelectedField("phoneNumber")}
         >
           Change
         </Button>
@@ -101,7 +103,16 @@ const ProfileSection = () => {
           showSearch
           value={user?.country}
           className="country-select-field"
-          options={countries}
+          options={countries?.map((countryData) => ({
+            label: (
+              <Flex align="center" gap={6}>
+                <img src={getFlagLink(countryData?.icon)} width={22} />
+                <div>{countryData?.label}</div>
+              </Flex>
+            ),
+            value: countryData?.value,
+          }))}
+          virtual={false}
           onChange={(value) => {
             setUser({ ...user, country: value });
             updateUser({ ...user, country: value });
@@ -114,10 +125,10 @@ const ProfileSection = () => {
       key: "business",
       actionItem: (
         <Button
-          className="business-save-button"
-          onClick={() => updateUser(user)}
+          className="default-text-gray"
+          onClick={() => setSelectedField("business")}
         >
-          Save
+          Change
         </Button>
       ),
     },
@@ -337,7 +348,7 @@ const ProfileSection = () => {
                   )}
                 </div>
 
-                {index === profile_options?.length - 1 ? (
+                {selectedField == data?.key ? (
                   <Flex
                     align="center"
                     justify="space-between"
@@ -346,12 +357,23 @@ const ProfileSection = () => {
                   >
                     <Input
                       className="business-input-field"
-                      value={user?.business}
+                      value={user[selectedField]}
                       onChange={(e) =>
-                        setUser({ ...user, business: e.target.value })
+                        setUser({
+                          ...user,
+                          [selectedField]: e.target.value,
+                        })
                       }
                     />
-                    {data?.actionItem}
+                    <Button
+                      className="business-save-button"
+                      onClick={() => {
+                        setSelectedField("");
+                        updateUser(user);
+                      }}
+                    >
+                      Save
+                    </Button>
                   </Flex>
                 ) : (
                   <Flex
@@ -360,11 +382,14 @@ const ProfileSection = () => {
                     gap={16}
                     className="profile-option-subcontainer"
                   >
-                    {" "}
-                    {user[data?.key] && (
+                    {user[data?.key] ? (
                       <Text className="default-text-gray profile-option-value">
                         {user[data?.key]}
                       </Text>
+                    ) : (
+                      data?.title != "Country" && (
+                        <div className="default-text-gray profile-option-value"></div>
+                      )
                     )}
                     {data?.actionItem}
                   </Flex>

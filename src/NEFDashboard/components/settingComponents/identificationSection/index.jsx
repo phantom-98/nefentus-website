@@ -56,6 +56,51 @@ const IdentificationSection = () => {
     }
   };
 
+  const levelCard = [
+    {
+      level: 1,
+      status: "verified",
+      content: [
+        {
+          icon: PersonalInfoIcon,
+          label: "Personal Information",
+        },
+        {
+          icon: GovernmentIdIcon,
+          label: "Government Issued ID",
+        },
+        {
+          icon: FaceIcon,
+          label: "Facial Recognition",
+        },
+      ],
+    },
+    {
+      level: 2,
+      status: "pending",
+      content: [
+        {
+          icon: LocationIcon,
+          label: "Proof of Address",
+        },
+        {
+          icon: CompanyIcon,
+          label: "Proof of Company",
+        },
+      ],
+    },
+    {
+      level: 3,
+      status: "unverified",
+      content: [
+        {
+          icon: DeligenceIcon,
+          label: " Enhanced Diligence",
+        },
+      ],
+    },
+  ];
+
   const fetchUserKYC = async () => {
     const level1Data = await Promise.all(
       Object.values(level1).map((type) =>
@@ -138,63 +183,11 @@ const IdentificationSection = () => {
     };
 
     setKycData({
-      level1: level1Finalised,
-      level2: level2Finalised,
-      level3: level3Finalised,
+      level1: { ...level1Finalised, ...levelCard[0] },
+      level2: { ...level2Finalised, ...levelCard[1] },
+      level3: { ...level3Finalised, ...levelCard[2] },
     });
-
-    // console.log(
-    //   userKYCDataText.concat(userKYCData)?.map((kyc) => ({
-    //     data: kyc[Object.keys(kyc)[0]]?.data,
-    //     type: Object.keys(kyc)[0],
-    //   })),
-    // );
-    debugger;
   };
-  const levelCard = [
-    {
-      level: 1,
-      status: "verified",
-      content: [
-        {
-          icon: PersonalInfoIcon,
-          label: "Personal Information",
-        },
-        {
-          icon: GovernmentIdIcon,
-          label: "Government Issued ID",
-        },
-        {
-          icon: FaceIcon,
-          label: "Facial Recognition",
-        },
-      ],
-    },
-    {
-      level: 2,
-      status: "pending",
-      content: [
-        {
-          icon: LocationIcon,
-          label: "Proof of Address",
-        },
-        {
-          icon: CompanyIcon,
-          label: "Proof of Company",
-        },
-      ],
-    },
-    {
-      level: 3,
-      status: "unverified",
-      content: [
-        {
-          icon: DeligenceIcon,
-          label: " Enhanced Diligence",
-        },
-      ],
-    },
-  ];
 
   const handleModalOpen = (data) => {
     switch (data?.level) {
@@ -217,34 +210,53 @@ const IdentificationSection = () => {
         <ModalLevel1
           open={openModal === "level1"}
           onClose={() => setOpenModal("")}
+          kycData={kycData?.level1}
+          onRefresh={() => {
+            fetchUserKYC();
+            setOpenModal("");
+          }}
         />
       )}
       {openModal == "level2" && (
         <ModalLevel2
           open={openModal === "level2"}
           onClose={() => setOpenModal("")}
+          kycData={kycData?.level2}
+          onRefresh={() => {
+            fetchUserKYC();
+            setOpenModal("");
+          }}
         />
       )}
       {openModal == "level3" && (
         <ModalLevel3
           open={openModal === "level3"}
           onClose={() => setOpenModal("")}
+          kycData={kycData?.level3}
+          onRefresh={() => {
+            fetchUserKYC();
+            setOpenModal("");
+          }}
         />
       )}
       <div className="IdentificationSection">
-        <IdentificationStepper />
+        <IdentificationStepper kycData={kycData} />
         <div className="identification-card-wrapper">
-          {levelCard?.map((card, index) => (
-            <LevelCard
-              card={card}
-              keyIndex={index}
-              handleModalOpen={handleModalOpen}
-            />
-          ))}
+          {Object.keys(kycData)?.length > 0 &&
+            Object.keys(kycData)?.map((title, index) => {
+              return (
+                <LevelCard
+                  level={level}
+                  card={kycData[title]}
+                  keyIndex={index}
+                  handleModalOpen={handleModalOpen}
+                />
+              );
+            })}
         </div>
         <Flex vertical gap={8}>
           <div className="account-limit-title">Account Limit</div>
-          <AccountLimit />
+          <AccountLimit kycData={kycData} />
         </Flex>
       </div>
     </>

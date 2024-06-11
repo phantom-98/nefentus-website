@@ -1,5 +1,6 @@
 import { Button, Drawer, Flex, Typography, Divider, Anchor } from "antd";
 import React, { useEffect, useState } from "react";
+import "./transactionDrawer.css";
 import EthereumIcon from "../../../assets/icon/crypto/ethereum.svg";
 import LocalGasStationFill from "../../../assets/newDashboardIcons/local_gas_station_filled.svg";
 import CompanyIcon from "../../../assets/newDashboardIcons/company.svg";
@@ -146,13 +147,17 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
             </Flex>
             <Flex vertical gap={"4px"}>
               <Text
-                className="default-text-gray"
+                className="default-text"
                 style={{ fontSize: "16px", fontWeight: 500 }}
               >
                 {t("transactionDrawer.crypto")}
               </Text>
               <Flex align="center" gap={"16px"}>
-                <Title level={4} style={{ margin: "0" }}>
+                <Title
+                  level={4}
+                  className="default-text"
+                  style={{ marginBottom: 0, fontWeight: "500" }}
+                >
                   0.076311321
                 </Title>
                 <Flex align="center" gap={"4px"}>
@@ -162,7 +167,13 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                     width={24}
                     height={24}
                   />
-                  <Text className="default-text" style={{ fontWeight: 500 }}>
+                  <Text
+                    style={{
+                      fontSize: "14px",
+                      fontWeight: 500,
+                      color: "var(--White2, #F6F6F6)",
+                    }}
+                  >
                     {t("transactionDrawer.crypto")}
                   </Text>
                 </Flex>
@@ -201,12 +212,24 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                   style={{ padding: "8px 0" }}
                 >
                   <Flex align="center" gap={"5px"}>
-                    <Text style={{ fontSize: "16px", fontWeight: 500 }}>
+                    <Text
+                      style={{
+                        fontSize: "16px",
+                        fontWeight: 500,
+                        color: " var(--light-grey, #E9E9E9)",
+                      }}
+                    >
                       {t("transactionDrawer.total")}
                     </Text>
                   </Flex>
                   <Flex align="center" gap={"5px"}>
-                    <Text style={{ fontSize: "16px", fontWeight: 500 }}>
+                    <Text
+                      style={{
+                        fontSize: "16px",
+                        fontWeight: 500,
+                        color: " var(--light-grey, #E9E9E9)",
+                      }}
+                    >
                       $30.967,00
                     </Text>
                   </Flex>
@@ -219,7 +242,7 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
         <Divider style={{ margin: 0 }} />
         <Flex vertical gap={"16px"}>
           <Text
-            className="default-text-gray"
+            className="default-text"
             style={{ fontSize: "16px", fontWeight: 500 }}
           >
             {t("transactionDrawer.invoiceInfo")}
@@ -285,7 +308,9 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                   src={selectedData?.paidAt == null ? OpenIcon : PaidIcon}
                   alt="active-icon"
                 />
-                <Text>{selectedData?.paidAt == null ? "Open" : "Paid"}</Text>
+                <Text className="default-text">
+                  {selectedData?.paidAt == null ? "Open" : "Paid"}
+                </Text>
               </Flex>
             </Flex>
             <Flex align="center" justify="space-between">
@@ -293,12 +318,12 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                 {t("transactionDrawer.created")}
               </Text>
               <Flex gap={"5px"}>
-                <Text>
+                <Text className="default-text">
                   {selectedData?.createdAt
                     ? moment(selectedData?.createdAt)?.format("MMM DD YY")
                     : "Jan 22 2023"}
                 </Text>
-                <Text>
+                <Text className="default-text">
                   {selectedData?.createdAt
                     ? moment(selectedData?.createdAt)?.format("hh:mm")
                     : "17:42"}
@@ -310,15 +335,15 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                 {t("transactionDrawer.completed")}
               </Text>
               <Flex gap={"5px"}>
-                <Text>Jan 22 2023</Text>
-                <Text>12:12</Text>
+                <Text className="default-text">Jan 22 2023</Text>
+                <Text className="default-text">12:12</Text>
               </Flex>
             </Flex>
             <Flex align="center" justify="space-between">
               <Text className="default-text-gray">
                 {t("transactionDrawer.invoiceId")}
               </Text>
-              <Text>DA11425</Text>
+              <Text className="default-text">DA11425</Text>
             </Flex>
           </Flex>
         </Flex>
@@ -330,7 +355,10 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
               <Flex vertical gap={"12px"}>
                 <Text
                   className="default-text-gray"
-                  style={{ fontSize: "16px", fontWeight: 500 }}
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: 500,
+                  }}
                 >
                   {t("transactionDrawer.checkoutPage")}:
                 </Text>
@@ -347,7 +375,9 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
                   <Paragraph style={{ margin: 0 }}>
                     <Button>
                       <Flex gap={"3px"} align="center">
-                        <Text>{t("transactionDrawer.copy")}</Text>
+                        <Text className="default-text">
+                          {t("transactionDrawer.copy")}
+                        </Text>
                         <img src={CopyIcon} alt="copy-icon" />
                       </Flex>
                     </Button>
@@ -360,7 +390,13 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
 
         <Divider style={{ margin: 0 }} />
         <Flex vertical gap={"6px"}>
-          <Text style={{ fontSize: "16px", fontWeight: 500 }}>
+          <Text
+            style={{
+              fontSize: "16px",
+              fontWeight: 500,
+              color: "var(--light-grey, #E9E9E9)",
+            }}
+          >
             {t("transactionDrawer.note")}:
           </Text>
           <Paragraph className="default-text-gray" style={{ margin: 0 }}>
@@ -370,13 +406,17 @@ const TransactionDrawer = ({ open, onClose, selectedData }) => {
         <Flex gap={"6px"} justify="flex-end">
           <Button>
             <Flex gap={"4px"}>
-              <Text>{t("transactionDrawer.saveInvoice")}</Text>
+              <Text className="default-text">
+                {t("transactionDrawer.saveInvoice")}
+              </Text>
               <img src={FilesIcon} alt="FilesIcon" />
             </Flex>
           </Button>
           <Button>
             <Flex gap={"4px"}>
-              <Text>{t("transactionDrawer.saveReceipt")}</Text>
+              <Text className="default-text">
+                {t("transactionDrawer.saveReceipt")}
+              </Text>
               <img src={SaveReceiptIcon} alt="FilesIcon" />
             </Flex>
           </Button>

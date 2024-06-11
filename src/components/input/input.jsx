@@ -11,6 +11,7 @@ import CopyAddress from "../../assets/icon/copy.png";
 import { MessageContext } from "../../context/message";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
 import ImageplusDark from "../../assets/icon/dark/image-plus.svg";
+import imageDropIcon from "../../assets/icon/light/imageDropIcon.svg";
 import ImageplusLight from "../../assets/icon/light/image-plus.svg";
 import CheckedIcon from "../../assets/icon/checked.svg";
 import USD from "../../assets/icon/usd.png";
@@ -263,12 +264,14 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
         style={{
           display: "flex",
           alignItems: "center",
-          border: base64 ? "none" : "2px dashed var(--border-color)",
-          borderRadius: "1rem",
+          border: base64 ? "none" : "2px dashed  var(--Dark, #202020)",
+          background: "var(--BG2, #171717)",
+          borderRadius: "6px",
           overflow: "hidden",
-          height: "16rem",
+          height: "167px",
           cursor: "pointer",
         }}
+        className={styles.dragDropImage}
       >
         {base64 ? (
           <img
@@ -278,16 +281,52 @@ export const Attachment = ({ label, onUpload, onDelete, value, dashboard }) => {
         ) : (
           <div
             style={{
-              margin: "auto",
+              margin: "0 auto",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              gap: "12px",
             }}
           >
-            <img src={ImageplusDark} alt="Attachment" />
-            <p style={{ color: "#b1b1b1" }}>
-              {t("products.createProductModal.attach")}
-            </p>
+            <div
+              style={{
+                width: "36px",
+                height: "36px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "6px",
+                border: "1px solid var(--Dark, #202020)",
+                background: "var(--Dark, #202020)",
+                boxShadow:
+                  " 0px 191px 53px 0px rgba(0, 0, 0, 0.00), 0px 122px 49px 0px rgba(0, 0, 0, 0.01), 0px 69px 41px 0px rgba(0, 0, 0, 0.02), 0px 30px 30px 0px rgba(0, 0, 0, 0.03), 0px 8px 17px 0px rgba(0, 0, 0, 0.04)",
+              }}
+            >
+              <img src={imageDropIcon} alt="Attachment" />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "6px",
+              }}
+            >
+              <p style={{ color: "#E9E9E9" }}>
+                {t("products.createProductModal.attach")}
+                <span
+                  style={{
+                    color: "var(--Blue, var(--light-grey, #078BB9))",
+                  }}
+                >
+                  {t("products.createProductModal.browseLink")}
+                </span>
+              </p>
+              <p style={{ color: "#b1b1b1" }}>
+                {t("products.createProductModal.imageType")}
+              </p>
+            </div>
             {/* <img
               src={Delete}
               alt="Delete attachment"
@@ -568,9 +607,9 @@ export const CurrencySelect = ({ value, setValue, dashboard }) => {
       <div
         className={`${styles.currencySelect}`}
         style={{
-          borderRadius: dashboard ? "0.6rem" : "",
+          borderRadius: dashboard ? "6px" : "",
           width: dashboard ? "100%" : "",
-          height: dashboard ? "max-content" : "",
+          height: dashboard ? "40px" : "",
         }}
         onClick={() => setOpen((prev) => !prev)}
         onMouseLeave={() => setOpen(false)}
@@ -632,8 +671,8 @@ const CurrencyOption = ({
     <div
       className={styles.optionLineWrapper}
       style={{
-        borderRadius: dropDown ? (dashboard ? "0.6rem" : "3px") : "0",
-        padding: dashboard ? "1rem" : "",
+        borderRadius: dropDown ? (dashboard ? "6px" : "3px") : "0",
+        padding: dashboard ? "8px 6px 8px 12px" : "",
         backgroundColor: dashboard ? "#171717" : "",
       }}
     >
@@ -643,7 +682,11 @@ const CurrencyOption = ({
           className={styles.icon}
           alt={alt}
           style={{
-            width: dashboard ? "2.3rem" : "",
+            // width: dashboard ? "2.3rem" : "",
+            width: "22px",
+            height: "16px!important",
+            objectFit: "cover",
+            borderRadius: "2px",
           }}
         />
         <p
@@ -652,7 +695,7 @@ const CurrencyOption = ({
             fontSize: dashboard ? "1.2rem" : "",
             lineHeight: dashboard ? "1.5rem" : "",
             marginTop: dashboard ? "0" : "",
-            paddingTop: dashboard ? "0.3rem" : "",
+            paddingTop: dashboard ? "0" : "",
           }}
         >
           {" "}
@@ -697,10 +740,10 @@ export const RadioOption = ({
         display: "flex",
         justifyContent: "space-between",
         gap: "1rem",
-        border: `1px solid ${value ? "#28C8F0" : "var(--Dark)"}`,
-        borderRadius: "0.6rem",
-        padding: "0.8rem",
-        background: createInvoice ? "var(--BG2, #171717)" : "var(--bg2-color)",
+        border: `1px solid ${value ? "#28C8F0" : "var(--Dark, #202020)"}`,
+        borderRadius: "6px",
+        padding: "8px",
+        background: "var(--BG2, #171717)",
         cursor: "pointer",
         alignItems: horizon ? "center" : "start",
         ...style,
@@ -708,7 +751,7 @@ export const RadioOption = ({
     >
       <div
         style={{
-          fontSize: "1.2rem",
+          fontSize: "14px",
           display: "flex",
           flexDirection: horizon ? "row" : "column",
           alignItems: horizon ? "center" : "start",
@@ -718,7 +761,7 @@ export const RadioOption = ({
       >
         {icon && <img src={icon} style={{ width: "2.25rem" }} />}
         {label && <p>{label}</p>}
-        <p style={{ fontSize: "1.2rem", marginTop: "0.2rem" }}>{content}</p>
+        <p style={{ fontSize: "14px" }}>{content}</p>
       </div>
       <div
         style={{
@@ -756,13 +799,14 @@ export const Spinner = ({
       <div
         className={styles.spinner}
         style={{
-          padding: dashboard && isDrawer ? "1rem" : dashboard ? "0.8rem" : "",
-          background: dashboard && !disabled ? "var(--bg2-color)" : "",
+          padding:
+            dashboard && isDrawer ? "10.2px 12px;" : dashboard ? "0.8rem" : "",
+          background: dashboard && !disabled ? "var(--BG2, #171717)" : "",
           width: dashboard ? "100%" : "",
           opacity: disabled ? "50%" : "100%",
           justifyContent: dashboard ? "space-between" : "flex-start",
-          border: dashboard ? "1px solid var(--border-color)" : "",
-          borderRadius: "0.6rem",
+          border: dashboard ? "1px solid var(--Dark, #202020)" : "",
+          borderRadius: "6px",
         }}
       >
         <div
@@ -809,7 +853,7 @@ export const RadioSelect = ({
       <div
         style={{
           display: "flex",
-          gap: "1rem",
+          gap: "6px",
         }}
       >
         {options.map((option, index) => {
