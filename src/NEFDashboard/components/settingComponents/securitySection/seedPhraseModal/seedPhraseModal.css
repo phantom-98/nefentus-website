@@ -1,0 +1,20 @@
+.seed-phrase-modal .ant-modal-content {
+  padding: 0px;
+}
+
+.seed-phrase-modal .ant-modal-header {
+  margin-bottom: 0px;
+}
+.seed-phrase-modal .ant-modal-title {
+  padding: 16px;
+  border-bottom: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+  border-radius: 4px 4px 0px 0px;
+}
+
+.seed-phrase-modal .ant-modal-body {
+  border-radius: 0px 0px 4px 4px;
+  background: var(--BG, #111);
+  box-shadow: 0px 4px 20.1px 0px rgba(0, 0, 0, 0.15);
+  padding: 20px 0px;
+}

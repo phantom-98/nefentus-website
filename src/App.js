@@ -117,6 +117,8 @@ import DashboardLayout from "./NEFDashboard/containers/dashboardLayout";
 import PersonalDashboard from "./NEFDashboard/containers/personalDashboard";
 import ReferralDashboard from "./NEFDashboard/containers/referralDashboard";
 import SalesDashboard from "./NEFDashboard/containers/salesDashboard";
+import SettingLayout from "./NEFDashboard/containers/settingLayout";
+import SettingPage from "./NEFDashboard/containers/settings";
 import Products from "./NEFDashboard/containers/products";
 import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
 import NewLanding, { NewB2B, NewB2C } from "./pages/Landing";
@@ -215,6 +217,14 @@ function App() {
                 >
                   <ScrollToTop>
                     <Routes>
+                      <Route
+                        path="/new-settings"
+                        element={
+                          <SettingLayout>
+                            <SettingPage />
+                          </SettingLayout>
+                        }
+                      />
                       <Route
                         path="/personal-dashboard"
                         element={
