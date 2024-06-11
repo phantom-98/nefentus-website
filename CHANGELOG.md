@@ -35,7 +35,7 @@
 - Settings Page is implemented (MAJOR)
 - Identification Process implemented in Settings Page (MAJOR)
 - Add Portfolio coins zero balance case (MINOR)
-
+- Implement new Landing, B2C, B2B, Resources pages
 
 # v1.0.0
 
