@@ -33,7 +33,12 @@ const ReferralDashboard = () => {
   const { theme } = useTheme();
   const backend_Api = new backendAPI();
   const { user, setUser, currencyRate } = useAuth();
-  const adminApi = new adminDashboardApi(user.roles && getRole(user));
+
+  const adminApi = new adminDashboardApi(
+    user?.roles?.length > 0 && getRole(user) == ""
+      ? user.roles[0]
+      : getRole(user),
+  );
   const [users, setUsers] = useState([]);
   const [income, setIncome] = useState(0);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -145,6 +150,10 @@ const ReferralDashboard = () => {
     updateUser,
   );
 
+  const fetchData = () => {
+    fetchUsers("", 1);
+  };
+
   return (
     <Flex vertical gap={32} className="referral-dashboard">
       <Flex gap={20}>
@@ -179,19 +188,21 @@ const ReferralDashboard = () => {
           {/* </div> */}
         </Flex>
         <div className="roles-card-container">
-          <Roles
-            fetchUsers={fetchUsers}
-            selectedUser={selectedUser}
-            update={update}
-            setUpdate={setUpdate}
-          />
+          {user?.roles?.length > 0 && (
+            <Roles
+              fetchData={fetchData}
+              selectedUser={selectedUser}
+              update={update}
+              setUpdate={setUpdate}
+            />
+          )}
         </div>
       </Flex>
       {/** Income container that is viewed only for tab and mobile view */}
       <Flex gap={20} className="tab-view-income-container">
         <div className="tabview-roles-card">
           <Roles
-            fetchUsers={fetchUsers}
+            fetchData={fetchData}
             selectedUser={selectedUser}
             update={update}
             setUpdate={setUpdate}

@@ -37,6 +37,12 @@
 - Settings Page is implemented (MAJOR)
 - Identification Process implemented in Settings Page (MAJOR)
 - Add Portfolio coins zero balance case (MINOR)
+- Crypto value error issue on send modal resolved (MINOR)
+- Add user through partner role (PATCH)
+- Fetch roles isues by admin and partner role (PATCH)
+- Wallet drawer close issue in send modal resolved (MINOR)
+- Disconnect wallet on convertor modal closes (MINOR)
+- update step 2 values in send modal (PATCH)
 
 # v1.0.0
 

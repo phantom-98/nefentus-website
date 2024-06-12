@@ -53,6 +53,9 @@ const TotalBalanceSection = ({ total }) => {
         openConvertModal={openConvertModal}
         onCloseModal={() => setOpenConvertModal(!openConvertModal)}
         handleConvertCrypto={handleConvertCrypto}
+        onWalletSuccess={(toggle) => {
+          setIsWalletConnected(toggle);
+        }}
       />
 
       {/* <div className="total-balance-value-container"></div> */}

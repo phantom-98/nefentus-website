@@ -123,11 +123,6 @@ const SendCrypto = ({
     return () => clearInterval(gasPriceInterval);
   }, [step]);
 
-  // This useeffect is useful for handling amount when gasPrice changes every 30 seconds
-  // useEffect(() => {
-  //   fetchGasValues();
-  // }, [gasValues, step, selectedCoin]);
-
   const handleAmountPercentage = (percentage) => {
     if (selectedCoin?.value == 0) return;
     const updatedAmount =
@@ -163,14 +158,7 @@ const SendCrypto = ({
   };
 
   useMemo(() => {
-    if (Object.keys(gasValues)?.length && selectedCoin?.amount != "") {
-      if (step == 1) {
-        const updatedAmount =
-          selectedCoin?.price * selectedCoin?.amount * +selectedCurrency?.price;
-        setTotal(updatedAmount);
-        setStep2Amount(selectedCoin?.amount);
-        setStep2GasValues({ ...gasValues });
-      }
+    if (Object.keys(gasValues)?.length && selectedCoin?.amount != "")
       percentage
         ? handleAmountPercentage(percentage)
         : handleAmount(
@@ -178,8 +166,21 @@ const SendCrypto = ({
               ? selectedCoin?.amount_for_currency
               : selectedCoin?.amount,
           );
-    }
   }, [gasValues, step]);
+
+  useEffect(() => {
+    if (
+      Object.keys(gasValues)?.length &&
+      selectedCoin?.amount != "" &&
+      step == 1
+    ) {
+      const updatedAmount =
+        selectedCoin?.price * selectedCoin?.amount * +selectedCurrency?.price;
+      setTotal(updatedAmount);
+      setStep2Amount(selectedCoin?.amount);
+      setStep2GasValues({ ...gasValues });
+    }
+  }, [gasValues, step, selectedCoin]);
 
   const startGasPriceInterval = (coin = selectedCoin) => {
     setDisable(false);
@@ -385,23 +386,14 @@ const SendCrypto = ({
       const web3API = new web3Api();
 
       try {
-        console.log(chainId(selectedCoin?.blockchain));
-        debugger;
-        await switchNetwork(chainId(selectedCoin?.blockchain))
-          .then((res) => {
-            console.log(res);
-            debugger;
-          })
-          .catch((e) => {
-            console.log(e);
-            debugger;
-          });
-        console.log(chainId(selectedCoin?.blockchain));
-        debugger;
+        await switchNetwork(chainId(selectedCoin?.blockchain));
+
         const txReceipt = await web3API.send(
           tokenAddress,
           selectedCoin?.blockchain,
-          selectedCoin?.amount,
+          typeof selectedCoin?.amount == "string"
+            ? selectedCoin?.amount
+            : `${selectedCoin?.amount?.toFixed(7)}`,
           receiverAddress,
         );
         if (txReceipt.status === 1) {
@@ -466,9 +458,12 @@ const SendCrypto = ({
       }
       open={openSendModal}
       onCancel={async () => {
-        await disconnect();
-        onWalletSuccess(false);
-        onCloseModal();
+        if (openDrawer || openCryptoDrawer) onCloseDrawer();
+        else {
+          await disconnect();
+          onWalletSuccess(false);
+          onCloseModal();
+        }
       }}
       width={380}
       className="send-crypto"
@@ -590,6 +585,7 @@ const SendCrypto = ({
                     placeholder={"0.0"}
                     size="large"
                     type="number"
+                    onWheel={(e) => e.target.blur()}
                     value={
                       toggleCurrency
                         ? selectedCoin?.amount_for_currency
@@ -708,8 +704,7 @@ const SendCrypto = ({
         placement="bottom"
         closable={false}
         onClose={() => {
-          onCloseModal();
-          disconnect();
+          onCloseDrawer();
         }}
         open={openDrawer || openCryptoDrawer}
         getContainer={false}
