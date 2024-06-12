@@ -38,6 +38,7 @@ import {
   walletConnect,
   coinbaseWallet,
   useWallet,
+  useDisconnect,
 } from "@thirdweb-dev/react";
 import useBalances from "../../../hooks/balances";
 import usePrices from "../../../hooks/prices";
@@ -99,7 +100,12 @@ const items = [
   },
 ];
 
-const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
+const Converter = ({
+  openConvertModal,
+  onCloseModal,
+  handleConvertCrypto,
+  onWalletSuccess,
+}) => {
   const { t } = useTranslation();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openFromCryptoDrawer, setOpenFromCryptoDrawer] = useState(false);
@@ -137,6 +143,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
     toUserAddress: "",
   });
   const [signer, setSigner] = useState();
+  const disconnect = useDisconnect();
   const connect = useConnect();
   const walletInstance = useWallet();
   const cryptos = currencies().map((currency, index) => {
@@ -194,7 +201,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
     const connection = await connect(walletConfig, { chainId });
     const _signer = await connection.getSigner();
     setSigner(_signer);
-
+    onWalletSuccess(true);
     // Connect wallet signer to Swing SDK
     const walletAddress = await swingSDK.wallet.connect(
       _signer,
@@ -209,6 +216,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
 
     // Connect wallet signer to Swing SDK
     const walletAddress = await swingSDK.wallet.connect(signer, chain.slug);
+    onWalletSuccess(true);
   }
   async function getQuote() {
     if (!swingSDK) return;
@@ -395,6 +403,7 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
                 setSpinner(false);
                 // setInfoMessage(t("payments.swap.success"));
                 fetchBalances(wallets[selectedWalletIndex].address);
+                disconnect();
                 setStep(3);
               }
               break;
@@ -534,7 +543,11 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
       width={420}
       className="converter"
       footer={null}
-      onCancel={onCloseModal}
+      onCancel={async () => {
+        await disconnect();
+        onWalletSuccess(false);
+        onCloseModal();
+      }}
     >
       <Flex
         vertical
@@ -962,7 +975,10 @@ const Converter = ({ openConvertModal, onCloseModal, handleConvertCrypto }) => {
         ) : (
           <Button
             className="converter-footer-button back-to-home"
-            onClick={handleConvertCrypto}
+            onClick={() => {
+              onWalletSuccess(false);
+              handleConvertCrypto();
+            }}
           >
             {t("converter.close")}
           </Button>
