@@ -48,7 +48,7 @@ const B2C = () => {
 
       <Conclusion
         icon={NefentusLogo}
-        title={`Transparent Pricing, No Strings Attached`}
+        title={`Transparent Pricing,\nNo Strings Attached`}
         subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating and using an account for personal use is completely free. Get started today!`}
         button={`Create an account`}
       />
@@ -78,7 +78,9 @@ const Hero = () => {
             width: "50%",
           }}
         >
-          <h1 className="title">Take charge of your crypto with Nefentus</h1>
+          <h1 className="title">
+            Take charge of your <br /> crypto with Nefentus
+          </h1>
           <p className="sub-title">
             Simplify your crypto experience. Easily send & receive payments,
             manage all your wallets and handle sales—all in one convenient
@@ -156,25 +158,19 @@ const Hero = () => {
         }}
         className="translate-left"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "calc(25% - 0.5rem)",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "0",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
@@ -188,31 +184,26 @@ const Hero = () => {
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "calc(50% - 3rem)",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
       <hr
         style={{
-          position: "absolute",
           top: "0",
           width: "100vw",
-          border: "1px solid #202020",
+          zIndex: "1",
         }}
       />
       <hr
         style={{
-          position: "absolute",
           bottom: "0",
           width: "100vw",
-          border: "1px solid #202020",
+          zIndex: "1",
         }}
       />
     </div>
@@ -479,9 +470,8 @@ const Transactions = () => {
           className="hide-in-tablet"
         />
 
-        <div className="transaction-img">
-          <img src={TransactionSend} />
-        </div>
+        <img className="transaction-img" src={TransactionSend} />
+
         <div className="transaction-description">
           <div
             style={{
@@ -577,9 +567,7 @@ const Transactions = () => {
             currency including Bitcoin, Ethereum & other networks.
           </p>
         </div>
-        <div className="transaction-img">
-          <img src={TransactionConverter} />
-        </div>
+        <img className="transaction-img" src={TransactionConverter} />
       </div>
     </div>
   );
