@@ -78,6 +78,17 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
   const handleReceiveCrypto = () => {
     setOpenReceiveModal(!openReceiveModal);
   };
+
+  const onOptionClick = (e) => {
+    switch (+e?.key) {
+      case 1:
+        navigate("/new-settings");
+        break;
+      default:
+        return;
+    }
+  };
+
   const onClick = (e) => {
     switch (+e?.key) {
       case 1:
@@ -302,6 +313,9 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
           openConvertModal={openConvertModal}
           onCloseModal={() => setOpenConvertModal(!openConvertModal)}
           handleConvertCrypto={handleConvertCrypto}
+          onWalletSuccess={(toggle) => {
+            setIsWalletConnected(toggle);
+          }}
         />
       )}
 
@@ -402,7 +416,7 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
             </div>
           </div>
           <Menu
-            // onClick={onClick}
+            onClick={onOptionClick}
             defaultOpenKeys={["sub1"]}
             mode="inline"
             items={userItems}

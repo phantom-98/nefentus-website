@@ -17,11 +17,15 @@ const role_colors = {
   admin: "#ED9001",
 };
 
-const Roles = ({ fetchUsers, selectedUser, update, setUpdate }) => {
+const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const adminApi = new adminDashboardApi(user.roles && getRole(user));
-  const [totalRoles, setTotalRoles] = useState(12);
+  const adminApi = new adminDashboardApi(
+    user?.roles?.length > 0 && getRole(user) == ""
+      ? user.roles[0]
+      : getRole(user),
+  );
+  const [totalRoles, setTotalRoles] = useState(0);
   const [roleList, setRoleList] = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -56,7 +60,8 @@ const Roles = ({ fetchUsers, selectedUser, update, setUpdate }) => {
   };
 
   const handleSubmit = async () => {
-    fetchUsers();
+    fetchData();
+    fetchUserRoles();
     setOpen(!open);
     setUpdate(false);
   };

@@ -148,7 +148,7 @@ const userColumns = (
         }}
         overlayClassName="user-table-menu"
         trigger={["click"]}
-        onOpenChange={() => setSelectedUser(record)}
+        onOpenChange={() => setSelectedUser({ ...record })}
       >
         <div className="table-menu-icon cursor-pointer">
           <img src={MenuIcon} alt="menu" width={20} height={20} />

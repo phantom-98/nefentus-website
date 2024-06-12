@@ -12,7 +12,9 @@ import "./addUser.css";
 
 const AddUser = ({ open, handleSubmit, onClose, selectedUser = {} }) => {
   const { user } = useAuth();
-  const adminApi = new adminDashboardApi(user.roles && getRole(user));
+  const adminApi = new adminDashboardApi(
+    user.roles && getRole(user) == "" ? user?.roles[0] : getRole(user),
+  );
   const { t } = useTranslation();
   const [roles, setRoles] = useState([
     { value: "Vendor", label: t("dashboard.roles.Vendor") },
@@ -31,6 +33,7 @@ const AddUser = ({ open, handleSubmit, onClose, selectedUser = {} }) => {
     password: "",
     company: "",
     role: "",
+    agent: "",
     service_fee: "1",
   });
 
@@ -53,7 +56,7 @@ const AddUser = ({ open, handleSubmit, onClose, selectedUser = {} }) => {
         service_fee: "1",
         company: selectedUser?.business,
         role: capitalizeAllWords(selectedUser?.roles[0]),
-        // password: "",
+        agent: selectedUser?.agent,
       });
   }, [selectedUser]);
 
@@ -62,10 +65,13 @@ const AddUser = ({ open, handleSubmit, onClose, selectedUser = {} }) => {
   };
 
   const handleSubmitUser = async () => {
+    const validationData = { ...userDetail };
+    delete validationData.agent;
+    delete validationData.company;
     if (
-      Object.keys(userDetail)?.some(
+      Object.keys(validationData)?.some(
         (key) =>
-          (userDetail[key] == "" && key != "company") ||
+          userDetail[key] == "" ||
           (Object.keys(selectedUser)?.length > 0 && key == "password"),
       )
     ) {
@@ -90,6 +96,7 @@ const AddUser = ({ open, handleSubmit, onClose, selectedUser = {} }) => {
             payload?.email,
             payload?.email,
             userDetail?.role,
+            payload?.agent,
           )
         : await adminApi.createUser(payload);
     if (resp) {
@@ -147,6 +154,33 @@ const AddUser = ({ open, handleSubmit, onClose, selectedUser = {} }) => {
       }
     } else {
       setErrorMessage(t("messages.error.addUser"));
+    }
+  };
+
+  const fetchRoleOptions = () => {
+    switch (
+      user.roles && getRole(user) == "" ? user?.roles[0] : getRole(user)
+    ) {
+      case "admin":
+        return roles;
+      case "leader":
+        return roles?.filter(
+          (roleData) => roleData?.value?.toLowerCase() != "leader",
+        );
+      case "seniorbroker":
+        return roles
+          ?.filter(
+            (roleData) => roleData?.value?.toLowerCase() != "senior broker",
+          )
+          ?.filter((roleData) => roleData?.value?.toLowerCase() != "leader");
+      case "broker":
+        return roles?.filter(
+          (roleData) => roleData?.value?.toLowerCase() == "vendor",
+        );
+      case "vendor":
+        return [];
+      default:
+        return roles;
     }
   };
 
@@ -245,32 +279,21 @@ const AddUser = ({ open, handleSubmit, onClose, selectedUser = {} }) => {
               placeholder={t("dashboard.modal.role")}
               className="add-user-role-select"
               size="large"
-              options={
-                getRole(user) == "admin"
-                  ? roles
-                  : getRole(user) == "leader"
-                  ? roles?.filter(
-                      (roleData) =>
-                        roleData?.value?.toLowerCase() != getRole(user),
-                    )
-                  : getRole(user) == "seniorbroker"
-                  ? roles
-                      ?.filter(
-                        (roleData) =>
-                          roleData?.value?.toLowerCase() != "senior broker",
-                      )
-                      ?.filter(
-                        (roleData) =>
-                          roleData?.value?.toLowerCase() != "leader",
-                      )
-                  : getRole(user) == "broker"
-                  ? roles?.filter(
-                      (roleData) => roleData?.value?.toLowerCase() == "vendor",
-                    )
-                  : roles
-              }
+              options={fetchRoleOptions()}
               value={userDetail?.role == "" ? null : userDetail?.role}
               onChange={(role) => handleUserDetails(role, "role")}
+            />
+          </Flex>
+          <Flex vertical gap={6}>
+            <div className="default-text-gray">
+              {t("dashboard.modal.agent")}
+            </div>
+            <Input
+              placeholder={t("dashboard.modal.agentPlaceholder")}
+              size="large"
+              className="add-user-input-fields"
+              value={userDetail?.agent}
+              onChange={(e) => handleUserDetails(e.target.value, "agent")}
             />
           </Flex>
           <Flex vertical>
