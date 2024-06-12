@@ -481,9 +481,8 @@ const Transactions = () => {
           className="hide-in-tablet"
         />
 
-        <div className="transaction-img">
-          <img src={TransactionSend} />
-        </div>
+        <img className="transaction-img" src={TransactionSend} />
+
         <div className="transaction-description">
           <div
             style={{
@@ -579,9 +578,7 @@ const Transactions = () => {
             currency including Bitcoin, Ethereum & other networks.
           </p>
         </div>
-        <div className="transaction-img">
-          <img src={TransactionConverter} />
-        </div>
+        <img className="transaction-img" src={TransactionConverter} />
       </div>
     </div>
   );
