@@ -535,8 +535,9 @@ const Safe = () => {
               {id + 1 !== safeties.length && (
                 <hr
                   style={{
-                    border: "1px solid #202020",
+                    position: "relative",
                     width: "100%",
+                    zIndex: "1",
                   }}
                 />
               )}
@@ -550,20 +551,18 @@ const Safe = () => {
       </div>
       <hr
         style={{
-          position: "absolute",
           top: "0",
           left: "-32rem",
           width: "150vw",
-          border: "1px solid #202020",
+          zIndex: "1",
         }}
       />
       <hr
         style={{
-          position: "absolute",
           bottom: "0",
           left: "-32rem",
           width: "150vw",
-          border: "1px solid #202020",
+          zIndex: "1",
         }}
       />
     </div>
@@ -599,8 +598,8 @@ const Analytics = () => {
           width: "70%",
         }}
       >
-        Harness these insights to make informed decisions, streamline your
-        operations & drive business growth
+        Harness these insights to make <br />
+        informed decisions, streamline your operations & drive business growth
       </p>
     </div>
   );
@@ -673,20 +672,18 @@ const Security = () => {
 
         <hr
           style={{
-            position: "absolute",
             top: "0",
             left: "-32rem",
             width: "200vw",
-            border: "1px solid #202020",
+            zIndex: "1",
           }}
         />
         <hr
           style={{
-            position: "absolute",
             bottom: "0",
             left: "-32rem",
             width: "200vw",
-            border: "1px solid #202020",
+            zIndex: "1",
           }}
         />
       </div>

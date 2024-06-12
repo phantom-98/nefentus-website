@@ -158,25 +158,19 @@ const Hero = () => {
         }}
         className="translate-left"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "calc(25% - 0.5rem)",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "0",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
@@ -190,31 +184,26 @@ const Hero = () => {
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "calc(50% - 3rem)",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
       <hr
         style={{
-          position: "absolute",
           top: "0",
           width: "100vw",
-          border: "1px solid #202020",
+          zIndex: "1",
         }}
       />
       <hr
         style={{
-          position: "absolute",
           bottom: "0",
           width: "100vw",
-          border: "1px solid #202020",
+          zIndex: "1",
         }}
       />
     </div>
