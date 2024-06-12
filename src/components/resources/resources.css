@@ -115,6 +115,7 @@
 }
 
 .socials {
+  margin-top: 0.2rem;
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -124,4 +125,23 @@
   padding: 0;
   width: 2rem;
   cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .contents img {
+    max-width: 100%;
+  }
+  .contents {
+    padding-inline: 0;
+    width: 100%;
+  }
+  .socials img {
+    width: 1.4rem;
+  }
+  .sidebar {
+    display: none;
+  }
+  .contents {
+    border-left: none;
+  }
 }
