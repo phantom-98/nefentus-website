@@ -48,7 +48,7 @@ const B2C = () => {
 
       <Conclusion
         icon={NefentusLogo}
-        title={`Transparent Pricing, No Strings Attached`}
+        title={`Transparent Pricing,\nNo Strings Attached`}
         subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating and using an account for personal use is completely free. Get started today!`}
         button={`Create an account`}
       />
@@ -78,7 +78,9 @@ const Hero = () => {
             width: "50%",
           }}
         >
-          <h1 className="title">Take charge of your crypto with Nefentus</h1>
+          <h1 className="title">
+            Take charge of your <br /> crypto with Nefentus
+          </h1>
           <p className="sub-title">
             Simplify your crypto experience. Easily send & receive payments,
             manage all your wallets and handle sales—all in one convenient

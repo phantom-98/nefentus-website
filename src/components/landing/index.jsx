@@ -38,6 +38,16 @@ import FinanceSvg from "../../assets/landing/finance.svg";
 import TransportSvg from "../../assets/landing/transport.svg";
 import ECommerceSvg from "../../assets/landing/e-commerce.svg";
 import MarketSvg from "../../assets/landing/market.svg";
+import ConsultingSvg from "../../assets/landing/consulting.svg";
+import DropshippingSvg from "../../assets/landing/dropshipping.svg";
+import EducationSvg from "../../assets/landing/education.svg";
+import FreelancingSvg from "../../assets/landing/freelancing.svg";
+import HealthSvg from "../../assets/landing/health.svg";
+import AccountingSvg from "../../assets/landing/accounting.svg";
+import LegalServiceSvg from "../../assets/landing/legal-services.svg";
+import MarketingSvg from "../../assets/landing/marketing.svg";
+import SeoSvg from "../../assets/landing/seo-services.svg";
+import TravelSvg from "../../assets/landing/travel-agency.svg";
 
 import Main1 from "../../assets/landing/main1.png";
 import Main2 from "../../assets/landing/main2.png";
@@ -170,8 +180,14 @@ const Hero = () => {
 export const Heading = ({ title, subtitle }) => {
   return (
     <div className="layout-title">
-      <h1 className="title">{title}</h1>
-      <p className="sub-title">{subtitle}</p>
+      <h1
+        className="title"
+        dangerouslySetInnerHTML={{ __html: title.replace("\n", "<br/>") }}
+      ></h1>
+      <p
+        className="sub-title"
+        dangerouslySetInnerHTML={{ __html: subtitle.replace("\n", "<br/>") }}
+      ></p>
     </div>
   );
 };
@@ -463,36 +479,17 @@ const ScrollAnimation = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  //   2260, 2927, 3927
+
   return (
-    <div className="scroll-container">
+    <div className="scroll-container container">
       <div className="text-part">
         {features.map((item, i) => {
           return (
-            <div className="feature-heading" id={`heading_${i}`}>
+            <div className="feature-heading">
               <div className="ico-wrapper">
                 <img src={item.icon} />
               </div>
               <p>{item.title}</p>
-              <img
-                src={HorizontalDashedLine}
-                style={{
-                  position: "absolute",
-                  top: "0",
-                  left: "-32rem",
-                }}
-                className="hide-in-tablet"
-              />
-              <hr
-                style={{
-                  position: "absolute",
-                  bottom: "0",
-                  width: "200vw",
-                  left: "-32rem",
-                  border: "1px solid #202020",
-                }}
-                className="hide-in-tablet"
-              />
               <p className="sub-title">{item.subtitle}</p>
               <img src={item.img} />
             </div>
@@ -503,7 +500,7 @@ const ScrollAnimation = () => {
         className="img-part"
         style={{
           position: "sticky",
-          top: "20rem",
+          top: "28rem",
         }}
       >
         <div style={{ position: "relative", width: "100%" }}>
@@ -545,9 +542,9 @@ const MainFeaturesHead = () => {
       style={{
         marginTop: "8rem",
         paddingBlock: "5rem",
-        background: "#171717",
         width: "100vw",
         borderBlock: "1px solid #343434",
+        background: "#131313",
         overflow: "hidden",
       }}
     >
@@ -556,12 +553,11 @@ const MainFeaturesHead = () => {
         title={`Insightful dashboards`}
         subtitle={`Nefentus prioritizes customer convenience through thoughtfully designed dashboards`}
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "25%",
           width: "2px",
+          height: "100%",
           top: "0",
           zIndex: "1",
         }}
@@ -582,7 +578,7 @@ const MainFeaturesHead = () => {
         style={{
           position: "absolute",
           left: "25%",
-          width: "2px",
+          borderWidth: "2px",
           top: "0",
           zIndex: "1",
         }}
@@ -593,49 +589,25 @@ const MainFeaturesHead = () => {
 };
 const MainFeaturesBody = () => {
   return (
-    <div className="layout-paragraph main-feature">
+    <div className="main-feature">
       <ScrollAnimation />
-      <img
-        src={VerticalLine}
-        style={{
-          position: "absolute",
-          bottom: "0",
-          right: "0",
-          height: "101%",
-          zIndex: "-1",
-        }}
-        className="hide-in-tablet"
-      />
-      <img
-        src={VerticalLine}
-        style={{
-          position: "absolute",
-          bottom: "0",
-          right: "63%",
-          height: "101%",
-          zIndex: "-1",
-        }}
-        className="hide-in-tablet"
-      />
-      <hr
-        style={{
-          position: "absolute",
-          bottom: "0",
-          width: "200vw",
-          left: "-32rem",
-          border: "1px solid #202020",
-        }}
-        className="hide-in-tablet"
-      />
     </div>
   );
 };
 
-const industries = [
-  //   {
-  //     name: "Fitnesss",
-  //     icon: FitnessSvg,
-  //   },
+const industries_up = [
+  {
+    name: "Health and Wellness",
+    icon: HealthSvg,
+  },
+  {
+    name: "Travel agency",
+    icon: TravelSvg,
+  },
+  {
+    name: "Fitnesss",
+    icon: FitnessSvg,
+  },
   {
     name: "E-commerce",
     icon: ECommerceSvg,
@@ -645,10 +617,6 @@ const industries = [
     icon: RealEstateSvg,
   },
   {
-    name: "Technology and IT service",
-    icon: ItTechSvg,
-  },
-  {
     name: "Finance and Accounting",
     icon: FinanceSvg,
   },
@@ -656,14 +624,48 @@ const industries = [
     name: "Marcketing and Advertising",
     icon: MarketSvg,
   },
-  //   {
-  //     name: "Logistics and Transportation",
-  //     icon: TransportSvg,
-  //   },
-  //   {
-  //     name: "Restaurant and Food",
-  //     icon: FoodSvg,
-  //   },
+  {
+    name: "Education and E-learning",
+    icon: EducationSvg,
+  },
+  {
+    name: "Technology and IT service",
+    icon: ItTechSvg,
+  },
+];
+const industries_down = [
+  {
+    name: "Dropshipping",
+    icon: DropshippingSvg,
+  },
+  {
+    name: "Freelancing",
+    icon: FreelancingSvg,
+  },
+  {
+    name: "Legal Services",
+    icon: LegalServiceSvg,
+  },
+  {
+    name: "Logistics and Transportation",
+    icon: TransportSvg,
+  },
+  {
+    name: "SEO services",
+    icon: SeoSvg,
+  },
+  {
+    name: "Accounting and tax services",
+    icon: AccountingSvg,
+  },
+  {
+    name: "Restaurant and Food",
+    icon: FoodSvg,
+  },
+  {
+    name: "Consulting",
+    icon: ConsultingSvg,
+  },
 ];
 
 const IndustryCard = ({ icon, name }) => {
@@ -687,24 +689,29 @@ const Industries = () => {
       <div class="slider">
         <div class="animation-wrapper">
           <div className="industry-wrapper1 move-right1">
-            {industries.map((ind) => {
+            {industries_up.map((ind) => {
               return <IndustryCard icon={ind.icon} name={ind.name} />;
             })}
           </div>
           <div className="industry-wrapper2 move-right2">
-            {industries.map((ind) => {
+            {industries_up.map((ind) => {
               return <IndustryCard icon={ind.icon} name={ind.name} />;
             })}
           </div>
         </div>
-        <div class="animation-wrapper">
+        <div
+          class="animation-wrapper"
+          style={{
+            minWidth: "138rem",
+          }}
+        >
           <div className="industry-wrapper1 move-left1">
-            {industries.map((ind) => {
+            {industries_down.map((ind) => {
               return <IndustryCard icon={ind.icon} name={ind.name} />;
             })}
           </div>
           <div className="industry-wrapper2 move-left2">
-            {industries.map((ind) => {
+            {industries_down.map((ind) => {
               return <IndustryCard icon={ind.icon} name={ind.name} />;
             })}
           </div>
@@ -735,7 +742,7 @@ const Industries = () => {
           border: "1px solid #202020",
           width: "100vw",
           position: "absolute",
-          bottom: "0",
+          bottom: "-1px",
         }}
       />
       <hr
@@ -743,7 +750,7 @@ const Industries = () => {
           border: "1px solid #202020",
           width: "100vw",
           position: "absolute",
-          top: "0",
+          top: "-1px",
         }}
       />
     </div>

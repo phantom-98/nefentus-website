@@ -179,14 +179,14 @@ const Navigation = () => {
               <ul className={styles.navList}>
                 <li className="standard">
                   <Link to="/b2c">
-                    <p>B2C</p>
-                    <p className={styles.fake}>B2C</p>
+                    <p>Personal</p>
+                    <p className={styles.fake}>Personal</p>
                   </Link>
                 </li>
                 <li className="standard">
                   <Link to="/b2b">
-                    <p>B2B</p>
-                    <p className={styles.fake}>B2B</p>
+                    <p>Business Solutions</p>
+                    <p className={styles.fake}>Business Solutions</p>
                   </Link>
                 </li>
                 <li className="standard">
@@ -260,10 +260,10 @@ const Navigation = () => {
         <div>
           <ul>
             <Link to="/b2c" onClick={() => setOpenMenu(false)}>
-              <li className="standard">B2C</li>
+              <li className="standard">Personal</li>
             </Link>
             <Link to="/b2b" onClick={() => setOpenMenu(false)}>
-              <li className="standard">B2B</li>
+              <li className="standard">Business Solutions</li>
             </Link>
 
             {/* <Link to="/affiliate" onClick={() => setOpenMenu(false)}>
