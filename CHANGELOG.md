@@ -1,8 +1,11 @@
 # New changes
 
+- Fix some minor issues in landing (PATCH)
+
 # v1.2.0
 
 - Settings Page is implemented (MAJOR)
+- Implement new Landing, B2C, B2B, Resources pages (MAJOR)
 
 # v1.1.1
 
@@ -35,7 +38,6 @@
 - Settings Page is implemented (MAJOR)
 - Identification Process implemented in Settings Page (MAJOR)
 - Add Portfolio coins zero balance case (MINOR)
-- Implement new Landing, B2C, B2B, Resources pages
 
 # v1.0.0
 
