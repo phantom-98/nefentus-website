@@ -1,4 +1,4 @@
-import Footer from "./components/footer/footer";
+import Footer from "./components/footer";
 import "./style/general.css";
 import Navigation from "./components/navigation/navigation";
 import React, { useEffect, useState, Suspense } from "react";
@@ -117,6 +117,8 @@ import DashboardLayout from "./NEFDashboard/containers/dashboardLayout";
 import PersonalDashboard from "./NEFDashboard/containers/personalDashboard";
 import ReferralDashboard from "./NEFDashboard/containers/referralDashboard";
 import SalesDashboard from "./NEFDashboard/containers/salesDashboard";
+import SettingLayout from "./NEFDashboard/containers/settingLayout";
+import SettingPage from "./NEFDashboard/containers/settings";
 import Products from "./NEFDashboard/containers/products";
 import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
 import AuthLayout from "./NEFDashboard/containers/authLayout";
@@ -124,6 +126,8 @@ import LoginForm from "./NEFDashboard/containers/login";
 import SignForm from "./NEFDashboard/containers/signUp";
 import ForgotPassword from "./NEFDashboard/containers/forgotPassword";
 import SetPasswordForm from "./NEFDashboard/containers/setPassword";
+import NewLanding, { NewB2B, NewB2C } from "./pages/Landing";
+import Resources from "./components/resources";
 
 function App() {
   useEffect(() => {
@@ -251,9 +255,20 @@ function App() {
                         }
                       />
                       <Route
+                        path="/new-settings"
+                        element={
+                          <SettingLayout>
+                            <SettingPage />
+                          </SettingLayout>
+                        }
+                      />
+                      <Route
                         path="/personal-dashboard"
                         element={
-                          <DashboardLayout title={"personalDashboard.title"}>
+                          <DashboardLayout
+                            title={"personalDashboard.title"}
+                            type={"admin"}
+                          >
                             <PersonalDashboard />
                           </DashboardLayout>
                         }
@@ -300,14 +315,48 @@ function App() {
                           </DashboardLayout>
                         }
                       />
-                      <Route
+                      {/* <Route
                         path="/"
                         element={
                           <Layout>
                             <Home />
                           </Layout>
                         }
+                      /> */}
+                      <Route
+                        path="/"
+                        element={
+                          <Layout>
+                            <NewLanding />
+                          </Layout>
+                        }
                       />
+                      <Route
+                        path="/b2c"
+                        element={
+                          <Layout>
+                            <NewB2C />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path="/b2b"
+                        element={
+                          <Layout>
+                            <NewB2B />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path="/resources"
+                        element={
+                          <>
+                            <Navigation />
+                            <Resources />
+                          </>
+                        }
+                      />
+
                       <Route path="/signup" element={<SignUp />} />
                       <Route path="/login" element={<Login />} />
                       <Route

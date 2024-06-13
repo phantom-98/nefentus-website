@@ -32,4 +32,25 @@
 
 .custom-table .ant-table {
   border: 1px solid var(--Dark, #202020);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.custom-table .ant-table .ant-table-header,
+.custom-table .ant-table .ant-table-container,
+.ant-table-wrapper table,
+.custom-table .ant-table .ant-table-container th {
+  border-radius: 0 !important;
+}
+.custom-table .ant-table .ant-table-container th {
+  background: var(--Dark, #202020);
+  color: var(--Light-grey2, #b1b1b1);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+}
+.custom-table .ant-table .ant-table-container td {
+  color: var(--light-grey, #e9e9e9);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
 }

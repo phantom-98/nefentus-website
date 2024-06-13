@@ -1,0 +1,55 @@
+.setting-page {
+  padding: 32px 0;
+  max-width: 840px;
+  margin: auto;
+}
+
+.setting-tabs {
+  width: fit-content;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: transparent;
+}
+
+.setting-tabs .ant-segmented-group {
+  gap: 8px;
+}
+
+.setting-tabs .ant-segmented-group .ant-segmented-item {
+  border-right: 1px solid var(--Dark, #202020);
+  border-radius: 0px;
+}
+
+.setting-tabs.ant-segmented-lg .ant-segmented-item-label {
+  line-height: normal;
+  width: 160px;
+  min-height: auto;
+  padding: 12px 25px;
+}
+
+.setting-tabs .ant-segmented-group .ant-segmented-item:last-child {
+  border-right: none;
+}
+
+.setting-tabs .ant-segmented-item:hover,
+.setting-tabs .ant-segmented-item-selected {
+  border-radius: 4px !important;
+  background: var(--Dark, #202020) !important;
+}
+
+.setting-page-title {
+  font-size: 36px;
+  font-weight: 500;
+}
+
+.segment-title-container {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--Dark, #202020);
+}
+
+.segment-title {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 500;
+}

@@ -1,0 +1,35 @@
+.seed-step4-list-icon {
+  height: 28px;
+  padding: 6px;
+  border-radius: 6px;
+  background: var(
+    --grad,
+    linear-gradient(262deg, #009bd2 -78.58%, #3b6b7c 188.93%)
+  );
+}
+
+.seed-step4-description {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+}
+
+.seed-step4-value-container {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: transparent;
+  max-width: 110px;
+}
+
+.seed-step4-value-container .ant-input {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 4px 0px;
+}
+
+.seed-error-container {
+  border: 1px solid var(--red, #a43c3c) !important;
+}

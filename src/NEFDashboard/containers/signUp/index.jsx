@@ -3,39 +3,38 @@ import "./signUp.css";
 import { Select, Col, Flex, Form, Input, Button, Divider } from "antd";
 import Logo from "../../../assets/logo/logo.svg";
 import { useNavigate } from "react-router-dom";
+import backend_API from "../../../api/backendAPI";
+import { useTranslation } from "react-i18next";
+import { countryList } from "../../../constants";
+import { getCountryList, getFlagLink } from "../../../countries";
+
 // import { UserOutlined } from "@ant-design/icons";
 
 const SignForm = () => {
+  const backendAPI = new backend_API();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
+    const payload = {
+      email: values.email,
+      password: values.password,
+      roles: ["vendor"],
+      firstName: values?.firstname,
+      lastName: values?.lastname,
+      telNr: values?.phoneNumber,
+      affiliateLink: "",
+      country: values?.countryRegion,
+    };
+
+    const response = await backendAPI.register(payload);
+    console.log("Success:", response);
     console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-  };
-
-  const onGenderChange = (value) => {
-    switch (value) {
-      case "male":
-        form.setFieldsValue({
-          note: "Hi, man!",
-        });
-        break;
-      case "female":
-        form.setFieldsValue({
-          note: "Hi, lady!",
-        });
-        break;
-      case "other":
-        form.setFieldsValue({
-          note: "Hi there!",
-        });
-        break;
-      default:
-    }
   };
 
   return (
@@ -152,12 +151,21 @@ const SignForm = () => {
               >
                 <Select
                   placeholder="Choose"
-                  onChange={onGenderChange}
                   allowClear
+                  virtual={false}
+                  style={{ width: "42px" }}
                 >
-                  <Option value="male">male</Option>
-                  <Option value="female">female</Option>
-                  <Option value="other">other</Option>
+                  {getCountryList()?.map((country, index) => {
+                    return (
+                      <Option value={country?.value} key={index}>
+                        <img
+                          src={getFlagLink(country?.symbol)}
+                          alt="country"
+                          width="22"
+                        />
+                      </Option>
+                    );
+                  })}
                 </Select>
               </Form.Item>
               <Form.Item
@@ -184,12 +192,16 @@ const SignForm = () => {
           >
             <Select
               placeholder="Choose your country"
-              onChange={onGenderChange}
               allowClear
+              virtual={false}
             >
-              <Option value="male">male</Option>
-              <Option value="female">female</Option>
-              <Option value="other">other</Option>
+              {countryList?.map((country, index) => {
+                return (
+                  <Option value={country?.value} key={index}>
+                    {t(country?.display)}
+                  </Option>
+                );
+              })}
             </Select>
           </Form.Item>
 

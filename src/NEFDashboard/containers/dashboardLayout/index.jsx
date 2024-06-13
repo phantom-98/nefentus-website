@@ -21,7 +21,7 @@ import ThemeModeIcon from "../../../assets/newDashboardIcons/theme-mode.svg";
 import LogoutIcon from "../../../assets/newDashboardIcons/logout.svg";
 import EuropeFlag from "../../../assets/newDashboardIcons/europe-flag.svg";
 import USAFlag from "../../../assets/newDashboardIcons/usa-flag.svg";
-import DownArrow from "../../../assets/newDashboardIcons/down-arrow.svg";
+import DownArrow from "../../../assets/newDashboardIcons/down-arrow-gray.svg";
 import UpArrow from "../../../assets/newDashboardIcons/arrow-up.svg";
 import MobileBtnIcon from "../../../assets/newDashboardIcons/mobileBtnIcon.svg";
 import NotificationIcon from "../../../assets/newDashboardIcons/notificationIcon.svg";
@@ -197,6 +197,20 @@ const DashboardLayout = ({ children, title }) => {
     setDropDownToggle(e);
   };
 
+  const handleLanguage = (lng) => {
+    setSelectedLanguage(lng);
+  };
+
+  const onOptionClick = (e) => {
+    switch (+e?.key) {
+      case 1:
+        navigate("/new-settings");
+        break;
+      default:
+        return;
+    }
+  };
+
   return (
     <Row>
       <Col
@@ -250,6 +264,7 @@ const DashboardLayout = ({ children, title }) => {
               <Dropdown
                 menu={{
                   items,
+                  onClick: (e) => onOptionClick(e),
                 }}
                 className="profile-dropdown"
                 onOpenChange={handleDropDown}
@@ -270,7 +285,9 @@ const DashboardLayout = ({ children, title }) => {
                     <div className="username-text">
                       {user?.firstName + " " + user?.lastName}
                     </div>
-                    <div className="user-role-text">{getRole(user)}</div>
+                    <div className="user-role-text">
+                      {getRole(user) || (user?.roles && user?.roles[0])}
+                    </div>
                   </Col>
                   <img
                     src={dropDownToggle ? UpArrow : DownArrow}

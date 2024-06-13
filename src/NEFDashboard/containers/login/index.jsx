@@ -3,12 +3,18 @@ import "./login.css";
 import { Flex, Form, Input, Button, Divider } from "antd";
 import Logo from "../../../assets/logo/logo.svg";
 import { useNavigate } from "react-router-dom";
+import backend_API from "../../../api/backendAPI";
 
 const LoginForm = () => {
   const navigate = useNavigate();
-
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const backendAPI = new backend_API();
+  const onFinish = async (values) => {
+    const response = await backendAPI.login(
+      values.email,
+      values.password,
+      true,
+    );
+    console.log("Success:", response);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
