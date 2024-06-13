@@ -3,9 +3,6 @@ import "./landing.css";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import HeroLineTop from "../../assets/landing/b2c-hero-top.svg";
 import HeroLineBottom from "../../assets/landing/b2c-hero-down.svg";
-import VerticalLine from "../../assets/landing/hero lines 2.svg";
-import VerticalDashedLine from "../../assets/landing/VerticalDashedLine.svg";
-import BlueLine from "../../assets/landing/BlueLine.svg";
 import HeroPng from "../../assets/landing/b2b-hero.png";
 import Invoicing1Png from "../../assets/landing/b2b-invoice1.png";
 import Invoicing2Png from "../../assets/landing/b2b-invoice2.png";
@@ -117,63 +114,48 @@ const Hero = () => {
         }}
         className="translate-left"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "calc(25% + 0.8rem)",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "0",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalDashedLine}
+      <div
         style={{
-          position: "absolute",
-          right: "calc(25% - 1.35rem)",
+          height: "100%",
+          right: "calc(25% - 1.377rem)",
           bottom: "0",
-          zIndex: "-1",
         }}
-        className="hide-in-tablet"
+        className="hide-in-tablet vertical-dashed-line"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "50%",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
       <hr
         style={{
-          position: "absolute",
           top: "0",
           width: "100vw",
-          border: "1px solid #202020",
         }}
       />
       <hr
         style={{
-          position: "absolute",
           bottom: "0",
           width: "100vw",
-          border: "1px solid #202020",
         }}
         className="hide-in-tablet"
       />
@@ -285,20 +267,14 @@ const Invoicing = () => {
         </div>
         <hr
           style={{
-            position: "absolute",
             top: "0",
-            left: "-32rem",
-            width: "150vw",
-            border: "1px solid #202020",
+            width: "100vw",
           }}
         />
         <hr
           style={{
-            position: "absolute",
-            bottom: "0",
-            left: "-32rem",
-            width: "150vw",
-            border: "1px solid #202020",
+            bottom: "1px",
+            width: "100vw",
           }}
         />
       </div>
@@ -470,6 +446,7 @@ const Safe = () => {
     <div
       style={{
         display: "flex",
+        alignItems: "center",
         flexDirection: "column",
         gap: "4rem",
         padding: "4rem",
@@ -552,16 +529,14 @@ const Safe = () => {
       <hr
         style={{
           top: "0",
-          left: "-32rem",
-          width: "150vw",
+          width: "100vw",
           zIndex: "1",
         }}
       />
       <hr
         style={{
           bottom: "0",
-          left: "-32rem",
-          width: "150vw",
+          width: "100vw",
           zIndex: "1",
         }}
       />
@@ -673,16 +648,14 @@ const Security = () => {
         <hr
           style={{
             top: "0",
-            left: "-32rem",
-            width: "200vw",
+            width: "100vw",
             zIndex: "1",
           }}
         />
         <hr
           style={{
             bottom: "0",
-            left: "-32rem",
-            width: "200vw",
+            width: "100vw",
             zIndex: "1",
           }}
         />

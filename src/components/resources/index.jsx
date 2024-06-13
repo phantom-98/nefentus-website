@@ -166,72 +166,101 @@ const Resources = () => {
     window.location.hash = h;
     setHash(h);
   };
+  const [open, setOpen] = useState(false);
+  const [blur, setBlur] = useState(false);
+  const openSidebar = () => {
+    setBlur(true);
+    setOpen(true);
+  };
+  const closeSidebar = () => {
+    setOpen(false);
+    setTimeout(() => setBlur(false), 300);
+  };
   return (
     <div className="resources-layout container">
-      <hr
-        style={{
-          position: "absolute",
-          top: "0",
-          left: "-32rem",
-          width: "200vw",
-          border: "1px solid #202020",
+      <div
+        className="toggle-button container"
+        onClick={() => {
+          if (open) {
+            closeSidebar();
+          } else {
+            openSidebar();
+          }
         }}
-      />
-      <div className="sidebar">
-        {sidebar.map((item) => {
-          return (
-            <div className="sidebar-item">
-              <p>{item.title}</p>
-              <div className="sidebar-item-body">
-                {item.subtitle.map((subitem) => {
-                  return (
-                    <div
-                      onClick={() => {
-                        select(subitem.link);
-                      }}
-                      className={`sidebar-subitem ${
-                        hash == subitem.link && "sidebar-subitem-selected"
-                      }`}
-                    >
-                      {subitem.name}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
+      >
+        {open ? `< Close` : `> Open`}
       </div>
-      <div className="contents">
-        <img
-          src={LineLeft}
+      <div className="horizontal">
+        <hr
           style={{
             position: "absolute",
             top: "0",
-            left: "0",
-            padding: "0",
-            width: "64%",
+            width: "100vw",
+            border: "1px solid #202020",
           }}
         />
-        <img
-          src={LineRight}
-          style={{
-            position: "absolute",
-            top: "0",
-            right: "-16rem",
-            padding: "0",
-            width: "64%",
-          }}
-        />
-        {contents.map((item) => item)}
-        <div className="footer">
-          <p>© 2024 Nefentus. All rights reserved.</p>
-          <div className="socials">
-            {socials.map((item) => (
-              <a href={item.link}>
-                <img src={item.icon} />
-              </a>
-            ))}
+        <div
+          onClick={() => closeSidebar()}
+          className="back-blur"
+          style={{ display: blur && "block" }}
+        ></div>
+        <div className={`sidebar ${open && "open-sidebar"}`}>
+          {sidebar.map((item) => {
+            return (
+              <div className="sidebar-item">
+                <p>{item.title}</p>
+                <div className="sidebar-item-body">
+                  {item.subtitle.map((subitem) => {
+                    return (
+                      <div
+                        onClick={() => {
+                          select(subitem.link);
+                          closeSidebar();
+                        }}
+                        className={`sidebar-subitem ${
+                          hash == subitem.link && "sidebar-subitem-selected"
+                        }`}
+                      >
+                        {subitem.name}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="contents">
+          <img
+            src={LineLeft}
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              padding: "0",
+              width: "64%",
+            }}
+          />
+          <img
+            src={LineRight}
+            style={{
+              position: "absolute",
+              top: "0",
+              right: "-16rem",
+              padding: "0",
+              width: "64%",
+            }}
+          />
+          {contents.map((item) => item)}
+          <div className="footer">
+            <p>© 2024 Nefentus. All rights reserved.</p>
+            <div className="socials">
+              {socials.map((item) => (
+                <a href={item.link}>
+                  <img src={item.icon} />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
