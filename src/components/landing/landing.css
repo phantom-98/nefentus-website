@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  margin-top: 6.4rem;
+  margin-top: 6.5rem;
   color: #e9e9e9;
 }
 
@@ -332,6 +332,7 @@
 .landing-layout .layout-getting-started {
   background: #131313;
   padding-block: 8rem;
+  overflow: hidden;
 }
 
 .landing-layout .layout-industry {
@@ -503,6 +504,7 @@
 .landing-layout .multi-wallet-management {
   display: flex;
   position: relative;
+  justify-content: center;
 }
 
 .landing-layout .multi-wallet-management > div > p:first-child {
@@ -529,7 +531,7 @@
 
 .landing-layout .wallet-external {
   padding: 4rem 2rem 10rem 2rem;
-  width: 80%;
+  width: 85%;
   margin-right: -16rem;
   -webkit-mask-image: linear-gradient(to right, #fff 90%, #fff0);
 }
@@ -569,6 +571,7 @@
   display: flex;
   position: relative;
   align-items: center;
+  justify-content: center;
 }
 
 .landing-layout .transaction-description {
@@ -589,6 +592,8 @@
 .landing-layout .layout-invoicing,
 .landing-layout .layout-security {
   display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
 }
 
@@ -840,6 +845,7 @@
   .landing-layout.b2c .hero-img {
     width: 100% !important;
     justify-content: start !important;
+    overflow: hidden;
   }
   .landing-layout.b2c .hero-img > div {
     width: 70% !important;
@@ -858,9 +864,11 @@
   }
   .landing-layout .multi-wallet-management {
     flex-direction: column;
+    align-items: center;
   }
   .landing-layout .multi-wallet-management > div {
     width: 100%;
+    margin: 0;
   }
   .landing-layout .wallet-internal .ico-card-wallet {
     top: 6rem !important;
@@ -871,11 +879,9 @@
   }
   .landing-layout .wallet-external hr {
     display: block !important;
-    border: 1px solid #202020;
     width: 100vw;
-    position: absolute;
     top: 0;
-    left: -4rem;
+    left: -5rem;
   }
   .landing-layout .wallet-club {
     width: 100%;
@@ -911,7 +917,7 @@
   }
   .landing-layout.b2b .translate-left {
     bottom: 36% !important;
-    width: 120% !important;
+    width: 100% !important;
   }
   .landing-layout .invoicing-step-wrapper {
     display: none;
@@ -1071,6 +1077,9 @@
   .landing-layout .wallet-internal .sub-title {
     width: 100%;
   }
+  .landing-layout .multi-wallet-management > div {
+    padding-inline: 0;
+  }
   .landing-layout .wallet-club {
     grid-template-columns: 1fr 1fr;
   }
@@ -1112,4 +1121,34 @@
   .landing-layout .progress-bar {
     margin-top: 9.6rem;
   }
+}
+
+.vertical-dashed-line {
+  position: absolute;
+  border: none;
+  width: 1px;
+  height: 100px;
+  z-index: -1;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    #202020 0,
+    #202020 8px,
+    transparent 8px,
+    transparent 15px
+  );
+}
+
+.horizontal-dashed-line {
+  position: absolute;
+  border: none;
+  width: 100px;
+  height: 1px;
+  z-index: -1;
+  background-image: repeating-linear-gradient(
+    to right,
+    #202020 0,
+    #202020 8px,
+    transparent 8px,
+    transparent 15px
+  );
 }

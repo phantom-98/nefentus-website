@@ -379,8 +379,8 @@
     display: initial !important;
     cursor: pointer;
     pointer-events: initial !important;
-
     width: 25px;
+    padding-block: 2.2rem;
   }
 
   .lineButton {
@@ -388,8 +388,7 @@
     width: 25px;
     right: 0;
     top: 0;
-    transform: translateY(-50%);
-    height: 40px;
+    height: 44px;
   }
 
   .light {
