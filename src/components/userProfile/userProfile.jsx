@@ -50,7 +50,10 @@ const UserProfile = ({ web, logOut, requireKYC }) => {
           <p>{user?.email}</p>
         </div>
         <div>
-          <img src={DropDownIcon} style={{ width: "1rem", height: "1rem" }} />
+          <img
+            src={DropDownIcon}
+            style={{ width: "1rem", height: "0.6rem", border: "none" }}
+          />
         </div>
       </div>
       <div className={`${styles.profileDropdown}`}>
