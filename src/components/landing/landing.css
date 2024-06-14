@@ -56,20 +56,21 @@
   padding: 1.2rem 2.4rem;
   border-radius: 0.6rem;
   border: 1px solid rgba(23, 23, 23, 0.6);
+  background: linear-gradient(0deg, #fafafa -32.93%, #cfcfcf 187.8%);
   box-shadow:
-    0px 78px 22px 0px rgba(239, 239, 239, 0),
-    0px -8px 20px 0px rgba(239, 239, 239, 0.08),
-    0px 28px 17px 0px rgba(239, 239, 239, 0.02),
-    0px 12px 12px 0px rgba(239, 239, 239, 0.04),
-    0px 3px 7px 0px rgba(239, 239, 239, 0.04);
+    0px -2px 0px 0px #c9c9c9 inset,
+    0px 1px 0px 0px #fff inset;
   cursor: pointer;
 }
 
 .landing-layout button:hover {
   background: linear-gradient(0deg, #fff 13.1%, #cfcfcf 187.8%);
   box-shadow:
-    0px -2px 0px 0px #c9c9c9 inset,
-    0px 1px 0px 0px #fff inset;
+    0px 78px 22px 0px rgba(239, 239, 239, 0),
+    0px -8px 20px 0px rgba(239, 239, 239, 0.18),
+    0px 28px 17px 0px rgba(239, 239, 239, 0.02),
+    0px 12px 12px 0px rgba(239, 239, 239, 0.04),
+    0px 3px 7px 0px rgba(239, 239, 239, 0.04);
 }
 
 .landing-layout button:active {
