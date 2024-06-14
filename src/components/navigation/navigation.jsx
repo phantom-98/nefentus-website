@@ -79,10 +79,10 @@ const Navigation = () => {
       return (
         <>
           <div className={styles.login}>
-            <Link to="/login">{t("navigation.login")}</Link>
+            <Link to="/login">Log in</Link>
           </div>
           <div className={`${styles.button}`}>
-            <Link to="/signup">{t("navigation.signUp")}</Link>
+            <Link to="/signup">Sign up</Link>
           </div>
         </>
       );
@@ -106,15 +106,13 @@ const Navigation = () => {
       return (
         <>
           <Link to={"/new-settings"} onClick={() => setOpenMenu(false)}>
-            <li className="standard">
-              {t("personalDashboard.profileDropdown.setting")}
-            </li>
+            <li className="standard">Settings</li>
           </Link>
           <Link to={"/personal-dashboard"} onClick={() => setOpenMenu(false)}>
-            <li className="standard">{t("navigation.dashboard")}</li>
+            <li className="standard">Dashboard</li>
           </Link>
           <Link onClick={logOut}>
-            <li className="standard">{t("navigation.logOut")}</li>
+            <li className="standard">Log out</li>
           </Link>
         </>
       );
@@ -133,7 +131,7 @@ const Navigation = () => {
             link="/login"
             onClick={() => setOpenMenu(false)}
           >
-            {t("navigation.login")}
+            Log in
           </Button>
           <Button
             style={{ width: "100%" }}
@@ -141,7 +139,7 @@ const Navigation = () => {
             color="white"
             onClick={() => setOpenMenu(false)}
           >
-            {t("navigation.signUp")}
+            Sign up
           </Button>
         </div>
       );
@@ -191,14 +189,14 @@ const Navigation = () => {
                 </li>
                 <li className="standard">
                   <Link to="/resources">
-                    <p>{t("navigation.resources")}</p>
-                    <p className={styles.fake}>{t("navigation.resources")}</p>
+                    <p>Resources</p>
+                    <p className={styles.fake}>Resources</p>
                   </Link>
                 </li>
                 <li className="standard">
                   <Link to="/vacancy">
-                    <p>{t("navigation.vacancy")}</p>
-                    <p className={styles.fake}>{t("navigation.vacancy")}</p>
+                    <p>Career</p>
+                    <p className={styles.fake}>Career</p>
                   </Link>
                 </li>
               </ul>
@@ -270,10 +268,10 @@ const Navigation = () => {
               <li className="standard">{t("navigation.affiliate")}</li>
             </Link> */}
             <Link to="/resources" onClick={() => setOpenMenu(false)}>
-              <li className="standard">{t("navigation.resources")}</li>
+              <li className="standard">Resources</li>
             </Link>
             <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
-              <li className="standard">{t("navigation.vacancy")}</li>
+              <li className="standard">Career</li>
             </Link>
             {loginAndSignupMobile()}
           </ul>

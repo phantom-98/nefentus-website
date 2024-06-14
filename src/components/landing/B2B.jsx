@@ -207,7 +207,7 @@ const Invoicing = () => {
           <div
             className={`step-invoicing ${step[id] && "step-invoicing-visible"}`}
           >
-            <p style={{ fontSize: "1.4rem", color: "#e9e9e9" }}>{item.abbr}</p>
+            <p style={{ fontSize: "1.6rem", color: "#e9e9e9" }}>{item.title}</p>
             <p style={{ fontSize: "1.2rem", color: "#b1b1b1" }}>
               {item.subtitle}
             </p>
@@ -321,7 +321,7 @@ const Product = () => {
   return (
     <div className="layout-paragraph product">
       <Heading
-        title={`Simplified product creation`}
+        title={`Simplified <span style="text-wrap: nowrap">product creation</span>`}
         subtitle={`Utilize our internal wallet or link an unlimited number of external wallets for hassle-free product creation.`}
       />
       <div className="layout-product">
@@ -385,6 +385,8 @@ const Product = () => {
                   style={{
                     border: `1px solid ${step[id] ? "#e1e1e1" : "#202020"}`,
                     width: `calc(${100 / products.length}%)`,
+                    position: "static",
+                    display: "block",
                   }}
                 />
               ))}
@@ -468,7 +470,9 @@ const Safe = () => {
               marginBottom: "1rem",
             }}
           />
-          <p style={{ fontSize: "2.8rem" }}>Safeguarding your funds</p>
+          <p style={{ fontSize: "2.8rem" }}>
+            Safeguarding <span style={{ textWrap: "nowrap" }}>your funds</span>
+          </p>
         </div>
         <p className="sub-title" style={{ width: "50%" }}>
           To protect against crypto price fluctuations, we convert
@@ -513,6 +517,7 @@ const Safe = () => {
                 <hr
                   style={{
                     position: "relative",
+                    display: "block",
                     width: "100%",
                     zIndex: "1",
                   }}
@@ -547,7 +552,7 @@ const Safe = () => {
 const Analytics = () => {
   return (
     <div
-      className="layout-paragraph"
+      className="layout-paragraph analytics"
       style={{
         paddingBottom: "0",
       }}
@@ -568,13 +573,13 @@ const Analytics = () => {
 
       <p
         style={{
-          fontSize: "2.8rem",
+          fontSize: "2.4rem",
           textAlign: "center",
           width: "70%",
         }}
       >
-        Harness these insights to make <br />
-        informed decisions, streamline your operations & drive business growth
+        Harness these insights to make informed decisions, streamline your
+        operations & drive business growth
       </p>
     </div>
   );
