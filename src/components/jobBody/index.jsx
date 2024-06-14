@@ -266,7 +266,9 @@ const JobBody = () => {
       <div className={styles.jobBody}>
         <div className={styles.heading}>
           <h1>{job.title}</h1>
-          <a href="#apply">{t("vacancy.apply")}</a>
+          <a href="#apply" className={styles.hideInMobile}>
+            {t("vacancy.apply")}
+          </a>
         </div>
         <div className={styles.body}>
           <div className={styles.feature}>

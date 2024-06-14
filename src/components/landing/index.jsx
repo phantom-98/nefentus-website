@@ -375,7 +375,10 @@ const Benefits = () => {
             </p>
           </div>
           <div>
-            <p>Streamline Your Online Checkout Experience</p>
+            <p>
+              Streamline Your Online{" "}
+              <span style={{ textWrap: "nowrap" }}>Checkout Experience</span>
+            </p>
             <img src={Benefit2} />
             <p className="sub-title">
               Easily complete payments online with a successful transaction of

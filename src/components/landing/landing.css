@@ -65,6 +65,20 @@
   cursor: pointer;
 }
 
+.landing-layout button:hover {
+  background: linear-gradient(0deg, #fff 13.1%, #cfcfcf 187.8%);
+  box-shadow:
+    0px -2px 0px 0px #c9c9c9 inset,
+    0px 1px 0px 0px #fff inset;
+}
+
+.landing-layout button:active {
+  background: linear-gradient(0deg, #e5e5e5 13.1%, #cfcfcf 187.8%);
+  box-shadow:
+    0px -1px 0px 0px #c9c9c9 inset,
+    0px 1px 0px 0px #fff inset;
+}
+
 .landing-layout .hero-img {
   position: relative;
   width: 40%;
@@ -476,13 +490,13 @@
 .landing-layout .img-part {
   width: 72%;
   height: min-content;
-  -webkit-mask-image: linear-gradient(to bottom, #fff 40%, #fff0 96%);
+  /* -webkit-mask-image: linear-gradient(to bottom, #fff 40%, #fff0 96%); */
 }
 
 .landing-layout .image-transition {
   transition: 0.5s;
   width: 100%;
-  border: 0.8rem solid #202020;
+  /* border: 0.8rem solid #202020; */
 }
 
 .landing-layout .feature-heading {
@@ -929,13 +943,13 @@
     display: flex !important;
     flex-direction: column;
     gap: 2rem;
-    align-items: center;
+    align-items: start;
     position: relative;
     width: 100%;
   }
   .landing-layout .step-invoicing {
-    max-width: 50%;
-    text-align: center;
+    width: 100%;
+    /* text-align: center; */
     position: absolute;
     margin-inline: auto;
     opacity: 0;
@@ -1053,10 +1067,6 @@
   .landing-layout .benefits img {
     left: 0;
   }
-  .landing-layout .outlook p:last-child,
-  .landing-layout .benefits > div > p:last-child {
-    max-width: 96%;
-  }
   .landing-layout.b2c .hero-img > div:last-child {
     display: none !important;
   }
@@ -1120,6 +1130,21 @@
   }
   .landing-layout .progress-bar {
     margin-top: 9.6rem;
+  }
+  .landing-layout.home .layout-getting-started .layout-title .title {
+    width: 30rem;
+  }
+  .landing-layout .outlook p:last-child {
+    max-width: 96%;
+  }
+  .landing-layout .benefits > div > p:last-child {
+    max-width: 26rem;
+  }
+  .landing-layout .invoicing-step-container {
+    flex-direction: column-reverse;
+  }
+  .landing-layout .analytics > p:last-child {
+    width: 36rem !important;
   }
 }
 

@@ -103,4 +103,7 @@
     flex-direction: column;
     gap: 1rem;
   }
+  .hideInMobile {
+    display: none;
+  }
 }
