@@ -78,12 +78,12 @@ const Navigation = () => {
     } else {
       return (
         <>
-          <div className={styles.login}>
-            <Link to="/login">Log in</Link>
-          </div>
-          <div className={`${styles.button}`}>
-            <Link to="/signup">Sign up</Link>
-          </div>
+          <a className={styles.login} href="/login">
+            Log in
+          </a>
+          <a className={`${styles.button}`} href="/signup">
+            Sign up
+          </a>
         </>
       );
     }

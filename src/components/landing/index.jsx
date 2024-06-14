@@ -447,7 +447,7 @@ const ScrollAnimation = () => {
       (100 * document.documentElement.scrollTop) /
       document.documentElement.offsetHeight;
     // console.log("scroll >", position);
-    setPos(position < 52 ? 0 : position < 62 ? 1 : 2);
+    setPos(position < 51.2 ? 0 : position < 60 ? 1 : 2);
   };
 
   useEffect(() => {
@@ -478,7 +478,7 @@ const ScrollAnimation = () => {
         className="img-part"
         style={{
           position: "sticky",
-          top: "24rem",
+          top: "calc(100vh - 58rem)",
         }}
       >
         <div style={{ position: "relative", width: "100%" }}>
