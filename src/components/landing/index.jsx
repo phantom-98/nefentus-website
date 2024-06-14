@@ -375,7 +375,10 @@ const Benefits = () => {
             </p>
           </div>
           <div>
-            <p>Streamline Your Online Checkout Experience</p>
+            <p>
+              Streamline Your Online{" "}
+              <span style={{ textWrap: "nowrap" }}>Checkout Experience</span>
+            </p>
             <img src={Benefit2} />
             <p className="sub-title">
               Easily complete payments online with a successful transaction of
@@ -443,8 +446,8 @@ const ScrollAnimation = () => {
     const position =
       (100 * document.documentElement.scrollTop) /
       document.documentElement.offsetHeight;
-    console.log("scroll >", position);
-    setPos(position < 51.2 ? 0 : position < 60 ? 1 : 2);
+    // console.log("scroll >", position);
+    setPos(position < 52 ? 0 : position < 62 ? 1 : 2);
   };
 
   useEffect(() => {
@@ -475,7 +478,7 @@ const ScrollAnimation = () => {
         className="img-part"
         style={{
           position: "sticky",
-          top: "28rem",
+          top: "24rem",
         }}
       >
         <div style={{ position: "relative", width: "100%" }}>
