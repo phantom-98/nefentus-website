@@ -6,13 +6,13 @@ import InfoMark from "../../../assets/newDashboardIcons/info-circle.svg";
 import { formatTokenBalance } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../context/auth/authContext";
-import { isFloat } from "../../../utils";
+import { isNumber } from "../../../utils";
 import "./incomeCard.css";
 
 const IncomeCard = ({ card, key, isLast = false }) => {
   const { t } = useTranslation();
   const { currencyRate } = useAuth();
-  const isProfit = isFloat(card.percentage) ? card?.percentage > 0 : true;
+  const isProfit = isNumber(card.percentage) ? card?.percentage >= 0 : true;
 
   return (
     <Card

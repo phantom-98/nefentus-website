@@ -254,6 +254,10 @@ export const isFloat = (n) => {
   return Number(n) === n && n % 1 !== 0;
 };
 
+export const isNumber = (value) => {
+  return typeof value === "number" && isFinite(value);
+};
+
 export const graphDataToList = (data) => {
   const dataList = Object.entries(data).map(([key, value]) => ({
     label: key,
