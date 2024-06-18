@@ -1,6 +1,7 @@
 # New changes
 
 - Fix some minor issues in landing (PATCH)
+- Fix converter in case of internal wallet (MINOR)
 
 # 1.3.0
 
