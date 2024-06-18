@@ -262,79 +262,83 @@ const JobBody = () => {
   };
 
   return (
-    <div className={`container ${styles.jobBody}`}>
-      <div className={styles.heading}>
-        <h1>{job.title}</h1>
-        <a href="#apply">{t("vacancy.apply")}</a>
-      </div>
-      <div className={styles.body}>
-        <div className={styles.feature}>
-          {job.items.map((item) => {
-            return <p>{item}</p>;
-          })}
-        </div>
-        <div className={styles.description}>
-          {job.description.split("\n").map((para) => {
-            if (para.trim().endsWith(":"))
-              return <h3>{para.trim().slice(0, -1)}</h3>;
-            else
-              return (
-                <span>
-                  {para}
-                  <br />
-                </span>
-              );
-          })}
-        </div>
-        <div></div>
-        <div className={styles.contact} id="apply">
-          <p
-            style={{
-              fontSize: "2rem",
-            }}
-          >
+    <div className={`container`}>
+      <div className={styles.jobBody}>
+        <div className={styles.heading}>
+          <h1>{job.title}</h1>
+          <a href="#apply" className={styles.hideInMobile}>
             {t("vacancy.apply")}
-          </p>
-          <div className={styles.row}>
-            <Input
-              label={t("vacancy.firstName")}
-              value={firstName}
-              setState={setFirstName}
-              placeholder={`John`}
-              dashboard
-            />
-            <Input
-              label={t("vacancy.lastName")}
-              value={lastName}
-              setState={setLastName}
-              placeholder={`Doe`}
-              dashboard
-            />
+          </a>
+        </div>
+        <div className={styles.body}>
+          <div className={styles.feature}>
+            {job.items.map((item) => {
+              return <p>{item}</p>;
+            })}
           </div>
-          <Input
-            label={t("vacancy.email")}
-            value={email}
-            setState={setEmail}
-            placeholder={`yourmail@mail.com`}
-            dashboard
-          />
-          <Input
-            label={t("vacancy.linkedin")}
-            value={linkedin}
-            setState={setLinkedin}
-            placeholder={`https://linkedin/xyz`}
-            dashboard
-          />
-          <Textarea
-            label={t("vacancy.comment")}
-            value={comment}
-            setState={setComment}
-            placeholder={``}
-            dashboard
-          />
-          <Button style={{ width: "100%" }} spinner={spinner} onClick={apply}>
-            {t("vacancy.apply")}
-          </Button>
+          <div className={styles.description}>
+            {job.description.split("\n").map((para) => {
+              if (para.trim().endsWith(":"))
+                return <h3>{para.trim().slice(0, -1)}</h3>;
+              else
+                return (
+                  <span>
+                    {para}
+                    <br />
+                  </span>
+                );
+            })}
+          </div>
+          <div></div>
+          <div className={styles.contact} id="apply">
+            <p
+              style={{
+                fontSize: "2rem",
+              }}
+            >
+              {t("vacancy.apply")}
+            </p>
+            <div className={styles.row}>
+              <Input
+                label={t("vacancy.firstName")}
+                value={firstName}
+                setState={setFirstName}
+                placeholder={`John`}
+                dashboard
+              />
+              <Input
+                label={t("vacancy.lastName")}
+                value={lastName}
+                setState={setLastName}
+                placeholder={`Doe`}
+                dashboard
+              />
+            </div>
+            <Input
+              label={t("vacancy.email")}
+              value={email}
+              setState={setEmail}
+              placeholder={`yourmail@mail.com`}
+              dashboard
+            />
+            <Input
+              label={t("vacancy.linkedin")}
+              value={linkedin}
+              setState={setLinkedin}
+              placeholder={`https://linkedin/xyz`}
+              dashboard
+            />
+            <Textarea
+              label={t("vacancy.comment")}
+              value={comment}
+              setState={setComment}
+              placeholder={``}
+              dashboard
+            />
+            <Button style={{ width: "100%" }} spinner={spinner} onClick={apply}>
+              {t("vacancy.apply")}
+            </Button>
+          </div>
         </div>
       </div>
     </div>

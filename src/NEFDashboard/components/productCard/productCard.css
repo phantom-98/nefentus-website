@@ -58,10 +58,18 @@
 }
 
 .footer-action-icons {
-  padding: 7px;
   border-radius: 6px;
   border: 1px solid var(--Dark, #202020);
   background: var(--Dark, #202020);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer-action-icons img {
+  width: 16px;
+  height: 16px;
 }
 
 .product-copy-link {

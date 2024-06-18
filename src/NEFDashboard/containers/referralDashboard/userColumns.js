@@ -17,6 +17,7 @@ const userColumns = (
   deleteUser,
   setSelectedUser,
   currencyRate,
+  updateUser,
 ) => [
   {
     title: t("dashboard.tableHeaders.name"),
@@ -122,7 +123,10 @@ const userColumns = (
             {
               key: "2",
               label: (
-                <div className="default-text user-table-menu-width">
+                <div
+                  className="default-text user-table-menu-width"
+                  onClick={updateUser}
+                >
                   {t("referralDashboard.userTableMenu.edit")}
                 </div>
               ),
@@ -144,7 +148,7 @@ const userColumns = (
         }}
         overlayClassName="user-table-menu"
         trigger={["click"]}
-        onOpenChange={() => setSelectedUser(record)}
+        onOpenChange={() => setSelectedUser({ ...record })}
       >
         <div className="table-menu-icon cursor-pointer">
           <img src={MenuIcon} alt="menu" width={20} height={20} />

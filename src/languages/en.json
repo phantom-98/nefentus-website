@@ -1038,7 +1038,9 @@
       "imageLabel": "Product image",
       "createProduct": "Create Product",
       "updateProduct": "Update Product",
-      "attach": "Add attachment",
+      "attach": "Drag and drop or ",
+      "browseLink": "browse",
+      "imageType": "PNG or JPG",
       "nameLabel": "Name",
       "namePlaceholder": "Enter name",
       "descriptionLabel": "Description",
@@ -1461,7 +1463,11 @@
     },
     "receiveCrypto": {
       "heading": "Payment receiving QR code",
-      "description": "Scan this QR-code to receive money to your chosen wallet"
+      "description": "Scan this QR-code to receive money to your chosen wallet",
+      "selectNetwork": "Select Network",
+      "ethereumNetwork": "Ethereum (ERC20)",
+      "binanceNetwork": "BNB Smart Chain (BEP20)",
+      "deposit": "Deposit Address"
     }
   },
   "referralDashboard": {
@@ -1582,6 +1588,21 @@
     "addProductDescription": "Add your product or service to send the link to buyers.",
     "deleteProductConfirmation": "Are you sure you want to delete this product?",
     "productDetail": "Product Detail"
+  },
+  "sendModal": {
+    "step1-title": "Send Crypto",
+    "step2-title": "Confirm Payment",
+    "from": "From",
+    "to": "To",
+    "walletAddressPlaceholder": "Enter wallet address (0x)",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "amountTitle": "Enter Amount",
+    "balance": "Balance",
+    "amount": "Amount",
+    "next": "Next",
+    "connectedWallets": "Connected Wallets",
+    "addWallet": "Add Wallet"
   },
   "cancel": "Cancel",
   "confirm": "Confirm",

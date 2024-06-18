@@ -1,5 +1,5 @@
 import Contact from "./../components/contact/contact";
-import Footer from "./../components/footer/footer";
+import Footer from "./../components/footer";
 import Navigation from "./../components/navigation/navigation";
 
 const Layout = ({ children, affiliate }) => {

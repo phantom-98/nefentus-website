@@ -78,15 +78,12 @@ const Navigation = () => {
     } else {
       return (
         <>
-          <p className={styles.login}>
-            <Link to="/login">
-              <p>{t("navigation.login")}</p>
-              <p className={styles.fake}>{t("navigation.login")}</p>
-            </Link>
-          </p>
-          <div className={`${styles.button}`}>
-            <Link to="/signup">{t("navigation.signUp")}</Link>
-          </div>
+          <a className={styles.login} href="/login">
+            Log in
+          </a>
+          <a className={`${styles.button}`} href="/signup">
+            Sign up
+          </a>
         </>
       );
     }
@@ -108,13 +105,15 @@ const Navigation = () => {
     if (token?.length) {
       return (
         <>
-          <Button
-            link={profile.dashboardLink}
-            onClick={() => setOpenMenu(false)}
-            style={{ width: "100%" }}
-          >
-            {dashboardString(profile)}
-          </Button>
+          <Link to={"/new-settings"} onClick={() => setOpenMenu(false)}>
+            <li className="standard">Settings</li>
+          </Link>
+          <Link to={"/personal-dashboard"} onClick={() => setOpenMenu(false)}>
+            <li className="standard">Dashboard</li>
+          </Link>
+          <Link onClick={logOut}>
+            <li className="standard">Log out</li>
+          </Link>
         </>
       );
     } else {
@@ -132,7 +131,7 @@ const Navigation = () => {
             link="/login"
             onClick={() => setOpenMenu(false)}
           >
-            {t("navigation.login")}
+            Log in
           </Button>
           <Button
             style={{ width: "100%" }}
@@ -140,7 +139,7 @@ const Navigation = () => {
             color="white"
             onClick={() => setOpenMenu(false)}
           >
-            {t("navigation.signUp")}
+            Sign up
           </Button>
         </div>
       );
@@ -162,7 +161,7 @@ const Navigation = () => {
   });
 
   return (
-    <nav className={`${styles.navigation} load `} style={{ height }}>
+    <nav className={`${styles.navigation} load `}>
       <div className={` ${styles.contentWrapper}`}>
         <div
           className={`container ${styles.content} ${
@@ -171,37 +170,33 @@ const Navigation = () => {
         >
           <div className={styles.left}>
             <Link className={styles.logoWrapper} to="/">
-              <img
-                className={styles.logo}
-                src={hideOptions ? LogoWide : Logo}
-                alt="nefentus logo"
-              />
+              <img className={styles.logo} src={LogoWide} alt="nefentus logo" />
             </Link>
 
             {!hideOptions && (
               <ul className={styles.navList}>
                 <li className="standard">
-                  <Link to="/">
-                    <p>{t("navigation.home")}</p>
-                    <p className={styles.fake}>{t("navigation.home")}</p>
+                  <Link to="/b2c">
+                    <p>Personal</p>
+                    <p className={styles.fake}>Personal</p>
                   </Link>
                 </li>
                 <li className="standard">
-                  <Link to="/payment">
-                    <p>{t("navigation.solutions")}</p>
-                    <p className={styles.fake}>{t("navigation.solutions")}</p>
+                  <Link to="/b2b">
+                    <p>Business Solutions</p>
+                    <p className={styles.fake}>Business Solutions</p>
                   </Link>
                 </li>
                 <li className="standard">
-                  <Link to="/support">
-                    <p>{t("navigation.resources")}</p>
-                    <p className={styles.fake}>{t("navigation.resources")}</p>
+                  <Link to="/resources">
+                    <p>Resources</p>
+                    <p className={styles.fake}>Resources</p>
                   </Link>
                 </li>
                 <li className="standard">
                   <Link to="/vacancy">
-                    <p>{t("navigation.vacancy")}</p>
-                    <p className={styles.fake}>{t("navigation.vacancy")}</p>
+                    <p>Career</p>
+                    <p className={styles.fake}>Career</p>
                   </Link>
                 </li>
               </ul>
@@ -211,16 +206,16 @@ const Navigation = () => {
           {!hideOptions && (
             <div className={styles.right}>
               <div className={styles.rightWrapper}>
-                <QR />
+                {/* <QR /> */}
 
-                <Languages />
+                {/* <Languages /> */}
 
-                <img
+                {/* <img
                   onClick={toggleTheme}
                   src={theme === "dark" ? DarkMode : LightMode}
                   className={styles.light}
                   alt=""
-                />
+                /> */}
               </div>
 
               {loginAndSignupWeb()}
@@ -262,26 +257,25 @@ const Navigation = () => {
       >
         <div>
           <ul>
-            <Link to="/" onClick={() => setOpenMenu(false)}>
-              <li className="standard">{t("navigation.home")}</li>
+            <Link to="/b2c" onClick={() => setOpenMenu(false)}>
+              <li className="standard">Personal</li>
             </Link>
-            <Link to="/payment" onClick={() => setOpenMenu(false)}>
-              <li className="standard">{t("navigation.solutions")}</li>
+            <Link to="/b2b" onClick={() => setOpenMenu(false)}>
+              <li className="standard">Business Solutions</li>
             </Link>
 
-            <Link to="/affiliate" onClick={() => setOpenMenu(false)}>
+            {/* <Link to="/affiliate" onClick={() => setOpenMenu(false)}>
               <li className="standard">{t("navigation.affiliate")}</li>
-            </Link>
-            <Link to="/support" onClick={() => setOpenMenu(false)}>
-              <li className="standard">{t("navigation.resources")}</li>
+            </Link> */}
+            <Link to="/resources" onClick={() => setOpenMenu(false)}>
+              <li className="standard">Resources</li>
             </Link>
             <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
-              <li className="standard">{t("navigation.vacancy")}</li>
+              <li className="standard">Career</li>
             </Link>
+            {loginAndSignupMobile()}
           </ul>
         </div>
-
-        <div>{loginAndSignupMobile()}</div>
       </div>
     </nav>
   );

@@ -22,8 +22,7 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-block: 0.96rem;
   max-width: 111rem !important;
 }
 
@@ -38,6 +37,10 @@
 
 .left {
   gap: 5rem;
+}
+
+.logoWrapper {
+  margin-top: 0.4rem;
 }
 
 .logo {
@@ -126,8 +129,7 @@
 }
 
 .right {
-  gap: 2rem;
-  /* margin-left: 20px; */
+  gap: 0.6rem;
 }
 
 .right p {
@@ -140,28 +142,47 @@
   font-size: 1.4rem;
 }
 
-.button > a {
-  border-radius: 1rem;
+.login,
+.button {
+  color: var(--background-color);
+  /* background: var(--text-color); */
   font-size: 1.4rem;
-  pointer-events: initial;
+  padding: 0.8rem 2.4rem;
+  margin-block: 0.48rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--border-color);
   cursor: pointer;
-  padding: 1rem 3rem;
-  transition: 0.2s ease-out;
-  color: var(--text-color);
-  background-color: var(--bg2-color);
+  pointer-events: auto;
 }
 
 .login {
-  overflow: hidden;
-  position: relative;
+  color: var(--text-color);
+  background: #171717;
 }
 
-.login p {
-  transition: 0.2s ease-out;
+.login:hover {
+  background-color: #313131;
 }
-
-.login:hover p {
-  transform: translateY(-100%);
+.button {
+  background: linear-gradient(0deg, #fafafa -32.93%, #cfcfcf 187.8%);
+  box-shadow:
+    0px -2px 0px 0px #c9c9c9 inset,
+    0px 1px 0px 0px #fff inset;
+}
+.button:hover {
+  background: linear-gradient(0deg, #fff 13.1%, #cfcfcf 187.8%);
+  box-shadow:
+    0px 78px 22px 0px rgba(239, 239, 239, 0),
+    0px -8px 20px 0px rgba(239, 239, 239, 0.18),
+    0px 28px 17px 0px rgba(239, 239, 239, 0.02),
+    0px 12px 12px 0px rgba(239, 239, 239, 0.04),
+    0px 3px 7px 0px rgba(239, 239, 239, 0.04);
+}
+.button:active {
+  background: linear-gradient(0deg, #e5e5e5 13.1%, #cfcfcf 187.8%);
+  box-shadow:
+    0px -1px 0px 0px #c9c9c9 inset,
+    0px 1px 0px 0px #fff inset;
 }
 
 .dashboardButton {
@@ -373,8 +394,8 @@
     display: initial !important;
     cursor: pointer;
     pointer-events: initial !important;
-
     width: 25px;
+    padding-block: 2.2rem;
   }
 
   .lineButton {
@@ -382,8 +403,7 @@
     width: 25px;
     right: 0;
     top: 0;
-    transform: translateY(-50%);
-    height: 40px;
+    height: 44px;
   }
 
   .light {

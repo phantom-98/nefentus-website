@@ -10,9 +10,11 @@ import { getRole } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import "./addUser.css";
 
-const AddUser = ({ open, handleSubmit, onClose }) => {
+const AddUser = ({ open, handleSubmit, onClose, selectedUser = {} }) => {
   const { user } = useAuth();
-  const adminApi = new adminDashboardApi(user.roles && user.roles[0]);
+  const adminApi = new adminDashboardApi(
+    user.roles && getRole(user) == "" ? user?.roles[0] : getRole(user),
+  );
   const { t } = useTranslation();
   const [roles, setRoles] = useState([
     { value: "Vendor", label: t("dashboard.roles.Vendor") },
@@ -31,17 +33,46 @@ const AddUser = ({ open, handleSubmit, onClose }) => {
     password: "",
     company: "",
     role: "",
+    agent: "",
     service_fee: "1",
   });
+
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  const capitalizeAllWords = (str) => {
+    const words = str.split(" ");
+    const capitalizedWords = words.map(capitalizeFirstLetter);
+    return capitalizedWords.join(" ");
+  };
+
+  useEffect(() => {
+    if (Object.keys(selectedUser)?.length > 0)
+      setUserDetail({
+        firstName: selectedUser?.firstName,
+        lastName: selectedUser?.lastName,
+        email: selectedUser?.email,
+        service_fee: "1",
+        company: selectedUser?.business,
+        role: capitalizeAllWords(selectedUser?.roles[0]),
+        agent: selectedUser?.agent,
+      });
+  }, [selectedUser]);
 
   const handleUserDetails = (value, key) => {
     setUserDetail({ ...userDetail, [key]: value });
   };
 
   const handleSubmitUser = async () => {
+    const validationData = { ...userDetail };
+    delete validationData.agent;
+    delete validationData.company;
     if (
-      Object.keys(userDetail)?.some(
-        (key) => userDetail[key] == "" && key != "company",
+      Object.keys(validationData)?.some(
+        (key) =>
+          userDetail[key] == "" ||
+          (Object.keys(selectedUser)?.length > 0 && key == "password"),
       )
     ) {
       setErrorMessage("All fields are required");
@@ -57,10 +88,26 @@ const AddUser = ({ open, handleSubmit, onClose }) => {
     delete payload.role;
     delete payload.service_fee;
 
-    const resp = await adminApi.createUser(payload);
+    const resp =
+      Object.keys(selectedUser)?.length > 0
+        ? await adminApi.updateUser(
+            payload?.firstName,
+            payload?.lastName,
+            payload?.email,
+            payload?.email,
+            userDetail?.role,
+            payload?.agent,
+          )
+        : await adminApi.createUser(payload);
     if (resp) {
       if (resp.ok) {
-        setInfoMessage(t("messages.success.addUser"));
+        setInfoMessage(
+          t(
+            Object.keys(selectedUser)?.length > 0
+              ? "Updated Successfully"
+              : "messages.success.addUser",
+          ),
+        );
         handleSubmit();
       } else if (resp.status === 409) {
         setErrorMessage(t("messages.error.userExist"));
@@ -110,13 +157,42 @@ const AddUser = ({ open, handleSubmit, onClose }) => {
     }
   };
 
+  const fetchRoleOptions = () => {
+    switch (
+      user.roles && getRole(user) == "" ? user?.roles[0] : getRole(user)
+    ) {
+      case "admin":
+        return roles;
+      case "leader":
+        return roles?.filter(
+          (roleData) => roleData?.value?.toLowerCase() != "leader",
+        );
+      case "seniorbroker":
+        return roles
+          ?.filter(
+            (roleData) => roleData?.value?.toLowerCase() != "senior broker",
+          )
+          ?.filter((roleData) => roleData?.value?.toLowerCase() != "leader");
+      case "broker":
+        return roles?.filter(
+          (roleData) => roleData?.value?.toLowerCase() == "vendor",
+        );
+      case "vendor":
+        return [];
+      default:
+        return roles;
+    }
+  };
+
   return (
     <Modal
       title={
         <Flex align="center" gap={4} className="add-modal-title-container">
           <img src={AddUserIcon} alt="add_user" />
           <div className="default-text-gray add-user_modal_title">
-            Add New User
+            {Object.keys(selectedUser)?.length > 0
+              ? t("dashboard.modal.edit_user")
+              : t("dashboard.modal.titleCreate")}
           </div>
         </Flex>
       }
@@ -178,6 +254,7 @@ const AddUser = ({ open, handleSubmit, onClose }) => {
               className="add-user-input-fields"
               value={userDetail?.password}
               onChange={(e) => handleUserDetails(e.target.value, "password")}
+              disabled={Object.keys(selectedUser)?.length > 0}
             />
           </Flex>
           <Flex vertical gap={6}>
@@ -202,32 +279,21 @@ const AddUser = ({ open, handleSubmit, onClose }) => {
               placeholder={t("dashboard.modal.role")}
               className="add-user-role-select"
               size="large"
-              options={
-                getRole(user) == "admin"
-                  ? roles
-                  : getRole(user) == "leader"
-                  ? roles?.filter(
-                      (roleData) =>
-                        roleData?.value?.toLowerCase() != getRole(user),
-                    )
-                  : getRole(user) == "seniorbroker"
-                  ? roles
-                      ?.filter(
-                        (roleData) =>
-                          roleData?.value?.toLowerCase() != "senior broker",
-                      )
-                      ?.filter(
-                        (roleData) =>
-                          roleData?.value?.toLowerCase() != "leader",
-                      )
-                  : getRole(user) == "broker"
-                  ? roles?.filter(
-                      (roleData) => roleData?.value?.toLowerCase() == "vendor",
-                    )
-                  : roles
-              }
+              options={fetchRoleOptions()}
               value={userDetail?.role == "" ? null : userDetail?.role}
               onChange={(role) => handleUserDetails(role, "role")}
+            />
+          </Flex>
+          <Flex vertical gap={6}>
+            <div className="default-text-gray">
+              {t("dashboard.modal.agent")}
+            </div>
+            <Input
+              placeholder={t("dashboard.modal.agentPlaceholder")}
+              size="large"
+              className="add-user-input-fields"
+              value={userDetail?.agent}
+              onChange={(e) => handleUserDetails(e.target.value, "agent")}
             />
           </Flex>
           <Flex vertical>
@@ -282,7 +348,9 @@ const AddUser = ({ open, handleSubmit, onClose }) => {
           className="default-text add-user-submit cursor-pointer"
           onClick={handleSubmitUser}
         >
-          {t("dashboard.modal.titleCreate")}
+          {Object.keys(selectedUser)?.length > 0
+            ? t("update")
+            : t("dashboard.modal.titleCreate")}
         </div>
       </Flex>
     </Modal>

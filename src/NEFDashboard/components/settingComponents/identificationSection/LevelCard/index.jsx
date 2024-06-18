@@ -2,17 +2,30 @@ import React from "react";
 import { Card } from "antd";
 import "./levelCard.css";
 
-const LevelCard = ({ card, keyIndex, handleModalOpen }) => {
+const LevelCard = ({ level, card, keyIndex, handleModalOpen }) => {
+  const getCardStatus = () => {
+    if (card?.isPending) return "pending";
+    else if (card?.isRejected) return "rejected";
+    else if (card?.isVerified) return "verified";
+    else return "";
+  };
   return (
     <Card
       key={keyIndex}
       title={
         <div className="level-title">
           <span>Level {card?.level}:</span>
-          <span>{card?.status}</span>
+          <span>{getCardStatus() == "" ? "unverified" : getCardStatus()}</span>
         </div>
       }
-      className={card?.status}
+      className={`${
+        card?.isRejected ||
+        card?.isPending ||
+        card?.isVerified ||
+        level != card?.level - 1
+          ? ""
+          : "active"
+      } ${getCardStatus()}`}
     >
       <div className="card-content">
         <div className="content-title">Required:</div>
@@ -25,7 +38,14 @@ const LevelCard = ({ card, keyIndex, handleModalOpen }) => {
           </div>
         ))}
       </div>
-      <div className="card-btn" onClick={() => handleModalOpen(card)}>
+      <div
+        className="card-btn"
+        onClick={() =>
+          card?.isPending || card?.isVerified || level != card?.level - 1
+            ? null
+            : handleModalOpen(card)
+        }
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="19"
@@ -38,7 +58,7 @@ const LevelCard = ({ card, keyIndex, handleModalOpen }) => {
             fill="#E9E9E9"
           />
         </svg>
-        <span>{card?.status}</span>
+        <span>{getCardStatus() == "" ? "unverified" : getCardStatus()}</span>
       </div>
     </Card>
   );

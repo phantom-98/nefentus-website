@@ -34,6 +34,7 @@ input.identification-upload {
   right: 0;
   bottom: 0;
   opacity: 0;
+  z-index: -2;
 }
 
 .identification-uploaded-wrapper {
