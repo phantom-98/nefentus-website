@@ -1401,9 +1401,9 @@
       "last24HoursTitle": "Einkommen der letzten 24 Stunden",
       "last24HoursSubText": "vs. Vortag",
       "paymentCardTitle": "Gesamtanzahl der Zahlungen",
-      "paymentCardSubText": "vs. letzte 30 Tage",
+      "paymentCardSubText": "in letzten 30 Tagen",
       "registrationCardTitle": "Gesamtanzahl der Registrierungen",
-      "registrationCardSubText": "vs. letzte 30 Tage"
+      "registrationCardSubText": "in letzten 30 Tagen"
     },
     "userTableMenu": {
       "activate": "Aktivieren",
