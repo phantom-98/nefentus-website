@@ -13,6 +13,7 @@ import PersonLight from "../../assets/icon/light/user-square.svg";
 import BuildingDark from "../../assets/icon/dark/building.svg";
 import BuildingLight from "../../assets/icon/light/building.svg";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
+import WarningIcon from "../../assets/icon/warn.svg";
 import CheckedIcon from "../../assets/icon/checked.svg";
 import backendAPI from "../../api/backendAPI";
 import { uniswapApi, web3Api } from "../../api/web3Api";
@@ -162,6 +163,8 @@ const ReceivePayment = ({
   });
 
   const backend_API = new backendAPI();
+
+  const [warn, setWarn] = useState(false);
 
   useEffect(() => {
     fetchProfile();
@@ -514,6 +517,59 @@ const ReceivePayment = ({
                     width: "100%",
                   }}
                 >
+                  {window.ethereum?.overrideIsMetaMask && (
+                    <div
+                      style={{
+                        border: "1px solid var(--border-color)",
+                        borderRadius: "0.6rem",
+                        background: "var(--bg2-color)",
+                        padding: "1rem",
+                      }}
+                    >
+                      <div
+                        style={{
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
+                        onClick={() => {
+                          setWarn((prev) => !prev);
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "1rem",
+                            fontSize: "1.4rem",
+                          }}
+                        >
+                          <img src={WarningIcon} />
+                          <span>{t("payments.walletConflict")}</span>
+                        </div>
+                        <img
+                          src={DropDownIcon}
+                          style={{
+                            transform: `rotate(${warn ? "180deg" : "0"})`,
+                            transition: "0.2s ease",
+                          }}
+                        />
+                      </div>
+                      {warn && (
+                        <p
+                          style={{
+                            maxWidth: "30rem",
+                            fontSize: "1.2rem",
+                            marginTop: "1rem",
+                            color: "var(--text2-color)",
+                          }}
+                        >
+                          {t("payments.conflictDescription")}
+                        </p>
+                      )}
+                    </div>
+                  )}
                   <div className={styles.walletWrapper}>
                     <div className={styles.chooseWallet}>
                       <p>{t("payments.chooseWallet")}</p>

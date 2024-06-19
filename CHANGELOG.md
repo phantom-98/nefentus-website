@@ -2,6 +2,7 @@
 
 - Fix some minor issues in landing (PATCH)
 - Fix converter in case of internal wallet (MINOR)
+- Alert message in checkout when both Metamask and coinbase are installed (MINOR)
 
 # 1.3.0
 
