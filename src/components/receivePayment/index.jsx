@@ -57,6 +57,7 @@ import {
   formatUSDBalance,
   formatWalletAddress,
   getWalletIcon,
+  isWalletConflict,
 } from "../../utils";
 import { useTranslation } from "react-i18next";
 import Popup, {
@@ -165,6 +166,7 @@ const ReceivePayment = ({
   const backend_API = new backendAPI();
 
   const [warn, setWarn] = useState(false);
+  const [warning, setWarning] = useState(isWalletConflict());
 
   useEffect(() => {
     fetchProfile();
@@ -517,7 +519,7 @@ const ReceivePayment = ({
                     width: "100%",
                   }}
                 >
-                  {window.ethereum?.overrideIsMetaMask && (
+                  {warning && (
                     <div
                       style={{
                         border: "1px solid var(--border-color)",
