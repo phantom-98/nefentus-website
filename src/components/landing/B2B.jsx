@@ -25,8 +25,42 @@ import ShoppingCartSvg from "../../assets/landing/shopping-cart.svg";
 import Dollar from "../../assets/landing/dollar.svg";
 import SwapIcon from "../../assets/landing/swap-ico.svg";
 import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 const B2B = () => {
+  const [step, setStep] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const numImages = 3;
+
+    // Create the time line for the scroll animation
+    const tl = gsap.from(".product-img", {
+      scrollTrigger: {
+        trigger: ".layout-paragraph.product .sub-title",
+        start: "top top",
+        end: () => `+=${numImages * 200}%`,
+        scrub: true,
+        pin: ".landing-layout.container.b2b",
+        onUpdate: (self) => {
+          setStep(Math.floor(self.progress * numImages));
+          setProgress(Math.floor(self.progress * numImages * 100));
+        },
+        onLeave: () => {
+          setStep(numImages - 1);
+        },
+        onLeaveBack: () => {
+          setStep(0);
+        },
+      },
+      ease: "none",
+    });
+    return () => {
+      if (t1) t1.kill();
+    };
+  }, []);
   return (
     <div
       className="landing-layout container b2b"
@@ -38,7 +72,7 @@ const B2B = () => {
 
       <Invoicing />
 
-      <Product />
+      <Product stepId={step} progress={progress} />
 
       <Safe />
 
@@ -196,6 +230,25 @@ const steps = [
 
 const Invoicing = () => {
   const [step, setStep] = useState(steps.map((_, i) => !i));
+  const timeRef = useRef();
+  const updateProgress = () => {
+    setStep((prev) => {
+      const id = step.findIndex((item) => item == true);
+      step[id] = false;
+      step[(id + 1) % step.length] = true;
+      return [...step];
+    });
+  };
+  const start = () => {
+    clearInterval(timeRef.current);
+    timeRef.current = setInterval(updateProgress, 5000);
+  };
+  useEffect(() => {
+    start();
+    return () => {
+      clearInterval(timeRef.current);
+    };
+  }, []);
   return (
     <div className="layout-paragraph">
       <Heading
@@ -298,26 +351,17 @@ const products = [
     img: Product3Png,
   },
 ];
-const Product = () => {
+const Product = ({ stepId, progress }) => {
   const [step, setStep] = useState(products.map((item, id) => !id));
-  const timeRef = useRef();
-  const start = () => {
-    clearInterval(timeRef.current);
-    timeRef.current = setInterval(() => {
-      setStep((prev) => {
-        const id = step.findIndex((item) => item == true);
-        step[id] = false;
-        step[(id + 1) % step.length] = true;
-        return [...step];
-      });
-    }, 10000);
-  };
+
   useEffect(() => {
-    start();
-    return () => {
-      clearInterval(timeRef.current);
-    };
-  }, []);
+    setStep((prev) => {
+      const id = step.findIndex((item) => item == true);
+      step[id] = false;
+      step[stepId % step.length] = true;
+      return [...step];
+    });
+  }, [stepId]);
   return (
     <div className="layout-paragraph product">
       <Heading
@@ -325,13 +369,7 @@ const Product = () => {
         subtitle={`Utilize our internal wallet or link an unlimited number of external wallets for hassle-free product creation.`}
       />
       <div className="layout-product">
-        <div
-          className="product-img"
-          onMouseEnter={() => {
-            clearInterval(timeRef.current);
-          }}
-          onMouseLeave={start}
-        >
+        <div className="product-img">
           {products.map((p, id) => (
             <img className={step[id] && "product-img-showed"} src={p.img} />
           ))}
@@ -339,7 +377,7 @@ const Product = () => {
         <div className="product-creation-step">
           {products.map((p, id) => (
             <div
-              className={`product-step ${step[id] && "product-step-selected"}`}
+              className={`product-step`}
               onClick={() => {
                 !step[id] &&
                   id !== undefined &&
@@ -355,6 +393,12 @@ const Product = () => {
               }}
             >
               <p>{p.title}</p>
+              <hr
+                className={`${step[id] && "product-step-selected"}`}
+                style={{
+                  width: `${Math.max(0, Math.min(100, progress - 100 * id))}%`,
+                }}
+              />
               <p className="sub-title">{p.subtitle}</p>
             </div>
           ))}
@@ -379,40 +423,30 @@ const Product = () => {
             </div>
           ))}
           <div className="progress-bar">
-            <div style={{ width: "96%", display: "flex", gap: "2rem" }}>
-              {products.map((p, id) => (
+            {products.map((p, id) => (
+              <div
+                style={{
+                  background: `#202020`,
+                  height: "1px",
+                  width: `calc(${100 / products.length}%)`,
+                  position: "relative",
+                  display: "block",
+                }}
+              >
                 <hr
                   style={{
-                    border: `1px solid ${step[id] ? "#e1e1e1" : "#202020"}`,
-                    width: `calc(${100 / products.length}%)`,
-                    position: "static",
+                    borderInline: "none",
+                    borderBottom: `1px solid #e9e9e9`,
+                    width: `${Math.max(
+                      0,
+                      Math.min(100, progress - 100 * id),
+                    )}%`,
+                    position: "absolute",
                     display: "block",
                   }}
                 />
-              ))}
-            </div>
-            <div
-              style={{ width: "2%" }}
-              onClick={() => {
-                setStep((prev) => {
-                  const id = step.findIndex((item) => item == true);
-                  step[id] = false;
-                  step[(id - 1) % step.length] = true;
-                  return [...step];
-                });
-              }}
-            >{`<`}</div>
-            <div
-              style={{ width: "2%" }}
-              onClick={() => {
-                setStep((prev) => {
-                  const id = step.findIndex((item) => item == true);
-                  step[id] = false;
-                  step[(id + 1) % step.length] = true;
-                  return [...step];
-                });
-              }}
-            >{`>`}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
