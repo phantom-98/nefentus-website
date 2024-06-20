@@ -82,7 +82,7 @@ const Navigation = () => {
             <Link to="/login">{t("navigation.login")}</Link>
           </div>
           <div className={`${styles.button}`}>
-            <Link to="/signup">{t("navigation.signUp")}</Link>
+            <Link to="/sign-up">{t("navigation.signUp")}</Link>
           </div>
         </>
       );

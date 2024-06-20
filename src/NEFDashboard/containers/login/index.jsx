@@ -1,21 +1,66 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import "./login.css";
 import { Flex, Form, Input, Button, Divider } from "antd";
 import Logo from "../../../assets/logo/logo.svg";
 import { useNavigate } from "react-router-dom";
 import backend_API from "../../../api/backendAPI";
+import { MessageContext } from "../../../context/message";
+import { useAuth } from "../../../context/auth/authContext";
+import { useTranslation } from "react-i18next";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
+  const { setUser } = useAuth();
   const backendAPI = new backend_API();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("token")) {
+      const paramValue = urlParams.get("token");
+      activateUser(paramValue);
+    }
+  }, []);
+
+  const activateUser = async (token) => {
+    try {
+      const response = await backendAPI.activateAccount(token);
+      if (response == null) {
+        setErrorMessage(t("messages.error.activateAccount"));
+        return;
+      }
+      setInfoMessage(t("messages.success.activateAccount"));
+    } catch (error) {
+      setErrorMessage(t("messages.error.activateAccount"));
+    }
+  };
+
   const onFinish = async (values) => {
     const response = await backendAPI.login(
       values.email,
       values.password,
       true,
     );
-    console.log("Success:", response);
+    if (response == null) {
+      setErrorMessage(t("messages.error.loginData"));
+      // setSpinner(false);
+      return;
+    } else if (response.hasOtp || response.hasTotp) {
+      // setShowConfirmMeEmail(true);
+      // setOtp(response.hasOtp);
+      // setTotp(response.hasTotp);
+      // setEmail(response.email);
+    } else if (response.resetPassword) {
+      navigate("/new-settings", {
+        state: { recommendRecover: true },
+      });
+    } else {
+      setUser(response);
+      navigate("/personal-dashboard");
+    }
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };

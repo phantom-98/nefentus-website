@@ -1,5 +1,4 @@
-import React from "react";
-import "./signUp.css";
+import React, { useContext } from "react";
 import { Select, Col, Flex, Form, Input, Button, Divider } from "antd";
 import Logo from "../../../assets/logo/logo.svg";
 import { useNavigate } from "react-router-dom";
@@ -7,14 +6,14 @@ import backend_API from "../../../api/backendAPI";
 import { useTranslation } from "react-i18next";
 import { countryList } from "../../../constants";
 import { getCountryList, getFlagLink } from "../../../countries";
-
-// import { UserOutlined } from "@ant-design/icons";
+import "./signUp.css";
+import { MessageContext } from "../../../context/message";
 
 const SignForm = () => {
   const backendAPI = new backend_API();
   const navigate = useNavigate();
   const { t } = useTranslation();
-
+  const { setInfoMessage, setErrorMessage } = useContext(MessageContext);
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
@@ -30,8 +29,53 @@ const SignForm = () => {
     };
 
     const response = await backendAPI.register(payload);
-    console.log("Success:", response);
-    console.log("Success:", values);
+    if (response == null) {
+      setErrorMessage(t("messages.error.register"));
+    } else if (response.status == 409) {
+      setErrorMessage(t("messages.error.exist"));
+    } else if (response.status == 400) {
+      const data = await response.json();
+      if (data["firstName"]) {
+        if (
+          data["firstName"] == "First name must be between 2 and 70 characters"
+        ) {
+          setErrorMessage(t("messages.validation.validFirstName"));
+        } else {
+          setErrorMessage(t("messages.validation.firstName"));
+        }
+      } else if (data["lastName"]) {
+        if (
+          data["lastName"] == "Last name must be between 2 and 70 characters"
+        ) {
+          setErrorMessage(t("messages.validation.validLastName"));
+        } else {
+          setErrorMessage(t("messages.validation.lastName"));
+        }
+      } else if (data["email"]) {
+        if (data["email"] == "Please enter email") {
+          setErrorMessage(t("messages.validation.email"));
+        } else if (data["email"] == "Please enter valid email") {
+          setErrorMessage(t("messages.validation.validEmail"));
+        } else {
+          setErrorMessage(t("messages.validation.lengthEmail"));
+        }
+      } else if (data["password"]) {
+        if (data["password"] == "Please enter your password") {
+          setErrorMessage(t("messages.validation.password"));
+        } else if (
+          data["password"] == "Password must be between 8 and 70 characters"
+        ) {
+          setErrorMessage(t("messages.validation.validPassword"));
+        } else {
+          setErrorMessage(t("messages.validation.securityPassword"));
+        }
+      } else if (data["country"]) {
+        setErrorMessage(t("messages.error.country"));
+      } else setErrorMessage(t("messages.error.register"));
+    } else {
+      setInfoMessage(t("messages.error.confirmEmail"));
+      form.resetFields();
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -130,7 +174,7 @@ const SignForm = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input your confirmpassword!",
+                    message: "Please input your confirm password!",
                   },
                 ]}
               >
@@ -153,7 +197,8 @@ const SignForm = () => {
                   placeholder="Choose"
                   allowClear
                   virtual={false}
-                  style={{ width: "42px" }}
+                  style={{ width: "60px" }}
+                  className="telephone-flag"
                 >
                   {getCountryList()?.map((country, index) => {
                     return (
@@ -176,7 +221,10 @@ const SignForm = () => {
                   },
                 ]}
               >
-                <Input placeholder="+38 000 - 000 - 00 - 00" />
+                <Input
+                  placeholder="+38 000 - 000 - 00 - 00"
+                  className="telephone-number"
+                />
               </Form.Item>
             </Flex>
           </Form.Item>

@@ -21,6 +21,12 @@
   box-shadow: none !important;
   height: auto !important;
 }
+.telephone-flag {
+  width: 60px;
+}
+.telephone-number {
+  width: 250px !important;
+}
 .phoneNumber {
   height: 40px;
   border-radius: 6px;

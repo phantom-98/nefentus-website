@@ -66,7 +66,8 @@
   line-height: normal;
   margin-bottom: 24px;
 }
-.auth-form button.ant-btn {
+.auth-form button.ant-btn,
+.auth-form button.ant-btn:hover {
   height: 40px;
   display: block;
   width: 100%;
@@ -78,7 +79,7 @@
   background: var(
     --grad,
     linear-gradient(262deg, #009bd2 -78.58%, #3b6b7c 188.93%)
-  );
+  ) !important;
   box-shadow:
     0px 51px 14px 0px rgba(0, 0, 0, 0),
     0px 33px 13px 0px rgba(0, 0, 0, 0.01),
