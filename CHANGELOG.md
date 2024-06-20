@@ -2,6 +2,7 @@
 
 - Fix some minor issues in landing (PATCH)
 - Fix converter in case of internal wallet (MINOR)
+- Login and Sign up screens implemented (MAJOR)
 
 # 1.3.0
 
