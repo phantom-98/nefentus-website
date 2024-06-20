@@ -2,6 +2,7 @@
 
 - Fix some minor issues in landing (PATCH)
 - Fix converter in case of internal wallet (MINOR)
+- Fix undefined user issue in new dashboard (MINOR)
 
 # 1.3.0
 

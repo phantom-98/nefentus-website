@@ -2,19 +2,30 @@ import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import SidebarNew from "../../components/sidebarNew";
 import backendAPI from "../../../api/backendAPI";
-import { useAuth } from "../../../context/auth/authContext";
+import { useNavigate } from "react-router-dom";
 
 const SettingLayout = ({ children }) => {
   const backend_API = new backendAPI();
-  const { setUser } = useAuth();
   const [sideBarShow, setSideBarShow] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetchProfile();
+    checkToken();
   }, []);
 
-  const fetchProfile = async () => {
-    const response = await backend_API.getProfile();
-    if (response) setUser({ ...response });
+  async function checkToken() {
+    const jwtIsValid = await backend_API.checkJwt();
+    if (!jwtIsValid) {
+      logOut();
+    }
+  }
+  const logOut = async () => {
+    try {
+      const data = await backend_API.signout();
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <Row>

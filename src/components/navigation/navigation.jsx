@@ -57,6 +57,8 @@ const Navigation = () => {
         dashboardLink: link,
       };
       setProfile(newProfile);
+    } else {
+      logOut();
     }
   }
 

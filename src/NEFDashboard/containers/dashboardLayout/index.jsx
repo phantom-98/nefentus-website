@@ -40,14 +40,21 @@ const DashboardLayout = ({ children, title }) => {
   const [dropDownToggle, setDropDownToggle] = useState(false);
   const { toggleTheme } = useTheme();
   const { t } = useTranslation();
-  const { user, setUser, setCurrencyRate } = useAuth();
+  const { user, setCurrencyRate } = useAuth();
   const backend_API = new backendAPI();
   const navigate = useNavigate();
   const [currency, setCurrency] = useState("USD");
 
   useEffect(() => {
-    fetchProfile();
+    checkToken();
   }, []);
+
+  async function checkToken() {
+    const jwtIsValid = await backend_API.checkJwt();
+    if (!jwtIsValid) {
+      logOut();
+    }
+  }
 
   useEffect(() => {
     if (currency !== "USD") {
@@ -61,11 +68,6 @@ const DashboardLayout = ({ children, title }) => {
       });
     }
   }, [currency]);
-
-  const fetchProfile = async () => {
-    const response = await backend_API.getProfile();
-    if (response) setUser({ ...response });
-  };
 
   const fetchRate = async (from, to) => {
     const res = await backend_API.getCurrencyRate(from, to);
