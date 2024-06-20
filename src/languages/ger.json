@@ -30,7 +30,7 @@
     "imprint": "Impressum",
     "forgotPassword": "Passwort vergessen",
     "privacy": "Privatsphäre",
-    "vacancy": "Career",
+    "vacancy1": "Karrie",
     "resetPassword": "Passwort zurücksetzen",
     "support": "Unterstützung"
   },
@@ -89,7 +89,7 @@
     "helpCard2Text": " Detaillierte Anleitungen zu allen Funktionen finden Sie in den FAQs.",
     "helpCard2Button": "Jetzt informieren"
   },
-  "vacancy": {
+  "vacancy1": {
     "hero1": "Werden Sie Teil",
     "hero2": "unseres ",
     "hero3": "Teams",
@@ -1401,9 +1401,9 @@
       "last24HoursTitle": "Einkommen der letzten 24 Stunden",
       "last24HoursSubText": "vs. Vortag",
       "paymentCardTitle": "Gesamtanzahl der Zahlungen",
-      "paymentCardSubText": "vs. letzte 30 Tage",
+      "paymentCardSubText": "in letzten 30 Tagen",
       "registrationCardTitle": "Gesamtanzahl der Registrierungen",
-      "registrationCardSubText": "vs. letzte 30 Tage"
+      "registrationCardSubText": "in letzten 30 Tagen"
     },
     "userTableMenu": {
       "activate": "Aktivieren",

@@ -3,10 +3,6 @@ import Hero1 from "../../assets/landing/hero1.png";
 import Hero2 from "../../assets/landing/hero2.png";
 import HeroLine1 from "../../assets/landing/hero-line-top-left.svg";
 import HeroLine2 from "../../assets/landing/hero-line-bottom-left.svg";
-import VerticalLine from "../../assets/landing/hero lines 2.svg";
-import VerticalDashedLine from "../../assets/landing/VerticalDashedLine.svg";
-import HorizontalDashedLine from "../../assets/landing/HorizontalDashedLine.svg";
-import DashedLine from "../../assets/landing/DashedLine.svg";
 import BlueLine from "../../assets/landing/BlueLine.svg";
 import Plus from "../../assets/landing/plus.svg";
 import Minus from "../../assets/landing/minus.svg";
@@ -123,8 +119,7 @@ const Hero = () => {
           <img src={Hero2} />
         </div>
       </div>
-      <img
-        src={VerticalLine}
+      <hr
         style={{
           right: "24rem",
           bottom: "0",
@@ -132,45 +127,34 @@ const Hero = () => {
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "0",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
-        }}
-        className="hide-in-tablet"
-      />
-      <img
-        src={VerticalLine}
-        style={{
-          position: "absolute",
-          right: "18rem",
-          bottom: "0",
-          height: "100%",
-          zIndex: "-1",
-        }}
-        className="hide-in-tablet"
-      />
-      <img
-        src={VerticalLine}
-        style={{
-          position: "absolute",
-          right: "42rem",
-          bottom: "0",
-          height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
       <hr
         style={{
-          position: "absolute",
+          right: "18rem",
+          bottom: "0",
+          height: "100%",
+        }}
+        className="hide-in-tablet"
+      />
+      <hr
+        style={{
+          right: "42rem",
+          bottom: "0",
+          height: "100%",
+        }}
+        className="hide-in-tablet"
+      />
+      <hr
+        style={{
           top: "0",
           width: "100vw",
-          border: "1px solid #202020",
         }}
       />
     </div>
@@ -245,24 +229,22 @@ const Helps = () => {
           })}
         </div>
       </div>
-      <img
-        src={VerticalDashedLine}
+      <div
+        className="vertical-dashed-line"
         style={{
-          position: "absolute",
           right: "0",
           top: "2rem",
           zIndex: "-1",
+          height: "200%",
         }}
       />
-      <img
-        src={DashedLine}
+      <div
+        className="vertical-dashed-line hide-in-tablet"
         style={{
-          position: "absolute",
           right: "18rem",
           top: "0",
-          zIndex: "-1",
+          height: "50%",
         }}
-        className="hide-in-tablet"
       />
       <img
         src={BlueLine}
@@ -283,22 +265,18 @@ const Helps = () => {
           zIndex: "1",
         }}
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           left: "0",
           top: "0",
           height: "100%",
-          zIndex: "-1",
         }}
       />
-      <img
-        src={HorizontalDashedLine}
+      <div
+        className="horizontal-dashed-line"
         style={{
-          position: "absolute",
           bottom: "16rem",
-          zIndex: "-1",
+          width: "100vw",
         }}
       />
     </div>
@@ -397,7 +375,10 @@ const Benefits = () => {
             </p>
           </div>
           <div>
-            <p>Streamline Your Online Checkout Experience</p>
+            <p>
+              Streamline Your Online{" "}
+              <span style={{ textWrap: "nowrap" }}>Checkout Experience</span>
+            </p>
             <img src={Benefit2} />
             <p className="sub-title">
               Easily complete payments online with a successful transaction of
@@ -408,13 +389,13 @@ const Benefits = () => {
         </div>
       </div>
 
-      <img
-        src={VerticalLine}
+      <hr
         style={{
           position: "absolute",
           left: "0",
           top: "0",
           zIndex: "-1",
+          height: "calc(100% - 16rem)",
         }}
       />
       <img
@@ -428,11 +409,8 @@ const Benefits = () => {
       />
       <hr
         style={{
-          border: "1px solid #202020",
           width: "100vw",
-          position: "absolute",
           bottom: "8rem",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
@@ -468,7 +446,7 @@ const ScrollAnimation = () => {
     const position =
       (100 * document.documentElement.scrollTop) /
       document.documentElement.offsetHeight;
-    console.log("scroll >", position);
+    // console.log("scroll >", position);
     setPos(position < 51.2 ? 0 : position < 60 ? 1 : 2);
   };
 
@@ -500,7 +478,7 @@ const ScrollAnimation = () => {
         className="img-part"
         style={{
           position: "sticky",
-          top: "28rem",
+          top: "calc(100vh - 58rem)",
         }}
       >
         <div style={{ position: "relative", width: "100%" }}>
@@ -556,7 +534,7 @@ const MainFeaturesHead = () => {
       <hr
         style={{
           right: "25%",
-          width: "2px",
+          width: "1px",
           height: "100%",
           top: "0",
           zIndex: "1",
@@ -573,16 +551,14 @@ const MainFeaturesHead = () => {
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalDashedLine}
+      <div
         style={{
-          position: "absolute",
           left: "25%",
-          borderWidth: "2px",
+          height: "100%",
           top: "0",
           zIndex: "1",
         }}
-        className="hide-in-tablet"
+        className="hide-in-tablet vertical-dashed-line"
       />
     </div>
   );
@@ -739,17 +715,13 @@ const Industries = () => {
       />
       <hr
         style={{
-          border: "1px solid #202020",
           width: "100vw",
-          position: "absolute",
           bottom: "-1px",
         }}
       />
       <hr
         style={{
-          border: "1px solid #202020",
           width: "100vw",
-          position: "absolute",
           top: "-1px",
         }}
       />

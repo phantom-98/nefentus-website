@@ -3,9 +3,6 @@ import "./landing.css";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import HeroLineTop from "../../assets/landing/b2c-hero-top.svg";
 import HeroLineBottom from "../../assets/landing/b2c-hero-down.svg";
-import VerticalLine from "../../assets/landing/hero lines 2.svg";
-import VerticalDashedLine from "../../assets/landing/VerticalDashedLine.svg";
-import BlueLine from "../../assets/landing/BlueLine.svg";
 import HeroPng from "../../assets/landing/b2b-hero.png";
 import Invoicing1Png from "../../assets/landing/b2b-invoice1.png";
 import Invoicing2Png from "../../assets/landing/b2b-invoice2.png";
@@ -117,63 +114,48 @@ const Hero = () => {
         }}
         className="translate-left"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "calc(25% + 0.8rem)",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "0",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalDashedLine}
+      <div
         style={{
-          position: "absolute",
-          right: "calc(25% - 1.35rem)",
+          height: "100%",
+          right: "calc(25% - 1.377rem)",
           bottom: "0",
-          zIndex: "-1",
         }}
-        className="hide-in-tablet"
+        className="hide-in-tablet vertical-dashed-line"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "50%",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
       <hr
         style={{
-          position: "absolute",
           top: "0",
           width: "100vw",
-          border: "1px solid #202020",
         }}
       />
       <hr
         style={{
-          position: "absolute",
           bottom: "0",
           width: "100vw",
-          border: "1px solid #202020",
         }}
         className="hide-in-tablet"
       />
@@ -225,7 +207,7 @@ const Invoicing = () => {
           <div
             className={`step-invoicing ${step[id] && "step-invoicing-visible"}`}
           >
-            <p style={{ fontSize: "1.4rem", color: "#e9e9e9" }}>{item.abbr}</p>
+            <p style={{ fontSize: "1.6rem", color: "#e9e9e9" }}>{item.title}</p>
             <p style={{ fontSize: "1.2rem", color: "#b1b1b1" }}>
               {item.subtitle}
             </p>
@@ -285,20 +267,14 @@ const Invoicing = () => {
         </div>
         <hr
           style={{
-            position: "absolute",
             top: "0",
-            left: "-32rem",
-            width: "150vw",
-            border: "1px solid #202020",
+            width: "100vw",
           }}
         />
         <hr
           style={{
-            position: "absolute",
-            bottom: "0",
-            left: "-32rem",
-            width: "150vw",
-            border: "1px solid #202020",
+            bottom: "1px",
+            width: "100vw",
           }}
         />
       </div>
@@ -345,7 +321,7 @@ const Product = () => {
   return (
     <div className="layout-paragraph product">
       <Heading
-        title={`Simplified product creation`}
+        title={`Simplified <span style="text-wrap: nowrap">product creation</span>`}
         subtitle={`Utilize our internal wallet or link an unlimited number of external wallets for hassle-free product creation.`}
       />
       <div className="layout-product">
@@ -409,6 +385,8 @@ const Product = () => {
                   style={{
                     border: `1px solid ${step[id] ? "#e1e1e1" : "#202020"}`,
                     width: `calc(${100 / products.length}%)`,
+                    position: "static",
+                    display: "block",
                   }}
                 />
               ))}
@@ -470,6 +448,7 @@ const Safe = () => {
     <div
       style={{
         display: "flex",
+        alignItems: "center",
         flexDirection: "column",
         gap: "4rem",
         padding: "4rem",
@@ -491,7 +470,9 @@ const Safe = () => {
               marginBottom: "1rem",
             }}
           />
-          <p style={{ fontSize: "2.8rem" }}>Safeguarding your funds</p>
+          <p style={{ fontSize: "2.8rem" }}>
+            Safeguarding <span style={{ textWrap: "nowrap" }}>your funds</span>
+          </p>
         </div>
         <p className="sub-title" style={{ width: "50%" }}>
           To protect against crypto price fluctuations, we convert
@@ -536,6 +517,7 @@ const Safe = () => {
                 <hr
                   style={{
                     position: "relative",
+                    display: "block",
                     width: "100%",
                     zIndex: "1",
                   }}
@@ -552,16 +534,14 @@ const Safe = () => {
       <hr
         style={{
           top: "0",
-          left: "-32rem",
-          width: "150vw",
+          width: "100vw",
           zIndex: "1",
         }}
       />
       <hr
         style={{
           bottom: "0",
-          left: "-32rem",
-          width: "150vw",
+          width: "100vw",
           zIndex: "1",
         }}
       />
@@ -572,7 +552,7 @@ const Safe = () => {
 const Analytics = () => {
   return (
     <div
-      className="layout-paragraph"
+      className="layout-paragraph analytics"
       style={{
         paddingBottom: "0",
       }}
@@ -593,13 +573,13 @@ const Analytics = () => {
 
       <p
         style={{
-          fontSize: "2.8rem",
+          fontSize: "2.4rem",
           textAlign: "center",
           width: "70%",
         }}
       >
-        Harness these insights to make <br />
-        informed decisions, streamline your operations & drive business growth
+        Harness these insights to make informed decisions, streamline your
+        operations & drive business growth
       </p>
     </div>
   );
@@ -673,16 +653,14 @@ const Security = () => {
         <hr
           style={{
             top: "0",
-            left: "-32rem",
-            width: "200vw",
+            width: "100vw",
             zIndex: "1",
           }}
         />
         <hr
           style={{
             bottom: "0",
-            left: "-32rem",
-            width: "200vw",
+            width: "100vw",
             zIndex: "1",
           }}
         />
