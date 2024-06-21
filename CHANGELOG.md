@@ -48,6 +48,7 @@
 - Settings Page is implemented (MAJOR)
 - Identification Process implemented in Settings Page (MAJOR)
 - Add Portfolio coins zero balance case (MINOR)
+- Fix gas fee in cross swap
 
 # v1.0.0
 
