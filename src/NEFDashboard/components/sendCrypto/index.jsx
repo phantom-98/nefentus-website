@@ -29,6 +29,7 @@ import backendAPI from "../../../api/backendAPI";
 import useBalances from "../../../hooks/balances";
 import {
   formatTokenBalance,
+  formatUSDBalance,
   getWalleBackground,
   getWalletIcon,
 } from "../../../utils";
@@ -62,6 +63,7 @@ import {
 } from "@thirdweb-dev/react";
 import { useTranslation } from "react-i18next";
 import GasDetail from "./gasDetails";
+import { getCurrencyFlag, getCurrencySymbol } from "../../../countries";
 
 const SendCrypto = ({
   openSendModal,
@@ -86,21 +88,21 @@ const SendCrypto = ({
   const [receiverAddress, setReceiverAddress] = useState(null);
   const [percentage, setPercentage] = useState(0);
   const [toggleCurrency, setToggleCurrency] = useState(false);
+  const [amountInCrypto, setAmountInCrypto] = useState();
+  const [amountInCurrency, setAmountInCurrency] = useState();
   const [gasValues, setGasValues] = useState({});
   const [gasLimit] = useState(600_000);
   const [loader, setLoader] = useState(true);
-  const [gasPriceLoader, setGasPriceLoader] = useState(true);
+  const [buttonLoder, setButtonLoader] = useState(false);
   const [disable, setDisable] = useState(false);
   const [step2GasValues, setStep2GasValues] = useState({});
   const [step2Amount, setStep2Amount] = useState(0);
 
-  let gasPriceInterval;
-
   const currencyList = currencies();
   const backend_API = new backendAPI();
   const uniSwap = new uniswapApi();
-  const { fetchBalanceForWallet } = useBalances();
-  const { prices } = usePrices();
+  const { balances, fetchBalances } = useBalances();
+  const { prices, fetchPrices } = usePrices();
   const connect = useConnect();
   const disconnect = useDisconnect();
   const switchNetwork = useSwitchChain();
@@ -108,87 +110,12 @@ const SendCrypto = ({
   const createWalletInstance = useCreateWalletInstance();
   const wallet = useConnectedWallet();
 
-  useEffect(() => {
-    if (prices.every((amount) => amount != undefined)) fetchWallets();
-  }, [prices]);
-
-  useEffect(() => {
-    if (currencyItems?.length) setSelectedCurrency(currencyItems[0]);
-  }, [currencyItems]);
-
-  // handling intervals through step state
-  useEffect(() => {
-    if (step == 1 && Object.keys(selectedCoin)?.length) startGasPriceInterval();
-    else setDisable(true);
-    return () => clearInterval(gasPriceInterval);
-  }, [step]);
-
-  const handleAmountPercentage = (percentage) => {
-    if (selectedCoin?.value == 0) return;
-    const updatedAmount =
-      selectedCoin?.value -
-      (gasValues?.gasPrice * gasLimit) / 10 ** selectedCoin?.decimals;
-    if (updatedAmount > 0) {
-      handleAmount(
-        toggleCurrency
-          ? (
-              (selectedCoin?.price *
-                updatedAmount *
-                +selectedCurrency?.price *
-                percentage) /
-              100
-            )?.toFixed(9)
-          : ((updatedAmount * percentage) / 100)?.toFixed(9),
-      );
-      setPercentage(percentage);
-    } else handleAmount(0, true);
-  };
-
-  const handleAmount = (value, isChanged = false) => {
-    setSelectedCoin({
-      ...selectedCoin,
-      amount: toggleCurrency
-        ? value / (+selectedCurrency?.price * selectedCoin?.price)
-        : value,
-      amount_for_currency: toggleCurrency
-        ? value
-        : selectedCoin?.price * value * +selectedCurrency?.price,
-    });
-    isChanged && setPercentage(0);
-  };
-
-  useMemo(() => {
-    if (Object.keys(gasValues)?.length && selectedCoin?.amount != "")
-      percentage
-        ? handleAmountPercentage(percentage)
-        : handleAmount(
-            toggleCurrency
-              ? selectedCoin?.amount_for_currency
-              : selectedCoin?.amount,
-          );
-  }, [gasValues, step]);
-
-  useEffect(() => {
-    if (
-      Object.keys(gasValues)?.length &&
-      selectedCoin?.amount != "" &&
-      step == 1
-    ) {
-      const updatedAmount =
-        selectedCoin?.price * selectedCoin?.amount * +selectedCurrency?.price;
-      setTotal(updatedAmount);
-      setStep2Amount(selectedCoin?.amount);
-      setStep2GasValues({ ...gasValues });
-    }
-  }, [gasValues, step, selectedCoin]);
-
-  const startGasPriceInterval = (coin = selectedCoin) => {
-    setDisable(false);
-    if (Object.keys(coin)?.length && step == 1) {
-      gasPriceInterval = setInterval(
-        async () => await fetchGasPrice(coin?.abbr),
-        30000,
-      );
+  const fetchCurrencyRates = async () => {
+    const res = await backend_API.getRateList("USD");
+    console.log("rates", res);
+    if (res) {
+      setcurrencyItems(res);
+      setSelectedCurrency(res[0]);
     }
   };
 
@@ -196,17 +123,13 @@ const SendCrypto = ({
     setLoader(true);
     const list = await backend_API.getWalletAddresses();
 
-    const balance = await getWalletCryptoList(list[0]);
-
     const modifiedList = list.map((wallet, index) => ({
       ...wallet,
-      name: wallet?.type,
-      balance:
-        index == 0
-          ? balance
-              .map((balance, balanceIndex) => balance * prices[balanceIndex])
-              .reduce((pre, cur) => parseFloat(cur) + parseFloat(pre), 0)
-          : 0,
+      name:
+        wallet?.type == "internal"
+          ? "Nefentus"
+          : wallet?.type?.substring(0, 1).toUpperCase() +
+            wallet?.type?.substring(1),
       ...getWalleBackground(wallet?.type),
     }));
 
@@ -215,86 +138,21 @@ const SendCrypto = ({
     setLoader(false);
   };
 
-  const getWalletCryptoList = async (wallet) => {
-    return await fetchBalanceForWallet(wallet?.address)
-      .then(async (cryptoBalances) => {
-        if (cryptoBalances.some((amount) => amount == undefined)) return [];
-        const euroCurrency = await backend_API.getCurrencyRate();
-        setcurrencyItems([
-          {
-            icon: "$",
-            name: "USD",
-            price: "1.00",
-          },
-          {
-            icon: "€",
-            name: "Euro",
-            price: euroCurrency?.rate?.toFixed(2),
-          },
-        ]);
-
-        let totalBalance = cryptoBalances
-          .map((balance, index) => balance * prices[index])
-          .reduce((pre, cur) => parseFloat(cur) + parseFloat(pre), 0);
-
-        const pers = cryptoBalances?.map((balance, index) =>
-          parseFloat(
-            ((balance * prices[index]) / (totalBalance * 1.0)) * 100,
-          ).toFixed(2),
-        );
-        const data = currencyList.map((currency, index) => ({
-          ...currency,
-          middleName: blockchainToName(currency.blockchain),
-          middleInfo: "Network",
-          price: prices[index],
-          value: cryptoBalances[index],
-          amount_dollar: parseFloat(
-            (prices[index] * cryptoBalances[index]).toFixed(4),
-          ),
-          amount_euro:
-            +euroCurrency?.rate * prices[index] * cryptoBalances[index],
-          percentage: pers[index],
-          icon:
-            currency.name?.toLowerCase() == "ethereum" ||
-            currency.name?.toLowerCase() == "wrapped ethereum"
-              ? Ethereum
-              : currency?.icon,
-        }));
-        setCryptoList(data);
-        setSelectedCoin({ ...data[0], amount: "" });
-        fetchGasPrice(data[0]?.abbr);
-        startGasPriceInterval(data[0]);
-
-        return cryptoBalances;
-      })
-      .catch((e) => {
-        console.log(e);
-        return [];
-      });
-  };
-
-  const fetchGasPrice = async (blockchain = "ETH") => {
-    uniSwap
-      .getGasValues(blockchain)
-      .then((resp) => {
-        setGasPriceLoader(false);
-        if (step == 1) setGasValues(resp);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  const handleActiveWallet = async (wlt) => {
-    const balance = await getWalletCryptoList(wlt);
-    setSelectedWallet({
-      ...wlt,
-      balance: balance
-        .map((balance, balanceIndex) => balance * prices[balanceIndex])
-        .reduce((pre, cur) => parseFloat(cur) + parseFloat(pre), 0),
-    });
-    onCloseDrawer();
-    await onWalletConnect(wlt);
+  const handleAmount = (value) => {
+    setPercentage(null);
+    if (toggleCurrency) {
+      setAmountInCurrency(value || amountInCurrency);
+      setAmountInCrypto(
+        (value || amountInCurrency) /
+          selectedCoin.price /
+          selectedCurrency.rate,
+      );
+    } else {
+      setAmountInCrypto(value || amountInCrypto);
+      setAmountInCurrency(
+        (value || amountInCrypto) * selectedCoin.price * selectedCurrency.rate,
+      );
+    }
   };
 
   const onWalletConnect = async (wlt = selectedWallet) => {
@@ -351,12 +209,6 @@ const SendCrypto = ({
     onWalletSuccess(true);
   };
 
-  const handleSelectedCoin = async (coin) => {
-    setSelectedCoin({ ...coin, amount: "" });
-    fetchGasPrice(coin?.abbr);
-    onCloseDrawer();
-  };
-
   const onCloseDrawer = () => {
     setOpenDrawer(false);
     setOpenCryptoDrawer(false);
@@ -368,7 +220,7 @@ const SendCrypto = ({
 
   const handlePayment = async () => {
     // if (isWithdrawing) return;
-    if (!selectedCoin?.amount) {
+    if (!amountInCrypto) {
       setErrorMessage(t("dashboard.cryptoCard.sendModal.amountError"));
       return;
     }
@@ -379,6 +231,7 @@ const SendCrypto = ({
     }
 
     // Withdraw
+    setButtonLoader(true);
     const tokenAddress = selectedCoin?.address;
     if (!selectedWallet?.internal) {
       setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawing"));
@@ -391,9 +244,9 @@ const SendCrypto = ({
         const txReceipt = await web3API.send(
           tokenAddress,
           selectedCoin?.blockchain,
-          typeof selectedCoin?.amount == "string"
-            ? selectedCoin?.amount
-            : `${selectedCoin?.amount?.toFixed(7)}`,
+          typeof amountInCrypto == "string"
+            ? amountInCrypto
+            : `${amountInCrypto?.toFixed(7)}`,
           receiverAddress,
         );
         if (txReceipt.status === 1) {
@@ -408,11 +261,10 @@ const SendCrypto = ({
         setErrorMessage(t("messages.error.withdraw"));
       }
     } else {
-      const backend_Api = new backendAPI();
-      const ret = await backend_Api.send(
+      const ret = await backend_API.send(
         tokenAddress,
         selectedCoin?.blockchain,
-        selectedCoin?.amount,
+        amountInCrypto,
         selectedWallet?.address,
         receiverAddress,
         password,
@@ -424,12 +276,61 @@ const SendCrypto = ({
         setErrorMessage(t("messages.error.withdraw"));
       }
     }
-    await disconnect();
+    setButtonLoader(false);
+    // await disconnect();
     // setPassword("");
     // setIsWithdrawing(false);
     onWalletSuccess(false);
     handleSubmitCrypto();
   };
+
+  useEffect(() => {
+    if (openSendModal) {
+      fetchPrices();
+      fetchWallets();
+      fetchCurrencyRates();
+      setCryptoList([...currencies()]);
+      setSelectedCoin({
+        ...currencies()[0],
+        index: 0,
+      });
+    }
+  }, [openSendModal]);
+
+  useEffect(() => {
+    fetchBalances(selectedWallet?.address);
+    onWalletConnect();
+  }, [selectedWallet]);
+
+  useEffect(() => {
+    setCryptoList(
+      currencies().map((crypto, index) => ({
+        ...crypto,
+        price: prices[index],
+        balance: balances[index],
+      })),
+    );
+    setSelectedCoin((prev) => ({
+      ...prev,
+      price: prices[prev.index],
+      balance: balances[prev.index],
+    }));
+  }, [prices, balances]);
+
+  useEffect(() => {
+    handleAmount();
+  }, [toggleCurrency, selectedCoin, selectedCurrency]);
+
+  useEffect(() => {
+    if (gasValues?.gas != undefined && percentage) {
+      const v =
+        (selectedCoin.balance * percentage) / 100.0 -
+        (gasValues?.native == selectedCoin.abbr ? gasValues.gas : 0.0);
+      console.log("percentage", (selectedCoin.balance * percentage) / 100.0);
+      setAmountInCrypto(v);
+      setAmountInCurrency(v * selectedCoin.price * selectedCurrency.rate);
+    }
+  }, [gasValues, percentage]);
 
   return (
     <Modal
@@ -485,7 +386,7 @@ const SendCrypto = ({
                 className="send-crypto-wallet-container send-crypto-full-width"
                 align="center"
                 justify="space-between"
-                onClick={() => !disable && setOpenDrawer(!openDrawer)}
+                onClick={() => setOpenDrawer(!openDrawer)}
               >
                 <Flex align="center" gap={6}>
                   <div className="send-crypto-logo-container">
@@ -555,18 +456,12 @@ const SendCrypto = ({
                           width={14}
                           height={14}
                         />
-                        <div>
-                          {" "}
-                          {formatTokenBalance(selectedCoin?.amount, 4)}
-                        </div>
+                        <div> {formatTokenBalance(amountInCrypto, 4)}</div>
                       </Flex>
                     ) : (
                       <div>
-                        {(selectedCurrency?.icon ?? "$") +
-                          formatTokenBalance(
-                            selectedCoin?.amount_for_currency,
-                            2,
-                          )}
+                        {getCurrencySymbol()[selectedCurrency.to]}
+                        {formatTokenBalance(amountInCurrency, 2)}
                       </div>
                     )}
 
@@ -586,14 +481,14 @@ const SendCrypto = ({
                     size="large"
                     type="number"
                     onWheel={(e) => e.target.blur()}
-                    value={
-                      toggleCurrency
-                        ? selectedCoin?.amount_for_currency
-                        : selectedCoin?.amount
-                    }
+                    value={toggleCurrency ? amountInCurrency : amountInCrypto}
                     disabled={disable}
-                    onChange={(e) => handleAmount(e.target.value, true)}
-                    className="crypto-amount-input"
+                    onChange={(e) => {
+                      handleAmount(e.target.value);
+                    }}
+                    className={`crypto-amount-input ${
+                      amountInCrypto < 0 && "crypto-amount-danger"
+                    }`}
                   />
                   <Flex
                     align="center"
@@ -603,7 +498,7 @@ const SendCrypto = ({
                   >
                     {toggleCurrency ? (
                       <>
-                        <div>{selectedCurrency?.icon}</div>
+                        <div>{getCurrencySymbol()[selectedCurrency?.to]}</div>
                         <div>{selectedCurrency?.name}</div>
                         <img src={ArrowDown} />
                       </>
@@ -627,7 +522,7 @@ const SendCrypto = ({
                     className={`amount-percentage ${
                       percentage === value && "send-modal-percentage-active"
                     }`}
-                    onClick={() => handleAmountPercentage(value)}
+                    onClick={() => setPercentage(value)}
                   >
                     {value}%
                   </Button>
@@ -640,21 +535,11 @@ const SendCrypto = ({
                   {t("sendModal.balance")}
                 </div>
                 <Flex align="center" gap={6}>
-                  <div>{formatTokenBalance(selectedCoin?.value, 4)}</div>
+                  <div>{formatTokenBalance(selectedCoin?.balance, 4)}</div>
                   <div>{selectedCoin?.abbr}</div>
                 </Flex>
               </Flex>
             </Col>
-            {gasPriceLoader ? (
-              <Skeleton.Input active className="wallet-skeleton" />
-            ) : (
-              <GasDetail
-                gasLimit={gasLimit}
-                gasValues={gasValues}
-                selectedCoin={selectedCoin}
-                selectedCurrency={selectedCurrency}
-              />
-            )}
           </>
         ) : (
           <Flex vertical justify="center" gap={16}>
@@ -663,37 +548,63 @@ const SendCrypto = ({
                 {t("sendModal.amount")}
               </div>
               <div className="send-crypto-amount default-text">
-                {step2Amount + " " + selectedCoin?.abbr}{" "}
+                {amountInCrypto + " " + selectedCoin?.abbr}{" "}
               </div>
               <Flex align="center" gap={2}>
                 <img src={SwapHorizontal} />
                 <div className="default-text send-crypto-title">
-                  ≈{selectedCurrency?.icon + total}
+                  ≈{getCurrencySymbol()[selectedCurrency.to]}{" "}
+                  {formatUSDBalance(
+                    amountInCurrency +
+                      selectedCurrency.rate * gasValues?.gasUSD,
+                  )}
                 </div>
               </Flex>
             </Flex>
-
-            <GasDetail
-              gasLimit={gasLimit}
-              gasValues={step2GasValues}
-              selectedCoin={selectedCoin}
-            />
           </Flex>
         )}
+
+        <GasDetail
+          token={selectedCoin}
+          currency={selectedCurrency.to}
+          rate={selectedCurrency.rate}
+          setFee={setGasValues}
+        />
         {step == 1 ? (
           <Button
             className="send-crypto-footer-button"
-            onClick={() => setStep(() => step + 1)}
+            loading={buttonLoder}
             disabled={
-              selectedCoin?.value < selectedCoin?.amount ||
-              selectedCoin?.amount == "" ||
-              selectedCoin?.amount == 0
+              selectedCoin?.balance < amountInCrypto ||
+              amountInCrypto == "" ||
+              amountInCrypto <= 0 ||
+              (selectedWallet.type === "internal" && !password)
             }
+            onClick={() => {
+              if (selectedWallet.type === "internal") {
+                setButtonLoader(true);
+                backend_API.checkPassword(password).then((res) => {
+                  if (res) {
+                    setStep(2);
+                  } else {
+                    setPassword("");
+                  }
+                  setButtonLoader(false);
+                });
+              } else {
+                setStep(2);
+              }
+            }}
           >
             {t("sendModal.next")}
           </Button>
         ) : (
-          <Button className="send-crypto-footer-button" onClick={handlePayment}>
+          <Button
+            loading={buttonLoder}
+            disabled={!receiverAddress}
+            className="send-crypto-footer-button"
+            onClick={handlePayment}
+          >
             {t("confirm")}
           </Button>
         )}
@@ -738,7 +649,10 @@ const SendCrypto = ({
                         ? "send-crypto-selected-wallet send-crypto-drawer-wallet"
                         : "send-crypto-drawer-wallet"
                     }
-                    onClick={() => handleActiveWallet(wallet)}
+                    onClick={() => {
+                      setSelectedWallet(wallet);
+                      onCloseDrawer();
+                    }}
                     key={index}
                   >
                     <Flex
@@ -768,7 +682,7 @@ const SendCrypto = ({
                       className="send-crypto-drawer-wallet"
                       onClick={() => {
                         setSelectedCurrency(item);
-                        setOpenCryptoDrawer(!openCryptoDrawer);
+                        onCloseDrawer();
                       }}
                       key={index}
                       justify="space-between"
@@ -779,12 +693,12 @@ const SendCrypto = ({
                           justify="center"
                           className="send-crypto-drawer-coin-logo"
                         >
-                          <div>{item?.icon}</div>
+                          {getCurrencyFlag()[item?.to]}
                         </Flex>
-                        <div className="default-text">{item?.name}</div>
+                        <div className="default-text">{item?.to}</div>
                       </Flex>
                       <div className="crypto-coin-value">
-                        {item?.price ?? 0}
+                        ${formatUSDBalance(1 / item?.rate)}
                       </div>
                     </Flex>
                   ))
@@ -792,7 +706,11 @@ const SendCrypto = ({
                     <Flex
                       className="send-crypto-drawer-wallet"
                       onClick={() => {
-                        handleSelectedCoin(cryptoCoin);
+                        setSelectedCoin({
+                          ...cryptoCoin,
+                          index,
+                        });
+                        onCloseDrawer();
                       }}
                       key={index}
                       justify="space-between"
@@ -806,16 +724,16 @@ const SendCrypto = ({
                           <img src={cryptoCoin?.icon} width={36} height={36} />
                         </Flex>
                         <div>
-                          <div className="default-text">{cryptoCoin?.name}</div>
+                          <div className="default-text">{cryptoCoin?.abbr}</div>
                           <div className="default-text-gray">
-                            {cryptoCoin?.middleName}
+                            {blockchainToName(cryptoCoin?.blockchain)}
                           </div>
                         </div>
                       </Flex>
                       <div className="crypto-coin-value">
                         <div>
                           {" "}
-                          {formatTokenBalance(cryptoCoin?.value, 4) ?? 0}
+                          {formatTokenBalance(cryptoCoin?.balance, 4) ?? 0}
                         </div>
                         <div>${cryptoCoin?.price?.toFixed(2)}</div>
                       </div>
