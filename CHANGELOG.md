@@ -1,5 +1,6 @@
 # New changes
 
+- Fix texts & translations in the dashboard (PATCH)
 - Fix some minor issues in landing (PATCH)
 - Fix converter in case of internal wallet (MINOR)
 
