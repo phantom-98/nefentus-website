@@ -13,7 +13,7 @@ import {
 } from "antd";
 import SidebarNew from "../../components/sidebarNew";
 import Languages from "../../../components/navigation/languages.jsx/languages";
-import { getRole } from "../../../utils";
+import { getRole, checkJwtToken, logOut } from "../../../utils";
 import SettingIcon from "../../../assets/newDashboardIcons/settings.svg";
 import ProfileImg from "../../../assets/icon/user.svg";
 import SupportIcon from "../../../assets/newDashboardIcons/support.svg";
@@ -46,15 +46,8 @@ const DashboardLayout = ({ children, title }) => {
   const [currency, setCurrency] = useState("USD");
 
   useEffect(() => {
-    checkToken();
+    checkJwtToken();
   }, []);
-
-  async function checkToken() {
-    const jwtIsValid = await backend_API.checkJwt();
-    if (!jwtIsValid) {
-      logOut();
-    }
-  }
 
   useEffect(() => {
     if (currency !== "USD") {
@@ -76,15 +69,6 @@ const DashboardLayout = ({ children, title }) => {
         ...res,
         symbol: getCurrencySymbol()[to],
       });
-    }
-  };
-
-  const logOut = async () => {
-    try {
-      const data = await backend_API.signout();
-      navigate("/");
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -186,7 +170,7 @@ const DashboardLayout = ({ children, title }) => {
       label: (
         <div
           className="default-text profile-dropdown-width"
-          onClick={() => logOut()}
+          onClick={() => logOut(navigate)}
         >
           {t("personalDashboard.profileDropdown.logout")}
         </div>
