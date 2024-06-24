@@ -34,14 +34,13 @@ const B2B = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const numImages = 3;
+    const numImages = products.length;
 
-    // Create the time line for the scroll animation
-    const tl = gsap.from(".product-img", {
+    const tl = gsap.from(".b2b .product", {
       scrollTrigger: {
-        trigger: ".layout-paragraph.product .sub-title",
+        trigger: ".layout-paragraph.product .layout-title .sub-title",
         start: "top top",
-        end: () => `+=${numImages * 200}%`,
+        end: () => `+=${numImages * 120}%`,
         scrub: true,
         pin: ".landing-layout.container.b2b",
         onUpdate: (self) => {
@@ -58,34 +57,38 @@ const B2B = () => {
       ease: "none",
     });
     return () => {
-      if (t1) t1.kill();
+      tl?.kill();
     };
   }, []);
+
   return (
-    <div
-      className="landing-layout container b2b"
-      style={{
-        gap: "4rem",
-      }}
-    >
-      <Hero />
+    <div>
+      <div
+        className="landing-layout container b2b"
+        style={{
+          gap: "4rem",
+        }}
+      >
+        <Hero />
 
-      <Invoicing />
+        <Invoicing />
 
-      <Product stepId={step} progress={progress} />
+        <Product stepId={step} progress={progress} />
 
-      <Safe />
+        <Safe />
 
-      <Analytics />
+        <Analytics />
 
-      <Security />
+        <Security />
 
-      <Conclusion
-        icon={NefentusLogo}
-        title={`Transparent Pricing,\n No Strings Attached`}
-        subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating & using an account for personal use is completely free. Get started today!`}
-        button={`Create an account`}
-      />
+        <Conclusion
+          key="b2b-conclusion"
+          icon={NefentusLogo}
+          title={`Transparent Pricing,\n No Strings Attached`}
+          subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating & using an account for personal use is completely free. Get started today!`}
+          button={`Create an account`}
+        />
+      </div>
     </div>
   );
 };
