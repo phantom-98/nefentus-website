@@ -2,6 +2,7 @@
 
 - Fix some minor issues in landing (PATCH)
 - Fix converter in case of internal wallet (MINOR)
+- Fix user role order (PATCH)
 
 # 1.3.0
 
