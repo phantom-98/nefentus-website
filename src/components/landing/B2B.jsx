@@ -32,34 +32,66 @@ gsap.registerPlugin(ScrollTrigger);
 const B2B = () => {
   const [step, setStep] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [isPositionedAtStart, setIsPositionedAtStart] = useState(false);
+
+  const b2bContainer = useRef();
+
+  const handleScroll = (e) => {
+    const position =
+      (100 * document.documentElement.scrollTop) /
+      document.documentElement.offsetHeight;
+    if (position === 0) {
+      setIsPositionedAtStart(true);
+    }
+  };
 
   useEffect(() => {
-    const numImages = products.length;
+    // Ensure the component has mounted in a browser environment
+    window.addEventListener("scroll", handleScroll);
 
-    const tl = gsap.from(".b2b .product", {
-      scrollTrigger: {
-        trigger: ".layout-paragraph.product .layout-title .sub-title",
-        start: "top top",
-        end: () => `+=${numImages * 120}%`,
-        scrub: true,
-        pin: ".landing-layout.container.b2b",
-        onUpdate: (self) => {
-          setStep(Math.floor(self.progress * numImages));
-          setProgress(Math.floor(self.progress * numImages * 100));
-        },
-        onLeave: () => {
-          setStep(numImages - 1);
-        },
-        onLeaveBack: () => {
-          setStep(0);
-        },
-      },
-      ease: "none",
-    });
+    // Scroll to the top when component mounts
+    const position =
+      (100 * document.documentElement.scrollTop) /
+      document.documentElement.offsetHeight;
+    if (position === 0) setIsPositionedAtStart(true);
+    else window.scrollTo(0, 0);
     return () => {
-      tl?.kill();
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    if (isPositionedAtStart) {
+      // Initialize GSAP
+      const numImages = products.length;
+
+      const tl = gsap.from(".b2b .product", {
+        scrollTrigger: {
+          trigger: ".layout-paragraph.product .layout-title .sub-title",
+          start: "top top",
+          end: () => `+=${numImages * 120}%`,
+          scrub: true,
+          pin: ".landing-layout.container.b2b",
+          onUpdate: (self) => {
+            setStep(Math.floor(self.progress * numImages));
+            setProgress(Math.floor(self.progress * numImages * 100));
+          },
+          onLeave: () => {
+            setStep(numImages - 1);
+          },
+          onLeaveBack: () => {
+            setStep(0);
+          },
+        },
+        duration: 1,
+        ease: "none",
+      });
+
+      return () => {
+        tl.kill(); // Ensure GSAP instance is killed
+      };
+    }
+  }, [isPositionedAtStart]);
 
   return (
     <div>
@@ -68,6 +100,7 @@ const B2B = () => {
         style={{
           gap: "4rem",
         }}
+        ref={b2bContainer}
       >
         <Hero />
 
