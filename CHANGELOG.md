@@ -3,6 +3,7 @@
 - Fix some minor issues in landing (PATCH)
 - Fix converter in case of internal wallet (MINOR)
 - Fix user role order (PATCH)
+- Issue with wallet connection on the Add Wallet button has been resolved. (MINOR)
 
 # 1.3.0
 
