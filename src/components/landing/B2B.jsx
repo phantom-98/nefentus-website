@@ -37,10 +37,7 @@ const B2B = () => {
   const b2bContainer = useRef();
 
   const handleScroll = (e) => {
-    const position =
-      (100 * document.documentElement.scrollTop) /
-      document.documentElement.offsetHeight;
-    if (position === 0) {
+    if (document.documentElement.scrollTop === 0) {
       setIsPositionedAtStart(true);
     }
   };
@@ -50,11 +47,7 @@ const B2B = () => {
     window.addEventListener("scroll", handleScroll);
 
     // Scroll to the top when component mounts
-    const position =
-      (100 * document.documentElement.scrollTop) /
-      document.documentElement.offsetHeight;
-    if (position === 0) setIsPositionedAtStart(true);
-    else window.scrollTo(0, 0);
+    setIsPositionedAtStart(document.documentElement.scrollTop === 0);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
