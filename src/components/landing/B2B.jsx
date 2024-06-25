@@ -62,7 +62,7 @@ const B2B = () => {
         scrollTrigger: {
           trigger: ".layout-paragraph.product .layout-title .sub-title",
           start: "top top",
-          end: () => `+=${numImages * 120}%`,
+          end: () => `+=${numImages * 80}%`,
           scrub: true,
           pin: ".landing-layout.container.b2b",
           onUpdate: (self) => {
