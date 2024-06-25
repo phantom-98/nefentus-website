@@ -6,6 +6,7 @@
 - Fix user role order (PATCH)
 - Issue with wallet connection on the Add Wallet button has been resolved. (MINOR)
 - Fix undefined user issue in new dashboard (MINOR)
+- Authentication Flow is functional (MAJOR)
 
 # 1.3.0
 

@@ -1268,9 +1268,9 @@
     },
     "scanModal": {
       "title": "Scan QR-code or paste code",
-      "verifyCode": "TOTP has been verified successfully!",
+      "verifyCode": "Authentication has been verified successfully!",
       "copyLink": "Link copied to clipboard!",
-      "TOTPTitle": "TOTP Authentication",
+      "TOTPTitle": "Multi-Factor Authentication",
       "TOTPDescription": "Enter code from Authenticator"
     },
     "recommendRecoverModal": {

@@ -1196,9 +1196,9 @@
     },
     "scanModal": {
       "title": "QR-Code scannen oder Code einfügen",
-      "verifyCode": "TOTP wurde erfolgreich verifiziert",
+      "verifyCode": "Authenticator wurde erfolgreich verifiziert",
       "copyLink": "Link in die Zwischenablage kopiert!",
-      "TOTPTitle": "TOTP-Authentifizierung",
+      "TOTPTitle": "Mehr-Faktor-Authentifizierung",
       "TOTPDescription": "Geben Sie den Code vom Authenticator ein"
     },
     "recommendRecoverModal": {
