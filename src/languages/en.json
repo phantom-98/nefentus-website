@@ -548,7 +548,7 @@
       "service_fee": "Service Fee",
       "companyPlaceholder": "Enter Company",
       "service_fee_description": "The percentage that the user receives from each transaction",
-      "confirmCreate": "Add user"
+      "confirmCreate": "Add"
     },
     "earningCards": {
       "totalSales": "Total sales",
