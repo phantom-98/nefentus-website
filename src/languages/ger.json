@@ -458,11 +458,11 @@
       "name": "Name",
       "lastName": "Nachname",
       "email": "E-Mail",
-      "agent": "E-Mail des Agenten",
-      "roles": "Rollen",
+      "agent": "Agent",
+      "roles": "Rolle",
       "status": "Status",
-      "income ": "Einkommen",
-      "joinedOn": "Beigetreten am",
+      "income": "Einkommen",
+      "joinedOn": "Registriert am",
       "earnings": "Ergebnis",
       "actions": "Aktionen",
       "activate": "aktivieren"
@@ -470,7 +470,7 @@
     "modal": {
       "create_user": "Benutzer hinzufügen",
       "edit_user": "Benutzer bearbeiten",
-      "titleCreate": "Hinzufügen",
+      "titleCreate": "Benutzer hinzufügen",
       "titleEdit": "Benutzer bearbeiten",
       "firstName": "Vorname",
       "firstNamePlaceholder": "Geben Sie den Vornamen ein",
@@ -488,7 +488,8 @@
       "address": "Adresse",
       "service_fee": "Servicegebühr",
       "companyPlaceholder": "Unternehmen eingeben",
-      "service_fee_description": "Der Prozentsatz, den der Benutzer von jeder Transaktion erhält"
+      "service_fee_description": "Der Prozentsatz, den der Benutzer von jeder Transaktion erhält",
+      "confirmCreate": "Hinzufügen"
     },
     "earningCards": {
       "totalSales": "Gesamtumsatz",
@@ -1016,10 +1017,10 @@
     "email": "E-Mail",
     "name": "Name",
     "number": "Nummer",
-    "person": "Person",
+    "person": "Privatperson",
     "company": "Unternehmen",
     "address": "Straße, Stadt",
-    "legalStatus": "Rechtsstellung",
+    "legalStatus": "Rechtlicher Status",
     "addressHint": "Straße, Stadt",
     "taxNumber": "UmSt. Nummer",
     "vat": "UmSt.",
@@ -1033,7 +1034,7 @@
     "totalDue": "Insgesamt fällig",
     "note": "Hinweis",
     "buyer": {
-      "customer": "Informationen für Kunden",
+      "customer": "Kunden-Informationen",
       "fullName": "Vollständiger Name des Empfängers",
       "email": "E-Mail des Empfängers"
     },
@@ -1049,7 +1050,7 @@
       "name": "Artikel",
       "price": "Preis",
       "quantity": "Menge",
-      "total": "Preis insgesamt"
+      "total": "Gesamtpreis"
     },
     "table": {
       "title": "Alle Rechnungen",
@@ -1075,7 +1076,7 @@
       "gasPrice": "Gaspreis",
       "gasLimit": "Gaslimit",
       "updating": "Gaspreisaktualisierung alle 30 Sekunden",
-      "total": "Gesamtbetrag fällig"
+      "total": "Fälliger Gesamtbetrag"
     },
     "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
@@ -1083,7 +1084,7 @@
     "informVAT1": "Die MwSt. von",
     "informVAT2": "ist in diesem Betrag enthalten",
     "cryptoAmount": "In Krypto",
-    "cryptoDescription": "Dieser Betrag entspricht dem Rechnungsbetrag in der ausgewählten Kryptowährung. Nach der Bezahlung werden diese Mittel dem Verkäufer zugeschickt.",
+    "cryptoDescription": "Dieser Betrag entspricht dem Rechnungsbetrag in der ausgewählten Kryptowährung. Nach der Bezahlung wird der Betrag dem Verkäufer gutgeschrieben.",
     "chooseWallet": "Wallet auswählen",
     "chooseCoin": "Kryptowährung auswählen",
     "payButton": "Kaufen",
@@ -1091,7 +1092,7 @@
     "terms": "Bedingungen des Dienstes",
     "agree2": "einverstanden",
     "pay": {
-      "title": "Details zur Bezahlung",
+      "title": "Zahlungsdetails",
       "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein",
       "internalWalletButtonTitle": "Nefentus Wallet",
       "externalWalletButtonTitle": "Andere Wallets"
@@ -1125,9 +1126,9 @@
     }
   },
   "converter": {
-    "title": "Währungsswap",
-    "swap": "Tauschen Sie",
-    "success": "Erfolgreicher Währungsumtausch",
+    "title": "Währungs-Konverter",
+    "swap": "Konvertieren",
+    "success": "Erfolgreiche Konvertierung!",
     "close": "Schließen",
     "wallet": "Wallet",
     "from": "Von",
@@ -1343,7 +1344,7 @@
     "send": "Senden",
     "receive": "Empfangen",
     "convert": "Konvertieren",
-    "searchPlaceholder": "Mit Namen suchen",
+    "searchPlaceholder": "Nach Namen suchen",
     "profileDropdown": {
       "setting": "Einstellungen",
       "support": "Unterstützung",
@@ -1400,9 +1401,9 @@
       "last30DaysSubText": "vs. letzte 30 Tage",
       "last24HoursTitle": "Einkommen der letzten 24 Stunden",
       "last24HoursSubText": "vs. Vortag",
-      "paymentCardTitle": "Gesamtanzahl der Zahlungen",
+      "paymentCardTitle": "Anzahl der Zahlungen",
       "paymentCardSubText": "in letzten 30 Tagen",
-      "registrationCardTitle": "Gesamtanzahl der Registrierungen",
+      "registrationCardTitle": "Anzahl der Registrierungen",
       "registrationCardSubText": "in letzten 30 Tagen"
     },
     "userTableMenu": {
@@ -1494,7 +1495,7 @@
     "vatTitle": "VAT"
   },
   "productsDashboard": {
-    "title": "Ihre Produkte und Dienstleistungen",
+    "title": "Produkte und Dienstleistungen",
     "unit": "Einzelpreis",
     "stock": "Auf Lager",
     "share": "Link teilen",
