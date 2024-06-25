@@ -55,7 +55,7 @@ const ConverterCard = () => {
   const [toCryptoIndex, setToCryptoIndex] = useState(3);
   const [swingSDK, setSwingSDK] = useState(null);
   const [receiveAmount, setReceiveAmount] = useState("");
-  const [gas, setGas] = useState(0);
+  const [gas, setGas] = useState(-1);
   const [gasUsd, setGasUsd] = useState(0);
   const [amount, setAmount] = useState("");
   const [bridge, setBridge] = useState("");
@@ -185,8 +185,15 @@ const ConverterCard = () => {
         bestQuote.quote.integration,
       );
       setBridge(bestQuote.quote.integration);
-      setGas(parseInt(bestQuote.gas) / 10 ** 18);
-      setGasUsd(parseFloat(bestQuote.gasUSD));
+      setGas(
+        (parseInt(bestQuote.gas) +
+          parseInt(bestQuote.quote.bridgeFeeInNativeToken)) /
+          10 ** 18,
+      );
+      setGasUsd(
+        parseFloat(bestQuote.gasUSD) +
+          parseFloat(bestQuote.quote.bridgeFeeInNativeTokenUSD),
+      );
 
       const _amount =
         parseInt(bestQuote?.quote?.amount) / 10 ** bestQuote?.quote?.decimals;
@@ -340,6 +347,11 @@ const ConverterCard = () => {
                 fetchBalances(wallets[selectedWalletIndex].address);
               }
               break;
+            case "FAILED":
+              if (transferStepStatus.step === "send") {
+                setSpinner(false);
+                setErrorMessage(t("payments.swap.sendFailed"));
+              }
           }
         } catch (e) {
           swingSDK.cancelTransfer(transferId);
@@ -425,6 +437,30 @@ const ConverterCard = () => {
     });
   }, [amount]);
 
+  useEffect(() => {
+    const chain = currencies()[fromCryptoIndex];
+    console.log("gas", gas, amount);
+    if (
+      (chain.abbr === "ETH" || chain.abbr === "BNB") &&
+      parseFloat(amount) + parseFloat(gas) > balances[fromCryptoIndex]
+    ) {
+      setInsufficient(true);
+      return;
+    }
+    const native = currencies().findIndex(
+      (item) => item.abbr === chain.blockchain,
+    );
+    if (
+      parseFloat(amount) > balances[fromCryptoIndex] ||
+      parseFloat(gas) > balances[native]
+    ) {
+      setInsufficient(true);
+      return;
+    }
+
+    setInsufficient(false);
+  }, [transferParams, gas, balances]);
+
   return (
     <div className={styles.cardWrapper}>
       <Card className={`${styles.card}`}>
@@ -445,7 +481,6 @@ const ConverterCard = () => {
             selectedCryptoIndex={fromCryptoIndex}
             setSelectedCryptoIndex={setFromCryptoIndex}
             balances={balances}
-            setAlert={setInsufficient}
           />
           <div className={styles.convertIconWrapper}>
             <div
@@ -541,7 +576,7 @@ const ConverterCard = () => {
             {t("converter.convert")}
           </Button>
         </div>
-        {gas > 0 && (
+        {gas >= 0 && (
           <div
             style={{
               width: "100%",
@@ -633,7 +668,6 @@ const WalletBox = ({
   selectedCryptoIndex,
   setSelectedCryptoIndex,
   balances,
-  setAlert,
 }) => {
   const { t } = useTranslation();
   const crypto = currencies().map((c) => {
@@ -642,12 +676,6 @@ const WalletBox = ({
       title: c.abbr,
     };
   });
-  useEffect(() => {
-    if (setAlert) {
-      if (parseFloat(value) > balances[selectedCryptoIndex]) setAlert(true);
-      else setAlert(false);
-    }
-  }, [value, selectedCryptoIndex]);
 
   return (
     <div className={styles.walletBox}>
