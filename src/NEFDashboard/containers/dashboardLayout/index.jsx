@@ -13,7 +13,7 @@ import {
 } from "antd";
 import SidebarNew from "../../components/sidebarNew";
 import Languages from "../../../components/navigation/languages.jsx/languages";
-import { getRole } from "../../../utils";
+import { getRole, checkJwtToken, logOut } from "../../../utils";
 import SettingIcon from "../../../assets/newDashboardIcons/settings.svg";
 import ProfileImg from "../../../assets/icon/user.svg";
 import SupportIcon from "../../../assets/newDashboardIcons/support.svg";
@@ -40,13 +40,13 @@ const DashboardLayout = ({ children, title }) => {
   const [dropDownToggle, setDropDownToggle] = useState(false);
   const { toggleTheme } = useTheme();
   const { t } = useTranslation();
-  const { user, setUser, setCurrencyRate } = useAuth();
+  const { user, setCurrencyRate } = useAuth();
   const backend_API = new backendAPI();
   const navigate = useNavigate();
   const [currency, setCurrency] = useState("USD");
 
   useEffect(() => {
-    fetchProfile();
+    checkJwtToken();
   }, []);
 
   useEffect(() => {
@@ -62,11 +62,6 @@ const DashboardLayout = ({ children, title }) => {
     }
   }, [currency]);
 
-  const fetchProfile = async () => {
-    const response = await backend_API.getProfile();
-    if (response) setUser({ ...response });
-  };
-
   const fetchRate = async (from, to) => {
     const res = await backend_API.getCurrencyRate(from, to);
     if (res) {
@@ -74,15 +69,6 @@ const DashboardLayout = ({ children, title }) => {
         ...res,
         symbol: getCurrencySymbol()[to],
       });
-    }
-  };
-
-  const logOut = async () => {
-    try {
-      const data = await backend_API.signout();
-      navigate("/");
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -184,7 +170,7 @@ const DashboardLayout = ({ children, title }) => {
       label: (
         <div
           className="default-text profile-dropdown-width"
-          onClick={() => logOut()}
+          onClick={() => logOut(navigate)}
         >
           {t("personalDashboard.profileDropdown.logout")}
         </div>
