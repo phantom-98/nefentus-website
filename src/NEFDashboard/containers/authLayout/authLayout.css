@@ -1,6 +1,16 @@
 .authLayout {
   padding: 26px;
 }
+.authLayout .ant-row {
+  height: 100%;
+}
+.authLayout-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
 .back-btn {
   display: inline-flex;
   align-items: center;
@@ -33,4 +43,32 @@
   font-size: 26px;
   font-weight: 400;
   line-height: normal;
+}
+
+@media screen and (min-width: 1025px) {
+  .authLayout-img-container {
+    height: calc(100vh - 52px);
+  }
+}
+@media screen and (min-width: 991px) {
+  .authLayout {
+    height: 100vh;
+  }
+}
+@media screen and (max-width: 990px) {
+  .authLayout-img-container {
+    display: none;
+  }
+  .back-btn {
+    position: static;
+  }
+}
+@media screen and (max-width: 767px) {
+  .authLayout {
+    padding: 20px;
+  }
+  .back-btn {
+    padding-left: 0;
+    padding-top: 0;
+  }
 }
