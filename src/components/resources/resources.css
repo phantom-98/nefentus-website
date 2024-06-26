@@ -36,6 +36,7 @@
   padding-block: 0.6rem;
   padding-inline: 1rem;
   border-radius: 0 0.6rem 0.6rem 0;
+  cursor: pointer;
 }
 
 .sidebar-subitem:hover {
@@ -99,9 +100,17 @@
   margin-block: 1rem;
 }
 
-.contents img {
+.contents img,
+.contents video {
   max-width: 80%;
   padding-block: 2.4rem;
+}
+
+.contents > div {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  padding-block: 2rem;
 }
 
 .contents .footer {
@@ -137,10 +146,12 @@
   align-items: start;
   justify-content: center;
   width: 100%;
+  position: relative;
 }
 
 @media (max-width: 900px) {
-  .contents img {
+  .contents img,
+  .contents video {
     max-width: 100%;
   }
   /* .contents {
@@ -204,9 +215,13 @@
   }
 }
 
-@media (max-width: 550px) {
-  .toggle-button {
+@media (max-width: 640px) {
+  .contents > div {
+    flex-direction: column;
   }
+}
+
+@media (max-width: 550px) {
   .sidebar {
     padding-left: 2.5rem;
   }

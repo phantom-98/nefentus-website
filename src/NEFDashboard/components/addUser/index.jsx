@@ -350,7 +350,7 @@ const AddUser = ({ open, handleSubmit, onClose, selectedUser = {} }) => {
         >
           {Object.keys(selectedUser)?.length > 0
             ? t("update")
-            : t("dashboard.modal.titleCreate")}
+            : t("dashboard.modal.confirmCreate")}
         </div>
       </Flex>
     </Modal>

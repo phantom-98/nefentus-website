@@ -516,8 +516,8 @@
       "name": "Name",
       "lastName": "Last Name",
       "email": "Email",
-      "agent": "Agent email",
-      "roles": "Roles",
+      "agent": "Agent",
+      "roles": "Role",
       "status": "Status",
       "income": "Income",
       "joinedOn": "Joined on",
@@ -547,7 +547,8 @@
       "address": "Address",
       "service_fee": "Service Fee",
       "companyPlaceholder": "Enter Company",
-      "service_fee_description": "The percentage that the user receives from each transaction"
+      "service_fee_description": "The percentage that the user receives from each transaction",
+      "confirmCreate": "Add"
     },
     "earningCards": {
       "totalSales": "Total sales",
@@ -1184,7 +1185,7 @@
   "converter": {
     "title": "Currency Swap",
     "swap": "Swap",
-    "success": "Successful Currency Exchanged",
+    "success": "Successfully converted currency!",
     "close": "Close",
     "wallet": "Wallet",
     "from": "From",
@@ -1267,9 +1268,9 @@
     },
     "scanModal": {
       "title": "Scan QR-code or paste code",
-      "verifyCode": "TOTP has been verified successfully!",
+      "verifyCode": "Authentication has been verified successfully!",
       "copyLink": "Link copied to clipboard!",
-      "TOTPTitle": "TOTP Authentication",
+      "TOTPTitle": "Multi-Factor Authentication",
       "TOTPDescription": "Enter code from Authenticator"
     },
     "recommendRecoverModal": {
@@ -1423,7 +1424,7 @@
     "send": "Send",
     "receive": "Receive",
     "convert": "Convert",
-    "searchPlaceholder": "Search with name",
+    "searchPlaceholder": "Search by name",
     "profileDropdown": {
       "setting": "Setting",
       "support": "Support",
@@ -1578,7 +1579,7 @@
     "vatTitle": "VAT"
   },
   "productsDashboard": {
-    "title": "Your Products and Services",
+    "title": "Products and Services",
     "unit": "Unit Price",
     "stock": "In Stock",
     "share": "Share Link",
