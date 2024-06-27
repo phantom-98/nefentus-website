@@ -81,7 +81,6 @@ const SendCrypto = ({
   const [selectedWallet, setSelectedWallet] = useState({});
   const [wallets, setWallets] = useState([]);
   const [password, setPassword] = useState("");
-  const [total, setTotal] = useState(0);
   const [cryptoList, setCryptoList] = useState([]);
   const [selectedCoin, setSelectedCoin] = useState({});
   const [selectedCurrency, setSelectedCurrency] = useState({});
@@ -91,24 +90,16 @@ const SendCrypto = ({
   const [amountInCrypto, setAmountInCrypto] = useState();
   const [amountInCurrency, setAmountInCurrency] = useState();
   const [gasValues, setGasValues] = useState({});
-  const [gasLimit] = useState(600_000);
   const [loader, setLoader] = useState(true);
   const [buttonLoder, setButtonLoader] = useState(false);
   const [disable, setDisable] = useState(false);
-  const [step2GasValues, setStep2GasValues] = useState({});
-  const [step2Amount, setStep2Amount] = useState(0);
-
-  const currencyList = currencies();
   const backend_API = new backendAPI();
-  const uniSwap = new uniswapApi();
   const { balances, fetchBalances } = useBalances();
   const { prices, fetchPrices } = usePrices();
-  const connect = useConnect();
   const disconnect = useDisconnect();
   const switchNetwork = useSwitchChain();
   const setConnectedWallet = useSetConnectedWallet();
   const createWalletInstance = useCreateWalletInstance();
-  const wallet = useConnectedWallet();
 
   const fetchCurrencyRates = async () => {
     const res = await backend_API.getRateList("USD");
@@ -271,15 +262,12 @@ const SendCrypto = ({
       );
       if (ret) {
         setInfoMessage(t("messages.success.withdrawal"));
-        // if (onSuccess) onSuccess();
       } else {
         setErrorMessage(t("messages.error.withdraw"));
       }
     }
     setButtonLoader(false);
-    // await disconnect();
-    // setPassword("");
-    // setIsWithdrawing(false);
+    await disconnect();
     onWalletSuccess(false);
     handleSubmitCrypto();
   };
