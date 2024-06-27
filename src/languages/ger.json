@@ -30,9 +30,11 @@
     "imprint": "Impressum",
     "forgotPassword": "Passwort vergessen",
     "privacy": "Privatsphäre",
-    "vacancy": "Career",
+    "vacancy": "Karriere",
     "resetPassword": "Passwort zurücksetzen",
-    "support": "Unterstützung"
+    "support": "Unterstützung",
+    "b2b": "B2B",
+    "b2c": "B2C"
   },
   "home": {
     "heroTitle": "Akzeptieren Sie Krypto Zahlungen",
@@ -1095,7 +1097,8 @@
       "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein",
       "internalWalletButtonTitle": "Nefentus Wallet",
       "externalWalletButtonTitle": "Andere Wallets"
-    }
+    },
+    "payInvoice": "Rechnung bezahlen"
   },
 
   "transactions": {
@@ -1486,7 +1489,6 @@
     "rateDescription2": " sind mit dem Wechselkurs vom ",
     "rateDescription3": " für 1USD berechnet",
     "vatDescription": "Mehrwertsteuer: Umkehrung des Steuerschuldverhältnisses, die Steuerpflicht wird auf den Leistungsempfänger übertragen. Lokale Mehrwertsteuer anwendbar.",
-    "payInvoice": "Rechnung bezahlen",
     "description": "Beschreibung",
     "price": "Preis",
     "qty": "Menge",
@@ -1510,5 +1512,8 @@
   "close": "Schließen",
   "add": "Hinzufügen",
   "create": "Erstellen",
-  "update": "Aktualisieren"
+  "update": "Aktualisieren",
+  "settingPage": {
+    "title": "Einstellungen"
+  }
 }

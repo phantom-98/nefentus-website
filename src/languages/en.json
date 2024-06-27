@@ -32,7 +32,9 @@
     "privacy": "Privacy policy",
     "vacancy": "Career",
     "resetPassword": "Reset Password",
-    "support": "Support"
+    "support": "Support",
+    "b2b": "B2B",
+    "b2c": "B2C"
   },
   "home": {
     "heroTitle": "Accept Crypto Payments",
@@ -1153,7 +1155,8 @@
       "description": "Complete remittance by providing your payment details",
       "internalWalletButtonTitle": "Nefentus Wallet",
       "externalWalletButtonTitle": "Other Wallets"
-    }
+    },
+    "payInvoice": "Pay invoice"
   },
   "transactions": {
     "title": "Recent Transactions",
@@ -1609,5 +1612,8 @@
   "close": "Close",
   "add": "Add",
   "create": "Create",
-  "update": "Update"
+  "update": "Update",
+  "settingPage": {
+    "title": "Settings"
+  }
 }

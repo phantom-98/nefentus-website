@@ -1,6 +1,7 @@
 # New changes
 
 - Fix some minor issues in landing (PATCH)
+- Fix dashboards' titles (PATCH)
 
 # 1.3.0
 
