@@ -7,6 +7,7 @@
 - Issue with wallet connection on the Add Wallet button has been resolved. (MINOR)
 - Fix undefined user issue in new dashboard (MINOR)
 - Authentication Flow is functional (MAJOR)
+- Roboto Flex font added for ukrainian language (PATCH)
 - Login and Sign up screens implemented (MAJOR)
 
 # 1.3.0
