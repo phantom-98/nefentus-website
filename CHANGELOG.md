@@ -8,6 +8,7 @@
 - Fix undefined user issue in new dashboard (MINOR)
 - Authentication Flow is functional (MAJOR)
 - Roboto Flex font added for ukrainian language (PATCH)
+- Update product invoice work flow (MINOR)
 
 # 1.3.0
 
