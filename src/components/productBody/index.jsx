@@ -29,35 +29,8 @@ const ProductBody = ({ product, quantity }) => {
   const [reverseCharge, setReverseCharge] = useState();
   const [changed, setChanged] = useState(false);
   const [amount, setAmount] = useState(quantity || 1);
-  const [link, setLink] = useState(null);
   const [price, setPrice] = useState(0);
-  // const [currency, setCurrency] = useState("USD");
-  // const { user } = useAuth();
 
-  const updateInvoiceData = async () => {
-    const req = {
-      amount: price,
-      name,
-      email,
-      company,
-      country,
-      address,
-      currency: product.currency ?? "USD",
-      person: isPerson,
-      taxNumber: tax,
-      vatPercent: percent,
-      reverseCharge,
-      productLink: product.link,
-      productAmount: amount,
-    };
-    const data = await backend_API.updateInvoice(link, req);
-    if (data) {
-      setLink(data.link);
-      console.log("success");
-    } else {
-      console.log("failed");
-    }
-  };
   async function fetchTaxInfo(country) {
     const info = await backend_API.getTaxInfo(country);
     if (info && info[0]) {
@@ -71,16 +44,8 @@ const ProductBody = ({ product, quantity }) => {
       fetchProductImage();
       setPercent(product.vatPercent);
       setPrice(product.price * amount);
-      // setCurrency(product.currency);
     }
   }, [product]);
-
-  useEffect(() => {
-    if (changed) {
-      updateInvoiceData();
-      setChanged(false);
-    }
-  }, [changed]);
 
   useEffect(() => {
     if (product.stock != -1 && amount > product.stock) {
@@ -98,7 +63,7 @@ const ProductBody = ({ product, quantity }) => {
       price={price}
       currency={product.currency}
       seller={product.user}
-      transInfoArg={{ productLink: product.link, invoiceLink: link }}
+      transInfoArg={{ productLink: product.link }}
       vatPercent={reverseCharge ? null : percent}
       valid={name && email}
       info={
@@ -117,13 +82,9 @@ const ProductBody = ({ product, quantity }) => {
           setBusiness={setCompany}
           tax={tax}
           setTax={setTax}
-          // percent={percent}
-          // setPercent={setPercent}
-          // reverseCharge={reverseCharge}
           setReverseCharge={setReverseCharge}
           taxInfo={taxInfo}
           setChanged={setChanged}
-          // isSeller={user && user?.email === product.user.email}
         />
       }
       children={
@@ -136,6 +97,21 @@ const ProductBody = ({ product, quantity }) => {
           setChanged={setChanged}
         />
       }
+      invoiceInfo={{
+        amount: price,
+        name,
+        email,
+        company,
+        country,
+        address,
+        currency: product.currency ?? "USD",
+        person: isPerson,
+        taxNumber: tax,
+        vatPercent: percent,
+        reverseCharge,
+        productLink: product.link,
+        productAmount: amount,
+      }}
     />
   );
 };

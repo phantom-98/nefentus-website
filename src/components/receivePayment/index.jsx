@@ -82,6 +82,7 @@ const ReceivePayment = ({
   vatPercent,
   disabled,
   valid,
+  invoiceInfo,
 }) => {
   const [sellerDropdown, openSellerDropdown] = useState(false);
   const { theme } = useTheme();
@@ -159,6 +160,7 @@ const ReceivePayment = ({
     transInfoArg,
     switchNetwork,
     switchAccount,
+    invoiceInfo,
   });
 
   const backend_API = new backendAPI();
@@ -372,7 +374,11 @@ const ReceivePayment = ({
   const selectInternalWallet = async () => {
     if (!Object.keys(user)?.length) {
       navigate("/login", {
-        state: { redirectUrl: `/pay/${transInfoArg.invoiceLink}` },
+        state: {
+          redirectUrl: transInfoArg.invoiceLink
+            ? `/pay/${transInfoArg.invoiceLink}`
+            : `/product/${transInfoArg.productLink}/pay`,
+        },
       });
     } else {
       await disconnect();
