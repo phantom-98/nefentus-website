@@ -98,7 +98,7 @@ const Navigation = () => {
     if (window.innerHeight >= 900) return;
 
     const changeHeight = () => {
-      setHeight(window.innerHeight);
+      // setHeight(window.innerHeight);
     };
 
     changeHeight();

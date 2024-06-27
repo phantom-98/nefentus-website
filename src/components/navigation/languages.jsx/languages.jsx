@@ -41,6 +41,7 @@ const Languages = () => {
 
   const handleTrans = (code) => {
     i18n.changeLanguage(code);
+    document.documentElement.lang = code;
   };
 
   useEffect(() => {

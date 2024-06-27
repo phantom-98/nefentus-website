@@ -39,7 +39,7 @@ const DashboardLayout = ({ children, title }) => {
   const [sideBarShow, setSideBarShow] = useState(false);
   const [dropDownToggle, setDropDownToggle] = useState(false);
   const { toggleTheme } = useTheme();
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { user, setCurrencyRate } = useAuth();
   const backend_API = new backendAPI();
   const navigate = useNavigate();
@@ -47,6 +47,7 @@ const DashboardLayout = ({ children, title }) => {
 
   useEffect(() => {
     checkJwtToken();
+    document.documentElement.lang = i18n.language;
   }, []);
 
   useEffect(() => {
