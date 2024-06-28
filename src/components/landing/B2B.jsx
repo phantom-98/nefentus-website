@@ -3,9 +3,6 @@ import "./landing.css";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import HeroLineTop from "../../assets/landing/b2c-hero-top.svg";
 import HeroLineBottom from "../../assets/landing/b2c-hero-down.svg";
-import VerticalLine from "../../assets/landing/hero lines 2.svg";
-import VerticalDashedLine from "../../assets/landing/VerticalDashedLine.svg";
-import BlueLine from "../../assets/landing/BlueLine.svg";
 import HeroPng from "../../assets/landing/b2b-hero.png";
 import Invoicing1Png from "../../assets/landing/b2b-invoice1.png";
 import Invoicing2Png from "../../assets/landing/b2b-invoice2.png";
@@ -28,33 +25,96 @@ import ShoppingCartSvg from "../../assets/landing/shopping-cart.svg";
 import Dollar from "../../assets/landing/dollar.svg";
 import SwapIcon from "../../assets/landing/swap-ico.svg";
 import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 const B2B = () => {
+  const [step, setStep] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [isPositionedAtStart, setIsPositionedAtStart] = useState(false);
+
+  const b2bContainer = useRef();
+
+  const handleScroll = (e) => {
+    if (document.documentElement.scrollTop === 0) {
+      setIsPositionedAtStart(true);
+    }
+  };
+
+  useEffect(() => {
+    // Ensure the component has mounted in a browser environment
+    window.addEventListener("scroll", handleScroll);
+
+    // Scroll to the top when component mounts
+    setIsPositionedAtStart(document.documentElement.scrollTop === 0);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isPositionedAtStart) {
+      // Initialize GSAP
+      const numImages = products.length;
+
+      const tl = gsap.from(".b2b .product", {
+        scrollTrigger: {
+          trigger: ".layout-paragraph.product .layout-title .sub-title",
+          start: "top top",
+          end: () => `+=${numImages * 80}%`,
+          scrub: true,
+          pin: ".landing-layout.container.b2b",
+          onUpdate: (self) => {
+            setStep(Math.floor(self.progress * numImages));
+            setProgress(Math.floor(self.progress * numImages * 100));
+          },
+          onLeave: () => {
+            setStep(numImages - 1);
+          },
+          onLeaveBack: () => {
+            setStep(0);
+          },
+        },
+        duration: 1,
+        ease: "none",
+      });
+
+      return () => {
+        tl.kill(); // Ensure GSAP instance is killed
+      };
+    }
+  }, [isPositionedAtStart]);
+
   return (
-    <div
-      className="landing-layout container b2b"
-      style={{
-        gap: "4rem",
-      }}
-    >
-      <Hero />
+    <div>
+      <div
+        className="landing-layout container b2b"
+        style={{
+          gap: "4rem",
+        }}
+        ref={b2bContainer}
+      >
+        <Hero />
 
-      <Invoicing />
+        <Invoicing />
 
-      <Product />
+        <Product stepId={step} progress={progress} />
 
-      <Safe />
+        <Safe />
 
-      <Analytics />
+        <Analytics />
 
-      <Security />
+        <Security />
 
-      <Conclusion
-        icon={NefentusLogo}
-        title={`Transparent Pricing,\n No Strings Attached`}
-        subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating & using an account for personal use is completely free. Get started today!`}
-        button={`Create an account`}
-      />
+        <Conclusion
+          key="b2b-conclusion"
+          icon={NefentusLogo}
+          title={`Transparent Pricing,\n No Strings Attached`}
+          subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating & using an account for personal use is completely free. Get started today!`}
+          button={`Create an account`}
+        />
+      </div>
     </div>
   );
 };
@@ -117,63 +177,48 @@ const Hero = () => {
         }}
         className="translate-left"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "calc(25% + 0.8rem)",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "0",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalDashedLine}
+      <div
         style={{
-          position: "absolute",
-          right: "calc(25% - 1.35rem)",
+          height: "100%",
+          right: "calc(25% - 1.377rem)",
           bottom: "0",
-          zIndex: "-1",
         }}
-        className="hide-in-tablet"
+        className="hide-in-tablet vertical-dashed-line"
       />
-      <img
-        src={VerticalLine}
+      <hr
         style={{
-          position: "absolute",
           right: "50%",
           bottom: "0",
           height: "100%",
-          zIndex: "-1",
         }}
         className="hide-in-tablet"
       />
       <hr
         style={{
-          position: "absolute",
           top: "0",
           width: "100vw",
-          border: "1px solid #202020",
         }}
       />
       <hr
         style={{
-          position: "absolute",
           bottom: "0",
           width: "100vw",
-          border: "1px solid #202020",
         }}
         className="hide-in-tablet"
       />
@@ -214,6 +259,25 @@ const steps = [
 
 const Invoicing = () => {
   const [step, setStep] = useState(steps.map((_, i) => !i));
+  const timeRef = useRef();
+  const updateProgress = () => {
+    setStep((prev) => {
+      const id = step.findIndex((item) => item == true);
+      step[id] = false;
+      step[(id + 1) % step.length] = true;
+      return [...step];
+    });
+  };
+  const start = () => {
+    clearInterval(timeRef.current);
+    timeRef.current = setInterval(updateProgress, 5000);
+  };
+  useEffect(() => {
+    start();
+    return () => {
+      clearInterval(timeRef.current);
+    };
+  }, []);
   return (
     <div className="layout-paragraph">
       <Heading
@@ -225,7 +289,7 @@ const Invoicing = () => {
           <div
             className={`step-invoicing ${step[id] && "step-invoicing-visible"}`}
           >
-            <p style={{ fontSize: "1.4rem", color: "#e9e9e9" }}>{item.abbr}</p>
+            <p style={{ fontSize: "1.6rem", color: "#e9e9e9" }}>{item.title}</p>
             <p style={{ fontSize: "1.2rem", color: "#b1b1b1" }}>
               {item.subtitle}
             </p>
@@ -285,20 +349,14 @@ const Invoicing = () => {
         </div>
         <hr
           style={{
-            position: "absolute",
             top: "0",
-            left: "-32rem",
-            width: "150vw",
-            border: "1px solid #202020",
+            width: "100vw",
           }}
         />
         <hr
           style={{
-            position: "absolute",
-            bottom: "0",
-            left: "-32rem",
-            width: "150vw",
-            border: "1px solid #202020",
+            bottom: "1px",
+            width: "100vw",
           }}
         />
       </div>
@@ -322,40 +380,25 @@ const products = [
     img: Product3Png,
   },
 ];
-const Product = () => {
+const Product = ({ stepId, progress }) => {
   const [step, setStep] = useState(products.map((item, id) => !id));
-  const timeRef = useRef();
-  const start = () => {
-    clearInterval(timeRef.current);
-    timeRef.current = setInterval(() => {
-      setStep((prev) => {
-        const id = step.findIndex((item) => item == true);
-        step[id] = false;
-        step[(id + 1) % step.length] = true;
-        return [...step];
-      });
-    }, 10000);
-  };
+
   useEffect(() => {
-    start();
-    return () => {
-      clearInterval(timeRef.current);
-    };
-  }, []);
+    setStep((prev) => {
+      const id = step.findIndex((item) => item == true);
+      step[id] = false;
+      step[stepId % step.length] = true;
+      return [...step];
+    });
+  }, [stepId]);
   return (
     <div className="layout-paragraph product">
       <Heading
-        title={`Simplified product creation`}
+        title={`Simplified <span style="text-wrap: nowrap">product creation</span>`}
         subtitle={`Utilize our internal wallet or link an unlimited number of external wallets for hassle-free product creation.`}
       />
       <div className="layout-product">
-        <div
-          className="product-img"
-          onMouseEnter={() => {
-            clearInterval(timeRef.current);
-          }}
-          onMouseLeave={start}
-        >
+        <div className="product-img">
           {products.map((p, id) => (
             <img className={step[id] && "product-img-showed"} src={p.img} />
           ))}
@@ -363,7 +406,7 @@ const Product = () => {
         <div className="product-creation-step">
           {products.map((p, id) => (
             <div
-              className={`product-step ${step[id] && "product-step-selected"}`}
+              className={`product-step`}
               onClick={() => {
                 !step[id] &&
                   id !== undefined &&
@@ -379,6 +422,12 @@ const Product = () => {
               }}
             >
               <p>{p.title}</p>
+              <hr
+                className={`${step[id] && "product-step-selected"}`}
+                style={{
+                  width: `${Math.max(0, Math.min(100, progress - 100 * id))}%`,
+                }}
+              />
               <p className="sub-title">{p.subtitle}</p>
             </div>
           ))}
@@ -403,38 +452,30 @@ const Product = () => {
             </div>
           ))}
           <div className="progress-bar">
-            <div style={{ width: "96%", display: "flex", gap: "2rem" }}>
-              {products.map((p, id) => (
+            {products.map((p, id) => (
+              <div
+                style={{
+                  background: `#202020`,
+                  height: "1px",
+                  width: `calc(${100 / products.length}%)`,
+                  position: "relative",
+                  display: "block",
+                }}
+              >
                 <hr
                   style={{
-                    border: `1px solid ${step[id] ? "#e1e1e1" : "#202020"}`,
-                    width: `calc(${100 / products.length}%)`,
+                    borderInline: "none",
+                    borderBottom: `1px solid #e9e9e9`,
+                    width: `${Math.max(
+                      0,
+                      Math.min(100, progress - 100 * id),
+                    )}%`,
+                    position: "absolute",
+                    display: "block",
                   }}
                 />
-              ))}
-            </div>
-            <div
-              style={{ width: "2%" }}
-              onClick={() => {
-                setStep((prev) => {
-                  const id = step.findIndex((item) => item == true);
-                  step[id] = false;
-                  step[(id - 1) % step.length] = true;
-                  return [...step];
-                });
-              }}
-            >{`<`}</div>
-            <div
-              style={{ width: "2%" }}
-              onClick={() => {
-                setStep((prev) => {
-                  const id = step.findIndex((item) => item == true);
-                  step[id] = false;
-                  step[(id + 1) % step.length] = true;
-                  return [...step];
-                });
-              }}
-            >{`>`}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -470,6 +511,7 @@ const Safe = () => {
     <div
       style={{
         display: "flex",
+        alignItems: "center",
         flexDirection: "column",
         gap: "4rem",
         padding: "4rem",
@@ -491,7 +533,9 @@ const Safe = () => {
               marginBottom: "1rem",
             }}
           />
-          <p style={{ fontSize: "2.8rem" }}>Safeguarding your funds</p>
+          <p style={{ fontSize: "2.8rem" }}>
+            Safeguarding <span style={{ textWrap: "nowrap" }}>your funds</span>
+          </p>
         </div>
         <p className="sub-title" style={{ width: "50%" }}>
           To protect against crypto price fluctuations, we convert
@@ -536,6 +580,7 @@ const Safe = () => {
                 <hr
                   style={{
                     position: "relative",
+                    display: "block",
                     width: "100%",
                     zIndex: "1",
                   }}
@@ -552,16 +597,14 @@ const Safe = () => {
       <hr
         style={{
           top: "0",
-          left: "-32rem",
-          width: "150vw",
+          width: "100vw",
           zIndex: "1",
         }}
       />
       <hr
         style={{
           bottom: "0",
-          left: "-32rem",
-          width: "150vw",
+          width: "100vw",
           zIndex: "1",
         }}
       />
@@ -572,7 +615,7 @@ const Safe = () => {
 const Analytics = () => {
   return (
     <div
-      className="layout-paragraph"
+      className="layout-paragraph analytics"
       style={{
         paddingBottom: "0",
       }}
@@ -593,13 +636,13 @@ const Analytics = () => {
 
       <p
         style={{
-          fontSize: "2.8rem",
+          fontSize: "2.4rem",
           textAlign: "center",
           width: "70%",
         }}
       >
-        Harness these insights to make <br />
-        informed decisions, streamline your operations & drive business growth
+        Harness these insights to make informed decisions, streamline your
+        operations & drive business growth
       </p>
     </div>
   );
@@ -673,16 +716,14 @@ const Security = () => {
         <hr
           style={{
             top: "0",
-            left: "-32rem",
-            width: "200vw",
+            width: "100vw",
             zIndex: "1",
           }}
         />
         <hr
           style={{
             bottom: "0",
-            left: "-32rem",
-            width: "200vw",
+            width: "100vw",
             zIndex: "1",
           }}
         />

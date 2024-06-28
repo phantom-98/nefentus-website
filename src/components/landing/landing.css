@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  margin-top: 6.4rem;
+  margin-top: 6.5rem;
   color: #e9e9e9;
 }
 
@@ -56,13 +56,29 @@
   padding: 1.2rem 2.4rem;
   border-radius: 0.6rem;
   border: 1px solid rgba(23, 23, 23, 0.6);
+  color: #111;
+  background: linear-gradient(0deg, #fafafa -32.93%, #cfcfcf 187.8%);
+  box-shadow:
+    0px -2px 0px 0px #c9c9c9 inset,
+    0px 1px 0px 0px #fff inset;
+  cursor: pointer;
+}
+
+.landing-layout button:hover {
+  background: linear-gradient(0deg, #fff 13.1%, #cfcfcf 187.8%);
   box-shadow:
     0px 78px 22px 0px rgba(239, 239, 239, 0),
-    0px -8px 20px 0px rgba(239, 239, 239, 0.08),
+    0px -8px 20px 0px rgba(239, 239, 239, 0.18),
     0px 28px 17px 0px rgba(239, 239, 239, 0.02),
     0px 12px 12px 0px rgba(239, 239, 239, 0.04),
     0px 3px 7px 0px rgba(239, 239, 239, 0.04);
-  cursor: pointer;
+}
+
+.landing-layout button:active {
+  background: linear-gradient(0deg, #e5e5e5 13.1%, #cfcfcf 187.8%);
+  box-shadow:
+    0px -1px 0px 0px #c9c9c9 inset,
+    0px 1px 0px 0px #fff inset;
 }
 
 .landing-layout .hero-img {
@@ -341,6 +357,7 @@
   margin-top: 16rem;
   border-block: 1px solid #202020;
   width: 100vw !important;
+  overflow: hidden;
 }
 
 .landing-layout .industry-card {
@@ -362,7 +379,7 @@
 
 .landing-layout .industry-card p {
   font-size: 1.2rem;
-  padding: 0.4rem 1rem 0 0.6rem;
+  padding: 0.1rem 1rem 0 0.6rem;
   text-wrap: nowrap;
 }
 
@@ -475,17 +492,17 @@
 .landing-layout .img-part {
   width: 72%;
   height: min-content;
-  -webkit-mask-image: linear-gradient(to bottom, #fff 40%, #fff0 96%);
+  /* -webkit-mask-image: linear-gradient(to bottom, #fff 40%, #fff0 96%); */
 }
 
 .landing-layout .image-transition {
   transition: 0.5s;
   width: 100%;
-  border: 0.8rem solid #202020;
+  /* border: 0.8rem solid #202020; */
 }
 
 .landing-layout .feature-heading {
-  padding-block: 6rem 24rem;
+  padding-block: 7.2rem 32rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -503,6 +520,7 @@
 .landing-layout .multi-wallet-management {
   display: flex;
   position: relative;
+  justify-content: center;
 }
 
 .landing-layout .multi-wallet-management > div > p:first-child {
@@ -529,7 +547,7 @@
 
 .landing-layout .wallet-external {
   padding: 4rem 2rem 10rem 2rem;
-  width: 80%;
+  width: 85%;
   margin-right: -16rem;
   -webkit-mask-image: linear-gradient(to right, #fff 90%, #fff0);
 }
@@ -569,6 +587,7 @@
   display: flex;
   position: relative;
   align-items: center;
+  justify-content: center;
 }
 
 .landing-layout .transaction-description {
@@ -589,6 +608,8 @@
 .landing-layout .layout-invoicing,
 .landing-layout .layout-security {
   display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
 }
 
@@ -610,6 +631,7 @@
   border: 1px solid #202020;
   font-size: 1.4rem;
   cursor: pointer;
+  transition: 0.5s ease-in;
 }
 
 .landing-layout .invoicing-step:hover {
@@ -668,7 +690,7 @@
   border-radius: 1rem;
   border: 2px solid #202020;
   opacity: 0;
-  transition: 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
 }
 
 .landing-layout .product-img-showed {
@@ -689,9 +711,18 @@
   padding-top: 2rem;
   border-top: 2px solid #202020;
   cursor: pointer;
+  position: relative;
 }
+.landing-layout .product-step hr {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  border: none;
+  z-index: 10;
+  border-top: 2px solid #e9e9e9 !important;
+}
+
 .landing-layout .product-step-selected {
-  border-top: 2px solid #e9e9e9;
 }
 
 .landing-layout .product-step p:first-child {
@@ -840,6 +871,7 @@
   .landing-layout.b2c .hero-img {
     width: 100% !important;
     justify-content: start !important;
+    overflow: hidden;
   }
   .landing-layout.b2c .hero-img > div {
     width: 70% !important;
@@ -858,9 +890,11 @@
   }
   .landing-layout .multi-wallet-management {
     flex-direction: column;
+    align-items: center;
   }
   .landing-layout .multi-wallet-management > div {
     width: 100%;
+    margin: 0;
   }
   .landing-layout .wallet-internal .ico-card-wallet {
     top: 6rem !important;
@@ -871,11 +905,9 @@
   }
   .landing-layout .wallet-external hr {
     display: block !important;
-    border: 1px solid #202020;
     width: 100vw;
-    position: absolute;
     top: 0;
-    left: -4rem;
+    left: -5rem;
   }
   .landing-layout .wallet-club {
     width: 100%;
@@ -911,7 +943,7 @@
   }
   .landing-layout.b2b .translate-left {
     bottom: 36% !important;
-    width: 120% !important;
+    width: 100% !important;
   }
   .landing-layout .invoicing-step-wrapper {
     display: none;
@@ -923,17 +955,17 @@
     display: flex !important;
     flex-direction: column;
     gap: 2rem;
-    align-items: center;
+    align-items: start;
     position: relative;
     width: 100%;
   }
   .landing-layout .step-invoicing {
-    max-width: 50%;
-    text-align: center;
+    width: 100%;
+    /* text-align: center; */
     position: absolute;
     margin-inline: auto;
     opacity: 0;
-    transition: 0.5s ease-out;
+    transition: 0.5s ease-in;
   }
   .landing-layout .step-invoicing-visible {
     position: static;
@@ -955,6 +987,7 @@
     gap: 0.5rem;
     padding: 0.6rem 1.6rem;
     border-radius: 0.4rem;
+    transition: 0.5s ease-in;
   }
   .landing-layout .invoicing-tab-selected,
   .landing-layout .invoicing-tab:hover {
@@ -987,7 +1020,6 @@
     display: flex;
     align-items: center;
     margin-top: 8rem;
-    font-size: 3rem;
     gap: 2rem;
   }
   .landing-layout.b2b .product {
@@ -1047,10 +1079,6 @@
   .landing-layout .benefits img {
     left: 0;
   }
-  .landing-layout .outlook p:last-child,
-  .landing-layout .benefits > div > p:last-child {
-    max-width: 96%;
-  }
   .landing-layout.b2c .hero-img > div:last-child {
     display: none !important;
   }
@@ -1070,6 +1098,9 @@
   }
   .landing-layout .wallet-internal .sub-title {
     width: 100%;
+  }
+  .landing-layout .multi-wallet-management > div {
+    padding-inline: 0;
   }
   .landing-layout .wallet-club {
     grid-template-columns: 1fr 1fr;
@@ -1110,6 +1141,51 @@
     display: block;
   }
   .landing-layout .progress-bar {
-    margin-top: 9.6rem;
+    margin-top: 12rem;
   }
+  .landing-layout.home .layout-getting-started .layout-title .title {
+    width: 30rem;
+  }
+  .landing-layout .outlook p:last-child {
+    max-width: 96%;
+  }
+  .landing-layout .benefits > div > p:last-child {
+    max-width: 26rem;
+  }
+  .landing-layout .invoicing-step-container {
+    flex-direction: column-reverse;
+  }
+  .landing-layout .analytics > p:last-child {
+    width: 36rem !important;
+  }
+}
+
+.vertical-dashed-line {
+  position: absolute;
+  border: none;
+  width: 1px;
+  height: 100px;
+  z-index: -1;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    #202020 0,
+    #202020 8px,
+    transparent 8px,
+    transparent 15px
+  );
+}
+
+.horizontal-dashed-line {
+  position: absolute;
+  border: none;
+  width: 100px;
+  height: 1px;
+  z-index: -1;
+  background-image: repeating-linear-gradient(
+    to right,
+    #202020 0,
+    #202020 8px,
+    transparent 8px,
+    transparent 15px
+  );
 }

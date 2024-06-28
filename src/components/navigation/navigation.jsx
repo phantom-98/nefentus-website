@@ -1,22 +1,13 @@
 import styles from "./navigation.module.css";
-
-import Logo from "../../assets/logo/logo.svg";
 import LogoWide from "../../assets/logo/logo_wide2.svg";
-import LightMode from "../../assets/icon/lightMode2.svg";
-import DarkMode from "../../assets/icon/darkMode2.svg";
-
 import Button from "../button/button";
 import Languages from "./languages.jsx/languages";
 import { useEffect, useState } from "react";
-
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import backend_API from "../../api/backendAPI";
-import { dashboardLink } from "../../utils";
+import { logOut } from "../../utils";
 import UserProfile from "../userProfile/userProfile";
 import { useTheme } from "../../context/themeContext/themeContext";
-import { QR } from "../../assets/icon/icons";
-import { useAuth } from "../../context/auth/authContext";
 import Cookie from "js-cookie";
 
 const Navigation = () => {
@@ -24,66 +15,23 @@ const Navigation = () => {
 
   const { t, i18n } = useTranslation();
   const [openMenu, setOpenMenu] = useState(false);
-  const [profile, setProfile] = useState({});
-  const [height, setHeight] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
   const token = Cookie.get("token");
   const hideOptions = location?.pathname?.includes("/pay");
 
-  const backendAPI = new backend_API();
-
-  const logOut = async () => {
-    try {
-      const data = await backendAPI.signout();
-      navigate("/");
-      setProfile({});
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  async function getProfile() {
-    const jwtIsValid = await backendAPI.checkJwt();
-    if (jwtIsValid) {
-      const link = dashboardLink(user);
-      console.log(link);
-
-      const newProfile = {
-        email: user?.email,
-        firstName: user?.firstName,
-        lastName: user?.lastName,
-        dashboardLink: link,
-      };
-      setProfile(newProfile);
-    }
-  }
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
-  function dashboardString(profile) {
-    if (profile.firstName || profile.lastName)
-      return `${t("dashboard.title")}: ${profile.firstName} ${
-        profile.lastName
-      }`;
-    else return t("dashboard.title");
-  }
-
   function loginAndSignupWeb() {
     if (token?.length) {
-      return <UserProfile web logOut={logOut} />;
+      return <UserProfile web logOut={() => logOut(navigate)} />;
     } else {
       return (
         <>
-          <div className={styles.login}>
-            <Link to="/login">{t("navigation.login")}</Link>
-          </div>
-          <div className={`${styles.button}`}>
-            <Link to="/signup">{t("navigation.signUp")}</Link>
-          </div>
+          <a className={styles.login} href="/login">
+            Log in
+          </a>
+          <a className={`${styles.button}`} href="/signup">
+            Sign up
+          </a>
         </>
       );
     }
@@ -106,15 +54,13 @@ const Navigation = () => {
       return (
         <>
           <Link to={"/new-settings"} onClick={() => setOpenMenu(false)}>
-            <li className="standard">
-              {t("personalDashboard.profileDropdown.setting")}
-            </li>
+            <li className="standard">Settings</li>
           </Link>
           <Link to={"/personal-dashboard"} onClick={() => setOpenMenu(false)}>
-            <li className="standard">{t("navigation.dashboard")}</li>
+            <li className="standard">Dashboard</li>
           </Link>
-          <Link onClick={logOut}>
-            <li className="standard">{t("navigation.logOut")}</li>
+          <Link onClick={() => logOut(navigate)}>
+            <li className="standard">Log out</li>
           </Link>
         </>
       );
@@ -133,7 +79,7 @@ const Navigation = () => {
             link="/login"
             onClick={() => setOpenMenu(false)}
           >
-            {t("navigation.login")}
+            Log in
           </Button>
           <Button
             style={{ width: "100%" }}
@@ -141,7 +87,7 @@ const Navigation = () => {
             color="white"
             onClick={() => setOpenMenu(false)}
           >
-            {t("navigation.signUp")}
+            Sign up
           </Button>
         </div>
       );
@@ -152,7 +98,7 @@ const Navigation = () => {
     if (window.innerHeight >= 900) return;
 
     const changeHeight = () => {
-      setHeight(window.innerHeight);
+      // setHeight(window.innerHeight);
     };
 
     changeHeight();
@@ -191,14 +137,14 @@ const Navigation = () => {
                 </li>
                 <li className="standard">
                   <Link to="/resources">
-                    <p>{t("navigation.resources")}</p>
-                    <p className={styles.fake}>{t("navigation.resources")}</p>
+                    <p>Resources</p>
+                    <p className={styles.fake}>Resources</p>
                   </Link>
                 </li>
                 <li className="standard">
                   <Link to="/vacancy">
-                    <p>{t("navigation.vacancy")}</p>
-                    <p className={styles.fake}>{t("navigation.vacancy")}</p>
+                    <p>Career</p>
+                    <p className={styles.fake}>Career</p>
                   </Link>
                 </li>
               </ul>
@@ -270,10 +216,10 @@ const Navigation = () => {
               <li className="standard">{t("navigation.affiliate")}</li>
             </Link> */}
             <Link to="/resources" onClick={() => setOpenMenu(false)}>
-              <li className="standard">{t("navigation.resources")}</li>
+              <li className="standard">Resources</li>
             </Link>
             <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
-              <li className="standard">{t("navigation.vacancy")}</li>
+              <li className="standard">Career</li>
             </Link>
             {loginAndSignupMobile()}
           </ul>

@@ -8,9 +8,6 @@ import Hero3 from "../../assets/landing/hero 3.png";
 import Hero4 from "../../assets/landing/hero 4.png";
 import HeroLineTop from "../../assets/landing/b2c-hero-top.svg";
 import HeroLineBottom from "../../assets/landing/b2c-hero-down.svg";
-import VerticalLine from "../../assets/landing/hero lines 2.svg";
-import VerticalDashedLine from "../../assets/landing/VerticalDashedLine.svg";
-import BlueLine from "../../assets/landing/BlueLine.svg";
 import Blocto from "../../assets/landing/ico-blocto.png";
 import Coinbase from "../../assets/landing/ico-coinbase.png";
 import MetaMask from "../../assets/landing/ico-metamask.png";
@@ -174,15 +171,13 @@ const Hero = () => {
         }}
         className="hide-in-tablet"
       />
-      <img
-        src={VerticalDashedLine}
+      <div
         style={{
-          position: "absolute",
           right: "calc(25% - 2.6rem)",
           bottom: "0",
-          zIndex: "-1",
+          height: "100%",
         }}
-        className="hide-in-tablet"
+        className="hide-in-tablet vertical-dashed-line"
       />
       <hr
         style={{
@@ -279,6 +274,8 @@ const MultiWallets = () => {
       className="layout-paragraph"
       style={{
         paddingBottom: "0",
+        width: "100vw",
+        overflow: "hidden",
       }}
     >
       <Heading
@@ -286,24 +283,18 @@ const MultiWallets = () => {
         subtitle={`Effortlessly handle multiple wallets with our platform. Choose our built-in wallet or link countless external wallets for ultimate flexibility.`}
       />
 
-      <div className="multi-wallet-management">
+      <div className="multi-wallet-management container">
         <hr
           style={{
-            position: "absolute",
             top: "0",
-            left: "-32rem",
-            width: "200vw",
-            border: "1px solid #202020",
+            width: "100vw",
           }}
           className="hide-in-mobile"
         />
         <hr
           style={{
-            position: "absolute",
             bottom: "0",
-            left: "-32rem",
-            width: "200vw",
-            border: "1px solid #202020",
+            width: "100vw",
           }}
         />
         <div className="wallet-internal">
@@ -451,21 +442,15 @@ const Transactions = () => {
       <div className="layout-transactions first">
         <hr
           style={{
-            position: "absolute",
             top: "0",
-            left: "-32rem",
-            width: "150vw",
-            border: "1px solid #202020",
+            width: "100vw",
           }}
           className="hide-in-tablet"
         />
         <hr
           style={{
-            position: "absolute",
             bottom: "0",
-            left: "-32rem",
-            width: "150vw",
-            border: "1px solid #202020",
+            width: "100vw",
           }}
           className="hide-in-tablet"
         />
@@ -510,21 +495,15 @@ const Transactions = () => {
       <div className="layout-transactions">
         <hr
           style={{
-            position: "absolute",
             top: "0",
-            left: "-32rem",
-            width: "150vw",
-            border: "1px solid #202020",
+            width: "100vw",
           }}
           className="hide-in-tablet"
         />
         <hr
           style={{
-            position: "absolute",
             bottom: "0",
-            left: "-32rem",
-            width: "150vw",
-            border: "1px solid #202020",
+            width: "100vw",
           }}
           className="hide-in-tablet"
         />
