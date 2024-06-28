@@ -4,6 +4,9 @@
 .authLayout .ant-row {
   height: 100%;
 }
+.authLayout-img-container {
+  position: relative;
+}
 .authLayout-img-container img {
   width: 100%;
   height: 100%;

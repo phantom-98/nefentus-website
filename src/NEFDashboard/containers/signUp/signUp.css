@@ -47,3 +47,6 @@
   box-shadow: none !important;
   border: none !important;
 }
+.authLayout .ant-col:has(.back-btn-role) {
+  position: static;
+}

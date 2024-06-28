@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Select, Col, Flex, Form, Input, Button, Divider } from "antd";
 import Logo from "../../../assets/logo/logo.svg";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +8,10 @@ import { countryList } from "../../../constants";
 import { getCountryList, getFlagLink } from "../../../countries";
 import "./signUp.css";
 import { MessageContext } from "../../../context/message";
+import RoleSelection from "../roleSelection";
 
 const SignForm = () => {
+  const [roleSelector, setRoleSelector] = useState(false);
   const backendAPI = new backend_API();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -82,111 +84,176 @@ const SignForm = () => {
   };
 
   return (
-    <div className="auth-form">
-      <Flex vertical gap={24} className="form-header">
-        <div className="logo">
-          <img src={Logo} alt="Logo" />
-        </div>
-        <Flex vertical gap={6} className="form-heading">
-          <h4>Create an account</h4>
-          <h5>Sign up to a new Nefentus account</h5>
-        </Flex>
-      </Flex>
-      <Flex vertical gap={12}>
-        <Form
-          name="basic"
-          labelCol={{
-            span: 24,
-          }}
-          wrapperCol={{
-            span: 24,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Flex gap={12}>
-            <Col style={{ flex: 1 }}>
-              <Form.Item
-                label="First name"
-                name="firstname"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your firstname!",
-                  },
-                ]}
-              >
-                <Input placeholder="John" />
-              </Form.Item>
-            </Col>
-            <Col style={{ flex: 1 }}>
-              <Form.Item
-                label="Last name"
-                name="lastname"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your lastname!",
-                  },
-                ]}
-              >
-                <Input placeholder="Doe" />
-              </Form.Item>
-            </Col>
-          </Flex>
-
-          <Form.Item
-            label="Email*"
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
+    <>
+      {roleSelector ? (
+        <div className="auth-form">
+          <div
+            className="back-btn back-btn-role"
+            onClick={() => setRoleSelector(!roleSelector)}
           >
-            <Input />
-          </Form.Item>
-
-          <Flex gap={12}>
-            <Col style={{ flex: 1 }}>
-              <Form.Item
-                label="Password"
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your password!",
-                  },
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
-            </Col>
-            <Col style={{ flex: 1 }}>
-              <Form.Item
-                label="Confirm password"
-                name="confirmpassword"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your confirm password!",
-                  },
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
-            </Col>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="21"
+              viewBox="0 0 20 21"
+              fill="none"
+            >
+              <path
+                d="M12.4996 6.0875C12.1746 5.7625 11.6496 5.7625 11.3246 6.0875L7.49961 9.9125C7.17461 10.2375 7.17461 10.7625 7.49961 11.0875L11.3246 14.9125C11.6496 15.2375 12.1746 15.2375 12.4996 14.9125C12.8246 14.5875 12.8246 14.0625 12.4996 13.7375L9.26628 10.4958L12.4996 7.2625C12.8246 6.9375 12.8163 6.40417 12.4996 6.0875Z"
+                fill="#E9E9E9"
+              />
+            </svg>
+            <span>Back</span>
+          </div>
+          <Flex vertical gap={24} className="form-header">
+            <div className="logo">
+              <img src={Logo} alt="Logo" />
+            </div>
+            <Flex vertical gap={6} className="form-heading">
+              <h4>Create an account</h4>
+              <h5>Sign up to a new Nefentus account</h5>
+            </Flex>
           </Flex>
+          <Flex vertical gap={12}>
+            <Form
+              name="basic"
+              labelCol={{
+                span: 24,
+              }}
+              wrapperCol={{
+                span: 24,
+              }}
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+            >
+              <Flex gap={12}>
+                <Col style={{ flex: 1 }}>
+                  <Form.Item
+                    label="First name"
+                    name="firstname"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your firstname!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="John" />
+                  </Form.Item>
+                </Col>
+                <Col style={{ flex: 1 }}>
+                  <Form.Item
+                    label="Last name"
+                    name="lastname"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your lastname!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Doe" />
+                  </Form.Item>
+                </Col>
+              </Flex>
 
-          <Form.Item label="Phone number">
-            <Flex gap={8} className="phoneNumber">
               <Form.Item
-                name="countryFlag"
+                label="Email*"
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your username!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Flex gap={12}>
+                <Col style={{ flex: 1 }}>
+                  <Form.Item
+                    label="Password"
+                    name="password"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
+                      },
+                    ]}
+                  >
+                    <Input.Password />
+                  </Form.Item>
+                </Col>
+                <Col style={{ flex: 1 }}>
+                  <Form.Item
+                    label="Confirm password"
+                    name="confirmpassword"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your confirm password!",
+                      },
+                    ]}
+                  >
+                    <Input.Password />
+                  </Form.Item>
+                </Col>
+              </Flex>
+
+              <Form.Item label="Phone number">
+                <Flex gap={8} className="phoneNumber">
+                  <Form.Item
+                    name="countryFlag"
+                    rules={[
+                      {
+                        required: true,
+                      },
+                    ]}
+                  >
+                    <Select
+                      placeholder="Choose"
+                      allowClear
+                      virtual={false}
+                      style={{ width: "60px" }}
+                      className="telephone-flag"
+                    >
+                      {getCountryList()?.map((country, index) => {
+                        return (
+                          <Option value={country?.value} key={index}>
+                            <img
+                              src={getFlagLink(country?.symbol)}
+                              alt="country"
+                              width="22"
+                            />
+                          </Option>
+                        );
+                      })}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    name="phoneNumber"
+                    rules={[
+                      {
+                        required: true,
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="+38 000 - 000 - 00 - 00"
+                      className="telephone-number"
+                    />
+                  </Form.Item>
+                </Flex>
+              </Form.Item>
+
+              <Form.Item
+                name="countryRegion"
+                label="Country region"
                 rules={[
                   {
                     required: true,
@@ -194,83 +261,45 @@ const SignForm = () => {
                 ]}
               >
                 <Select
-                  placeholder="Choose"
+                  placeholder="Choose your country"
                   allowClear
                   virtual={false}
-                  style={{ width: "60px" }}
-                  className="telephone-flag"
                 >
-                  {getCountryList()?.map((country, index) => {
+                  {countryList?.map((country, index) => {
                     return (
                       <Option value={country?.value} key={index}>
-                        <img
-                          src={getFlagLink(country?.symbol)}
-                          alt="country"
-                          width="22"
-                        />
+                        {t(country?.display)}
                       </Option>
                     );
                   })}
                 </Select>
               </Form.Item>
-              <Form.Item
-                name="phoneNumber"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input
-                  placeholder="+38 000 - 000 - 00 - 00"
-                  className="telephone-number"
-                />
+
+              <Form.Item>
+                <div
+                  className="forgot-password"
+                  onClick={() => navigate("/forgot-password")}
+                >
+                  Forgot password?
+                </div>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
               </Form.Item>
-            </Flex>
-          </Form.Item>
-
-          <Form.Item
-            name="countryRegion"
-            label="Country region"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Select
-              placeholder="Choose your country"
-              allowClear
-              virtual={false}
-            >
-              {countryList?.map((country, index) => {
-                return (
-                  <Option value={country?.value} key={index}>
-                    {t(country?.display)}
-                  </Option>
-                );
-              })}
-            </Select>
-          </Form.Item>
-
-          <Form.Item>
-            <div
-              className="forgot-password"
-              onClick={() => navigate("/forgot-password")}
-            >
-              Forgot password?
-            </div>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Flex>
-      <div className="signup-text">
-        Already have an account?{" "}
-        <span onClick={() => navigate("/login")}>Log in</span>
-      </div>
-    </div>
+            </Form>
+          </Flex>
+          <div className="signup-text">
+            Already have an account?{" "}
+            <span onClick={() => navigate("/login")}>Log in</span>
+          </div>
+        </div>
+      ) : (
+        <RoleSelection
+          setRoleSelector={setRoleSelector}
+          roleSelector={roleSelector}
+        />
+      )}
+    </>
   );
 };
 

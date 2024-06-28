@@ -230,6 +230,7 @@ function App() {
                           </AuthLayout>
                         }
                       />
+
                       <Route
                         path="/sign-up"
                         element={
