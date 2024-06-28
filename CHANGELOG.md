@@ -8,6 +8,7 @@
 - Fix undefined user issue in new dashboard (MINOR)
 - Authentication Flow is functional (MAJOR)
 - Roboto Flex font added for ukrainian language (PATCH)
+- Cookie banner issue fixed (MINOR)
 
 # 1.3.0
 
