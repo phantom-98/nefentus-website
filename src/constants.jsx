@@ -23,6 +23,7 @@ export const ROLE_TO_NAME = {
   "senior broker": "Senior Broker",
   leader: "Leader",
   admin: "Admin",
+  private: "Private",
 };
 
 export const useMainnet = () => {

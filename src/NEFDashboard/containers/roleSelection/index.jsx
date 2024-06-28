@@ -2,12 +2,7 @@ import { Flex, Button } from "antd";
 import React, { useState } from "react";
 import "./role-selection.css";
 
-const RoleSelection = ({ roleSelector, setRoleSelector }) => {
-  const [role, setRole] = useState("Private");
-  const onChange = (e) => {
-    console.log("radio checked", e.target.value);
-    setValue(e.target.value);
-  };
+const RoleSelection = ({ roleSelector, setRoleSelector, role, setRole }) => {
   return (
     <div className="auth-form">
       <Flex vertical gap={24} className="form-header">

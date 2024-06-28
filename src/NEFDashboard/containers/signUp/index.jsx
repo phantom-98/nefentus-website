@@ -12,6 +12,7 @@ import RoleSelection from "../roleSelection";
 
 const SignForm = () => {
   const [roleSelector, setRoleSelector] = useState(false);
+  const [role, setRole] = useState("Private");
   const backendAPI = new backend_API();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ const SignForm = () => {
       telNr: values?.phoneNumber,
       affiliateLink: "",
       country: values?.countryRegion,
+      accountRole: role,
     };
 
     const response = await backendAPI.register(payload);
@@ -232,13 +234,12 @@ const SignForm = () => {
                     name="countryFlag"
                     rules={[
                       {
-                        required: true,
+                        required: false,
                       },
                     ]}
                   >
                     <Select
                       placeholder="Choose"
-                      allowClear
                       virtual={false}
                       style={{ width: "60px" }}
                       className="telephone-flag"
@@ -319,6 +320,8 @@ const SignForm = () => {
         <RoleSelection
           setRoleSelector={setRoleSelector}
           roleSelector={roleSelector}
+          role={role}
+          setRole={setRole}
         />
       )}
     </>
