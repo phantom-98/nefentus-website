@@ -4,7 +4,7 @@ import Logo from "../../../assets/logo/logo.svg";
 import { useNavigate } from "react-router-dom";
 import backend_API from "../../../api/backendAPI";
 import { useTranslation } from "react-i18next";
-import { countryList } from "../../../constants";
+import { updatedCountries } from "../../../constants";
 import { getCountryList, getFlagLink } from "../../../countries";
 import "./signUp.css";
 import { MessageContext } from "../../../context/message";
@@ -20,7 +20,7 @@ const SignForm = () => {
     const payload = {
       email: values.email,
       password: values.password,
-      roles: ["vendor"],
+      roles: ["Vendor"],
       firstName: values?.firstname,
       lastName: values?.lastname,
       telNr: values?.phoneNumber,
@@ -81,6 +81,19 @@ const SignForm = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const onPhoneChange = (value) => {
+    const selectedCountry = updatedCountries?.find((country) =>
+      value?.includes(country?.countryCode),
+    );
+    if (selectedCountry != undefined) {
+      const updatedValues = {
+        ...form.getFieldsValue(),
+        countryFlag: selectedCountry?.value,
+      };
+      form.setFieldsValue({ ...updatedValues });
+    }
+  };
+
   return (
     <div className="auth-form">
       <Flex vertical gap={24} className="form-header">
@@ -94,6 +107,7 @@ const SignForm = () => {
       </Flex>
       <Flex vertical gap={12}>
         <Form
+          form={form}
           name="basic"
           labelCol={{
             span: 24,
@@ -102,7 +116,14 @@ const SignForm = () => {
             span: 24,
           }}
           initialValues={{
-            remember: true,
+            confirmpassword: "",
+            countryFlag: "Austria",
+            countryRegion: "",
+            email: "",
+            firstname: "",
+            lastname: "",
+            password: "",
+            phoneNumber: "+43",
           }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -195,12 +216,11 @@ const SignForm = () => {
               >
                 <Select
                   placeholder="Choose"
-                  allowClear
                   virtual={false}
                   style={{ width: "60px" }}
                   className="telephone-flag"
                 >
-                  {getCountryList()?.map((country, index) => {
+                  {updatedCountries?.map((country, index) => {
                     return (
                       <Option value={country?.value} key={index}>
                         <img
@@ -224,6 +244,7 @@ const SignForm = () => {
                 <Input
                   placeholder="+38 000 - 000 - 00 - 00"
                   className="telephone-number"
+                  onChange={(e) => onPhoneChange(e.target.value)}
                 />
               </Form.Item>
             </Flex>
@@ -243,7 +264,7 @@ const SignForm = () => {
               allowClear
               virtual={false}
             >
-              {countryList?.map((country, index) => {
+              {updatedCountries?.map((country, index) => {
                 return (
                   <Option value={country?.value} key={index}>
                     {t(country?.display)}
