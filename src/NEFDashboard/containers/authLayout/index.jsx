@@ -40,7 +40,7 @@ const AuthLayout = ({ children }) => {
           <div className="authLayout-img-container">
             <img src={AuthLayoutImg} alt="authLayoutImg" />
             <Flex vertical gap={20} className="authLayout-img-text">
-              <h1>New way to lead bussiness</h1>
+              <h1>New way to lead business</h1>
               <p>Use cryptocurrencies without risk</p>
             </Flex>
           </div>
