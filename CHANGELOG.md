@@ -9,6 +9,7 @@
 - Authentication Flow is functional (MAJOR)
 - Roboto Flex font added for ukrainian language (PATCH)
 - Cookie banner issue fixed (MINOR)
+- Fix dashboards' titles (PATCH)
 
 # 1.3.0
 

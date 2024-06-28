@@ -121,10 +121,13 @@ import SettingLayout from "./NEFDashboard/containers/settingLayout";
 import SettingPage from "./NEFDashboard/containers/settings";
 import Products from "./NEFDashboard/containers/products";
 import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
-import NewLanding, { NewB2B, NewB2C } from "./pages/Landing";
+import NewLanding, { NewB2B, NewB2C, NewResources } from "./pages/Landing";
 import Resources from "./components/resources";
+import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t } = useTranslation();
   useEffect(() => {
     const scrollEvent = () => {
       const scrollElement = document.querySelectorAll(".scroll");
@@ -220,7 +223,7 @@ function App() {
                       <Route
                         path="/new-settings"
                         element={
-                          <SettingLayout>
+                          <SettingLayout title={"settingPage.title"}>
                             <SettingPage />
                           </SettingLayout>
                         }
@@ -313,10 +316,9 @@ function App() {
                       <Route
                         path="/resources"
                         element={
-                          <>
-                            <Navigation />
-                            <Resources />
-                          </>
+                          <Layout>
+                            <NewResources />
+                          </Layout>
                         }
                       />
 
