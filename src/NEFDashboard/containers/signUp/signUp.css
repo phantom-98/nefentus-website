@@ -33,7 +33,7 @@
   border: 1px solid var(--Dark, #202020);
   background: var(--BG2, #171717) !important;
   box-shadow: 0px 3px 10.2px 0px rgba(0, 0, 0, 0.03);
-  padding: 8px 12px;
+  padding: 4px 12px;
 }
 .auth-form .phoneNumber .ant-select .ant-select-selector {
   background: none !important;
@@ -47,6 +47,18 @@
   box-shadow: none !important;
   border: none !important;
 }
+
 .authLayout .ant-col:has(.back-btn-role) {
   position: static;
+}
+
+:where(
+    .css-dev-only-do-not-override-128oip2
+  ).telephone-flag.ant-select-show-arrow
+  .ant-select-selection-item,
+:where(
+    .css-dev-only-do-not-override-128oip2
+  ).telephone-flag.ant-select-show-arrow
+  .ant-select-selection-placeholder {
+  display: flex;
 }

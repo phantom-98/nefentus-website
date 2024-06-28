@@ -648,6 +648,197 @@ export const countryList = [
   return country1.value?.localeCompare(country2.value);
 });
 
+export const updatedCountries = [
+  {
+    value: "Austria",
+    display: "countries.Austria",
+    countryCode: "+43",
+    symbol: "AT",
+  },
+  {
+    value: "Belgium",
+    display: "countries.Belgium",
+    countryCode: "+32",
+    symbol: "BE",
+  },
+  {
+    value: "Bulgaria",
+    display: "countries.Bulgaria",
+    countryCode: "+359",
+    symbol: "BG",
+  },
+  {
+    value: "Croatia",
+    display: "countries.Croatia",
+    countryCode: "+385",
+    symbol: "HR",
+  },
+  {
+    value: "Cyprus",
+    display: "countries.Cyprus",
+    countryCode: "+357",
+    symbol: "CY",
+  },
+  {
+    value: "Czech Republic",
+    display: "countries.CzechRepublic",
+    countryCode: "+420",
+    symbol: "CZ",
+  },
+  {
+    value: "Denmark",
+    display: "countries.Denmark",
+    countryCode: "+45",
+    symbol: "DK",
+  },
+  {
+    value: "Estonia",
+    display: "countries.Estonia",
+    countryCode: "+372",
+    symbol: "EE",
+  },
+  {
+    value: "Finland",
+    display: "countries.Finland",
+    countryCode: "+358",
+    symbol: "FI",
+  },
+  {
+    value: "France",
+    display: "countries.France",
+    countryCode: "+33",
+    symbol: "FR",
+  },
+  {
+    value: "Germany",
+    display: "countries.Germany",
+    countryCode: "+49",
+    symbol: "DE",
+  },
+  {
+    value: "Greece",
+    display: "countries.Greece",
+    countryCode: "+30",
+    symbol: "GR",
+  },
+  {
+    value: "Hungary",
+    display: "countries.Hungary",
+    countryCode: "+36",
+    symbol: "HU",
+  },
+  {
+    value: "Iceland",
+    display: "countries.Iceland",
+    countryCode: "+354",
+    symbol: "IS",
+  },
+  {
+    value: "Ireland",
+    display: "countries.Ireland",
+    countryCode: "+353",
+    symbol: "IE",
+  },
+  {
+    value: "Italy",
+    display: "countries.Italy",
+    countryCode: "+39",
+    symbol: "IT",
+  },
+  {
+    value: "Latvia",
+    display: "countries.Latvia",
+    countryCode: "+371",
+    symbol: "LV",
+  },
+  {
+    value: "Lithuania",
+    display: "countries.Lithuania",
+    countryCode: "+370",
+    symbol: "LT",
+  },
+  {
+    value: "Luxembourg",
+    display: "countries.Luxembourg",
+    countryCode: "+352",
+    symbol: "LU",
+  },
+  {
+    value: "Malta",
+    display: "countries.Malta",
+    countryCode: "+356",
+    symbol: "MT",
+  },
+  {
+    value: "Netherlands",
+    display: "countries.Netherlands",
+    countryCode: "+31",
+    symbol: "NL",
+  },
+  {
+    value: "Norway",
+    display: "countries.Norway",
+    countryCode: "+47",
+    symbol: "NO",
+  },
+  {
+    value: "Poland",
+    display: "countries.Poland",
+    countryCode: "+48",
+    symbol: "PL",
+  },
+  {
+    value: "Portugal",
+    display: "countries.Portugal",
+    countryCode: "+351",
+    symbol: "PT",
+  },
+  {
+    value: "Romania",
+    display: "countries.Romania",
+    countryCode: "+40",
+    symbol: "RO",
+  },
+  {
+    value: "Slovakia",
+    display: "countries.Slovakia",
+    countryCode: "+421",
+    symbol: "SK",
+  },
+  {
+    value: "Slovenia",
+    display: "countries.Slovenia",
+    countryCode: "+386",
+    symbol: "SI",
+  },
+  {
+    value: "Spain",
+    display: "countries.Spain",
+    countryCode: "+34",
+    symbol: "ES",
+  },
+  {
+    value: "Sweden",
+    display: "countries.Sweden",
+    countryCode: "+46",
+    symbol: "SE",
+  },
+  {
+    value: "Switzerland",
+    display: "countries.Switzerland",
+    countryCode: "+41",
+    symbol: "CH",
+  },
+  {
+    value: "Liechtenstein",
+    display: "countries.Liechtenstein",
+    countryCode: "+423",
+    symbol: "LI",
+  },
+].sort((country1, country2) => {
+  return country1.value?.localeCompare(country2.value);
+});
+
 export const getChainSlug = (blockchain) => {
   if (useMainnet()) {
     if (blockchain === "ETH") return "ethereum";
