@@ -72,6 +72,7 @@ const Navigation = () => {
             flexDirection: "column",
             gap: 10,
             width: "100%",
+            pointerEvents: "auto"
           }}
         >
           <Button
