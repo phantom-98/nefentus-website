@@ -16,6 +16,13 @@ const role_colors = {
   vendor: "#8543DA",
   admin: "#ED9001",
 };
+const role_order = {
+  leader: 4,
+  seniorbroker: 3,
+  broker: 2,
+  vendor: 1,
+  admin: 5,
+};
 
 const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
   const { t } = useTranslation();
@@ -48,8 +55,9 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
             ...data,
             role: ROLE_TO_NAME[data?.role],
             color: role_colors[data?.role],
+            order: role_order[data?.role],
           }))
-          .sort((a, b) => a.role.localeCompare(b.role)),
+          .sort((a, b) => b.order - a.order),
       );
       setTotalRoles(
         response

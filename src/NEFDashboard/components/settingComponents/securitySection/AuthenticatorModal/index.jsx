@@ -2,72 +2,114 @@ import React, { useContext, useEffect, useState } from "react";
 import CommonModal from "../../commonModal";
 import KeyIcon from "../../../../../assets/newDashboardIcons/key.svg";
 import CopyIcon from "../../../../../assets/newDashboardIcons/copy-gray.svg";
+import AuthenticatorIcon from "../../../../../assets/newDashboardIcons/authenticator-code.svg";
 import "./authenticatorModal.css";
-import { Button, Flex, QRCode } from "antd";
+import { Button, Flex, Input, QRCode } from "antd";
 import backend_API from "../../../../../api/backendAPI";
 import { MessageContext } from "../../../../../context/message";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../../context/auth/authContext";
 
-const AuthenticatorModal = ({
-  open,
-  onClose,
-  onSuccess,
-  secretToken,
-  handleTotp,
-}) => {
-  const backendAPI = new backend_API();
+const AuthenticatorModal = ({ open, onClose, onSuccess, secretToken }) => {
   const { setInfoMessage } = useContext(MessageContext);
   const { t } = useTranslation();
   const { user } = useAuth();
+  const [step, setStep] = useState(1);
+  const [code, setCode] = useState("");
 
   return (
-    <CommonModal open={open} onClose={onClose} width={322}>
-      <Flex vertical gap={16} align="center">
-        <Flex vertical gap={8} align="center" justify="center">
+    <CommonModal open={open} onClose={onClose} width={step == 1 ? 322 : 434}>
+      {step == 1 ? (
+        <Flex vertical gap={16} align="center">
+          <Flex vertical gap={8} align="center" justify="center">
+            <Flex
+              align="center"
+              justify="center"
+              className="authenticator-key-icon"
+            >
+              <img src={KeyIcon} alt="icon" />
+            </Flex>
+            <div className="default-text">Set 2-factor authentication app</div>
+            <div className="default-text-gray authenticator-description">
+              Please use your authentication app to scan this QR Code
+            </div>
+          </Flex>
+          {secretToken?.length > 0 && (
+            <QRCode
+              value={`otpauth://totp/Nefentus?secret=${secretToken}&issuer=${user?.email}`}
+              bgColor="#fff"
+              color="#000"
+              width={206}
+              type="svg"
+              status="active"
+            />
+          )}
+          <div className="default-text-gray authenticator-description">
+            Or enter this code into your authentication app.
+          </div>
           <Flex
             align="center"
-            justify="center"
-            className="authenticator-key-icon"
+            justify="space-between"
+            gap={4}
+            className="authenticator-copy-container"
           >
-            <img src={KeyIcon} alt="icon" />
+            <div className="authenticator-secret-code">{secretToken}</div>
+            <Button
+              icon={<img src={CopyIcon} alt="icon" width={16} height={16} />}
+              className="authenticator-copy-button"
+              onClick={() => {
+                navigator.clipboard.writeText(secretToken);
+                setInfoMessage(t("general.copied"));
+              }}
+            >
+              Copy
+            </Button>
           </Flex>
-          <div className="default-text">Set 2-factor authentication app</div>
-          <div className="default-text-gray authenticator-description">
-            Please use your authentication app to scan this QR Code
-          </div>
-        </Flex>
-        {secretToken?.length > 0 && (
-          <QRCode
-            value={`otpauth://totp/Nefentus?secret=${secretToken}&issuer=${user?.email}`}
-            bgColor="#fff"
-            color="#000"
-            width={206}
-            status="active"
-          />
-        )}
-        <div className="default-text-gray authenticator-description">
-          Or enter this code into your authentication app.
-        </div>
-        <Flex
-          align="center"
-          justify="space-between"
-          gap={4}
-          className="authenticator-copy-container"
-        >
-          <div className="authenticator-secret-code">{secretToken}</div>
           <Button
-            icon={<img src={CopyIcon} alt="icon" width={16} height={16} />}
-            className="authenticator-copy-button"
-            onClick={() => {
-              navigator.clipboard.writeText(secretToken);
-              setInfoMessage(t("general.copied"));
-            }}
+            onClick={() => setStep(step + 1)}
+            className="authenticator-code-next"
           >
-            Copy
+            Next
           </Button>
         </Flex>
-      </Flex>
+      ) : (
+        <Flex vertical>
+          <Flex
+            vertical
+            className="authenticator-step2-container"
+            align="center"
+            justify="center"
+            gap={16}
+          >
+            <div>
+              <img src={AuthenticatorIcon} alt="icon" />
+            </div>
+            <Flex vertical align="center" gap={4}>
+              <div className="default-text authentication-step2-title">
+                Authentication Code
+              </div>
+              <p className="default-text-gray authentication-step2-desc">
+                Please enter the 6-digit code generated by your application
+              </p>
+            </Flex>
+          </Flex>
+          <Flex justify="center" className="authenticator-code-container">
+            <Input.OTP length={6} onChange={(value) => setCode(value)} />
+          </Flex>
+          <Flex gap={16} className="authenticator-step2-footer">
+            <Button className="authenticator-code-cancel" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              className="authenticator-code-verify"
+              disabled={code == ""}
+              onClick={() => onSuccess(code)}
+            >
+              Verify
+            </Button>
+          </Flex>
+        </Flex>
+      )}
     </CommonModal>
   );
 };

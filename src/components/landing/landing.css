@@ -56,20 +56,22 @@
   padding: 1.2rem 2.4rem;
   border-radius: 0.6rem;
   border: 1px solid rgba(23, 23, 23, 0.6);
+  color: #111;
+  background: linear-gradient(0deg, #fafafa -32.93%, #cfcfcf 187.8%);
   box-shadow:
-    0px 78px 22px 0px rgba(239, 239, 239, 0),
-    0px -8px 20px 0px rgba(239, 239, 239, 0.08),
-    0px 28px 17px 0px rgba(239, 239, 239, 0.02),
-    0px 12px 12px 0px rgba(239, 239, 239, 0.04),
-    0px 3px 7px 0px rgba(239, 239, 239, 0.04);
+    0px -2px 0px 0px #c9c9c9 inset,
+    0px 1px 0px 0px #fff inset;
   cursor: pointer;
 }
 
 .landing-layout button:hover {
   background: linear-gradient(0deg, #fff 13.1%, #cfcfcf 187.8%);
   box-shadow:
-    0px -2px 0px 0px #c9c9c9 inset,
-    0px 1px 0px 0px #fff inset;
+    0px 78px 22px 0px rgba(239, 239, 239, 0),
+    0px -8px 20px 0px rgba(239, 239, 239, 0.18),
+    0px 28px 17px 0px rgba(239, 239, 239, 0.02),
+    0px 12px 12px 0px rgba(239, 239, 239, 0.04),
+    0px 3px 7px 0px rgba(239, 239, 239, 0.04);
 }
 
 .landing-layout button:active {
@@ -346,7 +348,6 @@
 .landing-layout .layout-getting-started {
   background: #131313;
   padding-block: 8rem;
-  overflow: hidden;
 }
 
 .landing-layout .layout-industry {
@@ -356,6 +357,7 @@
   margin-top: 16rem;
   border-block: 1px solid #202020;
   width: 100vw !important;
+  overflow: hidden;
 }
 
 .landing-layout .industry-card {
@@ -377,7 +379,7 @@
 
 .landing-layout .industry-card p {
   font-size: 1.2rem;
-  padding: 0.4rem 1rem 0 0.6rem;
+  padding: 0.1rem 1rem 0 0.6rem;
   text-wrap: nowrap;
 }
 
@@ -500,7 +502,7 @@
 }
 
 .landing-layout .feature-heading {
-  padding-block: 6rem 24rem;
+  padding-block: 7.2rem 32rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -629,6 +631,7 @@
   border: 1px solid #202020;
   font-size: 1.4rem;
   cursor: pointer;
+  transition: 0.5s ease-in;
 }
 
 .landing-layout .invoicing-step:hover {
@@ -687,7 +690,7 @@
   border-radius: 1rem;
   border: 2px solid #202020;
   opacity: 0;
-  transition: 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
 }
 
 .landing-layout .product-img-showed {
@@ -708,9 +711,18 @@
   padding-top: 2rem;
   border-top: 2px solid #202020;
   cursor: pointer;
+  position: relative;
 }
+.landing-layout .product-step hr {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  border: none;
+  z-index: 10;
+  border-top: 2px solid #e9e9e9 !important;
+}
+
 .landing-layout .product-step-selected {
-  border-top: 2px solid #e9e9e9;
 }
 
 .landing-layout .product-step p:first-child {
@@ -953,7 +965,7 @@
     position: absolute;
     margin-inline: auto;
     opacity: 0;
-    transition: 0.5s ease-out;
+    transition: 0.5s ease-in;
   }
   .landing-layout .step-invoicing-visible {
     position: static;
@@ -975,6 +987,7 @@
     gap: 0.5rem;
     padding: 0.6rem 1.6rem;
     border-radius: 0.4rem;
+    transition: 0.5s ease-in;
   }
   .landing-layout .invoicing-tab-selected,
   .landing-layout .invoicing-tab:hover {
@@ -1007,7 +1020,6 @@
     display: flex;
     align-items: center;
     margin-top: 8rem;
-    font-size: 3rem;
     gap: 2rem;
   }
   .landing-layout.b2b .product {
@@ -1129,7 +1141,7 @@
     display: block;
   }
   .landing-layout .progress-bar {
-    margin-top: 9.6rem;
+    margin-top: 12rem;
   }
   .landing-layout.home .layout-getting-started .layout-title .title {
     width: 30rem;

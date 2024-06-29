@@ -165,6 +165,11 @@ export const checkJwtToken = async () => {
   }
 };
 
+export const logOut = async (navigate) => {
+  await new backendAPI().signout();
+  navigate("/");
+};
+
 export const validateEmail = (email) => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return emailRegex.test(email);
@@ -252,6 +257,10 @@ export const getWalleBackground = (type) => {
 
 export const isFloat = (n) => {
   return Number(n) === n && n % 1 !== 0;
+};
+
+export const isNumber = (value) => {
+  return typeof value === "number" && isFinite(value);
 };
 
 export const graphDataToList = (data) => {

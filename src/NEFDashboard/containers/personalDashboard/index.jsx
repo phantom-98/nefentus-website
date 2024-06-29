@@ -1,20 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Avatar,
-  Button,
-  Col,
-  Divider,
-  Flex,
-  Input,
-  Row,
-  Select,
-  Switch,
-  Dropdown,
-  Skeleton,
-} from "antd";
+import React, { useEffect, useState } from "react";
+import { Col, Divider, Flex, Input, Row, Skeleton } from "antd";
 
 import AddIcon from "../../../assets/newDashboardIcons/add.svg";
-import WalletIcon from "../../../assets/newDashboardIcons/wallets-gray.svg";
 import SearchIcon from "../../../assets/newDashboardIcons/search.svg";
 import EthereumLogo from "../../../assets/newDashboardIcons/ethereum-logo.svg";
 import Slider from "react-slick";
@@ -32,13 +19,11 @@ import backendAPI from "../../../api/backendAPI";
 import {
   formatTokenBalance,
   formatUSDBalance,
-  getRole,
   getWalleBackground,
   getWalletIcon,
 } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../context/auth/authContext";
-import Languages from "../../../components/navigation/languages.jsx/languages";
 import "./personalDashboard.css";
 import { ConnectWallet, useDisconnect } from "@thirdweb-dev/react";
 import PorfolioCoins from "../../components/portfolioCoins";
@@ -57,10 +42,9 @@ const COLORS = [
 
 const PersonalDashboard = () => {
   const { t } = useTranslation();
-  const walletRef = useRef(null);
   const currencyList = currencies();
   const backend_API = new backendAPI();
-  const { user, setUser, currencyRate, isWalletConnected } = useAuth();
+  const { currencyRate, isWalletConnected } = useAuth();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [backupCryptoList, setBackupCryptoList] = useState([]);
   const [cryptoList, setCryptoList] = useState([]);
@@ -69,12 +53,11 @@ const PersonalDashboard = () => {
   const [walletOptions, setWalletOptions] = useState([]);
   const [total, setTotal] = useState(0);
   const [selectedWallet, setSelectedWallet] = useState({});
-  const [dropDownToggle, setDropDownToggle] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("europe");
   const [loader, setLoader] = useState(true);
   const disconnect = useDisconnect();
   useEffect(() => {
     updateInfo();
+    disconnect();
   }, []);
 
   useEffect(() => {

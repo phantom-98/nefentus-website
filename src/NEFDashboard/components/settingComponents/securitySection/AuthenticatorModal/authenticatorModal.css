@@ -42,3 +42,103 @@
 .authenticator-secret-code {
   width: 65%;
 }
+
+.authenticator-step2-container {
+  padding: 28px 12px 12px 12px;
+}
+.authentication-step2-title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 140%;
+}
+.authentication-step2-desc {
+  text-align: center;
+  max-width: 300px;
+}
+
+.authenticator-code-container {
+  padding: 24px 20px;
+}
+
+.authenticator-code-container .ant-otp input {
+  padding: 16px;
+  height: 76px;
+  width: 52px;
+  font-size: 32px;
+}
+
+.authenticator-code-container .ant-otp input:focus-within,
+.authenticator-code-container .ant-otp input:hover {
+  border-radius: 6px;
+  border: 1px solid var(--grad, #009bd2);
+}
+
+.authenticator-step2-footer {
+  padding: 20px 4px 4px 4px;
+}
+
+.authenticator-code-cancel {
+  padding: 13px 0px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  box-shadow:
+    0px 51px 14px 0px rgba(0, 0, 0, 0),
+    0px 33px 13px 0px rgba(0, 0, 0, 0.01),
+    0px 19px 11px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+  width: 50%;
+}
+
+.authenticator-code-verify {
+  border-radius: 6px;
+  background: var(
+    --grad,
+    linear-gradient(262deg, #009bd2 -78.58%, #3b6b7c 188.93%)
+  );
+  border: none;
+  /* Button shadow */
+  box-shadow:
+    0px 51px 14px 0px rgba(0, 0, 0, 0),
+    0px 33px 13px 0px rgba(0, 0, 0, 0.01),
+    0px 19px 11px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+  padding: 13px 0px;
+  width: 50%;
+}
+
+.authenticator-code-next {
+  border-radius: 6px;
+  background: var(
+    --grad,
+    linear-gradient(262deg, #009bd2 -78.58%, #3b6b7c 188.93%)
+  );
+  border: none;
+  /* Button shadow */
+  box-shadow:
+    0px 51px 14px 0px rgba(0, 0, 0, 0),
+    0px 33px 13px 0px rgba(0, 0, 0, 0.01),
+    0px 19px 11px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+  padding: 6px 0px;
+  width: 100%;
+}
+
+.authenticator-code-verify:hover {
+  border-radius: 6px;
+  background: linear-gradient(
+    261deg,
+    #37cbff -84.06%,
+    #3b6b7c 281.95%
+  ) !important;
+
+  /* Button shadow */
+  box-shadow:
+    0px 51px 14px 0px rgba(0, 0, 0, 0),
+    0px 33px 13px 0px rgba(0, 0, 0, 0.01),
+    0px 19px 11px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+}

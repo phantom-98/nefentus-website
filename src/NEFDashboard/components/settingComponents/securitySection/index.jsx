@@ -42,24 +42,45 @@ const SecuritySection = () => {
     const response = await backendAPI.setupTotp({
       active: false,
     });
-    if (response?.ok) setStatus(false);
+    if (response?.ok) {
+      setStatus(false);
+      setInfoMessage(t("messages.success.updateSettings"));
+    }
   };
 
-  const handleTotp = async (toggle) => {
-    if (toggle) {
-      const response = await backendAPI.setupTotp({ active: toggle });
-      if (toggle) setInfoMessage(t("messages.success.updateSettings"));
-      if (response.status === 200) {
-        setStatus(toggle);
-      }
-    }
-    if (toggle) handleTotpSecretKey();
-  };
   const handleTotpSecretKey = async () => {
     backendAPI.getTotpToken().then(async (token) => {
       setSecretToken(token);
       setAuthenticatorModal(true);
     });
+  };
+
+  const handleTotpVerify = async (token) => {
+    const response = await backendAPI.verifyTotpToken(
+      user?.email,
+      token,
+      false,
+      () => {},
+    );
+    if (response?.status === 200) {
+      const response2 = await backendAPI.setupTotp({
+        active: true,
+      });
+
+      if (response2 == null) {
+      } else {
+        setStatus(true);
+        setInfoMessage(t("security.scanModal.verifyCode"));
+        setAuthenticatorModal(false);
+        setSecretToken("");
+      }
+    }
+    if (response.status === 400) {
+      setReset(true);
+      setTimeout(() => {
+        setReset(false);
+      });
+    }
   };
 
   const list = [
@@ -150,12 +171,10 @@ const SecuritySection = () => {
             setStatus(user?.hasTotp);
             setSecretToken("");
           }}
-          onSuccess={() => {
-            setAuthenticatorModal(false);
-            setSecretToken("");
+          onSuccess={(value) => {
+            handleTotpVerify(value);
           }}
           secretToken={secretToken}
-          handleTotp={handleTotp}
         />
       )}
       {antiPhishingModal && (

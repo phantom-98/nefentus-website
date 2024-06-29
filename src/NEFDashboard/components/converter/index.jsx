@@ -113,7 +113,6 @@ const Converter = ({
   const [step, setStep] = useState(1);
 
   const backend_API = new backendAPI();
-  const [pwd, setPwd] = useState(false);
   const [password, setPassword] = useState();
 
   const [wallets, setWallets] = useState([]);
@@ -128,7 +127,7 @@ const Converter = ({
   const [toCryptoIndex, setToCryptoIndex] = useState(3);
   const [swingSDK, setSwingSDK] = useState(null);
   const [receiveAmount, setReceiveAmount] = useState("");
-  const [gas, setGas] = useState(0);
+  const [gas, setGas] = useState(-1);
   const [gasUsd, setGasUsd] = useState(0);
   const [amount, setAmount] = useState("");
   const [bridge, setBridge] = useState("");
@@ -289,7 +288,6 @@ const Converter = ({
           body,
         );
         if (resAllow) {
-          console.log("allowance", resAllow);
           const allowance = parseInt(resAllow["allowance"]);
           if (
             allowance <
@@ -307,7 +305,6 @@ const Converter = ({
               },
             );
             if (resApprove) {
-              console.log("approve", resApprove);
               resApprove.tx.forEach(async (tx) => {
                 const approve = await backend_API.swap({
                   ...tx,
@@ -377,11 +374,7 @@ const Converter = ({
     }
 
     if (selectedWalletIndex === 0) {
-      if (password) {
-        requestSwap();
-      } else {
-        setPwd(true);
-      }
+      requestSwap();
       return;
     }
 
@@ -497,19 +490,30 @@ const Converter = ({
       amount: amount,
     });
   }, [amount]);
+
   useEffect(() => {
-    if (setInsufficient && gas) {
-      const native = currencies().findIndex(
-        (item) => item.abbr === currencies()[fromCryptoIndex].blockchain,
-      );
-      if (
-        parseFloat(amount) > balances[fromCryptoIndex] ||
-        parseFloat(gas) > balances[native]
-      )
-        setInsufficient(true);
-      else setInsufficient(false);
+    const chain = currencies()[fromCryptoIndex];
+    console.log("gas", gas, amount);
+    if (
+      (chain.abbr === "ETH" || chain.abbr === "BNB") &&
+      parseFloat(amount) + parseFloat(gas) > balances[fromCryptoIndex]
+    ) {
+      setInsufficient(true);
+      return;
     }
-  }, [amount, gas]);
+    const native = currencies().findIndex(
+      (item) => item.abbr === chain.blockchain,
+    );
+    if (
+      parseFloat(amount) > balances[fromCryptoIndex] ||
+      parseFloat(gas) > balances[native]
+    ) {
+      setInsufficient(true);
+      return;
+    }
+
+    setInsufficient(false);
+  }, [transferParams, gas, balances]);
 
   const onCloseDrawer = () => {
     setOpenDrawer(false);
@@ -593,6 +597,22 @@ const Converter = ({
                   </Flex>
                 )}
               </Flex>
+              {selectedWalletIndex == 0 && (
+                <Flex vertical justify="center" gap={6}>
+                  <div
+                    className="default-text-gray"
+                    style={{ marginTop: "1rem" }}
+                  >
+                    {t("sendModal.password")}
+                  </div>
+                  <Input.Password
+                    placeholder={t("sendModal.passwordPlaceholder")}
+                    className="send-crypto-wallet-address"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Flex>
+              )}
             </Col>
             <Flex vertical gap={"12px"}>
               <div>
@@ -767,7 +787,7 @@ const Converter = ({
                   </span>
                 </div>
               )}
-              {gas > 0 && (
+              {gas >= 0 && (
                 <div
                   style={{
                     width: "100%",
@@ -957,10 +977,22 @@ const Converter = ({
         {step == 1 ? (
           <Button
             className="converter-footer-button"
-            onClick={() => {
+            onClick={async () => {
+              if (selectedWalletIndex == 0) {
+                const res = await backend_API.checkPassword(password);
+                if (!res) {
+                  setPassword("");
+                  setErrorMessage(t("messages.error.passwordCorrect"));
+                  return;
+                }
+              }
               startTransfer();
             }}
-            disabled={insufficient || fromCryptoIndex == toCryptoIndex}
+            disabled={
+              insufficient ||
+              fromCryptoIndex == toCryptoIndex ||
+              (selectedWalletIndex == 0 && !password)
+            }
             loading={spinner}
           >
             {t("converter.swap")}
@@ -1082,22 +1114,6 @@ const Converter = ({
           )}
         </Flex>
       </Drawer>
-      <PasswordPopup
-        show={pwd}
-        setShow={setPwd}
-        password={password}
-        setPassword={setPassword}
-        onConfirm={async () => {
-          const res = await backend_API.checkPassword(password);
-          if (res) {
-            setPwd(false);
-            requestSwap();
-          } else {
-            setPassword("");
-            setErrorMessage(t("messages.error.passwordCorrect"));
-          }
-        }}
-      />
     </Modal>
   );
 };

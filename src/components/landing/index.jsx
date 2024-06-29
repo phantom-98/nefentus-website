@@ -350,7 +350,7 @@ const Benefits = () => {
     >
       <IcoGroup icons={[HeartSquare, Smile, HeartChecked]} />
       <Heading
-        title={`Here's why your customers will love it`}
+        title={`Here's why your customers <span style="text-wrap: nowrap">will love it</span>`}
         subtitle={`Nefentus prioritizes your customers' convenience at every step.`}
       />
       <div className="layout-benefits">
@@ -446,8 +446,8 @@ const ScrollAnimation = () => {
     const position =
       (100 * document.documentElement.scrollTop) /
       document.documentElement.offsetHeight;
-    // console.log("scroll >", position);
-    setPos(position < 52 ? 0 : position < 62 ? 1 : 2);
+    console.log("scroll >", position);
+    setPos(position < 50 ? 0 : position < 59.2 ? 1 : 2);
   };
 
   useEffect(() => {
@@ -478,7 +478,7 @@ const ScrollAnimation = () => {
         className="img-part"
         style={{
           position: "sticky",
-          top: "24rem",
+          top: "calc(100vh - 58rem)",
         }}
       >
         <div style={{ position: "relative", width: "100%" }}>
