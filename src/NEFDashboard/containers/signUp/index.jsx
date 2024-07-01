@@ -230,11 +230,57 @@ const SignForm = () => {
                   </Form.Item>
                 </Col>
               </Flex>
+              {role === "Business" && (
+                <>
+                  <Form.Item label="Phone number">
+                    <Flex gap={8} className="phoneNumber">
+                      <Form.Item
+                        name="countryFlag"
+                        rules={[
+                          {
+                            required: false,
+                          },
+                        ]}
+                      >
+                        <Select
+                          placeholder="Choose"
+                          virtual={false}
+                          style={{ width: "60px" }}
+                          className="telephone-flag"
+                        >
+                          {updatedCountries?.map((country, index) => {
+                            return (
+                              <Option value={country?.value} key={index}>
+                                <img
+                                  src={getFlagLink(country?.symbol)}
+                                  alt="country"
+                                  width="22"
+                                />
+                              </Option>
+                            );
+                          })}
+                        </Select>
+                      </Form.Item>
+                      <Form.Item
+                        name="phoneNumber"
+                        rules={[
+                          {
+                            required: false,
+                          },
+                        ]}
+                      >
+                        <Input
+                          placeholder="+38 000 - 000 - 00 - 00"
+                          className="telephone-number"
+                          onChange={(e) => onPhoneChange(e.target.value)}
+                        />
+                      </Form.Item>
+                    </Flex>
+                  </Form.Item>
 
-              <Form.Item label="Phone number">
-                <Flex gap={8} className="phoneNumber">
                   <Form.Item
-                    name="countryFlag"
+                    name="countryRegion"
+                    label={"Country"}
                     rules={[
                       {
                         required: false,
@@ -242,72 +288,30 @@ const SignForm = () => {
                     ]}
                   >
                     <Select
-                      placeholder="Choose"
+                      placeholder="Choose your country"
+                      allowClear
                       virtual={false}
-                      style={{ width: "60px" }}
-                      className="telephone-flag"
                     >
                       {updatedCountries?.map((country, index) => {
                         return (
                           <Option value={country?.value} key={index}>
-                            <img
-                              src={getFlagLink(country?.symbol)}
-                              alt="country"
-                              width="22"
-                            />
+                            {t(country?.display)}
                           </Option>
                         );
                       })}
                     </Select>
                   </Form.Item>
-                  <Form.Item
-                    name="phoneNumber"
-                    rules={[
-                      {
-                        required: false,
-                      },
-                    ]}
-                  >
-                    <Input
-                      placeholder="+38 000 - 000 - 00 - 00"
-                      className="telephone-number"
-                      onChange={(e) => onPhoneChange(e.target.value)}
-                    />
-                  </Form.Item>
-                </Flex>
-              </Form.Item>
-
-              <Form.Item
-                name="countryRegion"
-                label={"Country*"}
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Select
-                  placeholder="Choose your country"
-                  allowClear
-                  virtual={false}
-                >
-                  {updatedCountries?.map((country, index) => {
-                    return (
-                      <Option value={country?.value} key={index}>
-                        {t(country?.display)}
-                      </Option>
-                    );
-                  })}
-                </Select>
-              </Form.Item>
-
+                </>
+              )}
               <Form.Item>
-                <div
-                  className="forgot-password"
-                  onClick={() => navigate("/forgot-password")}
-                >
-                  Forgot password?
-                </div>
+                {role === "Business" && (
+                  <div
+                    className="forgot-password"
+                    onClick={() => navigate("/forgot-password")}
+                  >
+                    Forgot password?
+                  </div>
+                )}
                 <Button type="primary" htmlType="submit" disabled={processing}>
                   Submit
                 </Button>

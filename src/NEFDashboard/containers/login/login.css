@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-  max-width: 70%;
+  max-width: 76%;
   margin: auto;
+  padding: 32px;
 }
 .auth-form .logo {
   background: var(--BG2, #171717);

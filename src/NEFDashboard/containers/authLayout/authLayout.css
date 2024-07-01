@@ -1,17 +1,16 @@
-.authLayout {
-  padding: 26px;
-}
 .authLayout .ant-row {
   height: 100%;
 }
 .authLayout-img-container {
   position: relative;
-}
-.authLayout-img-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 6px;
+  padding: 32px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  align-items: flex-end;
+
+  /* background: var(--BG2, #171717); */
 }
 
 .back-btn {
@@ -26,12 +25,6 @@
   position: absolute;
   left: 20px;
   top: 20px;
-}
-.authLayout-img-text {
-  max-width: 400px;
-  position: absolute;
-  bottom: 29px;
-  left: 42px;
 }
 
 .authLayout-img-text h1 {
@@ -48,16 +41,6 @@
   line-height: normal;
 }
 
-@media screen and (min-width: 1025px) {
-  .authLayout-img-container {
-    height: calc(100vh - 52px);
-  }
-}
-@media screen and (min-width: 991px) {
-  .authLayout {
-    height: 100vh;
-  }
-}
 @media screen and (max-width: 990px) {
   .authLayout-img-container {
     display: none;
@@ -67,7 +50,7 @@
   }
 }
 @media screen and (max-width: 767px) {
-  .authLayout {
+  .authLayout-img-container {
     padding: 20px;
   }
   .back-btn {

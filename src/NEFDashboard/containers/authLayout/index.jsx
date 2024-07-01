@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 const AuthLayout = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.pathname);
 
   useEffect(() => {
     console.log(location);
@@ -37,10 +36,12 @@ const AuthLayout = ({ children }) => {
           {children}
         </Col>
         <Col span={24} lg={12}>
-          <div className="authLayout-img-container">
-            <img src={AuthLayoutImg} alt="authLayoutImg" />
+          <div
+            className="authLayout-img-container"
+            style={{ backgroundImage: `url(${AuthLayoutImg})` }}
+          >
             <Flex vertical gap={20} className="authLayout-img-text">
-              <h1>New way to lead business</h1>
+              <h1>Implement cryptocurrency payments in your business.</h1>
               <p>Use cryptocurrencies without risk</p>
             </Flex>
           </div>
