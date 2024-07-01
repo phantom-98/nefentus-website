@@ -1,7 +1,16 @@
 # New changes
 
+- Fix texts & translations in the dashboard (PATCH)
 - Fix some minor issues in landing (PATCH)
 - Fix converter in case of internal wallet (MINOR)
+- Fix user role order (PATCH)
+- Issue with wallet connection on the Add Wallet button has been resolved. (MINOR)
+- Fix undefined user issue in new dashboard (MINOR)
+- Authentication Flow is functional (MAJOR)
+- Roboto Flex font added for ukrainian language (PATCH)
+- Cookie banner issue fixed (MINOR)
+- Fix dashboards' titles (PATCH)
+- Invoice/Product not found and page not found UI implemented (PATCH)
 - Update send modal functinality for both internal and external wallet (MAJOR)
 
 # 1.3.0

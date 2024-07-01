@@ -1,35 +1,38 @@
 import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import SidebarNew from "../../components/sidebarNew";
-import backendAPI from "../../../api/backendAPI";
-import { useAuth } from "../../../context/auth/authContext";
+import { useTranslation } from "react-i18next";
+import { checkJwtToken } from "../../../utils";
+import { Helmet } from "react-helmet";
 
-const SettingLayout = ({ children }) => {
-  const backend_API = new backendAPI();
-  const { setUser } = useAuth();
+const SettingLayout = ({ title, children }) => {
+  const { i18n, t } = useTranslation();
   const [sideBarShow, setSideBarShow] = useState(false);
+
   useEffect(() => {
-    fetchProfile();
+    checkJwtToken();
+    document.documentElement.lang = i18n.language;
   }, []);
 
-  const fetchProfile = async () => {
-    const response = await backend_API.getProfile();
-    if (response) setUser({ ...response });
-  };
   return (
-    <Row>
-      <Col
-        span={4}
-        className={sideBarShow ? "sideBarHide sideBarShow" : "sideBarHide"}
-      >
-        <SidebarNew
-          title=""
-          sideBarShow={sideBarShow}
-          setSideBarShow={setSideBarShow}
-        />
-      </Col>
-      <Col span={20}>{children}</Col>
-    </Row>
+    <>
+      <Helmet>
+        <title>Nefentus | {t(title)}</title>
+      </Helmet>
+      <Row>
+        <Col
+          span={4}
+          className={sideBarShow ? "sideBarHide sideBarShow" : "sideBarHide"}
+        >
+          <SidebarNew
+            title=""
+            sideBarShow={sideBarShow}
+            setSideBarShow={setSideBarShow}
+          />
+        </Col>
+        <Col span={20}>{children}</Col>
+      </Row>
+    </>
   );
 };
 
