@@ -133,6 +133,10 @@
   background: var(--BG2, #171717);
 }
 
+.crypto-amount-danger {
+  outline: 2px solid #e0454573 !important;
+}
+
 .send-crypto-footer-button {
   border-radius: 6px;
   color: #fff;
@@ -187,8 +191,8 @@
 }
 
 .send-modal-percentage-active {
-  color: #1554ad;
-  border-color: #1554ad;
+  /* color: #1554ad !important; */
+  border-color: #1554ad !important;
 }
 
 .send-gas-price-container {

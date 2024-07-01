@@ -3,7 +3,7 @@ import Bitcoin from "./assets/icon/crypto/bitcoin.svg";
 import Polygon from "./assets/icon/crypto/polygon.svg";
 import Cardano from "./assets/icon/crypto/cardano.svg";
 import Binance from "./assets/icon/crypto/binance.svg";
-import Ethereum from "./assets/icon/crypto/ethereum.svg";
+import Ethereum from "./assets/newDashboardIcons/ethereum-logo.svg";
 import Tether from "./assets/icon/crypto/tether.svg";
 import USDC from "./assets/icon/crypto/usdc.svg";
 import Ripple from "./assets/icon/crypto/xrp.svg";
