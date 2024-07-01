@@ -1250,6 +1250,8 @@
     "walletDescription": "Wählen Sie die Wallet, die beim Erstellen einer Rechnung oder beim Verkauf eines Produkts Zahlungen erhält.",
     "stablecoin": "Stablecoin",
     "stablecoinDescription": "Wählen Sie den Stablecoin, in den umgewandelt werden soll.",
+    "invoiceNotFoundTitle": "Fehler: Rechnung nicht gefunden",
+    "invoiceNotFoundDescription": "Ups! Es sieht so aus, als ob die Rechnung, die Sie aufrufen möchten, nicht existiert oder entfernt wurde. Bitte überprüfen Sie den Link und versuchen Sie es erneut.",
     "action": {
       "add": "Hinzufügen",
       "enable": "Aktivieren",
@@ -1507,6 +1509,15 @@
     "addProductDescription": "Fügen Sie Ihr Produkt oder Ihre Dienstleistung hinzu, um den Link an Käufer zu senden.",
     "deleteProductConfirmation": "Sind Sie sicher, dass Sie dieses Produkt löschen möchten?",
     "productDetail": "Produktdetails"
+  },
+  "content": {
+    "contentSubText": "Wenn Sie glauben, dass dies ein Fehler ist oder Hilfe benötigen, wenden Sie sich bitte an unser Support-Team.",
+    "thankyouText": "Vielen Dank, dass Sie Nefentus verwenden!",
+    "backButton": "Zurück zur Startseite",
+    "productTitle": "Fehler: Produkt nicht gefunden",
+    "productDescription": "Ups! Es sieht so aus, als ob der Produktzahlungslink, den Sie aufrufen möchten, nicht existiert oder entfernt wurde. Bitte überprüfen Sie den Link und versuchen Sie es erneut.",
+    "pageNotFound": "Fehler: Seite nicht gefunden",
+    "pageNotFoundDescription": "Ups! Es sieht so aus, als ob die Seite, die Sie aufrufen möchten, nicht existiert oder entfernt wurde. Bitte überprüfen Sie die URL und versuchen Sie es erneut."
   },
   "cancel": "Stornieren",
   "confirm": "Bestätigen",

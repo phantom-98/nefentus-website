@@ -123,6 +123,7 @@ import Products from "./NEFDashboard/containers/products";
 import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
 import NewLanding, { NewB2B, NewB2C, NewResources } from "./pages/Landing";
 import Resources from "./components/resources";
+import PageNotFound from "./NEFDashboard/components/pageNotFound";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 
@@ -569,6 +570,15 @@ function App() {
                             {/* <Navigation /> */}
                             <Pay />
                             {/* <Footer /> */}
+                          </>
+                        }
+                      />
+                      <Route
+                        path="*"
+                        element={
+                          <>
+                            <Navigation />
+                            <PageNotFound />
                           </>
                         }
                       />

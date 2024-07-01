@@ -1,0 +1,29 @@
+.content-not-found {
+  height: 85vh;
+  width: 85vw;
+  margin: auto;
+}
+
+.content-not-found-sub-container {
+  max-width: 446px;
+}
+
+.content-not-found-title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.content-back-to-home {
+  margin-top: 16px;
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+  box-shadow:
+    0px 51px 14px 0px rgba(0, 0, 0, 0),
+    0px 33px 13px 0px rgba(0, 0, 0, 0.01),
+    0px 19px 11px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+}
