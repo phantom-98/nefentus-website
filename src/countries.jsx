@@ -306,3 +306,13 @@ export function getCurrencySymbol() {
     AED: "د.إ",
   };
 }
+
+export function getCurrencyFlag() {
+  return {
+    USD: <img src={getFlagLink("US")} />,
+    EUR: <img src={getFlagLink("EU")} />,
+    CHF: <img src={getFlagLink("CH")} />,
+    UAH: <img src={getFlagLink("UA")} />,
+    AED: <img src={getFlagLink("AE")} />,
+  };
+}

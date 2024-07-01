@@ -126,10 +126,14 @@ import LoginForm from "./NEFDashboard/containers/login";
 import SignForm from "./NEFDashboard/containers/signUp";
 import ForgotPassword from "./NEFDashboard/containers/forgotPassword";
 import SetPasswordForm from "./NEFDashboard/containers/setPassword";
-import NewLanding, { NewB2B, NewB2C } from "./pages/Landing";
+import NewLanding, { NewB2B, NewB2C, NewResources } from "./pages/Landing";
 import Resources from "./components/resources";
+import PageNotFound from "./NEFDashboard/components/pageNotFound";
+import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t } = useTranslation();
   useEffect(() => {
     const scrollEvent = () => {
       const scrollElement = document.querySelectorAll(".scroll");
@@ -258,7 +262,7 @@ function App() {
                       <Route
                         path="/new-settings"
                         element={
-                          <SettingLayout>
+                          <SettingLayout title={"settingPage.title"}>
                             <SettingPage />
                           </SettingLayout>
                         }
@@ -351,10 +355,9 @@ function App() {
                       <Route
                         path="/resources"
                         element={
-                          <>
-                            <Navigation />
-                            <Resources />
-                          </>
+                          <Layout>
+                            <NewResources />
+                          </Layout>
                         }
                       />
 
@@ -605,6 +608,15 @@ function App() {
                             {/* <Navigation /> */}
                             <Pay />
                             {/* <Footer /> */}
+                          </>
+                        }
+                      />
+                      <Route
+                        path="*"
+                        element={
+                          <>
+                            <Navigation />
+                            <PageNotFound />
                           </>
                         }
                       />
