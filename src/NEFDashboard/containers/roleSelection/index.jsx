@@ -11,7 +11,7 @@ const RoleSelection = ({ roleSelector, setRoleSelector, role, setRole }) => {
           <div className="signup-text">Sign up to a new Nefentus account</div>
         </Flex>
       </Flex>
-      <Flex gap={16}>
+      <Flex gap={16} className="account-type-container">
         <Flex
           vertical
           gap={24}
@@ -202,7 +202,9 @@ const RoleSelection = ({ roleSelector, setRoleSelector, role, setRole }) => {
               </svg>
             )}
           </Flex>
-          <div className="role-card-text">Managing personal crypto assets.</div>
+          <div className="role-card-text">
+            Writing invoices & accepting payments as a business.
+          </div>
         </Flex>
       </Flex>
       <Button

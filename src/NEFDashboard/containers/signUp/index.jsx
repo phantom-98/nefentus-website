@@ -12,6 +12,7 @@ import RoleSelection from "../roleSelection";
 
 const SignForm = () => {
   const [roleSelector, setRoleSelector] = useState(false);
+  const [processing, setProcessing] = useState(false);
   const [role, setRole] = useState("Private");
   const backendAPI = new backend_API();
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const SignForm = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
+    setProcessing(true);
     const payload = {
       email: values.email,
       password: values.password,
@@ -80,6 +82,7 @@ const SignForm = () => {
       setInfoMessage(t("messages.error.confirmEmail"));
       form.resetFields();
     }
+    setProcessing(false);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -156,7 +159,7 @@ const SignForm = () => {
               <Flex gap={12}>
                 <Col style={{ flex: 1 }}>
                   <Form.Item
-                    label="First name"
+                    label="First Name*"
                     name="firstname"
                     rules={[
                       {
@@ -170,7 +173,7 @@ const SignForm = () => {
                 </Col>
                 <Col style={{ flex: 1 }}>
                   <Form.Item
-                    label="Last name"
+                    label="Last Name*"
                     name="lastname"
                     rules={[
                       {
@@ -200,7 +203,7 @@ const SignForm = () => {
               <Flex gap={12}>
                 <Col style={{ flex: 1 }}>
                   <Form.Item
-                    label="Password"
+                    label="Password*"
                     name="password"
                     rules={[
                       {
@@ -214,7 +217,7 @@ const SignForm = () => {
                 </Col>
                 <Col style={{ flex: 1 }}>
                   <Form.Item
-                    label="Confirm password"
+                    label="Confirm Password*"
                     name="confirmpassword"
                     rules={[
                       {
@@ -261,7 +264,7 @@ const SignForm = () => {
                     name="phoneNumber"
                     rules={[
                       {
-                        required: true,
+                        required: false,
                       },
                     ]}
                   >
@@ -276,7 +279,7 @@ const SignForm = () => {
 
               <Form.Item
                 name="countryRegion"
-                label="Country region"
+                label={"Country*"}
                 rules={[
                   {
                     required: true,
@@ -305,7 +308,7 @@ const SignForm = () => {
                 >
                   Forgot password?
                 </div>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" disabled={processing}>
                   Submit
                 </Button>
               </Form.Item>
