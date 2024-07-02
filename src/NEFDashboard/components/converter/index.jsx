@@ -450,13 +450,6 @@ const Converter = ({
   }, [transferParams]);
   useEffect(() => {
     if (wallets[selectedWalletIndex]) {
-      if (!walletInstance && selectedWalletIndex > 0) {
-        try {
-          connectWallet();
-        } catch (e) {
-          console.log("wallet connect failed");
-        }
-      }
       const address = wallets[selectedWalletIndex].address;
       fetchBalances(address);
       setTransferParams({

@@ -60,6 +60,7 @@ import {
   zerionWallet,
   safeWallet,
   trustWallet,
+  useWallet,
 } from "@thirdweb-dev/react";
 import { useTranslation } from "react-i18next";
 import GasDetail from "./gasDetails";
@@ -98,6 +99,7 @@ const SendCrypto = ({
   const { prices, fetchPrices } = usePrices();
   const disconnect = useDisconnect();
   const switchNetwork = useSwitchChain();
+  const connectedWallet = useWallet();
   const setConnectedWallet = useSetConnectedWallet();
   const createWalletInstance = useCreateWalletInstance();
 
@@ -223,54 +225,67 @@ const SendCrypto = ({
 
     // Withdraw
     setButtonLoader(true);
-    const tokenAddress = selectedCoin?.address;
-    if (!selectedWallet?.internal) {
-      setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawing"));
+    await onWalletConnect();
+  };
 
-      const web3API = new web3Api();
+  useEffect(() => {
+    async function handleSend() {
+      if (
+        step == 2 &&
+        buttonLoder &&
+        (connectedWallet || selectedWallet?.internal)
+      ) {
+        const tokenAddress = selectedCoin?.address;
+        if (!selectedWallet?.internal) {
+          setInfoMessage(t("dashboard.cryptoCard.sendModal.withdrawing"));
 
-      try {
-        await switchNetwork(chainId(selectedCoin?.blockchain));
+          const web3API = new web3Api();
 
-        const txReceipt = await web3API.send(
-          tokenAddress,
-          selectedCoin?.blockchain,
-          typeof amountInCrypto == "string"
-            ? amountInCrypto
-            : `${amountInCrypto?.toFixed(7)}`,
-          receiverAddress,
-        );
-        if (txReceipt.status === 1) {
-          setInfoMessage(t("messages.success.withdrawal"));
-          // fetching balances again
-          // if (onSuccess) onSuccess();
+          try {
+            await switchNetwork(chainId(selectedCoin?.blockchain));
+
+            const txReceipt = await web3API.send(
+              tokenAddress,
+              selectedCoin?.blockchain,
+              typeof amountInCrypto == "string"
+                ? amountInCrypto
+                : `${amountInCrypto?.toFixed(7)}`,
+              receiverAddress,
+            );
+            if (txReceipt.status === 1) {
+              setInfoMessage(t("messages.success.withdrawal"));
+              // fetching balances again
+              // if (onSuccess) onSuccess();
+            } else {
+              setErrorMessage(t("messages.error.withdraw"));
+            }
+          } catch (error) {
+            console.log(error);
+            setErrorMessage(t("messages.error.withdraw"));
+          }
         } else {
-          setErrorMessage(t("messages.error.withdraw"));
+          const ret = await backend_API.send(
+            tokenAddress,
+            selectedCoin?.blockchain,
+            amountInCrypto,
+            selectedWallet?.address,
+            receiverAddress,
+            password,
+          );
+          if (ret) {
+            setInfoMessage(t("messages.success.withdrawal"));
+          } else {
+            setErrorMessage(t("messages.error.withdraw"));
+          }
         }
-      } catch (error) {
-        console.log(error);
-        setErrorMessage(t("messages.error.withdraw"));
-      }
-    } else {
-      const ret = await backend_API.send(
-        tokenAddress,
-        selectedCoin?.blockchain,
-        amountInCrypto,
-        selectedWallet?.address,
-        receiverAddress,
-        password,
-      );
-      if (ret) {
-        setInfoMessage(t("messages.success.withdrawal"));
-      } else {
-        setErrorMessage(t("messages.error.withdraw"));
+        setButtonLoader(false);
+        await disconnect();
+        onWalletSuccess(false);
+        handleSubmitCrypto();
       }
     }
-    setButtonLoader(false);
-    await disconnect();
-    onWalletSuccess(false);
-    handleSubmitCrypto();
-  };
+    handleSend();
+  }, [connectedWallet, buttonLoder]);
 
   useEffect(() => {
     if (openSendModal) {
@@ -287,7 +302,6 @@ const SendCrypto = ({
 
   useEffect(() => {
     fetchBalances(selectedWallet?.address);
-    onWalletConnect();
   }, [selectedWallet]);
 
   useEffect(() => {

@@ -92,10 +92,9 @@ const ReceivePayment = ({
   const navigate = useNavigate();
   const { user, setUser, currencyRate } = useAuth();
   const [wallets, setWallets] = useState([]);
-  const connectedWallet = useWallet();
-  const [walletInstance, setWalletInstance] = useState(null);
   const connect = useConnect();
   const disconnect = useDisconnect();
+  const connectedWallet = useWallet();
   const setConnectedWallet = useSetConnectedWallet();
   const activeExternalWalletAddress = useAddress();
   const createWalletInstance = useCreateWalletInstance();
@@ -109,7 +108,7 @@ const ReceivePayment = ({
   const switchAccount = async (address) => {
     try {
       if (activeExternalWalletAddress.toLowerCase() !== address.toLowerCase()) {
-        await walletInstance.switchAccount();
+        await connectedWallet?.switchAccount();
       }
     } catch (e) {
       console.log("switching error: ", e.message);
@@ -182,7 +181,7 @@ const ReceivePayment = ({
         !isDisable && setDisable(true);
       }
     } else {
-      connectSelectedWallet();
+      fetchBalances(wallets[selectedWalletIndex]?.address);
     }
   }, [selectedWalletIndex]);
 
@@ -255,7 +254,6 @@ const ReceivePayment = ({
   const connectSelectedWallet = async () => {
     const wallet = wallets[selectedWalletIndex];
 
-    fetchBalances(wallet?.address);
     const currentWalletConfig =
       wallet?.type?.toLowerCase() === "metamask"
         ? metamaskWallet()
@@ -309,7 +307,6 @@ const ReceivePayment = ({
       const response = createWalletInstance(currentWalletConfig);
       await response.connect();
       setConnectedWallet(response);
-      setWalletInstance(response);
     }
   };
 
@@ -328,6 +325,10 @@ const ReceivePayment = ({
     }
     setSpinner(true);
 
+    await connectSelectedWallet();
+  }
+
+  async function handlePayment() {
     const res = await handleBuy(
       selectedCryptoIndex,
       wallets?.length == 0
@@ -365,9 +366,17 @@ const ReceivePayment = ({
         setErrorMessage(t("messages.error.invalidUserId"));
         break;
     }
-
-    setSpinner(false);
   }
+
+  useEffect(() => {
+    async function pay() {
+      if ((connectedWallet || selectedWalletIndex === 0) && spinner) {
+        await handlePayment();
+        setSpinner(false);
+      }
+    }
+    pay();
+  }, [connectedWallet, spinner]);
 
   const selectInternalWallet = async () => {
     if (!Object.keys(user)?.length) {
@@ -519,14 +528,13 @@ const ReceivePayment = ({
                       <p>{t("payments.chooseWallet")}</p>
                     </div>
                     <div className={styles.fullWidthBox}>
-                      {internalWalletAddress && (
+                      {internalWalletAddress ? (
                         <Select
                           data={wallets}
                           selectedIndex={selectedWalletIndex}
                           setSelectedIndex={setSelectedWalletIndex}
                         />
-                      )}
-                      {!Object.keys(user)?.length && (
+                      ) : (
                         <div className={styles.unlogged}>
                           <div
                             className={styles.connectInternalButton}
