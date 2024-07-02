@@ -33,7 +33,7 @@ const SignForm = () => {
       roles: ["Vendor"],
       firstName: values?.firstname,
       lastName: values?.lastname,
-      telNr: values?.phoneNumber,
+      telNr: values?.phoneNumber?.length > 4 ? values?.phoneNumber : "",
       affiliateLink: "",
       country: values?.countryRegion,
       accountRole: role,
@@ -103,7 +103,7 @@ const SignForm = () => {
       if (selectedCountry != undefined) {
         updatedValues = {
           ...form.getFieldsValue(),
-          countryFlag: selectedCountry?.countryCode,
+          countryFlag: selectedCountry?.value,
         };
       } else
         updatedValues = {
@@ -189,7 +189,7 @@ const SignForm = () => {
                     }}
                     initialValues={{
                       confirmpassword: "",
-                      countryFlag: "+43",
+                      countryFlag: "Austria",
                       countryRegion: null,
                       email: "",
                       firstname: "",
@@ -371,7 +371,14 @@ const SignForm = () => {
                             {updatedCountries?.map((country, index) => {
                               return (
                                 <Option value={country?.value} key={index}>
-                                  {t(country?.display)}
+                                  <Flex gap={8}>
+                                    <img
+                                      src={getFlagLink(country?.symbol)}
+                                      alt="country"
+                                      width="22"
+                                    />
+                                    <div>{t(country?.display)}</div>
+                                  </Flex>
                                 </Option>
                               );
                             })}
@@ -402,7 +409,12 @@ const SignForm = () => {
                 </Flex>
                 <div className="signup-text back-to-login-text">
                   Already have an account?{" "}
-                  <span onClick={() => navigate("/login")}>Log in</span>
+                  <span
+                    onClick={() => navigate("/login")}
+                    className="cursor-pointer"
+                  >
+                    Log in
+                  </span>
                 </div>
               </div>
             ) : (
@@ -421,9 +433,7 @@ const SignForm = () => {
                 backgroundImage: `url(${
                   role == "Business" && roleSelector
                     ? BusinessPage
-                    : role == "Private" && roleSelector
-                    ? PersonalAccountPage
-                    : AuthLayoutImg
+                    : PersonalAccountPage
                 })`,
               }}
             ></div>
