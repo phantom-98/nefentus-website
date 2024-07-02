@@ -8,7 +8,7 @@ import backend_API from "../../../api/backendAPI";
 import { MessageContext } from "../../../context/message";
 import { useAuth } from "../../../context/auth/authContext";
 import { useTranslation } from "react-i18next";
-import AuthLayoutImg from "../../../assets/newDashboardIcons/login-img.svg";
+import AuthLayoutImg from "../../../assets/newDashboardIcons/personal-account.png";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -158,17 +158,7 @@ const LoginForm = () => {
             <div
               className="authLayout-img-container"
               style={{ backgroundImage: `url(${AuthLayoutImg})` }}
-            >
-              <Flex vertical gap={20} className="authLayout-img-text">
-                <h1>
-                  Manage all your crypto wallets effortlessly in one place
-                </h1>
-                <p>
-                  Streamline your crypto experience with our all-in-one
-                  multi-wallet management system
-                </p>
-              </Flex>
-            </div>
+            ></div>
           </Col>
         </Row>
       </div>
