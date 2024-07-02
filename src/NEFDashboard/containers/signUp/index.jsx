@@ -10,6 +10,7 @@ import "./signUp.css";
 import { MessageContext } from "../../../context/message";
 import RoleSelection from "../roleSelection";
 import AuthLayoutImg from "../../../assets/newDashboardIcons/login-img.svg";
+import MessageIcon from "../../../assets/newDashboardIcons/mail.svg";
 
 const SignForm = () => {
   const [roleSelector, setRoleSelector] = useState(false);
@@ -92,20 +93,36 @@ const SignForm = () => {
   };
 
   const onPhoneChange = (value) => {
-    const selectedCountry = updatedCountries?.find((country) =>
-      value?.includes(country?.countryCode),
-    );
-    if (selectedCountry != undefined) {
-      const updatedValues = {
-        ...form.getFieldsValue(),
-        countryFlag: selectedCountry?.value,
-      };
+    if (value?.length <= 3) {
+      const selectedCountry = updatedCountries?.find((country) =>
+        value?.includes(country?.countryCode),
+      );
+      let updatedValues;
+      if (selectedCountry != undefined) {
+        updatedValues = {
+          ...form.getFieldsValue(),
+          countryFlag: selectedCountry?.countryCode,
+        };
+      } else
+        updatedValues = {
+          ...form.getFieldsValue(),
+          countryFlag: "",
+        };
       form.setFieldsValue({ ...updatedValues });
     }
   };
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
+
+  const onFlagChange = (value) => {
+    const selectedCountry = updatedCountries?.find(
+      (country) => value == country?.countryCode,
+    );
+    const updatedValues = {
+      ...form.getFieldsValue(),
+      phoneNumber: selectedCountry?.countryCode,
+    };
+    form.setFieldsValue({ ...updatedValues });
+  };
+
   return (
     <>
       <div className="authLayout">
@@ -170,8 +187,8 @@ const SignForm = () => {
                     }}
                     initialValues={{
                       confirmpassword: "",
-                      countryFlag: "Austria",
-                      countryRegion: "",
+                      countryFlag: "+43",
+                      countryRegion: null,
                       email: "",
                       firstname: "",
                       lastname: "",
@@ -190,7 +207,7 @@ const SignForm = () => {
                           rules={[
                             {
                               required: true,
-                              message: "Please input your firstname!",
+                              message: "Please input your first name!",
                             },
                           ]}
                         >
@@ -204,7 +221,7 @@ const SignForm = () => {
                           rules={[
                             {
                               required: true,
-                              message: "Please input your lastname!",
+                              message: "Please input your last name!",
                             },
                           ]}
                         >
@@ -219,11 +236,21 @@ const SignForm = () => {
                       rules={[
                         {
                           required: true,
-                          message: "Please input your username!",
+                          message: "Please input your email!",
                         },
                       ]}
                     >
-                      <Input />
+                      <div className="email-field-container">
+                        <Input
+                          placeholder="yourmail@mail.com"
+                          className="email-field-input"
+                        />
+                        <img
+                          src={MessageIcon}
+                          alt="icon"
+                          className="email-field-icon"
+                        />
+                      </div>
                     </Form.Item>
 
                     <Flex gap={12}>
@@ -238,7 +265,7 @@ const SignForm = () => {
                             },
                           ]}
                         >
-                          <Input.Password />
+                          <Input.Password placeholder="Password" />
                         </Form.Item>
                       </Col>
                       <Col style={{ flex: 1 }}>
@@ -252,7 +279,7 @@ const SignForm = () => {
                             },
                           ]}
                         >
-                          <Input.Password />
+                          <Input.Password placeholder="Repeat Password" />
                         </Form.Item>
                       </Col>
                     </Flex>
@@ -267,21 +294,40 @@ const SignForm = () => {
                                   required: false,
                                 },
                               ]}
+                              className="country-flag-container"
                             >
                               <Select
                                 placeholder="Choose"
                                 virtual={false}
-                                style={{ width: "60px" }}
+                                style={{ width: "50px" }}
                                 className="telephone-flag"
+                                optionLabelProp="label"
+                                onChange={(e) => {
+                                  onFlagChange(e);
+                                }}
+                                popupMatchSelectWidth={false}
                               >
                                 {updatedCountries?.map((country, index) => {
                                   return (
-                                    <Option value={country?.value} key={index}>
-                                      <img
-                                        src={getFlagLink(country?.symbol)}
-                                        alt="country"
-                                        width="22"
-                                      />
+                                    <Option
+                                      value={country?.countryCode}
+                                      key={index}
+                                      label={
+                                        <img
+                                          src={getFlagLink(country?.symbol)}
+                                          alt="country"
+                                          width="22"
+                                        />
+                                      }
+                                    >
+                                      <Flex gap={8}>
+                                        <img
+                                          src={getFlagLink(country?.symbol)}
+                                          alt="country"
+                                          width="22"
+                                        />
+                                        <div>{t(country?.display)}</div>
+                                      </Flex>
                                     </Option>
                                   );
                                 })}
@@ -306,10 +352,11 @@ const SignForm = () => {
 
                         <Form.Item
                           name="countryRegion"
-                          label={"Country"}
+                          label={"Country*"}
                           rules={[
                             {
-                              required: false,
+                              required: role === "Business",
+                              message: "Please input your Country",
                             },
                           ]}
                         >

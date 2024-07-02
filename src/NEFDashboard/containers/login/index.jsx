@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./login.css";
 import { Col, Row, Flex, Form, Input, Button, Divider } from "antd";
 
@@ -16,6 +16,7 @@ const LoginForm = () => {
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
   const { setUser } = useAuth();
   const backendAPI = new backend_API();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -39,11 +40,13 @@ const LoginForm = () => {
   };
 
   const onFinish = async (values) => {
+    setLoading(true);
     const response = await backendAPI.login(
       values.email,
       values.password,
       true,
     );
+    setLoading(false);
     if (response == null) {
       setErrorMessage(t("messages.error.loginData"));
       // setSpinner(false);
@@ -129,7 +132,12 @@ const LoginForm = () => {
                     >
                       Forgot password?
                     </div>
-                    <Button type="primary" htmlType="submit">
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      disabled={loading}
+                      loading={loading}
+                    >
                       Submit
                     </Button>
                   </Form.Item>

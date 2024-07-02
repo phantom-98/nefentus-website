@@ -33,7 +33,7 @@
   border: 1px solid var(--Dark, #202020);
   background: var(--BG2, #171717) !important;
   box-shadow: 0px 3px 10.2px 0px rgba(0, 0, 0, 0.03);
-  padding: 4px 12px;
+  padding: 4px 12px 4px 0px;
 }
 .auth-form .phoneNumber .ant-select .ant-select-selector {
   background: none !important;
@@ -61,4 +61,22 @@
   ).telephone-flag.ant-select-show-arrow
   .ant-select-selection-placeholder {
   display: flex;
+}
+
+.country-flag-container {
+  padding-left: 12px;
+}
+.email-field-container {
+  position: relative;
+}
+
+.email-field-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.email-field-input {
+  padding-right: 50px !important;
 }
