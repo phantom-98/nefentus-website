@@ -114,7 +114,7 @@ const SignForm = () => {
 
   const onFlagChange = (value) => {
     const selectedCountry = updatedCountries?.find(
-      (country) => value == country?.countryCode,
+      (country) => value == country?.value,
     );
     const updatedValues = {
       ...form.getFieldsValue(),
@@ -298,6 +298,7 @@ const SignForm = () => {
                             >
                               <Select
                                 placeholder="Choose"
+                                showSearch
                                 virtual={false}
                                 style={{ width: "50px" }}
                                 className="telephone-flag"
@@ -310,7 +311,7 @@ const SignForm = () => {
                                 {updatedCountries?.map((country, index) => {
                                   return (
                                     <Option
-                                      value={country?.countryCode}
+                                      value={country?.value}
                                       key={index}
                                       label={
                                         <img
