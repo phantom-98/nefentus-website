@@ -226,23 +226,8 @@ function App() {
                 >
                   <ScrollToTop>
                     <Routes>
-                      <Route
-                        path="/login"
-                        element={
-                          <AuthLayout>
-                            <LoginForm />
-                          </AuthLayout>
-                        }
-                      />
-
-                      <Route
-                        path="/sign-up"
-                        element={
-                          <AuthLayout>
-                            <SignForm />
-                          </AuthLayout>
-                        }
-                      />
+                      <Route path="/login" element={<LoginForm />} />
+                      <Route path="/sign-up" element={<SignForm />} />
                       <Route
                         path="/forgot-password"
                         element={
