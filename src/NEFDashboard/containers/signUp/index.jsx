@@ -10,6 +10,8 @@ import "./signUp.css";
 import { MessageContext } from "../../../context/message";
 import RoleSelection from "../roleSelection";
 import AuthLayoutImg from "../../../assets/newDashboardIcons/login-img.svg";
+import BusinessPage from "../../../assets/newDashboardIcons/business-page.png";
+import PersonalAccountPage from "../../../assets/newDashboardIcons/personal-account.png";
 import MessageIcon from "../../../assets/newDashboardIcons/mail.svg";
 
 const SignForm = () => {
@@ -415,13 +417,16 @@ const SignForm = () => {
           <Col span={24} lg={12}>
             <div
               className="authLayout-img-container"
-              style={{ backgroundImage: `url(${AuthLayoutImg})` }}
-            >
-              <Flex vertical gap={20} className="authLayout-img-text">
-                <h1>Implement cryptocurrency payments in your business.</h1>
-                <p>Use cryptocurrencies without risk</p>
-              </Flex>
-            </div>
+              style={{
+                backgroundImage: `url(${
+                  role == "Business" && roleSelector
+                    ? BusinessPage
+                    : role == "Private" && roleSelector
+                    ? PersonalAccountPage
+                    : AuthLayoutImg
+                })`,
+              }}
+            ></div>
           </Col>
         </Row>
       </div>
