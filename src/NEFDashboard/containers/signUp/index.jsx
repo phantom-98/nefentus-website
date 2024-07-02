@@ -163,7 +163,7 @@ const SignForm = () => {
               initialValues={{
                 confirmpassword: "",
                 countryFlag: "+43",
-                countryRegion: "",
+                countryRegion: null,
                 email: "",
                 firstname: "",
                 lastname: "",
@@ -182,7 +182,7 @@ const SignForm = () => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input your firstname!",
+                        message: "Please input your first name!",
                       },
                     ]}
                   >
@@ -196,7 +196,7 @@ const SignForm = () => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input your lastname!",
+                        message: "Please input your last name!",
                       },
                     ]}
                   >
@@ -211,11 +211,11 @@ const SignForm = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input your username!",
+                    message: "Please input your email!",
                   },
                 ]}
               >
-                <Input />
+                <Input placeholder="yourmail@mail.com" />
               </Form.Item>
 
               <Flex gap={12}>
@@ -230,7 +230,7 @@ const SignForm = () => {
                       },
                     ]}
                   >
-                    <Input.Password />
+                    <Input.Password placeholder="Password" />
                   </Form.Item>
                 </Col>
                 <Col style={{ flex: 1 }}>
@@ -244,7 +244,7 @@ const SignForm = () => {
                       },
                     ]}
                   >
-                    <Input.Password />
+                    <Input.Password placeholder="Repeat Password" />
                   </Form.Item>
                 </Col>
               </Flex>
@@ -259,24 +259,40 @@ const SignForm = () => {
                             required: false,
                           },
                         ]}
+                        className="country-flag-container"
                       >
                         <Select
                           placeholder="Choose"
                           virtual={false}
-                          style={{ width: "60px" }}
+                          style={{ width: "50px" }}
                           className="telephone-flag"
+                          optionLabelProp="label"
                           onChange={(e) => {
                             onFlagChange(e);
                           }}
+                          popupMatchSelectWidth={false}
                         >
                           {updatedCountries?.map((country, index) => {
                             return (
-                              <Option value={country?.countryCode} key={index}>
-                                <img
-                                  src={getFlagLink(country?.symbol)}
-                                  alt="country"
-                                  width="22"
-                                />
+                              <Option
+                                value={country?.countryCode}
+                                key={index}
+                                label={
+                                  <img
+                                    src={getFlagLink(country?.symbol)}
+                                    alt="country"
+                                    width="22"
+                                  />
+                                }
+                              >
+                                <Flex gap={8}>
+                                  <img
+                                    src={getFlagLink(country?.symbol)}
+                                    alt="country"
+                                    width="22"
+                                  />
+                                  <div>{t(country?.display)}</div>
+                                </Flex>
                               </Option>
                             );
                           })}
@@ -304,12 +320,13 @@ const SignForm = () => {
                     label={"Country"}
                     rules={[
                       {
-                        required: false,
+                        required: true,
+                        message: "Please input your country",
                       },
                     ]}
                   >
                     <Select
-                      placeholder="Choose your country"
+                      placeholder="Choose your Country"
                       allowClear
                       virtual={false}
                     >
