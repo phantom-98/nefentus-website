@@ -89,16 +89,34 @@ const SignForm = () => {
   };
 
   const onPhoneChange = (value) => {
-    const selectedCountry = updatedCountries?.find((country) =>
-      value?.includes(country?.countryCode),
-    );
-    if (selectedCountry != undefined) {
-      const updatedValues = {
-        ...form.getFieldsValue(),
-        countryFlag: selectedCountry?.value,
-      };
+    if (value?.length <= 3) {
+      const selectedCountry = updatedCountries?.find((country) =>
+        value?.includes(country?.countryCode),
+      );
+      let updatedValues;
+      if (selectedCountry != undefined) {
+        updatedValues = {
+          ...form.getFieldsValue(),
+          countryFlag: selectedCountry?.countryCode,
+        };
+      } else
+        updatedValues = {
+          ...form.getFieldsValue(),
+          countryFlag: "",
+        };
       form.setFieldsValue({ ...updatedValues });
     }
+  };
+
+  const onFlagChange = (value) => {
+    const selectedCountry = updatedCountries?.find(
+      (country) => value == country?.countryCode,
+    );
+    const updatedValues = {
+      ...form.getFieldsValue(),
+      phoneNumber: selectedCountry?.countryCode,
+    };
+    form.setFieldsValue({ ...updatedValues });
   };
 
   return (
@@ -144,7 +162,7 @@ const SignForm = () => {
               }}
               initialValues={{
                 confirmpassword: "",
-                countryFlag: "Austria",
+                countryFlag: "+43",
                 countryRegion: "",
                 email: "",
                 firstname: "",
@@ -247,10 +265,13 @@ const SignForm = () => {
                           virtual={false}
                           style={{ width: "60px" }}
                           className="telephone-flag"
+                          onChange={(e) => {
+                            onFlagChange(e);
+                          }}
                         >
                           {updatedCountries?.map((country, index) => {
                             return (
-                              <Option value={country?.value} key={index}>
+                              <Option value={country?.countryCode} key={index}>
                                 <img
                                   src={getFlagLink(country?.symbol)}
                                   alt="country"
@@ -312,7 +333,12 @@ const SignForm = () => {
                     Forgot password?
                   </div>
                 )}
-                <Button type="primary" htmlType="submit" disabled={processing}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  disabled={processing}
+                  loading={processing}
+                >
                   Submit
                 </Button>
               </Form.Item>
