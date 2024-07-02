@@ -21,6 +21,9 @@
   box-shadow: none !important;
   height: auto !important;
 }
+.back-to-login-text {
+  margin-top: -12px;
+}
 .telephone-flag {
   width: 60px;
 }
@@ -79,4 +82,8 @@
 
 .email-field-input {
   padding-right: 50px !important;
+}
+
+.signup-submit-button {
+  margin-top: 12px;
 }

@@ -389,13 +389,15 @@ const SignForm = () => {
                         type="primary"
                         htmlType="submit"
                         disabled={processing}
+                        loading={processing}
+                        className="signup-submit-button"
                       >
                         Submit
                       </Button>
                     </Form.Item>
                   </Form>
                 </Flex>
-                <div className="signup-text">
+                <div className="signup-text back-to-login-text">
                   Already have an account?{" "}
                   <span onClick={() => navigate("/login")}>Log in</span>
                 </div>

@@ -114,7 +114,7 @@ const LoginForm = () => {
                   </Form.Item>
 
                   <Form.Item
-                    label="Password"
+                    label="Password*"
                     name="password"
                     rules={[
                       {
@@ -138,7 +138,7 @@ const LoginForm = () => {
                       disabled={loading}
                       loading={loading}
                     >
-                      Submit
+                      Log in
                     </Button>
                   </Form.Item>
                 </Form>
