@@ -60,7 +60,9 @@ const ContactUs = () => {
   return (
     <div className="landing-layout contact">
       <div className="contact-layout">
-        <h1>Get in touch with us</h1>
+        <h1>
+          Get in touch <span style={{ textWrap: "nowrap" }}>with us</span>
+        </h1>
         <p>
           We're here to help! Whether you have questions about our platform,
           need assistance with integration, or want to provide feedback, our
@@ -139,6 +141,7 @@ const ContactUs = () => {
           position: "absolute",
           left: "0",
           top: "0",
+          zIndex: "-1",
         }}
       />
       <img
@@ -147,6 +150,7 @@ const ContactUs = () => {
           position: "absolute",
           right: "0",
           top: "0",
+          zIndex: "-1",
         }}
       />
       <img
@@ -155,6 +159,7 @@ const ContactUs = () => {
           position: "absolute",
           right: "0",
           bottom: "0",
+          zIndex: "-1",
         }}
       />
     </div>

@@ -58,26 +58,84 @@
 
 .navigation ul li {
   list-style-type: none;
-  cursor: pointer;
   pointer-events: initial;
-  position: relative;
-  transition: 0.2s ease-out;
   font-size: 1.3rem;
-  overflow: hidden;
   opacity: 1;
-  transform: translateY(0%);
 }
 
-.navigation ul li p {
-  transition: 0.2s ease-out;
+.dropdownMenuItem {
+  display: flex;
+  gap: 1rem;
+  padding: 0.8rem;
+  border-radius: 6px;
 }
 
-.navigation ul li:hover p {
-  transform: translateY(-100%);
+.dropdownMenuItem:hover {
+  background: #323232;
 }
 
-.navigation .fake {
+.dropdownMenuItem .iconWrapper {
+  border-radius: 6px;
+  background: #323232;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8rem;
+  height: 2.8rem;
+}
+
+.dropdownMenuItem:hover .iconWrapper {
+  background: #e9e9e9;
+}
+.dropdownMenuItem:hover .body p:last-child {
+  color: #e9e9e9;
+}
+
+.dropdownMenuItem .iconWrapper img {
+  height: 1.4rem;
+  width: 1.4rem;
+}
+
+.dropdownMenuItem .body p:last-child {
+  color: #b1b1b1;
+  max-width: 28rem;
+}
+
+.products,
+.resources {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.products p,
+.resources p {
+  padding-block: 1rem;
+}
+
+.dropdown {
+  display: flex;
+  background: #202020;
+  border: 1px solid #323232;
+  border-radius: 6px;
   position: absolute;
+  top: 100%;
+  width: max-content;
+}
+
+.gridContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.gridContent a {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+}
+.gridContent a:hover {
+  background: #323232;
 }
 
 .menu {
@@ -460,5 +518,35 @@
   .mobileButtonWrapper > div > a > div {
     padding: 0.1rem 2rem;
     font-size: 1.2rem;
+  }
+
+  .dropdown {
+    display: block;
+    position: static;
+    border: none;
+    background: none;
+  }
+  .dropdown > div {
+    border: none !important;
+  }
+  .dropdown > div:first-child .gridContent {
+    grid-template-columns: 1fr;
+  }
+  .dropdownMenuItem {
+    align-items: center;
+  }
+  .dropdownMenuItem .body > p:last-child {
+    display: none;
+  }
+  .products p,
+  .resources p {
+    padding-block: 0rem;
+  }
+  .products,
+  .resources {
+    justify-content: space-between;
+  }
+  .dropdown * {
+    padding-inline: 0 !important;
   }
 }
