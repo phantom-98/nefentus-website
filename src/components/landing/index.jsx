@@ -45,6 +45,12 @@ import LegalServiceSvg from "../../assets/landing/legal-services.svg";
 import MarketingSvg from "../../assets/landing/marketing.svg";
 import SeoSvg from "../../assets/landing/seo-services.svg";
 import TravelSvg from "../../assets/landing/travel-agency.svg";
+import SendSvg from "../../assets/landing/send-ico.svg";
+
+import Telegram from "../../assets/icon/telegram.svg";
+import Linkedin from "../../assets/icon/in.svg";
+import Twitter from "../../assets/icon/x.svg";
+import Youtube from "../../assets/icon/youtube.svg";
 
 import Main1 from "../../assets/landing/main1.png";
 import Main2 from "../../assets/landing/main2.png";
@@ -69,6 +75,8 @@ const Landing = () => {
       <MainFeaturesBody />
 
       <Industries />
+
+      <Community />
 
       <Conclusion
         icon={NefentusLogo}
@@ -732,6 +740,61 @@ const Industries = () => {
           top: "-1px",
         }}
       />
+    </div>
+  );
+};
+
+const communities = [
+  {
+    icon: Telegram,
+    title: "Telegram",
+    subtitle:
+      "Join our Telegram community for real-time updates, support, and discussions on integrating cryptocurrency payments into your business.",
+    link: "https://t.me/nefentus",
+  },
+  {
+    icon: Linkedin,
+    title: "Linkedin",
+    subtitle:
+      "Connect with us on LinkedIn for professional insights, industry updates, and networking opportunities.",
+    link: "https://linkedin.com/nefentus",
+  },
+  {
+    icon: Twitter,
+    title: "Twitter",
+    subtitle:
+      "Follow us on Twitter for the latest news, updates, and insights on cryptocurrency payments. Stay informed about new features, industry trends.",
+    link: "https://x.com/nefentus",
+  },
+  {
+    icon: Youtube,
+    title: "Youtube",
+    subtitle:
+      "Subscribe to our YouTube channel for tutorials, webinars, and informative videos on integrating cryptocurrency payments into your business.",
+    link: "https://youtube.com/nefentus",
+  },
+];
+
+const Community = () => {
+  return (
+    <div className="layout-paragraph layout-community">
+      <Heading
+        title={`Join Our Community`}
+        subtitle={`Become a part of our vibrant community of like-minded individuals and businesses. Together, we can learn, grow, and lead the future of digital finance.`}
+      />
+      <div className="community-container">
+        {communities.map((com) => (
+          <a className="community" href={com.link}>
+            <img src={com.icon} />
+            <div className="community-body">
+              <h3>
+                {com.title} <img src={SendSvg} />
+              </h3>
+              <p>{com.subtitle}</p>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   );
 };
