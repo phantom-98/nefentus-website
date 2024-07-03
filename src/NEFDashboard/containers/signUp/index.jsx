@@ -402,7 +402,7 @@ const SignForm = () => {
                         loading={processing}
                         className="signup-submit-button"
                       >
-                        Submit
+                        <span className="signup-button-text">Submit</span>
                       </Button>
                     </Form.Item>
                   </Form>

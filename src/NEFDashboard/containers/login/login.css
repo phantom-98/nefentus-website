@@ -108,6 +108,12 @@
   font-weight: 400;
   line-height: normal;
 }
+.login-button-text {
+  margin-left: 8px;
+}
+.login-submit-button .ant-btn-loading-icon .anticon-loading {
+  font-size: 18px;
+}
 
 .signup-text span {
   color: var(--Nef-blue, #078bb9);

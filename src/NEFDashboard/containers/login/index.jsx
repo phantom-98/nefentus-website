@@ -137,8 +137,11 @@ const LoginForm = () => {
                       htmlType="submit"
                       disabled={loading}
                       loading={loading}
+                      className="login-submit-button"
                     >
-                      Log in
+                      <span className="default-text login-button-text">
+                        Log in
+                      </span>
                     </Button>
                   </Form.Item>
                 </Form>
@@ -150,7 +153,12 @@ const LoginForm = () => {
               </Flex>
               <div className="signup-text">
                 Don’t have an account?{" "}
-                <span onClick={() => navigate("/sign-up")}>Sign up</span>
+                <span
+                  className="cursor-pointer"
+                  onClick={() => navigate("/sign-up")}
+                >
+                  Sign up
+                </span>
               </div>
             </div>
           </Col>

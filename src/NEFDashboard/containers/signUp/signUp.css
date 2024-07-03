@@ -87,3 +87,10 @@
 .signup-submit-button {
   margin-top: 12px;
 }
+
+.signup-button-text {
+  margin-left: 8px;
+}
+.signup-submit-button .ant-btn-loading-icon .anticon-loading {
+  font-size: 18px;
+}
