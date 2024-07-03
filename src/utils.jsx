@@ -92,6 +92,7 @@ export function getRole(user) {
   const isSeniorBroker = roles?.includes("ROLE_SENIOR_BROKER");
   const isLeader = roles?.includes("ROLE_LEADER");
   const isAdmin = roles?.includes("ROLE_ADMIN");
+  const isPrivate = roles?.includes("ROLE_PRIVATE");
 
   if (isAdmin) {
     return "admin";
@@ -103,6 +104,8 @@ export function getRole(user) {
     return "seniorbroker";
   } else if (isLeader) {
     return "leader";
+  } else if (isPrivate) {
+    return "private";
   } else return "";
 }
 
@@ -163,6 +166,11 @@ export const checkJwtToken = async () => {
     Cookies.remove("token");
     window.location.href = "/";
   }
+};
+
+export const logOut = async (navigate) => {
+  await new backendAPI().signout();
+  navigate("/");
 };
 
 export const validateEmail = (email) => {

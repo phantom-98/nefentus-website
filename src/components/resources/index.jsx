@@ -5,9 +5,23 @@ import X from "../../assets/resources/x.svg";
 import In from "../../assets/resources/in.svg";
 import Github from "../../assets/resources/github.svg";
 import Telegram from "../../assets/resources/telegram.svg";
+import IntroductionVideo from "../../assets/video/introduction.mp4";
 import { useState } from "react";
 
 const sidebar = [
+  {
+    title: "Support Center Questions",
+    subtitle: [
+      {
+        name: "Welcome the the support page from Nefentus Solutions!",
+        link: "#welcome-nefentus",
+      },
+      {
+        name: "For more help, contact us!",
+        link: "#contact-us",
+      },
+    ],
+  },
   {
     title: "Frequently Asked Questions about Nefentus",
     subtitle: [
@@ -59,6 +73,78 @@ const sidebar = [
   },
 ];
 const contents = [
+  <h1>Support Center Questions:</h1>,
+  <h2 id="welcome-nefentus">
+    Welcome to the support page from Nefentus Solutions!
+  </h2>,
+  <p>
+    You can find all the information regarding Nefentus Solutions in this area.
+    You can find detailed information on what you can do, links to frequently
+    asked questions and popular blog posts, as well as a getting started guide
+    that leads you through using the product step-by-step.
+  </p>,
+  <video controls>
+    <source src={IntroductionVideo} type="video/mp4" />
+  </video>,
+  <p
+    style={{
+      padding: "1.6rem 1rem",
+      marginBottom: "1rem",
+      width: "100%",
+      background:
+        "linear-gradient(90deg, rgba(21, 149, 194, 0.1) 0%, rgba(102, 191, 222, 0.1) 100%)",
+      borderRadius: "0 1rem 1rem 0",
+      borderLeft: "2px solid #1595c2",
+    }}
+  >
+    We've structured the documentation page into four groups:
+  </p>,
+  <p>1. Essential information about the product</p>,
+  <p>2. Popular articles about product features</p>,
+  <p>3. Additional resources you might find interesting</p>,
+  <p>4. Ways to get in contact with us</p>,
+  <h2 id="contact-us">For more help, contact us!</h2>,
+  <p>
+    If you prefer a more personal touch, we're always here to help via phone or
+    email. Whether you have a quick question or need more in-depth assistance,
+    we're just a call or click away.
+  </p>,
+  <div>
+    <div
+      style={{
+        borderRadius: "1rem",
+        border: "1px solid #202020",
+        background: "#171717",
+        padding: "1.6rem 4rem 0.6rem 2rem",
+        cursor: "pointer",
+        boxShadow: "5px 5px 20px #070707",
+      }}
+    >
+      <h3 style={{ color: "#e9e9e9", fontSize: "1.4rem" }}>
+        Message us via chat
+      </h3>
+      <p style={{ fontSize: "1.1rem" }}>
+        Write us uncomplicated and fast via chat.
+      </p>
+    </div>
+    <div
+      style={{
+        borderRadius: "1rem",
+        border: "1px solid #202020",
+        background: "#171717",
+        padding: "1.6rem 4rem 0.6rem 2rem",
+        cursor: "pointer",
+        boxShadow: "5px 5px 20px #070707",
+      }}
+    >
+      <h3 style={{ color: "#e9e9e9", fontSize: "1.4rem" }}>
+        support@nefentus.com
+      </h3>
+      <p style={{ fontSize: "1.1rem" }}>
+        Your request will be answered within one day.
+      </p>
+    </div>
+  </div>,
   <h1>Frequently Asked Questions about Nefentus</h1>,
   <h2 id="what-is-nefentus">What is Nefentus?</h2>,
   <p>

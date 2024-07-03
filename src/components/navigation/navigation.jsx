@@ -1,22 +1,13 @@
 import styles from "./navigation.module.css";
-
-import Logo from "../../assets/logo/logo.svg";
 import LogoWide from "../../assets/logo/logo_wide2.svg";
-import LightMode from "../../assets/icon/lightMode2.svg";
-import DarkMode from "../../assets/icon/darkMode2.svg";
-
 import Button from "../button/button";
 import Languages from "./languages.jsx/languages";
 import { useEffect, useState } from "react";
-
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import backend_API from "../../api/backendAPI";
-import { dashboardLink } from "../../utils";
+import { logOut } from "../../utils";
 import UserProfile from "../userProfile/userProfile";
 import { useTheme } from "../../context/themeContext/themeContext";
-import { QR } from "../../assets/icon/icons";
-import { useAuth } from "../../context/auth/authContext";
 import Cookie from "js-cookie";
 
 const Navigation = () => {
@@ -24,64 +15,21 @@ const Navigation = () => {
 
   const { t, i18n } = useTranslation();
   const [openMenu, setOpenMenu] = useState(false);
-  const [profile, setProfile] = useState({});
-  const [height, setHeight] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
   const token = Cookie.get("token");
   const hideOptions = location?.pathname?.includes("/pay");
 
-  const backendAPI = new backend_API();
-
-  const logOut = async () => {
-    try {
-      const data = await backendAPI.signout();
-      navigate("/");
-      setProfile({});
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  async function getProfile() {
-    const jwtIsValid = await backendAPI.checkJwt();
-    if (jwtIsValid) {
-      const link = dashboardLink(user);
-      console.log(link);
-
-      const newProfile = {
-        email: user?.email,
-        firstName: user?.firstName,
-        lastName: user?.lastName,
-        dashboardLink: link,
-      };
-      setProfile(newProfile);
-    }
-  }
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
-  function dashboardString(profile) {
-    if (profile.firstName || profile.lastName)
-      return `${t("dashboard.title")}: ${profile.firstName} ${
-        profile.lastName
-      }`;
-    else return t("dashboard.title");
-  }
-
   function loginAndSignupWeb() {
     if (token?.length) {
-      return <UserProfile web logOut={logOut} />;
+      return <UserProfile web logOut={() => logOut(navigate)} />;
     } else {
       return (
         <>
           <a className={styles.login} href="/login">
             Log in
           </a>
-          <a className={`${styles.button}`} href="/signup">
+          <a className={`${styles.button}`} href="/sign-up">
             Sign up
           </a>
         </>
@@ -111,7 +59,7 @@ const Navigation = () => {
           <Link to={"/personal-dashboard"} onClick={() => setOpenMenu(false)}>
             <li className="standard">Dashboard</li>
           </Link>
-          <Link onClick={logOut}>
+          <Link onClick={() => logOut(navigate)}>
             <li className="standard">Log out</li>
           </Link>
         </>
@@ -124,6 +72,7 @@ const Navigation = () => {
             flexDirection: "column",
             gap: 10,
             width: "100%",
+            pointerEvents: "auto",
           }}
         >
           <Button
@@ -150,7 +99,7 @@ const Navigation = () => {
     if (window.innerHeight >= 900) return;
 
     const changeHeight = () => {
-      setHeight(window.innerHeight);
+      // setHeight(window.innerHeight);
     };
 
     changeHeight();

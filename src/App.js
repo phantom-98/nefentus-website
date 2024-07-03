@@ -121,10 +121,19 @@ import SettingLayout from "./NEFDashboard/containers/settingLayout";
 import SettingPage from "./NEFDashboard/containers/settings";
 import Products from "./NEFDashboard/containers/products";
 import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
-import NewLanding, { NewB2B, NewB2C } from "./pages/Landing";
+import AuthLayout from "./NEFDashboard/containers/authLayout";
+import LoginForm from "./NEFDashboard/containers/login";
+import SignForm from "./NEFDashboard/containers/signUp";
+import ForgotPassword from "./NEFDashboard/containers/forgotPassword";
+import SetPasswordForm from "./NEFDashboard/containers/setPassword";
+import NewLanding, { NewB2B, NewB2C, NewResources } from "./pages/Landing";
 import Resources from "./components/resources";
+import PageNotFound from "./NEFDashboard/components/pageNotFound";
+import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t } = useTranslation();
   useEffect(() => {
     const scrollEvent = () => {
       const scrollElement = document.querySelectorAll(".scroll");
@@ -217,10 +226,28 @@ function App() {
                 >
                   <ScrollToTop>
                     <Routes>
+                      <Route path="/login" element={<LoginForm />} />
+                      <Route path="/sign-up" element={<SignForm />} />
+                      <Route
+                        path="/forgot-password"
+                        element={
+                          <AuthLayout>
+                            <ForgotPassword />
+                          </AuthLayout>
+                        }
+                      />
+                      <Route
+                        path="/set-password"
+                        element={
+                          <AuthLayout>
+                            <SetPasswordForm />
+                          </AuthLayout>
+                        }
+                      />
                       <Route
                         path="/new-settings"
                         element={
-                          <SettingLayout>
+                          <SettingLayout title={"settingPage.title"}>
                             <SettingPage />
                           </SettingLayout>
                         }
@@ -313,10 +340,9 @@ function App() {
                       <Route
                         path="/resources"
                         element={
-                          <>
-                            <Navigation />
-                            <Resources />
-                          </>
+                          <Layout>
+                            <NewResources />
+                          </Layout>
                         }
                       />
 
@@ -567,6 +593,15 @@ function App() {
                             {/* <Navigation /> */}
                             <Pay />
                             {/* <Footer /> */}
+                          </>
+                        }
+                      />
+                      <Route
+                        path="*"
+                        element={
+                          <>
+                            <Navigation />
+                            <PageNotFound />
                           </>
                         }
                       />

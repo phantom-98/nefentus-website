@@ -17,9 +17,7 @@ const ProductCard = ({ data, index, onEdit, onDelete }) => {
   const { setSuccessMessage } = useContext(MessageContext);
 
   const onLinkCopy = (link) => {
-    navigator.clipboard.writeText(
-      `${window.location.origin}/product-detail/${link}`,
-    );
+    navigator.clipboard.writeText(`${window.location.origin}/product/${link}`);
     setSuccessMessage(t("security.scanModal.copyLink"));
   };
 
