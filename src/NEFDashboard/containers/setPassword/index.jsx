@@ -1,7 +1,7 @@
 import React from "react";
 import "./setPassword.css";
 import { Flex, Form, Input, Button, Divider } from "antd";
-import MailLogo from "../../../assets/newDashboardIcons/mailIcon.svg";
+import SetPasswordIcon from "../../../assets/newDashboardIcons/setPasswordIcon.svg";
 import { useNavigate } from "react-router-dom";
 
 const SetPasswordForm = () => {
@@ -17,7 +17,7 @@ const SetPasswordForm = () => {
     <div className="auth-form">
       <Flex vertical gap={24} className="form-header">
         <div className="logo">
-          <img src={MailLogo} alt="Logo" />
+          <img src={SetPasswordIcon} alt="Logo" />
         </div>
         <Flex vertical gap={6} className="form-heading">
           <h4>Set new password</h4>

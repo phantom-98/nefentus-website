@@ -76,9 +76,9 @@ const LoginForm = () => {
           <Col span={24} lg={12}>
             <div className="auth-form">
               <Flex vertical gap={24} className="form-header">
-                <div className="logo">
+                {/* <div className="logo">
                   <img src={Logo} alt="Logo" />
-                </div>
+                </div> */}
                 <Flex vertical gap={6} className="form-heading">
                   <h4>Welcome back!</h4>
                   <h5>Log in to your Nefentus account</h5>
@@ -146,11 +146,11 @@ const LoginForm = () => {
                   </Form.Item>
                 </Form>
               </Flex>
-              <Flex gap={16} align="center" className="continue-text-wrapper">
+              {/* <Flex gap={16} align="center" className="continue-text-wrapper">
                 <Divider />
                 <div className="continue-text">Or continue with</div>
                 <Divider />
-              </Flex>
+              </Flex> */}
               <div className="signup-text">
                 Don’t have an account?{" "}
                 <span

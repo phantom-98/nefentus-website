@@ -9,12 +9,13 @@ import { getCountryList, getFlagLink } from "../../../countries";
 import "./signUp.css";
 import { MessageContext } from "../../../context/message";
 import RoleSelection from "../roleSelection";
-import AuthLayoutImg from "../../../assets/newDashboardIcons/login-img.svg";
 import BusinessPage from "../../../assets/newDashboardIcons/business-page.png";
 import PersonalAccountPage from "../../../assets/newDashboardIcons/personal-account.png";
 import MessageIcon from "../../../assets/newDashboardIcons/mail.svg";
+import MailLogo from "../../../assets/newDashboardIcons/mailIcon.svg";
 
 const SignForm = () => {
+  const [verification, setVerification] = useState(false);
   const [roleSelector, setRoleSelector] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [role, setRole] = useState("Private");
@@ -27,6 +28,7 @@ const SignForm = () => {
 
   const onFinish = async (values) => {
     setProcessing(true);
+    setVerification(!verification);
     const payload = {
       email: values.email,
       password: values.password,
@@ -146,13 +148,13 @@ const SignForm = () => {
           </div>
         ) : null}
 
-        <Row align="middle">
-          <Col span={24} lg={12}>
-            {roleSelector ? (
+        <Row align="middle" className={verification && "auth-row"}>
+          {verification ? (
+            <Col span={24} lg={12}>
               <div className="auth-form">
                 <div
                   className="back-btn back-btn-role"
-                  onClick={() => setRoleSelector(!roleSelector)}
+                  onClick={() => setVerification(!verification)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -170,159 +172,252 @@ const SignForm = () => {
                 </div>
                 <Flex vertical gap={24} className="form-header">
                   <div className="logo">
-                    <img src={Logo} alt="Logo" />
+                    <img src={MailLogo} alt="Logo" />
                   </div>
                   <Flex vertical gap={6} className="form-heading">
-                    <h4>Create an account</h4>
-                    <h5>Sign up to a new Nefentus account</h5>
+                    <h4>Please check your email for a verification message.</h4>
+                    <h5>
+                      We send a confirmation link to{" "}
+                      <span>nikolaykislik@gmail.com</span>
+                    </h5>
                   </Flex>
                 </Flex>
-                <Flex vertical gap={12}>
-                  <Form
-                    form={form}
-                    name="basic"
-                    labelCol={{
-                      span: 24,
-                    }}
-                    wrapperCol={{
-                      span: 24,
-                    }}
-                    initialValues={{
-                      confirmpassword: "",
-                      countryFlag: "Austria",
-                      countryRegion: null,
-                      email: "",
-                      firstname: "",
-                      lastname: "",
-                      password: "",
-                      phoneNumber: "+43",
-                    }}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                    autoComplete="off"
-                  >
-                    <Flex gap={12}>
-                      <Col style={{ flex: 1 }}>
-                        <Form.Item
-                          label="First Name*"
-                          name="firstname"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Please input your first name!",
-                            },
-                          ]}
-                        >
-                          <Input placeholder="John" />
-                        </Form.Item>
-                      </Col>
-                      <Col style={{ flex: 1 }}>
-                        <Form.Item
-                          label="Last Name*"
-                          name="lastname"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Please input your last name!",
-                            },
-                          ]}
-                        >
-                          <Input placeholder="Doe" />
-                        </Form.Item>
-                      </Col>
-                    </Flex>
-
-                    <Form.Item
-                      label="Email*"
-                      name="email"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your email!",
-                        },
-                      ]}
+                <div className="signup-text">
+                  Don’t get an email? <span>Click to resend.</span>
+                </div>
+              </div>
+            </Col>
+          ) : (
+            <>
+              <Col span={24} lg={12}>
+                {roleSelector ? (
+                  <div className="auth-form">
+                    <div
+                      className="back-btn back-btn-role"
+                      onClick={() => setRoleSelector(!roleSelector)}
                     >
-                      <div className="email-field-container">
-                        <Input
-                          placeholder="yourmail@mail.com"
-                          className="email-field-input"
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="21"
+                        viewBox="0 0 20 21"
+                        fill="none"
+                      >
+                        <path
+                          d="M12.4996 6.0875C12.1746 5.7625 11.6496 5.7625 11.3246 6.0875L7.49961 9.9125C7.17461 10.2375 7.17461 10.7625 7.49961 11.0875L11.3246 14.9125C11.6496 15.2375 12.1746 15.2375 12.4996 14.9125C12.8246 14.5875 12.8246 14.0625 12.4996 13.7375L9.26628 10.4958L12.4996 7.2625C12.8246 6.9375 12.8163 6.40417 12.4996 6.0875Z"
+                          fill="#E9E9E9"
                         />
-                        <img
-                          src={MessageIcon}
-                          alt="icon"
-                          className="email-field-icon"
-                        />
-                      </div>
-                    </Form.Item>
+                      </svg>
+                      <span>Back</span>
+                    </div>
 
-                    <Flex gap={12}>
-                      <Col style={{ flex: 1 }}>
-                        <Form.Item
-                          label="Password*"
-                          name="password"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Please input your password!",
-                            },
-                          ]}
-                        >
-                          <Input.Password placeholder="Password" />
-                        </Form.Item>
-                      </Col>
-                      <Col style={{ flex: 1 }}>
-                        <Form.Item
-                          label="Confirm Password*"
-                          name="confirmpassword"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Please input your confirm password!",
-                            },
-                          ]}
-                        >
-                          <Input.Password placeholder="Repeat Password" />
-                        </Form.Item>
-                      </Col>
+                    <Flex vertical gap={24} className="form-header">
+                      {/* <div className="logo">
+                    <img src={Logo} alt="Logo" />
+                  </div> */}
+                      <Flex vertical gap={6} className="form-heading">
+                        <h4>Create an account</h4>
+                        <h5>Sign up to a new Nefentus account</h5>
+                      </Flex>
                     </Flex>
-                    {role === "Business" && (
-                      <>
-                        <Form.Item label="Phone number">
-                          <Flex gap={8} className="phoneNumber">
+
+                    <Flex vertical gap={12}>
+                      <Form
+                        form={form}
+                        name="basic"
+                        labelCol={{
+                          span: 24,
+                        }}
+                        wrapperCol={{
+                          span: 24,
+                        }}
+                        initialValues={{
+                          confirmpassword: "",
+                          countryFlag: "Austria",
+                          countryRegion: null,
+                          email: "",
+                          firstname: "",
+                          lastname: "",
+                          password: "",
+                          phoneNumber: "+43",
+                        }}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        autoComplete="off"
+                      >
+                        <Flex gap={12}>
+                          <Col style={{ flex: 1 }}>
                             <Form.Item
-                              name="countryFlag"
+                              label="First Name*"
+                              name="firstname"
                               rules={[
                                 {
-                                  required: false,
+                                  required: true,
+                                  message: "Please input your first name!",
                                 },
                               ]}
-                              className="country-flag-container"
+                            >
+                              <Input placeholder="John" />
+                            </Form.Item>
+                          </Col>
+                          <Col style={{ flex: 1 }}>
+                            <Form.Item
+                              label="Last Name*"
+                              name="lastname"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Please input your last name!",
+                                },
+                              ]}
+                            >
+                              <Input placeholder="Doe" />
+                            </Form.Item>
+                          </Col>
+                        </Flex>
+
+                        <Form.Item
+                          label="Email*"
+                          name="email"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please input your email!",
+                            },
+                          ]}
+                        >
+                          <div className="email-field-container">
+                            <Input
+                              placeholder="yourmail@mail.com"
+                              className="email-field-input"
+                            />
+                            <img
+                              src={MessageIcon}
+                              alt="icon"
+                              className="email-field-icon"
+                            />
+                          </div>
+                        </Form.Item>
+
+                        <Flex gap={12}>
+                          <Col style={{ flex: 1 }}>
+                            <Form.Item
+                              label="Password*"
+                              name="password"
+                              rules={[
+                                {
+                                  required: true,
+                                  message: "Please input your password!",
+                                },
+                              ]}
+                            >
+                              <Input.Password placeholder="Password" />
+                            </Form.Item>
+                          </Col>
+                          <Col style={{ flex: 1 }}>
+                            <Form.Item
+                              label="Confirm Password*"
+                              name="confirmpassword"
+                              rules={[
+                                {
+                                  required: true,
+                                  message:
+                                    "Please input your confirm password!",
+                                },
+                              ]}
+                            >
+                              <Input.Password placeholder="Repeat Password" />
+                            </Form.Item>
+                          </Col>
+                        </Flex>
+                        {role === "Business" && (
+                          <>
+                            <Form.Item label="Phone number">
+                              <Flex gap={8} className="phoneNumber">
+                                <Form.Item
+                                  name="countryFlag"
+                                  rules={[
+                                    {
+                                      required: false,
+                                    },
+                                  ]}
+                                  className="country-flag-container"
+                                >
+                                  <Select
+                                    placeholder="Choose"
+                                    showSearch
+                                    virtual={false}
+                                    style={{ width: "50px" }}
+                                    className="telephone-flag"
+                                    optionLabelProp="label"
+                                    onChange={(e) => {
+                                      onFlagChange(e);
+                                    }}
+                                    popupMatchSelectWidth={false}
+                                  >
+                                    {updatedCountries?.map((country, index) => {
+                                      return (
+                                        <Option
+                                          value={country?.value}
+                                          key={index}
+                                          label={
+                                            <img
+                                              src={getFlagLink(country?.symbol)}
+                                              alt="country"
+                                              width="22"
+                                            />
+                                          }
+                                        >
+                                          <Flex gap={8}>
+                                            <img
+                                              src={getFlagLink(country?.symbol)}
+                                              alt="country"
+                                              width="22"
+                                            />
+                                            <div>{t(country?.display)}</div>
+                                          </Flex>
+                                        </Option>
+                                      );
+                                    })}
+                                  </Select>
+                                </Form.Item>
+                                <Form.Item
+                                  name="phoneNumber"
+                                  rules={[
+                                    {
+                                      required: false,
+                                    },
+                                  ]}
+                                >
+                                  <Input
+                                    placeholder="+38 000 - 000 - 00 - 00"
+                                    className="telephone-number"
+                                    onChange={(e) =>
+                                      onPhoneChange(e.target.value)
+                                    }
+                                  />
+                                </Form.Item>
+                              </Flex>
+                            </Form.Item>
+
+                            <Form.Item
+                              name="countryRegion"
+                              label={"Country*"}
+                              rules={[
+                                {
+                                  required: role === "Business",
+                                  message: "Please input your Country",
+                                },
+                              ]}
                             >
                               <Select
-                                placeholder="Choose"
-                                showSearch
+                                placeholder="Choose your country"
+                                allowClear
                                 virtual={false}
-                                style={{ width: "50px" }}
-                                className="telephone-flag"
-                                optionLabelProp="label"
-                                onChange={(e) => {
-                                  onFlagChange(e);
-                                }}
-                                popupMatchSelectWidth={false}
                               >
                                 {updatedCountries?.map((country, index) => {
                                   return (
-                                    <Option
-                                      value={country?.value}
-                                      key={index}
-                                      label={
-                                        <img
-                                          src={getFlagLink(country?.symbol)}
-                                          alt="country"
-                                          width="22"
-                                        />
-                                      }
-                                    >
+                                    <Option value={country?.value} key={index}>
                                       <Flex gap={8}>
                                         <img
                                           src={getFlagLink(country?.symbol)}
@@ -336,108 +431,62 @@ const SignForm = () => {
                                 })}
                               </Select>
                             </Form.Item>
-                            <Form.Item
-                              name="phoneNumber"
-                              rules={[
-                                {
-                                  required: false,
-                                },
-                              ]}
-                            >
-                              <Input
-                                placeholder="+38 000 - 000 - 00 - 00"
-                                className="telephone-number"
-                                onChange={(e) => onPhoneChange(e.target.value)}
-                              />
-                            </Form.Item>
-                          </Flex>
-                        </Form.Item>
-
-                        <Form.Item
-                          name="countryRegion"
-                          label={"Country*"}
-                          rules={[
-                            {
-                              required: role === "Business",
-                              message: "Please input your Country",
-                            },
-                          ]}
-                        >
-                          <Select
-                            placeholder="Choose your country"
-                            allowClear
-                            virtual={false}
-                          >
-                            {updatedCountries?.map((country, index) => {
-                              return (
-                                <Option value={country?.value} key={index}>
-                                  <Flex gap={8}>
-                                    <img
-                                      src={getFlagLink(country?.symbol)}
-                                      alt="country"
-                                      width="22"
-                                    />
-                                    <div>{t(country?.display)}</div>
-                                  </Flex>
-                                </Option>
-                              );
-                            })}
-                          </Select>
-                        </Form.Item>
-                      </>
-                    )}
-                    <Form.Item>
-                      {role === "Business" && (
+                          </>
+                        )}
+                        <Form.Item>
+                          {/* {role === "Business" && (
                         <div
                           className="forgot-password"
                           onClick={() => navigate("/forgot-password")}
                         >
                           Forgot password?
                         </div>
-                      )}
-                      <Button
-                        type="primary"
-                        htmlType="submit"
-                        disabled={processing}
-                        loading={processing}
-                        className="signup-submit-button"
+                      )} */}
+                          <Button
+                            type="primary"
+                            htmlType="submit"
+                            disabled={processing}
+                            loading={processing}
+                            className="signup-submit-button"
+                          >
+                            <span className="signup-button-text">Submit</span>
+                          </Button>
+                        </Form.Item>
+                      </Form>
+                    </Flex>
+                    <div className="signup-text back-to-login-text">
+                      Already have an account?{" "}
+                      <span
+                        onClick={() => navigate("/login")}
+                        className="cursor-pointer"
                       >
-                        <span className="signup-button-text">Submit</span>
-                      </Button>
-                    </Form.Item>
-                  </Form>
-                </Flex>
-                <div className="signup-text back-to-login-text">
-                  Already have an account?{" "}
-                  <span
-                    onClick={() => navigate("/login")}
-                    className="cursor-pointer"
-                  >
-                    Log in
-                  </span>
-                </div>
-              </div>
-            ) : (
-              <RoleSelection
-                setRoleSelector={setRoleSelector}
-                roleSelector={roleSelector}
-                role={role}
-                setRole={setRole}
-              />
-            )}
-          </Col>
-          <Col span={24} lg={12}>
-            <div
-              className="authLayout-img-container"
-              style={{
-                backgroundImage: `url(${
-                  role == "Business" && roleSelector
-                    ? BusinessPage
-                    : PersonalAccountPage
-                })`,
-              }}
-            ></div>
-          </Col>
+                        Log in
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <RoleSelection
+                    setRoleSelector={setRoleSelector}
+                    roleSelector={roleSelector}
+                    role={role}
+                    setRole={setRole}
+                  />
+                )}
+              </Col>
+              <Col span={24} lg={12}>
+                <div
+                  className="authLayout-img-container"
+                  style={{
+                    backgroundImage: `url(${
+                      role == "Business" && roleSelector
+                        ? BusinessPage
+                        : PersonalAccountPage
+                    })`,
+                  }}
+                ></div>
+              </Col>
+            </>
+          )}
         </Row>
       </div>
     </>

@@ -3,6 +3,7 @@ import "./forgotPassword.css";
 import { Flex, Form, Input, Button, Divider } from "antd";
 import Logo from "../../../assets/newDashboardIcons/keyIcon.svg";
 import MailLogo from "../../../assets/newDashboardIcons/mailIcon.svg";
+import MessageIcon from "../../../assets/newDashboardIcons/mail.svg";
 
 const ForgotPassword = () => {
   const [confirmation, setConfirmation] = useState(false);
@@ -22,9 +23,9 @@ const ForgotPassword = () => {
             <img src={MailLogo} alt="Logo" />
           </div>
           <Flex vertical gap={6} className="form-heading">
-            <h4>Password reset</h4>
+            <h4>Email verification</h4>
             <h5>
-              We send a confirmation link to
+              We send a confirmation link to{" "}
               <span>nikolaykislik@gmail.com</span>
             </h5>
           </Flex>
@@ -67,7 +68,18 @@ const ForgotPassword = () => {
                 },
               ]}
             >
-              <Input />
+              <div className="email-field-container">
+                <Input
+                  placeholder="yourmail@mail.com"
+                  className="email-field-input"
+                />
+                <img
+                  src={MessageIcon}
+                  alt="icon"
+                  className="email-field-icon"
+                />
+              </div>
+              {/* <Input /> */}
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit">
