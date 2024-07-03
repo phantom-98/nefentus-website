@@ -116,7 +116,7 @@ const Hero = () => {
               <button>Get Started</button>
             </a>
             <a href="/contact">
-              <span>Take to an expert</span>
+              <span>Talk to an expert</span>
               <img src={RightArrow} />
             </a>
           </div>
@@ -736,7 +736,12 @@ const Industries = () => {
   );
 };
 
-export const Conclusion = ({ icon, title, subtitle, button }) => {
+export const Conclusion = ({
+  icon,
+  title,
+  subtitle,
+  button = "Get Started",
+}) => {
   return (
     <div className="layout-paragraph layout-getting-started">
       <div
@@ -763,10 +768,10 @@ export const Conclusion = ({ icon, title, subtitle, button }) => {
       <Heading title={title} subtitle={subtitle} />
       <div className="button-container">
         <a href="/signup">
-          <button>Get Started</button>
+          <button>{button}</button>
         </a>
         <a href="/contact">
-          <span>Take to an expert</span>
+          <span>Talk to an expert</span>
           <img src={RightArrow} />
         </a>
       </div>

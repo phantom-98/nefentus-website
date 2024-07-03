@@ -154,7 +154,7 @@ const Hero = () => {
               <button>Get Started</button>
             </a>
             <a href="/contact">
-              <span>Take to an expert</span>
+              <span>Talk to an expert</span>
               <img src={RightArrow} />
             </a>
           </div>
