@@ -11,7 +11,7 @@ import NotificationSection from "./notificationSection";
 import ChangeFieldModal from "./changeFieldModal";
 import backend_API from "../../../../api/backendAPI";
 import "./profileSection.css";
-import { countryList } from "../../../../constants";
+import { countryList, updatedCountries } from "../../../../constants";
 import CropDialog, {
   dataURLtoFile,
 } from "../../../../components/cropDialog/cropDialog";
@@ -32,7 +32,7 @@ const ProfileSection = () => {
   const [user, setUser] = useState({});
   const [selectedField, setSelectedField] = useState("");
   const [countries] = useState(
-    getCountryList()?.map((country) => ({
+    updatedCountries?.map((country) => ({
       label: t(country?.display),
       value: country?.value,
       icon: country?.symbol,
