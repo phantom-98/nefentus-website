@@ -13,6 +13,7 @@ import BusinessPage from "../../../assets/newDashboardIcons/business-page.png";
 import PersonalAccountPage from "../../../assets/newDashboardIcons/personal-account.png";
 import MessageIcon from "../../../assets/newDashboardIcons/mail.svg";
 import MailLogo from "../../../assets/newDashboardIcons/mailIcon.svg";
+import SearchLogo from "../../../assets/newDashboardIcons/search-country.svg";
 
 const SignForm = () => {
   const [verification, setVerification] = useState(false);
@@ -24,6 +25,8 @@ const SignForm = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { setInfoMessage, setErrorMessage } = useContext(MessageContext);
+  const [countries, setCountries] = useState(updatedCountries);
+  const [search, setSearch] = useState("");
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
@@ -125,6 +128,17 @@ const SignForm = () => {
       phoneNumber: selectedCountry?.countryCode,
     };
     form.setFieldsValue({ ...updatedValues });
+    setSearch("");
+    setCountries(updatedCountries);
+  };
+
+  const onSearch = (value) => {
+    setCountries(
+      updatedCountries?.filter((country) =>
+        country?.display?.toLowerCase()?.includes(value?.toLowerCase()),
+      ),
+    );
+    setSearch(value);
   };
 
   return (
@@ -345,17 +359,38 @@ const SignForm = () => {
                                 >
                                   <Select
                                     placeholder="Choose"
-                                    showSearch
                                     virtual={false}
                                     style={{ width: "50px" }}
                                     className="telephone-flag"
+                                    popupClassName="telephone-flag-dropdown"
                                     optionLabelProp="label"
                                     onChange={(e) => {
                                       onFlagChange(e);
                                     }}
                                     popupMatchSelectWidth={false}
+                                    dropdownRender={(menu) => {
+                                      return (
+                                        <div>
+                                          <Input
+                                            prefix={
+                                              <img
+                                                src={SearchLogo}
+                                                className="telephone-flag-search-icon"
+                                              />
+                                            }
+                                            value={search}
+                                            placeholder="Search For Countries"
+                                            className="telephone-flag-search"
+                                            onChange={(e) =>
+                                              onSearch(e.target.value)
+                                            }
+                                          />
+                                          {menu}
+                                        </div>
+                                      );
+                                    }}
                                   >
-                                    {updatedCountries?.map((country, index) => {
+                                    {countries?.map((country, index) => {
                                       return (
                                         <Option
                                           value={country?.value}
@@ -375,6 +410,7 @@ const SignForm = () => {
                                               width="22"
                                             />
                                             <div>{t(country?.display)}</div>
+                                            <div>({country?.countryCode})</div>
                                           </Flex>
                                         </Option>
                                       );
