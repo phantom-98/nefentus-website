@@ -40,6 +40,7 @@ const LoginForm = () => {
   };
 
   const onFinish = async (values) => {
+    if (loading) return;
     setLoading(true);
     const response = await backendAPI.login(
       values.email,
@@ -137,7 +138,6 @@ const LoginForm = () => {
                     <Button
                       type="primary"
                       htmlType="submit"
-                      disabled={loading}
                       loading={loading}
                       className="login-submit-button"
                     >

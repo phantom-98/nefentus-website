@@ -30,6 +30,7 @@ const SignForm = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
+    if (processing) return;
     setProcessing(true);
     setVerification(!verification);
     const payload = {
@@ -481,7 +482,6 @@ const SignForm = () => {
                           <Button
                             type="primary"
                             htmlType="submit"
-                            disabled={processing}
                             loading={processing}
                             className="signup-submit-button"
                           >
