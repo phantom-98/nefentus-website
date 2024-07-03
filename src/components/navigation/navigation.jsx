@@ -44,7 +44,7 @@ const Navigation = () => {
           <a className={styles.login} href="/login">
             Log in
           </a>
-          <a className={`${styles.button}`} href="/signup">
+          <a className={`${styles.button}`} href="/sign-up">
             Sign up
           </a>
         </>

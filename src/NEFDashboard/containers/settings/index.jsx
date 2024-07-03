@@ -5,9 +5,15 @@ import SecuritySection from "../../components/settingComponents/securitySection"
 import ProfileSection from "../../components/settingComponents/profileSection";
 import InvoiceSection from "../../components/settingComponents/invoiceSection";
 import IdentificationSection from "../../components/settingComponents/identificationSection";
+import { useAuth } from "../../../context/auth/authContext";
+import { getRole } from "../../../utils";
 
 const SettingPage = () => {
-  const tabs = ["General", "Security", "Identification", "Invoice"];
+  const { user } = useAuth();
+  const tabs =
+    getRole(user) == "private" || (user?.roles && user?.roles[0] == "private")
+      ? ["General", "Security"]
+      : ["General", "Security", "Identification", "Invoice"];
   const [activeTab, setActiveTab] = useState("General");
 
   const renderSection = () => {
