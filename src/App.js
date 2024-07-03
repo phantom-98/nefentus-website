@@ -121,6 +121,11 @@ import SettingLayout from "./NEFDashboard/containers/settingLayout";
 import SettingPage from "./NEFDashboard/containers/settings";
 import Products from "./NEFDashboard/containers/products";
 import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
+import AuthLayout from "./NEFDashboard/containers/authLayout";
+import LoginForm from "./NEFDashboard/containers/login";
+import SignForm from "./NEFDashboard/containers/signUp";
+import ForgotPassword from "./NEFDashboard/containers/forgotPassword";
+import SetPasswordForm from "./NEFDashboard/containers/setPassword";
 import NewLanding, { NewB2B, NewB2C, NewResources } from "./pages/Landing";
 import Resources from "./components/resources";
 import PageNotFound from "./NEFDashboard/components/pageNotFound";
@@ -221,6 +226,24 @@ function App() {
                 >
                   <ScrollToTop>
                     <Routes>
+                      <Route path="/login" element={<LoginForm />} />
+                      <Route path="/sign-up" element={<SignForm />} />
+                      <Route
+                        path="/forgot-password"
+                        element={
+                          <AuthLayout>
+                            <ForgotPassword />
+                          </AuthLayout>
+                        }
+                      />
+                      <Route
+                        path="/set-password"
+                        element={
+                          <AuthLayout>
+                            <SetPasswordForm />
+                          </AuthLayout>
+                        }
+                      />
                       <Route
                         path="/new-settings"
                         element={
