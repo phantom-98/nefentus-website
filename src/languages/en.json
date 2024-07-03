@@ -1331,6 +1331,8 @@
     "walletDescription": "Choose the wallet that receives funds when creating an invoice or selling product.",
     "stablecoin": "Stablecoin",
     "stablecoinDescription": "Choose the stablecoin that should be converted to.",
+    "invoiceNotFoundTitle": "Error: Invoice Not Found",
+    "invoiceNotFoundDescription": "Oops! It looks like the invoice you're trying to access doesn't exist or has been removed. Please check the link and try again.",
     "action": {
       "add": "Add",
       "enable": "Enable",
@@ -1607,6 +1609,15 @@
     "next": "Next",
     "connectedWallets": "Connected Wallets",
     "addWallet": "Add Wallet"
+  },
+  "content": {
+    "contentSubText": "If you believe this is an error or need assistance, please contact our support team for help.",
+    "thankyouText": "Thank you for using Nefentus!",
+    "backButton": "Back to home page",
+    "productTitle": "Error: Product Not Found",
+    "productDescription": "Oops! It looks like the product payment link you're trying to access doesn't exist or has been removed. Please check the link and try again.",
+    "pageNotFound": "Error: Page Not Found",
+    "pageNotFoundDescription": "Oops! It looks like the page you're trying to access doesn't exist or has been removed. Please check the URL and try again."
   },
   "cancel": "Cancel",
   "confirm": "Confirm",

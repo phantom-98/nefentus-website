@@ -10,6 +10,9 @@
 - Roboto Flex font added for ukrainian language (PATCH)
 - Cookie banner issue fixed (MINOR)
 - Fix dashboards' titles (PATCH)
+- Invoice/Product not found and page not found UI implemented (PATCH)
+- Update send modal functinality for both internal and external wallet (MAJOR)
+- Login and Sign up screens implemented (MAJOR)
 
 # 1.3.0
 

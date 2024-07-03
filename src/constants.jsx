@@ -3,7 +3,7 @@ import Bitcoin from "./assets/icon/crypto/bitcoin.svg";
 import Polygon from "./assets/icon/crypto/polygon.svg";
 import Cardano from "./assets/icon/crypto/cardano.svg";
 import Binance from "./assets/icon/crypto/binance.svg";
-import Ethereum from "./assets/icon/crypto/ethereum.svg";
+import Ethereum from "./assets/newDashboardIcons/ethereum-logo.svg";
 import Tether from "./assets/icon/crypto/tether.svg";
 import USDC from "./assets/icon/crypto/usdc.svg";
 import Ripple from "./assets/icon/crypto/xrp.svg";
@@ -23,6 +23,7 @@ export const ROLE_TO_NAME = {
   "senior broker": "Senior Broker",
   leader: "Leader",
   admin: "Admin",
+  private: "Private",
 };
 
 export const useMainnet = () => {
@@ -644,6 +645,90 @@ export const countryList = [
   { value: "Yemen", display: "countries.Yemen" },
   { value: "Zambia", display: "countries.Zambia" },
   { value: "Zimbabwe", display: "countries.Zimbabwe" },
+].sort((country1, country2) => {
+  return country1.value?.localeCompare(country2.value);
+});
+
+export const updatedCountries = [
+  {
+    value: "Austria",
+    display: "countries.Austria",
+    countryCode: "+43",
+    symbol: "AT",
+  },
+  {
+    value: "Germany",
+    display: "countries.Germany",
+    countryCode: "+49",
+    symbol: "DE",
+  },
+  {
+    value: "Switzerland",
+    display: "countries.Switzerland",
+    countryCode: "+41",
+    symbol: "CH",
+  },
+  {
+    value: "United Kingdom",
+    display: "countries.UnitedKingdom",
+    countryCode: "+44",
+    symbol: "GB",
+  },
+
+  {
+    value: "Cyprus",
+    display: "countries.Cyprus",
+    countryCode: "+357",
+    symbol: "CY",
+  },
+  {
+    value: "Spain",
+    display: "countries.Spain",
+    countryCode: "+34",
+    symbol: "ES",
+  },
+  {
+    value: "Poland",
+    display: "countries.Poland",
+    countryCode: "+48",
+    symbol: "PL",
+  },
+  {
+    value: "Mexico",
+    display: "countries.Mexico",
+    symbol: "MX",
+    countryCode: "+52",
+  },
+  {
+    value: "Qatar",
+    display: "countries.Qatar",
+    countryCode: "+974",
+    symbol: "QA",
+  },
+  {
+    value: "Saudi Arabia",
+    display: "countries.SaudiArabia",
+    countryCode: "+966",
+    symbol: "SA",
+  },
+  {
+    value: "United Arab Emirates",
+    display: "countries.UnitedArabEmirates",
+    countryCode: "+971",
+    symbol: "AE",
+  },
+  {
+    value: "Ukraine",
+    display: "countries.Ukraine",
+    countryCode: "+380",
+    symbol: "UA",
+  },
+  {
+    value: "Oman",
+    display: "countries.Oman",
+    countryCode: "+968",
+    symbol: "OM",
+  },
 ].sort((country1, country2) => {
   return country1.value?.localeCompare(country2.value);
 });

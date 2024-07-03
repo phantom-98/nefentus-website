@@ -88,7 +88,6 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
         return;
     }
   };
-
   const onClick = (e) => {
     switch (+e?.key) {
       case 1:
@@ -194,22 +193,41 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
       t("personalDashboard.sidebar.menu"),
       "grp",
       null,
-      [
-        getItem(
-          t("personalDashboard.sidebar.wallets"),
-          "5",
-          <img src={WalletIcon} />,
-        ),
-        getItem(
-          t("personalDashboard.sidebar.referral"),
-          "6",
-          <img src={DashboardIcon} />,
-        ),
-        getItem(t("salesDashboard.sales"), "7", <img src={DashboardIcon} />),
-        getItem(t("salesDashboard.products"), "8", <img src={ProductIcon} />),
-        getItem(t("referralDashboard.addUser"), "9", <img src={AddUserIcon} />),
-      ],
-
+      getRole(user) == "private" || (user?.roles && user?.roles[0] == "private")
+        ? [
+            getItem(
+              t("personalDashboard.sidebar.wallets"),
+              "5",
+              <img src={WalletIcon} />,
+            ),
+          ]
+        : [
+            getItem(
+              t("personalDashboard.sidebar.wallets"),
+              "5",
+              <img src={WalletIcon} />,
+            ),
+            getItem(
+              t("personalDashboard.sidebar.referral"),
+              "6",
+              <img src={DashboardIcon} />,
+            ),
+            getItem(
+              t("salesDashboard.sales"),
+              "7",
+              <img src={DashboardIcon} />,
+            ),
+            getItem(
+              t("salesDashboard.products"),
+              "8",
+              <img src={ProductIcon} />,
+            ),
+            getItem(
+              t("referralDashboard.addUser"),
+              "9",
+              <img src={AddUserIcon} />,
+            ),
+          ],
       "group",
     ),
     { type: "divider" },
@@ -218,11 +236,14 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
       "sub1",
       null,
       [
-        getItem(
-          t("salesDashboard.createInvoice"),
-          "1",
-          <img src={CreditCardIcon} />,
-        ),
+        getRole(user) == "private" ||
+        (user?.roles && user?.roles[0] == "private")
+          ? null
+          : getItem(
+              t("salesDashboard.createInvoice"),
+              "1",
+              <img src={CreditCardIcon} />,
+            ),
         getItem(
           t("personalDashboard.sidebar.sendCrypto"),
           "2",

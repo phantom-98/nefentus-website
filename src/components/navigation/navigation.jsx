@@ -29,7 +29,7 @@ const Navigation = () => {
           <a className={styles.login} href="/login">
             Log in
           </a>
-          <a className={`${styles.button}`} href="/signup">
+          <a className={`${styles.button}`} href="/sign-up">
             Sign up
           </a>
         </>
@@ -72,7 +72,7 @@ const Navigation = () => {
             flexDirection: "column",
             gap: 10,
             width: "100%",
-            pointerEvents: "auto"
+            pointerEvents: "auto",
           }}
         >
           <Button
