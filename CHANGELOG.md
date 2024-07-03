@@ -12,6 +12,7 @@
 - Fix dashboards' titles (PATCH)
 - Invoice/Product not found and page not found UI implemented (PATCH)
 - Update send modal functinality for both internal and external wallet (MAJOR)
+- Fix landings && add contact page && update navbar (MINOR)
 
 # 1.3.0
 
