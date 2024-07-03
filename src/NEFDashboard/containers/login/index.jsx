@@ -126,11 +126,13 @@ const LoginForm = () => {
                     <Input.Password placeholder="Enter your password" />
                   </Form.Item>
                   <Form.Item>
-                    <div
-                      className="forgot-password"
-                      onClick={() => navigate("/forgot-password")}
-                    >
-                      Forgot password?
+                    <div className="forgot-password">
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => navigate("/forgot-password")}
+                      >
+                        Forgot password?
+                      </span>
                     </div>
                     <Button
                       type="primary"
@@ -155,7 +157,7 @@ const LoginForm = () => {
                 Don’t have an account?{" "}
                 <span
                   className="cursor-pointer"
-                  onClick={() => navigate("/sign-up")}
+                  onClick={() => navigate("/signup")}
                 >
                   Sign up
                 </span>
