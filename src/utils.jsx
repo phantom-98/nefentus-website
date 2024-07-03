@@ -279,3 +279,20 @@ export const graphDataToList = (data) => {
   });
   return dataList;
 };
+
+export const isWalletConflict = () => {
+  const isCoinbase =
+    window.ethereum?.isCoinbaseWallet ||
+    window.ethereum?.providers?.find((x) => x.isCoinbaseWallet) ||
+    window.web3?.currentProvider?.isCoinbaseWallet;
+  const isMetamask =
+    window.ethereum?.isMetaMask ||
+    window.ethereum?.providers?.find((x) => x.isMetaMask) ||
+    window.web3?.currentProvider?.isMetaMask;
+  const isPhantom = window.ethereum?.isPhantom;
+  return (
+    window.ethereum?.overrideIsMetaMask ||
+    (isCoinbase && isMetamask) ||
+    (isPhantom && isMetamask)
+  );
+};
