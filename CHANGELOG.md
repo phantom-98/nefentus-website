@@ -13,6 +13,7 @@
 - Invoice/Product not found and page not found UI implemented (PATCH)
 - Update send modal functinality for both internal and external wallet (MAJOR)
 - Login and Sign up screens implemented (MAJOR)
+- Alert message in checkout when both Metamask and coinbase are installed (MINOR)
 
 # 1.3.0
 

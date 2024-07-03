@@ -1093,6 +1093,8 @@
     "agree": "Durch Anklicken der Schaltfläche erklären Sie sich mit den",
     "terms": "Bedingungen des Dienstes",
     "agree2": "einverstanden",
+    "walletConflict": "Wallet Konflikt",
+    "conflictDescription": "Wir haben festgestellt, dass sowohl MetaMask als auch Coinbase Wallet installiert sind. Dies kann zu Problemen beim Bezahlen mit einem der beiden führen. Wenn Sie Probleme haben, versuchen Sie bitte, eine von beiden zu deaktivieren.",
     "pay": {
       "title": "Zahlungsdetails",
       "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein",
