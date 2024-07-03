@@ -1,5 +1,6 @@
 import { Conclusion, Heading } from ".";
 import "./landing.css";
+import RightArrow from "../../assets/icon/right-arrow.svg";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import HeroLineTop from "../../assets/landing/b2c-hero-top.svg";
 import HeroLineBottom from "../../assets/landing/b2c-hero-down.svg";
@@ -148,9 +149,15 @@ const Hero = () => {
             Seamlessly create & receive payments. Manage all your wallets and
             streamline your sales process—all from a single platform.
           </p>
-          <a href="/signup">
-            <button>Get Started</button>
-          </a>
+          <div className="button-container">
+            <a href="/signup">
+              <button>Get Started</button>
+            </a>
+            <a href="/contact">
+              <span>Take to an expert</span>
+              <img src={RightArrow} />
+            </a>
+          </div>
         </div>
         <img
           src={HeroPng}

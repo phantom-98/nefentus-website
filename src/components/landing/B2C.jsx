@@ -1,5 +1,5 @@
 import "./landing.css";
-
+import RightArrow from "../../assets/icon/right-arrow.svg";
 import { Conclusion, Heading } from ".";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import Hero1 from "../../assets/landing/Hero 1.png";
@@ -83,9 +83,15 @@ const Hero = () => {
             manage all your wallets and handle sales—all in one convenient
             place.
           </p>
-          <a href="/signup">
-            <button>Get Started</button>
-          </a>
+          <div className="button-container">
+            <a href="/signup">
+              <button>Get Started</button>
+            </a>
+            <a href="/contact">
+              <span>Take to an expert</span>
+              <img src={RightArrow} />
+            </a>
+          </div>
         </div>
         <div
           className="hero-img"

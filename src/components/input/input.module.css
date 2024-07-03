@@ -20,9 +20,7 @@
   color: rgba(255, 255, 255, 0.42);
 }
 
-.attachmentWrapper .label,
-.textareaWrapper .label,
-.inputWrapper .label {
+.label {
   font-size: 1.2rem !important;
   margin-bottom: 0.5rem;
   font-weight: 500;
@@ -173,8 +171,8 @@
 .dashboardInput,
 .dashboardTextarea,
 .attachment {
-  font-size: 14px !important;
-  padding: 8px 12px !important;
+  font-size: 1.4rem !important;
+  padding: 1rem 1.8rem !important;
   background-color: var(--BG2, #171717);
 }
 

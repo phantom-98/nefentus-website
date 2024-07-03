@@ -5,6 +5,7 @@ import B2C from "../components/landing/B2C";
 import B2B from "../components/landing/B2B";
 import Navigation from "../components/navigation/navigation";
 import Resources from "../components/resources";
+import ContactUs from "../components/landing/ContactUs";
 
 const NewLanding = () => {
   const { t } = useTranslation();
@@ -58,5 +59,17 @@ export const NewResources = () => {
       <Navigation />
       <Resources />
     </>
+  );
+};
+
+export const Contact = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <Helmet>
+        <title>Nefentus | {t("navigation.contact")}</title>
+      </Helmet>
+      <ContactUs />
+    </div>
   );
 };

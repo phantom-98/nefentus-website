@@ -1,4 +1,5 @@
 import "./landing.css";
+import RightArrow from "../../assets/icon/right-arrow.svg";
 import Hero1 from "../../assets/landing/hero1.png";
 import Hero2 from "../../assets/landing/hero2.png";
 import HeroLine1 from "../../assets/landing/hero-line-top-left.svg";
@@ -110,9 +111,15 @@ const Hero = () => {
             management and streamline the sales process, all within a single
             platform.
           </p>
-          <a href="/signup">
-            <button>Get Started</button>
-          </a>
+          <div className="button-container">
+            <a href="/signup">
+              <button>Get Started</button>
+            </a>
+            <a href="/contact">
+              <span>Take to an expert</span>
+              <img src={RightArrow} />
+            </a>
+          </div>
         </div>
         <div className="hero-img">
           <img src={Hero1} />
@@ -754,9 +761,15 @@ export const Conclusion = ({ icon, title, subtitle, button }) => {
         />
       </div>
       <Heading title={title} subtitle={subtitle} />
-      <a href="/signup">
-        <button>{button}</button>
-      </a>
+      <div className="button-container">
+        <a href="/signup">
+          <button>Get Started</button>
+        </a>
+        <a href="/contact">
+          <span>Take to an expert</span>
+          <img src={RightArrow} />
+        </a>
+      </div>
 
       <img
         src={GettingStarted1}

@@ -62,7 +62,6 @@ const IntegrationsDashboard = React.lazy(() =>
   import("./dashboardNew/screens/integrationsDashboard"),
 );
 
-const Contact = React.lazy(() => import("./components/contact/contact"));
 const Home = React.lazy(() => import("./pages/Home"));
 const SignUp = React.lazy(() => import("./pages/Signup"));
 const Layout = React.lazy(() => import("./pages/Layout"));
@@ -121,7 +120,12 @@ import SettingLayout from "./NEFDashboard/containers/settingLayout";
 import SettingPage from "./NEFDashboard/containers/settings";
 import Products from "./NEFDashboard/containers/products";
 import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
-import NewLanding, { NewB2B, NewB2C, NewResources } from "./pages/Landing";
+import NewLanding, {
+  Contact,
+  NewB2B,
+  NewB2C,
+  NewResources,
+} from "./pages/Landing";
 import Resources from "./components/resources";
 import PageNotFound from "./NEFDashboard/components/pageNotFound";
 import { Helmet } from "react-helmet";
@@ -319,6 +323,14 @@ function App() {
                         element={
                           <Layout>
                             <NewResources />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path="/contact"
+                        element={
+                          <Layout>
+                            <Contact />
                           </Layout>
                         }
                       />
