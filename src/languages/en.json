@@ -865,6 +865,7 @@
     "UnitedKingdom": "United Kingdom",
     "Uruguay": "Uruguay",
     "Uzbekistan": "Uzbekistan",
+    "unitedStates": "United States",
     "Venezuela": "Venezuela",
     "Vietnam": "Vietnam",
     "VirginIslandsUS": "Virgin Islands (US)",
@@ -1151,6 +1152,8 @@
     "agree": "By clicking on button, you agree to the",
     "terms": "Terms of Service",
     "agree2": "",
+    "walletConflict": "Wallet Conflict",
+    "conflictDescription": "We have detected that both, MetaMask and Coinbase Wallet, are installed,  This can lead to problems when paying with either one of them. If you face problems, please try to disable one of them.",
     "pay": {
       "title": "Payment Details",
       "description": "Complete remittance by providing your payment details",

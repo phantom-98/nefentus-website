@@ -5,10 +5,13 @@ import { Button, Flex } from "antd";
 import InputField from "../../inputField";
 import WalletAddressFormatter from "../../../../../../func/walletAddressFormatter";
 import { MessageContext } from "../../../../../../context/message";
-import "./seedStep1.css";
 import { useTranslation } from "react-i18next";
+import { onNavigateToForgot } from "../../../../../../utils";
+import { useNavigate } from "react-router-dom";
+import "./seedStep1.css";
 
 const SeedStep1 = ({ onNext, password, setPassword, wallet }) => {
+  const navigate = useNavigate();
   const { setSuccessMessage } = useContext(MessageContext);
   const { t } = useTranslation();
   const onCopy = () => {
@@ -48,7 +51,10 @@ const SeedStep1 = ({ onNext, password, setPassword, wallet }) => {
           value={password}
           setValue={setPassword}
         />
-        <div className="default-text password-modal-forgot cursor-pointer">
+        <div
+          className="default-text password-modal-forgot cursor-pointer"
+          onClick={() => onNavigateToForgot(navigate)}
+        >
           Forgot Password?
         </div>
       </Flex>

@@ -227,7 +227,7 @@ function App() {
                   <ScrollToTop>
                     <Routes>
                       <Route path="/login" element={<LoginForm />} />
-                      <Route path="/sign-up" element={<SignForm />} />
+                      <Route path="/signup" element={<SignForm />} />
                       <Route
                         path="/forgot-password"
                         element={
@@ -237,7 +237,7 @@ function App() {
                         }
                       />
                       <Route
-                        path="/set-password"
+                        path="/reset-password"
                         element={
                           <AuthLayout>
                             <SetPasswordForm />

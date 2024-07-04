@@ -69,6 +69,7 @@
   font-weight: 400;
   line-height: normal;
   margin-bottom: 24px;
+  cursor: pointer;
 }
 .auth-form button.ant-btn,
 .auth-form button.ant-btn:hover {

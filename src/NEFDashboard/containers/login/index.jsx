@@ -9,6 +9,7 @@ import { MessageContext } from "../../../context/message";
 import { useAuth } from "../../../context/auth/authContext";
 import { useTranslation } from "react-i18next";
 import AuthLayoutImg from "../../../assets/newDashboardIcons/personal-account.png";
+import Cookies from "js-cookie";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -16,8 +17,16 @@ const LoginForm = () => {
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
   const { setUser } = useAuth();
   const backendAPI = new backend_API();
+  const [verificationLoader, setVerificationLoader] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [verification, setVerification] = useState(true);
+  const [verification, setVerification] = useState({});
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [checkBox] = useState(
+    Cookies.get("nefentus-remember-me")
+      ? JSON.parse(Cookies.get("nefentus-remember-me"))
+      : false,
+  );
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -41,6 +50,7 @@ const LoginForm = () => {
   };
 
   const onFinish = async (values) => {
+    if (loading) return;
     setLoading(true);
     const response = await backendAPI.login(
       values.email,
@@ -53,10 +63,12 @@ const LoginForm = () => {
       // setSpinner(false);
       return;
     } else if (response.hasOtp || response.hasTotp) {
-      // setShowConfirmMeEmail(true);
-      // setOtp(response.hasOtp);
-      // setTotp(response.hasTotp);
-      // setEmail(response.email);
+      setVerification({
+        totp: response.hasOtp && response.hasTotp ? false : response.hasTotp,
+        otp: response.hasOtp && response.hasTotp ? true : response.hasOtp,
+        both: response.hasOtp && response.hasTotp,
+      });
+      setEmail(response.email);
     } else if (response.resetPassword) {
       navigate("/new-settings", {
         state: { recommendRecover: true },
@@ -64,6 +76,58 @@ const LoginForm = () => {
     } else {
       setUser(response);
       navigate("/personal-dashboard");
+    }
+  };
+
+  const verifyOtpCode = async (email, checkbox = checkBox) => {
+    if (verificationLoader || code == "") return;
+    if (Cookies.get("acceptCookie") !== true) {
+      checkbox = false;
+    }
+    try {
+      const response = await backendAPI.verifyOTP(
+        email,
+        code,
+        checkbox,
+        setUser,
+      );
+      if (response == null) {
+        setErrorMessage(t("messages.error.confirm"));
+        return;
+      }
+      if (verification?.both) {
+        setVerification({ ...verification, otp: false, totp: true });
+        setCode("");
+      } else {
+        setUser(response);
+        navigate("/personal-dashboard");
+      }
+    } catch (error) {
+      setErrorMessage(t("messages.error.login"));
+    }
+  };
+
+  const verifyTotpCode = async (email, checkbox) => {
+    if (verificationLoader || code == "") return;
+    if (Cookies.get("acceptCookie") !== true) {
+      checkbox = false;
+    }
+    const response = await backendAPI.verifyTotpToken(
+      email,
+      code,
+      checkbox,
+      setUser,
+    );
+    try {
+      if (response == null) {
+        setErrorMessage("Failed to Confirm");
+        return;
+      } else {
+        setUser(response);
+        navigate("/personal-dashboard");
+      }
+    } catch (error) {
+      setErrorMessage(t("messages.error.login"));
     }
   };
 
@@ -81,27 +145,44 @@ const LoginForm = () => {
     <>
       <div className="authLayout">
         <Row align="middle">
-          {verification ? (
+          {verification?.otp || verification?.totp ? (
             <Col span={24} lg={12}>
               <div className="auth-form">
                 <Flex vertical gap={32} className="form-header">
                   <Flex vertical gap={12} className="form-heading">
-                    <h4>Please enter the verification code</h4>
-                    <h5>
-                      We send a verification code to{" "}
-                      <span> nikolaykislik@gmail.com</span>
-                    </h5>
+                    <h4>
+                      {verification?.otp
+                        ? "Please enter the verification code"
+                        : t("login.TOTPTitle")}
+                    </h4>
+                    {verification?.otp ? (
+                      <h5>
+                        To ensure the security of your account, please enter the
+                        One-Time Password (OTP) sent to <span> {email}</span>
+                      </h5>
+                    ) : (
+                      <h5>{t("login.TOTPSubtitle")}</h5>
+                    )}
                   </Flex>
                   <Flex vertical gap={24}>
                     <Flex className="authenticator-code-container">
-                      <Input.OTP length={6} {...sharedProps} />
+                      <Input.OTP
+                        length={6}
+                        {...sharedProps}
+                        value={code}
+                        onChange={(value) => setCode(value)}
+                      />
                     </Flex>
                     <Button
                       type="primary"
                       htmlType="submit"
-                      disabled={loading}
-                      loading={loading}
+                      loading={verificationLoader}
                       className="login-submit-button"
+                      onClick={() =>
+                        verification?.otp
+                          ? verifyOtpCode(email, checkBox)
+                          : verifyTotpCode(email, checkBox)
+                      }
                     >
                       <span className="default-text login-button-text">
                         Verify
@@ -183,7 +264,6 @@ const LoginForm = () => {
                       <Button
                         type="primary"
                         htmlType="submit"
-                        disabled={loading}
                         loading={loading}
                         className="login-submit-button"
                       >
@@ -198,7 +278,7 @@ const LoginForm = () => {
                   Don’t have an account?{" "}
                   <span
                     className="cursor-pointer"
-                    onClick={() => navigate("/sign-up")}
+                    onClick={() => navigate("/signup")}
                   >
                     Sign up
                   </span>

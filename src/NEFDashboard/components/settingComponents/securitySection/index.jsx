@@ -11,16 +11,18 @@ import { useTranslation } from "react-i18next";
 import { MessageContext } from "../../../../context/message";
 import { useAuth } from "../../../../context/auth/authContext";
 
-const SecuritySection = () => {
+const SecuritySection = ({ recommendRecover }) => {
   const backendAPI = new backend_API();
   const { t } = useTranslation();
   const { user, setUser } = useAuth();
-  const { setInfoMessage } = useContext(MessageContext);
+  const { setInfoMessage, setErrorMessage } = useContext(MessageContext);
   const [passwordModal, setPasswordModal] = useState(false);
   const [seedModal, setSeedModal] = useState(false);
   const [authenticatorModal, setAuthenticatorModal] = useState(false);
   const [antiPhishingModal, setAntiPhishingModal] = useState(false);
-  const [recoverWalletModal, setRecoverWalletModal] = useState(false);
+  const [recoverWalletModal, setRecoverWalletModal] = useState(
+    recommendRecover || false,
+  );
   const [status, setStatus] = useState(false);
   const [secretToken, setSecretToken] = useState("");
 
@@ -44,6 +46,7 @@ const SecuritySection = () => {
     });
     if (response?.ok) {
       setStatus(false);
+      setUser({ ...user, hasTotp: false });
       setInfoMessage(t("messages.success.updateSettings"));
     }
   };
@@ -62,24 +65,22 @@ const SecuritySection = () => {
       false,
       () => {},
     );
-    if (response?.status === 200) {
+
+    if (response) {
       const response2 = await backendAPI.setupTotp({
         active: true,
       });
 
       if (response2 == null) {
       } else {
+        setUser({ ...user, hasTotp: true });
         setStatus(true);
         setInfoMessage(t("security.scanModal.verifyCode"));
         setAuthenticatorModal(false);
         setSecretToken("");
       }
-    }
-    if (response.status === 400) {
-      setReset(true);
-      setTimeout(() => {
-        setReset(false);
-      });
+    } else {
+      setErrorMessage("Invalid Code!");
     }
   };
 
@@ -187,6 +188,7 @@ const SecuritySection = () => {
         <RecoverWalletModal
           open={recoverWalletModal}
           onClose={() => setRecoverWalletModal(false)}
+          recommendRecover={recommendRecover}
         />
       )}
       <Flex vertical gap={24}>

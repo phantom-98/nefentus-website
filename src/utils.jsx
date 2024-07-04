@@ -168,6 +168,11 @@ export const checkJwtToken = async () => {
   }
 };
 
+export const onNavigateToForgot = async (navigate) => {
+  await new backendAPI().signout();
+  navigate("/forgot-password");
+};
+
 export const logOut = async (navigate) => {
   await new backendAPI().signout();
   navigate("/");
@@ -278,4 +283,21 @@ export const graphDataToList = (data) => {
     return dateA - dateB;
   });
   return dataList;
+};
+
+export const isWalletConflict = () => {
+  const isCoinbase =
+    window.ethereum?.isCoinbaseWallet ||
+    window.ethereum?.providers?.find((x) => x.isCoinbaseWallet) ||
+    window.web3?.currentProvider?.isCoinbaseWallet;
+  const isMetamask =
+    window.ethereum?.isMetaMask ||
+    window.ethereum?.providers?.find((x) => x.isMetaMask) ||
+    window.web3?.currentProvider?.isMetaMask;
+  const isPhantom = window.ethereum?.isPhantom;
+  return (
+    window.ethereum?.overrideIsMetaMask ||
+    (isCoinbase && isMetamask) ||
+    (isPhantom && isMetamask)
+  );
 };
