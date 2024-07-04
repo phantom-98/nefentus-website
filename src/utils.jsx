@@ -168,6 +168,11 @@ export const checkJwtToken = async () => {
   }
 };
 
+export const onNavigateToForgot = async (navigate) => {
+  await new backendAPI().signout();
+  navigate("/forgot-password");
+};
+
 export const logOut = async (navigate) => {
   await new backendAPI().signout();
   navigate("/");

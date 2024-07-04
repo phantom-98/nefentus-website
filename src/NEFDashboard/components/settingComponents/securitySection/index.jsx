@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import { MessageContext } from "../../../../context/message";
 import { useAuth } from "../../../../context/auth/authContext";
 
-const SecuritySection = () => {
+const SecuritySection = ({ recommendRecover }) => {
   const backendAPI = new backend_API();
   const { t } = useTranslation();
   const { user, setUser } = useAuth();
@@ -20,7 +20,9 @@ const SecuritySection = () => {
   const [seedModal, setSeedModal] = useState(false);
   const [authenticatorModal, setAuthenticatorModal] = useState(false);
   const [antiPhishingModal, setAntiPhishingModal] = useState(false);
-  const [recoverWalletModal, setRecoverWalletModal] = useState(false);
+  const [recoverWalletModal, setRecoverWalletModal] = useState(
+    recommendRecover || false,
+  );
   const [status, setStatus] = useState(false);
   const [secretToken, setSecretToken] = useState("");
 
@@ -187,6 +189,7 @@ const SecuritySection = () => {
         <RecoverWalletModal
           open={recoverWalletModal}
           onClose={() => setRecoverWalletModal(false)}
+          recommendRecover={recommendRecover}
         />
       )}
       <Flex vertical gap={24}>

@@ -8,9 +8,17 @@ import backend_API from "../../../../../../api/backendAPI";
 import WalletAddressFormatter from "../../../../../../func/walletAddressFormatter";
 import { MessageContext } from "../../../../../../context/message";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { onNavigateToForgot } from "../../../../../../utils";
 
-const RecoverWalletStep1 = ({ onNext, password, setPassword }) => {
+const RecoverWalletStep1 = ({
+  onNext,
+  password,
+  setPassword,
+  recommendRecover,
+}) => {
   const backendAPI = new backend_API();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { setErrorMessage, setSuccessMessage, clearMessages } =
     useContext(MessageContext);
@@ -69,8 +77,9 @@ const RecoverWalletStep1 = ({ onNext, password, setPassword }) => {
         </Flex>
       </Flex>
       <div className="recover-wallet-description">
-        To recover your crypto wallet using your seed phrase, please enter your
-        password first
+        {recommendRecover
+          ? t("security.recommendRecoverModal.subtitle")
+          : "To recover your crypto wallet using your seed phrase, please enter your password first"}
       </div>
       <Flex vertical gap={4} className="recover-wallet-password-container">
         <InputField
@@ -79,8 +88,13 @@ const RecoverWalletStep1 = ({ onNext, password, setPassword }) => {
           value={password}
           setValue={setPassword}
         />
-        <div className="default-text password-modal-forgot cursor-pointer">
-          Forgot Password?
+        <div>
+          <div
+            className="default-text password-modal-forgot cursor-pointer"
+            onClick={() => onNavigateToForgot(navigate)}
+          >
+            Forgot Password?
+          </div>
         </div>
       </Flex>
       <Button className="recover-wallet-continue" onClick={checkPassword}>

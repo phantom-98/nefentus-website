@@ -9,6 +9,7 @@ import { MessageContext } from "../../../../../context/message";
 import { useNavigate } from "react-router-dom";
 import backend_API from "../../../../../api/backendAPI";
 import { useTranslation } from "react-i18next";
+import { onNavigateToForgot } from "../../../../../utils";
 
 const PasswordModal = ({ open, onClose }) => {
   const navigate = useNavigate();
@@ -24,7 +25,6 @@ const PasswordModal = ({ open, onClose }) => {
   });
 
   const onPasswordUpdate = async () => {
-    console.log(passwordFields);
     if (!passwordFields?.newPassword || !passwordFields?.currentPassword) {
       setErrorMessage(t("messages.error.passwordRequired"));
       return;
@@ -92,7 +92,10 @@ const PasswordModal = ({ open, onClose }) => {
                   })
                 }
               />
-              <div className="default-text password-modal-forgot cursor-pointer">
+              <div
+                className="default-text password-modal-forgot cursor-pointer"
+                onClick={() => onNavigateToForgot(navigate)}
+              >
                 Forgot Password?
               </div>
             </Flex>

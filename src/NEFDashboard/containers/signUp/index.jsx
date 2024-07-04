@@ -19,27 +19,27 @@ const SignForm = () => {
   const [verification, setVerification] = useState(false);
   const [roleSelector, setRoleSelector] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const [email, setEmail] = useState("");
   const [role, setRole] = useState("Private");
   const backendAPI = new backend_API();
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { setInfoMessage, setErrorMessage } = useContext(MessageContext);
-  const [countries, setCountries] = useState(updatedCountries);
+  const [countries, setCountries] = useState(getCountryList());
   const [search, setSearch] = useState("");
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
     if (processing) return;
     setProcessing(true);
-    setVerification(!verification);
     const payload = {
       email: values.email,
       password: values.password,
       roles: ["Vendor"],
       firstName: values?.firstname,
       lastName: values?.lastname,
-      telNr: values?.phoneNumber?.length > 4 ? values?.phoneNumber : "",
+      telNr: values?.phoneNumber?.length > 6 ? values?.phoneNumber : "",
       affiliateLink: "",
       country: values?.countryRegion,
       accountRole: role,
@@ -92,6 +92,7 @@ const SignForm = () => {
     } else {
       setInfoMessage(t("messages.error.confirmEmail"));
       form.resetFields();
+      setVerification(!verification);
     }
     setProcessing(false);
   };
@@ -103,7 +104,7 @@ const SignForm = () => {
   const onPhoneChange = (value) => {
     if (value?.length <= 3) {
       const selectedCountry = updatedCountries?.find((country) =>
-        value?.includes(country?.countryCode),
+        value?.includes(country?.code),
       );
       let updatedValues;
       if (selectedCountry != undefined) {
@@ -121,21 +122,21 @@ const SignForm = () => {
   };
 
   const onFlagChange = (value) => {
-    const selectedCountry = updatedCountries?.find(
+    const selectedCountry = getCountryList()?.find(
       (country) => value == country?.value,
     );
     const updatedValues = {
       ...form.getFieldsValue(),
-      phoneNumber: selectedCountry?.countryCode,
+      phoneNumber: selectedCountry?.code,
     };
     form.setFieldsValue({ ...updatedValues });
     setSearch("");
-    setCountries(updatedCountries);
+    setCountries(getCountryList());
   };
 
   const onSearch = (value) => {
     setCountries(
-      updatedCountries?.filter((country) =>
+      getCountryList()?.filter((country) =>
         country?.display?.toLowerCase()?.includes(value?.toLowerCase()),
       ),
     );
@@ -192,13 +193,13 @@ const SignForm = () => {
                   <Flex vertical gap={6} className="form-heading">
                     <h4>Please check your email for a verification message.</h4>
                     <h5>
-                      We send a confirmation link to{" "}
-                      <span>nikolaykislik@gmail.com</span>
+                      We send a confirmation link to <span>{email}</span>
                     </h5>
                   </Flex>
                 </Flex>
                 <div className="signup-text">
-                  Don’t get an email? <span>Click to resend.</span>
+                  Don’t get an email?{" "}
+                  <span className="cursor-pointer">Click to resend.</span>
                 </div>
               </div>
             </Col>
@@ -248,13 +249,13 @@ const SignForm = () => {
                         }}
                         initialValues={{
                           confirmpassword: "",
-                          countryFlag: "Austria",
+                          countryFlag: "Afghanistan",
                           countryRegion: null,
                           email: "",
                           firstname: "",
                           lastname: "",
                           password: "",
-                          phoneNumber: "+43",
+                          phoneNumber: "+93",
                         }}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
@@ -305,6 +306,7 @@ const SignForm = () => {
                             <Input
                               placeholder="yourmail@mail.com"
                               className="email-field-input"
+                              onChange={(e) => setEmail(e.target.value)}
                             />
                             <img
                               src={MessageIcon}
@@ -411,7 +413,7 @@ const SignForm = () => {
                                               width="22"
                                             />
                                             <div>{t(country?.display)}</div>
-                                            <div>({country?.countryCode})</div>
+                                            <div>({country?.code})</div>
                                           </Flex>
                                         </Option>
                                       );

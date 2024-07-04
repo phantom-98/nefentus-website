@@ -98,7 +98,7 @@
 .telephone-flag-dropdown {
   padding: 0px;
   border: 1px solid var(--Dark, #202020);
-  max-height: 270px;
+  /* max-height: 270px; */
   width: 32.33vw;
 }
 

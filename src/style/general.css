@@ -823,7 +823,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .password-modal-forgot {
-  color: var(--Blue, var(--Blue, #078bb9));
+  color: var(--Blue, var(--Blue, #078bb9)) !important;
+  width: fit-content;
 }
 
 .seed-modal-padding {
