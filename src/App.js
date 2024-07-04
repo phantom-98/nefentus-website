@@ -341,14 +341,7 @@ function App() {
                           </Layout>
                         }
                       />
-                      <Route
-                        path="/resources"
-                        element={
-                          <Layout>
-                            <NewResources />
-                          </Layout>
-                        }
-                      />
+                      <Route path="/resources" element={<NewResources />} />
                       <Route
                         path="/contact"
                         element={
