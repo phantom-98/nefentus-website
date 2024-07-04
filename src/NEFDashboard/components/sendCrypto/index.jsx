@@ -550,14 +550,16 @@ const SendCrypto = ({
                 {t("sendModal.amount")}
               </div>
               <div className="send-crypto-amount default-text">
-                {amountInCrypto + " " + selectedCoin?.abbr}{" "}
+                {formatTokenBalance(amountInCrypto, 6) +
+                  " " +
+                  selectedCoin?.abbr}{" "}
               </div>
               <Flex align="center" gap={2}>
                 <img src={SwapHorizontal} />
                 <div className="default-text send-crypto-title">
                   ≈{getCurrencySymbol()[selectedCurrency.to]}{" "}
                   {formatUSDBalance(
-                    amountInCurrency +
+                    parseFloat(amountInCurrency) +
                       selectedCurrency.rate * gasValues?.gasUSD,
                   )}
                 </div>
