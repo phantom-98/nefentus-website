@@ -264,7 +264,7 @@ const Products = () => {
       }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
-      onClick={() => setOpen((prev) => !prev)}
+      onTouchEnd={(e) => setOpen((prev) => !prev) && e.preventDefault()}
     >
       <div className={styles.products}>
         <p>Products</p>
@@ -367,7 +367,7 @@ const Resources = () => {
       style={{ position: "relative" }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
-      onClick={() => setOpen((prev) => !prev)}
+      onTouchEnd={(e) => setOpen((prev) => !prev) && e.preventDefault()}
     >
       <div className={styles.resources}>
         <p>Resources</p>
