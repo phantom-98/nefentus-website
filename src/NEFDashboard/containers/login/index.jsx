@@ -179,7 +179,7 @@ const LoginForm = () => {
                         }}
                       />
                     </Flex>
-                    {/* <Button
+                    <Button
                       type="primary"
                       htmlType="submit"
                       loading={verificationLoader}
@@ -193,7 +193,7 @@ const LoginForm = () => {
                       <span className="default-text login-button-text">
                         Verify
                       </span>
-                    </Button> */}
+                    </Button>
                   </Flex>
                 </Flex>
                 <div className="signup-text">
