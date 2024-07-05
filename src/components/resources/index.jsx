@@ -1,10 +1,10 @@
 import "./resources.css";
 import LineLeft from "../../assets/resources/line-left.svg";
 import LineRight from "../../assets/resources/line-right.svg";
-import X from "../../assets/resources/x.svg";
-import In from "../../assets/resources/in.svg";
-import Github from "../../assets/resources/github.svg";
-import Telegram from "../../assets/resources/telegram.svg";
+import InNormal from "../../assets/resources/in.svg";
+import InHover from "../../assets/resources/in_hover.svg";
+import TelegramNormal from "../../assets/resources/telegram.svg";
+import TelegramHover from "../../assets/resources/telegram_hover.svg";
 import IntroductionVideo from "../../assets/video/introduction.mp4";
 import { useEffect, useState } from "react";
 
@@ -240,25 +240,21 @@ const contents = {
     </p>,
   ],
 };
-const socials = [
-  {
-    icon: X,
+const socials = {
+  in: {
+    iconNormal: InNormal,
+    iconHover: InHover,
     link: "",
   },
-  {
-    icon: In,
-    link: "",
-  },
-  {
-    icon: Github,
-    link: "https://github.com/nefentus",
-  },
-  {
-    icon: Telegram,
+  telegram: {
+    iconNormal: TelegramNormal,
+    iconHover: TelegramHover,
     link: "https://t.me/nefentus",
   },
-];
+};
 const Resources = () => {
+  const [icon_in, setIcon_in] = useState(socials.in.iconNormal);
+  const [icon_tele, setIcon_tele] = useState(socials.telegram.iconNormal);
   const [hash, setHash] = useState(window.location.hash);
   const [blockId, setBlockId] = useState(sidebar[0].id);
   const select = (h) => {
@@ -366,11 +362,20 @@ const Resources = () => {
           <div className="footer">
             <p>© 2024 Nefentus. All rights reserved.</p>
             <div className="socials">
-              {socials.map((item) => (
-                <a href={item.link}>
-                  <img src={item.icon} />
-                </a>
-              ))}
+              <a
+                href={socials.in.link}
+                onMouseEnter={() => setIcon_in(socials.in.iconHover)}
+                onMouseLeave={() => setIcon_in(socials.in.iconNormal)}
+              >
+                <img src={icon_in} />
+              </a>
+              <a
+                href={socials.telegram.link}
+                onMouseEnter={() => setIcon_tele(socials.telegram.iconHover)}
+                onMouseLeave={() => setIcon_tele(socials.telegram.iconNormal)}
+              >
+                <img src={icon_tele} />
+              </a>
             </div>
           </div>
         </div>

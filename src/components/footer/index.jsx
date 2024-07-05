@@ -1,28 +1,23 @@
 import "./footer.css";
 import { NefentusLogo } from "../../assets/icon/logos/logos";
-import X from "../../assets/resources/x.svg";
-import In from "../../assets/resources/in.svg";
-import Github from "../../assets/resources/github.svg";
-import Telegram from "../../assets/resources/telegram.svg";
+import InNormal from "../../assets/resources/in.svg";
+import InHover from "../../assets/resources/in_hover.svg";
+import TelegramNormal from "../../assets/resources/telegram.svg";
+import TelegramHover from "../../assets/resources/telegram_hover.svg";
+import { useState } from "react";
 
-const socials = [
-  {
-    icon: X,
+const socials = {
+  in: {
+    iconNormal: InNormal,
+    iconHover: InHover,
     link: "",
   },
-  {
-    icon: In,
-    link: "",
-  },
-  {
-    icon: Github,
-    link: "https://github.com/nefentus",
-  },
-  {
-    icon: Telegram,
+  telegram: {
+    iconNormal: TelegramNormal,
+    iconHover: TelegramHover,
     link: "https://t.me/nefentus",
   },
-];
+};
 const sitemap = [
   {
     title: "Solutions",
@@ -75,17 +70,28 @@ const sitemap_bottom = [
   },
 ];
 const Footer = () => {
+  const [icon_in, setIcon_in] = useState(socials.in.iconNormal);
+  const [icon_tele, setIcon_tele] = useState(socials.telegram.iconNormal);
   return (
     <div className="footer-layout">
       <div className="footer-top container">
         <div style={{ width: "12rem" }}>
           <NefentusLogo />
           <div className="socials">
-            {socials.map((item) => (
-              <a href={item.link}>
-                <img src={item.icon} />
-              </a>
-            ))}
+            <a
+              href={socials.in.link}
+              onMouseEnter={() => setIcon_in(socials.in.iconHover)}
+              onMouseLeave={() => setIcon_in(socials.in.iconNormal)}
+            >
+              <img src={icon_in} />
+            </a>
+            <a
+              href={socials.telegram.link}
+              onMouseEnter={() => setIcon_tele(socials.telegram.iconHover)}
+              onMouseLeave={() => setIcon_tele(socials.telegram.iconNormal)}
+            >
+              <img src={icon_tele} />
+            </a>
           </div>
         </div>
         <div className="sitemap">

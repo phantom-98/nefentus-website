@@ -760,13 +760,6 @@ const communities = [
     link: "https://linkedin.com/nefentus",
   },
   {
-    icon: Twitter,
-    title: "Twitter",
-    subtitle:
-      "Follow us on Twitter for the latest news, updates, and insights on cryptocurrency payments. Stay informed about new features, industry trends.",
-    link: "https://x.com/nefentus",
-  },
-  {
     icon: Youtube,
     title: "Youtube",
     subtitle:
