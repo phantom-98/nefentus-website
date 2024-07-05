@@ -171,6 +171,12 @@ const LoginForm = () => {
                         {...sharedProps}
                         value={code}
                         onChange={(value) => setCode(value)}
+                        onKeyDown={(e) => {
+                          if (e.key == "Enter" && e.target.value != "")
+                            verification?.otp
+                              ? verifyOtpCode(email, checkBox)
+                              : verifyTotpCode(email, checkBox);
+                        }}
                       />
                     </Flex>
                     <Button

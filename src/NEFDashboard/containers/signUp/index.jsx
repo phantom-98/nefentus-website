@@ -102,8 +102,8 @@ const SignForm = () => {
   };
 
   const onPhoneChange = (value) => {
-    if (value?.length <= 3) {
-      const selectedCountry = updatedCountries?.find((country) =>
+    if (value?.length <= 6 && value?.charAt(0) == "+") {
+      const selectedCountry = getCountryList()?.find((country) =>
         value?.includes(country?.code),
       );
       let updatedValues;

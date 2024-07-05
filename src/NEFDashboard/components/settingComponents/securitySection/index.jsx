@@ -140,7 +140,7 @@ const SecuritySection = ({ recommendRecover }) => {
       title: "Seed Phrase",
       subTitle:
         "A sequence of words that allows you to regain access to your crypto funds if you ever lose your crypto wallet.",
-      actionItem: <Button onClick={() => setSeedModal(true)}>Change</Button>,
+      actionItem: <Button onClick={() => setSeedModal(true)}>See</Button>,
     },
     {
       title: "Recover Wallet",
