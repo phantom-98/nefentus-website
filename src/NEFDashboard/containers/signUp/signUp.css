@@ -94,3 +94,30 @@
 .signup-submit-button .ant-btn-loading-icon .anticon-loading {
   font-size: 18px;
 }
+
+.telephone-flag-dropdown {
+  padding: 0px;
+  border: 1px solid var(--Dark, #202020);
+  /* max-height: 270px; */
+  width: 32.33vw;
+}
+
+.telephone-flag-search,
+.telephone-flag-search:hover,
+.telephone-flag-search:focus {
+  padding: 12px;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  background: var(--BG2, #171717);
+  border-bottom: 1px solid var(--Dark, #202020) !important;
+  border-radius: 6px 6px 0px 0px;
+}
+
+.telephone-flag-search-icon {
+  margin-right: 8px;
+}
+
+.telephone-flag-dropdown div div .rc-virtual-list {
+  background: #171717;
+}

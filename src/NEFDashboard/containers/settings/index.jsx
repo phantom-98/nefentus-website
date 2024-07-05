@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Flex, Segmented, Switch } from "antd";
 import "./setting.css";
 import SecuritySection from "../../components/settingComponents/securitySection";
@@ -7,21 +7,26 @@ import InvoiceSection from "../../components/settingComponents/invoiceSection";
 import IdentificationSection from "../../components/settingComponents/identificationSection";
 import { useAuth } from "../../../context/auth/authContext";
 import { getRole } from "../../../utils";
+import { useLocation } from "react-router-dom";
 
 const SettingPage = () => {
   const { user } = useAuth();
+  const { state } = useLocation();
+  const { recommendRecover } = state || false;
   const tabs =
     getRole(user) == "private" || (user?.roles && user?.roles[0] == "private")
       ? ["General", "Security"]
       : ["General", "Security", "Identification", "Invoice"];
-  const [activeTab, setActiveTab] = useState("General");
+  const [activeTab, setActiveTab] = useState(
+    recommendRecover ? "Security" : "General",
+  );
 
   const renderSection = () => {
     switch (activeTab) {
       case "General":
         return <ProfileSection />;
       case "Security":
-        return <SecuritySection />;
+        return <SecuritySection recommendRecover={recommendRecover} />;
       case "Identification":
         return <IdentificationSection />;
       case "Invoice":

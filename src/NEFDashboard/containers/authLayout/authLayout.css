@@ -1,3 +1,8 @@
+.auth-row {
+  height: 100vh !important;
+  justify-content: center;
+}
+
 .authLayout .ant-row {
   height: 100%;
 }
