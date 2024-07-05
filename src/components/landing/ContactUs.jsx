@@ -101,7 +101,7 @@ const ContactUs = () => {
             options={getCountryList()}
             style={{
               background: "#171717",
-              fontSize: "1.6rem",
+              fontSize: "1.2rem",
             }}
           />
           <Textarea
