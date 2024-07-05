@@ -79,15 +79,19 @@ const LoginForm = () => {
     }
   };
 
-  const verifyOtpCode = async (email, checkbox = checkBox) => {
-    if (verificationLoader || code == "") return;
+  const verifyOtpCode = async (
+    email,
+    checkbox = checkBox,
+    verificationCode = code,
+  ) => {
+    if (verificationLoader || verificationCode == "") return;
     if (Cookies.get("acceptCookie") !== true) {
       checkbox = false;
     }
     try {
       const response = await backendAPI.verifyOTP(
         email,
-        code,
+        verificationCode,
         checkbox,
         setUser,
       );
@@ -98,6 +102,9 @@ const LoginForm = () => {
       if (verification?.both) {
         setVerification({ ...verification, otp: false, totp: true });
         setCode("");
+        document
+          .getElementById("code-input-container")
+          .firstElementChild.focus();
       } else {
         setUser(response);
         navigate("/personal-dashboard");
@@ -107,14 +114,14 @@ const LoginForm = () => {
     }
   };
 
-  const verifyTotpCode = async (email, checkbox) => {
-    if (verificationLoader || code == "") return;
+  const verifyTotpCode = async (email, checkbox, verificationCode = code) => {
+    if (verificationLoader || verificationCode == "") return;
     if (Cookies.get("acceptCookie") !== true) {
       checkbox = false;
     }
     const response = await backendAPI.verifyTotpToken(
       email,
-      code,
+      verificationCode,
       checkbox,
       setUser,
     );
@@ -135,12 +142,6 @@ const LoginForm = () => {
     console.log("Failed:", errorInfo);
   };
 
-  const onChange = (text) => {
-    console.log("onChange:", text);
-  };
-  const sharedProps = {
-    onChange,
-  };
   return (
     <>
       <div className="authLayout">
@@ -167,19 +168,18 @@ const LoginForm = () => {
                   <Flex vertical gap={24}>
                     <Flex className="authenticator-code-container">
                       <Input.OTP
+                        id="code-input-container"
                         length={6}
-                        {...sharedProps}
                         value={code}
-                        onChange={(value) => setCode(value)}
-                        onKeyDown={(e) => {
-                          if (e.key == "Enter" && e.target.value != "")
-                            verification?.otp
-                              ? verifyOtpCode(email, checkBox)
-                              : verifyTotpCode(email, checkBox);
+                        onChange={(value) => {
+                          setCode(value);
+                          verification?.otp
+                            ? verifyOtpCode(email, checkBox, value)
+                            : verifyTotpCode(email, checkBox, value);
                         }}
                       />
                     </Flex>
-                    <Button
+                    {/* <Button
                       type="primary"
                       htmlType="submit"
                       loading={verificationLoader}
@@ -193,7 +193,7 @@ const LoginForm = () => {
                       <span className="default-text login-button-text">
                         Verify
                       </span>
-                    </Button>
+                    </Button> */}
                   </Flex>
                 </Flex>
                 <div className="signup-text">
