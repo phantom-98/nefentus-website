@@ -177,10 +177,12 @@ export default class backendAPI {
         }),
       };
       const response = await fetch(url, options);
+      const data = await response.json();
+      if (data) return data;
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      return response;
+      return data;
     } catch (error) {
       return null; // or return some default value
     }
@@ -544,7 +546,6 @@ export default class backendAPI {
       // if (!response.ok) {
       //   throw new Error("Network response was not ok");
       // }
-
       if (response.ok) {
         const data = await response.json();
         setCookie("token", data.jwtToken);
@@ -555,7 +556,7 @@ export default class backendAPI {
           action: "login",
           label: data.email,
         });
-        return response;
+        return data;
       }
     } catch (e) {
       console.log(e, "responseresponse");

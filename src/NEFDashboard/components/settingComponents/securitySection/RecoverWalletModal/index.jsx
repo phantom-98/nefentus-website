@@ -4,7 +4,7 @@ import "./recover-wallet-modal.css";
 import RecoverWalletStep1 from "./RecoverWalletStep1";
 import RecoverWalletStep2 from "./RecoverWalletStep2";
 
-const RecoverWalletModal = ({ open, onClose }) => {
+const RecoverWalletModal = ({ open, onClose, recommendRecover }) => {
   const [password, setPassword] = useState("");
   const [step, setStep] = useState(1);
   const steps = [
@@ -27,6 +27,7 @@ const RecoverWalletModal = ({ open, onClose }) => {
             onNext={() => setStep(step + 1)}
             password={password}
             setPassword={setPassword}
+            recommendRecover={recommendRecover}
           />
         );
       case 2:

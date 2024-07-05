@@ -26,12 +26,15 @@ const Navigation = () => {
     } else {
       return (
         <>
-          <a className={styles.login} href="/login">
+          <div className={styles.login} onClick={() => navigate("/login")}>
             Log in
-          </a>
-          <a className={`${styles.button}`} href="/sign-up">
+          </div>
+          <div
+            className={`${styles.button}`}
+            onClick={() => navigate("/signup")}
+          >
             Sign up
-          </a>
+          </div>
         </>
       );
     }
