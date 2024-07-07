@@ -1,4 +1,4 @@
-# New changes
+# v2.0.0
 
 - Fix texts & translations in the dashboard (PATCH)
 - Fix some minor issues in landing (PATCH)
