@@ -134,14 +134,14 @@ const SendCrypto = ({
   const handleAmount = (value) => {
     setPercentage(null);
     if (toggleCurrency) {
-      setAmountInCurrency(value || amountInCurrency);
+      setAmountInCurrency(value != undefined ? value : amountInCurrency);
       setAmountInCrypto(
         (value || amountInCurrency) /
           selectedCoin.price /
           selectedCurrency.rate,
       );
     } else {
-      setAmountInCrypto(value || amountInCrypto);
+      setAmountInCrypto(value != undefined ? value : amountInCrypto);
       setAmountInCurrency(
         (value || amountInCrypto) * selectedCoin.price * selectedCurrency.rate,
       );
