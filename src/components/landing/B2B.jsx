@@ -28,6 +28,7 @@ import SwapIcon from "../../assets/landing/swap-ico.svg";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 gsap.registerPlugin(ScrollTrigger);
 
 const B2B = () => {
@@ -42,6 +43,18 @@ const B2B = () => {
       setIsPositionedAtStart(true);
     }
   };
+
+  useEffect(() => {
+    const href = window.location.href.substring(
+      window.location.href.lastIndexOf("#") + 1,
+    );
+    setTimeout(() => {
+      const element = document.getElementById(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 500);
+  }, []);
 
   useEffect(() => {
     // Ensure the component has mounted in a browser environment
@@ -125,6 +138,7 @@ export default B2B;
 const Hero = () => {
   return (
     <div
+      id="hero"
       className="layout-paragraph hero"
       style={{
         paddingBlock: "0",
@@ -285,8 +299,13 @@ const Invoicing = () => {
       clearInterval(timeRef.current);
     };
   }, []);
+  // useEffect(() => {
+  //   if(step.includes(true)) {
+  //     clearInterval(timeRef.current);
+  //   }
+  // },  [step]);
   return (
-    <div className="layout-paragraph">
+    <div id="invoicing" className="layout-paragraph">
       <Heading
         title={`Effortless invoice creation`}
         subtitle={`Use our built-in wallet or link an unlimited number of external wallets for seamless transactions.`}
@@ -317,6 +336,7 @@ const Invoicing = () => {
                       return false;
                     }),
                   );
+                clearInterval(timeRef.current);
               }}
             >
               <img src={item.icon} />
@@ -341,6 +361,7 @@ const Invoicing = () => {
                       return false;
                     }),
                   );
+                clearInterval(timeRef.current);
               }}
             >
               <img src={item.icon} />
@@ -399,7 +420,7 @@ const Product = ({ stepId, progress }) => {
     });
   }, [stepId]);
   return (
-    <div className="layout-paragraph product">
+    <div id="product" className="layout-paragraph product">
       <Heading
         title={`Simplified <span style="text-wrap: nowrap">product creation</span>`}
         subtitle={`Utilize our internal wallet or link an unlimited number of external wallets for hassle-free product creation.`}

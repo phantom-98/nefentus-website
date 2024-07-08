@@ -28,8 +28,21 @@ import TransactionSend from "../../assets/landing/transaction-send.png";
 import TransactionConverter from "../../assets/landing/transaction-converter.png";
 import SendIcon from "../../assets/landing/send-ico.svg";
 import SwapIcon from "../../assets/landing/swap-ico.svg";
+import { useEffect } from "react";
 
 const B2C = () => {
+  useEffect(() => {
+    const href = window.location.href.substring(
+      window.location.href.lastIndexOf("#") + 1,
+    );
+    setTimeout(() => {
+      const element = document.getElementById(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 500);
+  }, []);
+
   return (
     <div
       className="landing-layout b2c container"
@@ -58,6 +71,7 @@ export default B2C;
 const Hero = () => {
   return (
     <div
+      id="hero"
       className="layout-paragraph hero"
       style={{
         paddingBlock: "0",
@@ -277,6 +291,7 @@ const wallets = [
 const MultiWallets = () => {
   return (
     <div
+      id="multi-wallets"
       className="layout-paragraph"
       style={{
         paddingBottom: "0",
@@ -436,6 +451,7 @@ const MultiWallets = () => {
 const Transactions = () => {
   return (
     <div
+      id="transactions"
       className="layout-paragraph"
       style={{
         paddingBottom: "0",

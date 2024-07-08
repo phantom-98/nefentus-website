@@ -206,6 +206,7 @@ const Navigation = () => {
       </div>
 
       <div
+        id="mobileMenu"
         className={`${styles.mobileMenu}`}
         style={{
           transform: openMenu ? "translateY(0%)" : "translateY(-120%)",
@@ -214,7 +215,7 @@ const Navigation = () => {
         <div>
           <ul>
             <li>
-              <Products />
+              <Products setOpenMenu={setOpenMenu} />
             </li>
             <li>
               <Resources />
@@ -254,7 +255,7 @@ const DropDownMenuItem = ({ icon, title, subtitle }) => {
   );
 };
 
-const Products = () => {
+const Products = ({ setOpenMenu }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -286,32 +287,34 @@ const Products = () => {
               borderRight: "1px solid #323232",
             }}
           >
-            <p
-              style={{
-                color: "#b1b1b1",
-                padding: "0.8rem",
-              }}
-            >
-              Business Tools
-            </p>
-            <a href="/b2b">
+            <a href="/b2b" onClick={() => setOpenMenu(false)}>
+              <p
+                style={{
+                  color: "#b1b1b1",
+                  padding: "0.8rem",
+                }}
+              >
+                Business tools
+              </p>
+            </a>
+            <a href="/b2b#hero" onClick={() => setOpenMenu(false)}>
               <DropDownMenuItem
                 icon={{ normal: Shopping, hover: ShoppingBlue }}
                 title={`Product payment link`}
                 subtitle={`Generate a unique payment link for your products`}
               />
             </a>
-            <a href="/b2b">
+            <a href="/b2b#invoicing" onClick={() => setOpenMenu(false)}>
               <DropDownMenuItem
                 icon={{ normal: Invoicing, hover: InvoicingBlue }}
                 title={`Invoicing`}
                 subtitle={`Create and send professional invoices in cryptocurrency`}
               />
             </a>
-            <a href="/b2b">
+            <a href="/b2b#product" onClick={() => setOpenMenu(false)}>
               <DropDownMenuItem
                 icon={{ normal: Sales, hover: SalesBlue }}
-                title={`Sales Dashboard`}
+                title={`Sales dashboard`}
                 subtitle={`Track your sales and monitor transaction trends`}
               />
             </a>
@@ -323,32 +326,34 @@ const Products = () => {
               flexDirection: "column",
             }}
           >
-            <p
-              style={{
-                color: "#b1b1b1",
-                padding: "0.8rem",
-              }}
-            >
-              Personal use
-            </p>
-            <a href="/b2c">
+            <a href="/b2c" onClick={() => setOpenMenu(false)}>
+              <p
+                style={{
+                  color: "#b1b1b1",
+                  padding: "0.8rem",
+                }}
+              >
+                Personal use
+              </p>
+            </a>
+            <a href="/b2c#multi-wallets" onClick={() => setOpenMenu(false)}>
               <DropDownMenuItem
                 icon={{ normal: MultiWallet, hover: MultiWalletBlue }}
                 title={`Multi-wallet management`}
                 subtitle={`Manage multiple cryptocurrency wallets effortlessly in one place`}
               />
             </a>
-            <a href="/b2c">
+            <a href="/b2c#transactions" onClick={() => setOpenMenu(false)}>
               <DropDownMenuItem
                 icon={{ normal: Convert, hover: ConvertBlue }}
                 title={`Converter`}
                 subtitle={`Instantly convert between different cryptocurrencies with ease`}
               />
             </a>
-            <a href="/b2c">
+            <a href="/b2c#conclusion">
               <DropDownMenuItem
                 icon={{ normal: InternalWallet, hover: InternalWalletBlue }}
-                title={`Internal Nefentus Wallet`}
+                title={`Internal Nefentus wallet`}
                 subtitle={`Manage your digital assets securely within the Nefentus ecosystem`}
               />
             </a>

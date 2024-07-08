@@ -4,10 +4,10 @@
   width: 100%;
   background: var(--BG2, #171717);
   border-radius: 6px;
-  font-size: 1.2rem;
-  padding: 8px 12px;
+  font-size: 14px;
+  padding: 1rem;
   outline: 0 !important;
-  font-family: "Axiforma", sans-serif;
+  /* font-family: "Axiforma", sans-serif; */
 }
 
 /* .inputWrapper .input:focus {

@@ -1031,7 +1031,7 @@ export const CountrySelect = ({
               width: `calc(100% - ${value ? "6" : "2"}rem)`,
               outline: "0",
               background: "transparent",
-              fontFamily: "Axiforma, sans-serif",
+              // fontFamily: "Axiforma, sans-serif",
               // height: "2rem",
             }}
             placeholder={value ? "" : placeholder ?? t("countries.choose")}

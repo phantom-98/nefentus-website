@@ -391,8 +391,10 @@ const Benefits = () => {
           </div>
           <div>
             <p>
-              Streamline Your Online{" "}
-              <span style={{ textWrap: "nowrap" }}>Checkout Experience</span>
+              Streamline Your Online
+              <br />
+              Checkout Experience
+              {/* <span style={{ textWrap: "nowrap" }}>Checkout Experience</span> */}
             </p>
             <img src={Benefit2} />
             <p className="sub-title">
@@ -799,7 +801,7 @@ export const Conclusion = ({
   button = "Get Started",
 }) => {
   return (
-    <div className="layout-paragraph layout-getting-started">
+    <div id="conclusion" className="layout-paragraph layout-getting-started">
       <div
         style={{
           border: "1px solid #202020",

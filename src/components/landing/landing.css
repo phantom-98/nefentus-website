@@ -1289,3 +1289,9 @@
 .contact-form button * {
   color: white;
 }
+.contact-form input {
+  font-size: 1.2rem !important;
+}
+.contact-form textarea {
+  font-size: 1.2rem !important;
+}

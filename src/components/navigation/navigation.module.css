@@ -347,6 +347,11 @@
   pointer-events: initial !important;
 }
 
+.dropdown div > a > p:hover {
+  background: #323232;
+  border-radius: 6px;
+}
+
 @media (max-width: 900px) {
   .logo {
     height: 2.2rem;
