@@ -74,13 +74,13 @@ const ContactUs = () => {
         </p>
         <div className="contact-form">
           <Input
-            label={t("contact.name")}
+            label={t("contact.name").concat("*")}
             value={fullName}
             setState={setFullName}
             placeholder={`e.g. John Doe`}
           />
           <Input
-            label={t("contact.email")}
+            label={t("contact.email").concat("*")}
             value={email}
             setState={setEmail}
             placeholder={`e.g. yourmail@mail.com`}
@@ -109,7 +109,7 @@ const ContactUs = () => {
             }}
           />
           <Textarea
-            label={t("contact.comment")}
+            label={t("contact.comment").concat("*")}
             placeholder={`Tell us about your needs`}
             value={description}
             setState={setDescription}

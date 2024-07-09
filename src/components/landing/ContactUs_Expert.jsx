@@ -65,19 +65,19 @@ const ContactUs_Expert = () => {
         </p>
         <div className="contact-form">
           <Input
-            label={t("contact.name")}
+            label={t("contact.name").concat("*")}
             value={fullName}
             setState={setFullName}
             placeholder={`e.g. John Doe`}
           />
           <Input
-            label={t("contact.email")}
+            label={t("contact.email").concat("*")}
             value={email}
             setState={setEmail}
             placeholder={`e.g. yourmail@mail.com`}
           />
           <Textarea
-            label={t("contact.commentExpert")}
+            label={t("contact.commentExpert").concat("*")}
             placeholder={`Description...`}
             value={description}
             setState={setDescription}
