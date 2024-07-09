@@ -21,6 +21,10 @@ import Shopping from "../../assets/icon/shopping-bag-01.svg";
 import ShoppingBlue from "../../assets/icon/shopping-bag-01 - blue.svg";
 import Convert from "../../assets/landing/swap-ico.svg";
 import ConvertBlue from "../../assets/landing/swap-ico - blue.svg";
+import ContactSupport from "../../assets/icon/contact-support.svg";
+import ContactSupportBlue from "../../assets/icon/contact-support-blue.svg";
+import ContactExpert from "../../assets/icon/contact-expert.svg";
+import ContactExpertBlue from "../../assets/icon/contact-expert-blue.svg";
 import Send from "../../assets/landing/send-ico.svg";
 import Dropdown from "../../assets/icon/dropdown.svg";
 import { hover } from "@testing-library/user-event/dist/hover";
@@ -150,10 +154,13 @@ const Navigation = () => {
                     <p>Career</p>
                   </Link>
                 </li>
-                <li className="standard">
+                {/* <li className="standard">
                   <Link to="/contact">
                     <p>Contact us</p>
                   </Link>
+                </li> */}
+                <li className="standard">
+                  <ContactUs />
                 </li>
               </ul>
             )}
@@ -223,9 +230,12 @@ const Navigation = () => {
             <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
               <li className="standard">Career</li>
             </Link>
-            <Link to="/contact" onClick={() => setOpenMenu(false)}>
+            {/* <Link to="/contact" onClick={() => setOpenMenu(false)}>
               <li className="standard">Contact us</li>
-            </Link>
+            </Link> */}
+            <li>
+              <ContactUs />
+            </li>
             {loginAndSignupMobile()}
           </ul>
         </div>
@@ -432,6 +442,58 @@ const Resources = () => {
                 Twitter <img src={Send} style={{ width: "0.8rem" }} />
               </a>
             </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ContactUs = () => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div
+      style={{
+        position: "relative",
+      }}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      onTouchEnd={(e) => setOpen((prev) => !prev) && e.preventDefault()}
+    >
+      <div className={styles.contactus}>
+        <p>Contact us</p>
+        <img
+          src={Dropdown}
+          style={{
+            transition: "0.2s",
+            transform: open ? "rotate(180deg)" : "",
+          }}
+        />
+      </div>
+      {open && (
+        <div className={styles.dropdown}>
+          <div
+            style={{
+              padding: "1.4rem",
+              display: "flex",
+              flexDirection: "column",
+              borderRight: "1px solid #323232",
+            }}
+          >
+            <a href="/contact-support" onClick={() => setOpenMenu(false)}>
+              <DropDownMenuItem
+                icon={{ normal: ContactSupport, hover: ContactSupportBlue }}
+                title={`Support team`}
+                subtitle={`Write if you have noticed a problem in the work of the platform, a bug`}
+              />
+            </a>
+            <a href="/contact-expert" onClick={() => setOpenMenu(false)}>
+              <DropDownMenuItem
+                icon={{ normal: ContactExpert, hover: ContactExpertBlue }}
+                title={`Contact an expert`}
+                subtitle={`Get a consultation on how to integrate the platform into your business`}
+              />
+            </a>
           </div>
         </div>
       )}

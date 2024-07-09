@@ -327,6 +327,9 @@
   font-size: 1.3rem;
   max-width: 48%;
 }
+.landing-layout .benefits div:nth-child(2) > p {
+  width: 50%;
+}
 
 .landing-layout .layout-benefits .benefits {
   width: 100%;
@@ -1215,6 +1218,9 @@
   .landing-layout .benefits > div > p:last-child {
     max-width: 26rem;
   }
+  .landing-layout .benefits div:nth-child(2) > p {
+    width: 60%;
+  }
   .landing-layout .invoicing-step-container {
     flex-direction: column-reverse;
   }
@@ -1259,7 +1265,7 @@
 }
 .contact .contact-layout {
   margin: 4rem auto 8rem;
-  max-width: 48rem;
+  max-width: 50rem;
   width: 90%;
   display: flex;
   flex-direction: column;

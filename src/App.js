@@ -127,6 +127,7 @@ import ForgotPassword from "./NEFDashboard/containers/forgotPassword";
 import SetPasswordForm from "./NEFDashboard/containers/setPassword";
 import NewLanding, {
   Contact,
+  Contact_Expert,
   NewB2B,
   NewB2C,
   NewResources,
@@ -343,10 +344,18 @@ function App() {
                       />
                       <Route path="/resources" element={<NewResources />} />
                       <Route
-                        path="/contact"
+                        path="/contact-support"
                         element={
                           <Layout>
                             <Contact />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path="/contact-expert"
+                        element={
+                          <Layout>
+                            <Contact_Expert />
                           </Layout>
                         }
                       />

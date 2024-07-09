@@ -6,6 +6,7 @@ import B2B from "../components/landing/B2B";
 import Navigation from "../components/navigation/navigation";
 import Resources from "../components/resources";
 import ContactUs from "../components/landing/ContactUs";
+import ContactUs_Expert from "../components/landing/ContactUs_Expert";
 
 const NewLanding = () => {
   const { t } = useTranslation();
@@ -70,6 +71,18 @@ export const Contact = () => {
         <title>Nefentus | {t("navigation.contact")}</title>
       </Helmet>
       <ContactUs />
+    </div>
+  );
+};
+
+export const Contact_Expert = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <Helmet>
+        <title>Nefentus | {t("navigation.contact")}</title>
+      </Helmet>
+      <ContactUs_Expert />
     </div>
   );
 };

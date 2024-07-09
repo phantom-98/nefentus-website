@@ -10,18 +10,15 @@ import BottomSvg from "../../assets/landing/contact-bottom.svg";
 import backendAPI from "../../api/backendAPI";
 import { MessageContext } from "../../context/message";
 
-const ContactUs = () => {
+const ContactUs_Expert = () => {
   const { t } = useTranslation();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [company, setCompany] = useState("");
-  const [country, setCountry] = useState("");
   const [description, setDescription] = useState("");
   const [spinner, setSpinner] = useState(false);
   const { setInfoMessage, setErrorMessage } = useContext(MessageContext);
-  const emailTo = "contacttosupport@nefentus.com";
-  const contactTo = "support";
+  const emailTo = "contacttoexpert@nefentus.com";
+  const contactTo = "expert";
 
   const contact = async () => {
     if (!fullName) {
@@ -42,18 +39,12 @@ const ContactUs = () => {
       emailTo,
       fullName,
       email,
-      phone,
-      company,
-      country,
       description,
     });
     if (res) {
       setInfoMessage("We got your email successfully!");
       setFullName("");
       setEmail("");
-      setPhone("");
-      setCompany("");
-      setCountry("");
       setDescription("");
     } else {
       setErrorMessage("Unknown error!");
@@ -65,7 +56,7 @@ const ContactUs = () => {
     <div className="landing-layout contact">
       <div className="contact-layout">
         <h1>
-          Get in touch <span style={{ textWrap: "nowrap" }}>with us</span>
+          Write to our <span style={{ textWrap: "nowrap" }}>support team</span>
         </h1>
         <p>
           We're here to help! Whether you have questions about our platform,
@@ -85,32 +76,9 @@ const ContactUs = () => {
             setState={setEmail}
             placeholder={`e.g. yourmail@mail.com`}
           />
-          <Input
-            label={t("contact.phone")}
-            value={phone}
-            setState={setPhone}
-            placeholder={`e.g. +38 066 111 59 21`}
-          />
-          <Input
-            label={t("contact.company")}
-            value={company}
-            setState={setCompany}
-            placeholder={`e.g. Google`}
-          />
-          <CountrySelect
-            label={t("contact.country")}
-            placeholder={`e.g. Germany`}
-            value={country}
-            setValue={setCountry}
-            options={getCountryList()}
-            style={{
-              background: "#171717",
-              fontSize: "1.2rem",
-            }}
-          />
           <Textarea
-            label={t("contact.comment")}
-            placeholder={`Tell us about your needs`}
+            label={t("contact.commentExpert")}
+            placeholder={`Description...`}
             value={description}
             setState={setDescription}
           />
@@ -170,4 +138,4 @@ const ContactUs = () => {
   );
 };
 
-export default ContactUs;
+export default ContactUs_Expert;
