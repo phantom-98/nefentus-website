@@ -275,7 +275,7 @@ const Products = ({ setOpenMenu }) => {
       }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
-      onTouchEnd={(e) => setOpen((prev) => !prev) && e.preventDefault()}
+      // onTouchEnd={(e) => setOpen((prev) => !prev) && e.preventDefault()}
     >
       <div className={styles.products}>
         <p>Products</p>
