@@ -299,11 +299,7 @@ const Invoicing = () => {
       clearInterval(timeRef.current);
     };
   }, []);
-  // useEffect(() => {
-  //   if(step.includes(true)) {
-  //     clearInterval(timeRef.current);
-  //   }
-  // },  [step]);
+
   return (
     <div id="invoicing" className="layout-paragraph">
       <Heading
@@ -643,6 +639,7 @@ const Safe = () => {
 const Analytics = () => {
   return (
     <div
+      id="sales"
       className="layout-paragraph analytics"
       style={{
         paddingBottom: "0",

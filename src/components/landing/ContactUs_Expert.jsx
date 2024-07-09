@@ -17,8 +17,7 @@ const ContactUs_Expert = () => {
   const [description, setDescription] = useState("");
   const [spinner, setSpinner] = useState(false);
   const { setInfoMessage, setErrorMessage } = useContext(MessageContext);
-  const emailTo = "contacttoexpert@nefentus.com";
-  const contactTo = "expert";
+  const emailTo = "dev@nefentus.com";
 
   const contact = async () => {
     if (!fullName) {
@@ -35,14 +34,13 @@ const ContactUs_Expert = () => {
     }
     setSpinner(true);
     const res = await new backendAPI().contact({
-      contactTo,
       emailTo,
       fullName,
       email,
       description,
     });
     if (res) {
-      setInfoMessage("We got your email successfully!");
+      setInfoMessage("Message sent successfully");
       setFullName("");
       setEmail("");
       setDescription("");

@@ -757,7 +757,7 @@ const communities = [
     title: "Linkedin",
     subtitle:
       "Connect with us on LinkedIn for professional insights, industry updates, and networking opportunities.",
-    link: "https://linkedin.com/nefentus",
+    link: "https://cy.linkedin.com/company/nefentuspay",
   },
   {
     icon: Youtube,

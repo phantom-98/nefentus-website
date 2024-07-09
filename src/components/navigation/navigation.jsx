@@ -310,18 +310,18 @@ const Products = ({ setOpenMenu }) => {
             <a href="/b2b#hero" onClick={() => setOpenMenu(false)}>
               <DropDownMenuItem
                 icon={{ normal: Shopping, hover: ShoppingBlue }}
-                title={`Product payment link`}
-                subtitle={`Generate a unique payment link for your products`}
+                title={`Cryptocurrency payments`}
+                subtitle={`Accept cryptocurrencies using unique payment links`}
               />
             </a>
             <a href="/b2b#invoicing" onClick={() => setOpenMenu(false)}>
               <DropDownMenuItem
                 icon={{ normal: Invoicing, hover: InvoicingBlue }}
                 title={`Invoicing`}
-                subtitle={`Create and send professional invoices in cryptocurrency`}
+                subtitle={`Create and send professional invoices that can be paid in cryptocurrency`}
               />
             </a>
-            <a href="/b2b#product" onClick={() => setOpenMenu(false)}>
+            <a href="/b2b#sales" onClick={() => setOpenMenu(false)}>
               <DropDownMenuItem
                 icon={{ normal: Sales, hover: SalesBlue }}
                 title={`Sales dashboard`}
@@ -360,10 +360,10 @@ const Products = ({ setOpenMenu }) => {
                 subtitle={`Instantly convert between different cryptocurrencies with ease`}
               />
             </a>
-            <a href="/b2c#conclusion">
+            <a href="/b2c#multi-wallets">
               <DropDownMenuItem
                 icon={{ normal: InternalWallet, hover: InternalWalletBlue }}
-                title={`Internal Nefentus wallet`}
+                title={`Nefentus wallet`}
                 subtitle={`Manage your digital assets securely within the Nefentus ecosystem`}
               />
             </a>
@@ -412,10 +412,10 @@ const Resources = () => {
             </p>
             <div className={styles.gridContent}>
               <a href="/resources">Guides and Tutorials</a>
-              <a href="/resources">Case Studies and Testimonials</a>
+              {/* <a href="/resources">Case Studies and Testimonials</a>
               <a href="/resources">API Documentation</a>
               <a href="/resources">Blog and News</a>
-              <a href="/resources">Security Information</a>
+              <a href="/resources">Security Information</a> */}
             </div>
           </div>
           <div
@@ -435,11 +435,11 @@ const Resources = () => {
               <a href="https://t.me/nefentus">
                 Telegram <img src={Send} style={{ width: "0.8rem" }} />
               </a>
-              <a href="#">
-                Youtube <img src={Send} style={{ width: "0.8rem" }} />
+              <a href="https://cy.linkedin.com/company/nefentuspay">
+                Linkedin <img src={Send} style={{ width: "0.8rem" }} />
               </a>
-              <a href="#">
-                Twitter <img src={Send} style={{ width: "0.8rem" }} />
+              <a href="https://youtube.com/nefentus">
+                Youtube <img src={Send} style={{ width: "0.8rem" }} />
               </a>
             </div>
           </div>
@@ -480,18 +480,18 @@ const ContactUs = () => {
               borderRight: "1px solid #323232",
             }}
           >
-            <a href="/contact-support" onClick={() => setOpenMenu(false)}>
-              <DropDownMenuItem
-                icon={{ normal: ContactSupport, hover: ContactSupportBlue }}
-                title={`Support team`}
-                subtitle={`Write if you have noticed a problem in the work of the platform, a bug`}
-              />
-            </a>
             <a href="/contact-expert" onClick={() => setOpenMenu(false)}>
               <DropDownMenuItem
+                icon={{ normal: ContactSupport, hover: ContactSupportBlue }}
+                title={`Technical support`}
+                subtitle={`Report technical issues with the platform`}
+              />
+            </a>
+            <a href="/contact-support" onClick={() => setOpenMenu(false)}>
+              <DropDownMenuItem
                 icon={{ normal: ContactExpert, hover: ContactExpertBlue }}
-                title={`Contact an expert`}
-                subtitle={`Get a consultation on how to integrate the platform into your business`}
+                title={`Business support`}
+                subtitle={`Let us discuss how to integrate Nefentus into your own business`}
               />
             </a>
           </div>
