@@ -1,7 +1,5 @@
 .setting-page {
-  padding: 32px 0;
-  max-width: 840px;
-  margin: auto;
+  padding: 32px;
 }
 
 .setting-tabs {
@@ -52,4 +50,36 @@
   width: 100%;
   font-size: 20px;
   font-weight: 500;
+}
+@media screen and (min-width: 1200px) {
+  .setting-dashboard-container {
+    display: none;
+  }
+}
+@media screen and (max-width: 1199px) {
+  .setting-dashboard-container {
+    display: block;
+  }
+}
+@media screen and (max-width: 767px) {
+  .setting-page {
+    padding: 20px;
+  }
+  .segment-title {
+    font-size: 24px;
+  }
+  .setting-page .setting-tabs {
+    display: none;
+  }
+  .setting-wrapper,
+  .segment-title-container-wrapper {
+    gap: 24px !important;
+  }
+  .segment-title-container {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .setting-page-title-wrapper {
+    display: none;
+  }
 }

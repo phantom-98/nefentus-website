@@ -198,12 +198,12 @@ const SecuritySection = ({ recommendRecover }) => {
             className="option-container"
             key={index}
           >
-            <div>
+            <Flex vertical gap={2}>
               <div className="default-text option-title">{option?.title}</div>
               <div className="default-text-gray option-subtitle">
                 {option?.subTitle}
               </div>
-            </div>
+            </Flex>
             {option?.actionItem}
           </Flex>
         ))}

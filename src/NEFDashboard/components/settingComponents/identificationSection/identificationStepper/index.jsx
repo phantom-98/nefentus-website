@@ -1,7 +1,7 @@
 import React from "react";
 import "./identificationStepper.css";
 
-const IdentificationStepper = ({ kycData }) => {
+const IdentificationStepper = ({ kycData, contentHeight }) => {
   console.log(kycData);
   const getCardStatus = (data) => {
     if (data?.isPending) return "pending";
@@ -13,7 +13,10 @@ const IdentificationStepper = ({ kycData }) => {
     <div className="identification-stepper">
       {Object.keys(kycData)?.length > 0 &&
         Object.keys(kycData)?.map((kyc, index) => (
-          <div className={`stepper-content ${getCardStatus(kycData[kyc])}`}>
+          <div
+            className={`stepper-content ${getCardStatus(kycData[kyc])}`}
+            style={{ height: contentHeight[index] }}
+          >
             <div className="stepper-icon">
               {kycData[kyc]?.isPending ? (
                 <svg

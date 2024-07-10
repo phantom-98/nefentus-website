@@ -47,3 +47,15 @@
     0px 8px 8px 0px rgba(0, 0, 0, 0.04),
     0px 2px 5px 0px rgba(0, 0, 0, 0.05);
 }
+@media (max-width: 767px) {
+  .identification-common-modal {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding-bottom: 0 !important;
+    top: 0 !important;
+  }
+  .identification-common-modal > div {
+    border: none !important;
+    border-radius: 0 !important;
+  }
+}

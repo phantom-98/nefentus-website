@@ -35,10 +35,9 @@ const SettingPage = () => {
   };
   return (
     <div className="setting-page">
-      <Flex vertical gap={48}>
-        <Flex vertical gap={16}>
+      <Flex vertical gap={48} className="setting-wrapper">
+        <Flex vertical gap={16} className="setting-page-title-wrapper">
           <div className="default-text setting-page-title">Settings</div>
-
           <Segmented
             size="large"
             options={tabs}
@@ -49,7 +48,7 @@ const SettingPage = () => {
             }}
           />
         </Flex>
-        <Flex vertical gap={32}>
+        <Flex vertical gap={32} className="segment-title-container-wrapper">
           <div className="segment-title-container">
             <div className="default-text segment-title">{activeTab}</div>
             {activeTab === "Invoice" && (
