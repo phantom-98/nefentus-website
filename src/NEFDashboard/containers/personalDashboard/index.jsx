@@ -48,6 +48,7 @@ const PersonalDashboard = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [backupCryptoList, setBackupCryptoList] = useState([]);
   const [cryptoList, setCryptoList] = useState([]);
+  const [tablecryptoList, setTableCryptoList] = useState([]);
   const { balances, fetchBalances, fetchBalanceForWallet } = useBalances();
   const { prices, fetchPrices } = usePrices();
   const [walletOptions, setWalletOptions] = useState([]);
@@ -234,8 +235,8 @@ const PersonalDashboard = () => {
           .map((balance, index) => balance * prices[index])
           .reduce((pre, cur) => parseFloat(cur) + parseFloat(pre), 0);
         setTotal(totalBalance || 0);
-        console.log("TEST", totalBalance);
 
+        // Calculate percentages of each coin
         const pers = balanceSum?.map((balance, index) =>
           parseFloat(
             ((balance * prices[index]) / (totalBalance * 1.0)) * 100,
@@ -244,7 +245,6 @@ const PersonalDashboard = () => {
         const data = currencyList.map((currency, index) => ({
           ...currency,
           middleName: blockchainToName(currency.blockchain),
-          middleInfo: "Network",
           price: prices[index],
           value: balanceSum[index],
           amount_dollar: parseFloat(
@@ -255,49 +255,64 @@ const PersonalDashboard = () => {
           icon:
             initialiseCoinIcons(currency.name?.toLowerCase()) ?? currency?.icon,
         }));
-        let updatedArray = data;
-        if (totalBalance > 0)
-          updatedArray = data
-            .filter((item) => item.amount_dollar > 0)
-            .sort((a, b) => b.amount_dollar - a.amount_dollar);
-        let otherCoins;
-        if (updatedArray?.length > 5) {
-          const lastCoins = updatedArray?.slice(5, currencyList?.length);
-          otherCoins = lastCoins.reduce((acc, obj) => {
-            // Initialize the accumulator with the structure if it's empty
-            if (!acc.name) acc.name = "Other";
-            if (!acc.blockchain) acc.blockchain = "";
-            if (!acc.icon) acc.icon = "";
-            if (!acc.abbr) acc.abbr = "Other";
-            if (!acc.address) acc.address = null;
-            if (!acc.decimals) acc.decimals = 0;
-            if (!acc.middleName) acc.middleName = "";
-            if (!acc.middleInfo) acc.middleInfo = "";
-            if (!acc.price) acc.price = 0;
-            if (!acc.value) acc.value = 0;
-            if (!acc.amount_dollar) acc.amount_dollar = 0;
-            if (!acc.percentage) acc.percentage = "0.00";
-            if (!acc.color) acc.color = "#A43C3C";
+        setTableCryptoList([...data]);
+        setBackupCryptoList([...data]);
+        const nonZeroValueCoins = data?.filter(
+          (coin) => coin?.amount_dollar > 0,
+        );
+        nonZeroValueCoins.sort((a, b) => b.amount_dollar - a.amount_dollar);
 
-            // Sum the numerical values
-            acc.value += obj.value;
-            acc.amount_dollar += obj.amount_dollar;
+        if (totalBalance == 0) {
+          setCryptoList(data.slice(0, 6));
+        } else if (nonZeroValueCoins?.length < 6) {
+          const finalisedData = [
+            ...nonZeroValueCoins,
+            ...data
+              ?.filter((coin) => coin?.amount_dollar == 0)
+              ?.slice(0, 6 - nonZeroValueCoins?.length),
+          ];
+          setCryptoList(finalisedData);
+        } else {
+          let otherCoins, updatedData;
+          if (data?.length > 5) {
+            updatedData = data?.sort(
+              (a, b) => b?.amount_dollar - a?.amount_dollar,
+            );
+            const lastCoins = updatedData?.slice(5, currencyList?.length);
+            otherCoins = lastCoins.reduce((acc, obj) => {
+              // Initialize the accumulator with the structure if it's empty
+              if (!acc.name) acc.name = "Other";
+              if (!acc.blockchain) acc.blockchain = "";
+              if (!acc.icon) acc.icon = "";
+              if (!acc.abbr) acc.abbr = "Others";
+              if (!acc.address) acc.address = null;
+              if (!acc.decimals) acc.decimals = 0;
+              if (!acc.middleName) acc.middleName = "";
+              if (!acc.middleInfo) acc.middleInfo = "";
+              if (!acc.price) acc.price = 0;
+              if (!acc.value) acc.value = 0;
+              if (!acc.amount_dollar) acc.amount_dollar = 0;
+              if (!acc.percentage) acc.percentage = "0.00";
+              if (!acc.color) acc.color = "#A43C3C";
 
-            // For percentage, we should calculate the weighted average if needed, but here we can sum for simplicity
-            acc.percentage = (
-              parseFloat(acc.percentage) + parseFloat(obj.percentage)
-            ).toFixed(2);
+              // Sum the numerical values
+              acc.value += obj.value;
+              acc.amount_dollar += obj.amount_dollar;
 
-            return acc;
-          }, {});
+              // For percentage, we should calculate the weighted average if needed, but here we can sum for simplicity
+              acc.percentage = (
+                parseFloat(acc.percentage) + parseFloat(obj.percentage)
+              ).toFixed(2);
+
+              return acc;
+            }, {});
+          }
+          const finalisedData =
+            updatedData?.length > 5
+              ? [...updatedData?.slice(0, 5), { ...otherCoins }]
+              : updatedData;
+          setCryptoList(finalisedData);
         }
-
-        const finalisedData =
-          updatedArray?.length > 5
-            ? [...updatedArray?.slice(0, 5), { ...otherCoins }]
-            : updatedArray;
-        setCryptoList(finalisedData);
-        setBackupCryptoList(finalisedData);
 
         setLoader(false);
       })
@@ -321,7 +336,7 @@ const PersonalDashboard = () => {
     const updatedList = backupCryptoList?.filter((crypto) =>
       crypto?.name?.toLowerCase()?.includes(value?.toLowerCase()),
     );
-    setCryptoList(updatedList);
+    setTableCryptoList(updatedList);
   };
 
   const handleCloseDrawer = () => {
@@ -496,7 +511,7 @@ const PersonalDashboard = () => {
                 />
               </Row>
               <TableData
-                data={cryptoList}
+                data={tablecryptoList}
                 togglebtn={loader}
                 columns={columns}
               />
