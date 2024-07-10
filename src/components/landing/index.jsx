@@ -760,11 +760,11 @@ const communities = [
     link: "https://cy.linkedin.com/company/nefentuspay",
   },
   {
-    icon: Youtube,
-    title: "Youtube",
+    icon: Twitter,
+    title: "Twitter",
     subtitle:
-      "Subscribe to our YouTube channel for tutorials, webinars, and informative videos on integrating cryptocurrency payments into your business.",
-    link: "https://youtube.com/nefentus",
+      "Follow us on Twitter for the latest news, updates, and insights on cryptocurrency payments. Stay informed about new features, industry trends.",
+    link: "https://x.com/nefentusapp",
   },
 ];
 

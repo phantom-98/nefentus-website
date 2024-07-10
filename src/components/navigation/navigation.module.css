@@ -536,9 +536,13 @@
   .dropdown > div {
     border: none !important;
   }
+  .gridContent {
+    gap: 0 4rem;
+  }
   .dropdown > div:first-child .gridContent {
     grid-template-columns: 1fr;
   }
+
   .dropdownMenuItem {
     align-items: center;
   }

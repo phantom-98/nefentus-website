@@ -438,8 +438,8 @@ const Resources = () => {
               <a href="https://cy.linkedin.com/company/nefentuspay">
                 Linkedin <img src={Send} style={{ width: "0.8rem" }} />
               </a>
-              <a href="https://youtube.com/nefentus">
-                Youtube <img src={Send} style={{ width: "0.8rem" }} />
+              <a href="https://x.com/nefentusapp">
+                Twitter <img src={Send} style={{ width: "0.8rem" }} />
               </a>
             </div>
           </div>

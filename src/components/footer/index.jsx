@@ -4,13 +4,20 @@ import InNormal from "../../assets/resources/in.svg";
 import InHover from "../../assets/resources/in_hover.svg";
 import TelegramNormal from "../../assets/resources/telegram.svg";
 import TelegramHover from "../../assets/resources/telegram_hover.svg";
+import XNormal from "../../assets/resources/x.svg";
+import XHover from "../../assets/resources/x_hover.svg";
 import { useState } from "react";
 
 const socials = {
+  x: {
+    iconNormal: XNormal,
+    iconHover: XHover,
+    link: "https://x.com/nefentusapp",
+  },
   in: {
     iconNormal: InNormal,
     iconHover: InHover,
-    link: "",
+    link: "https://cy.linkedin.com/company/nefentuspay",
   },
   telegram: {
     iconNormal: TelegramNormal,
@@ -24,11 +31,11 @@ const sitemap = [
     body: [
       {
         subtitle: "Personal use",
-        link: "/personal-dashboard",
+        link: "/b2c",
       },
       {
         subtitle: "Business use",
-        link: "/sales-dashboard",
+        link: "/b2b",
       },
     ],
   },
@@ -49,19 +56,19 @@ const sitemap = [
     title: "Support",
     body: [
       {
-        subtitle: "FAQ",
-        link: "/resources",
+        subtitle: "Technical support",
+        link: "/contact-expert",
       },
       {
-        subtitle: "Ask a question",
-        link: "#",
+        subtitle: "Business support",
+        link: "/contact-support",
       },
     ],
   },
 ];
 const sitemap_bottom = [
   {
-    title: "Terms",
+    title: "Imprint",
     link: "/imprint",
   },
   {
@@ -72,12 +79,20 @@ const sitemap_bottom = [
 const Footer = () => {
   const [icon_in, setIcon_in] = useState(socials.in.iconNormal);
   const [icon_tele, setIcon_tele] = useState(socials.telegram.iconNormal);
+  const [icon_x, setIcon_x] = useState(socials.x.iconNormal);
   return (
     <div className="footer-layout">
       <div className="footer-top container">
         <div style={{ width: "12rem" }}>
           <NefentusLogo />
           <div className="socials">
+            <a
+              href={socials.x.link}
+              onMouseEnter={() => setIcon_x(socials.x.iconHover)}
+              onMouseLeave={() => setIcon_x(socials.x.iconNormal)}
+            >
+              <img src={icon_x} />
+            </a>
             <a
               href={socials.in.link}
               onMouseEnter={() => setIcon_in(socials.in.iconHover)}
