@@ -480,14 +480,14 @@ const ContactUs = () => {
               borderRight: "1px solid #323232",
             }}
           >
-            <a href="/contact-expert" onClick={() => setOpenMenu(false)}>
+            <a href="/technical-support" onClick={() => setOpenMenu(false)}>
               <DropDownMenuItem
                 icon={{ normal: ContactSupport, hover: ContactSupportBlue }}
                 title={`Technical support`}
                 subtitle={`Report technical issues with the platform`}
               />
             </a>
-            <a href="/contact-support" onClick={() => setOpenMenu(false)}>
+            <a href="/business-support" onClick={() => setOpenMenu(false)}>
               <DropDownMenuItem
                 icon={{ normal: ContactExpert, hover: ContactExpertBlue }}
                 title={`Business support`}

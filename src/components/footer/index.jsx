@@ -57,11 +57,11 @@ const sitemap = [
     body: [
       {
         subtitle: "Technical support",
-        link: "/contact-expert",
+        link: "/technical-support",
       },
       {
         subtitle: "Business support",
-        link: "/contact-support",
+        link: "/business-support",
       },
     ],
   },

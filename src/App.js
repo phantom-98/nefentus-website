@@ -344,7 +344,7 @@ function App() {
                       />
                       <Route path="/resources" element={<NewResources />} />
                       <Route
-                        path="/contact-support"
+                        path="/business-support"
                         element={
                           <Layout>
                             <Contact />
@@ -352,7 +352,7 @@ function App() {
                         }
                       />
                       <Route
-                        path="/contact-expert"
+                        path="/technical-support"
                         element={
                           <Layout>
                             <Contact_Expert />
