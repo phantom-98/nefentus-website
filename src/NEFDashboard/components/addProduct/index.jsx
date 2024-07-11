@@ -240,7 +240,7 @@ const AddProduct = ({
                 marginBottom: "0.5rem",
               }}
             >
-              {t("products.createProductModal.stockLabel")}
+              {t("products.createProductModal.stockLabel").concat("*")}
             </p>
             <div
               style={{
@@ -286,7 +286,7 @@ const AddProduct = ({
           />
         </div>
         <RadioSelect
-          label={t("products.createProductModal.vat")}
+          label={t("products.createProductModal.vat").concat("*")}
           value={product?.vatPercent}
           setValue={(value) => setProduct({ ...product, vatPercent: value })}
           options={
@@ -306,14 +306,14 @@ const AddProduct = ({
         />
         <Input
           dashboard
-          label={t("products.createProductModal.nameLabel") + "*"}
+          label={t("products.createProductModal.nameLabel").concat("*")}
           placeholder={t("products.createProductModal.namePlaceholder")}
           value={product?.name}
           setState={(value) => setProduct({ ...product, name: value })}
         />
         <Textarea
           dashboard
-          label={t("products.createProductModal.descriptionLabel") + "*"}
+          label={t("products.createProductModal.descriptionLabel").concat("*")}
           placeholder={t("products.createProductModal.descriptionPlaceholder")}
           value={product?.description}
           setState={(value) => setProduct({ ...product, description: value })}

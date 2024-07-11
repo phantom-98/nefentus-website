@@ -39,7 +39,6 @@ const CurrencyChart = ({
   total,
   onEmptyChartClick,
 }) => {
-  console.log(data);
   const [percentages, setPercentages] = useState([0, 0, 0, 0, 0]);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
   const { currencyRate } = useAuth();
@@ -120,7 +119,6 @@ const CurrencyChart = ({
               dataKey="amount_dollar"
             >
               {data.map((entry, index) => {
-                console.log(entry, index % COLORS.length);
                 return (
                   <Cell
                     key={`cell-${index}`}

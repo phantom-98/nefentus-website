@@ -152,14 +152,12 @@ const DashboardDrawer = ({ open, onClose, selectedWallet, onDeleteWallet }) => {
         price: prices[index],
         value: balances[index],
         amount_dollar: parseFloat((prices[index] * balances[index]).toFixed(4)),
-        percentage: pers[index] === "NaN" ? 0 : pers[index],
+        percentage: pers[index] === "NaN" ? "0.00" : pers[index],
         color: COLORS[index],
         icon:
           initialiseCoinIcons(currency.name?.toLowerCase()) ?? currency?.icon,
       }));
-      let updatedArray = data
-        .filter((item) => item.amount_dollar > 0)
-        .sort((a, b) => b.amount_dollar - a.amount_dollar);
+      let updatedArray = data.sort((a, b) => b.amount_dollar - a.amount_dollar);
       let otherCoins;
       if (updatedArray?.length > 5) {
         const lastCoins = updatedArray?.slice(5, currencyList?.length);
@@ -176,7 +174,7 @@ const DashboardDrawer = ({ open, onClose, selectedWallet, onDeleteWallet }) => {
           if (!acc.price) acc.price = 0;
           if (!acc.value) acc.value = 0;
           if (!acc.amount_dollar) acc.amount_dollar = 0;
-          if (!acc.percentage) acc.percentage = "0.00";
+          if (!acc.percentage) acc.percentage = 0;
           if (!acc.color) acc.color = "#A43C3C";
 
           // Sum the numerical values
