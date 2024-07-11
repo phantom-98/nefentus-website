@@ -109,7 +109,7 @@ const userColumns = (
               label: (
                 <div
                   className="default-text user-table-menu-width"
-                  onClick={updateStatus}
+                  onClick={() => updateStatus(record)}
                 >
                   {t(
                     `referralDashboard.userTableMenu.${
@@ -137,7 +137,7 @@ const userColumns = (
               label: (
                 <div
                   className="default-text user-table-menu-width"
-                  onClick={deleteUser}
+                  onClick={() => deleteUser(record)}
                 >
                   {t("referralDashboard.userTableMenu.delete")}
                 </div>

@@ -124,16 +124,17 @@ const ReferralDashboard = () => {
     );
   };
 
-  const updateStatus = async () => {
+  const updateStatus = async (user) => {
+    setSelectedUser({ ...user });
     let resp;
-    if (selectedUser?.activated)
-      resp = await adminApi.deactivateUser(selectedUser?.email);
-    else resp = await adminApi.patchStatus(selectedUser?.email);
+    if (user?.activated) resp = await adminApi.deactivateUser(user?.email);
+    else resp = await adminApi.patchStatus(user?.email);
     if (resp) fetchUsers();
   };
 
-  const deleteUser = async () => {
-    const resp = await adminApi.deleteUser(selectedUser?.email);
+  const deleteUser = async (user) => {
+    setSelectedUser({ ...user });
+    const resp = await adminApi.deleteUser(user?.email);
     if (resp) {
       fetchUsers();
     }
