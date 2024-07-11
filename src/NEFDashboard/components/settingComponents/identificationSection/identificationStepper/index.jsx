@@ -2,7 +2,6 @@ import React from "react";
 import "./identificationStepper.css";
 
 const IdentificationStepper = ({ kycData, contentHeight }) => {
-  console.log(kycData);
   const getCardStatus = (data) => {
     if (data?.isPending) return "pending";
     else if (data?.isRejected) return "rejected";

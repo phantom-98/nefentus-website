@@ -41,7 +41,6 @@ const IdentificationSection = () => {
   const [level, setLevel] = useState(null);
   const [kycData, setKycData] = useState([]);
   const [contentHeight, setContentHeight] = useState([]);
-  console.log(contentHeight);
   useEffect(() => {
     fetchLevel();
   }, []);
