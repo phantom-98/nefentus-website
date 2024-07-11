@@ -1,3 +1,8 @@
+# v2.1.0
+
+- Products UI changes completed (MINOR)
+- Implemented portfolio coin cases (PATCH)
+
 # v2.0.0
 
 - Fix texts & translations in the dashboard (PATCH)
@@ -15,8 +20,6 @@
 - Login and Sign up screens implemented (MAJOR)
 - Alert message in checkout when both Metamask and coinbase are installed (MINOR)
 - Fixes issue related to Login/SignUp and implemented forgot password functionality (PATCH)
-- Products UI changes completed (MINOR)
-- Implemented portfolio coin cases (PATCH)
 
 # 1.3.0
 
