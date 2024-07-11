@@ -139,7 +139,10 @@ const ReferralDashboard = () => {
     }
   };
 
-  const updateUser = () => setUpdate(true);
+  const updateUser = (user) => {
+    setSelectedUser({ ...user });
+    setUpdate(true);
+  };
 
   const columns = userColumns(
     t,

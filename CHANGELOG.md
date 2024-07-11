@@ -17,6 +17,7 @@
 - Fixes issue related to Login/SignUp and implemented forgot password functionality (PATCH)
 - Products UI changes completed (MINOR)
 - Implemented portfolio coin cases (PATCH)
+- fix the right users edit issue in users table (PATCH)
 
 # 1.3.0
 
