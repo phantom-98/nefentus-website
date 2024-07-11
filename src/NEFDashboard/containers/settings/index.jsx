@@ -13,6 +13,9 @@ const SettingPage = () => {
   const { user } = useAuth();
   const { state } = useLocation();
   const { recommendRecover } = state || false;
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const tabName = queryParams.get("tab_name");
   const tabs =
     getRole(user) == "private" || (user?.roles && user?.roles[0] == "private")
       ? ["General", "Security"]
@@ -33,6 +36,11 @@ const SettingPage = () => {
         return <InvoiceSection segment={activeTab} />;
     }
   };
+  useEffect(() => {
+    if (tabName) {
+      setActiveTab(tabName || "General");
+    }
+  }, [tabName]);
   return (
     <div className="setting-page">
       <Flex vertical gap={48} className="setting-wrapper">

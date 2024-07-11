@@ -1578,7 +1578,13 @@
   "create": "Створити",
   "update": "Оновити",
   "settingPage": {
-    "title": "Налаштування"
+    "title": "Налаштування",
+    "back": "Назад",
+    "subTitle": "Загальні налаштування",
+    "general": "Загальні",
+    "security": "Безпека",
+    "identification": "Ідентифікація",
+    "invoice": "Рахунок"
   },
   "languages": {
     "english": "Англійська",

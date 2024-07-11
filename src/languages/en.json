@@ -1629,6 +1629,12 @@
   "create": "Create",
   "update": "Update",
   "settingPage": {
-    "title": "Settings"
+    "title": "Settings",
+    "back": "Back",
+    "subTitle": "General settings",
+    "general": "General",
+    "security": "Security",
+    "identification": "Identification",
+    "invoice": "Invoice"
   }
 }

@@ -1530,6 +1530,12 @@
   "create": "Erstellen",
   "update": "Aktualisieren",
   "settingPage": {
-    "title": "Einstellungen"
+    "title": "Einstellungen",
+    "back": "Zurück",
+    "subTitle": "Allgemeine Einstellungen",
+    "general": "Allgemein",
+    "security": "Sicherheit",
+    "identification": "Identifikation",
+    "invoice": "Rechnung"
   }
 }

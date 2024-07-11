@@ -48,6 +48,9 @@
     0px 2px 5px 0px rgba(0, 0, 0, 0.05);
 }
 @media (max-width: 767px) {
+  .ant-modal-root:has(.identification-common-modal) .ant-modal-mask {
+    background: #171717;
+  }
   .identification-common-modal {
     max-width: 100% !important;
     margin: 0 !important;
