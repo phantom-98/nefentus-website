@@ -62,9 +62,9 @@
   overflow: hidden;
 }
 
-.profile-options-container {
+/* .profile-options-container {
   max-width: 625px;
-}
+} */
 
 .business-option-container {
   padding: 2px 5px;
@@ -122,6 +122,8 @@
 
 .personal-profile-detail {
   margin-bottom: 48px;
+}
+@media (min-width: 1400px) {
 }
 @media (max-width: 767px) {
   .personal-profile-detail-content,

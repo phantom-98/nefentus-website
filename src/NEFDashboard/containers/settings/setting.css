@@ -4,6 +4,7 @@
 
 .setting-tabs {
   width: fit-content;
+  margin: 0 auto;
   padding: 6px;
   border-radius: 6px;
   border: 1px solid var(--Dark, #202020);
@@ -50,6 +51,12 @@
   width: 100%;
   font-size: 20px;
   font-weight: 500;
+}
+@media (min-width: 1400px) {
+  .setting-page {
+    max-width: 1400px;
+    margin: auto;
+  }
 }
 @media screen and (min-width: 1200px) {
   .setting-dashboard-container {
