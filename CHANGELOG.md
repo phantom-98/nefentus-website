@@ -14,6 +14,7 @@
 - Update send modal functinality for both internal and external wallet (MAJOR)
 - Login and Sign up screens implemented (MAJOR)
 - Fix landings && add contact page && update navbar (MINOR)
+- Fix Footer link Remove && Pay button in invoice preview && sidebar behavior (MiNOR)
 
 # 1.3.0
 
