@@ -28,21 +28,10 @@ import SwapIcon from "../../assets/landing/swap-ico.svg";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 gsap.registerPlugin(ScrollTrigger);
 
 const B2B = () => {
-  const [step, setStep] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const [isPositionedAtStart, setIsPositionedAtStart] = useState(false);
-
   const b2bContainer = useRef();
-
-  const handleScroll = (e) => {
-    if (document.documentElement.scrollTop === 0) {
-      setIsPositionedAtStart(true);
-    }
-  };
 
   useEffect(() => {
     const href = window.location.href.substring(
@@ -51,54 +40,10 @@ const B2B = () => {
     setTimeout(() => {
       const element = document.getElementById(href);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        element.scrollIntoView();
       }
     }, 500);
   }, []);
-
-  useEffect(() => {
-    // Ensure the component has mounted in a browser environment
-    window.addEventListener("scroll", handleScroll);
-
-    // Scroll to the top when component mounts
-    setIsPositionedAtStart(document.documentElement.scrollTop === 0);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isPositionedAtStart) {
-      // Initialize GSAP
-      const numImages = products.length;
-
-      const tl = gsap.from(".b2b .product", {
-        scrollTrigger: {
-          trigger: ".layout-paragraph.product .layout-title .sub-title",
-          start: "top top",
-          end: () => `+=${numImages * 80}%`,
-          scrub: true,
-          pin: ".landing-layout.container.b2b",
-          onUpdate: (self) => {
-            setStep(Math.floor(self.progress * numImages));
-            setProgress(Math.floor(self.progress * numImages * 100));
-          },
-          onLeave: () => {
-            setStep(numImages - 1);
-          },
-          onLeaveBack: () => {
-            setStep(0);
-          },
-        },
-        duration: 1,
-        ease: "none",
-      });
-
-      return () => {
-        tl.kill(); // Ensure GSAP instance is killed
-      };
-    }
-  }, [isPositionedAtStart]);
 
   return (
     <div>
@@ -113,7 +58,7 @@ const B2B = () => {
 
         <Invoicing />
 
-        <Product stepId={step} progress={progress} />
+        <Product />
 
         <Safe />
 
@@ -404,8 +349,31 @@ const products = [
     img: Product3Png,
   },
 ];
-const Product = ({ stepId, progress }) => {
+const Product = () => {
+  const [stepId, setStepId] = useState(0);
+  const [progress, setProgress] = useState(0);
   const [step, setStep] = useState(products.map((item, id) => !id));
+  const timeRef = useRef();
+  const updateProgress = () => {
+    if (progress <= 300) {
+      const newProgress = progress + 0.3;
+      setProgress(newProgress);
+      setStepId(Math.trunc(progress / 100));
+    } else {
+      setProgress(0);
+      setStepId(0);
+    }
+  };
+  const start = () => {
+    clearInterval(timeRef.current);
+    timeRef.current = setInterval(updateProgress, 10);
+  };
+  useEffect(() => {
+    start();
+    return () => {
+      clearInterval(timeRef.current);
+    };
+  }, [progress]);
 
   useEffect(() => {
     setStep((prev) => {
@@ -432,14 +400,16 @@ const Product = ({ stepId, progress }) => {
             <div
               className={`product-step`}
               onClick={() => {
-                !step[id] &&
-                  id !== undefined &&
+                if (!step[id] && id !== undefined) {
                   setStep(
                     step.map((s, i) => {
                       if (i == id) return !s;
                       return false;
                     }),
                   );
+                  setStepId(id);
+                  setProgress(id * 100);
+                }
               }}
               style={{
                 width: `calc(${100 / products.length}%)`,
