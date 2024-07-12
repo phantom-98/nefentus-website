@@ -17,6 +17,9 @@
 - Fixes issue related to Login/SignUp and implemented forgot password functionality (PATCH)
 - Products UI changes completed (MINOR)
 - Implemented portfolio coin cases (PATCH)
+- Transaction Detail api integrated (MAJOR)
+- Inovice is sorting correctly (MINOR)
+
 
 # 1.3.0
 

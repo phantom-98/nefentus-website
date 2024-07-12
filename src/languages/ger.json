@@ -1085,7 +1085,7 @@
     "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
     "total": "Rechnungsbetrag",
-    "informVAT1": "Die MwSt. von",
+    "informVAT1": "Die UmSt. von",
     "informVAT2": "ist in diesem Betrag enthalten",
     "cryptoAmount": "In Krypto",
     "cryptoDescription": "Dieser Betrag entspricht dem Rechnungsbetrag in der ausgewählten Kryptowährung. Nach der Bezahlung wird der Betrag dem Verkäufer gutgeschrieben.",
@@ -1441,7 +1441,7 @@
     "productTable": {
       "productName": "Produktname",
       "client": "Kunde",
-      "invoiceId": "Rechnungs-ID",
+      "invoiceId": "Rechnungsnummer",
       "amount": "Betrag",
       "date": "Datum",
       "action": "Aktion"
@@ -1463,7 +1463,7 @@
     "taxText2": " ist in diesem Betrag enthalten",
     "crypto": "In Krypto",
     "invoiceItems": "Rechnungspositionen",
-    "gasPrice": "Gaspreis",
+    "transactionFees": "Transaktionsgebühren",
     "total": "Gesamtbetrag",
     "invoiceInfo": "Rechnungsinformationen",
     "invoiceFrom": "Rechnung von",
@@ -1478,7 +1478,14 @@
     "drawerDescription": "Vielen Dank für Ihr Geschäft! Wir schätzen Ihre prompten Zahlungen. Wenn Sie Fragen oder Bedenken zu dieser Rechnung haben, zögern Sie bitte nicht, uns zu kontaktieren. Wir freuen uns darauf, Ihnen auch in Zukunft zu dienen.",
     "savePdf": "Als PDF speichern",
     "saveReceipt": "Quittung speichern",
-    "saveInvoice": "Rechnung speichern"
+    "saveInvoice": "Rechnung speichern",
+    "currency": "Währung",
+    "items": {
+      "description": "Beschreibung",
+      "price": "Preis",
+      "qty": "Menge",
+      "total": "Gesamtpreis"
+    }
   },
   "invoicePreview": {
     "title": "Rechnungsvorschau",

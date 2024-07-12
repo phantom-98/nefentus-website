@@ -1524,14 +1524,14 @@
     "productTable": {
       "productName": "Product Name",
       "client": "Client",
-      "invoiceId": "Invoice ID",
+      "invoiceId": "Invoice Number",
       "amount": "Amount",
       "date": "Date",
       "action": "Action"
     },
     "invoiceTable": {
       "billedTo": "Billed To",
-      "invoiceId": "Invoice ID",
+      "invoiceId": "Invoice Number",
       "amount": "Amount",
       "status": "Status",
       "date": "Date",
@@ -1546,7 +1546,7 @@
     "taxText2": " is included in this amount",
     "crypto": "In Crypto",
     "invoiceItems": " Invoice Items",
-    "gasPrice": "Gas Price",
+    "transactionFees": "Transaction Fees",
     "total": "Total Due",
     "invoiceInfo": "Invoice Info",
     "invoiceFrom": "Invoice From",
@@ -1561,7 +1561,14 @@
     "drawerDescription": "Thank you for your business! We appreciate your prompt payment. If you have any questions or concerns regarding this invoice, please don't hesitate to contact us. We look forward to serving you again in the future.",
     "savePdf": "Save as PDF",
     "saveReceipt": "Save Receipt",
-    "saveInvoice": "Save Invoice"
+    "saveInvoice": "Save Invoice",
+    "currency": "Currency",
+    "items": {
+      "description": "Description",
+      "price": "Price",
+      "qty": "Qty",
+      "total": "Total Price"
+    }
   },
   "invoicePreview": {
     "title": "Invoice Preview",
