@@ -63,12 +63,13 @@ const ContactUs = () => {
     <div className="landing-layout contact">
       <div className="contact-layout">
         <h1>
-          Get in touch <span style={{ textWrap: "nowrap" }}>with us</span>
+          Contact Us for{" "}
+          <span style={{ textWrap: "nowrap" }}>Business-Related Queries</span>
         </h1>
         <p>
-          We're here to help! Whether you have questions about our platform,
-          need assistance with integration, or want to provide feedback, our
-          team is ready to assist you.
+          If you're looking to discuss business opportunities, need help with
+          specific issues, or wish to share your feedback about our platform,
+          our business support team is eager to assist you.
         </p>
         <div className="contact-form">
           <Input

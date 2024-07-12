@@ -54,12 +54,13 @@ const ContactUs_Expert = () => {
     <div className="landing-layout contact">
       <div className="contact-layout">
         <h1>
-          Write to our <span style={{ textWrap: "nowrap" }}>support team</span>
+          Reach Out to Our{" "}
+          <span style={{ textWrap: "nowrap" }}>Technical Support</span>
         </h1>
         <p>
-          We're here to help! Whether you have questions about our platform,
-          need assistance with integration, or want to provide feedback, our
-          team is ready to assist you.
+          For inquiries related to technical issues, bug reports, or usage
+          support for our platform, our dedicated technical support team is
+          ready to provide you with the assistance you need.
         </p>
         <div className="contact-form">
           <Input
