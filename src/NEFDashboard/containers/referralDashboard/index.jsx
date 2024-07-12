@@ -156,6 +156,7 @@ const ReferralDashboard = () => {
 
   const fetchData = () => {
     fetchUsers("", 1);
+    setPage(1);
   };
 
   return (
