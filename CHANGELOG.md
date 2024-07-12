@@ -1,5 +1,6 @@
 # New changes
 
+- Updated HTML template (PATCH)
 - Fix texts & translations in the dashboard (PATCH)
 - Fix some minor issues in landing (PATCH)
 - Fix converter in case of internal wallet (MINOR)
