@@ -439,7 +439,8 @@
       "Leader": "Leader",
       "SeniorBroker": "Senior Broker",
       "Broker": "Broker",
-      "Affiliate": "Affiliate"
+      "Affiliate": "Affiliate",
+      "Private": "Privat"
     },
     "charts": {
       "last24h": "Letzte 24 Stunden",

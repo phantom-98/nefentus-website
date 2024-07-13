@@ -20,7 +20,8 @@
 - Implemented portfolio coin cases (PATCH)
 - Transaction Detail api integrated (MAJOR)
 - Inovice is sorting correctly (MINOR)
-
+- Add Wallet Card implemented in Personal Dashboard (MINOR)
+- Login Page right side image changed (MINOR)
 
 # 1.3.0
 

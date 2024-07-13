@@ -511,7 +511,8 @@
       "Leader": "Leader",
       "SeniorBroker": "Senior Broker",
       "Broker": "Broker",
-      "Affiliate": "Affiliate"
+      "Affiliate": "Affiliate",
+      "Private": "Private"
     },
     "tableHeaders": {
       "firstName": "First Name",

@@ -8,7 +8,7 @@ import backend_API from "../../../api/backendAPI";
 import { MessageContext } from "../../../context/message";
 import { useAuth } from "../../../context/auth/authContext";
 import { useTranslation } from "react-i18next";
-import AuthLayoutImg from "../../../assets/newDashboardIcons/personal-account.png";
+import AuthLayoutImg from "../../../assets/newDashboardIcons/login.png";
 import Cookies from "js-cookie";
 
 const LoginForm = () => {

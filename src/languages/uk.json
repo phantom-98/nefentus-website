@@ -498,7 +498,8 @@
       "Leader": "Лідер",
       "SeniorBroker": "Старший брокер",
       "Broker": "Брокер",
-      "Affiliate": "Партнер"
+      "Affiliate": "Партнер",
+      "Private": "Приватний"
     },
     "charts": {
       "last24h": "Останні 24 години",

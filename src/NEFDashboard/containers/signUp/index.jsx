@@ -10,7 +10,7 @@ import "./signUp.css";
 import { MessageContext } from "../../../context/message";
 import RoleSelection from "../roleSelection";
 import BusinessPage from "../../../assets/newDashboardIcons/business-page.png";
-import PersonalAccountPage from "../../../assets/newDashboardIcons/personal-account.png";
+import PersonalAccountPage from "../../../assets/newDashboardIcons/login.png";
 import MessageIcon from "../../../assets/newDashboardIcons/mail.svg";
 import MailLogo from "../../../assets/newDashboardIcons/mailIcon.svg";
 import SearchLogo from "../../../assets/newDashboardIcons/search-country.svg";
