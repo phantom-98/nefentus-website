@@ -44,6 +44,7 @@ import "./sidebar.css";
 import AddUser from "../addUser";
 import SettingSideBar from "../settingSideBar";
 import ArrowRight from "../../../assets/newDashboardIcons/arrow-right-gray.svg";
+import ArrowLeft from "../../../assets/newDashboardIcons/arrow-left.svg";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -153,12 +154,13 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
         <Flex
           justify="space-between"
           align="center"
-          className="profile-dropdown-width"
+          className="settingSideBarMenuItem"
           onClick={() => setOpenSettingDrawer(!openSettingDrawer)}
         >
           <div className="profile-dropdown-width">
             {t("personalDashboard.profileDropdown.setting")}
           </div>
+          <img src={ArrowLeft} alt="right arrow" width={20} height={20} />
         </Flex>
       ),
       icon: <img src={SettingIcon} alt="setting" />,

@@ -71,12 +71,6 @@ const SettingSideBar = ({
             <Typography.Title level={3}>
               {t("settingPage.title")}
             </Typography.Title>
-            <Typography.Text
-              className="default-text-grey settingTitle"
-              type="secondary"
-            >
-              {t("settingPage.subTitle")}
-            </Typography.Text>
           </div>
           <div>
             <Flex vertical className="settingSideBarMenu">
