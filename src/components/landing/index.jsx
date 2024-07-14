@@ -1,4 +1,5 @@
 import "./landing.css";
+import RightArrow from "../../assets/icon/right-arrow.svg";
 import Hero1 from "../../assets/landing/hero1.png";
 import Hero2 from "../../assets/landing/hero2.png";
 import HeroLine1 from "../../assets/landing/hero-line-top-left.svg";
@@ -44,6 +45,12 @@ import LegalServiceSvg from "../../assets/landing/legal-services.svg";
 import MarketingSvg from "../../assets/landing/marketing.svg";
 import SeoSvg from "../../assets/landing/seo-services.svg";
 import TravelSvg from "../../assets/landing/travel-agency.svg";
+import SendSvg from "../../assets/landing/send-ico.svg";
+
+import Telegram from "../../assets/icon/telegram.svg";
+import Linkedin from "../../assets/icon/in.svg";
+import Twitter from "../../assets/icon/x.svg";
+import Youtube from "../../assets/icon/youtube.svg";
 
 import Main1 from "../../assets/landing/main1.png";
 import Main2 from "../../assets/landing/main2.png";
@@ -68,6 +75,8 @@ const Landing = () => {
       <MainFeaturesBody />
 
       <Industries />
+
+      <Community />
 
       <Conclusion
         icon={NefentusLogo}
@@ -110,9 +119,15 @@ const Hero = () => {
             management and streamline the sales process, all within a single
             platform.
           </p>
-          <a href="/signup">
-            <button>Get Started</button>
-          </a>
+          <div className="button-container">
+            <a href="/signup">
+              <button>Get Started</button>
+            </a>
+            <a href="/contact">
+              <span>Talk to an expert</span>
+              <img src={RightArrow} />
+            </a>
+          </div>
         </div>
         <div className="hero-img">
           <img src={Hero1} />
@@ -376,8 +391,8 @@ const Benefits = () => {
           </div>
           <div>
             <p>
-              Streamline Your Online{" "}
-              <span style={{ textWrap: "nowrap" }}>Checkout Experience</span>
+              Streamline Your Online Checkout Experience
+              {/* <span style={{ textWrap: "nowrap" }}>Checkout Experience</span> */}
             </p>
             <img src={Benefit2} />
             <p className="sub-title">
@@ -729,9 +744,62 @@ const Industries = () => {
   );
 };
 
-export const Conclusion = ({ icon, title, subtitle, button }) => {
+const communities = [
+  {
+    icon: Telegram,
+    title: "Telegram",
+    subtitle:
+      "Join our Telegram community for real-time updates, support, and discussions on integrating cryptocurrency payments into your business.",
+    link: "https://t.me/nefentus",
+  },
+  {
+    icon: Linkedin,
+    title: "Linkedin",
+    subtitle:
+      "Connect with us on LinkedIn for professional insights, industry updates, and networking opportunities.",
+    link: "https://cy.linkedin.com/company/nefentuspay",
+  },
+  {
+    icon: Twitter,
+    title: "Twitter",
+    subtitle:
+      "Follow us on Twitter for the latest news, updates, and insights on cryptocurrency payments. Stay informed about new features, industry trends.",
+    link: "https://x.com/nefentusapp",
+  },
+];
+
+const Community = () => {
   return (
-    <div className="layout-paragraph layout-getting-started">
+    <div className="layout-paragraph layout-community">
+      <Heading
+        title={`Join Our Community`}
+        subtitle={`Become a part of our vibrant community of like-minded individuals and businesses. Together, we can learn, grow, and lead the future of digital finance.`}
+      />
+      <div className="community-container">
+        {communities.map((com) => (
+          <a className="community" href={com.link}>
+            <img src={com.icon} />
+            <div className="community-body">
+              <h3>
+                {com.title} <img src={SendSvg} />
+              </h3>
+              <p>{com.subtitle}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export const Conclusion = ({
+  icon,
+  title,
+  subtitle,
+  button = "Get Started",
+}) => {
+  return (
+    <div id="conclusion" className="layout-paragraph layout-getting-started">
       <div
         style={{
           border: "1px solid #202020",
@@ -754,9 +822,15 @@ export const Conclusion = ({ icon, title, subtitle, button }) => {
         />
       </div>
       <Heading title={title} subtitle={subtitle} />
-      <a href="/signup">
-        <button>{button}</button>
-      </a>
+      <div className="button-container">
+        <a href="/signup">
+          <button>{button}</button>
+        </a>
+        <a href="/contact">
+          <span>Talk to an expert</span>
+          <img src={RightArrow} />
+        </a>
+      </div>
 
       <img
         src={GettingStarted1}

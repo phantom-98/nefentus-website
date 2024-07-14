@@ -181,11 +181,6 @@ body {
   width: 100vw;
   background-color: var(--background-color) !important;
   color: var(--text-color) !important;
-
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }
 
 .fontColor {

@@ -34,7 +34,8 @@
     "resetPassword": "Reset Password",
     "support": "Support",
     "b2b": "B2B",
-    "b2c": "B2C"
+    "b2c": "B2C",
+    "contact": "Contact us"
   },
   "home": {
     "heroTitle": "Accept Crypto Payments",
@@ -432,6 +433,14 @@
     }
   },
   "contact": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "company": "Company",
+    "country": "Country",
+    "comment": "Project/Business description",
+    "commentExpert": "Describe your problem/question",
+    "submit": "Submit",
     "title": "Create Account Today",
     "description": "At Nefentus, we believe in supporting our clients every step of the way. That's why we offer free onboarding calls to assist with registration and setup. Whether you're a bar owner, consultant, coach, trainer, speaker, or agency owner, we're committed to finding the perfect solution for your unique needs.",
     "button": "Sign up now",

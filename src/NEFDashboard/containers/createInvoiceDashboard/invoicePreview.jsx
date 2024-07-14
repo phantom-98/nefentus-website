@@ -284,9 +284,6 @@ const InvoicePreview = ({ invoice }) => {
             </Flex>
           </Flex>
         </Card>
-        <Button className="preview-btn">
-          {t("invoicePreview.payInvoice")}
-        </Button>
       </Card>
     </div>
   );
