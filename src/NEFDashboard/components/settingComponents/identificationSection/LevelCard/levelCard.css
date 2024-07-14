@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: calc(33.33% - 24px);
+  width: calc(33.33% - 12px);
 }
 
 .identification-card-wrapper .ant-card-head {
@@ -121,4 +121,31 @@
 .identification-card-wrapper .ant-card-body:before,
 .identification-card-wrapper .ant-card-body:after {
   display: none;
+}
+
+@media (max-width: 767px) {
+  .IdentificationSection {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    gap: 8px !important;
+  }
+  .identification-card-wrapper,
+  .identification-stepper,
+  .stepper-content {
+    flex-direction: column;
+  }
+  .identification-card-wrapper {
+    width: calc(100% - 32px);
+  }
+  .identification-card-wrapper .ant-card,
+  .stepper-content {
+    width: 100%;
+  }
+  .stepper-content {
+    height: 100%;
+  }
+  .stepper-line {
+    height: calc(100% - 30px);
+    width: 3px;
+  }
 }

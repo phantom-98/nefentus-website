@@ -131,14 +131,18 @@ const InvoicePreview = ({ invoice }) => {
             <Text className="default-text-gray">
               {t("invoicePreview.invoiceTo")}
             </Text>
-            <Flex gap={"8px"}>
+            <Flex gap={8}>
               <Divider type="vertical" style={{ height: "100%", margin: 0 }} />
-              <Flex vertical gap={"8px"}>
+              <Flex vertical gap={8}>
                 <Text className="default-text" style={{ fontWeight: 500 }}>
                   {invoice.name}
                 </Text>
-                <Flex vertical gap={"4px"}>
-                  <Text className="default-text-gray">{invoice.email}</Text>
+                <Text className="default-text-gray">{invoice.address}</Text>
+                {!invoice.isPerson && (
+                  <Text className="default-text-gray">{invoice.company}</Text>
+                )}
+                <Text className="default-text-gray">{invoice.email}</Text>
+                <Flex vertical gap={4}>
                   {!invoice.isPerson && (
                     <Text className="default-text-gray">
                       {t("invoicePreview.vatTitle")} {invoice.taxNumber}
@@ -280,9 +284,6 @@ const InvoicePreview = ({ invoice }) => {
             </Flex>
           </Flex>
         </Card>
-        <Button className="preview-btn">
-          {t("invoicePreview.payInvoice")}
-        </Button>
       </Card>
     </div>
   );

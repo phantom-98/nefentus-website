@@ -15,6 +15,7 @@ const role_colors = {
   broker: "#C09A15",
   vendor: "#8543DA",
   admin: "#ED9001",
+  private: "#4a320f",
 };
 const role_order = {
   leader: 4,

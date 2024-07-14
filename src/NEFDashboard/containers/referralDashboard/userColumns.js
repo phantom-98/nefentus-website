@@ -109,7 +109,7 @@ const userColumns = (
               label: (
                 <div
                   className="default-text user-table-menu-width"
-                  onClick={updateStatus}
+                  onClick={() => updateStatus(record)}
                 >
                   {t(
                     `referralDashboard.userTableMenu.${
@@ -125,7 +125,7 @@ const userColumns = (
               label: (
                 <div
                   className="default-text user-table-menu-width"
-                  onClick={updateUser}
+                  onClick={() => updateUser(record)}
                 >
                   {t("referralDashboard.userTableMenu.edit")}
                 </div>
@@ -137,7 +137,7 @@ const userColumns = (
               label: (
                 <div
                   className="default-text user-table-menu-width"
-                  onClick={deleteUser}
+                  onClick={() => deleteUser(record)}
                 >
                   {t("referralDashboard.userTableMenu.delete")}
                 </div>
@@ -148,7 +148,6 @@ const userColumns = (
         }}
         overlayClassName="user-table-menu"
         trigger={["click"]}
-        onOpenChange={() => setSelectedUser({ ...record })}
       >
         <div className="table-menu-icon cursor-pointer">
           <img src={MenuIcon} alt="menu" width={20} height={20} />

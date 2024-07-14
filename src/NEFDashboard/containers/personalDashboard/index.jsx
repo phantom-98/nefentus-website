@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Divider, Flex, Input, Row, Skeleton } from "antd";
+import { Col, Divider, Flex, Input, Row, Skeleton, Typography } from "antd";
 
 import AddIcon from "../../../assets/newDashboardIcons/add.svg";
 import SearchIcon from "../../../assets/newDashboardIcons/search.svg";
@@ -16,6 +16,9 @@ import usePrices from "../../../hooks/prices";
 import { blockchainToName, currencies } from "../../../constants";
 import Check from "../../../assets/icon/check.svg";
 import backendAPI from "../../../api/backendAPI";
+import WalletOpenIcon from "../../../assets/newDashboardIcons/wallet-open.svg";
+import WalletIcon from "../../../assets/newDashboardIcons/wallet.svg";
+import WalletCloseIcon from "../../../assets/newDashboardIcons/wallet-close.svg";
 import {
   formatTokenBalance,
   formatUSDBalance,
@@ -44,6 +47,7 @@ const PersonalDashboard = () => {
   const { t } = useTranslation();
   const currencyList = currencies();
   const backend_API = new backendAPI();
+  const { Text } = Typography;
   const { currencyRate, isWalletConnected } = useAuth();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [backupCryptoList, setBackupCryptoList] = useState([]);
@@ -427,16 +431,59 @@ const PersonalDashboard = () => {
                     <Slider {...settings}>
                       {walletOptions?.length > 0 &&
                         walletOptions.map((wallet, index) => (
-                          <WalletCard
-                            wallet={wallet}
-                            openDrawer={openDrawer}
-                            setOpenDrawer={setOpenDrawer}
-                            key={index}
-                            handleWalletDetail={(wlt) => {
-                              setSelectedWallet(wlt);
-                            }}
-                          />
+                          <>
+                            <WalletCard
+                              wallet={wallet}
+                              openDrawer={openDrawer}
+                              setOpenDrawer={setOpenDrawer}
+                              key={index}
+                              handleWalletDetail={(wlt) => {
+                                setSelectedWallet(wlt);
+                              }}
+                            />
+                          </>
                         ))}
+                      {walletOptions?.length == 1 && (
+                        <div className="wallet-card add-wallet-card">
+                          <Flex align="center" gap={12} justify="center">
+                            <div className="add-wallet-card-icon">
+                              <img src={WalletOpenIcon} />
+                            </div>
+                            <div className="add-wallet-card-icon">
+                              <img src={WalletIcon} />
+                            </div>
+                            <div className="add-wallet-card-icon">
+                              <img src={WalletCloseIcon} />
+                            </div>
+                          </Flex>
+                          <Flex align="center" gap={12} vertical>
+                            <div className="default-text-gray add-wallet-card-description">
+                              Add an external wallet
+                            </div>
+                            <div>
+                              <ConnectWallet
+                                // theme={"dark"}
+                                modalSize={"wide"}
+                                btnTitle={
+                                  <Flex align="center" gap={4}>
+                                    <img src={AddIcon} />
+                                    <div>
+                                      {t("personalDashboard.addWallet")}
+                                    </div>
+                                  </Flex>
+                                }
+                                onConnect={async (wlt) => {
+                                  await disconnect(wlt);
+                                  await registerWallet(wlt);
+                                }}
+                                className={
+                                  "personal-dashboard-add-wallet-button"
+                                }
+                              />
+                            </div>
+                          </Flex>
+                        </div>
+                      )}
                     </Slider>
                   </div>
                 )}

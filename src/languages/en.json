@@ -34,7 +34,8 @@
     "resetPassword": "Reset Password",
     "support": "Support",
     "b2b": "B2B",
-    "b2c": "B2C"
+    "b2c": "B2C",
+    "contact": "Contact us"
   },
   "home": {
     "heroTitle": "Accept Crypto Payments",
@@ -432,6 +433,14 @@
     }
   },
   "contact": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "company": "Company",
+    "country": "Country",
+    "comment": "Project/Business description",
+    "commentExpert": "Describe your problem/question",
+    "submit": "Submit",
     "title": "Create Account Today",
     "description": "At Nefentus, we believe in supporting our clients every step of the way. That's why we offer free onboarding calls to assist with registration and setup. Whether you're a bar owner, consultant, coach, trainer, speaker, or agency owner, we're committed to finding the perfect solution for your unique needs.",
     "button": "Sign up now",
@@ -511,7 +520,8 @@
       "Leader": "Leader",
       "SeniorBroker": "Senior Broker",
       "Broker": "Broker",
-      "Affiliate": "Affiliate"
+      "Affiliate": "Affiliate",
+      "Private": "Private"
     },
     "tableHeaders": {
       "firstName": "First Name",
@@ -1434,7 +1444,7 @@
     "convert": "Convert",
     "searchPlaceholder": "Search by name",
     "profileDropdown": {
-      "setting": "Setting",
+      "setting": "Settings",
       "support": "Support",
       "darkMode": "Dark Mode",
       "logout": "Logout"
@@ -1524,14 +1534,14 @@
     "productTable": {
       "productName": "Product Name",
       "client": "Client",
-      "invoiceId": "Invoice ID",
+      "invoiceId": "Invoice Number",
       "amount": "Amount",
       "date": "Date",
       "action": "Action"
     },
     "invoiceTable": {
       "billedTo": "Billed To",
-      "invoiceId": "Invoice ID",
+      "invoiceId": "Invoice Number",
       "amount": "Amount",
       "status": "Status",
       "date": "Date",
@@ -1546,7 +1556,7 @@
     "taxText2": " is included in this amount",
     "crypto": "In Crypto",
     "invoiceItems": " Invoice Items",
-    "gasPrice": "Gas Price",
+    "transactionFees": "Transaction Fees",
     "total": "Total Due",
     "invoiceInfo": "Invoice Info",
     "invoiceFrom": "Invoice From",
@@ -1561,7 +1571,14 @@
     "drawerDescription": "Thank you for your business! We appreciate your prompt payment. If you have any questions or concerns regarding this invoice, please don't hesitate to contact us. We look forward to serving you again in the future.",
     "savePdf": "Save as PDF",
     "saveReceipt": "Save Receipt",
-    "saveInvoice": "Save Invoice"
+    "saveInvoice": "Save Invoice",
+    "currency": "Currency",
+    "items": {
+      "description": "Description",
+      "price": "Price",
+      "qty": "Qty",
+      "total": "Total Price"
+    }
   },
   "invoicePreview": {
     "title": "Invoice Preview",
@@ -1629,6 +1646,12 @@
   "create": "Create",
   "update": "Update",
   "settingPage": {
-    "title": "Settings"
+    "title": "Settings",
+    "back": "Back",
+    "subTitle": "General settings",
+    "general": "General",
+    "security": "Security",
+    "identification": "Identification",
+    "invoice": "Invoice"
   }
 }

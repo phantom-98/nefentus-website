@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Divider,
   Menu,
@@ -42,6 +42,9 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import "./sidebar.css";
 import AddUser from "../addUser";
+import SettingSideBar from "../settingSideBar";
+import ArrowRight from "../../../assets/newDashboardIcons/arrow-right-gray.svg";
+import ArrowLeft from "../../../assets/newDashboardIcons/arrow-left.svg";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -54,6 +57,7 @@ function getItem(label, key, icon, children, type) {
 }
 
 const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const { toggleTheme } = useTheme();
 
   const { t, i18n } = useTranslation();
@@ -64,8 +68,13 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
   const [openConvertModal, setOpenConvertModal] = useState(false);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
+  const [openSettingDrawer, setOpenSettingDrawer] = useState(false);
   const backend_API = new backendAPI();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.addEventListener("resize", () => setScreenWidth(window.innerWidth));
+  }, [screenWidth]);
 
   const handleSubmitCrypto = () => {
     setOpenSendModal(!openSendModal);
@@ -142,9 +151,17 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
     {
       key: "1",
       label: (
-        <div className="profile-dropdown-width">
-          {t("personalDashboard.profileDropdown.setting")}
-        </div>
+        <Flex
+          justify="space-between"
+          align="center"
+          className="settingSideBarMenuItem"
+          onClick={() => setOpenSettingDrawer(!openSettingDrawer)}
+        >
+          <div className="profile-dropdown-width">
+            {t("personalDashboard.profileDropdown.setting")}
+          </div>
+          <img src={ArrowLeft} alt="right arrow" width={20} height={20} />
+        </Flex>
       ),
       icon: <img src={SettingIcon} alt="setting" />,
     },
@@ -347,6 +364,7 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
           onClose={() => setOpenAddModal(!openAddModal)}
         />
       )}
+
       <div className="sidebar-container">
         <Flex justify="space-between" className="sidebar-header">
           <div className="sidebar-nefentus-logo">
@@ -369,80 +387,93 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
             </Button>
           </Flex>
         </Flex>
+
         <div className="sidebar-body">
           <Divider className="logo-divider" />
-          <Row className="user-block user-block-mobile">
-            <Avatar
-              shape="square"
-              size={35}
-              icon={
-                user?.profileImage ? (
-                  <img src={user?.profileImage} className="user-avatar" />
-                ) : (
-                  <img src={ProfileImg} className="user-avatar" />
-                )
-              }
+
+          {openSettingDrawer && screenWidth < 1199 ? (
+            <SettingSideBar
+              openSettingDrawer={openSettingDrawer}
+              setOpenSettingDrawer={setOpenSettingDrawer}
+              setSideBarShow={setSideBarShow}
+              sideBarShow={sideBarShow}
             />
-            <Col>
-              <div className="username-text">
-                {user?.firstName + " " + user?.lastName}
-              </div>
-              <div className="user-role-text">{getRole(user)}</div>
-            </Col>
-          </Row>
+          ) : (
+            <>
+              <Row className="user-block user-block-mobile">
+                <Avatar
+                  shape="square"
+                  size={35}
+                  icon={
+                    user?.profileImage ? (
+                      <img src={user?.profileImage} className="user-avatar" />
+                    ) : (
+                      <img src={ProfileImg} className="user-avatar" />
+                    )
+                  }
+                />
+                <Col>
+                  <div className="username-text">
+                    {user?.firstName + " " + user?.lastName}
+                  </div>
+                  <div className="user-role-text">{getRole(user)}</div>
+                </Col>
+              </Row>
 
-          <Menu
-            onClick={onClick}
-            defaultOpenKeys={["sub1"]}
-            mode="inline"
-            items={items}
-            className="sidebar-menu"
-          />
-          <Divider className="logo-divider logo-divider-mobile" />
-
-          <Flex justify="space-between" className="currency-block">
-            <Flex gap={"6px"} align="center">
-              <img src={CurrencyIcon} alt="CurrencyIcon" />
-              <p>Currency</p>
-            </Flex>
-            <Flex gap={"6px"} align="center">
-              <Select
-                defaultValue={"europe"}
-                options={options}
-                // onChange={handleLanguage}
-                className="currency-dropdown"
+              <Menu
+                onClick={onClick}
+                defaultOpenKeys={["sub1"]}
+                mode="inline"
+                items={items}
+                className="sidebar-menu"
               />
-            </Flex>
-          </Flex>
+              <Divider className="logo-divider logo-divider-mobile" />
 
-          <div className="language-container">
-            <div className="localisation-container">
-              <Flex justify="space-between">
+              <Flex justify="space-between" className="currency-block">
                 <Flex gap={"6px"} align="center">
-                  <Languages />
-                  <p>Language</p>
+                  <img src={CurrencyIcon} alt="CurrencyIcon" />
+                  <p>Currency</p>
                 </Flex>
                 <Flex gap={"6px"} align="center">
                   <Select
-                    defaultValue={"English"}
-                    options={languages}
-                    onChange={handleLanguage}
+                    defaultValue={"europe"}
+                    options={options}
+                    // onChange={handleLanguage}
                     className="currency-dropdown"
-                    value={selectedLanguage}
                   />
-                  {/* <p>English</p>
-                <img src={DownArrow} alt="down-arrow" /> */}
                 </Flex>
               </Flex>
-            </div>
-          </div>
-          <Menu
-            onClick={onOptionClick}
-            defaultOpenKeys={["sub1"]}
-            mode="inline"
-            items={userItems}
-            className="sidebar-menu sidebar-menu-mobile"
-          />
+
+              <div className="language-container">
+                <div className="localisation-container">
+                  <Flex justify="space-between">
+                    <Flex gap={"6px"} align="center">
+                      <Languages />
+                      <p>Language</p>
+                    </Flex>
+                    <Flex gap={"6px"} align="center">
+                      <Select
+                        defaultValue={"English"}
+                        options={languages}
+                        onChange={handleLanguage}
+                        className="currency-dropdown"
+                        value={selectedLanguage}
+                      />
+                      {/* <p>English</p>
+                <img src={DownArrow} alt="down-arrow" /> */}
+                    </Flex>
+                  </Flex>
+                </div>
+              </div>
+              <Menu
+                onClick={onOptionClick}
+                defaultOpenKeys={["sub1"]}
+                mode="inline"
+                items={userItems}
+                className="sidebar-menu sidebar-menu-mobile"
+              />
+            </>
+          )}
         </div>
       </div>
     </>

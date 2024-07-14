@@ -128,6 +128,48 @@ export default class vendorDashboardApi {
     }
   }
 
+  async getSalesInvoices(current, dataLength, keyword = "", isProduct) {
+    try {
+      const url = `${this.baseURL}/invoices-detail?isProduct=${isProduct}&page=${current}&size=${dataLength}&keyword=${keyword}`;
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      this.updateToken(response);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return; // or return some default value
+    }
+  }
+
+  async getInvoiceGasPrice(link) {
+    try {
+      const url = `${this.baseURL}/invoice-gas?link=${link}`;
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      this.updateToken(response);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return; // or return some default value
+    }
+  }
+
   /**
    * Upsert a new product (insert if link is null)
    */

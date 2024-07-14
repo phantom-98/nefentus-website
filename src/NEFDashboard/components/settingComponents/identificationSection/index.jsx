@@ -40,7 +40,7 @@ const IdentificationSection = () => {
   const [openModal, setOpenModal] = useState("");
   const [level, setLevel] = useState(null);
   const [kycData, setKycData] = useState([]);
-
+  const [contentHeight, setContentHeight] = useState([]);
   useEffect(() => {
     fetchLevel();
   }, []);
@@ -204,6 +204,7 @@ const IdentificationSection = () => {
         setOpenModal("");
     }
   };
+
   return (
     <>
       {openModal == "level1" && (
@@ -240,12 +241,16 @@ const IdentificationSection = () => {
         />
       )}
       <div className="IdentificationSection">
-        <IdentificationStepper kycData={kycData} />
+        <IdentificationStepper
+          kycData={kycData}
+          contentHeight={contentHeight}
+        />
         <div className="identification-card-wrapper">
           {Object.keys(kycData)?.length > 0 &&
             Object.keys(kycData)?.map((title, index) => {
               return (
                 <LevelCard
+                  setContentHeight={setContentHeight}
                   level={level}
                   card={kycData[title]}
                   keyIndex={index}

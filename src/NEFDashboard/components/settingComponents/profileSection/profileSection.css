@@ -62,9 +62,9 @@
   overflow: hidden;
 }
 
-.profile-options-container {
+/* .profile-options-container {
   max-width: 625px;
-}
+} */
 
 .business-option-container {
   padding: 2px 5px;
@@ -122,4 +122,38 @@
 
 .personal-profile-detail {
   margin-bottom: 48px;
+}
+@media (min-width: 1400px) {
+}
+@media (max-width: 767px) {
+  .personal-profile-detail-content,
+  .profile-image-upload-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px !important;
+  }
+  .profile-image-upload-btn-wrapper {
+    flex-wrap: wrap;
+  }
+  .profile-options-container {
+    gap: 24px !important;
+  }
+  .profile-option-title {
+    width: 100px;
+    display: block;
+  }
+  .profile-option-subcontainer {
+    min-width: auto;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .profile-option-value {
+    width: calc(100% - 108px);
+  }
+  .country-select-field {
+    margin-left: auto;
+  }
+  .personal-profile-detail {
+    margin-bottom: 32px;
+  }
 }
