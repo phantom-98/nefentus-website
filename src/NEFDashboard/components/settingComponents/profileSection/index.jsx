@@ -296,14 +296,22 @@ const ProfileSection = () => {
       )}
       <div>
         <Flex vertical gap={32} className="personal-profile-detail">
-          <Flex align="center" justify="space-between">
+          <Flex
+            align="center"
+            justify="space-between"
+            className="personal-profile-detail-content"
+          >
             <div>
               <div className="default-text profile-photo-title">Your Photo</div>
               <div className="default-text-gray">
                 This will be displayed on your profile
               </div>
             </div>
-            <Flex align="center" gap={24}>
+            <Flex
+              align="center"
+              gap={24}
+              className="profile-image-upload-wrapper"
+            >
               <Avatar
                 shape="circle"
                 size={54}
@@ -315,7 +323,11 @@ const ProfileSection = () => {
                   )
                 }
               />
-              <Flex align="center" gap={8}>
+              <Flex
+                align="center"
+                gap={8}
+                className="profile-image-upload-btn-wrapper"
+              >
                 <Button
                   icon={<img src={UploadIcon} />}
                   className="default-text-gray profile-image-upload"

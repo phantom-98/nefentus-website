@@ -22,6 +22,7 @@
 - Inovice is sorting correctly (MINOR)
 - Add Wallet Card implemented in Personal Dashboard (MINOR)
 - Login Page right side image changed (MINOR)
+- Fix the responsiveness issue in setting page and add side bar in tablet and mobile view (PATCH)
 
 # 1.3.0
 

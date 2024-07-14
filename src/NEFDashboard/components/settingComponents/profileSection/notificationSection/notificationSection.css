@@ -14,22 +14,18 @@
   ) !important;
 }
 
-.notification-options-subcontainer {
+.notification-options-subcontainer > div {
   padding-bottom: 16px;
+  border-bottom: 1px solid var(--Dark, #202020);
+  height: 100%;
 }
-
-.notification-options-subcontainer:first-child,
-.notification-options-subcontainer:nth-child(3) {
-  padding-right: 48px !important;
-}
-
 .notification-option-subtitle {
   max-width: 250px;
   font-size: 12px;
 }
 
 .notification-option-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   margin-bottom: 2px;
   text-transform: capitalize;

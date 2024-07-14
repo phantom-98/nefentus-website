@@ -1,16 +1,33 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Card } from "antd";
 import "./levelCard.css";
 
-const LevelCard = ({ level, card, keyIndex, handleModalOpen }) => {
+const LevelCard = ({
+  level,
+  card,
+  keyIndex,
+  handleModalOpen,
+  setContentHeight,
+}) => {
+  const contentRef = useRef(null);
+  const [height, setHeight] = useState(0);
   const getCardStatus = () => {
     if (card?.isPending) return "pending";
     else if (card?.isRejected) return "rejected";
     else if (card?.isVerified) return "verified";
     else return "";
   };
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setHeight(contentRef.current.offsetHeight);
+      setContentHeight((prev) => [...prev, contentRef.current.offsetHeight]);
+    }
+  }, []);
+
   return (
     <Card
+      ref={contentRef}
       key={keyIndex}
       title={
         <div className="level-title">
