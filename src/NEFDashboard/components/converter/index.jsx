@@ -513,6 +513,10 @@ const Converter = ({
     setOpenFromCryptoDrawer(false);
     setOpenToCryptoDrawer(false);
   };
+
+  useEffect(() => {
+    setStep(1);
+  }, [openConvertModal]);
   return (
     <Modal
       title={
