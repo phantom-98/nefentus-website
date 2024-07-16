@@ -27,7 +27,9 @@ import ContactExpert from "../../assets/icon/contact-expert.svg";
 import ContactExpertBlue from "../../assets/icon/contact-expert-blue.svg";
 import Send from "../../assets/landing/send-ico.svg";
 import Dropdown from "../../assets/icon/dropdown.svg";
-import { hover } from "@testing-library/user-event/dist/hover";
+import Logout from "../../assets/newDashboardIcons/log-out.svg";
+import Dashboard from "../../assets/newDashboardIcons/dashboard.svg";
+import Settings from "../../assets/newDashboardIcons/settings.svg";
 
 const Navigation = () => {
   const { theme, toggleTheme } = useTheme();
@@ -75,14 +77,49 @@ const Navigation = () => {
     if (token?.length) {
       return (
         <>
-          <Link to={"/new-settings"} onClick={() => setOpenMenu(false)}>
-            <li className="standard">Settings</li>
-          </Link>
           <Link to={"/personal-dashboard"} onClick={() => setOpenMenu(false)}>
-            <li className="standard">Dashboard</li>
+            <li
+              className="standard"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem",
+              }}
+            >
+              <img src={Dashboard} alt="dashboard" style={{ width: "5%" }} />
+              Dashboard
+            </li>
+          </Link>
+          <Link to={"/new-settings"} onClick={() => setOpenMenu(false)}>
+            <li
+              className="standard"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem",
+              }}
+            >
+              <img
+                src={Settings}
+                alt="dashboard"
+                style={{ width: "5%", translateY: "10px" }}
+              />
+              Settings
+            </li>
           </Link>
           <Link onClick={() => logOut(navigate)}>
-            <li className="standard">Log out</li>
+            <li
+              className="standard"
+              style={{
+                color: "#A43C3C",
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem",
+              }}
+            >
+              <img src={Logout} alt="dashboard" style={{ width: "5%" }} />
+              Log out
+            </li>
           </Link>
         </>
       );
@@ -215,25 +252,33 @@ const Navigation = () => {
         className={`${styles.mobileMenu}`}
         style={{
           transform: openMenu ? "translateY(0%)" : "translateY(-120%)",
+          borderTop: "1px solid var(--lightBlack-color)",
         }}
       >
-        <div>
-          <ul>
-            <li>
-              <Products setOpenMenu={setOpenMenu} />
-            </li>
-            <li>
-              <Resources />
-            </li>
-            <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
-              <li className="standard">Career</li>
-            </Link>
-            <li>
-              <ContactUs />
-            </li>
-            {loginAndSignupMobile()}
-          </ul>
-        </div>
+        <ul>
+          <li>
+            <Products setOpenMenu={setOpenMenu} />
+          </li>
+          <li>
+            <Resources />
+          </li>
+          <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
+            <li className="standard">Career</li>
+          </Link>
+          <li>
+            <ContactUs />
+          </li>
+          <hr
+            style={{
+              margin: "-4px -2.5rem 11px -2.5rem",
+              width: "100vw",
+              display: "block",
+              border: "none",
+              borderTop: "1px solid var(--lightBlack-color)",
+            }}
+          />
+          {loginAndSignupMobile()}
+        </ul>
       </div>
     </nav>
   );
