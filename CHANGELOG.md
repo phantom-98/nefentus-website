@@ -1,5 +1,7 @@
 # New changes
 
+# v2.1.0
+
 - Products UI changes completed (MINOR)
 - Implemented portfolio coin cases (PATCH)
 - Transaction Detail api integrated (MAJOR)
