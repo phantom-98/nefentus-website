@@ -157,11 +157,6 @@ const Navigation = () => {
                     <p>Career</p>
                   </Link>
                 </li>
-                {/* <li className="standard">
-                  <Link to="/contact">
-                    <p>Contact us</p>
-                  </Link>
-                </li> */}
                 <li className="standard">
                   <ContactUs />
                 </li>
@@ -233,9 +228,6 @@ const Navigation = () => {
             <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
               <li className="standard">Career</li>
             </Link>
-            {/* <Link to="/contact" onClick={() => setOpenMenu(false)}>
-              <li className="standard">Contact us</li>
-            </Link> */}
             <li>
               <ContactUs />
             </li>
@@ -278,7 +270,6 @@ const Products = ({ setOpenMenu }) => {
       }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
-      // onTouchEnd={(e) => setOpen((prev) => !prev) && e.preventDefault()}
     >
       <div className={styles.products}>
         <p>Products</p>
@@ -385,7 +376,6 @@ const Resources = () => {
       style={{ position: "relative" }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
-      onTouchEnd={(e) => setOpen((prev) => !prev) && e.preventDefault()}
     >
       <div className={styles.resources}>
         <p>Resources</p>
@@ -461,7 +451,6 @@ const ContactUs = () => {
       }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
-      onTouchEnd={(e) => setOpen((prev) => !prev) && e.preventDefault()}
     >
       <div className={styles.contactus}>
         <p>Contact us</p>
