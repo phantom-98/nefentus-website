@@ -145,7 +145,7 @@ const Hero = () => {
       />
       <hr
         style={{
-          right: "calc(25% + 0.8rem)",
+          right: "calc(25% + 0.92rem)",
           bottom: "0",
           height: "100%",
         }}
@@ -162,7 +162,7 @@ const Hero = () => {
       <div
         style={{
           height: "100%",
-          right: "calc(25% - 1.377rem)",
+          right: "calc(25% - 1.3rem)",
           bottom: "0",
         }}
         className="hide-in-tablet vertical-dashed-line"

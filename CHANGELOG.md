@@ -1,5 +1,7 @@
 # New changes
 
+- Update wallet address in landing pages && update mobile nav bar (PATCH)
+
 # v2.1.0
 
 - Products UI changes completed (MINOR)
