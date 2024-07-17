@@ -1,5 +1,6 @@
 # New changes
 
+- Update wallet address in landing pages && update mobile nav bar (PATCH)
 - Updated HTML template (PATCH)
 - Fix texts & translations in the dashboard (PATCH)
 - Fix some minor issues in landing (PATCH)
