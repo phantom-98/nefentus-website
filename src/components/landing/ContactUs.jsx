@@ -113,17 +113,7 @@ const ContactUs = () => {
             value={description}
             setState={setDescription}
           />
-          <Button
-            children={t("contact.submit")}
-            style={{
-              padding: "0rem 2rem",
-              background: "none",
-              boxShadow: "none",
-              width: "100%",
-            }}
-            spinner={spinner}
-            onClick={contact}
-          />
+          <button onClick={contact}>Submit</button>
         </div>
         <h2>
           Thank you for reaching out to us.

@@ -101,7 +101,7 @@ const Hero = () => {
             <a href="/signup">
               <button>Get Started</button>
             </a>
-            <a href="/contact">
+            <a href="/business-support">
               <span>Talk to an expert</span>
               <img src={RightArrow} />
             </a>

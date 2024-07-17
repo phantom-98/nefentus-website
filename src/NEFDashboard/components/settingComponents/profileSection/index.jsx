@@ -348,7 +348,13 @@ const ProfileSection = () => {
 
           <Flex vertical gap={32} className="profile-options-container">
             {profile_options?.map((data, index) => (
-              <Flex align="center" justify="space-between" gap={8} key={index}>
+              <Flex
+                className="profile-option-container"
+                align="center"
+                justify="space-between"
+                gap={8}
+                key={index}
+              >
                 <div>
                   <Text className="default-text profile-option-title">
                     {data?.title}
@@ -390,7 +396,7 @@ const ProfileSection = () => {
                 ) : (
                   <Flex
                     align="center"
-                    justify="start"
+                    justify="space-between"
                     gap={16}
                     className="profile-option-subcontainer"
                   >
