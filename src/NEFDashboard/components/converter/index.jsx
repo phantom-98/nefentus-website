@@ -53,7 +53,6 @@ import {
 import SwingSDK from "@swing.xyz/sdk";
 import WalletAddressFormatter from "../../../func/walletAddressFormatter";
 import { useTranslation } from "react-i18next";
-import { PasswordPopup } from "../../../dashboardNew/components/popup/popup";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 

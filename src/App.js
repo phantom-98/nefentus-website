@@ -2,67 +2,15 @@ import Footer from "./components/footer";
 import "./style/general.css";
 import Navigation from "./components/navigation/navigation";
 import React, { useEffect, useState, Suspense } from "react";
-import {
-  Route,
-  HashRouter,
-  Routes,
-  useLocation,
-  BrowserRouter,
-} from "react-router-dom";
+import { Route, Routes, useLocation, BrowserRouter } from "react-router-dom";
 import CookieBanner from "./components/cookieBanner/cookieBanner";
 import { getAcceptCookie } from "./func/cookies";
 import { MessageContextProvider } from "./context/message";
-import RingLoader from "react-spinners/RingLoader";
-
-import { Player } from "@lottiefiles/react-lottie-player";
-import LoadingAnimation from "./assets/logo/loadingAnimation.json";
-import WalletSetting from "./dashboardNew/containers/walletSetting/walletSetting";
-import InvoicesBody from "./dashboardNew/components/invoiceBody/invoiceBody";
-import { KYC } from "./dashboard/settings/components/KYC";
-import Kyc from "./dashboardNew/components/kyc";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const MainDashboard = React.lazy(() =>
-  import("./dashboardNew/screens/mainDashboard"),
-);
-const ScreenLayout = React.lazy(() =>
-  import("./dashboardNew/containers/screenLayout/screenLayout"),
-);
-const ProfileDashboard = React.lazy(() =>
-  import("./dashboardNew/screens/profileDashboard"),
-);
-const SecuritySettings = React.lazy(() =>
-  import("./dashboardNew/containers/securitySettings/securitySettings"),
-);
-const AffiliateDashboard = React.lazy(() =>
-  import("./dashboardNew/screens/affiliateDashboard"),
-);
-const ConverterDashboard = React.lazy(() =>
-  import("./dashboardNew/screens/converterDashboard"),
-);
-const ProductsDashboard = React.lazy(() =>
-  import("./dashboardNew/screens/productsDashboard"),
-);
-const PaymentDashboard = React.lazy(() =>
-  import("./dashboardNew/screens/paymentDashboard"),
-);
-const AdminDashboard = React.lazy(() =>
-  import("./dashboardNew/screens/adminDashboard"),
-);
-const TransactionDashboard = React.lazy(() =>
-  import("./dashboardNew/screens/transactionDashboard"),
-);
-const IdentificationDashboard = React.lazy(() =>
-  import("./dashboardNew/screens/identificationDashboard"),
-);
-const IntegrationsDashboard = React.lazy(() =>
-  import("./dashboardNew/screens/integrationsDashboard"),
-);
-
-const Home = React.lazy(() => import("./pages/Home"));
 const SignUp = React.lazy(() => import("./pages/Signup"));
 const Layout = React.lazy(() => import("./pages/Layout"));
 const Login = React.lazy(() => import("./pages/Login"));
@@ -79,17 +27,6 @@ const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
 const Vacancy = React.lazy(() => import("./pages/Vacancy"));
 const Jobs = React.lazy(() => import("./pages/Jobs"));
 
-// OLD DASHBOARD
-// const AffiliateDashboard = React.lazy(() => import("./dashboard/Affiliate"));
-// const Settings = React.lazy(() => import("./dashboard/Settings"));
-// const Vendor = React.lazy(() => import("./dashboard/Vendor"));
-//const Products = React.lazy(() => import("./dashboard/Products"));
-// const Transactions = React.lazy(() => import("./dashboard/Transactions"));
-// const PaymentDashboardOld = React.lazy(() => import("./dashboard/Payment"));
-// const PayrollDashboard = React.lazy(() => import("./dashboard/Payroll"));
-// const Wallet = React.lazy(() => import("./dashboard/Wallet"));
-// const Admin = React.lazy(() => import("./dashboard/Admin"));
-// const Kyc = React.lazy(() => import("./dashboard/Kyc"));
 import { ThemeProvider } from "./context/themeContext/themeContext";
 import { AuthProvider } from "./context/auth/authContext";
 import {
@@ -448,136 +385,6 @@ function App() {
                               <Jobs />
                             </Layout>
                           </>
-                        }
-                      />
-
-                      <Route
-                        path="/dashboard/"
-                        element={
-                          <ScreenLayout>
-                            <MainDashboard />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/admin"
-                        element={
-                          <ScreenLayout>
-                            <AdminDashboard type={"admin"} />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/partner"
-                        element={
-                          <ScreenLayout>
-                            <AdminDashboard type="partner" />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/agent"
-                        element={
-                          <ScreenLayout>
-                            <AdminDashboard type="agent" />
-                          </ScreenLayout>
-                        }
-                      />
-
-                      <Route
-                        path="/dashboard/profile"
-                        element={
-                          <ScreenLayout>
-                            <ProfileDashboard />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/invoices"
-                        element={
-                          <ScreenLayout>
-                            <InvoicesBody />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/security"
-                        element={
-                          <ScreenLayout>
-                            <SecuritySettings />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/converter"
-                        element={
-                          <ScreenLayout>
-                            <ConverterDashboard />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/products"
-                        element={
-                          <ScreenLayout>
-                            <ProductsDashboard />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/payments"
-                        element={
-                          <ScreenLayout>
-                            <PaymentDashboard />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/admin"
-                        element={
-                          <ScreenLayout>
-                            <AdminDashboard type={"admin"} />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/kyc"
-                        element={
-                          <ScreenLayout>
-                            <Kyc />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/partner"
-                        element={
-                          <ScreenLayout>
-                            <AdminDashboard type="partner" />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/transactions"
-                        element={
-                          <ScreenLayout>
-                            <TransactionDashboard />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/identification"
-                        element={
-                          <ScreenLayout>
-                            <IdentificationDashboard />
-                          </ScreenLayout>
-                        }
-                      />
-                      <Route
-                        path="/dashboard/integrations"
-                        element={
-                          <ScreenLayout>
-                            <IntegrationsDashboard />
-                          </ScreenLayout>
                         }
                       />
                       <Route

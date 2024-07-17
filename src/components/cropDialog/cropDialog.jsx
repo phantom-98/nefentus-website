@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactCrop, { centerCrop, makeAspectCrop } from "react-image-crop";
 import Resizer from "react-image-file-resizer";
 import styles from "./cropDialog.module.css";
-import { Buttons } from "../../dashboard/settings/components/buttons";
+import { Buttons } from "../button1";
 import "react-image-crop/dist/ReactCrop.css";
 import { useTheme } from "../../context/themeContext/themeContext";
 

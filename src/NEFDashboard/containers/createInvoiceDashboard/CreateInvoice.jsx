@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import styles from "../../../dashboardNew/components/paymentForm/paymentForm.module.css";
+import styles from "../../../components/paymentForm/paymentForm.module.css";
 import PersonLight from "../../../assets/icon/light/user-square.svg";
 import PersonDark from "../../../assets/icon/dark/user-square.svg";
 import BuildingDark from "../../../assets/icon/dark/building.svg";
@@ -20,7 +20,7 @@ import Input, {
 import { useTheme } from "../../../context/themeContext/themeContext";
 import { getCurrencySymbol } from "../../../countries";
 import { formatUSDBalance } from "../../../utils";
-import { QRPopup } from "../../../dashboardNew/components/popup/popup";
+import { QRPopup } from "../../../components/popup/popup";
 import { MessageContext } from "../../../context/message";
 
 const CreateInvoice = ({ invoice, setInvoice }) => {

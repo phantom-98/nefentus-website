@@ -1,12 +1,12 @@
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
-import Landing from "../components/landing";
-import B2C from "../components/landing/B2C";
-import B2B from "../components/landing/B2B";
+import Landing from "./landing";
+import B2C from "./landing/B2C";
+import B2B from "./landing/B2B";
 import Navigation from "../components/navigation/navigation";
 import Resources from "../components/resources";
-import ContactUs from "../components/landing/ContactUs";
-import ContactUs_Expert from "../components/landing/ContactUs_Expert";
+import ContactUs from "./landing/ContactUs";
+import ContactUs_Expert from "./landing/ContactUs_Expert";
 
 const NewLanding = () => {
   const { t } = useTranslation();
