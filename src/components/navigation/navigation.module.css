@@ -99,7 +99,7 @@
 
 .dropdownMenuItem .body p:last-child {
   color: #b1b1b1;
-  max-width: 28rem;
+  max-width: 24rem;
 }
 
 .products,
@@ -355,6 +355,9 @@
 }
 
 @media (max-width: 900px) {
+  .contactus_dropdown {
+    flex-direction: column;
+  }
   .logo {
     height: 2.2rem;
   }

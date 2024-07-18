@@ -1,6 +1,14 @@
 # New changes
 
 - Update wallet address in landing pages && update mobile nav bar (PATCH)
+- Update contact us navbar (PATCH)
+- Change contact us submit button color (PATCH)
+- Change text spacing in checkout page(between invoice amount and vat description) (PATCH)
+- Change the order of items in side bar (PATCH)
+- Shine animation for every block headers in landing pages (PATCH)
+- Add `back` button in role choice page and login page (PATCH)
+- Update adaptive version of settings page (PATCH)
+- Fix `talk to an expert` button routing (PATCH)
 - Updated HTML template (PATCH)
 - Fix texts & translations in the dashboard (PATCH)
 - Fix some minor issues in landing (PATCH)

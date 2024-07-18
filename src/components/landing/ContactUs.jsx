@@ -64,7 +64,7 @@ const ContactUs = () => {
       <div className="contact-layout">
         <h1>
           Contact Us for{" "}
-          <span style={{ textWrap: "nowrap" }}>Business-Related Queries</span>
+          <span style={{ textWrap: "nowrap" }}>Business-Related</span> Queries
         </h1>
         <p>
           If you're looking to discuss business opportunities, need help with
@@ -113,17 +113,7 @@ const ContactUs = () => {
             value={description}
             setState={setDescription}
           />
-          <Button
-            children={t("contact.submit")}
-            style={{
-              padding: "0rem 2rem",
-              background: "none",
-              boxShadow: "none",
-              width: "100%",
-            }}
-            spinner={spinner}
-            onClick={contact}
-          />
+          <button onClick={contact}>Submit</button>
         </div>
         <h2>
           Thank you for reaching out to us.
