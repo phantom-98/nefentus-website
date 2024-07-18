@@ -1,5 +1,6 @@
 # New changes
 
+- Update wallet address in landing pages && update mobile nav bar (PATCH)
 - Update contact us navbar (PATCH)
 - Change contact us submit button color (PATCH)
 - Change text spacing in checkout page(between invoice amount and vat description) (PATCH)

@@ -123,7 +123,6 @@ const Hero = () => {
               flexDirection: "column",
               gap: "2rem",
               justifyContent: "start",
-              paddingBottom: "4rem",
             }}
           >
             <img
@@ -135,7 +134,15 @@ const Hero = () => {
                 borderTopLeftRadius: "0",
               }}
             />
-            <img src={Hero2} style={{ width: "100%" }} />
+            <img
+              src={Hero2}
+              style={{
+                width: "100%",
+                borderBottom: "none",
+                borderBottomRightRadius: "0",
+                borderBottomLeftRadius: "0",
+              }}
+            />
           </div>
           <div
             style={{
@@ -144,7 +151,6 @@ const Hero = () => {
               flexDirection: "column",
               gap: "2rem",
               justifyContent: "end",
-              paddingTop: "4rem",
             }}
           >
             <img src={Hero3} style={{ width: "100%" }} />
