@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Flex, Row } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, Card, Col, Flex, Row, Typography } from "antd";
 import AddIcon from "../../../assets/newDashboardIcons/add.svg";
 import "./roles.css";
 import adminDashboardApi from "../../../api/adminDashboardApi";
@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import AddUser from "../addUser";
 import { useAuth } from "../../../context/auth/authContext";
 import { getRole } from "../../../utils";
+import { MessageContext } from "../../../context/message";
+import CopyIcon from "../../../assets/newDashboardIcons/copyIcon.svg";
 
 const role_colors = {
   leader: "#078BB9",
@@ -26,16 +28,24 @@ const role_order = {
 };
 
 const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
+  const { Title, Text, Paragraph } = Typography;
   const { t } = useTranslation();
   const { user } = useAuth();
+  const link = window.location.origin + "?ref=" + user?.affiliateLink;
   const adminApi = new adminDashboardApi(
     user?.roles?.length > 0 && getRole(user) == ""
       ? user.roles[0]
       : getRole(user),
   );
+  const { setSuccessMessage } = useContext(MessageContext);
   const [totalRoles, setTotalRoles] = useState(0);
   const [roleList, setRoleList] = useState([]);
   const [open, setOpen] = useState(false);
+
+  const copyToClipboard = (link) => {
+    navigator.clipboard.writeText(link);
+    setSuccessMessage(t("general.copied"));
+  };
 
   useEffect(() => {
     fetchUserRoles();
@@ -170,6 +180,36 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
               ))}
             </Flex>
           </Flex>
+          <div>
+            <Text className="default-text-gray transaction-drawer-product-name">
+              {t("dashboard.affiliateLink")}
+            </Text>
+            <Flex align="center" justify="space-between" gap={8}>
+              <Text
+                className="default-text"
+                style={{
+                  background: "#171717",
+                  textWrap: "nowrap",
+                  padding: "4px 15px",
+                  border: "1px solid var(--border-color)",
+                  borderRadius: "6px",
+                }}
+              >
+                {link}
+              </Text>
+              <Button
+                onClick={() => copyToClipboard(link)}
+                style={{ background: "#202020" }}
+              >
+                <Flex gap={3} align="center">
+                  <img src={CopyIcon} alt="copy-icon" />
+                  <Text className="default-text">
+                    {t("transactionDrawer.copy")}
+                  </Text>
+                </Flex>
+              </Button>
+            </Flex>
+          </div>
         </Flex>
       </Card>
     </>
