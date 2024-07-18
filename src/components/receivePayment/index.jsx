@@ -652,7 +652,7 @@ const ReceivePayment = ({
                     <p
                       style={{
                         color: "var(--text2-color)",
-                        margin: "-0.8rem 0 0.8rem 0",
+                        marginBottom: "0.8rem",
                       }}
                     >
                       {t("payments.informVAT1")} {vatPercent}% (
@@ -663,7 +663,10 @@ const ReceivePayment = ({
                   )}
                   <p className={styles.cryptoTitle}>
                     {t("payments.cryptoAmount")}
-                    <div className={styles.tooltip}>
+                    <div
+                      className={styles.tooltip}
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
                       <span className={styles.tooltiptext}>
                         {t("payments.cryptoDescription")}
                       </span>

@@ -220,16 +220,6 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
           ]
         : [
             getItem(
-              t("personalDashboard.sidebar.wallets"),
-              "5",
-              <img src={WalletIcon} />,
-            ),
-            getItem(
-              t("personalDashboard.sidebar.referral"),
-              "6",
-              <img src={DashboardIcon} />,
-            ),
-            getItem(
               t("salesDashboard.sales"),
               "7",
               <img src={DashboardIcon} />,
@@ -238,6 +228,16 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
               t("salesDashboard.products"),
               "8",
               <img src={ProductIcon} />,
+            ),
+            getItem(
+              t("personalDashboard.sidebar.referral"),
+              "6",
+              <img src={DashboardIcon} />,
+            ),
+            getItem(
+              t("personalDashboard.sidebar.wallets"),
+              "5",
+              <img src={WalletIcon} />,
             ),
             getItem(
               t("referralDashboard.addUser"),
@@ -367,12 +367,14 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
 
       <div className="sidebar-container">
         <Flex justify="space-between" className="sidebar-header">
-          <div className="sidebar-nefentus-logo">
-            <img src={LogoWide} alt="logo" />
-          </div>
-          <div className="nefentus-logo-mobile">
-            <img src={Logo} alt="logo" />
-          </div>
+          <a href="/">
+            <div className="sidebar-nefentus-logo">
+              <img src={LogoWide} alt="logo" />
+            </div>
+            <div className="nefentus-logo-mobile">
+              <img src={Logo} alt="logo" />
+            </div>
+          </a>
           <Flex align="center" gap={"20px"}>
             <Button className="notificationIconMobileBtn">
               <img src={NotificationIcon} alt="MobileBtnIcon" />

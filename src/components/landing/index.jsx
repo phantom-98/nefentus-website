@@ -123,7 +123,7 @@ const Hero = () => {
             <a href="/signup">
               <button>Get Started</button>
             </a>
-            <a href="/contact">
+            <a href="/business-support">
               <span>Talk to an expert</span>
               <img src={RightArrow} />
             </a>
@@ -180,7 +180,7 @@ export const Heading = ({ title, subtitle }) => {
   return (
     <div className="layout-title">
       <h1
-        className="title"
+        className="title heading-gradient"
         dangerouslySetInnerHTML={{ __html: title.replace("\n", "<br/>") }}
       ></h1>
       <p
@@ -826,7 +826,7 @@ export const Conclusion = ({
         <a href="/signup">
           <button>{button}</button>
         </a>
-        <a href="/contact">
+        <a href="/business-support">
           <span>Talk to an expert</span>
           <img src={RightArrow} />
         </a>

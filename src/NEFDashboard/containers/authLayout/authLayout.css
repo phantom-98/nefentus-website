@@ -30,6 +30,7 @@
   position: absolute;
   left: 20px;
   top: 20px;
+  cursor: pointer;
 }
 
 .authLayout-img-text h1 {

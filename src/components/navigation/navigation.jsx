@@ -508,12 +508,12 @@ const ContactUs = () => {
         />
       </div>
       {open && (
-        <div className={styles.dropdown}>
+        <div className={styles.dropdown} style={{ left: "-28rem" }}>
           <div
+            className={styles.contactus_dropdown}
             style={{
               padding: "1.4rem",
               display: "flex",
-              flexDirection: "column",
               borderRight: "1px solid #323232",
             }}
           >
