@@ -45,6 +45,7 @@ import AddUser from "../addUser";
 import SettingSideBar from "../settingSideBar";
 import ArrowRight from "../../../assets/newDashboardIcons/arrow-right-gray.svg";
 import ArrowLeft from "../../../assets/newDashboardIcons/arrow-left.svg";
+import { getCurrencySymbol, getFlagLink } from "../../../countries";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -63,7 +64,7 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
   const { t, i18n } = useTranslation();
   const { user, setUser, setIsWalletConnected } = useAuth();
   const [selectedLanguage, setSelectedLanguage] = useState("en");
-
+  const [currency, setCurrency] = useState("USD");
   const [openSendModal, setOpenSendModal] = useState(false);
   const [openConvertModal, setOpenConvertModal] = useState(false);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
@@ -75,6 +76,14 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
   useEffect(() => {
     window.addEventListener("resize", () => setScreenWidth(window.innerWidth));
   }, [screenWidth]);
+
+  useEffect(() => {
+    setCurrency(
+      localStorage.getItem("currency")
+        ? localStorage.getItem("currency")
+        : "USD",
+    );
+  }, [localStorage.getItem("currency")]);
 
   const handleSubmitCrypto = () => {
     setOpenSendModal(!openSendModal);
@@ -129,20 +138,73 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
         break;
     }
   };
+  // const options = [
+  //   {
+  //     value: "usa",
+  //     label: (
+  //       <Row className="currency-option">
+  //         <img src={USAFlag} alt="usa-flag" /> <div>USD $</div>
+  //       </Row>
+  //     ),
+  //   },
+  //   {
+  //     value: "europe",
+  //     label: (
+  //       <Row className="currency-option">
+  //         <img src={EuropeFlag} alt="europe-flag" /> <div>EUR €</div>
+  //       </Row>
+  //     ),
+  //   },
+  // ];
+
   const options = [
     {
-      value: "usa",
+      value: "USD",
       label: (
         <Row className="currency-option">
-          <img src={USAFlag} alt="usa-flag" /> <div>USD $</div>
+          <img src={getFlagLink("US")} alt="usa-flag" width={18} height={14} />
+          <div>USD $</div>
         </Row>
       ),
     },
     {
-      value: "europe",
+      value: "EUR",
       label: (
         <Row className="currency-option">
-          <img src={EuropeFlag} alt="europe-flag" /> <div>EUR €</div>
+          <img
+            src={getFlagLink("EU")}
+            alt="europe-flag"
+            width={18}
+            height={14}
+          />{" "}
+          <div>EUR €</div>
+        </Row>
+      ),
+    },
+    {
+      value: "AED",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("AE")} alt="flag" width={18} height={14} />{" "}
+          <div>{"AED د.إ"}</div>
+        </Row>
+      ),
+    },
+    {
+      value: "UAH",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("UA")} alt="flag" width={18} height={14} />{" "}
+          <div>UAH ₴</div>
+        </Row>
+      ),
+    },
+    {
+      value: "CHF",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("CH")} alt="flag" width={18} height={14} />{" "}
+          <div>CHF</div>
         </Row>
       ),
     },
@@ -440,8 +502,13 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
                   <Select
                     defaultValue={"europe"}
                     options={options}
-                    // onChange={handleLanguage}
+                    value={currency}
+                    onChange={(e) => {
+                      setCurrency(e);
+                      localStorage.setItem("currency", e);
+                    }}
                     className="currency-dropdown"
+                    style={{ width: "110px" }}
                   />
                 </Flex>
               </Flex>

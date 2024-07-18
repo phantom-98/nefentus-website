@@ -52,6 +52,14 @@ const DashboardLayout = ({ children, title }) => {
   }, []);
 
   useEffect(() => {
+    setCurrency(
+      localStorage.getItem("currency")
+        ? localStorage.getItem("currency")
+        : "USD",
+    );
+  }, [localStorage.getItem("currency")]);
+
+  useEffect(() => {
     if (currency !== "USD") {
       fetchRate("USD", currency);
     } else {
@@ -232,8 +240,12 @@ const DashboardLayout = ({ children, title }) => {
                   defaultValue={"europe"}
                   options={options}
                   value={currency}
-                  onChange={setCurrency}
+                  onChange={(e) => {
+                    setCurrency(e);
+                    localStorage.setItem("currency", e);
+                  }}
                   className="currency-dropdown"
+                  style={{ width: "110px" }}
                 />
                 <div className="dashboard-language-container">
                   <div className="localisation-container">

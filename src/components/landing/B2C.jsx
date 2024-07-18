@@ -90,7 +90,8 @@ const Hero = () => {
           }}
         >
           <h1 className="title">
-            Take charge of your <br /> crypto with Nefentus
+            <span className="gradient">Take charge</span> of your <br /> crypto
+            with Nefentus
           </h1>
           <p className="sub-title">
             Simplify your crypto experience. Easily send & receive payments,
