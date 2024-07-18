@@ -355,6 +355,9 @@
 }
 
 @media (max-width: 900px) {
+  .contactus_dropdown {
+    flex-direction: column;
+  }
   .logo {
     height: 2.2rem;
   }

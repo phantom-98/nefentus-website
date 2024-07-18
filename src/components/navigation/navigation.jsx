@@ -476,6 +476,7 @@ const ContactUs = () => {
       {open && (
         <div className={styles.dropdown} style={{ left: "-28rem" }}>
           <div
+            className={styles.contactus_dropdown}
             style={{
               padding: "1.4rem",
               display: "flex",

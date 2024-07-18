@@ -212,7 +212,7 @@ const LoginForm = () => {
               <div className="auth-form">
                 <div
                   className="back-btn back-btn-role"
-                  onClick={() => setVerification(!verification)}
+                  onClick={() => window.history.back()}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
