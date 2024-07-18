@@ -64,7 +64,7 @@ const ContactUs = () => {
       <div className="contact-layout">
         <h1>
           Contact Us for{" "}
-          <span style={{ textWrap: "nowrap" }}>Business-Related Queries</span>
+          <span style={{ textWrap: "nowrap" }}>Business-Related</span> Queries
         </h1>
         <p>
           If you're looking to discuss business opportunities, need help with

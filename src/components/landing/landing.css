@@ -593,7 +593,7 @@
 }
 
 .landing-layout .ico-card-wallet {
-  padding: 0.4rem;
+  padding: 0.4rem 0.4rem 0.2rem 0.4rem;
   width: fit-content;
   height: fit-content;
   border-radius: 1rem;
@@ -603,6 +603,7 @@
 
 .landing-layout .ico-card-wallet img {
   width: 24rem;
+  border-radius: 0.6rem;
 }
 
 .landing-layout .layout-transactions {
