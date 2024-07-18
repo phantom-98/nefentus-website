@@ -1,5 +1,7 @@
 # New changes
 
+- Save selected currency (PATCH)
+- Small edits in landing (PATCH)
 - Update wallet address in landing pages && update mobile nav bar (PATCH)
 - Update contact us navbar (PATCH)
 - Change contact us submit button color (PATCH)
@@ -24,6 +26,7 @@
 - Fix Footer link Remove && Pay button in invoice preview && sidebar behavior (MiNOR)
 
 # v2.0.0
+
 - Updated HTML template (PATCH)
 - Fix texts & translations in the dashboard (PATCH)
 - Fix some minor issues in landing (PATCH)
