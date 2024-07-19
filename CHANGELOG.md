@@ -56,6 +56,7 @@
 - Fix Footer link Remove && Pay button in invoice preview && sidebar behavior (MiNOR)
 - Fix Dashboard issues (MINOR)
 - Kyc Flow has implemented for admin (MAJOR)
+- Adaptive Add User Modal (MINOR)
 
 # 1.3.0
 

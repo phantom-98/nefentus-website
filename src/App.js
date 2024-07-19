@@ -136,6 +136,7 @@ import Resources from "./components/resources";
 import PageNotFound from "./NEFDashboard/components/pageNotFound";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
+import AddUserForTablet from "./NEFDashboard/components/addUserForTablet";
 import KycDashboard from "./NEFDashboard/containers/kycDasboard";
 
 function App() {
@@ -311,6 +312,16 @@ function App() {
                           </DashboardLayout>
                         }
                       />
+
+                      <Route
+                        path="/add-user"
+                        element={
+                          <DashboardLayout>
+                            <AddUserForTablet />
+                          </DashboardLayout>
+                        }
+                      />
+
                       <Route
                         path="/kyc-dashboard"
                         element={

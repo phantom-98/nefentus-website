@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import AddUser from "../addUser";
 import { useAuth } from "../../../context/auth/authContext";
 import { getRole } from "../../../utils";
+import { useNavigate } from "react-router-dom";
 
 const role_colors = {
   leader: "#078BB9",
@@ -28,6 +29,7 @@ const role_order = {
 const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const adminApi = new adminDashboardApi(
     user?.roles?.length > 0 && getRole(user) == ""
       ? user.roles[0]
@@ -42,8 +44,11 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
   }, [user]);
 
   useEffect(() => {
-    setOpen(update);
-  }, [update]);
+    window.innerWidth <= 1024
+      ? Object.keys(selectedUser)?.length &&
+        navigate("/add-user", { state: { selectedUser: selectedUser } })
+      : setOpen(update);
+  }, [update, selectedUser]);
 
   const fetchUserRoles = async () => {
     const response = await adminApi.getRoleReport();
@@ -99,7 +104,13 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
           <Button
             className=" default-text add-role-button"
             icon={<img src={AddIcon} />}
-            onClick={() => setOpen(!open)}
+            onClick={() =>
+              window.innerWidth <= 1024
+                ? navigate("/add-user", {
+                    state: { selectedUser: selectedUser },
+                  })
+                : setOpen(true)
+            }
           >
             {t("referralDashboard.addUser")}
           </Button>

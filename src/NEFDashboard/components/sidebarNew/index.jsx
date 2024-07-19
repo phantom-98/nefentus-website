@@ -133,11 +133,12 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
         navigate("/products-dashboard");
         break;
       case 9:
-        setOpenAddModal(!openAddModal);
+        window.innerWidth <= 1024
+          ? navigate("/add-user", { state: { selectedUser: {} } })
+          : setOpenAddModal(!openAddModal);
+        break;
       case 10:
         navigate("/kyc-dashboard");
-        break;
-
         break;
     }
   };
@@ -310,9 +311,9 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
               <img src={AddUserIcon} />,
             ),
             getRole(user) == "admin" ||
-              (user?.roles &&
-                user?.roles[0] == "admin" &&
-                getItem(t("navigation.kyc"), "10", <img src={AddUserIcon} />)),
+            (user?.roles && user?.roles[0] == "admin")
+              ? getItem(t("navigation.kyc"), "10", <img src={AddUserIcon} />)
+              : null,
           ],
       "group",
     ),
