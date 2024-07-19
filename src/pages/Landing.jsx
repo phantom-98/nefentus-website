@@ -3,6 +3,10 @@ import { useTranslation } from "react-i18next";
 import Landing from "../components/landing";
 import B2C from "../components/landing/B2C";
 import B2B from "../components/landing/B2B";
+import Navigation from "../components/navigation/navigation";
+import Resources from "../components/resources";
+import ContactUs from "../components/landing/ContactUs";
+import ContactUs_Expert from "../components/landing/ContactUs_Expert";
 
 const NewLanding = () => {
   const { t } = useTranslation();
@@ -20,10 +24,12 @@ const NewLanding = () => {
 export default NewLanding;
 
 export const NewB2C = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Helmet>
-        <title>Nefentus | B2C</title>
+        <title>Nefentus | {t("navigation.b2c")}</title>
       </Helmet>
       <B2C />
     </>
@@ -31,12 +37,52 @@ export const NewB2C = () => {
 };
 
 export const NewB2B = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Helmet>
-        <title>Nefentus | B2B</title>
+        <title>Nefentus | {t("navigation.b2b")}</title>
       </Helmet>
       <B2B />
     </>
+  );
+};
+
+export const NewResources = () => {
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <Helmet>
+        <title>Nefentus | {t("navigation.resources")}</title>
+      </Helmet>
+      <Navigation />
+      <Resources />
+    </>
+  );
+};
+
+export const Contact = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <Helmet>
+        <title>Nefentus | {t("navigation.contact")}</title>
+      </Helmet>
+      <ContactUs />
+    </div>
+  );
+};
+
+export const Contact_Expert = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <Helmet>
+        <title>Nefentus | {t("navigation.contact")}</title>
+      </Helmet>
+      <ContactUs_Expert />
+    </div>
   );
 };

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Col, Divider, Flex, Typography } from "antd";
-import WatchImg from "../../../assets/newDashboardIcons/watchImg.svg";
-import AddProductIcon from "../../../assets/newDashboardIcons/addProductIcon.svg";
+import ProductImage from "../../../assets/newDashboardIcons/default-product.svg";
 import EditIcon from "../../../assets/newDashboardIcons/edit.svg";
 import CopyIcon from "../../../assets/newDashboardIcons/copy.svg";
 import DeleteIcon from "../../../assets/newDashboardIcons/delete-gray.svg";
@@ -10,6 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { MessageContext } from "../../../context/message";
 import "./productCard.css";
 
+const currencySymbol = {
+  USD: "$",
+  EUR: "€",
+  AED: "د.إ",
+  UAH: "₴",
+  CHF: "CHF",
+};
+
 const ProductCard = ({ data, index, onEdit, onDelete }) => {
   const { t } = useTranslation();
   const { Text } = Typography;
@@ -17,20 +24,24 @@ const ProductCard = ({ data, index, onEdit, onDelete }) => {
   const { setSuccessMessage } = useContext(MessageContext);
 
   const onLinkCopy = (link) => {
-    navigator.clipboard.writeText(
-      `${window.location.origin}/product-detail/${link}`,
-    );
+    navigator.clipboard.writeText(`${window.location.origin}/product/${link}`);
     setSuccessMessage(t("security.scanModal.copyLink"));
   };
-
+  console.log(data);
   return (
     <Col className="gutter-row" span={24} md={12} lg={8} xl={6} key={index}>
       <Flex vertical className="product-card">
-        <Flex className="product-header" gap={6}>
-          <img src={data?.image} alt="prd_img" className="product_image" />
+        <Flex className="product-header" gap={6} align="center">
+          {data?.image ? (
+            <img src={data?.image} alt="prd_img" className="product_image" />
+          ) : (
+            <div className="product-default-image">
+              <img src={ProductImage} alt="default" />
+            </div>
+          )}
           <Text
             className="default-text cursor-pointer product-name"
-            onClick={() => navigate(`/product-detail/${data?.link}`)}
+            onClick={() => onEdit(data)}
           >
             {data?.name}
           </Text>
@@ -42,6 +53,8 @@ const ProductCard = ({ data, index, onEdit, onDelete }) => {
                 {t("productsDashboard.unit")}
               </Text>
               <Text className="default-text product-price-text">
+                {currencySymbol[data?.currency]}
+
                 {data?.price}
               </Text>
             </Flex>

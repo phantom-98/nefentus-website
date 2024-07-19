@@ -84,7 +84,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
       name: invoice?.name,
       company: invoice?.company,
       address: invoice?.address,
-      taxNumber: invoice?.taxNumber,
+      taxNumber: invoice?.isPerson ? "" : invoice?.taxNumber,
       vatPercent: invoice?.taxPercent,
       items: invoice?.items.filter((item) => item.total !== 0),
       reverseCharge: invoice?.reverseCharge,
@@ -214,21 +214,14 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
             // dashboard
             createInvoice
           />
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "2fr 1fr",
-              gap: "1rem",
-            }}
+          <Flex
+            gap={16}
+            className="status-currency-container"
+            justify="space-between"
           >
-            <Flex vertical gap={6}>
+            <Flex vertical gap={6} className="legal-status-container">
               <p className="default-text-gray">{t("payments.legalStatus")}</p>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "6px",
-                }}
-              >
+              <Flex gap={6}>
                 <RadioOption
                   icon={theme === "dark" ? PersonDark : PersonLight}
                   content={t("payments.person")}
@@ -239,6 +232,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                   horizon={true}
                   style={{
                     width: "50%",
+                    height: "40px",
                   }}
                   createInvoice
                 />
@@ -252,17 +246,18 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                   horizon={true}
                   style={{
                     width: "50%",
+                    height: "40px",
                   }}
                   createInvoice
                 />
-              </div>
+              </Flex>
             </Flex>
             <CurrencySelectWithLabel
               label={t("products.createProductModal.currency").concat("*")}
               value={invoice?.currency}
               setValue={(value) => setInvoice({ ...invoice, currency: value })}
             />
-          </div>
+          </Flex>
           {!invoice?.isPerson && (
             <div
               style={{
@@ -397,22 +392,14 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
               margin: "-1rem",
             }}
           >
-            <thead
-              style={{
-                fontSize: "14px",
-                fontWeight: 400,
-                color: " var(--Light-grey2, #B1B1B1)",
-                textAlign: "left",
-                overflowWrap: "nowrap",
-              }}
-            >
+            <thead className="item-table-head">
               <th>{t("payments.items.name")}</th>
               <th style={{ width: "10rem" }}>{t("payments.items.price")}</th>
               <th style={{ width: "8rem" }}>{t("payments.items.quantity")}</th>
               <th style={{ width: "12rem" }}>{t("payments.items.total")}</th>
               <th style={{ width: "2rem" }}></th>
             </thead>
-            <tbody className="invoice-items-table-input">
+            <tbody className=" ">
               {invoice?.items?.map((item, index) => {
                 return (
                   <tr
@@ -437,16 +424,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                             }),
                           });
                         }}
-                        style={{
-                          textAlign: "left",
-                          background: "var(--BG2, #171717)",
-                          padding: "6px 24px 6px 12px",
-                          border: "1px solid var(--Dark)",
-                          height: "40px",
-                          color: " var(--light-grey, #E9E9E9) ",
-                          fontSize: "14px",
-                          fontWeight: 500,
-                        }}
+                        className="item-name-text item-name-field"
                       />
                     </td>
                     <td>
@@ -467,16 +445,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                             }),
                           });
                         }}
-                        style={{
-                          textAlign: "left",
-                          background: "var(--BG2, #171717)",
-                          padding: "6px 24px 6px 12px",
-                          border: "1px solid var(--Dark)",
-                          height: "40px",
-                          color: " var(--light-grey, #E9E9E9) ",
-                          fontSize: "14px",
-                          fontWeight: 500,
-                        }}
+                        className="item-name-text item-sub-detail"
                       />
                     </td>
                     <td>
@@ -497,32 +466,14 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                             }),
                           });
                         }}
-                        style={{
-                          textAlign: "left",
-                          background: "var(--BG2, #171717)",
-                          padding: "6px 24px 6px 12px",
-                          border: "1px solid var(--Dark)",
-                          height: "40px",
-                          color: " var(--light-grey, #E9E9E9) ",
-                          fontSize: "14px",
-                          fontWeight: 500,
-                        }}
+                        className="item-name-text item-sub-detail"
                       />
                     </td>
                     <td>
                       <input
                         readOnly
                         value={item.total}
-                        style={{
-                          textAlign: "left",
-                          background: "var(--BG2, #171717)",
-                          padding: "6px 24px 6px 12px",
-                          border: "1px solid var(--Dark)",
-                          height: "40px",
-                          color: " var(--light-grey, #E9E9E9) ",
-                          fontSize: "14px",
-                          fontWeight: 500,
-                        }}
+                        className="item-name-text item-sub-detail"
                       />
                     </td>
                     <td>
@@ -536,11 +487,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
                           });
                         }}
                         src={theme === "dark" ? TrashDark : TrashLight}
-                        style={{
-                          cursor: "pointer",
-                          width: "100%",
-                          height: "100%",
-                        }}
+                        className="cursor-pointer"
                       />
                     </td>
                   </tr>

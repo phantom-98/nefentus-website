@@ -14,6 +14,10 @@
   padding: 20px;
 }
 
+.decline-container .ant-modal-body {
+  padding: 0px !important;
+}
+
 .identification-modal-cancel,
 .identification-modal-cancel:hover .identification-modal-cancel:active {
   padding: 6px 12px;
@@ -46,4 +50,62 @@
     0px 19px 11px 0px rgba(0, 0, 0, 0.03),
     0px 8px 8px 0px rgba(0, 0, 0, 0.04),
     0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+}
+
+.verfication-common-button {
+  padding: 5px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+
+  /* Button shadow */
+  box-shadow:
+    0px 51px 14px 0px rgba(0, 0, 0, 0),
+    0px 33px 13px 0px rgba(0, 0, 0, 0.01),
+    0px 19px 11px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+}
+
+.verfication-decline-button {
+  color: var(--red, #a43c3c) !important;
+}
+
+.verfication-accept-button {
+  padding: 5px 16px;
+  border-radius: 6px;
+  background: var(--Blue, #078bb9);
+  border: 1px solid var(--Blue, #078bb9);
+  /* Button shadow */
+  box-shadow:
+    0px 51px 14px 0px rgba(0, 0, 0, 0),
+    0px 33px 13px 0px rgba(0, 0, 0, 0.01),
+    0px 19px 11px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+}
+
+.verfication-accept-button:hover {
+  border: 1px solid var(--Blue, #078bb9) !important;
+}
+
+.decline-modal-footer {
+  padding: 20px;
+  border-top: 1px solid var(--Dark, #202020);
+}
+
+@media (max-width: 767px) {
+  .ant-modal-root:has(.identification-common-modal) .ant-modal-mask {
+    background: #171717;
+  }
+  .identification-common-modal {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding-bottom: 0 !important;
+    top: 0 !important;
+  }
+  .identification-common-modal > div {
+    border: none !important;
+    border-radius: 0 !important;
+  }
 }

@@ -40,7 +40,7 @@ const IdentificationSection = () => {
   const [openModal, setOpenModal] = useState("");
   const [level, setLevel] = useState(null);
   const [kycData, setKycData] = useState([]);
-
+  const [contentHeight, setContentHeight] = useState([]);
   useEffect(() => {
     fetchLevel();
   }, []);
@@ -115,7 +115,6 @@ const IdentificationSection = () => {
     const level3Data = await Promise.all(
       Object.values(level3).map((type) => BackendAPI.getByKYC(type)),
     );
-
     const level1Finalised = {
       list: level1Data?.map((kyc) => ({
         data: kyc[Object.keys(kyc)[0]]?.data,
@@ -133,6 +132,7 @@ const IdentificationSection = () => {
           detail?.rejectReason != null && !detail?.verify && detail?.url != null
         );
       }),
+      reject_message: level1Data[0][level1?.firstName]?.data?.rejectReason,
       isVerified: level1Data?.every(
         (kyc) => kyc[Object.keys(kyc)[0]]?.data?.verify,
       ),
@@ -155,6 +155,8 @@ const IdentificationSection = () => {
           detail?.rejectReason != null && !detail?.verify && detail?.url != null
         );
       }),
+      reject_message:
+        level2Data[0][level2?.PROOF_OF_ADRESS]?.data?.rejectReason,
       isVerified: level2Data?.every(
         (kyc) => kyc[Object.keys(kyc)[0]]?.data?.verify,
       ),
@@ -171,6 +173,8 @@ const IdentificationSection = () => {
           detail?.rejectReason == null && !detail?.verify && detail?.url != null
         );
       }),
+      reject_message:
+        level3Data[0][level3?.ENHANCED_DILIGENCE]?.data?.rejectReason,
       isRejected: level3Data?.some((kyc) => {
         const detail = kyc[Object.keys(kyc)[0]]?.data;
         return (
@@ -204,6 +208,7 @@ const IdentificationSection = () => {
         setOpenModal("");
     }
   };
+
   return (
     <>
       {openModal == "level1" && (
@@ -240,12 +245,16 @@ const IdentificationSection = () => {
         />
       )}
       <div className="IdentificationSection">
-        <IdentificationStepper kycData={kycData} />
+        <IdentificationStepper
+          kycData={kycData}
+          contentHeight={contentHeight}
+        />
         <div className="identification-card-wrapper">
           {Object.keys(kycData)?.length > 0 &&
             Object.keys(kycData)?.map((title, index) => {
               return (
                 <LevelCard
+                  setContentHeight={setContentHeight}
                   level={level}
                   card={kycData[title]}
                   keyIndex={index}

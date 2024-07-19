@@ -1,0 +1,21 @@
+.reject-modal-text-title {
+  font-size: 16px;
+}
+
+.decline-text-container {
+  border-radius: 6px;
+  border: 1px dashed var(--Dark, #202020) !important;
+  background: var(--BG2, #171717);
+  box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15);
+}
+
+.decline-text-container:focus,
+.decline-text-container:focus-within,
+.decline-text-container:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+.decline-modal-container {
+  padding: 20px 20px 4px 20px;
+}

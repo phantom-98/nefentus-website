@@ -177,10 +177,12 @@ export default class backendAPI {
         }),
       };
       const response = await fetch(url, options);
+      const data = await response.json();
+      if (data) return data;
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      return response;
+      return data;
     } catch (error) {
       return null; // or return some default value
     }
@@ -544,7 +546,6 @@ export default class backendAPI {
       // if (!response.ok) {
       //   throw new Error("Network response was not ok");
       // }
-
       if (response.ok) {
         const data = await response.json();
         setCookie("token", data.jwtToken);
@@ -555,7 +556,7 @@ export default class backendAPI {
           action: "login",
           label: data.email,
         });
-        return response;
+        return data;
       }
     } catch (e) {
       console.log(e, "responseresponse");
@@ -1551,9 +1552,9 @@ export default class backendAPI {
       return null; // or return some default value
     }
   }
-  async contact(title, firstName, lastName, email, linkedin, comment) {
+  async apply(title, firstName, lastName, email, linkedin, comment) {
     try {
-      const url = `${this.baseURL}/contact`;
+      const url = `${this.baseURL}/apply`;
 
       const options = {
         method: "POST",
@@ -1568,6 +1569,26 @@ export default class backendAPI {
           linkedin,
           comment,
         }),
+      };
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response;
+    } catch (error) {
+      return null; // or return some default value
+    }
+  }
+  async contact(body) {
+    try {
+      const url = `${this.baseURL}/contact`;
+
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
       };
       const response = await fetch(url, options);
       if (!response.ok) {

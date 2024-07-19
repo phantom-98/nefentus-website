@@ -5,9 +5,9 @@
   background: var(--BG2, #171717);
   border-radius: 6px;
   font-size: 14px;
-  padding: 8px 12px;
+  padding: 1rem;
   outline: 0 !important;
-  font-family: "Axiforma", sans-serif;
+  /* font-family: "Axiforma", sans-serif; */
 }
 
 /* .inputWrapper .input:focus {
@@ -20,9 +20,7 @@
   color: rgba(255, 255, 255, 0.42);
 }
 
-.attachmentWrapper .label,
-.textareaWrapper .label,
-.inputWrapper .label {
+.label {
   font-size: 1.2rem !important;
   margin-bottom: 0.5rem;
   font-weight: 500;
@@ -173,8 +171,8 @@
 .dashboardInput,
 .dashboardTextarea,
 .attachment {
-  font-size: 14px !important;
-  padding: 8px 12px !important;
+  font-size: 1.4rem !important;
+  padding: 1rem 1.8rem !important;
   background-color: var(--BG2, #171717);
 }
 
@@ -325,4 +323,18 @@
   background-image: url("../../assets/newDashboardIcons/add-product-background2.svg") !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
+}
+
+.currencySelectField {
+  width: 25%;
+}
+
+.currencySelectLabel {
+  text-wrap: nowrap;
+}
+
+@media screen and (max-width: 767px) {
+  .currencySelectField {
+    width: 100%;
+  }
 }

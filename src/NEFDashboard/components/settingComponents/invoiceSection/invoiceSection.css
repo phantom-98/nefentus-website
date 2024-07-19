@@ -40,6 +40,7 @@
 
 .vat-number-change-button {
   padding: 8px 16px;
+  font-size: 16px;
 }
 
 .invoice-section-switch.ant-switch-checked,
@@ -70,7 +71,7 @@
 }
 
 .invoice-section-option-title {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
 }
 
@@ -80,4 +81,24 @@
 
 .invoice-wallet-title-subcontainer {
   min-width: 97px;
+}
+
+@media (max-width: 767px) {
+  .funds-receiving-wallet {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .funds-receiving-wallet .invoice-wallet-container {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .invoice-action-item-container {
+    max-width: unset;
+    flex-shrink: 0;
+    gap: 16px;
+  }
+  .invoice-action-item-container .vat-number-input,
+  .enable-invoicing-value {
+    width: auto;
+  }
 }

@@ -1,39 +1,41 @@
 import "./footer.css";
 import { NefentusLogo } from "../../assets/icon/logos/logos";
-import X from "../../assets/resources/x.svg";
-import In from "../../assets/resources/in.svg";
-import Github from "../../assets/resources/github.svg";
-import Telegram from "../../assets/resources/telegram.svg";
+import InNormal from "../../assets/resources/in.svg";
+import InHover from "../../assets/resources/in_hover.svg";
+import TelegramNormal from "../../assets/resources/telegram.svg";
+import TelegramHover from "../../assets/resources/telegram_hover.svg";
+import XNormal from "../../assets/resources/x.svg";
+import XHover from "../../assets/resources/x_hover.svg";
+import { useState } from "react";
 
-const socials = [
-  {
-    icon: X,
-    link: "",
+const socials = {
+  x: {
+    iconNormal: XNormal,
+    iconHover: XHover,
+    link: "https://x.com/nefentusapp",
   },
-  {
-    icon: In,
-    link: "",
+  in: {
+    iconNormal: InNormal,
+    iconHover: InHover,
+    link: "https://cy.linkedin.com/company/nefentuspay",
   },
-  {
-    icon: Github,
-    link: "https://github.com/nefentus",
-  },
-  {
-    icon: Telegram,
+  telegram: {
+    iconNormal: TelegramNormal,
+    iconHover: TelegramHover,
     link: "https://t.me/nefentus",
   },
-];
+};
 const sitemap = [
   {
     title: "Solutions",
     body: [
       {
         subtitle: "Personal use",
-        link: "/personal-dashboard",
+        link: "/b2c",
       },
       {
         subtitle: "Business use",
-        link: "/sales-dashboard",
+        link: "/b2b",
       },
     ],
   },
@@ -54,19 +56,19 @@ const sitemap = [
     title: "Support",
     body: [
       {
-        subtitle: "FAQ",
-        link: "/resources",
+        subtitle: "Technical support",
+        link: "/technical-support",
       },
       {
-        subtitle: "Ask a question",
-        link: "#",
+        subtitle: "Business support",
+        link: "/business-support",
       },
     ],
   },
 ];
 const sitemap_bottom = [
   {
-    title: "Terms",
+    title: "Imprint",
     link: "/imprint",
   },
   {
@@ -75,17 +77,36 @@ const sitemap_bottom = [
   },
 ];
 const Footer = () => {
+  const [icon_in, setIcon_in] = useState(socials.in.iconNormal);
+  const [icon_tele, setIcon_tele] = useState(socials.telegram.iconNormal);
+  const [icon_x, setIcon_x] = useState(socials.x.iconNormal);
   return (
     <div className="footer-layout">
       <div className="footer-top container">
         <div style={{ width: "12rem" }}>
           <NefentusLogo />
           <div className="socials">
-            {socials.map((item) => (
-              <a href={item.link}>
-                <img src={item.icon} />
-              </a>
-            ))}
+            <a
+              href={socials.x.link}
+              onMouseEnter={() => setIcon_x(socials.x.iconHover)}
+              onMouseLeave={() => setIcon_x(socials.x.iconNormal)}
+            >
+              <img src={icon_x} />
+            </a>
+            <a
+              href={socials.in.link}
+              onMouseEnter={() => setIcon_in(socials.in.iconHover)}
+              onMouseLeave={() => setIcon_in(socials.in.iconNormal)}
+            >
+              <img src={icon_in} />
+            </a>
+            <a
+              href={socials.telegram.link}
+              onMouseEnter={() => setIcon_tele(socials.telegram.iconHover)}
+              onMouseLeave={() => setIcon_tele(socials.telegram.iconNormal)}
+            >
+              <img src={icon_tele} />
+            </a>
           </div>
         </div>
         <div className="sitemap">

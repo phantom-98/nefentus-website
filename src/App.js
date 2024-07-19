@@ -62,7 +62,6 @@ const IntegrationsDashboard = React.lazy(() =>
   import("./dashboardNew/screens/integrationsDashboard"),
 );
 
-const Contact = React.lazy(() => import("./components/contact/contact"));
 const Home = React.lazy(() => import("./pages/Home"));
 const SignUp = React.lazy(() => import("./pages/Signup"));
 const Layout = React.lazy(() => import("./pages/Layout"));
@@ -121,10 +120,27 @@ import SettingLayout from "./NEFDashboard/containers/settingLayout";
 import SettingPage from "./NEFDashboard/containers/settings";
 import Products from "./NEFDashboard/containers/products";
 import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
-import NewLanding, { NewB2B, NewB2C } from "./pages/Landing";
+import AuthLayout from "./NEFDashboard/containers/authLayout";
+import LoginForm from "./NEFDashboard/containers/login";
+import SignForm from "./NEFDashboard/containers/signUp";
+import ForgotPassword from "./NEFDashboard/containers/forgotPassword";
+import SetPasswordForm from "./NEFDashboard/containers/setPassword";
+import NewLanding, {
+  Contact,
+  Contact_Expert,
+  NewB2B,
+  NewB2C,
+  NewResources,
+} from "./pages/Landing";
 import Resources from "./components/resources";
+import PageNotFound from "./NEFDashboard/components/pageNotFound";
+import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
+import AddUserForTablet from "./NEFDashboard/components/addUserForTablet";
+import KycDashboard from "./NEFDashboard/containers/kycDasboard";
 
 function App() {
+  const { t } = useTranslation();
   useEffect(() => {
     const scrollEvent = () => {
       const scrollElement = document.querySelectorAll(".scroll");
@@ -217,10 +233,28 @@ function App() {
                 >
                   <ScrollToTop>
                     <Routes>
+                      <Route path="/login" element={<LoginForm />} />
+                      <Route path="/signup" element={<SignForm />} />
+                      <Route
+                        path="/forgot-password"
+                        element={
+                          <AuthLayout>
+                            <ForgotPassword />
+                          </AuthLayout>
+                        }
+                      />
+                      <Route
+                        path="/reset-password"
+                        element={
+                          <AuthLayout>
+                            <SetPasswordForm />
+                          </AuthLayout>
+                        }
+                      />
                       <Route
                         path="/new-settings"
                         element={
-                          <SettingLayout>
+                          <SettingLayout title={"settingPage.title"}>
                             <SettingPage />
                           </SettingLayout>
                         }
@@ -278,6 +312,24 @@ function App() {
                           </DashboardLayout>
                         }
                       />
+
+                      <Route
+                        path="/add-user"
+                        element={
+                          <DashboardLayout>
+                            <AddUserForTablet />
+                          </DashboardLayout>
+                        }
+                      />
+
+                      <Route
+                        path="/kyc-dashboard"
+                        element={
+                          <DashboardLayout title={"KYC Verification"}>
+                            <KycDashboard />
+                          </DashboardLayout>
+                        }
+                      />
                       {/* <Route
                         path="/"
                         element={
@@ -310,13 +362,21 @@ function App() {
                           </Layout>
                         }
                       />
+                      <Route path="/resources" element={<NewResources />} />
                       <Route
-                        path="/resources"
+                        path="/business-support"
                         element={
-                          <>
-                            <Navigation />
-                            <Resources />
-                          </>
+                          <Layout>
+                            <Contact />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path="/technical-support"
+                        element={
+                          <Layout>
+                            <Contact_Expert />
+                          </Layout>
                         }
                       />
 
@@ -567,6 +627,15 @@ function App() {
                             {/* <Navigation /> */}
                             <Pay />
                             {/* <Footer /> */}
+                          </>
+                        }
+                      />
+                      <Route
+                        path="*"
+                        element={
+                          <>
+                            <Navigation />
+                            <PageNotFound />
                           </>
                         }
                       />

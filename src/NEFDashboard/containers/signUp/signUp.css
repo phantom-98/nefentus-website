@@ -1,0 +1,123 @@
+.auth-form .ant-select {
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717) !important;
+  box-shadow: 0px 3px 10.2px 0px rgba(0, 0, 0, 0.03);
+}
+.auth-form .ant-select-selector {
+  background: var(--BG2, #171717) !important;
+  padding: 0 12px !important;
+  box-shadow: none !important;
+}
+.auth-form .ant-select-selector:focus-visible,
+.auth-form .ant-form-item-control-input-content {
+  outline: none;
+}
+.auth-form .phoneNumber .ant-select {
+  max-width: 60px;
+  border: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  height: auto !important;
+}
+.back-to-login-text {
+  margin-top: -12px;
+}
+.telephone-flag {
+  width: 60px;
+}
+.telephone-number {
+  width: 250px !important;
+}
+.phoneNumber {
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717) !important;
+  box-shadow: 0px 3px 10.2px 0px rgba(0, 0, 0, 0.03);
+  padding: 4px 12px 4px 0px;
+}
+.auth-form .phoneNumber .ant-select .ant-select-selector {
+  background: none !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.auth-form .phoneNumber .ant-input {
+  padding: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.authLayout .ant-col:has(.back-btn-role) {
+  position: static;
+}
+
+:where(
+    .css-dev-only-do-not-override-128oip2
+  ).telephone-flag.ant-select-show-arrow
+  .ant-select-selection-item,
+:where(
+    .css-dev-only-do-not-override-128oip2
+  ).telephone-flag.ant-select-show-arrow
+  .ant-select-selection-placeholder {
+  display: flex;
+}
+
+.country-flag-container {
+  padding-left: 12px;
+}
+.email-field-container {
+  position: relative;
+}
+
+.email-field-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.email-field-input {
+  padding-right: 50px !important;
+}
+
+.signup-submit-button {
+  margin-top: 12px;
+}
+
+.signup-button-text {
+  margin-left: 8px;
+}
+.signup-submit-button .ant-btn-loading-icon .anticon-loading {
+  font-size: 18px;
+}
+
+.telephone-flag-dropdown {
+  padding: 0px;
+  border: 1px solid var(--Dark, #202020);
+  /* max-height: 270px; */
+  width: 32.33vw;
+}
+
+.telephone-flag-search,
+.telephone-flag-search:hover,
+.telephone-flag-search:focus {
+  padding: 12px;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  background: var(--BG2, #171717);
+  border-bottom: 1px solid var(--Dark, #202020) !important;
+  border-radius: 6px 6px 0px 0px;
+}
+
+.telephone-flag-search-icon {
+  margin-right: 8px;
+}
+
+.telephone-flag-dropdown div div .rc-virtual-list {
+  background: #171717;
+}

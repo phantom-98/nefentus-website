@@ -11,7 +11,7 @@ import NotificationSection from "./notificationSection";
 import ChangeFieldModal from "./changeFieldModal";
 import backend_API from "../../../../api/backendAPI";
 import "./profileSection.css";
-import { countryList } from "../../../../constants";
+import { countryList, updatedCountries } from "../../../../constants";
 import CropDialog, {
   dataURLtoFile,
 } from "../../../../components/cropDialog/cropDialog";
@@ -32,7 +32,7 @@ const ProfileSection = () => {
   const [user, setUser] = useState({});
   const [selectedField, setSelectedField] = useState("");
   const [countries] = useState(
-    getCountryList()?.map((country) => ({
+    updatedCountries?.map((country) => ({
       label: t(country?.display),
       value: country?.value,
       icon: country?.symbol,
@@ -296,14 +296,22 @@ const ProfileSection = () => {
       )}
       <div>
         <Flex vertical gap={32} className="personal-profile-detail">
-          <Flex align="center" justify="space-between">
+          <Flex
+            align="center"
+            justify="space-between"
+            className="personal-profile-detail-content"
+          >
             <div>
               <div className="default-text profile-photo-title">Your Photo</div>
               <div className="default-text-gray">
                 This will be displayed on your profile
               </div>
             </div>
-            <Flex align="center" gap={24}>
+            <Flex
+              align="center"
+              gap={24}
+              className="profile-image-upload-wrapper"
+            >
               <Avatar
                 shape="circle"
                 size={54}
@@ -315,7 +323,11 @@ const ProfileSection = () => {
                   )
                 }
               />
-              <Flex align="center" gap={8}>
+              <Flex
+                align="center"
+                gap={8}
+                className="profile-image-upload-btn-wrapper"
+              >
                 <Button
                   icon={<img src={UploadIcon} />}
                   className="default-text-gray profile-image-upload"
@@ -336,7 +348,13 @@ const ProfileSection = () => {
 
           <Flex vertical gap={32} className="profile-options-container">
             {profile_options?.map((data, index) => (
-              <Flex align="center" justify="space-between" gap={8} key={index}>
+              <Flex
+                className="profile-option-container"
+                align="center"
+                justify="space-between"
+                gap={8}
+                key={index}
+              >
                 <div>
                   <Text className="default-text profile-option-title">
                     {data?.title}
@@ -378,7 +396,7 @@ const ProfileSection = () => {
                 ) : (
                   <Flex
                     align="center"
-                    justify="start"
+                    justify="space-between"
                     gap={16}
                     className="profile-option-subcontainer"
                   >

@@ -175,7 +175,7 @@ export const Textarea = ({
         <p
           className={`${styles.label} ${
             dashboard ? styles.dashboardLabel : ""
-          } default-text`}
+          } ${dashboard ? "default-text" : ""}`}
         >
           {label}
         </p>
@@ -574,13 +574,9 @@ export const OptionsWithImage = ({
 
 export const CurrencySelectWithLabel = ({ label, value, setValue }) => {
   return (
-    <div className={styles.inputWrapper}>
+    <div className={styles.currencySelectField}>
       {label && (
-        <p
-          className={`${styles.label} ${
-            dashboard ? styles.dashboardLabel : ""
-          }`}
-        >
+        <p className={`default-text-gray ${styles.currencySelectLabel}`}>
           {label}
         </p>
       )}
@@ -610,6 +606,7 @@ export const CurrencySelect = ({ value, setValue, dashboard }) => {
           borderRadius: dashboard ? "6px" : "",
           width: dashboard ? "100%" : "",
           height: dashboard ? "40px" : "",
+          marginTop: "6px",
         }}
         onClick={() => setOpen((prev) => !prev)}
         onMouseLeave={() => setOpen(false)}
@@ -855,6 +852,7 @@ export const RadioSelect = ({
           display: "flex",
           gap: "6px",
         }}
+        className="radio-text-custom"
       >
         {options.map((option, index) => {
           return (
@@ -893,7 +891,14 @@ export const CombinedInput = ({
 
   return (
     <div className={styles.inputWrapper} style={{ width: "100%" }}>
-      <p className={styles.label}>{t("payments.address").concat("*")}</p>
+      <p
+        className={`${styles.label}`}
+        style={{
+          color: "var(--text2-color)",
+        }}
+      >
+        {t("payments.address").concat("*")}
+      </p>
 
       <div
         style={{
@@ -911,11 +916,10 @@ export const CombinedInput = ({
         }}
       >
         <CountrySelect
-          // setChanged={setChanged}
           value={country}
           setValue={setCountry}
           options={getCountryList()}
-          styles={{
+          style={{
             borderBottom: "none",
             borderBottomLeftRadius: "0",
             borderBottomRightRadius: "0",
@@ -958,10 +962,12 @@ export const CombinedInput = ({
 
 export const CountrySelect = ({
   setChanged,
+  label,
+  placeholder,
   options,
   value,
   setValue,
-  styles,
+  style,
   className,
 }) => {
   const { t } = useTranslation();
@@ -980,7 +986,8 @@ export const CountrySelect = ({
     }
   }, [value]);
   return (
-    <>
+    <div>
+      {label && <p className={styles.label}>{label}</p>}
       <div
         style={{
           padding: "0",
@@ -995,13 +1002,13 @@ export const CountrySelect = ({
             width: "100%",
             display: "flex",
             alignItems: "center",
-            padding: "0.7rem 1rem",
+            padding: "1rem",
             gap: "1rem",
             border: "1px solid var(--border-color)",
             borderRadius: "0.6rem",
             background: "var(--bg2-color)",
             cursor: "pointer",
-            ...styles,
+            ...style,
           }}
           className={`${className}`}
         >
@@ -1018,13 +1025,14 @@ export const CountrySelect = ({
           <input
             className="custom"
             style={{
-              fontSize: "1.2rem",
+              fontSize: style.fontSize ?? "1.2rem",
               width: `calc(100% - ${value ? "6" : "2"}rem)`,
               outline: "0",
               background: "transparent",
-              height: "2rem",
+              // fontFamily: "Axiforma, sans-serif",
+              // height: "2rem",
             }}
-            placeholder={value ? "" : t("countries.choose")}
+            placeholder={value ? "" : placeholder ?? t("countries.choose")}
             value={keyword}
             onChange={(e) => {
               !open && setOpen(true);
@@ -1050,7 +1058,7 @@ export const CountrySelect = ({
               background: "var(--bg2-color)",
               border: "1px solid var(--border-color)",
               zIndex: "10",
-              ...styles,
+              ...style,
             }}
           >
             {filtered.map((item, index) => {
@@ -1077,7 +1085,7 @@ export const CountrySelect = ({
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

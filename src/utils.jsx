@@ -92,6 +92,7 @@ export function getRole(user) {
   const isSeniorBroker = roles?.includes("ROLE_SENIOR_BROKER");
   const isLeader = roles?.includes("ROLE_LEADER");
   const isAdmin = roles?.includes("ROLE_ADMIN");
+  const isPrivate = roles?.includes("ROLE_PRIVATE");
 
   if (isAdmin) {
     return "admin";
@@ -103,6 +104,8 @@ export function getRole(user) {
     return "seniorbroker";
   } else if (isLeader) {
     return "leader";
+  } else if (isPrivate) {
+    return "private";
   } else return "";
 }
 
@@ -163,6 +166,11 @@ export const checkJwtToken = async () => {
     Cookies.remove("token");
     window.location.href = "/";
   }
+};
+
+export const onNavigateToForgot = async (navigate) => {
+  await new backendAPI().signout();
+  navigate("/forgot-password");
 };
 
 export const logOut = async (navigate) => {
@@ -275,4 +283,21 @@ export const graphDataToList = (data) => {
     return dateA - dateB;
   });
   return dataList;
+};
+
+export const isWalletConflict = () => {
+  const isCoinbase =
+    window.ethereum?.isCoinbaseWallet ||
+    window.ethereum?.providers?.find((x) => x.isCoinbaseWallet) ||
+    window.web3?.currentProvider?.isCoinbaseWallet;
+  const isMetamask =
+    window.ethereum?.isMetaMask ||
+    window.ethereum?.providers?.find((x) => x.isMetaMask) ||
+    window.web3?.currentProvider?.isMetaMask;
+  const isPhantom = window.ethereum?.isPhantom;
+  return (
+    window.ethereum?.overrideIsMetaMask ||
+    (isCoinbase && isMetamask) ||
+    (isPhantom && isMetamask)
+  );
 };

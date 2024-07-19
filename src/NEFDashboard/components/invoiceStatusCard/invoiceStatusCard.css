@@ -39,6 +39,18 @@
   width: 4px;
 }
 
+.sales-income-card-container .income-card {
+  justify-content: flex-start;
+}
+
+.sales-income-card-container .income-card .income-profit-container {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.sales-income-card-container .income-card .ant-card-body {
+  height: 100%;
+}
+
 .invoice-status-text {
   text-transform: capitalize;
 }
@@ -62,7 +74,6 @@
 
   .income-card {
     min-width: 47.8%;
-    height: auto;
   }
 
   .income-card:last-child {
@@ -72,6 +83,10 @@
   .sales-income-card-container {
     flex-wrap: wrap;
     gap: 12px;
+  }
+  .sales-income-card-container .ant-card {
+    width: 100%;
+    height: auto;
   }
   .income-card-title {
     text-wrap: wrap;

@@ -30,9 +30,11 @@
     "imprint": "Impressum",
     "forgotPassword": "Passwort vergessen",
     "privacy": "Privatsphäre",
-    "vacancy1": "Karrie",
+    "vacancy": "Karriere",
     "resetPassword": "Passwort zurücksetzen",
-    "support": "Unterstützung"
+    "support": "Unterstützung",
+    "b2b": "B2B",
+    "b2c": "B2C"
   },
   "home": {
     "heroTitle": "Akzeptieren Sie Krypto Zahlungen",
@@ -437,7 +439,8 @@
       "Leader": "Leader",
       "SeniorBroker": "Senior Broker",
       "Broker": "Broker",
-      "Affiliate": "Affiliate"
+      "Affiliate": "Affiliate",
+      "Private": "Privat"
     },
     "charts": {
       "last24h": "Letzte 24 Stunden",
@@ -804,6 +807,7 @@
     "UnitedKingdom": "Vereinigtes Königreich",
     "Uruguay": "Uruguay",
     "Uzbekistan": "Usbekistan",
+    "unitedStates": "Vereinigte Staaten",
     "Venezuela": "Venezuela",
     "Vietnam": "Vietnam",
     "VirginIslandsUS": "Amerikanische Jungferninseln",
@@ -980,6 +984,7 @@
     "createProductModal": {
       "createNewProduct": "Neues Produkt erstellen",
       "createProduct": "Produkt erstellen",
+      "updateProduct": "Produkt aktualisieren",
       "imageLabel": "Produktbild",
       "attach": "Anhang hinzufügen ",
       "browseLink": "Durchsuchen",
@@ -998,10 +1003,10 @@
       "currency": "Währung",
       "limitless": "Unbegrenzt",
       "quantity": "Begrenzt",
-      "stockAvailable": "Verfügbarer Lagerbestand",
+      "stockAvailable": "Verf. Lagerbestand",
       "add": "Hinzufügen",
       "update": "Aktualisieren",
-      "cancel": "Stornieren",
+      "cancel": "Abbrechen",
       "updatedSuccessfully": "Produkt erfolgreich aktualisiert!",
       "addedSuccessfully": "Produkt erfolgreich hinzugefügt!",
       "deletedSuccessfully": "Produkt erfolgreich gelöscht!",
@@ -1081,7 +1086,7 @@
     "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
     "total": "Rechnungsbetrag",
-    "informVAT1": "Die MwSt. von",
+    "informVAT1": "Die UmSt. von",
     "informVAT2": "ist in diesem Betrag enthalten",
     "cryptoAmount": "In Krypto",
     "cryptoDescription": "Dieser Betrag entspricht dem Rechnungsbetrag in der ausgewählten Kryptowährung. Nach der Bezahlung wird der Betrag dem Verkäufer gutgeschrieben.",
@@ -1091,12 +1096,15 @@
     "agree": "Durch Anklicken der Schaltfläche erklären Sie sich mit den",
     "terms": "Bedingungen des Dienstes",
     "agree2": "einverstanden",
+    "walletConflict": "Wallet Konflikt",
+    "conflictDescription": "Wir haben festgestellt, dass sowohl MetaMask als auch Coinbase Wallet installiert sind. Dies kann zu Problemen beim Bezahlen mit einem der beiden führen. Wenn Sie Probleme haben, versuchen Sie bitte, eine von beiden zu deaktivieren.",
     "pay": {
       "title": "Zahlungsdetails",
       "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein",
       "internalWalletButtonTitle": "Nefentus Wallet",
       "externalWalletButtonTitle": "Andere Wallets"
-    }
+    },
+    "payInvoice": "Rechnung bezahlen"
   },
 
   "transactions": {
@@ -1247,6 +1255,8 @@
     "walletDescription": "Wählen Sie die Wallet, die beim Erstellen einer Rechnung oder beim Verkauf eines Produkts Zahlungen erhält.",
     "stablecoin": "Stablecoin",
     "stablecoinDescription": "Wählen Sie den Stablecoin, in den umgewandelt werden soll.",
+    "invoiceNotFoundTitle": "Fehler: Rechnung nicht gefunden",
+    "invoiceNotFoundDescription": "Ups! Es sieht so aus, als ob die Rechnung, die Sie aufrufen möchten, nicht existiert oder entfernt wurde. Bitte überprüfen Sie den Link und versuchen Sie es erneut.",
     "action": {
       "add": "Hinzufügen",
       "enable": "Aktivieren",
@@ -1309,7 +1319,7 @@
     "first": "Wir verwenden Cookies von Drittanbietern, um Ihr Website-Erlebnis zu personalisieren.",
     "privacyPolicy1": " Lesen Sie mehr über unsere ",
     "privacyPolicyLink": "Datenschutzbestimmungen",
-    "privacyPolicy2": "lesen.",
+    "privacyPolicy2": ".",
     "decline": "Ablehnen",
     "accept": "Akzeptieren"
   },
@@ -1432,7 +1442,7 @@
     "productTable": {
       "productName": "Produktname",
       "client": "Kunde",
-      "invoiceId": "Rechnungs-ID",
+      "invoiceId": "Rechnungsnummer",
       "amount": "Betrag",
       "date": "Datum",
       "action": "Aktion"
@@ -1454,7 +1464,7 @@
     "taxText2": " ist in diesem Betrag enthalten",
     "crypto": "In Krypto",
     "invoiceItems": "Rechnungspositionen",
-    "gasPrice": "Gaspreis",
+    "transactionFees": "Transaktionsgebühren",
     "total": "Gesamtbetrag",
     "invoiceInfo": "Rechnungsinformationen",
     "invoiceFrom": "Rechnung von",
@@ -1469,7 +1479,14 @@
     "drawerDescription": "Vielen Dank für Ihr Geschäft! Wir schätzen Ihre prompten Zahlungen. Wenn Sie Fragen oder Bedenken zu dieser Rechnung haben, zögern Sie bitte nicht, uns zu kontaktieren. Wir freuen uns darauf, Ihnen auch in Zukunft zu dienen.",
     "savePdf": "Als PDF speichern",
     "saveReceipt": "Quittung speichern",
-    "saveInvoice": "Rechnung speichern"
+    "saveInvoice": "Rechnung speichern",
+    "currency": "Währung",
+    "items": {
+      "description": "Beschreibung",
+      "price": "Preis",
+      "qty": "Menge",
+      "total": "Gesamtpreis"
+    }
   },
   "invoicePreview": {
     "title": "Rechnungsvorschau",
@@ -1487,7 +1504,6 @@
     "rateDescription2": " sind mit dem Wechselkurs vom ",
     "rateDescription3": " für 1USD berechnet",
     "vatDescription": "Mehrwertsteuer: Umkehrung des Steuerschuldverhältnisses, die Steuerpflicht wird auf den Leistungsempfänger übertragen. Lokale Mehrwertsteuer anwendbar.",
-    "payInvoice": "Rechnung bezahlen",
     "description": "Beschreibung",
     "price": "Preis",
     "qty": "Menge",
@@ -1506,10 +1522,28 @@
     "deleteProductConfirmation": "Sind Sie sicher, dass Sie dieses Produkt löschen möchten?",
     "productDetail": "Produktdetails"
   },
+  "content": {
+    "contentSubText": "Wenn Sie glauben, dass dies ein Fehler ist oder Hilfe benötigen, wenden Sie sich bitte an unser Support-Team.",
+    "thankyouText": "Vielen Dank, dass Sie Nefentus verwenden!",
+    "backButton": "Zurück zur Startseite",
+    "productTitle": "Fehler: Produkt nicht gefunden",
+    "productDescription": "Ups! Es sieht so aus, als ob der Produktzahlungslink, den Sie aufrufen möchten, nicht existiert oder entfernt wurde. Bitte überprüfen Sie den Link und versuchen Sie es erneut.",
+    "pageNotFound": "Fehler: Seite nicht gefunden",
+    "pageNotFoundDescription": "Ups! Es sieht so aus, als ob die Seite, die Sie aufrufen möchten, nicht existiert oder entfernt wurde. Bitte überprüfen Sie die URL und versuchen Sie es erneut."
+  },
   "cancel": "Stornieren",
   "confirm": "Bestätigen",
   "close": "Schließen",
   "add": "Hinzufügen",
   "create": "Erstellen",
-  "update": "Aktualisieren"
+  "update": "Aktualisieren",
+  "settingPage": {
+    "title": "Einstellungen",
+    "back": "Zurück",
+    "subTitle": "Allgemeine Einstellungen",
+    "general": "Allgemein",
+    "security": "Sicherheit",
+    "identification": "Identifikation",
+    "invoice": "Rechnung"
+  }
 }
