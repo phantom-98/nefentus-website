@@ -184,10 +184,12 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
             <Text className="default-text-gray transaction-drawer-product-name">
               {t("dashboard.affiliateLink")}
             </Text>
-            <Flex align="center" justify="space-between" gap={8}>
+            <Flex align="center" gap={8}>
               <Text
                 className="default-text"
                 style={{
+                  width: "calc(100% - 100px)",
+                  overflow: "hidden",
                   background: "#171717",
                   textWrap: "nowrap",
                   padding: "4px 15px",
@@ -199,7 +201,7 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
               </Text>
               <Button
                 onClick={() => copyToClipboard(link)}
-                style={{ background: "#202020" }}
+                style={{ background: "#202020", width: "100px" }}
               >
                 <Flex gap={3} align="center">
                   <img src={CopyIcon} alt="copy-icon" />
