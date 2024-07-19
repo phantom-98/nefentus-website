@@ -331,7 +331,7 @@ h1 {
   font-size: 5rem;
   line-height: 105%;
 }
-
+.layout-community .layout-title .title,
 .gradient {
   background: linear-gradient(
     to right,
