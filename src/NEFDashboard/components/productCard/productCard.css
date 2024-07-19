@@ -79,3 +79,13 @@
   background: var(--Dark, #202020);
   box-shadow: 0px 4px 6px 0px rgba(18, 18, 18, 0.15);
 }
+
+.product-default-image {
+  border-radius: 4px;
+  background: var(--Dark, #202020);
+  display: flex;
+  width: 54px;
+  height: 54px;
+  justify-content: center;
+  align-items: center;
+}

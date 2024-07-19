@@ -31,11 +31,11 @@ const AuthLayout = ({ children }) => {
         </div>
       ) : null}
 
-      <Row align="middle">
+      <Row align="middle" className="auth-row">
         <Col span={24} lg={12}>
           {children}
         </Col>
-        <Col span={24} lg={12}>
+        {/* <Col span={24} lg={12}>
           <div
             className="authLayout-img-container"
             style={{ backgroundImage: `url(${AuthLayoutImg})` }}
@@ -45,7 +45,7 @@ const AuthLayout = ({ children }) => {
               <p>Use cryptocurrencies without risk</p>
             </Flex>
           </div>
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );

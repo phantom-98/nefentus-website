@@ -439,7 +439,8 @@
       "Leader": "Leader",
       "SeniorBroker": "Senior Broker",
       "Broker": "Broker",
-      "Affiliate": "Affiliate"
+      "Affiliate": "Affiliate",
+      "Private": "Privat"
     },
     "charts": {
       "last24h": "Letzte 24 Stunden",
@@ -806,6 +807,7 @@
     "UnitedKingdom": "Vereinigtes Königreich",
     "Uruguay": "Uruguay",
     "Uzbekistan": "Usbekistan",
+    "unitedStates": "Vereinigte Staaten",
     "Venezuela": "Venezuela",
     "Vietnam": "Vietnam",
     "VirginIslandsUS": "Amerikanische Jungferninseln",
@@ -982,6 +984,7 @@
     "createProductModal": {
       "createNewProduct": "Neues Produkt erstellen",
       "createProduct": "Produkt erstellen",
+      "updateProduct": "Produkt aktualisieren",
       "imageLabel": "Produktbild",
       "attach": "Anhang hinzufügen ",
       "browseLink": "Durchsuchen",
@@ -1000,10 +1003,10 @@
       "currency": "Währung",
       "limitless": "Unbegrenzt",
       "quantity": "Begrenzt",
-      "stockAvailable": "Verfügbarer Lagerbestand",
+      "stockAvailable": "Verf. Lagerbestand",
       "add": "Hinzufügen",
       "update": "Aktualisieren",
-      "cancel": "Stornieren",
+      "cancel": "Abbrechen",
       "updatedSuccessfully": "Produkt erfolgreich aktualisiert!",
       "addedSuccessfully": "Produkt erfolgreich hinzugefügt!",
       "deletedSuccessfully": "Produkt erfolgreich gelöscht!",
@@ -1083,7 +1086,7 @@
     "price": "Stückpreis",
     "seller": "Infos zum Verkäufer",
     "total": "Rechnungsbetrag",
-    "informVAT1": "Die MwSt. von",
+    "informVAT1": "Die UmSt. von",
     "informVAT2": "ist in diesem Betrag enthalten",
     "cryptoAmount": "In Krypto",
     "cryptoDescription": "Dieser Betrag entspricht dem Rechnungsbetrag in der ausgewählten Kryptowährung. Nach der Bezahlung wird der Betrag dem Verkäufer gutgeschrieben.",
@@ -1093,6 +1096,8 @@
     "agree": "Durch Anklicken der Schaltfläche erklären Sie sich mit den",
     "terms": "Bedingungen des Dienstes",
     "agree2": "einverstanden",
+    "walletConflict": "Wallet Konflikt",
+    "conflictDescription": "Wir haben festgestellt, dass sowohl MetaMask als auch Coinbase Wallet installiert sind. Dies kann zu Problemen beim Bezahlen mit einem der beiden führen. Wenn Sie Probleme haben, versuchen Sie bitte, eine von beiden zu deaktivieren.",
     "pay": {
       "title": "Zahlungsdetails",
       "description": "Bitte geben Sie zur Bezahlung Ihre Daten ein",
@@ -1437,7 +1442,7 @@
     "productTable": {
       "productName": "Produktname",
       "client": "Kunde",
-      "invoiceId": "Rechnungs-ID",
+      "invoiceId": "Rechnungsnummer",
       "amount": "Betrag",
       "date": "Datum",
       "action": "Aktion"
@@ -1459,7 +1464,7 @@
     "taxText2": " ist in diesem Betrag enthalten",
     "crypto": "In Krypto",
     "invoiceItems": "Rechnungspositionen",
-    "gasPrice": "Gaspreis",
+    "transactionFees": "Transaktionsgebühren",
     "total": "Gesamtbetrag",
     "invoiceInfo": "Rechnungsinformationen",
     "invoiceFrom": "Rechnung von",
@@ -1474,7 +1479,14 @@
     "drawerDescription": "Vielen Dank für Ihr Geschäft! Wir schätzen Ihre prompten Zahlungen. Wenn Sie Fragen oder Bedenken zu dieser Rechnung haben, zögern Sie bitte nicht, uns zu kontaktieren. Wir freuen uns darauf, Ihnen auch in Zukunft zu dienen.",
     "savePdf": "Als PDF speichern",
     "saveReceipt": "Quittung speichern",
-    "saveInvoice": "Rechnung speichern"
+    "saveInvoice": "Rechnung speichern",
+    "currency": "Währung",
+    "items": {
+      "description": "Beschreibung",
+      "price": "Preis",
+      "qty": "Menge",
+      "total": "Gesamtpreis"
+    }
   },
   "invoicePreview": {
     "title": "Rechnungsvorschau",
@@ -1526,6 +1538,12 @@
   "create": "Erstellen",
   "update": "Aktualisieren",
   "settingPage": {
-    "title": "Einstellungen"
+    "title": "Einstellungen",
+    "back": "Zurück",
+    "subTitle": "Allgemeine Einstellungen",
+    "general": "Allgemein",
+    "security": "Sicherheit",
+    "identification": "Identifikation",
+    "invoice": "Rechnung"
   }
 }

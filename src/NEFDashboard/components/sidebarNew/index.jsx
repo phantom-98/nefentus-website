@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Divider,
   Menu,
@@ -42,6 +42,10 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../../context/themeContext/themeContext";
 import "./sidebar.css";
 import AddUser from "../addUser";
+import SettingSideBar from "../settingSideBar";
+import ArrowRight from "../../../assets/newDashboardIcons/arrow-right-gray.svg";
+import ArrowLeft from "../../../assets/newDashboardIcons/arrow-left.svg";
+import { getCurrencySymbol, getFlagLink } from "../../../countries";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -54,18 +58,32 @@ function getItem(label, key, icon, children, type) {
 }
 
 const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const { toggleTheme } = useTheme();
 
   const { t, i18n } = useTranslation();
   const { user, setUser, setIsWalletConnected } = useAuth();
   const [selectedLanguage, setSelectedLanguage] = useState("en");
-
+  const [currency, setCurrency] = useState("USD");
   const [openSendModal, setOpenSendModal] = useState(false);
   const [openConvertModal, setOpenConvertModal] = useState(false);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
+  const [openSettingDrawer, setOpenSettingDrawer] = useState(false);
   const backend_API = new backendAPI();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.addEventListener("resize", () => setScreenWidth(window.innerWidth));
+  }, [screenWidth]);
+
+  useEffect(() => {
+    setCurrency(
+      localStorage.getItem("currency")
+        ? localStorage.getItem("currency")
+        : "USD",
+    );
+  }, [localStorage.getItem("currency")]);
 
   const handleSubmitCrypto = () => {
     setOpenSendModal(!openSendModal);
@@ -116,24 +134,80 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
         break;
       case 9:
         setOpenAddModal(!openAddModal);
+      case 10:
+        navigate("/kyc-dashboard");
+        break;
 
         break;
     }
   };
+  // const options = [
+  //   {
+  //     value: "usa",
+  //     label: (
+  //       <Row className="currency-option">
+  //         <img src={USAFlag} alt="usa-flag" /> <div>USD $</div>
+  //       </Row>
+  //     ),
+  //   },
+  //   {
+  //     value: "europe",
+  //     label: (
+  //       <Row className="currency-option">
+  //         <img src={EuropeFlag} alt="europe-flag" /> <div>EUR €</div>
+  //       </Row>
+  //     ),
+  //   },
+  // ];
+
   const options = [
     {
-      value: "usa",
+      value: "USD",
       label: (
         <Row className="currency-option">
-          <img src={USAFlag} alt="usa-flag" /> <div>USD $</div>
+          <img src={getFlagLink("US")} alt="usa-flag" width={18} height={14} />
+          <div>USD $</div>
         </Row>
       ),
     },
     {
-      value: "europe",
+      value: "EUR",
       label: (
         <Row className="currency-option">
-          <img src={EuropeFlag} alt="europe-flag" /> <div>EUR €</div>
+          <img
+            src={getFlagLink("EU")}
+            alt="europe-flag"
+            width={18}
+            height={14}
+          />{" "}
+          <div>EUR €</div>
+        </Row>
+      ),
+    },
+    {
+      value: "AED",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("AE")} alt="flag" width={18} height={14} />{" "}
+          <div>{"AED د.إ"}</div>
+        </Row>
+      ),
+    },
+    {
+      value: "UAH",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("UA")} alt="flag" width={18} height={14} />{" "}
+          <div>UAH ₴</div>
+        </Row>
+      ),
+    },
+    {
+      value: "CHF",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("CH")} alt="flag" width={18} height={14} />{" "}
+          <div>CHF</div>
         </Row>
       ),
     },
@@ -142,9 +216,17 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
     {
       key: "1",
       label: (
-        <div className="profile-dropdown-width">
-          {t("personalDashboard.profileDropdown.setting")}
-        </div>
+        <Flex
+          justify="space-between"
+          align="center"
+          className="settingSideBarMenuItem"
+          onClick={() => setOpenSettingDrawer(!openSettingDrawer)}
+        >
+          <div className="profile-dropdown-width">
+            {t("personalDashboard.profileDropdown.setting")}
+          </div>
+          <img src={ArrowLeft} alt="right arrow" width={20} height={20} />
+        </Flex>
       ),
       icon: <img src={SettingIcon} alt="setting" />,
     },
@@ -203,16 +285,6 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
           ]
         : [
             getItem(
-              t("personalDashboard.sidebar.wallets"),
-              "5",
-              <img src={WalletIcon} />,
-            ),
-            getItem(
-              t("personalDashboard.sidebar.referral"),
-              "6",
-              <img src={DashboardIcon} />,
-            ),
-            getItem(
               t("salesDashboard.sales"),
               "7",
               <img src={DashboardIcon} />,
@@ -223,10 +295,24 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
               <img src={ProductIcon} />,
             ),
             getItem(
+              t("personalDashboard.sidebar.referral"),
+              "6",
+              <img src={DashboardIcon} />,
+            ),
+            getItem(
+              t("personalDashboard.sidebar.wallets"),
+              "5",
+              <img src={WalletIcon} />,
+            ),
+            getItem(
               t("referralDashboard.addUser"),
               "9",
               <img src={AddUserIcon} />,
             ),
+            getRole(user) == "admin" ||
+              (user?.roles &&
+                user?.roles[0] == "admin" &&
+                getItem(t("navigation.kyc"), "10", <img src={AddUserIcon} />)),
           ],
       "group",
     ),
@@ -347,14 +433,17 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
           onClose={() => setOpenAddModal(!openAddModal)}
         />
       )}
+
       <div className="sidebar-container">
         <Flex justify="space-between" className="sidebar-header">
-          <div className="sidebar-nefentus-logo">
-            <img src={LogoWide} alt="logo" />
-          </div>
-          <div className="nefentus-logo-mobile">
-            <img src={Logo} alt="logo" />
-          </div>
+          <a href="/">
+            <div className="sidebar-nefentus-logo">
+              <img src={LogoWide} alt="logo" />
+            </div>
+            <div className="nefentus-logo-mobile">
+              <img src={Logo} alt="logo" />
+            </div>
+          </a>
           <Flex align="center" gap={"20px"}>
             <Button className="notificationIconMobileBtn">
               <img src={NotificationIcon} alt="MobileBtnIcon" />
@@ -369,80 +458,98 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
             </Button>
           </Flex>
         </Flex>
+
         <div className="sidebar-body">
           <Divider className="logo-divider" />
-          <Row className="user-block user-block-mobile">
-            <Avatar
-              shape="square"
-              size={35}
-              icon={
-                user?.profileImage ? (
-                  <img src={user?.profileImage} className="user-avatar" />
-                ) : (
-                  <img src={ProfileImg} className="user-avatar" />
-                )
-              }
+
+          {openSettingDrawer && screenWidth < 1199 ? (
+            <SettingSideBar
+              openSettingDrawer={openSettingDrawer}
+              setOpenSettingDrawer={setOpenSettingDrawer}
+              setSideBarShow={setSideBarShow}
+              sideBarShow={sideBarShow}
             />
-            <Col>
-              <div className="username-text">
-                {user?.firstName + " " + user?.lastName}
-              </div>
-              <div className="user-role-text">{getRole(user)}</div>
-            </Col>
-          </Row>
+          ) : (
+            <>
+              <Row className="user-block user-block-mobile">
+                <Avatar
+                  shape="square"
+                  size={35}
+                  icon={
+                    user?.profileImage ? (
+                      <img src={user?.profileImage} className="user-avatar" />
+                    ) : (
+                      <img src={ProfileImg} className="user-avatar" />
+                    )
+                  }
+                />
+                <Col>
+                  <div className="username-text">
+                    {user?.firstName + " " + user?.lastName}
+                  </div>
+                  <div className="user-role-text">{getRole(user)}</div>
+                </Col>
+              </Row>
 
-          <Menu
-            onClick={onClick}
-            defaultOpenKeys={["sub1"]}
-            mode="inline"
-            items={items}
-            className="sidebar-menu"
-          />
-          <Divider className="logo-divider logo-divider-mobile" />
-
-          <Flex justify="space-between" className="currency-block">
-            <Flex gap={"6px"} align="center">
-              <img src={CurrencyIcon} alt="CurrencyIcon" />
-              <p>Currency</p>
-            </Flex>
-            <Flex gap={"6px"} align="center">
-              <Select
-                defaultValue={"europe"}
-                options={options}
-                // onChange={handleLanguage}
-                className="currency-dropdown"
+              <Menu
+                onClick={onClick}
+                defaultOpenKeys={["sub1"]}
+                mode="inline"
+                items={items}
+                className="sidebar-menu"
               />
-            </Flex>
-          </Flex>
+              <Divider className="logo-divider logo-divider-mobile" />
 
-          <div className="language-container">
-            <div className="localisation-container">
-              <Flex justify="space-between">
+              <Flex justify="space-between" className="currency-block">
                 <Flex gap={"6px"} align="center">
-                  <Languages />
-                  <p>Language</p>
+                  <img src={CurrencyIcon} alt="CurrencyIcon" />
+                  <p>Currency</p>
                 </Flex>
                 <Flex gap={"6px"} align="center">
                   <Select
-                    defaultValue={"English"}
-                    options={languages}
-                    onChange={handleLanguage}
+                    defaultValue={"europe"}
+                    options={options}
+                    value={currency}
+                    onChange={(e) => {
+                      setCurrency(e);
+                      localStorage.setItem("currency", e);
+                    }}
                     className="currency-dropdown"
-                    value={selectedLanguage}
+                    style={{ width: "110px" }}
                   />
-                  {/* <p>English</p>
-                <img src={DownArrow} alt="down-arrow" /> */}
                 </Flex>
               </Flex>
-            </div>
-          </div>
-          <Menu
-            onClick={onOptionClick}
-            defaultOpenKeys={["sub1"]}
-            mode="inline"
-            items={userItems}
-            className="sidebar-menu sidebar-menu-mobile"
-          />
+
+              <div className="language-container">
+                <div className="localisation-container">
+                  <Flex justify="space-between">
+                    <Flex gap={"6px"} align="center">
+                      <Languages />
+                      <p>Language</p>
+                    </Flex>
+                    <Flex gap={"6px"} align="center">
+                      <Select
+                        defaultValue={"English"}
+                        options={languages}
+                        onChange={handleLanguage}
+                        className="currency-dropdown"
+                        value={selectedLanguage}
+                      />
+                      {/* <p>English</p>
+                <img src={DownArrow} alt="down-arrow" /> */}
+                    </Flex>
+                  </Flex>
+                </div>
+              </div>
+              <Menu
+                onClick={onOptionClick}
+                defaultOpenKeys={["sub1"]}
+                mode="inline"
+                items={userItems}
+                className="sidebar-menu sidebar-menu-mobile"
+              />
+            </>
+          )}
         </div>
       </div>
     </>

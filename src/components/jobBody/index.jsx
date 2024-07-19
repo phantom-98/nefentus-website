@@ -239,7 +239,7 @@ const JobBody = () => {
         return;
       }
       setSpinner(true);
-      const res = await backendApi.contact(
+      const res = await backendApi.apply(
         job.title,
         firstName,
         lastName,

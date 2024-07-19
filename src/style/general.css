@@ -118,6 +118,7 @@
   --BG2: #e9e9e9;
   --Light-grey: #111111;
   --Light-grey2: #565656;
+  --Mild-dark-BG: #181818;
   --White-BG: #696969;
 }
 
@@ -180,11 +181,6 @@ body {
   width: 100vw;
   background-color: var(--background-color) !important;
   color: var(--text-color) !important;
-
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }
 
 .fontColor {
@@ -335,13 +331,13 @@ h1 {
   font-size: 5rem;
   line-height: 105%;
 }
-
+.layout-community .layout-title .title,
 .gradient {
   background: linear-gradient(
     to right,
     var(--text-color) 20%,
-    #0784b5 40%,
-    #1595c2 60%,
+    #a1a1a1 40%,
+    #b8b8b8 60%,
     var(--text-color) 80%
   );
   -webkit-background-clip: text;
@@ -823,7 +819,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .password-modal-forgot {
-  color: var(--Blue, var(--Blue, #078bb9));
+  color: var(--Blue, var(--Blue, #078bb9)) !important;
+  width: fit-content;
 }
 
 .seed-modal-padding {

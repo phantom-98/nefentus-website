@@ -84,7 +84,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
       name: invoice?.name,
       company: invoice?.company,
       address: invoice?.address,
-      taxNumber: invoice?.taxNumber,
+      taxNumber: invoice?.isPerson ? "" : invoice?.taxNumber,
       vatPercent: invoice?.taxPercent,
       items: invoice?.items.filter((item) => item.total !== 0),
       reverseCharge: invoice?.reverseCharge,

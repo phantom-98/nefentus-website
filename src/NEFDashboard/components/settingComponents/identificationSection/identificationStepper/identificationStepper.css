@@ -48,15 +48,22 @@
   left: 0;
   top: 0;
   border-radius: 6px;
-  transition: width 0.6s;
+  transition: all 0.6s;
 }
 
 .stepper-content.verified .stepper-line:before {
   width: 100%;
   background: #07b561;
+  height: 100%;
 }
 
 .stepper-content.pending .stepper-line:before {
   width: 100%;
   background: #f9c43c;
+  height: 100%;
+}
+@media (min-width: 768px) {
+  .stepper-content {
+    height: unset !important;
+  }
 }

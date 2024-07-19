@@ -7,15 +7,21 @@
 .income-card {
   height: 100%;
   width: 32%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--BG2, #171717);
 }
 
-:where(.css-dev-only-do-not-override-1yuxnot).income-card .ant-card-body {
+.income-card .ant-card-body {
   padding: 12px;
   border-radius: 0 0 8px 8px;
+  border-top: 1px solid #303030;
+  background-color: var(--BG, #111);
   /* min-height: 270px; */
 }
 
-:where(.css-dev-only-do-not-override-1yuxnot).income-card .ant-card-head {
+.income-card .ant-card-head {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -25,7 +31,7 @@
   font-weight: 600;
   font-size: 16px;
   background: var(--BG2, #171717);
-  border-bottom: 1px solid #303030;
+  border-bottom: none;
   border-radius: 8px 8px 0 0;
 }
 
@@ -76,15 +82,18 @@
   }
 }
 
+@media screen and (max-width: 991px) {
+  .income-profit-container {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .income-card .ant-card-head {
     padding: 10px 12px;
   }
   .income-card .ant-card-body {
     padding: 12px;
-  }
-  .income-profit-container {
-    flex-direction: column;
-    align-items: start;
   }
 }

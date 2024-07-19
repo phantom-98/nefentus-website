@@ -73,3 +73,27 @@
 .level3-wrapper .level-label:last-child {
   border-radius: 0px 0px 6px 0px;
 }
+
+@media (max-width: 767px) {
+  .AccountLimitWrapper {
+    overflow: hidden;
+  }
+
+  .AccountLimit {
+    overflow: auto;
+  }
+  .AccountLimit::-webkit-scrollbar {
+    display: none;
+  }
+  .limit-wrapper {
+    min-width: auto;
+    width: 272px;
+    flex-shrink: 0;
+  }
+  .level-main-wrapper {
+    width: auto;
+  }
+  .level-main-wrapper .level-wrapper {
+    width: 162px;
+  }
+}

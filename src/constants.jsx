@@ -79,14 +79,6 @@ export const currencies = () => {
         decimals: 18,
       },
       {
-        name: "Wrapped Ethereum",
-        blockchain: "ETH",
-        icon: Ethereum,
-        abbr: "WETH",
-        address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        decimals: 18,
-      },
-      {
         name: "Tether",
         blockchain: "ETH",
         icon: Tether,
@@ -95,22 +87,13 @@ export const currencies = () => {
         decimals: 6,
       },
       {
-        name: "USD Coin",
-        blockchain: "ETH",
-        icon: USDC,
-        abbr: "USDC",
-        address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        decimals: 6,
+        name: "Tether (BSC)",
+        blockchain: "BNB",
+        icon: BSC,
+        abbr: "USDT-BSC",
+        address: "0x55d398326f99059fF775485246999027B3197955",
+        decimals: 18,
       },
-      /*
-			{
-				icon: Bitcoin,
-				name: "Bitcoin",
-				abbr: "BTC",
-				address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
-				decimals: 8,
-			},
-			*/
       {
         name: "Binance Coin",
         blockchain: "BNB",
@@ -120,12 +103,12 @@ export const currencies = () => {
         decimals: 18,
       },
       {
-        name: "Wrapped Binance Coin",
-        blockchain: "BNB",
-        icon: Binance,
-        abbr: "WBNB",
-        address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-        decimals: 18,
+        name: "USD Coin",
+        blockchain: "ETH",
+        icon: USDC,
+        abbr: "USDC",
+        address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        decimals: 6,
       },
       {
         name: "Ripple",
@@ -143,12 +126,29 @@ export const currencies = () => {
         address: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         decimals: 18,
       },
+      /*
+			{
+				icon: Bitcoin,
+				name: "Bitcoin",
+				abbr: "BTC",
+				address: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+				decimals: 8,
+			},
+			*/
       {
-        name: "Tether (BSC)",
+        name: "Wrapped Ethereum",
+        blockchain: "ETH",
+        icon: Ethereum,
+        abbr: "WETH",
+        address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        decimals: 18,
+      },
+      {
+        name: "Wrapped Binance Coin",
         blockchain: "BNB",
-        icon: BSC,
-        abbr: "USDT-BSC",
-        address: "0x55d398326f99059fF775485246999027B3197955",
+        icon: Binance,
+        abbr: "WBNB",
+        address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
         decimals: 18,
       },
       /*

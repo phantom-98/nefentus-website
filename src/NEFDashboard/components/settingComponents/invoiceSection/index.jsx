@@ -134,9 +134,14 @@ const InvoiceSection = ({ segment }) => {
         />
       )}
 
-      <Flex vertical gap={32}>
+      <Flex vertical gap={32} className="invoice-section-option-wrapper">
         {invoiceOptions?.map((option, index) => (
-          <Flex key={index} align="center" justify="space-between">
+          <Flex
+            key={index}
+            align="center"
+            justify="space-between"
+            className={option?.title.replaceAll(" ", "-").toLowerCase()}
+          >
             <Flex vertical gap={2}>
               <div className="default-text invoice-section-option-title">
                 {option?.title}

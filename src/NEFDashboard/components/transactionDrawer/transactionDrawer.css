@@ -20,3 +20,32 @@
 .invoice-link-container .ant-anchor-link-title {
   color: var(--White, #fafafa);
 }
+
+.transaction-drawer-margin-zero {
+  margin: 0px !important;
+}
+
+.transaction-drawer-product-name {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.transaction-drawer-crypto-price {
+  margin-bottom: 0px !important;
+  font-weight: 500 !important;
+}
+
+.transaction-drawer-crypto {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--White2, #f6f6f6);
+}
+
+.transaction-drawer-total-main {
+  padding: 8px 0px;
+}
+
+.transaction-drawer-divider-height {
+  height: 100%;
+  margin: 0px !important;
+}

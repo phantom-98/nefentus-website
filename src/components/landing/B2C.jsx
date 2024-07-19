@@ -1,5 +1,5 @@
 import "./landing.css";
-
+import RightArrow from "../../assets/icon/right-arrow.svg";
 import { Conclusion, Heading } from ".";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import Hero1 from "../../assets/landing/Hero 1.png";
@@ -28,8 +28,21 @@ import TransactionSend from "../../assets/landing/transaction-send.png";
 import TransactionConverter from "../../assets/landing/transaction-converter.png";
 import SendIcon from "../../assets/landing/send-ico.svg";
 import SwapIcon from "../../assets/landing/swap-ico.svg";
+import { useEffect } from "react";
 
 const B2C = () => {
+  useEffect(() => {
+    const href = window.location.href.substring(
+      window.location.href.lastIndexOf("#") + 1,
+    );
+    setTimeout(() => {
+      const element = document.getElementById(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 500);
+  }, []);
+
   return (
     <div
       className="landing-layout b2c container"
@@ -58,6 +71,7 @@ export default B2C;
 const Hero = () => {
   return (
     <div
+      id="hero"
       className="layout-paragraph hero"
       style={{
         paddingBlock: "0",
@@ -76,16 +90,23 @@ const Hero = () => {
           }}
         >
           <h1 className="title">
-            Take charge of your <br /> crypto with Nefentus
+            <span className="gradient">Take charge</span> of your <br /> crypto
+            with Nefentus
           </h1>
           <p className="sub-title">
             Simplify your crypto experience. Easily send & receive payments,
             manage all your wallets and handle sales—all in one convenient
             place.
           </p>
-          <a href="/signup">
-            <button>Get Started</button>
-          </a>
+          <div className="button-container">
+            <a href="/signup">
+              <button>Get Started</button>
+            </a>
+            <a href="/business-support">
+              <span>Talk to an expert</span>
+              <img src={RightArrow} />
+            </a>
+          </div>
         </div>
         <div
           className="hero-img"
@@ -103,7 +124,6 @@ const Hero = () => {
               flexDirection: "column",
               gap: "2rem",
               justifyContent: "start",
-              paddingBottom: "4rem",
             }}
           >
             <img
@@ -115,7 +135,15 @@ const Hero = () => {
                 borderTopLeftRadius: "0",
               }}
             />
-            <img src={Hero2} style={{ width: "100%" }} />
+            <img
+              src={Hero2}
+              style={{
+                width: "100%",
+                borderBottom: "none",
+                borderBottomRightRadius: "0",
+                borderBottomLeftRadius: "0",
+              }}
+            />
           </div>
           <div
             style={{
@@ -124,7 +152,6 @@ const Hero = () => {
               flexDirection: "column",
               gap: "2rem",
               justifyContent: "end",
-              paddingTop: "4rem",
             }}
           >
             <img src={Hero3} style={{ width: "100%" }} />
@@ -271,6 +298,7 @@ const wallets = [
 const MultiWallets = () => {
   return (
     <div
+      id="multi-wallets"
       className="layout-paragraph"
       style={{
         paddingBottom: "0",
@@ -430,6 +458,7 @@ const MultiWallets = () => {
 const Transactions = () => {
   return (
     <div
+      id="transactions"
       className="layout-paragraph"
       style={{
         paddingBottom: "0",

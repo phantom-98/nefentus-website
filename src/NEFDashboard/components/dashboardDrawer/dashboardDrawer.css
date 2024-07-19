@@ -157,6 +157,10 @@
   display: none;
 }
 
+.remove-wallet-with-balance {
+  height: fit-content;
+}
+
 @media screen and (max-width: 767px) {
   .wallet-drawer-title {
     flex-direction: column;

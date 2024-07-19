@@ -1,0 +1,25 @@
+.kyc-dashboard {
+  padding: 20px 32px;
+}
+
+.kyc-action-container {
+  text-align: center;
+}
+
+.kyc-action-button {
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+  padding: 6px 16px;
+  /* Button shadow */
+  box-shadow:
+    0px 51px 14px 0px rgba(0, 0, 0, 0),
+    0px 33px 13px 0px rgba(0, 0, 0, 0.01),
+    0px 19px 11px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+}
+
+.kyc-empty-text-field {
+  min-width: 70px;
+}

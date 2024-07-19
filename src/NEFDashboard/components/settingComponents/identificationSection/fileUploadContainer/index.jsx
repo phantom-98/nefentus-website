@@ -1,22 +1,41 @@
 import React, { useRef } from "react";
-import { Flex } from "antd";
+import { Button, Flex, Upload } from "antd";
 import AttachmentIcon from "../../../../../assets/newDashboardIcons/attachment.svg";
 import AttachmentSuccessIcon from "../../../../../assets/newDashboardIcons/attachment-success.svg";
 import AttachmentErrorIcon from "../../../../../assets/newDashboardIcons/attachment-error.svg";
 import DeleteIcon from "../../../../../assets/newDashboardIcons/delete-dark-gray.svg";
-import "./fileUploadContainer.css";
+import DownloadIcon from "../../../../../assets/newDashboardIcons/download.svg";
+import FileIcon from "../../../../../assets/newDashboardIcons/file.svg";
 import { formatUSDBalance } from "../../../../../utils";
+import "./fileUploadContainer.css";
 
 const FileUploadContainer = ({
   name,
   fileData,
-  type,
   label = "",
   onUploadImage,
   onDeleteImage,
+  verification,
 }) => {
   const inputRef = useRef(null);
   const inputRef2 = useRef(null);
+  const { Dragger } = Upload;
+  const props = {
+    name: "file",
+    multiple: true,
+    // action: null,
+
+    onChange(info) {
+      const file = info?.file;
+      const fileName = file?.name.split("\\").pop();
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        onUploadImage(reader.result, file, fileName, name);
+      });
+      reader.readAsDataURL(file);
+    },
+  };
+
   const onChangeImage = (inputReference) => {
     const file = inputReference.current.files[0];
     const fileName = inputReference.current.value.split("\\").pop();
@@ -31,6 +50,27 @@ const FileUploadContainer = ({
     const urlParts = url.split("/");
     const fullName = urlParts[urlParts.length - 1];
     return fullName.split("?")[0]?.split("_").pop();
+  };
+
+  const previewImage = (file) => {
+    const newWindow = window.open();
+    newWindow.document.write(`<img src="${file}" alt="Image">`);
+  };
+
+  const downloadFile = (url, fileName) => {
+    // Create a new anchor element
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+
+    // Append the anchor to the body
+    document.body.appendChild(a);
+
+    // Programmatically trigger a click event on the anchor
+    a.click();
+
+    // Remove the anchor from the body
+    document.body.removeChild(a);
   };
 
   const renderItem = (type) => {
@@ -54,7 +94,10 @@ const FileUploadContainer = ({
                 gap={8}
                 align="center"
               >
-                <img src={AttachmentSuccessIcon} alt="icon" />
+                <img
+                  src={verification ? FileIcon : AttachmentSuccessIcon}
+                  alt="icon"
+                />
                 <Flex vertical gap={2} className="identification-file-name">
                   <span className="file-name">
                     {typeof fileData == "string"
@@ -68,12 +111,35 @@ const FileUploadContainer = ({
                   )}
                 </Flex>
               </Flex>
-              <div
-                className="identification-trash-icon"
-                onClick={() => onDeleteImage(name)}
-              >
-                <img src={DeleteIcon} alt="icon" />
-              </div>
+              {verification ? (
+                <Flex gap={8}>
+                  <Button
+                    className="default-text preview-file-button"
+                    onClick={() => {
+                      previewImage(fileData);
+                    }}
+                  >
+                    Preview
+                  </Button>
+                  <div>
+                    <img
+                      src={DownloadIcon}
+                      alt="icon"
+                      className="download-file-icon"
+                      onClick={() =>
+                        downloadFile(fileData, extractImageName(fileData))
+                      }
+                    />
+                  </div>
+                </Flex>
+              ) : (
+                <div
+                  className="identification-trash-icon"
+                  onClick={() => onDeleteImage(name)}
+                >
+                  <img src={DeleteIcon} alt="icon" />
+                </div>
+              )}
             </Flex>
           </Flex>
         );
@@ -167,22 +233,49 @@ const FileUploadContainer = ({
                 Only .jpg and .png files. 500KB max size.
               </div>
             </Flex>
-            <div className="identification-upload-wrapper">
-              <input
-                accept=".jpg, .png"
-                ref={inputRef}
-                type="file"
-                className="identification-upload"
-                onChange={() => onChangeImage(inputRef)}
-              />
-              <div className="identification-upload-logo">
-                <img src={AttachmentIcon} alt="icon" />
+            <Dragger
+              beforeUpload={() => false}
+              {...props}
+              className="identification-ant-upload cursor-pointer"
+            >
+              <div className="identification-upload-wrapper">
+                <div className="identification-upload-logo">
+                  <img src={AttachmentIcon} alt="icon" />
+                </div>
+                <p>
+                  Drag and drop or <span>Choose file </span>to upload
+                </p>
               </div>
-              <p>
-                Drag and drop or <span>Choose file </span>to upload
-              </p>
-            </div>
+            </Dragger>
           </Flex>
+          // <Flex
+          //   vertical
+          //   gap={4}
+          //   onClick={() => inputRef.current.click()}
+          //   className="cursor-pointer"
+          // >
+          //   <Flex align="center" justify="space-between">
+          //     <div className="default-text-gray">{label}</div>
+          //     <div className="default-text-gray identification-field-subText">
+          //       Only .jpg and .png files. 500KB max size.
+          //     </div>
+          //   </Flex>
+          //   <div className="identification-upload-wrapper">
+          //     <input
+          //       accept=".jpg, .png"
+          //       ref={inputRef}
+          //       type="file"
+          //       className="identification-upload"
+          //       onChange={() => onChangeImage(inputRef)}
+          //     />
+          //     <div className="identification-upload-logo">
+          //       <img src={AttachmentIcon} alt="icon" />
+          //     </div>
+          //     <p>
+          //       Drag and drop or <span>Choose file </span>to upload
+          //     </p>
+          //   </div>
+          // </Flex>
         );
     }
   };

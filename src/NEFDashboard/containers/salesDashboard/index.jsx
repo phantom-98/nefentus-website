@@ -60,7 +60,7 @@ const SalesDashboard = () => {
   }, [user]);
 
   useEffect(() => {
-    if (user.roles) fetchProducts();
+    if (user.roles) fetchProducts(search);
   }, [user, currentPage, dataLength]);
 
   useEffect(() => {
@@ -69,6 +69,7 @@ const SalesDashboard = () => {
   }, [selectedData]);
 
   useEffect(() => {
+    setSearch("");
     if (currentPage == 1) fetchProducts();
     else setCurrentPage(1);
   }, [activeSegment]);
@@ -106,15 +107,16 @@ const SalesDashboard = () => {
     length = dataLength,
   ) => {
     if (activeSegment == "product") {
-      const newProducts = await dashboardApi.getProducts(
+      const newProducts = await dashboardApi.getSalesInvoices(
         current - 1, // 0
         length, // 1000
         search, // ""
+        true,
       );
       if (newProducts) {
         const newSignedImagePaths = await Promise.all(
-          newProducts?.content.map((product) =>
-            dashboardApi.getSignedImagePath(product.link),
+          newProducts?.content.map((data) =>
+            dashboardApi.getSignedImagePath(data?.product.link),
           ),
         );
 
@@ -130,13 +132,13 @@ const SalesDashboard = () => {
         } else setProducts([]);
       }
     } else {
-      let newInvoices = await dashboardApi.getInvoices(
+      let newInvoices = await dashboardApi.getSalesInvoices(
         current - 1,
         length,
         search,
+        false,
       );
-      // Reverse the array
-      newInvoices = { ...newInvoices, content: newInvoices?.content.reverse() };
+
       setTotal(newInvoices?.totalElements);
       setInvoices([...newInvoices?.content]);
     }
@@ -145,11 +147,11 @@ const SalesDashboard = () => {
   const columns = [
     {
       title: t("salesDashboard.productTable.productName"),
-      dataIndex: "name",
+      dataIndex: "product",
       fixed: "left",
-      sorter: (a, b) => a.name.length - b.name.length,
+      sorter: (a, b) => a.product.name.length - b.product.name.length,
       sortDirections: ["ascend", "descend"],
-      render: (name, record) => {
+      render: (product, record) => {
         return (
           <Row align={"middle"} gutter={12}>
             <Col>
@@ -161,8 +163,7 @@ const SalesDashboard = () => {
               />
             </Col>
             <Col>
-              <div className="default-text">{name}</div>
-              {/* <div className="default-text-gray">{record?.email}</div> */}
+              <div className="default-text">{product?.name}</div>
             </Col>
           </Row>
         );
@@ -170,17 +171,15 @@ const SalesDashboard = () => {
     },
     {
       title: t("salesDashboard.productTable.client"),
-      dataIndex: "user",
-      sorter: (a, b) => a.user?.firstName.length - b.user?.firstName.length,
+      dataIndex: "name",
+      sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ["ascend", "descend"],
-      render: (user, record) => {
+      render: (name, record) => {
         return (
           <Row align={"middle"} gutter={6}>
             <Col>
-              <div className="default-text">
-                {user?.firstName + " " + user?.lastName}
-              </div>
-              <div className="default-text-gray">{record?.user?.email}</div>
+              <div className="default-text">{name}</div>
+              <div className="default-text-gray">{record?.email}</div>
             </Col>
           </Row>
         );
@@ -188,11 +187,15 @@ const SalesDashboard = () => {
     },
     {
       title: t("salesDashboard.productTable.invoiceId"),
-      dataIndex: "link",
-      sorter: (a, b) => a.link.length - b.link.length,
+      dataIndex: "invoiceNumber",
+      sorter: (a, b) => a.invoiceNumber.length - b.invoiceNumber.length,
       sortDirections: ["ascend", "descend"],
-      render: (link, record) => {
-        return <div className="default-text invoice-id-column">{link}</div>;
+      render: (invoiceNumber, record) => {
+        return (
+          <div className="default-text invoice-id-column">
+            {"NEF" + invoiceNumber}
+          </div>
+        );
       },
     },
     {
@@ -208,7 +211,6 @@ const SalesDashboard = () => {
                 {currencyRate?.symbol +
                   formatUSDBalance(+price * currencyRate?.rate)}
               </div>
-              {/* <div className="default-text-gray">{record?.email}</div> */}
             </Col>
           </Row>
         );
@@ -216,8 +218,8 @@ const SalesDashboard = () => {
     },
     {
       title: t("salesDashboard.productTable.date"),
-      dataIndex: "updatedAt",
-      sorter: (a, b) => a.updatedAt.length - b.updatedAt.length,
+      dataIndex: "createdAt",
+      sorter: (a, b) => a.createdAt.length - b.createdAt.length,
       sortDirections: ["ascend", "descend"],
       render: (date, record) => {
         return (
@@ -227,9 +229,8 @@ const SalesDashboard = () => {
                 {moment(date).format("MMM DD YYYY")}
               </div>
               <div className="default-text-gray">
-                {moment(date).format("HH:MM")}
+                {moment(date).format("HH:mm")}
               </div>
-              {/* <div className="default-text-gray">{record?.email}</div> */}
             </Col>
           </Row>
         );
@@ -258,7 +259,7 @@ const SalesDashboard = () => {
 
   const invoiceColumns = [
     {
-      title: t("salesDashboard.invoiceTable.billedTo"),
+      title: t("salesDashboard.productTable.client"),
       dataIndex: "company",
       fixed: "left",
       sorter: (a, b) => a.company.length - b.company.length,
@@ -266,7 +267,7 @@ const SalesDashboard = () => {
       render: (company, record) => {
         return (
           <div>
-            <div className="default-text">{company}</div>
+            <div className="default-text">{company || record?.name}</div>
             <div className="default-text-gray">{record?.email}</div>
           </div>
         );
@@ -334,9 +335,8 @@ const SalesDashboard = () => {
                 {moment(date).format("MMM DD YYYY")}
               </div>
               <div className="default-text-gray">
-                {moment(date).format("HH:MM")}
+                {moment(date).format("HH:mm")}
               </div>
-              {/* <div className="default-text-gray">{record?.email}</div> */}
             </Col>
           </Row>
         );
@@ -364,7 +364,7 @@ const SalesDashboard = () => {
   ];
 
   const onSearch = (value) => {
-    fetchProducts(value);
+    currentPage == 1 ? fetchProducts(value, 1) : setCurrentPage(1);
   };
 
   const handleSegment = (value) => {
@@ -377,7 +377,10 @@ const SalesDashboard = () => {
       {openTransaction && (
         <TransactionDrawer
           open={openTransaction}
-          onClose={() => setSelectedData({})}
+          onClose={() => {
+            setSelectedData({});
+            setOpenTransaction(false);
+          }}
           selectedData={selectedData}
         />
       )}
@@ -410,6 +413,7 @@ const SalesDashboard = () => {
         <Flex gap={12} wrap>
           <InvoiceStatusCard />
           <Flex
+            gap={16}
             className="sales-income-card-container"
             justify={"space-between"}
           >
