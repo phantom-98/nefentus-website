@@ -24,6 +24,7 @@
 - Fix Footer link Remove && Pay button in invoice preview && sidebar behavior (MiNOR)
 
 # v2.0.0
+
 - Updated HTML template (PATCH)
 - Fix texts & translations in the dashboard (PATCH)
 - Fix some minor issues in landing (PATCH)
@@ -40,6 +41,17 @@
 - Login and Sign up screens implemented (MAJOR)
 - Alert message in checkout when both Metamask and coinbase are installed (MINOR)
 - Fixes issue related to Login/SignUp and implemented forgot password functionality (PATCH)
+- Products UI changes completed (MINOR)
+- Implemented portfolio coin cases (PATCH)
+- Transaction Detail api integrated (MAJOR)
+- Inovice is sorting correctly (MINOR)
+- Add Wallet Card implemented in Personal Dashboard (MINOR)
+- Login Page right side image changed (MINOR)
+- Fix the responsiveness issue in setting page and add side bar in tablet and mobile view (PATCH)
+- fix the right users edit issue in users table (PATCH)
+- Fix landings && add contact page && update navbar (MINOR)
+- Fix Footer link Remove && Pay button in invoice preview && sidebar behavior (MiNOR)
+- Fix Dashboard issues (MINOR)
 
 # 1.3.0
 

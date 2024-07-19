@@ -20,7 +20,7 @@ const SignForm = () => {
   const [roleSelector, setRoleSelector] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("Private");
+  const [role, setRole] = useState("");
   const backendAPI = new backend_API();
   const location = useLocation();
   const navigate = useNavigate();

@@ -38,8 +38,8 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    fetchUserRoles();
-  }, []);
+    if (Object.keys(user)?.length) fetchUserRoles();
+  }, [user]);
 
   useEffect(() => {
     setOpen(update);

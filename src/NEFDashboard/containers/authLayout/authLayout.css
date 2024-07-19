@@ -19,6 +19,7 @@
 }
 
 .back-btn {
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 4px;
