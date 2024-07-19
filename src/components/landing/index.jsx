@@ -189,7 +189,7 @@ export const Heading = ({ title, subtitle }) => {
   return (
     <div className="layout-title">
       <h1
-        className="title"
+        className="title heading-gradient"
         dangerouslySetInnerHTML={{ __html: title.replace("\n", "<br/>") }}
       ></h1>
       <p

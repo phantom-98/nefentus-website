@@ -28,7 +28,6 @@
 - Fix Footer link Remove && Pay button in invoice preview && sidebar behavior (MiNOR)
 
 # v2.0.0
-
 - Add affiliate link (PATCH)
 - Updated HTML template (PATCH)
 - Fix texts & translations in the dashboard (PATCH)
