@@ -4,16 +4,27 @@ import { Flex, Input, Select } from "antd";
 import FileUploadContainer from "../fileUploadContainer";
 import backendAPI from "../../../../../api/backendAPI";
 import "./modalLevel1.css";
-import { countryList } from "../../../../../constants";
+import { countryList, updatedCountries } from "../../../../../constants";
 import { useTranslation } from "react-i18next";
 import { MessageContext } from "../../../../../context/message";
+import { getFlagLink } from "../../../../../countries";
+import DeclineModal from "../declineModal";
 
-const ModalLevel1 = ({ open, onClose, kycData, onRefresh }) => {
+const ModalLevel1 = ({
+  open,
+  onClose,
+  kycData,
+  onRefresh,
+  verification = false,
+  acceptKYC,
+  declineKYC,
+}) => {
   const BackendAPI = new backendAPI();
   const { t } = useTranslation();
   const { setSuccessMessage, setErrorMessage } = useContext(MessageContext);
   const [errorField, setErrorField] = useState("");
   const [loading, setLoading] = useState(false);
+  const [decline, setDecline] = useState(false);
 
   const [data, setData] = useState({
     FIRST_NAME: "",
@@ -29,10 +40,16 @@ const ModalLevel1 = ({ open, onClose, kycData, onRefresh }) => {
 
   useEffect(() => {
     let dataset = {};
-    kycData?.list?.map((kyc) => {
-      dataset[kyc.type] = kyc?.data?.url;
-    }),
-      setData(dataset);
+    // if verification is true then modal is opened for admin role to verify kyc.
+    if (verification) {
+      kycData?.data?.map((kyc) => {
+        dataset[kyc.type] = kyc?.url;
+      });
+    } else
+      kycData?.list?.map((kyc) => {
+        dataset[kyc.type] = kyc?.data?.url;
+      });
+    setData(dataset);
   }, [kycData]);
 
   const [countries] = useState(
@@ -119,70 +136,115 @@ const ModalLevel1 = ({ open, onClose, kycData, onRefresh }) => {
     } else setErrorMessage("Invalid Data!");
     setLoading(false);
   };
-  const onFieldChange = (value, key) => setData({ ...data, [key]: value });
+  const onFieldChange = (value, key) =>
+    !verification && setData({ ...data, [key]: value });
+
+  const OnVerificationSuccess = async () => {
+    setLoading(true);
+    await acceptKYC(kycData);
+    setLoading(false);
+  };
+
+  const onDecline = async (text) => {
+    setLoading(true);
+    await declineKYC(kycData, text);
+    setDecline(false);
+    setLoading(false);
+  };
+
   return (
-    <IdentificationCommonModal
-      open={open}
-      onClose={onClose}
-      title={<div>Level 1 Verification</div>}
-      onUpload={uploadData}
-      loading={loading}
-    >
-      <Flex vertical gap={16}>
-        <Flex align="center" gap={12}>
-          <div className="identification-name-container">
-            <div>First Name*</div>
-            <div className="identification-field-container">
-              <Input
-                placeholder="Enter your first name"
-                className={` ${
-                  errorField == "FIRST_NAME" ? "identification-error-field" : ""
-                } identification-input-field`}
-                name="FIRST_NAME"
-                value={data?.FIRST_NAME}
-                onChange={(e) => onFieldChange(e.target.value, e.target.name)}
-              />
-              {errorField == "FIRST_NAME" && (
-                <div className="default-text identification-error-text">
-                  This field is required
-                </div>
-              )}
+    <>
+      {decline && (
+        <DeclineModal
+          open={decline}
+          onClose={() => setDecline(false)}
+          onDecline={onDecline}
+          loading={loading}
+        />
+      )}
+      <IdentificationCommonModal
+        open={open}
+        onClose={onClose}
+        title={<div>Level 1 Verification</div>}
+        onUpload={uploadData}
+        loading={loading}
+        verification={verification}
+        acceptKYC={OnVerificationSuccess}
+        declineRequest={() => setDecline(!decline)}
+      >
+        <Flex vertical gap={16}>
+          <Flex align="center" gap={12}>
+            <div className="identification-name-container">
+              <div>First Name*</div>
+              <div className="identification-field-container">
+                <Input
+                  placeholder="Enter your first name"
+                  className={` ${
+                    errorField == "FIRST_NAME"
+                      ? "identification-error-field"
+                      : ""
+                  } identification-input-field`}
+                  name="FIRST_NAME"
+                  value={data?.FIRST_NAME}
+                  onChange={(e) => onFieldChange(e.target.value, e.target.name)}
+                />
+                {errorField == "FIRST_NAME" && (
+                  <div className="default-text identification-error-text">
+                    This field is required
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="identification-name-container">
-            <div>Last Name*</div>
-            <div className="identification-field-container">
-              <Input
-                placeholder="Enter your last name"
-                className={`${
-                  errorField == "LAST_NAME" ? "identification-error-field" : ""
-                } identification-input-field`}
-                name="LAST_NAME"
-                value={data?.LAST_NAME}
-                onChange={(e) => onFieldChange(e.target.value, e.target.name)}
-              />
-              {errorField == "LAST_NAME" && (
-                <div className="default-text identification-error-text">
-                  This field is required
-                </div>
-              )}
+            <div className="identification-name-container">
+              <div>Last Name*</div>
+              <div className="identification-field-container">
+                <Input
+                  placeholder="Enter your last name"
+                  className={`${
+                    errorField == "LAST_NAME"
+                      ? "identification-error-field"
+                      : ""
+                  } identification-input-field`}
+                  name="LAST_NAME"
+                  value={data?.LAST_NAME}
+                  onChange={(e) => onFieldChange(e.target.value, e.target.name)}
+                />
+                {errorField == "LAST_NAME" && (
+                  <div className="default-text identification-error-text">
+                    This field is required
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        </Flex>
-        <Flex vertical>
-          <div className="default-text-gray">Address*</div>
+          </Flex>
           <Flex vertical>
-            <Select
-              showSearch
-              options={countries}
-              placeholder="Select Country"
-              className={`${
-                errorField == "COUNTRY" ? "identification-error-field" : ""
-              } identification-country-select`}
-              value={data?.COUNTRY}
-              onChange={(e) => onFieldChange(e, "COUNTRY")}
-            />
-            {/* <Input
+            <div className="default-text-gray">Address*</div>
+            <Flex vertical>
+              <Select
+                showSearch
+                placeholder="Select Country"
+                className={`${
+                  errorField == "COUNTRY" ? "identification-error-field" : ""
+                } identification-country-select`}
+                value={data?.COUNTRY}
+                onChange={(e) => onFieldChange(e, "COUNTRY")}
+              >
+                {updatedCountries?.map((country, index) => {
+                  return (
+                    <Option value={country?.value} key={index}>
+                      <Flex gap={8}>
+                        <img
+                          src={getFlagLink(country?.symbol)}
+                          alt="country"
+                          width="22"
+                        />
+                        <div>{t(country?.display)}</div>
+                      </Flex>
+                    </Option>
+                  );
+                })}
+              </Select>
+              {/* <Input
               placeholder="Skovoda str. 15"
               className={`street-field ${
                 errorField == "street" ? "identification-error-field" : ""
@@ -191,54 +253,57 @@ const ModalLevel1 = ({ open, onClose, kycData, onRefresh }) => {
               value={data?.street}
               onChange={(e) => onFieldChange(e.target.value, e.target.name)}
             /> */}
-            <Input
-              placeholder="Address Line 2"
-              className={`${
-                errorField == "ADRESS" ? "identification-error-field" : ""
-              } street-field`}
-              name="ADRESS"
-              value={data?.ADRESS}
-              onChange={(e) => onFieldChange(e.target.value, e.target.name)}
-            />
-            <Flex
-              className={`${
-                errorField == "CITY" || errorField == "ZIP_CODE"
-                  ? "identification-error-field"
-                  : ""
-              } identification-city-zip`}
-            >
               <Input
-                placeholder="City"
-                name="CITY"
-                value={data?.CITY}
+                placeholder="Address Line 2"
+                className={`${
+                  errorField == "ADRESS" ? "identification-error-field" : ""
+                } street-field`}
+                name="ADRESS"
+                value={data?.ADRESS}
                 onChange={(e) => onFieldChange(e.target.value, e.target.name)}
               />
-              <Input
-                placeholder="Zip"
-                type="number"
-                name="ZIP_CODE"
-                value={data?.ZIP_CODE}
-                onChange={(e) => onFieldChange(e.target.value, e.target.name)}
-              />
+              <Flex
+                className={`${
+                  errorField == "CITY" || errorField == "ZIP_CODE"
+                    ? "identification-error-field"
+                    : ""
+                } identification-city-zip`}
+              >
+                <Input
+                  placeholder="City"
+                  name="CITY"
+                  value={data?.CITY}
+                  onChange={(e) => onFieldChange(e.target.value, e.target.name)}
+                />
+                <Input
+                  placeholder="Zip"
+                  type="number"
+                  name="ZIP_CODE"
+                  value={data?.ZIP_CODE}
+                  onChange={(e) => onFieldChange(e.target.value, e.target.name)}
+                />
+              </Flex>
             </Flex>
           </Flex>
+          <FileUploadContainer
+            label="Government Issue ID"
+            name={"GOVERNMENT_ISSUES_ID"}
+            fileData={data?.GOVERNMENT_ISSUES_ID}
+            onUploadImage={onUploadImage}
+            onDeleteImage={onDeleteImage}
+            verification={verification}
+          />
+          <FileUploadContainer
+            name={"PICTURE_WIDTH_ID_IN_HAND"}
+            fileData={data?.PICTURE_WIDTH_ID_IN_HAND}
+            label="Picture with ID in hand"
+            onUploadImage={onUploadImage}
+            onDeleteImage={onDeleteImage}
+            verification={verification}
+          />
         </Flex>
-        <FileUploadContainer
-          label="Government Issue ID"
-          name={"GOVERNMENT_ISSUES_ID"}
-          fileData={data?.GOVERNMENT_ISSUES_ID}
-          onUploadImage={onUploadImage}
-          onDeleteImage={onDeleteImage}
-        />
-        <FileUploadContainer
-          name={"PICTURE_WIDTH_ID_IN_HAND"}
-          fileData={data?.PICTURE_WIDTH_ID_IN_HAND}
-          label="Picture with ID in hand"
-          onUploadImage={onUploadImage}
-          onDeleteImage={onDeleteImage}
-        />
-      </Flex>
-    </IdentificationCommonModal>
+      </IdentificationCommonModal>
+    </>
   );
 };
 

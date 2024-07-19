@@ -136,6 +136,7 @@ import Resources from "./components/resources";
 import PageNotFound from "./NEFDashboard/components/pageNotFound";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
+import KycDashboard from "./NEFDashboard/containers/kycDasboard";
 
 function App() {
   const { t } = useTranslation();
@@ -307,6 +308,14 @@ function App() {
                             title={"productsDashboard.productDetail"}
                           >
                             <Product />
+                          </DashboardLayout>
+                        }
+                      />
+                      <Route
+                        path="/kyc-dashboard"
+                        element={
+                          <DashboardLayout title={"KYC Verification"}>
+                            <KycDashboard />
                           </DashboardLayout>
                         }
                       />

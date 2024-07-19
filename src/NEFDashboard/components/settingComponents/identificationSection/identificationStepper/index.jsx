@@ -1,4 +1,5 @@
 import React from "react";
+import RejectIcon from "../../../../../assets/newDashboardIcons/reject-icon.svg";
 import "./identificationStepper.css";
 
 const IdentificationStepper = ({ kycData, contentHeight }) => {
@@ -34,6 +35,8 @@ const IdentificationStepper = ({ kycData, contentHeight }) => {
                     fill="none"
                   />
                 </svg>
+              ) : kycData[kyc]?.isRejected ? (
+                <img src={RejectIcon} />
               ) : (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

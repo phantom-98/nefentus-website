@@ -54,6 +54,7 @@
 - Fix landings && add contact page && update navbar (MINOR)
 - Fix Footer link Remove && Pay button in invoice preview && sidebar behavior (MiNOR)
 - Fix Dashboard issues (MINOR)
+- Kyc Flow has implemented for admin (MAJOR)
 
 # 1.3.0
 

@@ -134,6 +134,9 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
         break;
       case 9:
         setOpenAddModal(!openAddModal);
+      case 10:
+        navigate("/kyc-dashboard");
+        break;
 
         break;
     }
@@ -306,6 +309,10 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
               "9",
               <img src={AddUserIcon} />,
             ),
+            getRole(user) == "admin" ||
+              (user?.roles &&
+                user?.roles[0] == "admin" &&
+                getItem(t("navigation.kyc"), "10", <img src={AddUserIcon} />)),
           ],
       "group",
     ),
