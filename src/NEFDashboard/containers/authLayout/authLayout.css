@@ -19,6 +19,7 @@
 }
 
 .back-btn {
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -30,6 +31,7 @@
   position: absolute;
   left: 20px;
   top: 20px;
+  cursor: pointer;
 }
 
 .authLayout-img-text h1 {

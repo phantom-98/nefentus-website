@@ -331,13 +331,13 @@ h1 {
   font-size: 5rem;
   line-height: 105%;
 }
-
+.layout-community .layout-title .title,
 .gradient {
   background: linear-gradient(
     to right,
     var(--text-color) 20%,
-    #0784b5 40%,
-    #1595c2 60%,
+    #a1a1a1 40%,
+    #b8b8b8 60%,
     var(--text-color) 80%
   );
   -webkit-background-clip: text;

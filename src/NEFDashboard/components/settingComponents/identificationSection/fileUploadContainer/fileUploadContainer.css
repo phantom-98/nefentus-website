@@ -71,3 +71,52 @@ span.file-size {
   bottom: 0;
   opacity: 0;
 }
+
+.input-file-on-error,
+.identification-trash-icon {
+  cursor: pointer;
+}
+
+.preview-file-button {
+  height: fit-content;
+  padding: 5px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--Dark, #202020);
+  cursor: pointer;
+  /* Button shadow */
+  box-shadow:
+    0px 51px 14px 0px rgba(0, 0, 0, 0),
+    0px 33px 13px 0px rgba(0, 0, 0, 0.01),
+    0px 19px 11px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+}
+
+.download-file-icon {
+  height: 30px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark, #202020);
+  background: var(--BG2, #171717);
+  box-shadow:
+    0px 51px 14px 0px rgba(0, 0, 0, 0),
+    0px 33px 13px 0px rgba(0, 0, 0, 0.01),
+    0px 19px 11px 0px rgba(0, 0, 0, 0.03),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.04),
+    0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+}
+
+.download-file-icon:hover {
+  border-color: currentColor;
+}
+
+.identification-ant-upload .ant-upload-drag {
+  background: transparent;
+  border: none;
+}
+
+.identification-ant-upload .ant-upload-drag .ant-upload {
+  padding: 0px;
+}

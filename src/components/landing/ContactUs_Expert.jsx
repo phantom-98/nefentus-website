@@ -81,7 +81,8 @@ const ContactUs_Expert = () => {
             value={description}
             setState={setDescription}
           />
-          <Button
+          <button onClick={contact}>Submit</button>
+          {/* <Button
             children={t("contact.submit")}
             style={{
               padding: "0rem 2rem",
@@ -91,7 +92,7 @@ const ContactUs_Expert = () => {
             }}
             spinner={spinner}
             onClick={contact}
-          />
+          /> */}
         </div>
         <h2>
           Thank you for reaching out to us.

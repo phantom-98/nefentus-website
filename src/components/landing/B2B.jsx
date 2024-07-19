@@ -102,7 +102,8 @@ const Hero = () => {
           }}
         >
           <h1 className="title">
-            Revolutionize Your Business with Effortless Crypto Payments
+            Revolutionize Your Business with{" "}
+            <span className="gradient">Effortless Crypto Payments</span>
           </h1>
           <p className="sub-title">
             Seamlessly create & receive payments. Manage all your wallets and
@@ -112,7 +113,7 @@ const Hero = () => {
             <a href="/signup">
               <button>Get Started</button>
             </a>
-            <a href="/contact">
+            <a href="/business-support">
               <span>Talk to an expert</span>
               <img src={RightArrow} />
             </a>
@@ -145,7 +146,7 @@ const Hero = () => {
       />
       <hr
         style={{
-          right: "calc(25% + 0.8rem)",
+          right: "calc(25% + 0.92rem)",
           bottom: "0",
           height: "100%",
         }}
@@ -162,7 +163,7 @@ const Hero = () => {
       <div
         style={{
           height: "100%",
-          right: "calc(25% - 1.377rem)",
+          right: "calc(25% - 1.3rem)",
           bottom: "0",
         }}
         className="hide-in-tablet vertical-dashed-line"
