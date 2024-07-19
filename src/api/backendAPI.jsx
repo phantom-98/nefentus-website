@@ -1269,7 +1269,12 @@ export default class backendAPI {
     }
   }
 
-  async setTransactionInfo(transactionInfo, buyerAddress, productOrInvoiceId) {
+  async setTransactionInfo(
+    transactionInfo,
+    buyerAddress,
+    productOrInvoiceId,
+    invoiceInfo,
+  ) {
     try {
       const url = `${this.baseURL}/transaction`;
       let headers = {
@@ -1280,9 +1285,10 @@ export default class backendAPI {
       }
 
       const body = {
-        transactionInfo: transactionInfo,
-        buyerAddress: buyerAddress,
+        transactionInfo,
+        buyerAddress,
         ...productOrInvoiceId,
+        invoiceInfo,
       };
       console.log("transaction info", JSON.stringify(body));
       const options = {
@@ -1361,6 +1367,7 @@ export default class backendAPI {
     password,
     stablecoinAddress,
     transInfoArg,
+    invoiceInfo,
   ) {
     try {
       const url = `${this.baseURL}/payment`;
@@ -1380,6 +1387,7 @@ export default class backendAPI {
         password: password,
         blockchain: blockchain,
         ...transInfoArg,
+        invoiceInfo,
       };
 
       const options = {

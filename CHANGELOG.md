@@ -1,5 +1,6 @@
 # New changes
 
+- Update product invoice work flow (MINOR)
 - Fix connecting wallet when clicking final button (MINOR)
 - Save selected currency (PATCH)
 - Small edits in landing (PATCH)
