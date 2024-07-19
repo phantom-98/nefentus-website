@@ -1,5 +1,6 @@
 # New changes
 
+- Fix connecting wallet when clicking final button (MINOR)
 - Save selected currency (PATCH)
 - Small edits in landing (PATCH)
 - Update wallet address in landing pages && update mobile nav bar (PATCH)
