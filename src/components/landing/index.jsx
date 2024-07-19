@@ -60,6 +60,14 @@ import Logos from "../logos/logos";
 import { useEffect, useState } from "react";
 
 const Landing = () => {
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("ref")) {
+      const paramValue = urlParams.get("ref");
+      localStorage.setItem("affiliate", paramValue);
+    }
+  }, []);
+
   return (
     <div className="landing-layout home container">
       <Hero />

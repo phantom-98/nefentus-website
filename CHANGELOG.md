@@ -28,6 +28,7 @@
 
 # v2.0.0
 
+- Add affiliate link (PATCH)
 - Updated HTML template (PATCH)
 - Fix texts & translations in the dashboard (PATCH)
 - Fix some minor issues in landing (PATCH)

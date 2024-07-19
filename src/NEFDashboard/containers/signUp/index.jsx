@@ -40,7 +40,9 @@ const SignForm = () => {
       firstName: values?.firstname,
       lastName: values?.lastname,
       telNr: values?.phoneNumber?.length > 6 ? values?.phoneNumber : "",
-      affiliateLink: "",
+      affiliateLink: localStorage.getItem("affiliate")
+        ? localStorage.getItem("affiliate")
+        : "",
       country: values?.countryRegion,
       accountRole: role,
     };
