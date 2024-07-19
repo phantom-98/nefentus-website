@@ -102,7 +102,8 @@ const Hero = () => {
           }}
         >
           <h1 className="title">
-            Revolutionize Your Business with Effortless Crypto Payments
+            Revolutionize Your Business with{" "}
+            <span className="gradient">Effortless Crypto Payments</span>
           </h1>
           <p className="sub-title">
             Seamlessly create & receive payments. Manage all your wallets and

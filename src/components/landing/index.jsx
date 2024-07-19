@@ -50,7 +50,7 @@ import SendSvg from "../../assets/landing/send-ico.svg";
 import Telegram from "../../assets/icon/telegram.svg";
 import Linkedin from "../../assets/icon/in.svg";
 import Twitter from "../../assets/icon/x.svg";
-import Youtube from "../../assets/icon/youtube.svg";
+import TalkTo from "../../assets/icon/notification-message.svg";
 
 import Main1 from "../../assets/landing/main1.png";
 import Main2 from "../../assets/landing/main2.png";
@@ -112,7 +112,8 @@ const Hero = () => {
       <div className="layout-horizontal">
         <div className="hero-layout">
           <h1 className="title">
-            Revolutionize Your Business with Crypto Payment Integration
+            <span className="gradient">Revolutionize</span> Your Business with
+            Crypto Payment Integration
           </h1>
           <p className="sub-title">
             Effortlessly generate & receive payments. Consolidate wallet
@@ -180,7 +181,7 @@ export const Heading = ({ title, subtitle }) => {
   return (
     <div className="layout-title">
       <h1
-        className="title heading-gradient"
+        className="title"
         dangerouslySetInnerHTML={{ __html: title.replace("\n", "<br/>") }}
       ></h1>
       <p
@@ -765,6 +766,13 @@ const communities = [
     subtitle:
       "Follow us on Twitter for the latest news, updates, and insights on cryptocurrency payments. Stay informed about new features, industry trends.",
     link: "https://x.com/nefentusapp",
+  },
+  {
+    icon: TalkTo,
+    title: "Talk to an expert",
+    subtitle:
+      "Get personalized advice and insights from our knowledgeable team to help you seamlessly integrate cryptocurrency payments into your business.",
+    link: "/business-support",
   },
 ];
 
