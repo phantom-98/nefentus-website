@@ -1,5 +1,6 @@
 # New changes
 
+- Update resource navbar && hero && headings of home page (PATCH)
 - Save selected currency (PATCH)
 - Small edits in landing (PATCH)
 - Update wallet address in landing pages && update mobile nav bar (PATCH)
