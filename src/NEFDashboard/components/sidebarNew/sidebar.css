@@ -103,6 +103,10 @@
 .ant-menu-root {
   font-family: "DM-Sans";
 }
+
+.sidebar-menu .ant-menu-item .ant-menu-item-icon + span {
+  margin-inline-start: 6px;
+}
 @media screen and (min-width: 1200px) {
   .sidebar-container {
     position: fixed;

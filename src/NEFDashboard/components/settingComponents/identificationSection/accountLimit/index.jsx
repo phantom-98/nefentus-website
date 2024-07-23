@@ -56,7 +56,7 @@ const AccountLimit = ({ kycData }) => {
               <span>Level 2</span>
             </div>
             <div className="level-label-wrapper default-text-gray">
-              <div className="level-label">1,000,000$</div>
+              <div className="level-label">10,000,000$</div>
               <div className="level-label">Unlimited</div>
               <div className="level-label">Unlimited</div>
               <div className="level-label">Unlimited</div>

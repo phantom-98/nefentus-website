@@ -13,6 +13,7 @@
 - Add `back` button in role choice page and login page (PATCH)
 - Update adaptive version of settings page (PATCH)
 - Fix `talk to an expert` button routing (PATCH)
+- Auth and Dashboard Fixes (MINOR)
 
 # v2.1.0
 
@@ -28,6 +29,7 @@
 - Fix Footer link Remove && Pay button in invoice preview && sidebar behavior (MiNOR)
 
 # v2.0.0
+
 - Add affiliate link (PATCH)
 - Updated HTML template (PATCH)
 - Fix texts & translations in the dashboard (PATCH)

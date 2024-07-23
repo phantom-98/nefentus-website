@@ -202,6 +202,13 @@ const DashboardLayout = ({ children, title }) => {
       case 1:
         navigate("/new-settings");
         break;
+      case 2:
+        window.open(
+          "http://staging.nefentus.com.s3-website.eu-central-1.amazonaws.com/technical-support",
+          "_blank",
+          "noopener,noreferrer",
+        );
+        break;
       default:
         return;
     }
@@ -252,9 +259,9 @@ const DashboardLayout = ({ children, title }) => {
                     <Languages />
                   </div>
                 </div>
-                <Button className="notificationIconMobileBtn">
+                {/* <Button className="notificationIconMobileBtn">
                   <img src={NotificationIcon} alt="MobileBtnIcon" />
-                </Button>
+                </Button> */}
                 <Button
                   className="mobileBtn"
                   onClick={() => {

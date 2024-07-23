@@ -1,5 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Select, Row, Col, Flex, Form, Input, Button, Divider } from "antd";
+import {
+  Select,
+  Row,
+  Col,
+  Flex,
+  Form,
+  Input,
+  Button,
+  Divider,
+  Checkbox,
+} from "antd";
 import Logo from "../../../assets/logo/logo.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import backend_API from "../../../api/backendAPI";
@@ -474,15 +484,28 @@ const SignForm = () => {
                             </Form.Item>
                           </>
                         )}
-                        <Form.Item>
-                          {/* {role === "Business" && (
-                        <div
-                          className="forgot-password"
-                          onClick={() => navigate("/forgot-password")}
+                        <Form.Item
+                          name={"privacy"}
+                          rules={[
+                            {
+                              required: true,
+                              message: "Please read and agree Privacy Policy",
+                            },
+                          ]}
                         >
-                          Forgot password?
-                        </div>
-                      )} */}
+                          <Checkbox className="privacy-policy-checkbox">
+                            <div className="default-text-gray privacy-policy-text">
+                              <span>I have read and agree to the </span>
+                              <a
+                                href="http://localhost:5173/login"
+                                className="privay-policy"
+                              >
+                                Privacy Policy
+                              </a>
+                            </div>
+                          </Checkbox>
+                        </Form.Item>
+                        <Form.Item>
                           <Button
                             type="primary"
                             htmlType="submit"
