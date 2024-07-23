@@ -256,6 +256,7 @@ const LoginForm = () => {
                 <Flex vertical gap={12}>
                   <Form
                     name="basic"
+                    form={form}
                     labelCol={{
                       span: 24,
                     }}
