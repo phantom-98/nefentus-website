@@ -500,7 +500,7 @@ const SignForm = () => {
                                 href="http://localhost:5173/login"
                                 className="privay-policy"
                               >
-                                Privacy Policy
+                                Terms of use
                               </a>
                             </div>
                           </Checkbox>
