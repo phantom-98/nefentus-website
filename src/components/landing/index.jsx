@@ -112,13 +112,18 @@ const Hero = () => {
       <div className="layout-horizontal">
         <div className="hero-layout">
           <h1 className="title">
-            <span className="gradient">Revolutionize</span> Your Business with
-            Crypto Payment Integration
+            The Ultimate{" "}
+            <span className="gradient">
+              Crypto
+              <br /> Payment Ecosystem{" "}
+            </span>
+            <br />
+            for Businesses
           </h1>
           <p className="sub-title">
-            Effortlessly generate & receive payments. Consolidate wallet
-            management and streamline the sales process, all within a single
-            platform.
+            Leading the charge in mass adoption, our innovative products empower
+            businesses to seamlessly transition into the new era of digital
+            assets.
           </p>
           <div className="button-container">
             <a href="/signup">
