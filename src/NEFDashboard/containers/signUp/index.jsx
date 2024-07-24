@@ -20,7 +20,7 @@ const SignForm = () => {
   const [roleSelector, setRoleSelector] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("Private");
+  const [role, setRole] = useState("");
   const backendAPI = new backend_API();
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,7 +40,9 @@ const SignForm = () => {
       firstName: values?.firstname,
       lastName: values?.lastname,
       telNr: values?.phoneNumber?.length > 6 ? values?.phoneNumber : "",
-      affiliateLink: "",
+      affiliateLink: localStorage.getItem("affiliate")
+        ? localStorage.getItem("affiliate")
+        : "",
       country: values?.countryRegion,
       accountRole: role,
     };

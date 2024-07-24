@@ -9,6 +9,10 @@ const IdentificationCommonModal = ({
   title,
   onUpload,
   loading,
+  verification,
+  acceptKYC,
+  declineRequest,
+  isDecline,
 }) => {
   return (
     <Modal
@@ -17,23 +21,68 @@ const IdentificationCommonModal = ({
       title={title}
       footer={null}
       width={514}
-      className="identification-common-modal"
+      className={`identification-common-modal ${
+        isDecline ? "decline-container" : ""
+      }`}
     >
       <Flex vertical gap={16}>
         {children}
-        <Flex align="center" justify="flex-end" gap={8}>
-          <Button className="identification-modal-cancel" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button
-            className="identification-modal-upload"
-            onClick={onUpload}
-            loading={loading}
-            disabled={loading}
+        {verification ? (
+          <Flex align="center" justify="space-between" gap={8}>
+            <Button
+              className="default-text verfication-common-button"
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
+            <Flex gap={8}>
+              <Button
+                className="verfication-decline-button default-text verfication-common-button"
+                onClick={declineRequest}
+              >
+                Decline
+              </Button>
+              <Button
+                className="verfication-accept-button"
+                onClick={() => !loading && acceptKYC()}
+                loading={loading}
+              >
+                Accept
+              </Button>
+            </Flex>
+          </Flex>
+        ) : isDecline ? (
+          <Flex
+            align="center"
+            justify="space-between"
+            gap={8}
+            className="decline-modal-footer"
           >
-            Upload
-          </Button>
-        </Flex>
+            <Button className="identification-modal-cancel" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              className="identification-modal-upload"
+              onClick={() => !loading && onUpload()}
+              loading={loading}
+            >
+              Send
+            </Button>
+          </Flex>
+        ) : (
+          <Flex align="center" justify="flex-end" gap={8}>
+            <Button className="identification-modal-cancel" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              className="identification-modal-upload"
+              onClick={() => !loading && onUpload()}
+              loading={loading}
+            >
+              Upload
+            </Button>
+          </Flex>
+        )}
       </Flex>
     </Modal>
   );
