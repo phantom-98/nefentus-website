@@ -450,10 +450,10 @@ const Resources = () => {
             </p>
             <div className={styles.gridContent}>
               <a href="/resources">Guides and Tutorials</a>
-              {/* <a href="/resources">Case Studies and Testimonials</a>
+              <a href="/resources">Case Studies and Testimonials</a>
               <a href="/resources">API Documentation</a>
               <a href="/resources">Blog and News</a>
-              <a href="/resources">Security Information</a> */}
+              <a href="/resources">Security Information</a>
             </div>
           </div>
           <div

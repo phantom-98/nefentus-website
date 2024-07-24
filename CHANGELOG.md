@@ -1,5 +1,6 @@
 # New changes
 
+- Update resource navbar && hero && headings of home page (PATCH)
 - Update product invoice work flow (MINOR)
 - Fix connecting wallet when clicking final button (MINOR)
 - Save selected currency (PATCH)
@@ -28,6 +29,7 @@
 - Fix Footer link Remove && Pay button in invoice preview && sidebar behavior (MiNOR)
 
 # v2.0.0
+
 - Add affiliate link (PATCH)
 - Updated HTML template (PATCH)
 - Fix texts & translations in the dashboard (PATCH)
