@@ -204,7 +204,7 @@ const DashboardLayout = ({ children, title }) => {
         break;
       case 2:
         window.open(
-          "http://staging.nefentus.com.s3-website.eu-central-1.amazonaws.com/technical-support",
+          `${window.origin}/technical-support`,
           "_blank",
           "noopener,noreferrer",
         );

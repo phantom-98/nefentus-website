@@ -268,6 +268,7 @@ const SignForm = () => {
                           lastname: "",
                           password: "",
                           phoneNumber: "+93",
+                          privacy: false,
                         }}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
