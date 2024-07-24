@@ -1,5 +1,6 @@
 # New changes
 
+- Update resource navbar && hero && headings of home page (PATCH)
 - Update product invoice work flow (MINOR)
 - Fix connecting wallet when clicking final button (MINOR)
 - Save selected currency (PATCH)
@@ -13,6 +14,7 @@
 - Add `back` button in role choice page and login page (PATCH)
 - Update adaptive version of settings page (PATCH)
 - Fix `talk to an expert` button routing (PATCH)
+- Modified Roles Component (MINOR)
 - Auth and Dashboard Fixes (MINOR)
 
 # v2.1.0

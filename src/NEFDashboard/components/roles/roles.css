@@ -68,6 +68,14 @@
   margin-inline-end: 0px !important;
 }
 
+.total-users-count {
+  padding: 3px 6px;
+  border-radius: 3px;
+  background: var(--Dark-color-theme-Dark, #202020);
+  font-size: 16px;
+  font-weight: 500;
+}
+
 @media screen and (max-width: 1200px) {
   .roles-card-body {
     gap: 22px;
