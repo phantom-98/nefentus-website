@@ -574,13 +574,9 @@ export const OptionsWithImage = ({
 
 export const CurrencySelectWithLabel = ({ label, value, setValue }) => {
   return (
-    <div className={styles.inputWrapper}>
+    <div className={styles.currencySelectField}>
       {label && (
-        <p
-          className={`${styles.label} ${
-            dashboard ? styles.dashboardLabel : ""
-          }`}
-        >
+        <p className={`default-text-gray ${styles.currencySelectLabel}`}>
           {label}
         </p>
       )}
@@ -610,6 +606,7 @@ export const CurrencySelect = ({ value, setValue, dashboard }) => {
           borderRadius: dashboard ? "6px" : "",
           width: dashboard ? "100%" : "",
           height: dashboard ? "40px" : "",
+          marginTop: "6px",
         }}
         onClick={() => setOpen((prev) => !prev)}
         onMouseLeave={() => setOpen(false)}
@@ -855,6 +852,7 @@ export const RadioSelect = ({
           display: "flex",
           gap: "6px",
         }}
+        className="radio-text-custom"
       >
         {options.map((option, index) => {
           return (

@@ -60,6 +60,14 @@ import Logos from "../logos/logos";
 import { useEffect, useState } from "react";
 
 const Landing = () => {
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("ref")) {
+      const paramValue = urlParams.get("ref");
+      localStorage.setItem("affiliate", paramValue);
+    }
+  }, []);
+
   return (
     <div className="landing-layout home container">
       <Hero />
@@ -186,7 +194,7 @@ export const Heading = ({ title, subtitle }) => {
   return (
     <div className="layout-title">
       <h1
-        className="title"
+        className="title heading-gradient"
         dangerouslySetInnerHTML={{ __html: title.replace("\n", "<br/>") }}
       ></h1>
       <p

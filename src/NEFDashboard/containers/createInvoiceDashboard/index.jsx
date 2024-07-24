@@ -34,10 +34,10 @@ const CreateInvoiceDashboard = () => {
     <>
       <div className="create-invoice-container">
         <Row>
-          <Col lg={12} span={24}>
+          <Col xl={12} span={24}>
             <CreateInvoice invoice={invoice} setInvoice={setInvoice} />
           </Col>
-          <Col lg={12} span={24}>
+          <Col xl={12} span={24}>
             <InvoicePreview invoice={invoice} />
           </Col>
         </Row>
