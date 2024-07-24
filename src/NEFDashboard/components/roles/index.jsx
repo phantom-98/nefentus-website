@@ -34,6 +34,11 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const link = window.location.origin + "?ref=" + user?.affiliateLink;
+  const userRole =
+    user?.roles?.length > 0 && getRole(user) == ""
+      ? user.roles[0]
+      : getRole(user);
+  console.log(userRole);
   const adminApi = new adminDashboardApi(
     user?.roles?.length > 0 && getRole(user) == ""
       ? user.roles[0]
@@ -111,31 +116,22 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
           </div>
         }
         extra={
-          <Button
-            className=" default-text add-role-button"
-            icon={<img src={AddIcon} />}
-            onClick={() =>
-              window.innerWidth <= 1024
-                ? navigate("/add-user", {
-                    state: { selectedUser: selectedUser },
-                  })
-                : setOpen(true)
-            }
-          >
-            {t("referralDashboard.addUser")}
-          </Button>
+          <div className="total-users-count default-text">
+            {t("dashboard.total")}: {totalRoles}
+          </div>
         }
       >
-        <Flex vertical justify="space-between" className="roles-card-body">
+        <Flex
+          vertical
+          gap={16}
+          justify={
+            !(userRole?.toLowerCase() == "vendor")
+              ? "space-between"
+              : "flex-start"
+          }
+          className={"roles-card-body"}
+        >
           <Flex vertical justify="center" gap={8}>
-            <Flex
-              align="center"
-              gap={6}
-              className="default-text common-role-style"
-            >
-              <div>{t("dashboard.total")} :</div>
-              <div>{totalRoles}</div>
-            </Flex>
             <div className="roles-line-bar-graph">
               {roleList.map((data, index) =>
                 data?.count ? (
@@ -151,7 +147,7 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
               )}
             </div>
           </Flex>
-          <Flex vertical justify="center" gap={16}>
+          <Flex vertical justify="center" gap={8}>
             <Flex
               align="center"
               justify="space-between"
@@ -161,6 +157,7 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
               <div>{t("referralDashboard.amount")}</div>
               <div>%</div>
             </Flex>
+
             <Flex vertical gap={12}>
               {roleList?.map((data, index) => (
                 <Row
@@ -191,38 +188,56 @@ const Roles = ({ fetchData, selectedUser, update, setUpdate }) => {
               ))}
             </Flex>
           </Flex>
-          <div>
-            <Text className="default-text-gray transaction-drawer-product-name">
-              {t("dashboard.affiliateLink")}
-            </Text>
-            <Flex align="center" gap={8}>
-              <Text
-                className="default-text"
-                style={{
-                  width: "calc(100% - 100px)",
-                  overflow: "hidden",
-                  background: "#171717",
-                  textWrap: "nowrap",
-                  padding: "4px 15px",
-                  border: "1px solid var(--border-color)",
-                  borderRadius: "6px",
-                }}
-              >
-                {link}
-              </Text>
+          {!(userRole?.toLowerCase() == "vendor") && (
+            <>
               <Button
-                onClick={() => copyToClipboard(link)}
-                style={{ background: "#202020", width: "100px" }}
+                className=" default-text add-role-button"
+                icon={<img src={AddIcon} />}
+                onClick={() =>
+                  window.innerWidth <= 1024
+                    ? navigate("/add-user", {
+                        state: { selectedUser: selectedUser },
+                      })
+                    : setOpen(true)
+                }
               >
-                <Flex gap={3} align="center">
-                  <img src={CopyIcon} alt="copy-icon" />
-                  <Text className="default-text">
-                    {t("transactionDrawer.copy")}
-                  </Text>
-                </Flex>
+                {t("referralDashboard.addUser")}
               </Button>
-            </Flex>
-          </div>
+
+              <div>
+                <Text className="default-text-gray transaction-drawer-product-name">
+                  {t("dashboard.affiliateLink")}
+                </Text>
+                <Flex align="center" gap={8}>
+                  <Text
+                    className="default-text"
+                    style={{
+                      width: "calc(100% - 100px)",
+                      overflow: "hidden",
+                      background: "#171717",
+                      textWrap: "nowrap",
+                      padding: "4px 15px",
+                      border: "1px solid var(--border-color)",
+                      borderRadius: "6px",
+                    }}
+                  >
+                    {link}
+                  </Text>
+                  <Button
+                    onClick={() => copyToClipboard(link)}
+                    style={{ background: "#202020", width: "100px" }}
+                  >
+                    <Flex gap={3} align="center">
+                      <img src={CopyIcon} alt="copy-icon" />
+                      <Text className="default-text">
+                        {t("transactionDrawer.copy")}
+                      </Text>
+                    </Flex>
+                  </Button>
+                </Flex>
+              </div>
+            </>
+          )}
         </Flex>
       </Card>
     </>

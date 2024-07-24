@@ -14,6 +14,7 @@
 - Add `back` button in role choice page and login page (PATCH)
 - Update adaptive version of settings page (PATCH)
 - Fix `talk to an expert` button routing (PATCH)
+- Modified Roles Component (MINOR)
 
 # v2.1.0
 
