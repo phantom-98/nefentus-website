@@ -1,19 +1,19 @@
 import { t } from "i18next";
-import PrivacyPolicyBody from "./../components/privacyPolicyBody/privacyPolicyBody";
+import AMLPolicyBody from "./../components/amlpolicyBody/amlpolicyBody";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import NefentusLogo from "../assets/logo/logo.svg";
 import { Conclusion } from "../components/landing";
 import "../components/landing/landing.css";
 
-const PrivacyPolicy = () => {
+const AMLPolicy = () => {
   const { t } = useTranslation();
   return (
     <div className="landing-layout container">
       <Helmet>
-        <title>Nefentus | {t("navigation.privacy")}</title>
+        <title>Nefentus | {t("navigation.amlpolicy")}</title>
       </Helmet>
-      <PrivacyPolicyBody />
+      <AMLPolicyBody />
       <Conclusion
         icon={NefentusLogo}
         title={`Transparent Pricing, No Strings Attached`}
@@ -25,4 +25,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default AMLPolicy;

@@ -124,12 +124,15 @@
 
 .landing-layout .layout-title {
   text-align: center;
-  max-width: 52rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   padding-inline: 2rem;
+}
+
+.landing-layout .layout-title .sub-title {
+  max-width: 52rem;
 }
 
 .landing-layout .layout-title h1 {

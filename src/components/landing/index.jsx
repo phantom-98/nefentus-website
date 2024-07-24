@@ -810,6 +810,7 @@ export const Conclusion = ({
   title,
   subtitle,
   button = "Get Started",
+  isLanding = true,
 }) => {
   return (
     <div id="conclusion" className="layout-paragraph layout-getting-started">
@@ -839,10 +840,12 @@ export const Conclusion = ({
         <a href="/signup">
           <button>{button}</button>
         </a>
-        <a href="/business-support">
-          <span>Talk to an expert</span>
-          <img src={RightArrow} />
-        </a>
+        {isLanding && (
+          <a href="/business-support">
+            <span>Talk to an expert</span>
+            <img src={RightArrow} />
+          </a>
+        )}
       </div>
 
       <img

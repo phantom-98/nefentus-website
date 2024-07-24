@@ -7,12 +7,14 @@ const PrivacyPolicyBody = () => {
   const { t: tpp } = useTranslation(["privacy_policy"]);
 
   return (
-    <div className={`container ${styles.section}`}>
+    <div
+      className={`container ${styles.section}`}
+      style={{ marginBottom: "0" }}
+    >
       <h2>{t("privacyPolicy.headline")}</h2>
       <div className={`${styles.body}`}>
         <div className={styles.content}>
           <div dangerouslySetInnerHTML={{ __html: tpp("contents") }} />
-
           <p>
             <a href="javascript:;" onClick={() => declineCookie()}>
               {t("privacyPolicy.revoke")}

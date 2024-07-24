@@ -43,9 +43,6 @@
 }
 
 .footer-layout .footer-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding-block: 2rem 4rem;
 }
 
