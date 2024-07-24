@@ -268,7 +268,6 @@ const SignForm = () => {
                           lastname: "",
                           password: "",
                           phoneNumber: "+93",
-                          privacy: false,
                         }}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
@@ -490,7 +489,12 @@ const SignForm = () => {
                           rules={[
                             {
                               required: true,
-                              message: "Please read and agree Privacy Policy",
+                              validator: (_, value) =>
+                                value
+                                  ? Promise.resolve()
+                                  : Promise.reject(
+                                      "Please read and agree terms of use",
+                                    ),
                             },
                           ]}
                         >
