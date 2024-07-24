@@ -486,6 +486,7 @@ const SignForm = () => {
                         )}
                         <Form.Item
                           name={"privacy"}
+                          valuePropName="checked"
                           rules={[
                             {
                               required: true,
