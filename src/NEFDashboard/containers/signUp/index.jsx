@@ -351,7 +351,7 @@ const SignForm = () => {
                                 {
                                   required: true,
                                   message:
-                                    "Please input your confirm password!",
+                                    "Please input your password confirmation!",
                                 },
                               ]}
                             >
@@ -457,7 +457,7 @@ const SignForm = () => {
                               rules={[
                                 {
                                   required: role === "Business",
-                                  message: "Please input your Country",
+                                  message: "Please input your country",
                                 },
                               ]}
                             >
