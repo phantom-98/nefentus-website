@@ -19,6 +19,8 @@ import AddUserIcon from "../../../assets/newDashboardIcons/add-user.svg";
 import ProductIcon from "../../../assets/newDashboardIcons/products.svg";
 import CreditCardIcon from "../../../assets/newDashboardIcons/credit-card.svg";
 import DashboardIcon from "../../../assets/newDashboardIcons/referral-dashboard.svg";
+import ReferralIcon from "../../../assets/newDashboardIcons/referral.svg";
+import KYCIcon from "../../../assets/newDashboardIcons/kyc.svg";
 import { useTranslation } from "react-i18next";
 import SendCrypto from "../sendCrypto";
 import ReceiveCrypto from "../receiveCrypto";
@@ -141,6 +143,7 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
         navigate("/kyc-dashboard");
         break;
     }
+    setSideBarShow(!sideBarShow);
   };
   // const options = [
   //   {
@@ -298,22 +301,25 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
             getItem(
               t("personalDashboard.sidebar.referral"),
               "6",
-              <img src={DashboardIcon} />,
+              <img src={ReferralIcon} />,
             ),
             getItem(
               t("personalDashboard.sidebar.wallets"),
               "5",
               <img src={WalletIcon} />,
             ),
-            getItem(
-              t("referralDashboard.addUser"),
-              "9",
-              <img src={AddUserIcon} />,
-            ),
             getRole(user) == "admin" ||
             (user?.roles && user?.roles[0] == "admin")
-              ? getItem(t("navigation.kyc"), "10", <img src={AddUserIcon} />)
+              ? getItem(t("navigation.kyc"), "10", <img src={KYCIcon} />)
               : null,
+            getRole(user) == "vendor" ||
+            (user?.roles && user?.roles[0] == "vendor")
+              ? null
+              : getItem(
+                  t("referralDashboard.addUser"),
+                  "9",
+                  <img src={AddUserIcon} />,
+                ),
           ],
       "group",
     ),

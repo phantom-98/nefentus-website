@@ -105,7 +105,7 @@ const KycDashboard = () => {
       render: (userDetail, record) => {
         return (
           <div className="default-text kyc-empty-text-field">
-            {userDetail?.business}
+            {userDetail?.business || "Google"}
           </div>
         );
       },

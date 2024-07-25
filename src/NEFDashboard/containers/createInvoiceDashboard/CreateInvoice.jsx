@@ -188,6 +188,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               gap: "16px",
+              color: "var(--Light-grey2)",
             }}
             className="create-invoice-personal-detail"
           >
@@ -220,7 +221,9 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
             justify="space-between"
           >
             <Flex vertical gap={6} className="legal-status-container">
-              <p className="default-text-gray">{t("payments.legalStatus")}</p>
+              <p className="default-text-gray create-invoice-normal-font">
+                {t("payments.legalStatus")}
+              </p>
               <Flex gap={6}>
                 <RadioOption
                   icon={theme === "dark" ? PersonDark : PersonLight}
@@ -340,7 +343,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
           >
             <p
               style={{
-                fontSize: "16px",
+                fontSize: "18px",
                 fontWeight: 500,
                 lineHeight: "140%",
                 color: "var(--White, #FAFAFA)",
@@ -504,13 +507,13 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
           >
             <p
               className="default-text-gray"
-              style={{ fontSize: "16px", fontWeight: 500 }}
+              style={{ fontSize: "18px", fontWeight: 500 }}
             >
               {t("payments.subtotal")}
             </p>
             <p
               className="default-text"
-              style={{ fontSize: "16px", fontWeight: 500 }}
+              style={{ fontSize: "18px", fontWeight: 500 }}
             >
               {getCurrencySymbol()[invoice?.currency]}
               {formatUSDBalance(invoice?.amount)}
@@ -526,13 +529,13 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
           >
             <p
               className="default-text-gray"
-              style={{ fontSize: "16px", fontWeight: 500 }}
+              style={{ fontSize: "18px", fontWeight: 500 }}
             >
               {t("payments.vatValue")}
             </p>
             <p
               className="default-text"
-              style={{ fontSize: "16px", fontWeight: 500 }}
+              style={{ fontSize: "18px", fontWeight: 500 }}
             >
               {invoice?.reverseCharge ? (
                 <span>RC</span>
@@ -561,7 +564,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
             <p
               style={{
                 color: "var(--White, #FAFAFA)",
-                fontSize: "16px",
+                fontSize: "18px",
                 fontWeight: 500,
                 lineHeight: "140%",
               }}
@@ -571,7 +574,7 @@ const CreateInvoice = ({ invoice, setInvoice }) => {
             <p
               style={{
                 color: "var(--White, #FAFAFA)",
-                fontSize: "16px",
+                fontSize: "18px",
                 fontWeight: 500,
                 lineHeight: "140%",
               }}

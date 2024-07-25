@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./login.css";
-import { Col, Row, Flex, Form, Input, Button, Divider } from "antd";
+import { Col, Row, Flex, Form, Input, Button, Divider, Checkbox } from "antd";
 
 import Logo from "../../../assets/logo/logo.svg";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +10,13 @@ import { useAuth } from "../../../context/auth/authContext";
 import { useTranslation } from "react-i18next";
 import AuthLayoutImg from "../../../assets/newDashboardIcons/login.png";
 import Cookies from "js-cookie";
+import { setCookie } from "../../../func/cookies";
+import { decryptData, encryptData } from "../../../utils";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [form] = Form.useForm();
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
   const { setUser } = useAuth();
   const backendAPI = new backend_API();
@@ -22,7 +25,7 @@ const LoginForm = () => {
   const [verification, setVerification] = useState({});
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
-  const [checkBox] = useState(
+  const [checkBox, setCheckBox] = useState(
     Cookies.get("nefentus-remember-me")
       ? JSON.parse(Cookies.get("nefentus-remember-me"))
       : false,
@@ -52,10 +55,23 @@ const LoginForm = () => {
   const onFinish = async (values) => {
     if (loading) return;
     setLoading(true);
+    if (checkBox && Cookies.get("acceptCookie")) {
+      setCookie("nefentus-username", form.getFieldValue("email"), 365);
+      setCookie(
+        "nefentus-password",
+        encryptData(form.getFieldValue("password")),
+        365,
+      );
+      setCookie("nefentus-remember-me", checkBox, 365);
+    } else {
+      setCookie("nefentus-username", "", 365);
+      setCookie("nefentus-password", "", 365);
+      setCookie("nefentus-remember-me", false, 365);
+    }
     const response = await backendAPI.login(
       values.email,
       values.password,
-      true,
+      checkBox,
     );
     setLoading(false);
     if (response == null) {
@@ -240,6 +256,7 @@ const LoginForm = () => {
                 <Flex vertical gap={12}>
                   <Form
                     name="basic"
+                    form={form}
                     labelCol={{
                       span: 24,
                     }}
@@ -247,7 +264,15 @@ const LoginForm = () => {
                       span: 24,
                     }}
                     initialValues={{
-                      remember: true,
+                      email: Cookies.get("nefentus-username")
+                        ? Cookies.get("nefentus-username")
+                        : "",
+                      password: Cookies.get("nefentus-password")
+                        ? decryptData(Cookies.get("nefentus-password"))
+                        : "",
+                      remember: Cookies.get("nefentus-remember-me")
+                        ? JSON.parse(Cookies.get("nefentus-remember-me"))
+                        : false,
                     }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -277,6 +302,17 @@ const LoginForm = () => {
                       ]}
                     >
                       <Input.Password placeholder="Enter your password" />
+                    </Form.Item>
+                    <Form.Item name="remember">
+                      <Checkbox
+                        className="remember-me-checkbox"
+                        checked={checkBox}
+                        onChange={(e) => setCheckBox(e.target.checked)}
+                      >
+                        <div className="default-text-gray remember-me-text">
+                          Remember Me
+                        </div>
+                      </Checkbox>
                     </Form.Item>
                     <Form.Item>
                       <div

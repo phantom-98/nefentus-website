@@ -172,11 +172,7 @@ export const Textarea = ({
   return (
     <div className={styles.textareaWrapper}>
       {label && (
-        <p
-          className={`${styles.label} ${
-            dashboard ? styles.dashboardLabel : ""
-          } ${dashboard ? "default-text" : ""}`}
-        >
+        <p className={`${styles.textArea}  ${dashboard ? "default-text" : ""}`}>
           {label}
         </p>
       )}

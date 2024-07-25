@@ -15,6 +15,14 @@
 - Update adaptive version of settings page (PATCH)
 - Fix `talk to an expert` button routing (PATCH)
 - Modified Roles Component (MINOR)
+- Change icon for KYC page (Admin dashboard)
+- Remove referral and add user for venor role
+- Change Vendore KYC level 2 - to 10Million
+- Change font color on table on white (now half is grey and half is white)
+- Terms of use checkobox on log in/sign up flow (They can't register without a check mark.)
+- Menu behavior.
+- Delete notification button.
+- Support link in menu leads to technical support page
 
 # v2.1.0
 

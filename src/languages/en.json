@@ -1106,9 +1106,9 @@
     "totalDue": "Total due",
     "note": "Note",
     "buyer": {
-      "customer": "Customer information",
-      "fullName": "Recipient full name",
-      "email": "Recipient email"
+      "customer": "Customer Information",
+      "fullName": "Full Name",
+      "email": "Recipient Email"
     },
     "tax": {
       "reverseCharge": "The Reverse Charge process is used. The client is responsable for paying the VAT.",
