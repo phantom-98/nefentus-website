@@ -18,7 +18,28 @@
   align-items: center;
   padding: 0rem 0 4rem 0;
 }
+/* .cryptopayment {
+  background-color:#171717;
+} */
 
+.landing-layout .world {
+  margin-top: -4rem;
+  background: #131313;
+  border-block: 1px solid #202020;
+  width: 100vw !important;
+  overflow: hidden;
+}
+.landing-layout .cryptopayment {
+  background: #131313;
+  border-block: 1px solid #202020;
+  width: 100vw !important;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+  position: relative;
+}
 .layout-world {
   display: flex;
   gap: 6rem;
@@ -60,7 +81,7 @@
   gap: 2rem;
   justify-content: space-between;
   align-items: start;
-  width: 40%;
+  width: 32%;
 }
 
 .cryptopayment-title-layout {
@@ -198,7 +219,7 @@
 .landing-layout .world-img {
   display: flex;
   flex-direction: row-reverse;
-  width: 70%;
+  width: 68%;
 }
 .landing-layout .world-img img {
   max-width: 100%;
@@ -1313,6 +1334,19 @@
   }
   .landing-layout .world {
     padding-block: 4rem;
+  }
+  .landing-layout .cryptopayment {
+    padding-top: 4rem;
+  }
+  .manage-title-layout h1,
+  .world-title-layout h1,
+  .cryptopayment-title-layout h1 {
+    width: 100%;
+  }
+  .manage-title-layout p,
+  .world-title-layout p,
+  .cryptopayment-title-layout p {
+    width: 100%;
   }
 }
 @media (max-width: 640px) {

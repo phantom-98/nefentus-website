@@ -78,7 +78,7 @@ const B2B = () => {
         <Conclusion
           key="b2b-conclusion"
           icon={NefentusLogo}
-          title={`Transparent Pricing,\n No Strings Attached`}
+          title={`Transparent Pricing, <span style="white-space: nowrap;">No Strings Attached</span>`}
           subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating & using an account for personal use is completely free. Get started today!`}
           button={`Create an account`}
         />
@@ -236,7 +236,7 @@ const steps = [
 const World = () => {
   return (
     <div className="layout-paragraph world">
-      <div className="layout-world">
+      <div className="layout-world container">
         <div className="world-title-layout">
           <h1 className="title">Over 580M crypto owners worldwide</h1>
           <p className="sub-title">
@@ -386,8 +386,8 @@ const products = [
 
 const CryptoPayment = () => {
   return (
-    <div className="layout-paragraph world">
-      <div className="layout-cryptopayment">
+    <div className="cryptopayment">
+      <div className="layout-cryptopayment container">
         <div className="cryptopayment-title-layout">
           <h1 className="title">Crypto payments are borderless</h1>
           <p className="sub-title">
