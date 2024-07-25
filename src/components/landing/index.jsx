@@ -2,6 +2,7 @@ import "./landing.css";
 import RightArrow from "../../assets/icon/right-arrow.svg";
 import Hero1 from "../../assets/landing/hero1.png";
 import Hero2 from "../../assets/landing/hero2.png";
+import ManageCrypto from "../../assets/landing/manage-crypto.png";
 import HeroLine1 from "../../assets/landing/hero-line-top-left.svg";
 import HeroLine2 from "../../assets/landing/hero-line-bottom-left.svg";
 import BlueLine from "../../assets/landing/BlueLine.svg";
@@ -76,6 +77,8 @@ const Landing = () => {
 
       <Helps />
 
+      <CryptoManage />
+
       <Benefits />
 
       <MainFeaturesHead />
@@ -121,11 +124,7 @@ const Hero = () => {
         <div className="hero-layout">
           <h1 className="title">
             The Ultimate{" "}
-            <span className="gradient">
-              Crypto
-              <br /> Payment Ecosystem{" "}
-            </span>
-            <br />
+            <span className="gradient">Crypto Payment Ecosystem </span>
             for Businesses
           </h1>
           <p className="sub-title">
@@ -194,7 +193,7 @@ export const Heading = ({ title, subtitle }) => {
   return (
     <div className="layout-title">
       <h1
-        className="title heading-gradient"
+        className="title"
         dangerouslySetInnerHTML={{ __html: title.replace("\n", "<br/>") }}
       ></h1>
       <p
@@ -304,9 +303,45 @@ const Helps = () => {
       <div
         className="horizontal-dashed-line"
         style={{
-          bottom: "16rem",
+          bottom: "0",
           width: "100vw",
         }}
+      />
+    </div>
+  );
+};
+
+const CryptoManage = () => {
+  return (
+    <div className="layout-paragraph manage">
+      <div className="layout-horizontal layout-manage">
+        <div className="manage-title-layout">
+          <h1 className="title">Manage your crypto on the go with our app</h1>
+          <p className="sub-title">
+            Stay connected to your cryptocurrency transactions anytime, anywhere
+            with the Nefentus mobile app.
+          </p>
+          <p className="sub-title">
+            Download the app today and experience the future of crypto payments
+            at your fingertips.
+          </p>
+          <div className="button-container">
+            <a href="/signup">
+              <button>Download App</button>
+            </a>
+          </div>
+        </div>
+        <div className="manage-img">
+          <img src={ManageCrypto} />
+        </div>
+      </div>
+      <hr
+        style={{
+          left: "0",
+          bottom: "0",
+          height: "100%",
+        }}
+        className="hide-in-tablet"
       />
     </div>
   );

@@ -2,6 +2,7 @@ import "./landing.css";
 import RightArrow from "../../assets/icon/right-arrow.svg";
 import { Conclusion, Heading } from ".";
 import NefentusLogo from "../../assets/logo/logo.svg";
+import ManageCrypto from "../../assets/landing/manage-crypto.png";
 import Hero1 from "../../assets/landing/Hero 1.png";
 import Hero2 from "../../assets/landing/Hero 2.png";
 import Hero3 from "../../assets/landing/hero 3.png";
@@ -53,6 +54,8 @@ const B2C = () => {
       <Hero />
 
       <MultiWallets />
+
+      <CryptoManage />
 
       <Transactions />
 
@@ -455,6 +458,38 @@ const MultiWallets = () => {
   );
 };
 
+const CryptoManage = () => {
+  return (
+    <div className="layout-paragraph b2c-manage">
+      <div className="layout-horizontal layout-manage">
+        <div className="manage-title-layout">
+          <h1 className="title">
+            Manage your crypto
+            <br />
+            on the go with our app
+          </h1>
+          <p className="sub-title">
+            Stay connected to your cryptocurrency transactions anytime, anywhere
+            with the Nefentus mobile app.
+          </p>
+          <p className="sub-title">
+            Download the app today and experience the future of crypto payments
+            at your fingertips.
+          </p>
+          <div className="button-container">
+            <a href="/signup">
+              <button>Download App</button>
+            </a>
+          </div>
+        </div>
+        <div className="manage-img">
+          <img src={ManageCrypto} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Transactions = () => {
   return (
     <div
@@ -462,6 +497,7 @@ const Transactions = () => {
       className="layout-paragraph"
       style={{
         paddingBottom: "0",
+        paddingTop: "4rem",
       }}
     >
       <Heading

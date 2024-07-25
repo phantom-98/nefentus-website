@@ -1,6 +1,9 @@
 import { Conclusion, Heading } from ".";
 import "./landing.css";
 import RightArrow from "../../assets/icon/right-arrow.svg";
+import ManageCrypto from "../../assets/landing/manage-crypto.png";
+import CryptoPaymentPng from "../../assets/landing/crypto-payment.png";
+import WorldPng from "../../assets/landing/world.png";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import HeroLineTop from "../../assets/landing/b2c-hero-top.svg";
 import HeroLineBottom from "../../assets/landing/b2c-hero-down.svg";
@@ -56,7 +59,11 @@ const B2B = () => {
       >
         <Hero />
 
+        <World />
+
         <Invoicing />
+
+        <CryptoPayment />
 
         <Product />
 
@@ -65,6 +72,8 @@ const B2B = () => {
         <Analytics />
 
         <Security />
+
+        <CryptoManage />
 
         <Conclusion
           key="b2b-conclusion"
@@ -224,6 +233,30 @@ const steps = [
   },
 ];
 
+const World = () => {
+  return (
+    <div className="layout-paragraph world">
+      <div className="layout-world">
+        <div className="world-title-layout">
+          <h1 className="title">Over 580M crypto owners worldwide</h1>
+          <p className="sub-title">
+            As of 2024, the global cryptocurrency community has grown to over
+            580 million users. This number could reach over 1 billion in the
+            coming years.
+          </p>
+          <p className="sub-title">
+            By accepting crypto payments, your business can unlock the potential
+            of connecting with millions of new customers globally.
+          </p>
+        </div>
+        <div className="world-img">
+          <img src={WorldPng} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Invoicing = () => {
   const [step, setStep] = useState(steps.map((_, i) => !i));
   const timeRef = useRef();
@@ -350,6 +383,35 @@ const products = [
     img: Product3Png,
   },
 ];
+
+const CryptoPayment = () => {
+  return (
+    <div className="layout-paragraph world">
+      <div className="layout-cryptopayment">
+        <div className="cryptopayment-title-layout">
+          <h1 className="title">Crypto payments are borderless</h1>
+          <p className="sub-title">
+            Unlike traditional banking services, crypto transactions operate
+            24/7 with no limits on transaction amounts.
+          </p>
+          <p className="sub-title">
+            Since every blockchain transaction is final, there are no risks of
+            bank blocks or rejections.
+          </p>
+          <ul className="sub-title">
+            <li>99.9% acceptance rate</li>
+            <li>No chargebacks or rolling reserves</li>
+            <li>Unlimited transaction amounts</li>
+          </ul>
+        </div>
+        <div className="cryptopayment-img">
+          <img src={CryptoPaymentPng} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Product = () => {
   const [stepId, setStepId] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -723,6 +785,34 @@ const Security = () => {
             zIndex: "1",
           }}
         />
+      </div>
+    </div>
+  );
+};
+
+const CryptoManage = () => {
+  return (
+    <div className="layout-paragraph b2b-manage">
+      <div className="layout-horizontal layout-b2b-manage">
+        <div className="manage-title-layout">
+          <h1 className="title">Manage your crypto on the go with our app</h1>
+          <p className="sub-title">
+            Stay connected to your cryptocurrency transactions anytime, anywhere
+            with the Nefentus mobile app.
+          </p>
+          <p className="sub-title">
+            Download the app today and experience the future of crypto payments
+            at your fingertips.
+          </p>
+          <div className="button-container">
+            <a href="/signup">
+              <button>Download App</button>
+            </a>
+          </div>
+        </div>
+        <div className="manage-img">
+          <img src={ManageCrypto} />
+        </div>
       </div>
     </div>
   );

@@ -18,6 +18,19 @@
   align-items: center;
   padding: 0rem 0 4rem 0;
 }
+
+.layout-world {
+  display: flex;
+  gap: 6rem;
+  justify-content: space-between;
+  align-items: center;
+}
+.layout-cryptopayment {
+  display: flex;
+  gap: 6rem;
+  justify-content: space-between;
+  align-items: center;
+}
 /* 
 .layout-horizontal > div {
     width: 50%;
@@ -32,14 +45,85 @@
   width: 60%;
 }
 
+.manage-title-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: start;
+  width: 45%;
+}
+
+.world-title-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: start;
+  width: 40%;
+}
+
+.cryptopayment-title-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: start;
+  width: 40%;
+}
+
 .hero-layout h1 {
   font-size: 4rem;
   line-height: 6rem;
 }
 
+.manage-title-layout h1 {
+  width: 72%;
+  font-size: 3.2rem;
+  line-height: 5rem;
+  font-weight: 500;
+}
+.world-title-layout h1 {
+  width: 72%;
+  font-size: 3.2rem;
+  line-height: 5rem;
+  font-weight: 500;
+}
+.cryptopayment-title-layout h1 {
+  width: 75%;
+  font-size: 3.2rem;
+  line-height: 5rem;
+  font-weight: 500;
+}
+
 .hero-layout p {
   font-size: 1.6rem;
-  width: 76%;
+}
+
+.manage-title-layout p {
+  font-size: 1.6rem;
+  width: 73%;
+  /* width: 76%; */
+}
+.world-title-layout p {
+  font-size: 1.6rem;
+  width: 100%;
+  /* width: 76%; */
+}
+
+.cryptopayment-title-layout p {
+  font-size: 1.6rem;
+  width: 90%;
+  /* width: 76%; */
+}
+.cryptopayment-title-layout ul {
+  padding-left: 2rem;
+}
+.cryptopayment-title-layout ul li {
+  padding-bottom: 1rem;
+}
+.cryptopayment-title-layout li::marker {
+  color: #387d91;
 }
 
 .landing-layout .title {
@@ -102,6 +186,33 @@
   width: 40%;
 }
 
+.landing-layout .manage-img {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 55%;
+}
+.landing-layout .manage-img img {
+  max-width: 100%;
+}
+
+.landing-layout .world-img {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 70%;
+}
+.landing-layout .world-img img {
+  max-width: 100%;
+}
+
+.landing-layout .cryptopayment-img {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 60%;
+}
+.landing-layout .cryptopayment-img img {
+  max-width: 100%;
+}
+
 .landing-layout .hero-img img {
   border-radius: 1.6rem;
   border: 5px solid var(--Dark, #202020);
@@ -154,6 +265,17 @@
   border: 1px solid #171717;
   background: #202020;
   width: 100%;
+}
+
+.landing-layout .layout-manage {
+  display: flex;
+  width: 100%;
+}
+
+.landing-layout .layout-b2b-manage {
+  display: flex;
+  width: 100%;
+  padding: 0;
 }
 
 .landing-layout .layout-feature {
@@ -775,7 +897,18 @@
 }
 .landing-layout .help {
   gap: 8rem;
-  padding-block: 16rem;
+  /* padding-block: 16rem; */
+  padding-top: 16rem;
+  padding-bottom: 4rem;
+}
+.landing-layout .manage {
+  padding-block: 12rem;
+}
+.landing-layout .b2c-manage {
+  padding-block: 4rem;
+}
+.landing-layout .b2b-manage {
+  padding-bottom: 0rem;
 }
 .landing-layout .benefits img {
   height: 100%;
@@ -859,6 +992,12 @@
   margin-top: 0.6rem;
 }
 @media (max-width: 900px) {
+  .manage-title-layout p {
+    width: 100%;
+  }
+  .manage-title-layout h1 {
+    width: 100%;
+  }
   .landing-layout .hide-in-tablet {
     display: none;
   }
@@ -919,6 +1058,24 @@
   }
   .landing-layout .layout-help {
     height: fit-content;
+  }
+  .landing-layout .manage {
+    padding-block: 4rem;
+  }
+  .landing-layout .layout-manage {
+    padding: 0;
+  }
+  .landing-layout .manage-title-layout {
+    width: 100%;
+  }
+  .landing-layout .manage-img {
+    width: 80%;
+  }
+  .landing-layout .world-img {
+    width: 95%;
+  }
+  .landing-layout .cryptopayment-img {
+    width: 95%;
   }
   .landing-layout .benefits {
     flex-direction: column;
@@ -1141,6 +1298,21 @@
   }
   .community-container {
     grid-template-columns: 1fr;
+  }
+  .landing-layout .layout-world {
+    flex-direction: column;
+  }
+  .landing-layout .layout-cryptopayment {
+    flex-direction: column;
+  }
+  .landing-layout .world-title-layout {
+    width: 100%;
+  }
+  .landing-layout .cryptopayment-title-layout {
+    width: 100%;
+  }
+  .landing-layout .world {
+    padding-block: 4rem;
   }
 }
 @media (max-width: 640px) {

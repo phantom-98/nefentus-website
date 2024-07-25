@@ -349,7 +349,7 @@ h1 {
   background-size: 500% auto;
   animation: textShine 2.5s ease-in-out infinite;
 }
-.heading-gradient {
+/* .heading-gradient {
   background: linear-gradient(
     to right,
     #898989 20%,
@@ -365,7 +365,7 @@ h1 {
   background-position: 50% 50%;
   background-size: 500% auto;
   animation: textShine 3s ease-in-out infinite;
-}
+} */
 
 @keyframes textShine {
   0% {
