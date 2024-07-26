@@ -10,7 +10,7 @@ const TermsofUseBody = () => {
       className={`container ${styles.section}`}
       style={{ marginBottom: "0" }}
     >
-      <h4>Last Update: June 30, 2023</h4>
+      <h4>Last Update: June 30, 2024</h4>
       <h2>{t("termsofuse.headline")}</h2>
       <div className={`${styles.body}`}>
         <div className={styles.content}>
