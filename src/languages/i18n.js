@@ -49,7 +49,7 @@ i18n
         termsofUse: { contents: termsofUseDE },
         aml_policy: { contents: amlPolicyDE },
         cookie_policy: { contents: cookiePolicyDE },
-        privacy_policy: { contents: privacyPolicyDE },
+        privacy_policy: { contents: privacyPolicyEN },
         imprint: { contents: imprintDE },
       },
       uk: {
@@ -57,7 +57,7 @@ i18n
         termsofUse: { contents: termsofUseUK },
         aml_policy: { contents: amlPolicyUK },
         cookie_policy: { contents: cookiePolicyUK },
-        privacy_policy: { contents: privacyPolicyUK },
+        privacy_policy: { contents: privacyPolicyEN },
         imprint: { contents: imprintUK },
       },
       /*

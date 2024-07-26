@@ -10,7 +10,7 @@ const CookiePolicyBody = () => {
       className={`container ${styles.section}`}
       style={{ marginBottom: "0" }}
     >
-      <h4>Last Update: Mai 10, 2024</h4>
+      <h4>Last Update: May 10, 2024</h4>
       <h2>{t("cookiepolicy.headline")}</h2>
       <div className={`${styles.body}`}>
         <div className={styles.content}>

@@ -10,7 +10,7 @@ const AMLPolicyBody = () => {
       className={`container ${styles.section}`}
       style={{ marginBottom: "0" }}
     >
-      <h4>Last Update: Juli 23, 2024</h4>
+      <h4>Last Update: July 23, 2024</h4>
       <h2>{t("amlpolicy.headline")}</h2>
       <div className={`${styles.body}`}>
         <div className={styles.content}>

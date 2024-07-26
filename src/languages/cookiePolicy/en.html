@@ -12,6 +12,25 @@
   cookies. You can also customize your cookie preferences.
 </p>
 
+<p>
+  <a
+    href="javascript:;"
+    style="text-decoration: underline"
+    onclick="javascript:(function () {
+          // Get all cookies
+          const cookies = document.cookie.split(';');
+          // Iterate through each cookie and set its expiration date to the past
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            const name = cookie.split('=')[0];
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/`;
+          }
+          alert('Cookies have been declined.');
+        })()"
+    >Revoke my consent to the storage of cookies</a
+  >
+</p>
+
 <h4>What Are Cookies?</h4>
 <p>
   Cookies are small text files placed on your device when you visit a website.

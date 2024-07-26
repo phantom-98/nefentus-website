@@ -15,11 +15,6 @@ const PrivacyPolicyBody = () => {
       <div className={`${styles.body}`}>
         <div className={styles.content}>
           <div dangerouslySetInnerHTML={{ __html: tpp("contents") }} />
-          <p>
-            <a href="javascript:;" onClick={() => declineCookie()}>
-              {t("privacyPolicy.revoke")}
-            </a>
-          </p>
         </div>
       </div>
     </div>
