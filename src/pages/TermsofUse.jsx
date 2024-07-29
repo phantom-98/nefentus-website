@@ -1,19 +1,19 @@
 import { t } from "i18next";
-import PrivacyPolicyBody from "./../components/privacyPolicyBody/privacyPolicyBody";
+import TermsofUseBody from "./../components/termsofuse/termsofuseBody";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import NefentusLogo from "../assets/logo/logo.svg";
 import { Conclusion } from "../components/landing";
 import "../components/landing/landing.css";
 
-const PrivacyPolicy = () => {
+const TermsofUse = () => {
   const { t } = useTranslation();
   return (
     <div className="landing-layout container">
       <Helmet>
-        <title>Nefentus | {t("navigation.privacy")}</title>
+        <title>Nefentus | {t("navigation.termsofuse")}</title>
       </Helmet>
-      <PrivacyPolicyBody />
+      <TermsofUseBody />
       <Conclusion
         icon={NefentusLogo}
         title={`Transparent Pricing, <span style="white-space: nowrap;">No Strings Attached</span>`}
@@ -24,4 +24,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default TermsofUse;

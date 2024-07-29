@@ -27,9 +27,12 @@
     "partner": "Partner",
     "converter": "Converter",
     "integration": "Integration",
+    "termsofuse": "Terms of Use",
+    "amlpolicy": "AML Policy",
+    "cookiepolicy": "Cookie Policy",
     "imprint": "Imprint",
     "forgotPassword": "Password forgotten",
-    "privacy": "Privacy policy",
+    "privacy": "Privacy Policy",
     "vacancy": "Career",
     "resetPassword": "Reset Password",
     "support": "Support",
@@ -1411,6 +1414,15 @@
     "privacyPolicy2": "!",
     "decline": "Decline",
     "accept": "Accept"
+  },
+  "termsofuse": {
+    "headline": "Terms of Use"
+  },
+  "amlpolicy": {
+    "headline": "AML Policy"
+  },
+  "cookiepolicy": {
+    "headline": "Cookie Policy"
   },
   "privacyPolicy": {
     "revoke": "Revoke my consent to the storage of cookies",
