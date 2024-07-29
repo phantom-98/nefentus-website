@@ -331,13 +331,13 @@ h1 {
   font-size: 5rem;
   line-height: 105%;
 }
-
+.layout-community .layout-title .title,
 .gradient {
   background: linear-gradient(
     to right,
     var(--text-color) 20%,
-    #0784b5 40%,
-    #1595c2 60%,
+    #a1a1a1 40%,
+    #b8b8b8 60%,
     var(--text-color) 80%
   );
   -webkit-background-clip: text;
@@ -349,6 +349,23 @@ h1 {
   background-size: 500% auto;
   animation: textShine 2.5s ease-in-out infinite;
 }
+/* .heading-gradient {
+  background: linear-gradient(
+    to right,
+    #898989 20%,
+    #e9e9e9 40%,
+    #fff 60%,
+    #898989 80%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: max-content;
+  text-fill-color: transparent;
+  background-position: 50% 50%;
+  background-size: 500% auto;
+  animation: textShine 3s ease-in-out infinite;
+} */
 
 @keyframes textShine {
   0% {

@@ -128,6 +128,21 @@
 .signup-text span {
   color: var(--Nef-blue, #078bb9);
 }
+
+.remember-me-text {
+  font-size: 16px;
+}
+
+.remember-me-checkbox .ant-checkbox-checked .ant-checkbox-inner,
+.remember-me-checkbox .ant-checkbox-checked:hover .ant-checkbox-inner {
+  border-color: var(--Dark) !important;
+  background: transparent !important;
+}
+
+.remember-me-checkbox .ant-checkbox:hover .ant-checkbox-inner {
+  border-color: #078bb9;
+}
+
 @media screen and (max-width: 767px) {
   .auth-form {
     max-width: 100%;

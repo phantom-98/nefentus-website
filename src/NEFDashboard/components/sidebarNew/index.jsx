@@ -19,6 +19,8 @@ import AddUserIcon from "../../../assets/newDashboardIcons/add-user.svg";
 import ProductIcon from "../../../assets/newDashboardIcons/products.svg";
 import CreditCardIcon from "../../../assets/newDashboardIcons/credit-card.svg";
 import DashboardIcon from "../../../assets/newDashboardIcons/referral-dashboard.svg";
+import ReferralIcon from "../../../assets/newDashboardIcons/referral.svg";
+import KYCIcon from "../../../assets/newDashboardIcons/kyc.svg";
 import { useTranslation } from "react-i18next";
 import SendCrypto from "../sendCrypto";
 import ReceiveCrypto from "../receiveCrypto";
@@ -45,6 +47,7 @@ import AddUser from "../addUser";
 import SettingSideBar from "../settingSideBar";
 import ArrowRight from "../../../assets/newDashboardIcons/arrow-right-gray.svg";
 import ArrowLeft from "../../../assets/newDashboardIcons/arrow-left.svg";
+import { getCurrencySymbol, getFlagLink } from "../../../countries";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -63,7 +66,7 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
   const { t, i18n } = useTranslation();
   const { user, setUser, setIsWalletConnected } = useAuth();
   const [selectedLanguage, setSelectedLanguage] = useState("en");
-
+  const [currency, setCurrency] = useState("USD");
   const [openSendModal, setOpenSendModal] = useState(false);
   const [openConvertModal, setOpenConvertModal] = useState(false);
   const [openReceiveModal, setOpenReceiveModal] = useState(false);
@@ -75,6 +78,14 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
   useEffect(() => {
     window.addEventListener("resize", () => setScreenWidth(window.innerWidth));
   }, [screenWidth]);
+
+  useEffect(() => {
+    setCurrency(
+      localStorage.getItem("currency")
+        ? localStorage.getItem("currency")
+        : "USD",
+    );
+  }, [localStorage.getItem("currency")]);
 
   const handleSubmitCrypto = () => {
     setOpenSendModal(!openSendModal);
@@ -124,25 +135,83 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
         navigate("/products-dashboard");
         break;
       case 9:
-        setOpenAddModal(!openAddModal);
-
+        window.innerWidth <= 1024
+          ? navigate("/add-user", { state: { selectedUser: {} } })
+          : setOpenAddModal(!openAddModal);
+        break;
+      case 10:
+        navigate("/kyc-dashboard");
         break;
     }
+    setSideBarShow(!sideBarShow);
   };
+  // const options = [
+  //   {
+  //     value: "usa",
+  //     label: (
+  //       <Row className="currency-option">
+  //         <img src={USAFlag} alt="usa-flag" /> <div>USD $</div>
+  //       </Row>
+  //     ),
+  //   },
+  //   {
+  //     value: "europe",
+  //     label: (
+  //       <Row className="currency-option">
+  //         <img src={EuropeFlag} alt="europe-flag" /> <div>EUR €</div>
+  //       </Row>
+  //     ),
+  //   },
+  // ];
+
   const options = [
     {
-      value: "usa",
+      value: "USD",
       label: (
         <Row className="currency-option">
-          <img src={USAFlag} alt="usa-flag" /> <div>USD $</div>
+          <img src={getFlagLink("US")} alt="usa-flag" width={18} height={14} />
+          <div>USD $</div>
         </Row>
       ),
     },
     {
-      value: "europe",
+      value: "EUR",
       label: (
         <Row className="currency-option">
-          <img src={EuropeFlag} alt="europe-flag" /> <div>EUR €</div>
+          <img
+            src={getFlagLink("EU")}
+            alt="europe-flag"
+            width={18}
+            height={14}
+          />{" "}
+          <div>EUR €</div>
+        </Row>
+      ),
+    },
+    {
+      value: "AED",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("AE")} alt="flag" width={18} height={14} />{" "}
+          <div>{"AED د.إ"}</div>
+        </Row>
+      ),
+    },
+    {
+      value: "UAH",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("UA")} alt="flag" width={18} height={14} />{" "}
+          <div>UAH ₴</div>
+        </Row>
+      ),
+    },
+    {
+      value: "CHF",
+      label: (
+        <Row className="currency-option">
+          <img src={getFlagLink("CH")} alt="flag" width={18} height={14} />{" "}
+          <div>CHF</div>
         </Row>
       ),
     },
@@ -220,16 +289,6 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
           ]
         : [
             getItem(
-              t("personalDashboard.sidebar.wallets"),
-              "5",
-              <img src={WalletIcon} />,
-            ),
-            getItem(
-              t("personalDashboard.sidebar.referral"),
-              "6",
-              <img src={DashboardIcon} />,
-            ),
-            getItem(
               t("salesDashboard.sales"),
               "7",
               <img src={DashboardIcon} />,
@@ -240,10 +299,27 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
               <img src={ProductIcon} />,
             ),
             getItem(
-              t("referralDashboard.addUser"),
-              "9",
-              <img src={AddUserIcon} />,
+              t("personalDashboard.sidebar.referral"),
+              "6",
+              <img src={ReferralIcon} />,
             ),
+            getItem(
+              t("personalDashboard.sidebar.wallets"),
+              "5",
+              <img src={WalletIcon} />,
+            ),
+            getRole(user) == "admin" ||
+            (user?.roles && user?.roles[0] == "admin")
+              ? getItem(t("navigation.kyc"), "10", <img src={KYCIcon} />)
+              : null,
+            getRole(user) == "vendor" ||
+            (user?.roles && user?.roles[0] == "vendor")
+              ? null
+              : getItem(
+                  t("referralDashboard.addUser"),
+                  "9",
+                  <img src={AddUserIcon} />,
+                ),
           ],
       "group",
     ),
@@ -367,12 +443,14 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
 
       <div className="sidebar-container">
         <Flex justify="space-between" className="sidebar-header">
-          <div className="sidebar-nefentus-logo">
-            <img src={LogoWide} alt="logo" />
-          </div>
-          <div className="nefentus-logo-mobile">
-            <img src={Logo} alt="logo" />
-          </div>
+          <a href="/">
+            <div className="sidebar-nefentus-logo">
+              <img src={LogoWide} alt="logo" />
+            </div>
+            <div className="nefentus-logo-mobile">
+              <img src={Logo} alt="logo" />
+            </div>
+          </a>
           <Flex align="center" gap={"20px"}>
             <Button className="notificationIconMobileBtn">
               <img src={NotificationIcon} alt="MobileBtnIcon" />
@@ -438,8 +516,13 @@ const SidebarNew = ({ title, setSideBarShow, sideBarShow }) => {
                   <Select
                     defaultValue={"europe"}
                     options={options}
-                    // onChange={handleLanguage}
+                    value={currency}
+                    onChange={(e) => {
+                      setCurrency(e);
+                      localStorage.setItem("currency", e);
+                    }}
                     className="currency-dropdown"
+                    style={{ width: "110px" }}
                   />
                 </Flex>
               </Flex>

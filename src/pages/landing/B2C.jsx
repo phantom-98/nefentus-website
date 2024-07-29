@@ -2,6 +2,7 @@ import "./landing.css";
 import RightArrow from "../../assets/icon/right-arrow.svg";
 import { Conclusion, Heading } from ".";
 import NefentusLogo from "../../assets/logo/logo.svg";
+import ManageCrypto from "../../assets/landing/manage-crypto.png";
 import Hero1 from "../../assets/landing/Hero 1.png";
 import Hero2 from "../../assets/landing/Hero 2.png";
 import Hero3 from "../../assets/landing/hero 3.png";
@@ -54,11 +55,13 @@ const B2C = () => {
 
       <MultiWallets />
 
+      <CryptoManage />
+
       <Transactions />
 
       <Conclusion
         icon={NefentusLogo}
-        title={`Transparent Pricing,\nNo Strings Attached`}
+        title={`Transparent Pricing, <span style="white-space: nowrap;">No Strings Attached</span>`}
         subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating and using an account for personal use is completely free. Get started today!`}
         button={`Create an account`}
       />
@@ -90,7 +93,8 @@ const Hero = () => {
           }}
         >
           <h1 className="title">
-            Take charge of your <br /> crypto with Nefentus
+            <span className="gradient">Take charge</span> of your <br /> crypto
+            with Nefentus
           </h1>
           <p className="sub-title">
             Simplify your crypto experience. Easily send & receive payments,
@@ -101,7 +105,7 @@ const Hero = () => {
             <a href="/signup">
               <button>Get Started</button>
             </a>
-            <a href="/contact">
+            <a href="/business-support">
               <span>Talk to an expert</span>
               <img src={RightArrow} />
             </a>
@@ -123,7 +127,6 @@ const Hero = () => {
               flexDirection: "column",
               gap: "2rem",
               justifyContent: "start",
-              paddingBottom: "4rem",
             }}
           >
             <img
@@ -135,7 +138,15 @@ const Hero = () => {
                 borderTopLeftRadius: "0",
               }}
             />
-            <img src={Hero2} style={{ width: "100%" }} />
+            <img
+              src={Hero2}
+              style={{
+                width: "100%",
+                borderBottom: "none",
+                borderBottomRightRadius: "0",
+                borderBottomLeftRadius: "0",
+              }}
+            />
           </div>
           <div
             style={{
@@ -144,7 +155,6 @@ const Hero = () => {
               flexDirection: "column",
               gap: "2rem",
               justifyContent: "end",
-              paddingTop: "4rem",
             }}
           >
             <img src={Hero3} style={{ width: "100%" }} />
@@ -448,6 +458,38 @@ const MultiWallets = () => {
   );
 };
 
+const CryptoManage = () => {
+  return (
+    <div className="layout-paragraph b2c-manage">
+      <div className="layout-horizontal layout-manage">
+        <div className="manage-title-layout">
+          <h1 className="title">
+            Manage your crypto
+            <br />
+            on the go with our app
+          </h1>
+          <p className="sub-title">
+            Stay connected to your cryptocurrency transactions anytime, anywhere
+            with the Nefentus mobile app.
+          </p>
+          <p className="sub-title">
+            Download the app today and experience the future of crypto payments
+            at your fingertips.
+          </p>
+          <div className="button-container">
+            <a href="/signup">
+              <button>Download App</button>
+            </a>
+          </div>
+        </div>
+        <div className="manage-img">
+          <img src={ManageCrypto} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Transactions = () => {
   return (
     <div
@@ -455,6 +497,7 @@ const Transactions = () => {
       className="layout-paragraph"
       style={{
         paddingBottom: "0",
+        paddingTop: "4rem",
       }}
     >
       <Heading

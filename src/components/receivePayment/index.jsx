@@ -84,6 +84,7 @@ const ReceivePayment = ({
   vatPercent,
   disabled,
   valid,
+  invoiceInfo,
 }) => {
   const [sellerDropdown, openSellerDropdown] = useState(false);
   const { theme } = useTheme();
@@ -94,10 +95,9 @@ const ReceivePayment = ({
   const navigate = useNavigate();
   const { user, setUser, currencyRate } = useAuth();
   const [wallets, setWallets] = useState([]);
-  const connectedWallet = useWallet();
-  const [walletInstance, setWalletInstance] = useState(null);
   const connect = useConnect();
   const disconnect = useDisconnect();
+  const connectedWallet = useWallet();
   const setConnectedWallet = useSetConnectedWallet();
   const activeExternalWalletAddress = useAddress();
   const createWalletInstance = useCreateWalletInstance();
@@ -111,7 +111,7 @@ const ReceivePayment = ({
   const switchAccount = async (address) => {
     try {
       if (activeExternalWalletAddress.toLowerCase() !== address.toLowerCase()) {
-        await walletInstance.switchAccount();
+        await connectedWallet?.switchAccount();
       }
     } catch (e) {
       console.log("switching error: ", e.message);
@@ -161,6 +161,7 @@ const ReceivePayment = ({
     transInfoArg,
     switchNetwork,
     switchAccount,
+    invoiceInfo,
   });
 
   const backend_API = new backendAPI();
@@ -187,7 +188,7 @@ const ReceivePayment = ({
         !isDisable && setDisable(true);
       }
     } else {
-      connectSelectedWallet();
+      fetchBalances(wallets[selectedWalletIndex]?.address);
     }
   }, [selectedWalletIndex]);
 
@@ -260,7 +261,6 @@ const ReceivePayment = ({
   const connectSelectedWallet = async () => {
     const wallet = wallets[selectedWalletIndex];
 
-    fetchBalances(wallet?.address);
     const currentWalletConfig =
       wallet?.type?.toLowerCase() === "metamask"
         ? metamaskWallet()
@@ -314,7 +314,6 @@ const ReceivePayment = ({
       const response = createWalletInstance(currentWalletConfig);
       await response.connect();
       setConnectedWallet(response);
-      setWalletInstance(response);
     }
   };
 
@@ -333,6 +332,10 @@ const ReceivePayment = ({
     }
     setSpinner(true);
 
+    await connectSelectedWallet();
+  }
+
+  async function handlePayment() {
     const res = await handleBuy(
       selectedCryptoIndex,
       wallets?.length == 0
@@ -370,14 +373,26 @@ const ReceivePayment = ({
         setErrorMessage(t("messages.error.invalidUserId"));
         break;
     }
-
-    setSpinner(false);
   }
+
+  useEffect(() => {
+    async function pay() {
+      if ((connectedWallet || selectedWalletIndex === 0) && spinner) {
+        await handlePayment();
+        setSpinner(false);
+      }
+    }
+    pay();
+  }, [connectedWallet, spinner]);
 
   const selectInternalWallet = async () => {
     if (!Object.keys(user)?.length) {
       navigate("/login", {
-        state: { redirectUrl: `/pay/${transInfoArg.invoiceLink}` },
+        state: {
+          redirectUrl: transInfoArg.invoiceLink
+            ? `/pay/${transInfoArg.invoiceLink}`
+            : `/product/${transInfoArg.productLink}/pay`,
+        },
       });
     } else {
       await disconnect();
@@ -577,14 +592,13 @@ const ReceivePayment = ({
                       <p>{t("payments.chooseWallet")}</p>
                     </div>
                     <div className={styles.fullWidthBox}>
-                      {internalWalletAddress && (
+                      {internalWalletAddress ? (
                         <Select
                           data={wallets}
                           selectedIndex={selectedWalletIndex}
                           setSelectedIndex={setSelectedWalletIndex}
                         />
-                      )}
-                      {!Object.keys(user)?.length && (
+                      ) : (
                         <div className={styles.unlogged}>
                           <div
                             className={styles.connectInternalButton}
@@ -652,7 +666,7 @@ const ReceivePayment = ({
                     <p
                       style={{
                         color: "var(--text2-color)",
-                        margin: "-0.8rem 0 0.8rem 0",
+                        marginBottom: "0.8rem",
                       }}
                     >
                       {t("payments.informVAT1")} {vatPercent}% (
@@ -663,7 +677,10 @@ const ReceivePayment = ({
                   )}
                   <p className={styles.cryptoTitle}>
                     {t("payments.cryptoAmount")}
-                    <div className={styles.tooltip}>
+                    <div
+                      className={styles.tooltip}
+                      style={{ display: "flex", alignItems: "center" }}
+                    >
                       <span className={styles.tooltiptext}>
                         {t("payments.cryptoDescription")}
                       </span>

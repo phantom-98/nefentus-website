@@ -1,5 +1,46 @@
 # New changes
 
+- Add new policy pages && add new blocks in landing (MINOR)
+- Update resource navbar && hero && headings of home page (PATCH)
+- Update product invoice work flow (MINOR)
+- Fix connecting wallet when clicking final button (MINOR)
+- Save selected currency (PATCH)
+- Small edits in landing (PATCH)
+- Update wallet address in landing pages && update mobile nav bar (PATCH)
+- Update contact us navbar (PATCH)
+- Change contact us submit button color (PATCH)
+- Change text spacing in checkout page(between invoice amount and vat description) (PATCH)
+- Change the order of items in side bar (PATCH)
+- Shine animation for every block headers in landing pages (PATCH)
+- Add `back` button in role choice page and login page (PATCH)
+- Update adaptive version of settings page (PATCH)
+- Fix `talk to an expert` button routing (PATCH)
+- Modified Roles Component (MINOR)
+- Change icon for KYC page (Admin dashboard)
+- Remove referral and add user for venor role
+- Change Vendore KYC level 2 - to 10Million
+- Change font color on table on white (now half is grey and half is white)
+- Terms of use checkobox on log in/sign up flow (They can't register without a check mark.)
+- Menu behavior.
+- Delete notification button.
+- Support link in menu leads to technical support page
+
+# v2.1.0
+
+- Products UI changes completed (MINOR)
+- Implemented portfolio coin cases (PATCH)
+- Transaction Detail api integrated (MAJOR)
+- Inovice is sorting correctly (MINOR)
+- Add Wallet Card implemented in Personal Dashboard (MINOR)
+- Login Page right side image changed (MINOR)
+- Fix the responsiveness issue in setting page and add side bar in tablet and mobile view (PATCH)
+- fix the right users edit issue in users table (PATCH)
+- Fix landings && add contact page && update navbar (MINOR)
+- Fix Footer link Remove && Pay button in invoice preview && sidebar behavior (MiNOR)
+
+# v2.0.0
+
+- Add affiliate link (PATCH)
 - Updated HTML template (PATCH)
 - Fix texts & translations in the dashboard (PATCH)
 - Fix some minor issues in landing (PATCH)
@@ -26,6 +67,9 @@
 - fix the right users edit issue in users table (PATCH)
 - Fix landings && add contact page && update navbar (MINOR)
 - Fix Footer link Remove && Pay button in invoice preview && sidebar behavior (MiNOR)
+- Fix Dashboard issues (MINOR)
+- Kyc Flow has implemented for admin (MAJOR)
+- Adaptive Add User Modal (MINOR)
 
 # 1.3.0
 

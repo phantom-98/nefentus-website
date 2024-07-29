@@ -27,9 +27,12 @@
     "partner": "Partner",
     "converter": "Converter",
     "integration": "Integration",
+    "termsofuse": "Terms of Use",
+    "amlpolicy": "AML Policy",
+    "cookiepolicy": "Cookie Policy",
     "imprint": "Imprint",
     "forgotPassword": "Password forgotten",
-    "privacy": "Privacy policy",
+    "privacy": "Privacy Policy",
     "vacancy": "Career",
     "resetPassword": "Reset Password",
     "support": "Support",
@@ -490,6 +493,7 @@
     "registrationsRoles": "Roles",
     "cardsDays": "last 30 days",
     "total": "Total",
+    "affiliateLink": "Affiliate link",
     "KYCRequests": "KYC Requests",
     "wallet": "Wallet",
     "plan": "Plan",
@@ -1105,9 +1109,9 @@
     "totalDue": "Total due",
     "note": "Note",
     "buyer": {
-      "customer": "Customer information",
-      "fullName": "Recipient full name",
-      "email": "Recipient email"
+      "customer": "Customer Information",
+      "fullName": "Full Name",
+      "email": "Recipient Email"
     },
     "tax": {
       "reverseCharge": "The Reverse Charge process is used. The client is responsable for paying the VAT.",
@@ -1410,6 +1414,15 @@
     "privacyPolicy2": "!",
     "decline": "Decline",
     "accept": "Accept"
+  },
+  "termsofuse": {
+    "headline": "Terms of Use"
+  },
+  "amlpolicy": {
+    "headline": "AML Policy"
+  },
+  "cookiepolicy": {
+    "headline": "Cookie Policy"
   },
   "privacyPolicy": {
     "revoke": "Revoke my consent to the storage of cookies",

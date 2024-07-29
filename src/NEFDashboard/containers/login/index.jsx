@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./login.css";
-import { Col, Row, Flex, Form, Input, Button, Divider } from "antd";
+import { Col, Row, Flex, Form, Input, Button, Divider, Checkbox } from "antd";
 
 import Logo from "../../../assets/logo/logo.svg";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +10,13 @@ import { useAuth } from "../../../context/auth/authContext";
 import { useTranslation } from "react-i18next";
 import AuthLayoutImg from "../../../assets/newDashboardIcons/login.png";
 import Cookies from "js-cookie";
+import { setCookie } from "../../../func/cookies";
+import { decryptData, encryptData } from "../../../utils";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [form] = Form.useForm();
   const { setErrorMessage, setInfoMessage } = useContext(MessageContext);
   const { setUser } = useAuth();
   const backendAPI = new backend_API();
@@ -22,7 +25,7 @@ const LoginForm = () => {
   const [verification, setVerification] = useState({});
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
-  const [checkBox] = useState(
+  const [checkBox, setCheckBox] = useState(
     Cookies.get("nefentus-remember-me")
       ? JSON.parse(Cookies.get("nefentus-remember-me"))
       : false,
@@ -52,10 +55,23 @@ const LoginForm = () => {
   const onFinish = async (values) => {
     if (loading) return;
     setLoading(true);
+    if (checkBox && Cookies.get("acceptCookie")) {
+      setCookie("nefentus-username", form.getFieldValue("email"), 365);
+      setCookie(
+        "nefentus-password",
+        encryptData(form.getFieldValue("password")),
+        365,
+      );
+      setCookie("nefentus-remember-me", checkBox, 365);
+    } else {
+      setCookie("nefentus-username", "", 365);
+      setCookie("nefentus-password", "", 365);
+      setCookie("nefentus-remember-me", false, 365);
+    }
     const response = await backendAPI.login(
       values.email,
       values.password,
-      true,
+      checkBox,
     );
     setLoading(false);
     if (response == null) {
@@ -210,6 +226,24 @@ const LoginForm = () => {
           ) : (
             <Col span={24} lg={12}>
               <div className="auth-form">
+                <div
+                  className="back-btn back-btn-role"
+                  onClick={() => window.history.back()}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="21"
+                    viewBox="0 0 20 21"
+                    fill="none"
+                  >
+                    <path
+                      d="M12.4996 6.0875C12.1746 5.7625 11.6496 5.7625 11.3246 6.0875L7.49961 9.9125C7.17461 10.2375 7.17461 10.7625 7.49961 11.0875L11.3246 14.9125C11.6496 15.2375 12.1746 15.2375 12.4996 14.9125C12.8246 14.5875 12.8246 14.0625 12.4996 13.7375L9.26628 10.4958L12.4996 7.2625C12.8246 6.9375 12.8163 6.40417 12.4996 6.0875Z"
+                      fill="#E9E9E9"
+                    />
+                  </svg>
+                  <span>Back</span>
+                </div>
                 <Flex vertical gap={24} className="form-header">
                   {/* <div className="logo">
                   <img src={Logo} alt="Logo" />
@@ -222,6 +256,7 @@ const LoginForm = () => {
                 <Flex vertical gap={12}>
                   <Form
                     name="basic"
+                    form={form}
                     labelCol={{
                       span: 24,
                     }}
@@ -229,7 +264,15 @@ const LoginForm = () => {
                       span: 24,
                     }}
                     initialValues={{
-                      remember: true,
+                      email: Cookies.get("nefentus-username")
+                        ? Cookies.get("nefentus-username")
+                        : "",
+                      password: Cookies.get("nefentus-password")
+                        ? decryptData(Cookies.get("nefentus-password"))
+                        : "",
+                      remember: Cookies.get("nefentus-remember-me")
+                        ? JSON.parse(Cookies.get("nefentus-remember-me"))
+                        : false,
                     }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -259,6 +302,17 @@ const LoginForm = () => {
                       ]}
                     >
                       <Input.Password placeholder="Enter your password" />
+                    </Form.Item>
+                    <Form.Item name="remember">
+                      <Checkbox
+                        className="remember-me-checkbox"
+                        checked={checkBox}
+                        onChange={(e) => setCheckBox(e.target.checked)}
+                      >
+                        <div className="default-text-gray remember-me-text">
+                          Remember Me
+                        </div>
+                      </Checkbox>
                     </Form.Item>
                     <Form.Item>
                       <div

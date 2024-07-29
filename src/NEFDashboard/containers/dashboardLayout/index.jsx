@@ -52,6 +52,14 @@ const DashboardLayout = ({ children, title }) => {
   }, []);
 
   useEffect(() => {
+    setCurrency(
+      localStorage.getItem("currency")
+        ? localStorage.getItem("currency")
+        : "USD",
+    );
+  }, [localStorage.getItem("currency")]);
+
+  useEffect(() => {
     if (currency !== "USD") {
       fetchRate("USD", currency);
     } else {
@@ -194,6 +202,13 @@ const DashboardLayout = ({ children, title }) => {
       case 1:
         navigate("/new-settings");
         break;
+      case 2:
+        window.open(
+          `${window.origin}/technical-support`,
+          "_blank",
+          "noopener,noreferrer",
+        );
+        break;
       default:
         return;
     }
@@ -232,17 +247,21 @@ const DashboardLayout = ({ children, title }) => {
                   defaultValue={"europe"}
                   options={options}
                   value={currency}
-                  onChange={setCurrency}
+                  onChange={(e) => {
+                    setCurrency(e);
+                    localStorage.setItem("currency", e);
+                  }}
                   className="currency-dropdown"
+                  style={{ width: "110px" }}
                 />
                 <div className="dashboard-language-container">
                   <div className="localisation-container">
                     <Languages />
                   </div>
                 </div>
-                <Button className="notificationIconMobileBtn">
+                {/* <Button className="notificationIconMobileBtn">
                   <img src={NotificationIcon} alt="MobileBtnIcon" />
-                </Button>
+                </Button> */}
                 <Button
                   className="mobileBtn"
                   onClick={() => {

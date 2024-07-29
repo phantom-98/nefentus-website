@@ -16,3 +16,9 @@
 .account-type-container .role-card {
   width: 50%;
 }
+
+.auth-form button.disable-create-account,
+.auth-form button.disable-create-account:hover {
+  background: #141414 !important;
+  border: 1px solid var(--Dark, #202020);
+}

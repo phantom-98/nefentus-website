@@ -413,6 +413,7 @@ const SalesDashboard = () => {
         <Flex gap={12} wrap>
           <InvoiceStatusCard />
           <Flex
+            gap={16}
             className="sales-income-card-container"
             justify={"space-between"}
           >

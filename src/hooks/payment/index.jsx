@@ -10,6 +10,7 @@ export const usePayment = ({
   transInfoArg,
   switchNetwork,
   switchAccount,
+  invoiceInfo,
 }) => {
   async function handleBuy(
     currencyIdx,
@@ -67,6 +68,7 @@ export const usePayment = ({
           transactionInfo,
           walletAddress,
           transInfoArg,
+          invoiceInfo,
         );
         if (ret) {
           return "success";
@@ -85,6 +87,7 @@ export const usePayment = ({
         password,
         stablecoin.address,
         transInfoArg,
+        invoiceInfo,
       );
 
       if (ret === "insufficientFunds") {

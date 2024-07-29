@@ -122,7 +122,7 @@
     display: flex;
   }
   .tabview-roles-card {
-    width: 62.5%;
+    width: 60%;
   }
   .tabview-roles-card .ant-card-body {
     height: 85%;

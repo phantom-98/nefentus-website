@@ -56,11 +56,11 @@ const sitemap = [
     title: "Support",
     body: [
       {
-        subtitle: "Technical support",
+        subtitle: "FAQ",
         link: "/technical-support",
       },
       {
-        subtitle: "Business support",
+        subtitle: "Ask a question",
         link: "/business-support",
       },
     ],
@@ -68,12 +68,20 @@ const sitemap = [
 ];
 const sitemap_bottom = [
   {
-    title: "Imprint",
-    link: "/imprint",
+    title: "Terms of use",
+    link: "/termsofuse",
   },
   {
-    title: "Privacy",
+    title: "Privacy Policy",
     link: "/privacy",
+  },
+  {
+    title: "AML Policy",
+    link: "/aml-policies",
+  },
+  {
+    title: "Cookie Policy",
+    link: "/cookie-policies",
   },
 ];
 const Footer = () => {
@@ -121,12 +129,29 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="footer-bottom container">
-        <p>© 2024 Nefentus. All rights reserved.</p>
-        <div className="bottom-right">
-          {sitemap_bottom.map((item) => (
-            <a href={item.link}>{item.title}</a>
-          ))}
+      <div className="container footer-bottom">
+        <p style={{ marginBottom: "4rem", paddingRight: "6rem" }}>
+          Data and information on this website are provided for informational
+          purposes only, and are not intended for reference or other purposes.
+          All financial, statistical and other relevant data regarding the
+          clients/merchants, conducted transactions, etc., has been provided as
+          aggregate from activities of all legal entities operating under the
+          brand name of Nefentus, including, but not limited to: (I) Nefentus
+          Soutions LTD, Faneromenis Avenue 85, Office 301, Larnaca, Cyprus.
+        </p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p>© 2024 Nefentus. All rights reserved.</p>
+          <div className="bottom-right">
+            {sitemap_bottom.map((item) => (
+              <a href={item.link}>{item.title}</a>
+            ))}
+          </div>
         </div>
       </div>
     </div>

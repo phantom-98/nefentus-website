@@ -18,6 +18,9 @@ const Payment = React.lazy(() => import("./pages/Payment"));
 const Affiliate = React.lazy(() => import("./pages/Affiliate"));
 const Support = React.lazy(() => import("./pages/Support"));
 const Privacy = React.lazy(() => import("./pages/PrivacyPolicy"));
+const TermsofUSe = React.lazy(() => import("./pages/TermsofUse"));
+const AMLPolicy = React.lazy(() => import("./pages/AMLPolicy"));
+const CookiePolicy = React.lazy(() => import("./pages/CookiePolicy"));
 const Imprint = React.lazy(() => import("./pages/Imprint"));
 const PasswordForgot = React.lazy(() => import("./pages/PasswordForgot"));
 const Product = React.lazy(() => import("./pages/Product"));
@@ -73,6 +76,8 @@ import Resources from "./components/resources";
 import PageNotFound from "./NEFDashboard/components/pageNotFound";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
+import AddUserForTablet from "./NEFDashboard/components/addUserForTablet";
+import KycDashboard from "./NEFDashboard/containers/kycDasboard";
 
 function App() {
   const { t } = useTranslation();
@@ -247,6 +252,24 @@ function App() {
                           </DashboardLayout>
                         }
                       />
+
+                      <Route
+                        path="/add-user"
+                        element={
+                          <DashboardLayout>
+                            <AddUserForTablet />
+                          </DashboardLayout>
+                        }
+                      />
+
+                      <Route
+                        path="/kyc-dashboard"
+                        element={
+                          <DashboardLayout title={"KYC Verification"}>
+                            <KycDashboard />
+                          </DashboardLayout>
+                        }
+                      />
                       {/* <Route
                         path="/"
                         element={
@@ -343,6 +366,36 @@ function App() {
                             <Navigation />
 
                             <Support />
+                            <Footer />
+                          </>
+                        }
+                      />
+                      <Route
+                        path="/termsofuse"
+                        element={
+                          <>
+                            <Navigation />
+                            <TermsofUSe />
+                            <Footer />
+                          </>
+                        }
+                      />
+                      <Route
+                        path="/aml-policies"
+                        element={
+                          <>
+                            <Navigation />
+                            <AMLPolicy />
+                            <Footer />
+                          </>
+                        }
+                      />
+                      <Route
+                        path="/cookie-policies"
+                        element={
+                          <>
+                            <Navigation />
+                            <CookiePolicy />
                             <Footer />
                           </>
                         }

@@ -449,13 +449,6 @@ const Converter = ({
   }, [transferParams]);
   useEffect(() => {
     if (wallets[selectedWalletIndex]) {
-      if (!walletInstance && selectedWalletIndex > 0) {
-        try {
-          connectWallet();
-        } catch (e) {
-          console.log("wallet connect failed");
-        }
-      }
       const address = wallets[selectedWalletIndex].address;
       fetchBalances(address);
       setTransferParams({
@@ -519,6 +512,10 @@ const Converter = ({
     setOpenFromCryptoDrawer(false);
     setOpenToCryptoDrawer(false);
   };
+
+  useEffect(() => {
+    setStep(1);
+  }, [openConvertModal]);
   return (
     <Modal
       title={

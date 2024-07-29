@@ -1040,7 +1040,7 @@
     "note": "Hinweis",
     "buyer": {
       "customer": "Kunden-Informationen",
-      "fullName": "Vollständiger Name des Empfängers",
+      "fullName": "Vollständiger Name",
       "email": "E-Mail des Empfängers"
     },
     "tax": {
@@ -1323,7 +1323,7 @@
     "decline": "Ablehnen",
     "accept": "Akzeptieren"
   },
-  "privacyPolicy": {
+  "privacyPolicy11": {
     "revoke": "Meine Zustimmung zur Speicherung von Cookies widerrufen",
     "headline": "Datenschutzerklärung"
   },

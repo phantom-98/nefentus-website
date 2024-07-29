@@ -2,6 +2,7 @@ import "./landing.css";
 import RightArrow from "../../assets/icon/right-arrow.svg";
 import Hero1 from "../../assets/landing/hero1.png";
 import Hero2 from "../../assets/landing/hero2.png";
+import ManageCrypto from "../../assets/landing/manage-crypto.png";
 import HeroLine1 from "../../assets/landing/hero-line-top-left.svg";
 import HeroLine2 from "../../assets/landing/hero-line-bottom-left.svg";
 import BlueLine from "../../assets/landing/BlueLine.svg";
@@ -50,7 +51,7 @@ import SendSvg from "../../assets/landing/send-ico.svg";
 import Telegram from "../../assets/icon/telegram.svg";
 import Linkedin from "../../assets/icon/in.svg";
 import Twitter from "../../assets/icon/x.svg";
-import Youtube from "../../assets/icon/youtube.svg";
+import TalkTo from "../../assets/icon/notification-message.svg";
 
 import Main1 from "../../assets/landing/main1.png";
 import Main2 from "../../assets/landing/main2.png";
@@ -60,6 +61,14 @@ import Logos from "../../components/logos/logos";
 import { useEffect, useState } from "react";
 
 const Landing = () => {
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("ref")) {
+      const paramValue = urlParams.get("ref");
+      localStorage.setItem("affiliate", paramValue);
+    }
+  }, []);
+
   return (
     <div className="landing-layout home container">
       <Hero />
@@ -67,6 +76,8 @@ const Landing = () => {
       <Logos />
 
       <Helps />
+
+      <CryptoManage />
 
       <Benefits />
 
@@ -112,18 +123,20 @@ const Hero = () => {
       <div className="layout-horizontal">
         <div className="hero-layout">
           <h1 className="title">
-            Revolutionize Your Business with Crypto Payment Integration
+            The Ultimate{" "}
+            <span className="gradient">Crypto Payment Ecosystem </span>
+            for Businesses
           </h1>
           <p className="sub-title">
-            Effortlessly generate & receive payments. Consolidate wallet
-            management and streamline the sales process, all within a single
-            platform.
+            Leading the charge in mass adoption, our innovative products empower
+            businesses to seamlessly transition into the new era of digital
+            assets.
           </p>
           <div className="button-container">
             <a href="/signup">
               <button>Get Started</button>
             </a>
-            <a href="/contact">
+            <a href="/business-support">
               <span>Talk to an expert</span>
               <img src={RightArrow} />
             </a>
@@ -250,7 +263,7 @@ const Helps = () => {
           right: "0",
           top: "2rem",
           zIndex: "-1",
-          height: "200%",
+          height: "300%",
         }}
       />
       <div
@@ -290,9 +303,45 @@ const Helps = () => {
       <div
         className="horizontal-dashed-line"
         style={{
-          bottom: "16rem",
+          bottom: "0",
           width: "100vw",
         }}
+      />
+    </div>
+  );
+};
+
+const CryptoManage = () => {
+  return (
+    <div className="layout-paragraph manage">
+      <div className="layout-horizontal layout-manage">
+        <div className="manage-title-layout">
+          <h1 className="title">Manage your crypto on the go with our app</h1>
+          <p className="sub-title">
+            Stay connected to your cryptocurrency transactions anytime, anywhere
+            with the Nefentus mobile app.
+          </p>
+          <p className="sub-title">
+            Download the app today and experience the future of crypto payments
+            at your fingertips.
+          </p>
+          <div className="button-container">
+            <a href="/signup">
+              <button>Download App</button>
+            </a>
+          </div>
+        </div>
+        <div className="manage-img">
+          <img src={ManageCrypto} />
+        </div>
+      </div>
+      <hr
+        style={{
+          left: "0",
+          bottom: "0",
+          height: "100%",
+        }}
+        className="hide-in-tablet"
       />
     </div>
   );
@@ -766,6 +815,13 @@ const communities = [
       "Follow us on Twitter for the latest news, updates, and insights on cryptocurrency payments. Stay informed about new features, industry trends.",
     link: "https://x.com/nefentusapp",
   },
+  {
+    icon: TalkTo,
+    title: "Talk to an expert",
+    subtitle:
+      "Get personalized advice and insights from our knowledgeable team to help you seamlessly integrate cryptocurrency payments into your business.",
+    link: "/business-support",
+  },
 ];
 
 const Community = () => {
@@ -826,7 +882,7 @@ export const Conclusion = ({
         <a href="/signup">
           <button>{button}</button>
         </a>
-        <a href="/contact">
+        <a href="/business-support">
           <span>Talk to an expert</span>
           <img src={RightArrow} />
         </a>

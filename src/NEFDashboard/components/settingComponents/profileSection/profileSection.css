@@ -54,11 +54,11 @@
 }
 
 .profile-option-subcontainer {
-  min-width: 267px;
+  min-width: 300px;
 }
 
 .profile-option-value {
-  width: 169px;
+  /* width: 169px; */
   overflow: hidden;
 }
 
@@ -123,8 +123,6 @@
 .personal-profile-detail {
   margin-bottom: 48px;
 }
-@media (min-width: 1400px) {
-}
 @media (max-width: 767px) {
   .personal-profile-detail-content,
   .profile-image-upload-wrapper {
@@ -155,5 +153,17 @@
   }
   .personal-profile-detail {
     margin-bottom: 32px;
+  }
+}
+@media (max-width: 575px) {
+  .profile-option-container {
+    flex-wrap: wrap;
+  }
+  .profile-option-subtitle {
+    max-width: 100%;
+  }
+  .country-select-field {
+    min-width: 100%;
+    max-width: fit-content;
   }
 }
