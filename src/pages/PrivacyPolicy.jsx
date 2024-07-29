@@ -3,8 +3,8 @@ import PrivacyPolicyBody from "./../components/privacyPolicyBody/privacyPolicyBo
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import NefentusLogo from "../assets/logo/logo.svg";
-import { Conclusion } from "../components/landing";
-import "../components/landing/landing.css";
+import { Conclusion } from "./landing";
+import "./landing/landing.css";
 
 const PrivacyPolicy = () => {
   const { t } = useTranslation();

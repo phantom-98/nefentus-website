@@ -4,8 +4,6 @@ import MessageComponent from "../message";
 import { MessageContext } from "../../context/message";
 import NefentusLogo from "../../assets/logo/logo_n.png";
 import WalletIcon from "../../assets/icon/wallets.svg";
-import MetaMaskLogo from "../../assets/logo/MetaMask.svg";
-import WalletConnectLogo from "../../assets/logo/WalletConnect.svg";
 import InfoMarkDark from "../../assets/icon/dark/info.svg";
 import InfoMarkLight from "../../assets/icon/light/info.svg";
 import PersonDark from "../../assets/icon/dark/user-square.svg";
@@ -14,20 +12,16 @@ import BuildingDark from "../../assets/icon/dark/building.svg";
 import BuildingLight from "../../assets/icon/light/building.svg";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
 import WarningIcon from "../../assets/icon/warn.svg";
-import CheckedIcon from "../../assets/icon/checked.svg";
 import backendAPI from "../../api/backendAPI";
-import { uniswapApi, web3Api } from "../../api/web3Api";
 import Button from "../../components/button/button";
 import useInternalWallet from "../../hooks/internalWallet";
 import {
   metamaskWallet,
   useAddress,
   useConnect,
-  useConnectionStatus,
   useDisconnect,
   walletConnect,
   useSwitchChain,
-  useSwitchAccount,
   coinbaseWallet,
   trustWallet,
   useWallet,
@@ -60,18 +54,12 @@ import {
   isWalletConflict,
 } from "../../utils";
 import { useTranslation } from "react-i18next";
-import Popup, {
-  PasswordPopup,
-} from "../../dashboardNew/components/popup/popup";
+import { PasswordPopup } from "../popup/popup";
 import { useAuth } from "../../context/auth/authContext";
 import { useTheme } from "../../context/themeContext/themeContext";
 import { GasDetails } from "../gasDetails/gasDetails";
 import { useNavigate } from "react-router-dom";
-import {
-  getCountryList,
-  getCurrencySymbol,
-  getFlagLink,
-} from "../../countries";
+import { getCurrencySymbol } from "../../countries";
 import { CombinedInput } from "../input/input";
 
 const ReceivePayment = ({
@@ -89,11 +77,10 @@ const ReceivePayment = ({
   const [sellerDropdown, openSellerDropdown] = useState(false);
   const { theme } = useTheme();
 
-  const { internalWalletAddress, fetchInternalWalletAddress } =
-    useInternalWallet();
+  const { internalWalletAddress } = useInternalWallet();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { user, setUser, currencyRate } = useAuth();
+  const { user, setUser } = useAuth();
   const [wallets, setWallets] = useState([]);
   const connect = useConnect();
   const disconnect = useDisconnect();
@@ -106,7 +93,7 @@ const ReceivePayment = ({
   const [feeUSD, setFeeUSD] = useState(0);
   const [spinner, setSpinner] = useState(false);
   const { balances, fetchBalances } = useBalances();
-  const { prices, fetchPrices } = usePrices();
+  const { prices } = usePrices();
   const switchNetwork = useSwitchChain();
   const switchAccount = async (address) => {
     try {
@@ -167,7 +154,7 @@ const ReceivePayment = ({
   const backend_API = new backendAPI();
 
   const [warn, setWarn] = useState(false);
-  const [warning, setWarning] = useState(isWalletConflict());
+  const [warning] = useState(isWalletConflict());
 
   useEffect(() => {
     fetchProfile();
