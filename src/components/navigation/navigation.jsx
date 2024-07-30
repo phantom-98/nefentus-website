@@ -63,7 +63,7 @@ const Navigation = () => {
       return (
         <>
           <Link
-            to={`${process.env.process.env.VITE_REACT_APP_DASHBOARD}/personal-dashboard`}
+            to={`${process.env.VITE_REACT_APP_DASHBOARD}/personal-dashboard`}
             onClick={() => setOpenMenu(false)}
           >
             <li
