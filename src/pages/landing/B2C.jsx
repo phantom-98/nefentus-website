@@ -102,7 +102,7 @@ const Hero = () => {
             place.
           </p>
           <div className="button-container">
-            <a href="/signup">
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
               <button>Get Started</button>
             </a>
             <a href="/business-support">
@@ -477,7 +477,7 @@ const CryptoManage = () => {
             at your fingertips.
           </p>
           <div className="button-container">
-            <a href="/signup">
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
               <button>Download App</button>
             </a>
           </div>

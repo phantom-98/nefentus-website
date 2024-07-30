@@ -11,60 +11,18 @@ import "react-toastify/dist/ReactToastify.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const SignUp = React.lazy(() => import("./pages/Signup"));
 const Layout = React.lazy(() => import("./pages/Layout"));
-const Login = React.lazy(() => import("./pages/Login"));
-const Payment = React.lazy(() => import("./pages/Payment"));
-const Affiliate = React.lazy(() => import("./pages/Affiliate"));
 const Support = React.lazy(() => import("./pages/Support"));
 const Privacy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const TermsofUSe = React.lazy(() => import("./pages/TermsofUse"));
 const AMLPolicy = React.lazy(() => import("./pages/AMLPolicy"));
 const CookiePolicy = React.lazy(() => import("./pages/CookiePolicy"));
 const Imprint = React.lazy(() => import("./pages/Imprint"));
-const PasswordForgot = React.lazy(() => import("./pages/PasswordForgot"));
-const Product = React.lazy(() => import("./pages/Product"));
-const ProductPay = React.lazy(() => import("./pages/ProductPay"));
-const Pay = React.lazy(() => import("./pages/Pay"));
-const ResetPassword = React.lazy(() => import("./pages/ResetPassword"));
 const Vacancy = React.lazy(() => import("./pages/Vacancy"));
 const Jobs = React.lazy(() => import("./pages/Jobs"));
+import PageNotFound from "./components/pageNotFound";
 
-import { ThemeProvider } from "./context/themeContext/themeContext";
 import { AuthProvider } from "./context/auth/authContext";
-import {
-  ThirdwebProvider,
-  bloctoWallet,
-  coin98Wallet,
-  coinbaseWallet,
-  coreWallet,
-  cryptoDefiWallet,
-  frameWallet,
-  metamaskWallet,
-  okxWallet,
-  oneKeyWallet,
-  phantomWallet,
-  rabbyWallet,
-  rainbowWallet,
-  safeWallet,
-  trustWallet,
-  walletConnect,
-  xdefiWallet,
-  zerionWallet,
-} from "@thirdweb-dev/react";
-import DashboardLayout from "./NEFDashboard/containers/dashboardLayout";
-import PersonalDashboard from "./NEFDashboard/containers/personalDashboard";
-import ReferralDashboard from "./NEFDashboard/containers/referralDashboard";
-import SalesDashboard from "./NEFDashboard/containers/salesDashboard";
-import SettingLayout from "./NEFDashboard/containers/settingLayout";
-import SettingPage from "./NEFDashboard/containers/settings";
-import Products from "./NEFDashboard/containers/products";
-import CreateInvoice from "./NEFDashboard/containers/createInvoiceDashboard";
-import AuthLayout from "./NEFDashboard/containers/authLayout";
-import LoginForm from "./NEFDashboard/containers/login";
-import SignForm from "./NEFDashboard/containers/signUp";
-import ForgotPassword from "./NEFDashboard/containers/forgotPassword";
-import SetPasswordForm from "./NEFDashboard/containers/setPassword";
 import NewLanding, {
   Contact,
   Contact_Expert,
@@ -72,15 +30,8 @@ import NewLanding, {
   NewB2C,
   NewResources,
 } from "./pages/Landing";
-import Resources from "./components/resources";
-import PageNotFound from "./NEFDashboard/components/pageNotFound";
-import { Helmet } from "react-helmet";
-import { useTranslation } from "react-i18next";
-import AddUserForTablet from "./NEFDashboard/components/addUserForTablet";
-import KycDashboard from "./NEFDashboard/containers/kycDasboard";
 
 function App() {
-  const { t } = useTranslation();
   useEffect(() => {
     const scrollEvent = () => {
       const scrollElement = document.querySelectorAll(".scroll");
@@ -118,379 +69,157 @@ function App() {
   const [ck, setCK] = useState(getAcceptCookie());
 
   return (
-    <ThirdwebProvider
-      activeChain="ethereum"
-      clientId="639eea2ebcabed7eab90b56aceeed08b"
-      supportedWallets={[
-        metamaskWallet(),
-        coinbaseWallet({ recommended: true }),
-        walletConnect(),
-        safeWallet({
-          personalWallets: [
-            metamaskWallet(),
-            coinbaseWallet({ recommended: true }),
-            walletConnect(),
-            trustWallet(),
-            zerionWallet(),
-            bloctoWallet(),
-            frameWallet(),
-            rainbowWallet(),
-            phantomWallet(),
-          ],
-        }),
-        trustWallet(),
-        zerionWallet(),
-        bloctoWallet(),
-        frameWallet(),
-        rainbowWallet(),
-        phantomWallet(),
-        okxWallet(),
-        coin98Wallet(),
-        coreWallet(),
-        cryptoDefiWallet(),
-        oneKeyWallet(),
-        rabbyWallet(),
-        xdefiWallet(),
-      ]}
-    >
-      <AuthProvider>
-        <ThemeProvider>
-          <div className={`App`}>
-            <MessageContextProvider>
-              <ToastContainer />
-              <BrowserRouter>
-                <Suspense
-                  fallback={
-                    <div className="loadingAnimationWrapper">
-                      {/* <Player
-                      src={LoadingAnimation}
-                      className="loadingAnimation"
-                      loop
-                      autoplay
-                    /> */}
-                    </div>
-                  }
-                >
-                  <ScrollToTop>
-                    <Routes>
-                      <Route path="/login" element={<LoginForm />} />
-                      <Route path="/signup" element={<SignForm />} />
-                      <Route
-                        path="/forgot-password"
-                        element={
-                          <AuthLayout>
-                            <ForgotPassword />
-                          </AuthLayout>
-                        }
-                      />
-                      <Route
-                        path="/reset-password"
-                        element={
-                          <AuthLayout>
-                            <SetPasswordForm />
-                          </AuthLayout>
-                        }
-                      />
-                      <Route
-                        path="/new-settings"
-                        element={
-                          <SettingLayout title={"settingPage.title"}>
-                            <SettingPage />
-                          </SettingLayout>
-                        }
-                      />
-                      <Route
-                        path="/personal-dashboard"
-                        element={
-                          <DashboardLayout
-                            title={"personalDashboard.title"}
-                            type={"admin"}
-                          >
-                            <PersonalDashboard />
-                          </DashboardLayout>
-                        }
-                      />
-                      <Route
-                        path="/referral-dashboard"
-                        element={
-                          <DashboardLayout title={"referralDashboard.title"}>
-                            <ReferralDashboard />
-                          </DashboardLayout>
-                        }
-                      />
-                      <Route
-                        path="/sales-dashboard"
-                        element={
-                          <DashboardLayout title={"salesDashboard.title"}>
-                            <SalesDashboard />
-                          </DashboardLayout>
-                        }
-                      />
-                      <Route
-                        path="/products-dashboard"
-                        element={
-                          <DashboardLayout title={"productsDashboard.title"}>
-                            <Products />
-                          </DashboardLayout>
-                        }
-                      />
-                      <Route
-                        path="/create-invoice"
-                        element={
-                          <DashboardLayout title={"payments.createInvoice"}>
-                            <CreateInvoice />
-                          </DashboardLayout>
-                        }
-                      />
-                      <Route
-                        path="/product-detail/:productLink"
-                        element={
-                          <DashboardLayout
-                            title={"productsDashboard.productDetail"}
-                          >
-                            <Product />
-                          </DashboardLayout>
-                        }
-                      />
+    <AuthProvider>
+      <div className={`App`}>
+        <MessageContextProvider>
+          <ToastContainer />
+          <BrowserRouter>
+            <Suspense
+              fallback={<div className="loadingAnimationWrapper"></div>}
+            >
+              <ScrollToTop>
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <Layout>
+                        <NewLanding />
+                      </Layout>
+                    }
+                  />
+                  <Route
+                    path="/b2c"
+                    element={
+                      <Layout>
+                        <NewB2C />
+                      </Layout>
+                    }
+                  />
+                  <Route
+                    path="/b2b"
+                    element={
+                      <Layout>
+                        <NewB2B />
+                      </Layout>
+                    }
+                  />
+                  <Route path="/resources" element={<NewResources />} />
+                  <Route
+                    path="/business-support"
+                    element={
+                      <Layout>
+                        <Contact />
+                      </Layout>
+                    }
+                  />
+                  <Route
+                    path="/technical-support"
+                    element={
+                      <Layout>
+                        <Contact_Expert />
+                      </Layout>
+                    }
+                  />
+                  <Route
+                    path="/support"
+                    element={
+                      <>
+                        <Navigation />
 
-                      <Route
-                        path="/add-user"
-                        element={
-                          <DashboardLayout>
-                            <AddUserForTablet />
-                          </DashboardLayout>
-                        }
-                      />
+                        <Support />
+                        <Footer />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/termsofuse"
+                    element={
+                      <>
+                        <Navigation />
+                        <TermsofUSe />
+                        <Footer />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/aml-policies"
+                    element={
+                      <>
+                        <Navigation />
+                        <AMLPolicy />
+                        <Footer />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/cookie-policies"
+                    element={
+                      <>
+                        <Navigation />
+                        <CookiePolicy />
+                        <Footer />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/privacy"
+                    element={
+                      <>
+                        <Navigation />
+                        <Privacy />
+                        <Footer />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/imprint"
+                    element={
+                      <>
+                        <Navigation />
+                        <Imprint />
+                        <Footer />
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/vacancy"
+                    element={
+                      <>
+                        <Layout>
+                          <Vacancy />
+                        </Layout>
+                      </>
+                    }
+                  />
+                  <Route
+                    path="/jobs"
+                    element={
+                      <>
+                        <Layout>
+                          <Jobs />
+                        </Layout>
+                      </>
+                    }
+                  />
+                  <Route
+                    path="*"
+                    element={
+                      <>
+                        <Navigation />
+                        <PageNotFound />
+                      </>
+                    }
+                  />
+                </Routes>
+              </ScrollToTop>
+            </Suspense>
 
-                      <Route
-                        path="/kyc-dashboard"
-                        element={
-                          <DashboardLayout title={"KYC Verification"}>
-                            <KycDashboard />
-                          </DashboardLayout>
-                        }
-                      />
-                      {/* <Route
-                        path="/"
-                        element={
-                          <Layout>
-                            <Home />
-                          </Layout>
-                        }
-                      /> */}
-                      <Route
-                        path="/"
-                        element={
-                          <Layout>
-                            <NewLanding />
-                          </Layout>
-                        }
-                      />
-                      <Route
-                        path="/b2c"
-                        element={
-                          <Layout>
-                            <NewB2C />
-                          </Layout>
-                        }
-                      />
-                      <Route
-                        path="/b2b"
-                        element={
-                          <Layout>
-                            <NewB2B />
-                          </Layout>
-                        }
-                      />
-                      <Route path="/resources" element={<NewResources />} />
-                      <Route
-                        path="/business-support"
-                        element={
-                          <Layout>
-                            <Contact />
-                          </Layout>
-                        }
-                      />
-                      <Route
-                        path="/technical-support"
-                        element={
-                          <Layout>
-                            <Contact_Expert />
-                          </Layout>
-                        }
-                      />
-
-                      <Route path="/signup" element={<SignUp />} />
-                      <Route path="/login" element={<Login />} />
-                      <Route
-                        path="/forgot-password"
-                        element={
-                          <>
-                            <PasswordForgot />
-                          </>
-                        }
-                      />
-                      <Route
-                        path="/reset-password"
-                        element={
-                          <>
-                            <ResetPassword />
-                          </>
-                        }
-                      />
-
-                      <Route
-                        path="/payment"
-                        element={
-                          <>
-                            <Navigation />
-
-                            <Payment />
-                            <Footer />
-                          </>
-                        }
-                      />
-
-                      <Route
-                        path="/affiliate"
-                        element={
-                          <Layout affiliate={true}>
-                            <Affiliate />
-                          </Layout>
-                        }
-                      />
-                      <Route
-                        path="/support"
-                        element={
-                          <>
-                            <Navigation />
-
-                            <Support />
-                            <Footer />
-                          </>
-                        }
-                      />
-                      <Route
-                        path="/termsofuse"
-                        element={
-                          <>
-                            <Navigation />
-                            <TermsofUSe />
-                            <Footer />
-                          </>
-                        }
-                      />
-                      <Route
-                        path="/aml-policies"
-                        element={
-                          <>
-                            <Navigation />
-                            <AMLPolicy />
-                            <Footer />
-                          </>
-                        }
-                      />
-                      <Route
-                        path="/cookie-policies"
-                        element={
-                          <>
-                            <Navigation />
-                            <CookiePolicy />
-                            <Footer />
-                          </>
-                        }
-                      />
-                      <Route
-                        path="/privacy"
-                        element={
-                          <>
-                            <Navigation />
-                            <Privacy />
-                            <Footer />
-                          </>
-                        }
-                      />
-                      <Route
-                        path="/imprint"
-                        element={
-                          <>
-                            <Navigation />
-                            <Imprint />
-                            <Footer />
-                          </>
-                        }
-                      />
-                      <Route
-                        path="/vacancy"
-                        element={
-                          <>
-                            <Layout>
-                              <Vacancy />
-                            </Layout>
-                          </>
-                        }
-                      />
-                      <Route
-                        path="/jobs"
-                        element={
-                          <>
-                            <Layout>
-                              <Jobs />
-                            </Layout>
-                          </>
-                        }
-                      />
-                      <Route
-                        path="/product/:productLink"
-                        element={
-                          <>
-                            <Navigation />
-                            <Product />
-                            <Footer />
-                          </>
-                        }
-                      />
-                      <Route
-                        path="/product/:productLink/pay"
-                        element={
-                          <>
-                            {/* <Navigation /> */}
-                            <ProductPay />
-                            {/* <Footer /> */}
-                          </>
-                        }
-                      />
-                      <Route
-                        path="/pay/:payLink"
-                        element={
-                          <>
-                            {/* <Navigation /> */}
-                            <Pay />
-                            {/* <Footer /> */}
-                          </>
-                        }
-                      />
-                      <Route
-                        path="*"
-                        element={
-                          <>
-                            <Navigation />
-                            <PageNotFound />
-                          </>
-                        }
-                      />
-                    </Routes>
-                  </ScrollToTop>
-                </Suspense>
-
-                {/* COOKIE BANNER */}
-                {!ck && <CookieBanner close={() => setCK(true)} />}
-              </BrowserRouter>
-            </MessageContextProvider>
-          </div>
-        </ThemeProvider>
-      </AuthProvider>
-    </ThirdwebProvider>
+            {/* COOKIE BANNER */}
+            {!ck && <CookieBanner close={() => setCK(true)} />}
+          </BrowserRouter>
+        </MessageContextProvider>
+      </div>
+    </AuthProvider>
   );
 }
 

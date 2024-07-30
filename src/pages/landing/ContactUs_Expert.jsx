@@ -1,9 +1,7 @@
 import { useContext, useState } from "react";
 import "./landing.css";
 import { useTranslation } from "react-i18next";
-import Input, { CountrySelect, Textarea } from "../../components/input/input";
-import { getCountryList } from "../../countries";
-import Button from "../../components/button/button";
+import Input, { Textarea } from "../../components/input/input";
 import LeftSvg from "../../assets/landing/contact-left.svg";
 import TopSvg from "../../assets/landing/contact-top.svg";
 import BottomSvg from "../../assets/landing/contact-bottom.svg";
@@ -82,17 +80,6 @@ const ContactUs_Expert = () => {
             setState={setDescription}
           />
           <button onClick={contact}>Submit</button>
-          {/* <Button
-            children={t("contact.submit")}
-            style={{
-              padding: "0rem 2rem",
-              background: "none",
-              boxShadow: "none",
-              width: "100%",
-            }}
-            spinner={spinner}
-            onClick={contact}
-          /> */}
         </div>
         <h2>
           Thank you for reaching out to us.

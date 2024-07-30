@@ -1,4 +1,3 @@
-import { t } from "i18next";
 import TermsofUseBody from "./../components/termsofuse/termsofuseBody";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";

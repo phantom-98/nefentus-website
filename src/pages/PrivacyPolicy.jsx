@@ -1,4 +1,3 @@
-import { t } from "i18next";
 import PrivacyPolicyBody from "./../components/privacyPolicyBody/privacyPolicyBody";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import ImprintBody from "./../components/imprintBody/imprintBody";
+import ImprintBody from "../components/imprintBody/imprintBody";
 import { Helmet } from "react-helmet";
 
 const Imprint = () => {

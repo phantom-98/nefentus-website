@@ -3,7 +3,6 @@ import "./landing.css";
 import { useTranslation } from "react-i18next";
 import Input, { CountrySelect, Textarea } from "../../components/input/input";
 import { getCountryList } from "../../countries";
-import Button from "../../components/button/button";
 import LeftSvg from "../../assets/landing/contact-left.svg";
 import TopSvg from "../../assets/landing/contact-top.svg";
 import BottomSvg from "../../assets/landing/contact-bottom.svg";

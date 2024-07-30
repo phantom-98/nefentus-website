@@ -48,7 +48,7 @@ const sitemap = [
       },
       {
         subtitle: "Log in",
-        link: "/login",
+        link: process.env.VITE_REACT_APP_DASHBOARD + "/login",
       },
     ],
   },

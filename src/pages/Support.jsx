@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import SupportBody from "./../components/supportBody/supportBody";
+import SupportBody from "../components/supportBody/supportBody";
 import { Helmet } from "react-helmet";
 
 const Support = () => {

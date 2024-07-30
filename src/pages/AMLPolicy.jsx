@@ -1,5 +1,4 @@
-import { t } from "i18next";
-import AMLPolicyBody from "./../components/amlpolicyBody/amlpolicyBody";
+import AMLPolicyBody from "../components/amlpolicyBody/amlpolicyBody";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import NefentusLogo from "../assets/logo/logo.svg";

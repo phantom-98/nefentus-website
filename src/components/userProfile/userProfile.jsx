@@ -1,34 +1,19 @@
 import styles from "./userProfile.module.css";
-import { useState } from "react";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import SettingSvg from "../../assets/newDashboardIcons/settings.svg";
 import DashboardSvg from "../../assets/newDashboardIcons/dashboard.svg";
 import LogoutSvg from "../../assets/newDashboardIcons/logout.svg";
 import { useAuth } from "../../context/auth/authContext";
-import backend_API from "../../api/backendAPI";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
 
-const UserProfile = ({ web, logOut, requireKYC }) => {
-  const { user, setUser, avatarUrl, setAvatarUrl } = useAuth();
-  const backendAPI = new backend_API();
-  const fetchProfile = async () => {
-    const data = await backendAPI.getProfile();
-    setUser({ ...data });
-    if (data["profileImage"]) setAvatarUrl(data["profileImage"]);
-    else setAvatarUrl(null);
-  };
-  useEffect(() => {
-    fetchProfile();
-  }, []);
+const UserProfile = ({ web, logOut }) => {
+  const { user } = useAuth();
 
-  const { t } = useTranslation();
   return (
     <div className={styles.profileWrapper}>
       <div className={styles.profileImage}>
-        {avatarUrl ? (
-          <img src={avatarUrl} alt="Profile" />
+        {user?.profileImage ? (
+          <img src={user?.profileImage} alt="Profile" />
         ) : (
           <svg
             viewBox="0 0 30 30"
@@ -58,12 +43,18 @@ const UserProfile = ({ web, logOut, requireKYC }) => {
       </div>
       <div className={`${styles.profileDropdown}`}>
         <div className={`${styles.profileBody} card`}>
-          <Link to="/new-settings" className={styles.profileItem}>
+          <Link
+            to={`${process.env.VITE_REACT_APP_DASHBOARD}/new-settings`}
+            className={styles.profileItem}
+          >
             <img src={SettingSvg} />
             <p>Settings</p>
           </Link>
           {web && (
-            <Link to="/personal-dashboard" className={styles.profileItem}>
+            <Link
+              to={`${process.env.VITE_REACT_APP_DASHBOARD}/personal-dashboard`}
+              className={styles.profileItem}
+            >
               <img src={DashboardSvg} />
               <p>Dashboard</p>
             </Link>

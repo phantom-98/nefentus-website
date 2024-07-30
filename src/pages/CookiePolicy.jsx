@@ -1,5 +1,4 @@
-import { t } from "i18next";
-import CookiePolicyBody from "./../components/cookiepolicyBody/cookiepolicyBody";
+import CookiePolicyBody from "../components/cookiepolicyBody/cookiepolicyBody";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import NefentusLogo from "../assets/logo/logo.svg";
