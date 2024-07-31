@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import "./landing.css";
-import { useTranslation } from "react-i18next";
 import Input, { CountrySelect, Textarea } from "../../components/input/input";
 import { getCountryList } from "../../countries";
 import LeftSvg from "../../assets/landing/contact-left.svg";
@@ -9,8 +8,7 @@ import BottomSvg from "../../assets/landing/contact-bottom.svg";
 import backendAPI from "../../api/backendAPI";
 import { MessageContext } from "../../context/message";
 
-const ContactUs = () => {
-  const { t } = useTranslation();
+const BusinessSupportBody = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -72,31 +70,31 @@ const ContactUs = () => {
         </p>
         <div className="contact-form">
           <Input
-            label={t("contact.name").concat("*")}
+            label={"Full name*"}
             value={fullName}
             setState={setFullName}
             placeholder={`e.g. John Doe`}
           />
           <Input
-            label={t("contact.email").concat("*")}
+            label={"Email*"}
             value={email}
             setState={setEmail}
             placeholder={`e.g. yourmail@mail.com`}
           />
           <Input
-            label={t("contact.phone")}
+            label={"Phone"}
             value={phone}
             setState={setPhone}
             placeholder={`e.g. +38 066 111 59 21`}
           />
           <Input
-            label={t("contact.company")}
+            label={"Company"}
             value={company}
             setState={setCompany}
             placeholder={`e.g. Google`}
           />
           <CountrySelect
-            label={t("contact.country")}
+            label={"Country"}
             placeholder={`e.g. Germany`}
             value={country}
             setValue={setCountry}
@@ -107,7 +105,7 @@ const ContactUs = () => {
             }}
           />
           <Textarea
-            label={t("contact.comment").concat("*")}
+            label={"Project/Business description*"}
             placeholder={`Tell us about your needs`}
             value={description}
             setState={setDescription}
@@ -158,4 +156,4 @@ const ContactUs = () => {
   );
 };
 
-export default ContactUs;
+export default BusinessSupportBody;

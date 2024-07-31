@@ -1,6 +1,5 @@
 import styles from "./input.module.css";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import DropDownIcon from "../../assets/icon/dropdown.svg";
 import { getCountryList, getFlagLink } from "../../countries";
 
@@ -113,7 +112,6 @@ export const CountrySelect = ({
   style,
   className,
 }) => {
-  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [icon, setIcon] = useState();
   const [keyword, setKeyword] = useState("");
@@ -122,7 +120,7 @@ export const CountrySelect = ({
     const country = getCountryList().find((item) => item.value === value);
     if (country) {
       setIcon(getFlagLink(country.symbol));
-      setKeyword(t(country.display));
+      setKeyword(country.value);
     } else {
       setIcon(null);
       setKeyword("");
@@ -175,14 +173,14 @@ export const CountrySelect = ({
               // fontFamily: "Axiforma, sans-serif",
               // height: "2rem",
             }}
-            placeholder={value ? "" : placeholder ?? t("countries.choose")}
+            placeholder={value ? "" : placeholder ?? "Choose your country"}
             value={keyword}
             onChange={(e) => {
               !open && setOpen(true);
               setKeyword(e.target.value);
               setFiltered(
                 options.filter((item) =>
-                  t(item.display)
+                  item.value
                     .toLowerCase()
                     .includes(e.target.value.toLowerCase()),
                 ),
@@ -212,7 +210,7 @@ export const CountrySelect = ({
                     setValue(item.value);
                     item.value !== value
                       ? setChanged && setChanged(true)
-                      : setKeyword(t(item.display));
+                      : setKeyword(item.value);
                   }}
                   style={{
                     padding: "0.4rem",
@@ -220,7 +218,7 @@ export const CountrySelect = ({
                 >
                   <SearchSelectOption
                     icon={`${getFlagLink(item.symbol)}`}
-                    text={t(item.display)}
+                    text={item.value}
                   />
                 </div>
               );

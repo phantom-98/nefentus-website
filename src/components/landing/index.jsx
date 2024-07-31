@@ -59,7 +59,7 @@ import Logos from "../../components/logos/logos";
 
 import { useEffect, useState } from "react";
 
-const Landing = () => {
+const HomeBody = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has("ref")) {
@@ -98,7 +98,7 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default HomeBody;
 
 const Hero = () => {
   return (

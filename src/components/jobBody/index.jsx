@@ -1,8 +1,7 @@
-import { useTranslation } from "react-i18next";
 import styles from "./jobBody.module.css";
 import Input, { Textarea } from "../input/input";
 import { useContext, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Button from "../button/button";
 import backendAPI from "../../api/backendAPI";
 import { MessageContext } from "../../context/message";
@@ -212,7 +211,6 @@ const jobs = {
 };
 
 const JobBody = () => {
-  const { t } = useTranslation();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -227,15 +225,15 @@ const JobBody = () => {
   const apply = async () => {
     if (!spinner) {
       if (!firstName) {
-        setErrorMessage(t("messages.validation.firstName"));
+        setErrorMessage("Please enter your first name");
         return;
       }
       if (!lastName) {
-        setErrorMessage(t("messages.validation.lastName"));
+        setErrorMessage("Please enter your last name");
         return;
       }
       if (!email || !validateEmail(email)) {
-        setErrorMessage(t("messages.validation.email"));
+        setErrorMessage("Please enter your email");
         return;
       }
       setSpinner(true);
@@ -248,14 +246,14 @@ const JobBody = () => {
         comment,
       );
       if (res) {
-        setInfoMessage(t("vacancy.success"));
+        setInfoMessage("You have successfully applied");
         setFirstName("");
         setLastName("");
         setEmail("");
         setLinkedin("");
         setComment("");
       } else {
-        setErrorMessage(t("vacancy.failed"));
+        setErrorMessage("Network error");
       }
       setSpinner(false);
     }
@@ -267,7 +265,7 @@ const JobBody = () => {
         <div className={styles.heading}>
           <h1>{job.title}</h1>
           <a href="#apply" className={styles.hideInMobile}>
-            {t("vacancy.apply")}
+            Apply for this job
           </a>
         </div>
         <div className={styles.body}>
@@ -296,18 +294,18 @@ const JobBody = () => {
                 fontSize: "2rem",
               }}
             >
-              {t("vacancy.apply")}
+              Apply for this job
             </p>
             <div className={styles.row}>
               <Input
-                label={t("vacancy.firstName")}
+                label={"First name*"}
                 value={firstName}
                 setState={setFirstName}
                 placeholder={`John`}
                 dashboard
               />
               <Input
-                label={t("vacancy.lastName")}
+                label={"Last name*"}
                 value={lastName}
                 setState={setLastName}
                 placeholder={`Doe`}
@@ -315,28 +313,28 @@ const JobBody = () => {
               />
             </div>
             <Input
-              label={t("vacancy.email")}
+              label={"Email*"}
               value={email}
               setState={setEmail}
               placeholder={`yourmail@mail.com`}
               dashboard
             />
             <Input
-              label={t("vacancy.linkedin")}
+              label={"Linkedin"}
               value={linkedin}
               setState={setLinkedin}
               placeholder={`https://linkedin/xyz`}
               dashboard
             />
             <Textarea
-              label={t("vacancy.comment")}
+              label={"Comment"}
               value={comment}
               setState={setComment}
               placeholder={``}
               dashboard
             />
             <Button style={{ width: "100%" }} spinner={spinner} onClick={apply}>
-              {t("vacancy.apply")}
+              Apply for this job
             </Button>
           </div>
         </div>

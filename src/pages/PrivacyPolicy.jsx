@@ -1,16 +1,14 @@
 import PrivacyPolicyBody from "./../components/privacyPolicyBody/privacyPolicyBody";
 import { Helmet } from "react-helmet";
-import { useTranslation } from "react-i18next";
 import NefentusLogo from "../assets/logo/logo.svg";
-import { Conclusion } from "./landing";
-import "./landing/landing.css";
+import { Conclusion } from "../components/landing";
+import "../components/landing/landing.css";
 
 const PrivacyPolicy = () => {
-  const { t } = useTranslation();
   return (
     <div className="landing-layout container">
       <Helmet>
-        <title>Nefentus | {t("navigation.privacy")}</title>
+        <title>Nefentus | Privacy policy</title>
       </Helmet>
       <PrivacyPolicyBody />
       <Conclusion

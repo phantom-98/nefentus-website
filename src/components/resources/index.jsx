@@ -259,7 +259,7 @@ const socials = {
     link: "https://t.me/nefentus",
   },
 };
-const Resources = () => {
+const ResourcesBody = () => {
   const [icon_in, setIcon_in] = useState(socials.in.iconNormal);
   const [icon_tele, setIcon_tele] = useState(socials.telegram.iconNormal);
   const [icon_x, setIcon_x] = useState(socials.x.iconNormal);
@@ -399,4 +399,4 @@ const Resources = () => {
   );
 };
 
-export default Resources;
+export default ResourcesBody;

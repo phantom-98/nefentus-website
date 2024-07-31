@@ -1,30 +1,32 @@
 import { Button, Flex } from "antd";
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import "./pageNotFound.css";
 
 const PageNotFound = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
   return (
     <Flex className="page-not-found" align="center" justify="center">
       <Flex vertical gap={16}>
         <div className="default-text page-not-found-title">
-          {t("content.pageNotFound")}
+          Error: Page Not Found
         </div>
         <Flex vertical gap={8}>
           <div className="default-text-gray">
-            {t("content.pageNotFoundDescription")}
+            Oops! It looks like the page you're trying to access doesn't exist
+            or has been removed. Please check the URL and try again.
           </div>
-          <div className="default-text-gray">{t("content.contentSubText")}</div>
-          <div className="default-text-gray">{t("content.thankyouText")}</div>
+          <div className="default-text-gray">
+            If you believe this is an error or need assistance, please contact
+            our support team for help.
+          </div>
+          <div className="default-text-gray">Thank you for using Nefentus!</div>
 
           <Button
             className="default-text page-back-to-home"
             onClick={() => navigate("/")}
           >
-            {t("content.backButton")}
+            Back to home page
           </Button>
         </Flex>
       </Flex>

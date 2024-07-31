@@ -194,10 +194,7 @@ const Navigation = () => {
 
           {!hideOptions && (
             <div className={styles.right}>
-              <div className={styles.rightWrapper}>
-                {/* <QR /> */}
-                {/* <Languages /> */}
-              </div>
+              <div className={styles.rightWrapper}>{/* <QR /> */}</div>
 
               {loginAndSignupWeb()}
 

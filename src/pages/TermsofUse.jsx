@@ -1,16 +1,14 @@
 import TermsofUseBody from "./../components/termsofuse/termsofuseBody";
 import { Helmet } from "react-helmet";
-import { useTranslation } from "react-i18next";
 import NefentusLogo from "../assets/logo/logo.svg";
-import { Conclusion } from "./landing";
-import "./landing/landing.css";
+import { Conclusion } from "../components/landing";
+import "../components/landing/landing.css";
 
 const TermsofUse = () => {
-  const { t } = useTranslation();
   return (
     <div className="landing-layout container">
       <Helmet>
-        <title>Nefentus | {t("navigation.termsofuse")}</title>
+        <title>Nefentus | Terms of use</title>
       </Helmet>
       <TermsofUseBody />
       <Conclusion
