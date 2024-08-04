@@ -1,5 +1,6 @@
 # New changes
 
+- Add new blocks (audience, api) && Update some texts (MINOR)
 - Add new policy pages && add new blocks in landing (MINOR)
 - Update resource navbar && hero && headings of home page (PATCH)
 - Update product invoice work flow (MINOR)
