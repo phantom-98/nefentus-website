@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import "./landing.css";
-import { useTranslation } from "react-i18next";
 import Input, { Textarea } from "../../components/input/input";
 import LeftSvg from "../../assets/landing/contact-left.svg";
 import TopSvg from "../../assets/landing/contact-top.svg";
@@ -8,8 +7,7 @@ import BottomSvg from "../../assets/landing/contact-bottom.svg";
 import backendAPI from "../../api/backendAPI";
 import { MessageContext } from "../../context/message";
 
-const ContactUs_Expert = () => {
-  const { t } = useTranslation();
+const TechnicalSupportBody = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
@@ -62,19 +60,19 @@ const ContactUs_Expert = () => {
         </p>
         <div className="contact-form">
           <Input
-            label={t("contact.name").concat("*")}
+            label={"Full name*"}
             value={fullName}
             setState={setFullName}
             placeholder={`e.g. John Doe`}
           />
           <Input
-            label={t("contact.email").concat("*")}
+            label={"Email*"}
             value={email}
             setState={setEmail}
             placeholder={`e.g. yourmail@mail.com`}
           />
           <Textarea
-            label={t("contact.commentExpert").concat("*")}
+            label={"Describe your problem/question*"}
             placeholder={`Description...`}
             value={description}
             setState={setDescription}
@@ -125,4 +123,4 @@ const ContactUs_Expert = () => {
   );
 };
 
-export default ContactUs_Expert;
+export default TechnicalSupportBody;

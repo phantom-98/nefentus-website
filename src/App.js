@@ -12,7 +12,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Layout = React.lazy(() => import("./pages/Layout"));
-const Support = React.lazy(() => import("./pages/Support"));
 const Privacy = React.lazy(() => import("./pages/PrivacyPolicy"));
 const TermsofUSe = React.lazy(() => import("./pages/TermsofUse"));
 const AMLPolicy = React.lazy(() => import("./pages/AMLPolicy"));
@@ -23,13 +22,12 @@ const Jobs = React.lazy(() => import("./pages/Jobs"));
 import PageNotFound from "./components/pageNotFound";
 
 import { AuthProvider } from "./context/auth/authContext";
-import NewLanding, {
-  Contact,
-  Contact_Expert,
-  NewB2B,
-  NewB2C,
-  NewResources,
-} from "./pages/Landing";
+import Home from "./pages/Home";
+import B2C from "./pages/B2C";
+import B2B from "./pages/B2B";
+import Resources from "./pages/Resources";
+import BusinessSupport from "./pages/BusinessSupport";
+import TechnicalSupport from "./pages/TechnicalSupport";
 
 function App() {
   useEffect(() => {
@@ -83,7 +81,7 @@ function App() {
                     path="/"
                     element={
                       <Layout>
-                        <NewLanding />
+                        <Home />
                       </Layout>
                     }
                   />
@@ -91,7 +89,7 @@ function App() {
                     path="/b2c"
                     element={
                       <Layout>
-                        <NewB2C />
+                        <B2C />
                       </Layout>
                     }
                   />
@@ -99,16 +97,16 @@ function App() {
                     path="/b2b"
                     element={
                       <Layout>
-                        <NewB2B />
+                        <B2B />
                       </Layout>
                     }
                   />
-                  <Route path="/resources" element={<NewResources />} />
+                  <Route path="/resources" element={<Resources />} />
                   <Route
                     path="/business-support"
                     element={
                       <Layout>
-                        <Contact />
+                        <BusinessSupport />
                       </Layout>
                     }
                   />
@@ -116,19 +114,8 @@ function App() {
                     path="/technical-support"
                     element={
                       <Layout>
-                        <Contact_Expert />
+                        <TechnicalSupport />
                       </Layout>
-                    }
-                  />
-                  <Route
-                    path="/support"
-                    element={
-                      <>
-                        <Navigation />
-
-                        <Support />
-                        <Footer />
-                      </>
                     }
                   />
                   <Route

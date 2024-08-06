@@ -1,24 +1,15 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import fs from "fs/promises";
-import { resolve } from "path";
-import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import { NodeModulesPolyfillPlugin } from "@esbuild-plugins/node-modules-polyfill";
 import nodePolyfills from "rollup-plugin-polyfill-node";
-import string from "vite-plugin-string";
 
 export default ({ mode }) => {
   env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
   return defineConfig({
     base: "/",
-    plugins: [
-      react(),
-      string({
-        include: ["**/languages/**/*.html"],
-        compress: false,
-      }),
-    ],
+    plugins: [react()],
     esbuild: {
       loader: "jsx",
       include: /src\/.*\.jsx?$/,

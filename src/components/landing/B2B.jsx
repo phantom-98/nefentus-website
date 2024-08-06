@@ -32,7 +32,7 @@ import Dollar from "../../assets/landing/dollar.svg";
 import SwapIcon from "../../assets/landing/swap-ico.svg";
 import { useEffect, useRef, useState } from "react";
 
-const B2B = () => {
+const B2BBody = () => {
   const b2bContainer = useRef();
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const B2B = () => {
   );
 };
 
-export default B2B;
+export default B2BBody;
 
 const Hero = () => {
   return (
