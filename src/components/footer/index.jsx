@@ -48,7 +48,7 @@ const sitemap = [
       },
       {
         subtitle: "Log in",
-        link: "/login",
+        link: process.env.VITE_REACT_APP_DASHBOARD + "/login",
       },
     ],
   },
@@ -130,7 +130,7 @@ const Footer = () => {
       </div>
 
       <div className="container footer-bottom">
-        <p style={{ marginBottom: "4rem", paddingRight: "6rem" }}>
+        <p>
           Data and information on this website are provided for informational
           purposes only, and are not intended for reference or other purposes.
           All financial, statistical and other relevant data regarding the

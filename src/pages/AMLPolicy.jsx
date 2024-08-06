@@ -1,17 +1,14 @@
-import { t } from "i18next";
-import AMLPolicyBody from "./../components/amlpolicyBody/amlpolicyBody";
+import AMLPolicyBody from "../components/amlpolicyBody/amlpolicyBody";
 import { Helmet } from "react-helmet";
-import { useTranslation } from "react-i18next";
 import NefentusLogo from "../assets/logo/logo.svg";
 import { Conclusion } from "../components/landing";
 import "../components/landing/landing.css";
 
 const AMLPolicy = () => {
-  const { t } = useTranslation();
   return (
     <div className="landing-layout container">
       <Helmet>
-        <title>Nefentus | {t("navigation.amlpolicy")}</title>
+        <title>Nefentus | AML policy</title>
       </Helmet>
       <AMLPolicyBody />
       <Conclusion

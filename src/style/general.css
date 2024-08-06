@@ -59,27 +59,8 @@
   font-weight: 600;
 }
 
-.cursor-pointer {
-  cursor: pointer;
-}
-
-/* new dashboard colors 
-
---Dark: #202020
---BG2: #171717
---Light-grey: #E9E9E9
---Light-grey2: #B1B1B1
---White-BG: #F7F7F8
---Color: #111
---Green: #07B561
---TrnspGreen: rgba(7, 181, 97, 0.10)
---Grey: #323232;
---grad: #009BD2
-
-
-*/
 /* Variable */
-:root .dark {
+:root {
   --lightBlack-color: rgb(38, 38, 38);
   --gray-color: rgba(255, 255, 255, 0.09);
   --hover-color: rgba(255, 255, 255, 0.09);
@@ -98,31 +79,6 @@
   --Light-grey: #e9e9e9;
   --Light-grey2: #b1b1b1;
   --White-BG: #f7f7f8;
-}
-
-:root .light {
-  --lightBlack-color: rgba(38, 38, 38, 0.2);
-  --gray-color: rgb(38, 38, 38);
-  --hover-color: rgba(0, 0, 0, 0.09);
-  --lightWhite-color: rgba(0, 0, 0, 0.04);
-
-  --background-color: #f6f6f6; /* for main background */
-  --bg2-color: #e9e9e9; /* for card background */
-  --text-color: #111111; /* for primary text background */
-  --text3-color: #696969; /* for special text background */
-  --card-color: #e0e0e0; /* for card header background */
-  --text2-color: #565656; /* for second text background */
-  --border-color: #dadada; /* for border */
-  --Light-grey: #9e9e9e;
-  --Dark: #f6f6f6;
-  --BG2: #e9e9e9;
-  --Light-grey: #111111;
-  --Light-grey2: #565656;
-  --Mild-dark-BG: #181818;
-  --White-BG: #696969;
-}
-
-:root {
   --blue-color: #0784b5;
   --linear-color: linear-gradient(90deg, #1595c2 0%, #66bfde 100%);
   --success-color: #23c215;
@@ -179,15 +135,11 @@ body {
   font-family: Axiforma;
   overflow-x: hidden;
   width: 100vw;
-  background-color: var(--background-color) !important;
+  background-color: #111 !important;
   color: var(--text-color) !important;
 }
 
-.fontColor {
-  color: rgba(255, 255, 255, 0.42) !important;
-}
-
-.dark .card {
+.card {
   background: radial-gradient(
     circle,
     rgba(17, 16, 17, 1) 40%,
@@ -197,48 +149,21 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.light .card {
-  border: 1px solid rgba(0, 0, 0, 0.05);
-
-  background: #fff;
-
-  box-shadow:
-    0px 18px 36px -18px rgba(0, 0, 0, 0.1),
-    0px 30px 45px -30px rgba(50, 50, 93, 0.25);
-}
-
-.dark .dateOption {
+.dateOption {
   background-color: transparent !important;
 }
 
-.light .dateOption {
-  background-color: transparent !important;
-}
-
-.dark input,
-.dark textarea,
-.dark .option {
+input,
+textarea,
+.option {
   border: 1px solid rgba(255, 255, 255, 0.08);
 
   color: var(--text-color);
 }
 
-.dark input::placeholder,
-.dark textarea::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: rgba(255, 255, 255, 0.42) !important;
-}
-
-.light input,
-.light textarea,
-.light .option {
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
-
-  color: var(--black-color) !important;
-}
-
-.light input::placeholder,
-.light textarea::placeholder {
-  color: rgba(0, 0, 0, 0.42) !important;
 }
 
 input.custom {
@@ -294,26 +219,10 @@ svg {
   }
 }
 
-.dashboardContainer {
-  max-width: 1800px !important;
-  padding-left: 50px;
-  padding-right: 50px;
-}
-
-.break {
-  margin-top: 7rem;
-  margin-bottom: 7rem;
-}
-
 @media (max-width: 550px) {
   .container {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
-  }
-
-  .break {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
   }
 }
 
@@ -349,23 +258,6 @@ h1 {
   background-size: 500% auto;
   animation: textShine 2.5s ease-in-out infinite;
 }
-/* .heading-gradient {
-  background: linear-gradient(
-    to right,
-    #898989 20%,
-    #e9e9e9 40%,
-    #fff 60%,
-    #898989 80%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  width: max-content;
-  text-fill-color: transparent;
-  background-position: 50% 50%;
-  background-size: 500% auto;
-  animation: textShine 3s ease-in-out infinite;
-} */
 
 @keyframes textShine {
   0% {
@@ -430,64 +322,6 @@ a {
   text-decoration: none;
 }
 
-/* Animation */
-/* 
-.hero > div:first-child {
-  opacity: 0;
-  transform: translateY(100px);
-}
-
-.hero > div:first-child {
-  animation-name: move;
-  animation-duration: 1s;
-  animation-timing-function: ease;
-  animation-fill-mode: forwards;
-  animation-delay: 0.5s;
-}
-
-.hero > img,
-.hero > video {
-  transform: scale(0);
-  animation-duration: 1s;
-  animation-timing-function: ease;
-  animation-fill-mode: forwards;
-  animation-delay: 0.5s;
-}
-
-.hero > img,
-.hero > video {
-  animation-name: scaleUp;
-}
-
-@keyframes move {
-  from {
-    opacity: 0;
-    transform: translateY(100px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slide {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes scaleUp {
-  from {
-    transform: scale(0);
-  }
-
-  to {
-    transform: scale(1);
-  }
-} */
-
 nav {
   opacity: 0;
   animation-name: move2;
@@ -517,12 +351,6 @@ nav {
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
-}
-
-.payroll .scroll {
-  animation-name: initial !important;
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .slide-left {
@@ -765,10 +593,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border: 1px solid var(--border-color, #313131) !important;
 }
 
-.light .affiliate {
-  box-shadow: 0.4rem 0.4rem 0.8rem var(--border-color);
-}
-
 :where(.css-dev-only-do-not-override-ysyo1).ant-divider-vertical {
   position: relative;
   top: -0.06em;
@@ -833,15 +657,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .ant-btn {
   line-height: normal;
   height: auto;
-}
-
-.password-modal-forgot {
-  color: var(--Blue, var(--Blue, #078bb9)) !important;
-  width: fit-content;
-}
-
-.seed-modal-padding {
-  padding: 0px 20px;
 }
 
 .toggle-theme-button.ant-switch-checked {

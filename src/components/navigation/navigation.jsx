@@ -1,13 +1,10 @@
 import styles from "./navigation.module.css";
 import LogoWide from "../../assets/logo/logo_wide2.svg";
 import Button from "../button/button";
-import Languages from "./languages.jsx/languages";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { logOut } from "../../utils";
 import UserProfile from "../userProfile/userProfile";
-import { useTheme } from "../../context/themeContext/themeContext";
 import Cookie from "js-cookie";
 import MultiWallet from "../../assets/icon/wallet-01.svg";
 import MultiWalletBlue from "../../assets/icon/wallet-01 - blue.svg";
@@ -32,9 +29,6 @@ import Dashboard from "../../assets/newDashboardIcons/dashboard.svg";
 import Settings from "../../assets/newDashboardIcons/settings.svg";
 
 const Navigation = () => {
-  const { theme, toggleTheme } = useTheme();
-
-  const { t, i18n } = useTranslation();
   const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,27 +41,18 @@ const Navigation = () => {
     } else {
       return (
         <>
-          <div className={styles.login} onClick={() => navigate("/login")}>
+          <a
+            className={styles.login}
+            href={`${process.env.VITE_REACT_APP_DASHBOARD}/login`}
+          >
             Log in
-          </div>
-          <div
+          </a>
+          <a
             className={`${styles.button}`}
-            onClick={() => navigate("/signup")}
+            href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}
           >
             Sign up
-          </div>
-        </>
-      );
-    }
-  }
-
-  function loginAndSignupTopButtons() {
-    if (!token?.length) {
-      return (
-        <>
-          {/* <div className={styles.mobileButtonWrapper}>
-            <Button link="/signUp">{t("navigation.signUp")}</Button>
-          </div> */}
+          </a>
         </>
       );
     }
@@ -77,7 +62,10 @@ const Navigation = () => {
     if (token?.length) {
       return (
         <>
-          <Link to={"/personal-dashboard"} onClick={() => setOpenMenu(false)}>
+          <Link
+            to={`${process.env.VITE_REACT_APP_DASHBOARD}/personal-dashboard`}
+            onClick={() => setOpenMenu(false)}
+          >
             <li
               className="standard"
               style={{
@@ -90,7 +78,10 @@ const Navigation = () => {
               Dashboard
             </li>
           </Link>
-          <Link to={"/new-settings"} onClick={() => setOpenMenu(false)}>
+          <Link
+            to={`${process.env.VITE_REACT_APP_DASHBOARD}/new-settings`}
+            onClick={() => setOpenMenu(false)}
+          >
             <li
               className="standard"
               style={{
@@ -136,14 +127,14 @@ const Navigation = () => {
         >
           <Button
             style={{ width: "100%" }}
-            link="/login"
+            link={`${process.env.VITE_REACT_APP_DASHBOARD}/login`}
             onClick={() => setOpenMenu(false)}
           >
             Log in
           </Button>
           <Button
             style={{ width: "100%" }}
-            link="/signup"
+            link={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}
             color="white"
             onClick={() => setOpenMenu(false)}
           >
@@ -203,22 +194,9 @@ const Navigation = () => {
 
           {!hideOptions && (
             <div className={styles.right}>
-              <div className={styles.rightWrapper}>
-                {/* <QR /> */}
-
-                {/* <Languages /> */}
-
-                {/* <img
-                  onClick={toggleTheme}
-                  src={theme === "dark" ? DarkMode : LightMode}
-                  className={styles.light}
-                  alt=""
-                /> */}
-              </div>
+              <div className={styles.rightWrapper}>{/* <QR /> */}</div>
 
               {loginAndSignupWeb()}
-
-              {loginAndSignupTopButtons()}
 
               <div className={styles.mobMenu}>
                 <div

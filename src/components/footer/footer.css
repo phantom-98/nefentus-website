@@ -46,6 +46,11 @@
   padding-block: 2rem 4rem;
 }
 
+.footer-layout .footer-bottom > p {
+  margin-bottom: 4rem;
+  padding-right: 6rem;
+}
+
 .footer-layout .bottom-right {
   display: flex;
   align-items: center;
@@ -62,5 +67,19 @@
   }
   .footer-layout .sitemap {
     grid-template-columns: 1fr 1fr;
+  }
+  .footer-layout .footer-bottom > p {
+    margin-bottom: 4rem;
+    padding-right: 0rem;
+  }
+  .footer-layout .footer-bottom > div {
+    flex-direction: column;
+    align-items: start !important;
+    gap: 3rem;
+  }
+  .footer-layout .bottom-right {
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
   }
 }

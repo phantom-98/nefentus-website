@@ -1,7 +1,5 @@
 import styles from "./logos.module.css";
-
-import Line from "../../assets/image/line.svg";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import {
   Logo1,
   Logo2,
@@ -10,12 +8,10 @@ import {
   Logo5,
   Logo6,
 } from "../../assets/icon/logos/logos";
-import { useTheme } from "../../context/themeContext/themeContext";
 
 const list = [<Logo1 />, <Logo2 />, <Logo3 />, <Logo4 />, <Logo5 />, <Logo6 />];
 
 const Logos = () => {
-  const { theme } = useTheme();
   useEffect(() => {
     const line1 = document.querySelector(".line1");
     const line2 = document.querySelector(".line2");

@@ -29,11 +29,8 @@ import ShoppingCartSvg from "../../assets/landing/shopping-cart.svg";
 import Dollar from "../../assets/landing/dollar.svg";
 import SwapIcon from "../../assets/landing/swap-ico.svg";
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
 
-const B2B = () => {
+const B2BBody = () => {
   const b2bContainer = useRef();
 
   useEffect(() => {
@@ -87,7 +84,7 @@ const B2B = () => {
   );
 };
 
-export default B2B;
+export default B2BBody;
 
 const Hero = () => {
   return (
@@ -119,7 +116,7 @@ const Hero = () => {
             streamline your sales process—all from a single platform.
           </p>
           <div className="button-container">
-            <a href="/signup">
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
               <button>Get Started</button>
             </a>
             <a href="/business-support">
@@ -805,7 +802,7 @@ const CryptoManage = () => {
             at your fingertips.
           </p>
           <div className="button-container">
-            <a href="/signup">
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
               <button>Download App</button>
             </a>
           </div>

@@ -43,7 +43,6 @@ import FreelancingSvg from "../../assets/landing/freelancing.svg";
 import HealthSvg from "../../assets/landing/health.svg";
 import AccountingSvg from "../../assets/landing/accounting.svg";
 import LegalServiceSvg from "../../assets/landing/legal-services.svg";
-import MarketingSvg from "../../assets/landing/marketing.svg";
 import SeoSvg from "../../assets/landing/seo-services.svg";
 import TravelSvg from "../../assets/landing/travel-agency.svg";
 import SendSvg from "../../assets/landing/send-ico.svg";
@@ -56,11 +55,11 @@ import TalkTo from "../../assets/icon/notification-message.svg";
 import Main1 from "../../assets/landing/main1.png";
 import Main2 from "../../assets/landing/main2.png";
 import Main3 from "../../assets/landing/main3.png";
-import Logos from "../logos/logos";
+import Logos from "../../components/logos/logos";
 
 import { useEffect, useState } from "react";
 
-const Landing = () => {
+const HomeBody = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has("ref")) {
@@ -99,7 +98,7 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default HomeBody;
 
 const Hero = () => {
   return (
@@ -133,7 +132,7 @@ const Hero = () => {
             assets.
           </p>
           <div className="button-container">
-            <a href="/signup">
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
               <button>Get Started</button>
             </a>
             <a href="/business-support">
@@ -326,7 +325,7 @@ const CryptoManage = () => {
             at your fingertips.
           </p>
           <div className="button-container">
-            <a href="/signup">
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
               <button>Download App</button>
             </a>
           </div>
@@ -879,7 +878,7 @@ export const Conclusion = ({
       </div>
       <Heading title={title} subtitle={subtitle} />
       <div className="button-container">
-        <a href="/signup">
+        <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
           <button>{button}</button>
         </a>
         <a href="/business-support">

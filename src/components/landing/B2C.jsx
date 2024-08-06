@@ -31,7 +31,7 @@ import SendIcon from "../../assets/landing/send-ico.svg";
 import SwapIcon from "../../assets/landing/swap-ico.svg";
 import { useEffect } from "react";
 
-const B2C = () => {
+const B2CBody = () => {
   useEffect(() => {
     const href = window.location.href.substring(
       window.location.href.lastIndexOf("#") + 1,
@@ -69,7 +69,7 @@ const B2C = () => {
   );
 };
 
-export default B2C;
+export default B2CBody;
 
 const Hero = () => {
   return (
@@ -102,7 +102,7 @@ const Hero = () => {
             place.
           </p>
           <div className="button-container">
-            <a href="/signup">
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
               <button>Get Started</button>
             </a>
             <a href="/business-support">
@@ -477,7 +477,7 @@ const CryptoManage = () => {
             at your fingertips.
           </p>
           <div className="button-container">
-            <a href="/signup">
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
               <button>Download App</button>
             </a>
           </div>

@@ -1,19 +1,16 @@
-import { useTranslation } from "react-i18next";
 import styles from "./vacancyBody.module.css";
 
 const VacancyBody = () => {
-  const { t } = useTranslation();
   return (
     <div className={`container ${styles.vacancyBody}`}>
       <div className={styles.heading}>
-        <p>{t("vacancy.hero1")}</p>
+        <p>Become a part</p>
         <p>
-          {t("vacancy.hero2")}{" "}
-          <span className="gradient">{t("vacancy.hero3")}</span>
+          of our <span className="gradient">team</span>
         </p>
       </div>
       <div className={styles.jobs}>
-        <p>{t("vacancy.open")}</p>
+        <p>Open roles</p>
         <div className={styles.cards}>
           <JobCard
             head={`Sales Manager`}
@@ -48,7 +45,6 @@ const VacancyBody = () => {
 export default VacancyBody;
 
 const JobCard = ({ head, text, link }) => {
-  const { t } = useTranslation();
   return (
     <div className={styles.card}>
       <div>
@@ -56,7 +52,7 @@ const JobCard = ({ head, text, link }) => {
         <p>{text}</p>
       </div>
       <a target="_blank" href={link}>
-        {t("vacancy.seeDetail").concat(" >")}
+        See details{" >"}
       </a>
     </div>
   );
