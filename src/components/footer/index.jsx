@@ -69,19 +69,19 @@ const sitemap = [
 const sitemap_bottom = [
   {
     title: "Terms of use",
-    link: "/termsofuse",
+    link: "/terms-of-use",
   },
   {
     title: "Privacy Policy",
-    link: "/privacy",
+    link: "/privacy-policy",
   },
   {
     title: "AML Policy",
-    link: "/aml-policies",
+    link: "/aml-policy",
   },
   {
     title: "Cookie Policy",
-    link: "/cookie-policies",
+    link: "/cookie-policy",
   },
 ];
 const Footer = () => {

@@ -4,7 +4,7 @@ const PrivacyPolicyBody = () => {
   return (
     <div
       className={`container ${styles.section}`}
-      style={{ marginBlock: "2rem 0" }}
+      style={{ marginBlock: "2rem" }}
     >
       <h2>Privacy policy</h2>
       <div className={`${styles.body}`}>

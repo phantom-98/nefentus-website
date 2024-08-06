@@ -4,7 +4,7 @@ const AMLPolicyBody = () => {
   return (
     <div
       className={`container ${styles.section}`}
-      style={{ marginBottom: "0" }}
+      style={{ marginBlock: "2rem" }}
     >
       <h4>Last Update: July 23, 2024</h4>
       <h2>AML policy</h2>
@@ -158,20 +158,7 @@ const AMLPolicyBody = () => {
             <h4>
               The Company screens customers against sanctions lists, including:
             </h4>
-            <p>
-              UN Sanctions
-              <br />
-              EU Sanctions
-              <br />
-              UK OFSI Sanctions
-              <br />
-              US OFAC Sanctions
-              <br />
-              Sanctions under the International Sanction Act
-              <br />
-              Matches are escalated to the Compliance Officer for further
-              action.
-            </p>
+            <p>EU Sanctions</p>
 
             <h4>Suspicious Activity Monitoring and Reporting</h4>
             <p>
@@ -204,7 +191,7 @@ const AMLPolicyBody = () => {
               authorities, providing necessary information and responding to
               queries in a timely manner. Law enforcement agencies outside the
               EU may need to follow procedures under the Mutual Legal Assistance
-              Treaty (MLAT) for relevant requests. Contact
+              Treaty (MLAT) for relevant requests. Contact{" "}
               <a href="/">compliance@nefentus.com</a> for inquiries.
             </p>
           </div>

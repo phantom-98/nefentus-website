@@ -29,7 +29,7 @@ const CookieBanner = ({ close }) => {
 
         <p className={styles.text}>
           We use third-party cookies to personalize your site experience. Read
-          more about our <Link to="/privacy">privacy policy</Link>!
+          more about our <Link to="/cookie-policy">Cookie policy</Link>!
         </p>
       </div>
 
