@@ -1,5 +1,6 @@
 # New changes
 
+- Show only login/signup button in user profile component (PATCH)
 - Make landing separate (MAJOR)
 - Add new policy pages && add new blocks in landing (MINOR)
 - Update resource navbar && hero && headings of home page (PATCH)
