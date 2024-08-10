@@ -914,7 +914,7 @@ export const Conclusion = ({
   );
 };
 
-const Audience = () => {
+export const Audience = () => {
   return (
     <div className="layout-paragraph audience">
       <div className="layout-horizontal">
