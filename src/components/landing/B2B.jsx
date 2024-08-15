@@ -1,8 +1,10 @@
-import { Conclusion, Heading } from ".";
+import { Audience, Conclusion, Heading } from ".";
 import "./landing.css";
 import RightArrow from "../../assets/icon/right-arrow.svg";
 import ManageCrypto from "../../assets/landing/manage-crypto.png";
 import CryptoPaymentPng from "../../assets/landing/crypto-payment.png";
+import APIBlockPng1 from "../../assets/landing/b2b-api-block1.png";
+import APIBlockPng2 from "../../assets/landing/b2b-api-block2.png";
 import WorldPng from "../../assets/landing/world.png";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import HeroLineTop from "../../assets/landing/b2c-hero-top.svg";
@@ -64,6 +66,8 @@ const B2BBody = () => {
 
         <Product />
 
+        <APIBlock />
+
         <Safe />
 
         <Analytics />
@@ -72,13 +76,7 @@ const B2BBody = () => {
 
         <CryptoManage />
 
-        <Conclusion
-          key="b2b-conclusion"
-          icon={NefentusLogo}
-          title={`Transparent Pricing, <span style="white-space: nowrap;">No Strings Attached</span>`}
-          subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating & using an account for personal use is completely free. Get started today!`}
-          button={`Create an account`}
-        />
+        <Audience />
       </div>
     </div>
   );
@@ -559,6 +557,64 @@ const safeties = [
     subtitle: `The converted stablecoin amount (e.g., USDT) is then securely deposited into the seller's account.`,
   },
 ];
+
+const APIBlock = () => {
+  return (
+    <div className="layout-paragraph api-block">
+      <div className="layout-horizontal">
+        <div className="hero-layout api-block-layout">
+          <h1 className="title">Seamless API Integration for Your Website</h1>
+          <p className="sub-title api-block-sub-title">
+            Integrate Nefentus into your website effortlessly with our powerful
+            and flexible API solutions. Our APIs are designed to enable smooth
+            and secure cryptocurrency transactions directly on your platform,
+            allowing your customers to make payments with ease.
+          </p>
+          <div className="button-container">
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
+              <button>Get Started</button>
+            </a>
+            <a href="/business-support">
+              <span>Talk to an expert</span>
+              <img src={RightArrow} />
+            </a>
+          </div>
+        </div>
+        <div className="api-block-img">
+          <img src={APIBlockPng1} />
+          <img src={APIBlockPng2} />
+        </div>
+        <hr
+          style={{
+            right: "0",
+            bottom: "-50%",
+            height: "200%",
+            zIndex: "5",
+          }}
+          className="hide-in-tablet"
+        />
+        <hr
+          style={{
+            right: "26.5%",
+            bottom: "-50%",
+            height: "200%",
+            zIndex: "5",
+          }}
+          className="hide-in-tablet"
+        />
+        <hr
+          style={{
+            right: "52.9%",
+            bottom: "-50%",
+            height: "200%",
+            zIndex: "5",
+          }}
+          className="hide-in-tablet"
+        />
+      </div>
+    </div>
+  );
+};
 
 const Safe = () => {
   return (

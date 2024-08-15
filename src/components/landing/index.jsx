@@ -2,6 +2,7 @@ import "./landing.css";
 import RightArrow from "../../assets/icon/right-arrow.svg";
 import Hero1 from "../../assets/landing/hero1.png";
 import Hero2 from "../../assets/landing/hero2.png";
+import AudienceImg from "../../assets/landing/audience.png";
 import ManageCrypto from "../../assets/landing/manage-crypto.png";
 import HeroLine1 from "../../assets/landing/hero-line-top-left.svg";
 import HeroLine2 from "../../assets/landing/hero-line-bottom-left.svg";
@@ -88,12 +89,14 @@ const HomeBody = () => {
 
       <Community />
 
-      <Conclusion
+      <Audience />
+
+      {/* <Conclusion
         icon={NefentusLogo}
         title={`Begin Crypto Payments Today`}
         subtitle={`Start accepting cryptocurrency payments immediately. Our dedicated support team is here to address all your inquiries, ensuring you feel secure every step of the way.`}
         button={`Get Started`}
-      />
+      /> */}
     </div>
   );
 };
@@ -905,6 +908,42 @@ export const Conclusion = ({
           top: "0",
           width: "40%",
           zIndex: "1",
+        }}
+      />
+    </div>
+  );
+};
+
+export const Audience = () => {
+  return (
+    <div className="layout-paragraph audience">
+      <div className="layout-horizontal">
+        <div className="hero-layout audience-layout">
+          <h1 className="title">
+            We've earned the trust of over 10,000 active users worldwide.
+          </h1>
+          <p className="sub-title audience-sub-title">
+            Join them and be a part of the Nefentus community to providing a
+            seamless and secure experience.
+          </p>
+          <div className="button-container">
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
+              <button>Get Started</button>
+            </a>
+            <a href="/business-support">
+              <span>Talk to an expert</span>
+              <img src={RightArrow} />
+            </a>
+          </div>
+        </div>
+        <div className="audience-img">
+          <img src={AudienceImg} />
+        </div>
+      </div>
+      <hr
+        style={{
+          top: "0",
+          width: "100vw",
         }}
       />
     </div>

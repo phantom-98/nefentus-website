@@ -180,11 +180,11 @@ const Navigation = () => {
                 <li className="standard">
                   <Resources />
                 </li>
-                <li className="standard">
+                {/* <li className="standard">
                   <Link to="/vacancy">
                     <p>Career</p>
                   </Link>
-                </li>
+                </li> */}
                 <li className="standard">
                   <ContactUs />
                 </li>
@@ -240,9 +240,9 @@ const Navigation = () => {
           <li>
             <Resources />
           </li>
-          <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
+          {/* <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
             <li className="standard">Career</li>
-          </Link>
+          </Link> */}
           <li>
             <ContactUs />
           </li>
