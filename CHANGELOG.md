@@ -1,5 +1,6 @@
 # New changes
 
+- Add link of dashboard download app page (MINOR)
 - Add new blocks (audience, api) && Update some texts (MINOR)
 - Make landing separate (MAJOR)
 - Add new policy pages && add new blocks in landing (MINOR)
