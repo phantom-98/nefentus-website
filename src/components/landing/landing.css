@@ -24,13 +24,14 @@
 
 .landing-layout .world {
   margin-top: -4rem;
-  background: #131313;
+  background: #171717;
   border-block: 1px solid #202020;
   width: 100vw !important;
   overflow: hidden;
 }
+
 .landing-layout .cryptopayment {
-  background: #131313;
+  background: #171717;
   border-block: 1px solid #202020;
   width: 100vw !important;
   overflow: hidden;
@@ -66,6 +67,31 @@
   width: 60%;
 }
 
+.audience-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  gap: 4rem;
+  width: 45%;
+}
+
+.api-block-layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  gap: 4rem;
+  width: 44%;
+}
+
+.audience-sub-title {
+  width: 70%;
+}
+.api-block-sub-title {
+  width: 95%;
+}
+
 .manage-title-layout {
   display: flex;
   flex-direction: column;
@@ -93,7 +119,9 @@
   width: 40%;
 }
 
-.hero-layout h1 {
+.hero-layout h1,
+.audience-layout h1,
+.api-block-layout h1 {
   font-size: 4rem;
   line-height: 6rem;
 }
@@ -117,7 +145,9 @@
   font-weight: 500;
 }
 
-.hero-layout p {
+.hero-layout p,
+.audience-layout p,
+.api-block-layout p {
   font-size: 1.6rem;
 }
 
@@ -221,8 +251,32 @@
   flex-direction: row-reverse;
   width: 68%;
 }
+
+.landing-layout .audience-img {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 55%;
+}
+.landing-layout .api-block-img {
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+  width: 56%;
+}
 .landing-layout .world-img img {
   max-width: 100%;
+}
+
+.landing-layout .audience-img img,
+.landing-layout .api-block-img img {
+  max-width: 100%;
+}
+.landing-layout .api-block-img img:last-child {
+  position: absolute;
+  width: 50%;
+  top: 0;
+  right: 0;
+  z-index: 3;
 }
 
 .landing-layout .cryptopayment-img {
@@ -253,7 +307,28 @@
   padding: 8rem 0;
   position: relative;
 }
-
+.audience {
+  padding: 0 !important;
+  background: #171717;
+  border-block: 1px solid #202020;
+  width: 100vw !important;
+  overflow: hidden;
+}
+.audience .layout-horizontal {
+  max-width: 111rem;
+  padding: 0;
+}
+.b2b .api-block {
+  margin-bottom: 8rem;
+  background: #171717;
+  width: 100vw !important;
+  overflow: hidden;
+}
+.b2b .api-block .layout-horizontal {
+  position: relative;
+  max-width: 111rem;
+  padding: 0;
+}
 .landing-layout .layout-title {
   text-align: center;
   display: flex;
@@ -912,6 +987,7 @@
   top: 4.4rem;
   right: 0;
 }
+
 .landing-layout .hero > img {
   position: absolute;
   z-index: -1;
@@ -929,7 +1005,7 @@
   padding-block: 4rem;
 }
 .landing-layout .b2b-manage {
-  padding-bottom: 0rem;
+  padding-block: 10rem;
 }
 .landing-layout .benefits img {
   height: 100%;
@@ -969,7 +1045,6 @@
 }
 .layout-community {
   align-items: start !important;
-  padding-bottom: 0 !important;
 }
 .layout-community .layout-title {
   padding: 0;
@@ -1013,6 +1088,27 @@
   margin-top: 0.6rem;
 }
 @media (max-width: 900px) {
+  .audience .layout-horizontal {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    /* padding-left: 5rem;
+    padding-right: 5rem; */
+    padding: 5rem;
+    gap: 4rem !important;
+  }
+  .b2b .api-block .layout-horizontal {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    gap: 4rem !important;
+  }
+  .audience-sub-title,
+  .api-block-sub-title {
+    width: 100%;
+  }
   .manage-title-layout p {
     width: 100%;
   }
@@ -1036,7 +1132,9 @@
     flex-direction: column;
     gap: 2rem;
   }
-  .landing-layout .hero-layout {
+  .landing-layout .hero-layout,
+  .landing-layout .audience-layout,
+  .landing-layout .api-block-layout {
     width: 100% !important;
     gap: 2rem;
   }
@@ -1094,6 +1192,10 @@
   }
   .landing-layout .world-img {
     width: 95%;
+  }
+  .landing-layout .audience-img,
+  .landing-layout .api-block-img {
+    width: 100%;
   }
   .landing-layout .cryptopayment-img {
     width: 95%;

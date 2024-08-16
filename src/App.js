@@ -119,7 +119,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/termsofuse"
+                    path="/terms-of-use"
                     element={
                       <>
                         <Navigation />
@@ -129,7 +129,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/aml-policies"
+                    path="/aml-policy"
                     element={
                       <>
                         <Navigation />
@@ -139,7 +139,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/cookie-policies"
+                    path="/cookie-policy"
                     element={
                       <>
                         <Navigation />
@@ -149,7 +149,7 @@ function App() {
                     }
                   />
                   <Route
-                    path="/privacy"
+                    path="/privacy-policy"
                     element={
                       <>
                         <Navigation />

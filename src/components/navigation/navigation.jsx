@@ -105,11 +105,6 @@ const Navigation = () => {
                 <Resources />
               </li>
               <li className="standard">
-                <Link to="/vacancy">
-                  <p>Career</p>
-                </Link>
-              </li>
-              <li className="standard">
                 <ContactUs />
               </li>
             </ul>
@@ -155,9 +150,6 @@ const Navigation = () => {
           <li>
             <Resources />
           </li>
-          <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
-            <li className="standard">Career</li>
-          </Link>
           <li>
             <ContactUs />
           </li>

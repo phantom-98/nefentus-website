@@ -1,6 +1,6 @@
 import "./landing.css";
 import RightArrow from "../../assets/icon/right-arrow.svg";
-import { Conclusion, Heading } from ".";
+import { Audience, Conclusion, Heading } from ".";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import ManageCrypto from "../../assets/landing/manage-crypto.png";
 import Hero1 from "../../assets/landing/Hero 1.png";
@@ -59,12 +59,7 @@ const B2CBody = () => {
 
       <Transactions />
 
-      <Conclusion
-        icon={NefentusLogo}
-        title={`Transparent Pricing, <span style="white-space: nowrap;">No Strings Attached</span>`}
-        subtitle={`Enjoy peace of mind with our straightforward approach—no hidden fees, no monthly subscriptions. Creating and using an account for personal use is completely free. Get started today!`}
-        button={`Create an account`}
-      />
+      <Audience />
     </div>
   );
 };
@@ -93,8 +88,8 @@ const Hero = () => {
           }}
         >
           <h1 className="title">
-            <span className="gradient">Take charge</span> of your <br /> crypto
-            with Nefentus
+            <span className="gradient">Take charge</span> of your <br />{" "}
+            finances with Nefentus
           </h1>
           <p className="sub-title">
             Simplify your crypto experience. Easily send & receive payments,
@@ -477,7 +472,11 @@ const CryptoManage = () => {
             at your fingertips.
           </p>
           <div className="button-container">
-            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
+            <a
+              href={`${process.env.VITE_REACT_APP_DASHBOARD}/install-app`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <button>Download App</button>
             </a>
           </div>
@@ -496,8 +495,7 @@ const Transactions = () => {
       id="transactions"
       className="layout-paragraph"
       style={{
-        paddingBottom: "0",
-        paddingTop: "4rem",
+        paddingBlock: "4rem 8rem",
       }}
     >
       <Heading

@@ -4,7 +4,7 @@ const CookiePolicyBody = () => {
   return (
     <div
       className={`container ${styles.section}`}
-      style={{ marginBlock: "2rem 0" }}
+      style={{ marginBlock: "2rem" }}
     >
       <h4>Last Update: May 10, 2024</h4>
       <h2>Cookie policy</h2>
@@ -141,10 +141,10 @@ const CookiePolicyBody = () => {
 
             <p>
               For any questions or concerns about our Cookie Policy, please
-              contact us at
+              contact us at{" "}
               <a href="" style={{ color: "#078bb9" }}>
                 compliance@coinspaid.com
-              </a>
+              </a>{" "}
               compliance@coinspaid.com.
             </p>
           </div>

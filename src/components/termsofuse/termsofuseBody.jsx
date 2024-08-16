@@ -4,7 +4,7 @@ const TermsofUseBody = () => {
   return (
     <div
       className={`container ${styles.section}`}
-      style={{ marginBlock: "2rem 0" }}
+      style={{ marginBlock: "2rem" }}
     >
       <h4>Last Update: June 30, 2024</h4>
       <h2>Terms of Use</h2>
@@ -44,8 +44,8 @@ const TermsofUseBody = () => {
             <p>
               1.2 AML Policy: Rules to prevent money laundering and terrorism
               financing, in accordance with the Applicable Law, accessible at
-              <a href="https://nefentus.com/aml-policies/">
-                https://nefentus.com/aml-policies/
+              <a href="https://nefentus.com/aml-policy/">
+                https://nefentus.com/aml-policy/
               </a>
               .
             </p>
@@ -86,8 +86,8 @@ const TermsofUseBody = () => {
             <p>
               1.9 Privacy Policy: Rules of personal data collection, storage,
               and use in accordance with the Applicable Law, accessible at
-              <a href="https://nefentus.com/privacy">
-                https://nefentus.com/privacy
+              <a href="https://nefentus.com/privacy-policy">
+                https://nefentus.com/privacy-policy
               </a>
               .
             </p>
