@@ -329,7 +329,7 @@ const CryptoManage = () => {
           </p>
           <div className="button-container">
             <a
-              href={`${process.env.VITE_REACT_APP_DASHBOARD}/download-app`}
+              href={`${process.env.VITE_REACT_APP_DASHBOARD}/install-app`}
               target="_blank"
               rel="noopener noreferrer"
             >
