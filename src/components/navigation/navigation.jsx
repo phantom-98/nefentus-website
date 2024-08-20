@@ -2,10 +2,7 @@ import styles from "./navigation.module.css";
 import LogoWide from "../../assets/logo/logo_wide2.svg";
 import Button from "../button/button";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { logOut } from "../../utils";
-import UserProfile from "../userProfile/userProfile";
-import Cookie from "js-cookie";
+import { Link } from "react-router-dom";
 import MultiWallet from "../../assets/icon/wallet-01.svg";
 import MultiWalletBlue from "../../assets/icon/wallet-01 - blue.svg";
 import InternalWallet from "../../assets/icon/wallet-02.svg";
@@ -24,125 +21,57 @@ import ContactExpert from "../../assets/icon/contact-expert.svg";
 import ContactExpertBlue from "../../assets/icon/contact-expert-blue.svg";
 import Send from "../../assets/landing/send-ico.svg";
 import Dropdown from "../../assets/icon/dropdown.svg";
-import Logout from "../../assets/newDashboardIcons/log-out.svg";
-import Dashboard from "../../assets/newDashboardIcons/dashboard.svg";
-import Settings from "../../assets/newDashboardIcons/settings.svg";
 
 const Navigation = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const token = Cookie.get("token");
-  const hideOptions = location?.pathname?.includes("/pay");
 
   function loginAndSignupWeb() {
-    if (token?.length) {
-      return <UserProfile web logOut={() => logOut(navigate)} />;
-    } else {
-      return (
-        <>
-          <a
-            className={styles.login}
-            href={`${process.env.VITE_REACT_APP_DASHBOARD}/login`}
-          >
-            Log in
-          </a>
-          <a
-            className={`${styles.button}`}
-            href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}
-          >
-            Sign up
-          </a>
-        </>
-      );
-    }
+    return (
+      <>
+        <a
+          className={styles.login}
+          href={`${process.env.VITE_REACT_APP_DASHBOARD}/login`}
+        >
+          Log in
+        </a>
+        <a
+          className={`${styles.button}`}
+          href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}
+        >
+          Sign up
+        </a>
+      </>
+    );
   }
 
   function loginAndSignupMobile() {
-    if (token?.length) {
-      return (
-        <>
-          <Link
-            to={`${process.env.VITE_REACT_APP_DASHBOARD}/personal-dashboard`}
-            onClick={() => setOpenMenu(false)}
-          >
-            <li
-              className="standard"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-              }}
-            >
-              <img src={Dashboard} alt="dashboard" style={{ width: "5%" }} />
-              Dashboard
-            </li>
-          </Link>
-          <Link
-            to={`${process.env.VITE_REACT_APP_DASHBOARD}/new-settings`}
-            onClick={() => setOpenMenu(false)}
-          >
-            <li
-              className="standard"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-              }}
-            >
-              <img
-                src={Settings}
-                alt="dashboard"
-                style={{ width: "5%", translateY: "10px" }}
-              />
-              Settings
-            </li>
-          </Link>
-          <Link onClick={() => logOut(navigate)}>
-            <li
-              className="standard"
-              style={{
-                color: "#A43C3C",
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-              }}
-            >
-              <img src={Logout} alt="dashboard" style={{ width: "5%" }} />
-              Log out
-            </li>
-          </Link>
-        </>
-      );
-    } else {
-      return (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 10,
-            width: "100%",
-            pointerEvents: "auto",
-          }}
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 10,
+          width: "100%",
+          pointerEvents: "auto",
+        }}
+      >
+        <Button
+          style={{ width: "100%" }}
+          link={`${process.env.VITE_REACT_APP_DASHBOARD}/login`}
+          onClick={() => setOpenMenu(false)}
         >
-          <Button
-            style={{ width: "100%" }}
-            link={`${process.env.VITE_REACT_APP_DASHBOARD}/login`}
-            onClick={() => setOpenMenu(false)}
-          >
-            Log in
-          </Button>
-          <Button
-            style={{ width: "100%" }}
-            link={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}
-            color="white"
-            onClick={() => setOpenMenu(false)}
-          >
-            Sign up
-          </Button>
-        </div>
-      );
-    }
+          Log in
+        </Button>
+        <Button
+          style={{ width: "100%" }}
+          link={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}
+          color="white"
+          onClick={() => setOpenMenu(false)}
+        >
+          Sign up
+        </Button>
+      </div>
+    );
   }
 
   useEffect(() => {
@@ -162,66 +91,47 @@ const Navigation = () => {
   return (
     <nav className={`${styles.navigation} load `}>
       <div className={` ${styles.contentWrapper}`}>
-        <div
-          className={`container ${styles.content} ${
-            (hideOptions && styles.contentAlignForPay) || ""
-          }`}
-        >
+        <div className={`container ${styles.content}`}>
           <div className={styles.left}>
             <Link className={styles.logoWrapper} to="/">
               <img className={styles.logo} src={LogoWide} alt="nefentus logo" />
             </Link>
 
-            {!hideOptions && (
-              <ul className={styles.navList}>
-                <li className="standard">
-                  <Products />
-                </li>
-                <li className="standard">
-                  <Resources />
-                </li>
-                {/* <li className="standard">
-                  <Link to="/vacancy">
-                    <p>Career</p>
-                  </Link>
-                </li> */}
-                <li className="standard">
-                  <ContactUs />
-                </li>
-              </ul>
-            )}
+            <ul className={styles.navList}>
+              <li className="standard">
+                <Products />
+              </li>
+              <li className="standard">
+                <Resources />
+              </li>
+              <li className="standard">
+                <ContactUs />
+              </li>
+            </ul>
           </div>
 
-          {!hideOptions && (
-            <div className={styles.right}>
-              <div className={styles.rightWrapper}>{/* <QR /> */}</div>
+          <div className={styles.right}>
+            <div className={styles.rightWrapper}>{/* <QR /> */}</div>
 
-              {loginAndSignupWeb()}
+            {loginAndSignupWeb()}
 
-              <div className={styles.mobMenu}>
-                <div
-                  className={`${styles.line} ${
-                    openMenu ? styles.openLine : ""
-                  }`}
-                ></div>
-                <div
-                  className={`${styles.line} ${
-                    openMenu ? styles.openLine : ""
-                  }`}
-                ></div>
-                <div
-                  className={`${styles.line} ${
-                    openMenu ? styles.openLine : ""
-                  }`}
-                ></div>
+            <div className={styles.mobMenu}>
+              <div
+                className={`${styles.line} ${openMenu ? styles.openLine : ""}`}
+              ></div>
+              <div
+                className={`${styles.line} ${openMenu ? styles.openLine : ""}`}
+              ></div>
+              <div
+                className={`${styles.line} ${openMenu ? styles.openLine : ""}`}
+              ></div>
 
-                <div
-                  onClick={() => setOpenMenu((prev) => !prev)}
-                  className={styles.lineButton}
-                ></div>
-              </div>
+              <div
+                onClick={() => setOpenMenu((prev) => !prev)}
+                className={styles.lineButton}
+              ></div>
             </div>
-          )}
+          </div>
         </div>
       </div>
 
@@ -240,9 +150,6 @@ const Navigation = () => {
           <li>
             <Resources />
           </li>
-          {/* <Link to="/vacancy" onClick={() => setOpenMenu(false)}>
-            <li className="standard">Career</li>
-          </Link> */}
           <li>
             <ContactUs />
           </li>

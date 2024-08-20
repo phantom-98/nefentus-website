@@ -1,5 +1,6 @@
 # New changes
 
+- Show only login/signup button in user profile component (PATCH)
 - Add link of dashboard download app page (MINOR)
 - Add new blocks (audience, api) && Update some texts (MINOR)
 - Make landing separate (MAJOR)
