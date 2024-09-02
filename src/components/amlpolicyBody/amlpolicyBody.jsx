@@ -192,7 +192,7 @@ const AMLPolicyBody = () => {
               queries in a timely manner. Law enforcement agencies outside the
               EU may need to follow procedures under the Mutual Legal Assistance
               Treaty (MLAT) for relevant requests. Contact{" "}
-              <a href="/">compliance@nefentus.com</a> for inquiries.
+              <a href="/">office@nefentus.com</a> for inquiries.
             </p>
           </div>
         </div>

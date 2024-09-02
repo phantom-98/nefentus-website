@@ -143,9 +143,9 @@ const CookiePolicyBody = () => {
               For any questions or concerns about our Cookie Policy, please
               contact us at{" "}
               <a href="" style={{ color: "#078bb9" }}>
-                compliance@coinspaid.com
+                office@nefentus.com
               </a>{" "}
-              compliance@coinspaid.com.
+              office@nefentus.com.
             </p>
           </div>
         </div>
