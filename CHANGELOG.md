@@ -1,6 +1,7 @@
 # New changes
 
 - SEO implemented (MAJOR)
+- Legal Text modified (MINOR)
 - Show only login/signup button in user profile component (PATCH)
 - Add link of dashboard download app page (MINOR)
 - Add new blocks (audience, api) && Update some texts (MINOR)
