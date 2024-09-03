@@ -102,7 +102,7 @@ const Hero = () => {
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>
-              <img src={RightArrow} />
+              <img src={RightArrow} alt="icon" />
             </a>
           </div>
         </div>
@@ -132,6 +132,7 @@ const Hero = () => {
                 borderTopRightRadius: "0",
                 borderTopLeftRadius: "0",
               }}
+              alt="image"
             />
             <img
               src={Hero2}
@@ -141,6 +142,7 @@ const Hero = () => {
                 borderBottomRightRadius: "0",
                 borderBottomLeftRadius: "0",
               }}
+              alt="image"
             />
           </div>
           <div
@@ -152,7 +154,7 @@ const Hero = () => {
               justifyContent: "end",
             }}
           >
-            <img src={Hero3} style={{ width: "100%" }} />
+            <img src={Hero3} style={{ width: "100%" }} alt="image" />
             <img
               src={Hero4}
               style={{
@@ -161,6 +163,7 @@ const Hero = () => {
                 borderBottomRightRadius: "0",
                 borderBottomLeftRadius: "0",
               }}
+              alt="image"
             />
           </div>
         </div>
@@ -171,6 +174,7 @@ const Hero = () => {
           top: "0",
           width: "80%",
         }}
+        alt="icon"
       />
       <img
         src={HeroLineBottom}
@@ -179,6 +183,7 @@ const Hero = () => {
           width: "80%",
         }}
         className="translate-left"
+        alt="icon"
       />
       <hr
         style={{
@@ -341,6 +346,7 @@ const MultiWallets = () => {
                 width: "2rem",
                 height: "2rem",
               }}
+              alt="logo"
             />
           </div>
           <p
@@ -364,7 +370,7 @@ const MultiWallets = () => {
               left: "2rem",
             }}
           >
-            <img src={NefentusCard} />
+            <img src={NefentusCard} alt="image" />
           </div>
         </div>
         <div className="wallet-external">
@@ -385,6 +391,7 @@ const MultiWallets = () => {
                     height: "3.6rem",
                     borderRadius: "50%",
                   }}
+                  alt="icon"
                 />
                 <p
                   style={{
@@ -406,7 +413,7 @@ const MultiWallets = () => {
               left: "46rem",
             }}
           >
-            <img src={CoinbaseCard} />
+            <img src={CoinbaseCard} alt="icon" />
           </div>
 
           <div
@@ -417,7 +424,7 @@ const MultiWallets = () => {
               left: "49rem",
             }}
           >
-            <img src={RabbyCard} />
+            <img src={RabbyCard} alt="icon" />
           </div>
 
           <div
@@ -428,7 +435,7 @@ const MultiWallets = () => {
               left: "75rem",
             }}
           >
-            <img src={MetamaskCard} />
+            <img src={MetamaskCard} alt="icon" />
           </div>
 
           <div
@@ -439,7 +446,7 @@ const MultiWallets = () => {
               left: "79rem",
             }}
           >
-            <img src={RainbowCard} />
+            <img src={RainbowCard} alt="icon" />
           </div>
           <p className="sub-title">
             Integrating an external wallet into your platform or service
@@ -482,7 +489,7 @@ const CryptoManage = () => {
           </div>
         </div>
         <div className="manage-img">
-          <img src={ManageCrypto} />
+          <img src={ManageCrypto} alt="icon" />
         </div>
       </div>
     </div>
@@ -518,7 +525,7 @@ const Transactions = () => {
           className="hide-in-tablet"
         />
 
-        <img className="transaction-img" src={TransactionSend} />
+        <img className="transaction-img" src={TransactionSend} alt="icon" />
 
         <div className="transaction-description">
           <div
@@ -539,6 +546,7 @@ const Transactions = () => {
                 width: "1rem",
                 height: "1rem",
               }}
+              alt="icon"
             />
           </div>
           <p
@@ -594,6 +602,7 @@ const Transactions = () => {
                 width: "1.6rem",
                 height: "1.6rem",
               }}
+              alt="icon"
             />
           </div>
           <p
@@ -609,7 +618,11 @@ const Transactions = () => {
             currency including Bitcoin, Ethereum & other networks.
           </p>
         </div>
-        <img className="transaction-img" src={TransactionConverter} />
+        <img
+          className="transaction-img"
+          src={TransactionConverter}
+          alt="image"
+        />
       </div>
     </div>
   );

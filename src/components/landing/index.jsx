@@ -113,6 +113,7 @@ const Hero = () => {
           width: "91%",
         }}
         className="translate-left"
+        alt="icon"
       />
       <img
         src={HeroLine2}
@@ -121,6 +122,7 @@ const Hero = () => {
           width: "91%",
         }}
         className="translate-left"
+        alt="icon"
       />
       <div className="layout-horizontal">
         <div className="hero-layout">
@@ -140,13 +142,13 @@ const Hero = () => {
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>
-              <img src={RightArrow} />
+              <img src={RightArrow} alt="icon" />
             </a>
           </div>
         </div>
         <div className="hero-img">
-          <img src={Hero1} />
-          <img src={Hero2} />
+          <img src={Hero1} alt="icon" />
+          <img src={Hero2} alt="icon" />
         </div>
       </div>
       <hr
@@ -210,22 +212,22 @@ const helps = [
   {
     title: "Invoices",
     body: "Streamline your billing process with easy-to-create & track invoices. Generate invoices, monitor payment statuses and send reminders effortlessly.",
-    element: <img src={Help2} style={{ width: "100%" }} />,
+    element: <img src={Help2} style={{ width: "100%" }} alt="icon" />,
   },
   {
     title: "Product payment links",
     body: "Simplify transactions with direct product payment links. Provide customers with convenient payment options, ensuring seamless & secure purchases.",
-    element: <img src={Help3} style={{ width: "100%" }} />,
+    element: <img src={Help3} style={{ width: "100%" }} alt="icon" />,
   },
   {
     title: "Different ways to use cryptocurrency",
     body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
-    element: <img src={Help1} style={{ width: "100%" }} />,
+    element: <img src={Help1} style={{ width: "100%" }} alt="icon" />,
   },
   {
     title: "Sales analytics",
     body: "Gain valuable insights into your sales performance. Analyze key metrics, track trends and make informed decisions to optimize your business strategy & drive growth.",
-    element: <img src={Help4} style={{ width: "100%" }} />,
+    element: <img src={Help4} style={{ width: "100%" }} alt="icon" />,
   },
 ];
 
@@ -285,6 +287,7 @@ const Helps = () => {
           zIndex: "1",
         }}
         className="hide-in-tablet"
+        alt="icon"
       />
       <img
         src={BlueLine}
@@ -294,6 +297,7 @@ const Helps = () => {
           top: "10rem",
           zIndex: "1",
         }}
+        alt="icon"
       />
       <hr
         style={{
@@ -338,7 +342,7 @@ const CryptoManage = () => {
           </div>
         </div>
         <div className="manage-img">
-          <img src={ManageCrypto} />
+          <img src={ManageCrypto} alt="image" />
         </div>
       </div>
       <hr
@@ -383,6 +387,7 @@ const Feature = ({
           style={{
             width: "2rem",
           }}
+          alt="icon"
         />
       </div>
       {expands && expands[index] && (
@@ -401,7 +406,7 @@ const IcoGroup = ({ icons }) => {
       {icons.map((ico) => {
         return (
           <div className="ico-wrapper">
-            <img src={ico} />
+            <img src={ico} alt="icon" />
           </div>
         );
       })}
@@ -425,7 +430,7 @@ const Benefits = () => {
       />
       <div className="layout-benefits">
         <div style={{ objectFit: "cover" }}>
-          <img src={WalletsPng} style={{ height: "100%" }} />
+          <img src={WalletsPng} style={{ height: "100%" }} alt="icon" />
           <div className="outlook">
             <p>Access a diverse range of currencies & wallets</p>
             <p className="sub-title">
@@ -438,7 +443,7 @@ const Benefits = () => {
         <div className="benefits">
           <div>
             <p>Pre-configured payment.</p>
-            <img src={Benefit1} />
+            <img src={Benefit1} alt="icon" />
             <p className="sub-title">
               Commerce shares payment information directly with their wallet,
               removing any need for manual data entry.
@@ -449,7 +454,7 @@ const Benefits = () => {
               Streamline Your Online Checkout Experience
               {/* <span style={{ textWrap: "nowrap" }}>Checkout Experience</span> */}
             </p>
-            <img src={Benefit2} />
+            <img src={Benefit2} alt="icon" />
             <p className="sub-title">
               Easily complete payments online with a successful transaction of
               $5 via Payme. Integrate a pre-built payment page into your website
@@ -476,6 +481,7 @@ const Benefits = () => {
           top: "6rem",
           zIndex: "1",
         }}
+        alt="icon"
       />
       <hr
         style={{
@@ -535,11 +541,11 @@ const ScrollAnimation = () => {
           return (
             <div className="feature-heading">
               <div className="ico-wrapper">
-                <img src={item.icon} />
+                <img src={item.icon} alt="icon" />
               </div>
               <p>{item.title}</p>
               <p className="sub-title">{item.subtitle}</p>
-              <img src={item.img} />
+              <img src={item.img} alt="image" />
             </div>
           );
         })}
@@ -556,6 +562,7 @@ const ScrollAnimation = () => {
             className="image-transition"
             style={{ opacity: pos == 0 ? "1" : "0" }}
             src={Main1}
+            alt="image"
           />
           <img
             className="image-transition"
@@ -566,6 +573,7 @@ const ScrollAnimation = () => {
               opacity: pos == 1 ? "1" : "0",
             }}
             src={Main2}
+            alt="image"
           />
           <img
             className="image-transition"
@@ -576,6 +584,7 @@ const ScrollAnimation = () => {
               opacity: pos == 2 ? "1" : "0",
             }}
             src={Main3}
+            alt="image"
           />
         </div>
       </div>
@@ -620,6 +629,7 @@ const MainFeaturesHead = () => {
           zIndex: "1",
         }}
         className="hide-in-tablet"
+        alt="icon"
       />
       <div
         style={{
@@ -718,7 +728,7 @@ const IndustryCard = ({ icon, name }) => {
   return (
     <div className="industry-card">
       <div className="ico-wrapper">
-        <img src={icon} />
+        <img src={icon} alt="icon" />
       </div>
       <p>{name}</p>
     </div>
@@ -772,6 +782,7 @@ const Industries = () => {
           width: "42%",
           zIndex: "1",
         }}
+        alt="icon"
       />
       <img
         src={ServiceLine2}
@@ -782,6 +793,7 @@ const Industries = () => {
           width: "36%",
           zIndex: "1",
         }}
+        alt="icon"
       />
       <hr
         style={{
@@ -840,10 +852,10 @@ const Community = () => {
       <div className="community-container">
         {communities.map((com) => (
           <a className="community" href={com.link}>
-            <img src={com.icon} />
+            <img src={com.icon} alt="icon" />
             <div className="community-body">
               <h3>
-                {com.title} <img src={SendSvg} />
+                {com.title} <img src={SendSvg} alt="icon" />
               </h3>
               <p>{com.subtitle}</p>
             </div>
@@ -881,6 +893,7 @@ export const Conclusion = ({
             width: "4rem",
             height: "4rem",
           }}
+          alt="icon"
         />
       </div>
       <Heading title={title} subtitle={subtitle} />
@@ -890,7 +903,7 @@ export const Conclusion = ({
         </a>
         <a href="/business-support">
           <span>Talk to an expert</span>
-          <img src={RightArrow} />
+          <img src={RightArrow} alt="icon" />
         </a>
       </div>
 
@@ -903,6 +916,7 @@ export const Conclusion = ({
           width: "40%",
           zIndex: "1",
         }}
+        alt="icon"
       />
       <img
         src={GettingStarted2}
@@ -913,6 +927,7 @@ export const Conclusion = ({
           width: "40%",
           zIndex: "1",
         }}
+        alt="icon"
       />
     </div>
   );
@@ -936,12 +951,12 @@ export const Audience = () => {
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>
-              <img src={RightArrow} />
+              <img src={RightArrow} alt="icon" />
             </a>
           </div>
         </div>
         <div className="audience-img">
-          <img src={AudienceImg} />
+          <img src={AudienceImg} alt="icon" />
         </div>
       </div>
       <hr

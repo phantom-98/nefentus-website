@@ -161,6 +161,7 @@ export const CountrySelect = ({
                 width: "3rem",
                 height: "2rem",
               }}
+              alt="icon"
             />
           )}
           <input
@@ -187,7 +188,7 @@ export const CountrySelect = ({
               );
             }}
           />
-          <img src={DropDownIcon} />
+          <img src={DropDownIcon} alt="icon" />
         </div>
         {open && (
           <div
@@ -252,6 +253,7 @@ const SearchSelectOption = ({ icon, text, styles, className }) => {
             width: "3rem",
             height: "2rem",
           }}
+          alt="icon"
         />
       )}
       {text && (

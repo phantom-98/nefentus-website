@@ -119,7 +119,7 @@ const Hero = () => {
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>
-              <img src={RightArrow} />
+              <img src={RightArrow} alt="icon" />
             </a>
           </div>
         </div>
@@ -129,6 +129,7 @@ const Hero = () => {
           style={{
             width: "50%",
           }}
+          alt="icon"
         />
       </div>
       <img
@@ -139,6 +140,7 @@ const Hero = () => {
           width: "80%",
           left: "-10rem",
         }}
+        alt="icon"
       />
       <img
         src={HeroLineBottom}
@@ -147,6 +149,7 @@ const Hero = () => {
           width: "70%",
         }}
         className="translate-left"
+        alt="icon"
       />
       <hr
         style={{
@@ -245,7 +248,7 @@ const World = () => {
           </p>
         </div>
         <div className="world-img">
-          <img src={WorldPng} />
+          <img src={WorldPng} alt="icon" />
         </div>
       </div>
     </div>
@@ -309,7 +312,7 @@ const Invoicing = () => {
                 clearInterval(timeRef.current);
               }}
             >
-              <img src={item.icon} />
+              <img src={item.icon} alt="icon" />
               <p>{item.abbr}</p>
             </div>
           ))}
@@ -334,7 +337,7 @@ const Invoicing = () => {
                 clearInterval(timeRef.current);
               }}
             >
-              <img src={item.icon} />
+              <img src={item.icon} alt="icon" />
               <p>{item.title}</p>
               <p className="sub-title">{item.subtitle}</p>
             </div>
@@ -342,7 +345,7 @@ const Invoicing = () => {
         </div>
         <div className="invoicing-img">
           {steps.map((item, id) => (
-            <img className={step[id] && "visible"} src={item.img} />
+            <img className={step[id] && "visible"} src={item.img} alt="image" />
           ))}
         </div>
         <hr
@@ -400,7 +403,7 @@ const CryptoPayment = () => {
           </ul>
         </div>
         <div className="cryptopayment-img">
-          <img src={CryptoPaymentPng} />
+          <img src={CryptoPaymentPng} alt="image" />
         </div>
       </div>
     </div>
@@ -450,7 +453,11 @@ const Product = () => {
       <div className="layout-product">
         <div className="product-img">
           {products.map((p, id) => (
-            <img className={step[id] && "product-img-showed"} src={p.img} />
+            <img
+              className={step[id] && "product-img-showed"}
+              src={p.img}
+              alt="image"
+            />
           ))}
         </div>
         <div className="product-creation-step">
@@ -576,13 +583,13 @@ const APIBlock = () => {
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>
-              <img src={RightArrow} />
+              <img src={RightArrow} alt="icon" />
             </a>
           </div>
         </div>
         <div className="api-block-img">
-          <img src={APIBlockPng1} />
-          <img src={APIBlockPng2} />
+          <img src={APIBlockPng1} alt="image" />
+          <img src={APIBlockPng2} alt="image" />
         </div>
         <hr
           style={{
@@ -642,6 +649,7 @@ const Safe = () => {
               width: "2.4rem",
               marginBottom: "1rem",
             }}
+            alt="icon"
           />
           <p style={{ fontSize: "2.8rem" }}>
             Safeguarding <span style={{ textWrap: "nowrap" }}>your funds</span>
@@ -684,6 +692,7 @@ const Safe = () => {
                 <img
                   src={item.icon}
                   style={{ width: "1.8rem", height: "1.8rem" }}
+                  alt="icon"
                 />
               </div>
               {id + 1 !== safeties.length && (
@@ -743,6 +752,7 @@ const Analytics = () => {
           border: "2px solid #202020",
           borderRadius: "1rem",
         }}
+        alt="icon"
       />
 
       <p
@@ -807,6 +817,7 @@ const Security = () => {
               style={{
                 width: "100%",
               }}
+              alt="icon"
             />
             <div
               style={{
@@ -868,7 +879,7 @@ const CryptoManage = () => {
           </div>
         </div>
         <div className="manage-img">
-          <img src={ManageCrypto} />
+          <img src={ManageCrypto} alt="icon" />
         </div>
       </div>
     </div>

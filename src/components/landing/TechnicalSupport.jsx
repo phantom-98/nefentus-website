@@ -100,6 +100,7 @@ const TechnicalSupportBody = () => {
           top: "0",
           zIndex: "-1",
         }}
+        alt="icon"
       />
       <img
         src={TopSvg}
@@ -109,6 +110,7 @@ const TechnicalSupportBody = () => {
           top: "0",
           zIndex: "-1",
         }}
+        alt="icon"
       />
       <img
         src={BottomSvg}
@@ -118,6 +120,7 @@ const TechnicalSupportBody = () => {
           bottom: "0",
           zIndex: "-1",
         }}
+        alt="icon"
       />
     </div>
   );
