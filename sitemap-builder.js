@@ -3,20 +3,20 @@ const { createWriteStream } = require("fs");
 const { resolve } = require("path");
 
 const links = [
-  { url: "/", changefreq: "daily", priority: 0.9 },
-  { url: "/about", changefreq: "weekly", priority: 0.7 },
-  { url: "/b2c", changefreq: "weekly", priority: 0.8 },
-  { url: "/b2b", changefreq: "weekly", priority: 0.8 },
-  { url: "/resources", changefreq: "weekly", priority: 0.5 },
-  { url: "/business-support", changefreq: "weekly", priority: 0.9 },
-  { url: "/technical-support", changefreq: "weekly", priority: 0.9 },
-  { url: "/terms-of-use", changefreq: "weekly", priority: 0.6 },
-  { url: "/aml-policy", changefreq: "weekly", priority: 0.4 },
-  { url: "/cookie-policy", changefreq: "weekly", priority: 0.4 },
-  { url: "/privacy-policy", changefreq: "weekly", priority: 0.5 },
-  { url: "/imprint", changefreq: "weekly", priority: 0.6 },
-  { url: "/vacancy", changefreq: "weekly", priority: 0.6 },
-  { url: "/jobs", changefreq: "weekly", priority: 0.7 },
+  { url: "/", changefreq: "daily", priority: 1 },
+  { url: "/privacy-policy", changefreq: "monthly", priority: 1 },
+  { url: "/aml-policy", changefreq: "monthly", priority: 1 },
+  { url: "/cookie-policy", changefreq: "monthly", priority: 1 },
+  { url: "/b2c", changefreq: "weekly", priority: 0.9 },
+  { url: "/b2b", changefreq: "weekly", priority: 0.9 },
+  { url: "/about", changefreq: "weekly", priority: 0.8 },
+  { url: "/resources", changefreq: "weekly", priority: 0.6 },
+  { url: "/business-support", changefreq: "weekly", priority: 0.6 },
+  { url: "/technical-support", changefreq: "weekly", priority: 0.6 },
+  { url: "/terms-of-use", changefreq: "weekly", priority: 0.1 },
+  { url: "/imprint", changefreq: "weekly", priority: 0.1 },
+  { url: "/vacancy", changefreq: "weekly", priority: 0.1 },
+  { url: "/jobs", changefreq: "weekly", priority: 0.1 },
 ];
 
 const stream = new SitemapStream({ hostname: "https://nefentus.com" });

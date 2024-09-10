@@ -102,7 +102,7 @@ const Hero = () => {
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>
-              <img src={RightArrow} alt="icon" />
+              <img src={RightArrow} alt="Right arrow" />
             </a>
           </div>
         </div>
@@ -132,7 +132,7 @@ const Hero = () => {
                 borderTopRightRadius: "0",
                 borderTopLeftRadius: "0",
               }}
-              alt="image"
+              alt="Send cryptocurrency using Nefentus"
             />
             <img
               src={Hero2}
@@ -142,7 +142,7 @@ const Hero = () => {
                 borderBottomRightRadius: "0",
                 borderBottomLeftRadius: "0",
               }}
-              alt="image"
+              alt="Send cryptocurrency using Nefentus"
             />
           </div>
           <div
@@ -154,7 +154,11 @@ const Hero = () => {
               justifyContent: "end",
             }}
           >
-            <img src={Hero3} style={{ width: "100%" }} alt="image" />
+            <img
+              src={Hero3}
+              style={{ width: "100%" }}
+              alt="Swap cryptocurrency using Nefentus"
+            />
             <img
               src={Hero4}
               style={{
@@ -163,7 +167,7 @@ const Hero = () => {
                 borderBottomRightRadius: "0",
                 borderBottomLeftRadius: "0",
               }}
-              alt="image"
+              alt="Swap cryptocurrency using Nefentus"
             />
           </div>
         </div>
@@ -174,7 +178,7 @@ const Hero = () => {
           top: "0",
           width: "80%",
         }}
-        alt="icon"
+        alt="line"
       />
       <img
         src={HeroLineBottom}
@@ -183,7 +187,7 @@ const Hero = () => {
           width: "80%",
         }}
         className="translate-left"
-        alt="icon"
+        alt="line"
       />
       <hr
         style={{
@@ -346,7 +350,7 @@ const MultiWallets = () => {
                 width: "2rem",
                 height: "2rem",
               }}
-              alt="logo"
+              alt="Nefentus logo"
             />
           </div>
           <p
@@ -370,7 +374,7 @@ const MultiWallets = () => {
               left: "2rem",
             }}
           >
-            <img src={NefentusCard} alt="image" />
+            <img src={NefentusCard} alt="Nefentus wallet" />
           </div>
         </div>
         <div className="wallet-external">
@@ -391,7 +395,7 @@ const MultiWallets = () => {
                     height: "3.6rem",
                     borderRadius: "50%",
                   }}
-                  alt="icon"
+                  alt={item.name}
                 />
                 <p
                   style={{
@@ -413,7 +417,7 @@ const MultiWallets = () => {
               left: "46rem",
             }}
           >
-            <img src={CoinbaseCard} alt="icon" />
+            <img src={CoinbaseCard} alt="Coinbase wallet" />
           </div>
 
           <div
@@ -424,7 +428,7 @@ const MultiWallets = () => {
               left: "49rem",
             }}
           >
-            <img src={RabbyCard} alt="icon" />
+            <img src={RabbyCard} alt="Rabby wallet" />
           </div>
 
           <div
@@ -435,7 +439,7 @@ const MultiWallets = () => {
               left: "75rem",
             }}
           >
-            <img src={MetamaskCard} alt="icon" />
+            <img src={MetamaskCard} alt="Metamask wallet" />
           </div>
 
           <div
@@ -446,7 +450,7 @@ const MultiWallets = () => {
               left: "79rem",
             }}
           >
-            <img src={RainbowCard} alt="icon" />
+            <img src={RainbowCard} alt="Rainbow wallet" />
           </div>
           <p className="sub-title">
             Integrating an external wallet into your platform or service
@@ -489,7 +493,7 @@ const CryptoManage = () => {
           </div>
         </div>
         <div className="manage-img">
-          <img src={ManageCrypto} alt="icon" />
+          <img src={ManageCrypto} alt="Manage cryptocurrency using Nefentus" />
         </div>
       </div>
     </div>
@@ -525,7 +529,11 @@ const Transactions = () => {
           className="hide-in-tablet"
         />
 
-        <img className="transaction-img" src={TransactionSend} alt="icon" />
+        <img
+          className="transaction-img"
+          src={TransactionSend}
+          alt="Transaction using Nefentus"
+        />
 
         <div className="transaction-description">
           <div
@@ -546,7 +554,7 @@ const Transactions = () => {
                 width: "1rem",
                 height: "1rem",
               }}
-              alt="icon"
+              alt="Send cryptocurrency"
             />
           </div>
           <p
@@ -602,7 +610,7 @@ const Transactions = () => {
                 width: "1.6rem",
                 height: "1.6rem",
               }}
-              alt="icon"
+              alt="Swap currency"
             />
           </div>
           <p
@@ -621,7 +629,7 @@ const Transactions = () => {
         <img
           className="transaction-img"
           src={TransactionConverter}
-          alt="image"
+          alt="Convert cryptocurrency"
         />
       </div>
     </div>

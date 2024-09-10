@@ -113,7 +113,7 @@ const Hero = () => {
           width: "91%",
         }}
         className="translate-left"
-        alt="icon"
+        alt="Banner lines"
       />
       <img
         src={HeroLine2}
@@ -122,7 +122,7 @@ const Hero = () => {
           width: "91%",
         }}
         className="translate-left"
-        alt="icon"
+        alt="Banner bottom lines"
       />
       <div className="layout-horizontal">
         <div className="hero-layout">
@@ -142,13 +142,13 @@ const Hero = () => {
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>
-              <img src={RightArrow} alt="icon" />
+              <img src={RightArrow} alt="Right arrow" />
             </a>
           </div>
         </div>
         <div className="hero-img">
-          <img src={Hero1} alt="icon" />
-          <img src={Hero2} alt="icon" />
+          <img src={Hero1} alt="Payment details using Nefentus" />
+          <img src={Hero2} alt="Payment using Nefentus" />
         </div>
       </div>
       <hr
@@ -212,22 +212,36 @@ const helps = [
   {
     title: "Invoices",
     body: "Streamline your billing process with easy-to-create & track invoices. Generate invoices, monitor payment statuses and send reminders effortlessly.",
-    element: <img src={Help2} style={{ width: "100%" }} alt="icon" />,
+    element: <img src={Help2} style={{ width: "100%" }} alt="Invoices" />,
   },
   {
     title: "Product payment links",
     body: "Simplify transactions with direct product payment links. Provide customers with convenient payment options, ensuring seamless & secure purchases.",
-    element: <img src={Help3} style={{ width: "100%" }} alt="icon" />,
+    element: (
+      <img
+        src={Help3}
+        style={{ width: "100%" }}
+        alt="Create Products using Nefentus"
+      />
+    ),
   },
   {
     title: "Different ways to use cryptocurrency",
     body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
-    element: <img src={Help1} style={{ width: "100%" }} alt="icon" />,
+    element: (
+      <img
+        src={Help1}
+        style={{ width: "100%" }}
+        alt="Send and swap cryptocurrency"
+      />
+    ),
   },
   {
     title: "Sales analytics",
     body: "Gain valuable insights into your sales performance. Analyze key metrics, track trends and make informed decisions to optimize your business strategy & drive growth.",
-    element: <img src={Help4} style={{ width: "100%" }} alt="icon" />,
+    element: (
+      <img src={Help4} style={{ width: "100%" }} alt="Sales analytics" />
+    ),
   },
 ];
 
@@ -287,7 +301,7 @@ const Helps = () => {
           zIndex: "1",
         }}
         className="hide-in-tablet"
-        alt="icon"
+        alt="line"
       />
       <img
         src={BlueLine}
@@ -297,7 +311,7 @@ const Helps = () => {
           top: "10rem",
           zIndex: "1",
         }}
-        alt="icon"
+        alt="line"
       />
       <hr
         style={{
@@ -342,7 +356,7 @@ const CryptoManage = () => {
           </div>
         </div>
         <div className="manage-img">
-          <img src={ManageCrypto} alt="image" />
+          <img src={ManageCrypto} alt="Manage crypto currency using Nefentus" />
         </div>
       </div>
       <hr
@@ -430,7 +444,11 @@ const Benefits = () => {
       />
       <div className="layout-benefits">
         <div style={{ objectFit: "cover" }}>
-          <img src={WalletsPng} style={{ height: "100%" }} alt="icon" />
+          <img
+            src={WalletsPng}
+            style={{ height: "100%" }}
+            alt="Wallets for cryptocurrency"
+          />
           <div className="outlook">
             <p>Access a diverse range of currencies & wallets</p>
             <p className="sub-title">
@@ -443,7 +461,7 @@ const Benefits = () => {
         <div className="benefits">
           <div>
             <p>Pre-configured payment.</p>
-            <img src={Benefit1} alt="icon" />
+            <img src={Benefit1} alt="Pre configured payments using Nefentus" />
             <p className="sub-title">
               Commerce shares payment information directly with their wallet,
               removing any need for manual data entry.
@@ -454,7 +472,10 @@ const Benefits = () => {
               Streamline Your Online Checkout Experience
               {/* <span style={{ textWrap: "nowrap" }}>Checkout Experience</span> */}
             </p>
-            <img src={Benefit2} alt="icon" />
+            <img
+              src={Benefit2}
+              alt="Streamline checkout experience using Nefentus"
+            />
             <p className="sub-title">
               Easily complete payments online with a successful transaction of
               $5 via Payme. Integrate a pre-built payment page into your website
@@ -481,7 +502,7 @@ const Benefits = () => {
           top: "6rem",
           zIndex: "1",
         }}
-        alt="icon"
+        alt="line"
       />
       <hr
         style={{
@@ -498,18 +519,21 @@ const features = [
   {
     icon: WalletSvg,
     img: Main1,
+    alt: "Wallets management",
     title: `Multi-wallet management`,
     subtitle: `Hundreds of currencies, all Web3 wallets. Customers can pay with their preferred wallet and currency across Bitcoin, Ethereum, and other networks`,
   },
   {
     icon: ShoppingCartSvg,
     img: Main2,
+    alt: "Purchase products using Nefentus",
     title: `Product creation`,
     subtitle: `Creating product payment links simplifies the purchasing process for your customers by allowing them to buy products directly through a unique, secure link.`,
   },
   {
     icon: Chain,
     img: Main3,
+    alt: "Track Sales using Nefentus",
     title: `Insightful sales analytics`,
     subtitle: `Access a high-level summary of your key sales metrics, including total sales, total revenue, and number of transactions over selectable time periods (daily, weekly, monthly, etc.).`,
   },
@@ -541,11 +565,11 @@ const ScrollAnimation = () => {
           return (
             <div className="feature-heading">
               <div className="ico-wrapper">
-                <img src={item.icon} alt="icon" />
+                <img src={item.icon} alt={"icon"} />
               </div>
               <p>{item.title}</p>
               <p className="sub-title">{item.subtitle}</p>
-              <img src={item.img} alt="image" />
+              <img src={item.img} alt={item.alt} />
             </div>
           );
         })}
@@ -562,7 +586,7 @@ const ScrollAnimation = () => {
             className="image-transition"
             style={{ opacity: pos == 0 ? "1" : "0" }}
             src={Main1}
-            alt="image"
+            alt="Image transition"
           />
           <img
             className="image-transition"
@@ -573,7 +597,7 @@ const ScrollAnimation = () => {
               opacity: pos == 1 ? "1" : "0",
             }}
             src={Main2}
-            alt="image"
+            alt="Image transition"
           />
           <img
             className="image-transition"
@@ -584,7 +608,7 @@ const ScrollAnimation = () => {
               opacity: pos == 2 ? "1" : "0",
             }}
             src={Main3}
-            alt="image"
+            alt="Image transition"
           />
         </div>
       </div>
@@ -629,7 +653,7 @@ const MainFeaturesHead = () => {
           zIndex: "1",
         }}
         className="hide-in-tablet"
-        alt="icon"
+        alt="line"
       />
       <div
         style={{
@@ -728,7 +752,7 @@ const IndustryCard = ({ icon, name }) => {
   return (
     <div className="industry-card">
       <div className="ico-wrapper">
-        <img src={icon} alt="icon" />
+        <img src={icon} alt="Nefentus services" />
       </div>
       <p>{name}</p>
     </div>
@@ -782,7 +806,7 @@ const Industries = () => {
           width: "42%",
           zIndex: "1",
         }}
-        alt="icon"
+        alt="Background left line"
       />
       <img
         src={ServiceLine2}
@@ -793,7 +817,7 @@ const Industries = () => {
           width: "36%",
           zIndex: "1",
         }}
-        alt="icon"
+        alt="Background right line"
       />
       <hr
         style={{
@@ -852,10 +876,10 @@ const Community = () => {
       <div className="community-container">
         {communities.map((com) => (
           <a className="community" href={com.link}>
-            <img src={com.icon} alt="icon" />
+            <img src={com.icon} alt={`${com.title} icon`} />
             <div className="community-body">
               <h3>
-                {com.title} <img src={SendSvg} alt="icon" />
+                {com.title} <img src={SendSvg} alt="Send icon" />
               </h3>
               <p>{com.subtitle}</p>
             </div>
@@ -956,7 +980,7 @@ export const Audience = () => {
           </div>
         </div>
         <div className="audience-img">
-          <img src={AudienceImg} alt="icon" />
+          <img src={AudienceImg} alt="Nefentus users" />
         </div>
       </div>
       <hr
