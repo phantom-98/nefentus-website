@@ -129,7 +129,7 @@ const Hero = () => {
           style={{
             width: "50%",
           }}
-          alt="Payment details using Nefentus"
+          alt="Payment details on Nefentus"
         />
       </div>
       <img
@@ -248,7 +248,7 @@ const World = () => {
           </p>
         </div>
         <div className="world-img">
-          <img src={WorldPng} alt="world" />
+          <img src={WorldPng} alt="Worldwide crypto payments" />
         </div>
       </div>
     </div>
@@ -595,8 +595,8 @@ const APIBlock = () => {
           </div>
         </div>
         <div className="api-block-img">
-          <img src={APIBlockPng1} alt="Public api integration" />
-          <img src={APIBlockPng2} alt="Product detail using Nefentus" />
+          <img src={APIBlockPng1} alt="Crypto payments API" />
+          <img src={APIBlockPng2} alt="Product details on Nefentus" />
         </div>
         <hr
           style={{
@@ -759,7 +759,7 @@ const Analytics = () => {
           border: "2px solid #202020",
           borderRadius: "1rem",
         }}
-        alt="Analytics"
+        alt="Sales analytics on Nefentus"
       />
 
       <p
@@ -889,7 +889,10 @@ const CryptoManage = () => {
           </div>
         </div>
         <div className="manage-img">
-          <img src={ManageCrypto} alt="Manage cryptocurrency using nefentus" />
+          <img
+            src={ManageCrypto}
+            alt="Manage cryptocurrencies using Nefentus"
+          />
         </div>
       </div>
     </div>

@@ -132,7 +132,7 @@ const Hero = () => {
                 borderTopRightRadius: "0",
                 borderTopLeftRadius: "0",
               }}
-              alt="Send cryptocurrency using Nefentus"
+              alt="Send cryptocurrency"
             />
             <img
               src={Hero2}
@@ -142,7 +142,7 @@ const Hero = () => {
                 borderBottomRightRadius: "0",
                 borderBottomLeftRadius: "0",
               }}
-              alt="Send cryptocurrency using Nefentus"
+              alt="Send cryptocurrency on Nefentus"
             />
           </div>
           <div
@@ -157,7 +157,7 @@ const Hero = () => {
             <img
               src={Hero3}
               style={{ width: "100%" }}
-              alt="Swap cryptocurrency using Nefentus"
+              alt="Swap cryptocurrency"
             />
             <img
               src={Hero4}
@@ -417,7 +417,7 @@ const MultiWallets = () => {
               left: "46rem",
             }}
           >
-            <img src={CoinbaseCard} alt="Coinbase wallet" />
+            <img src={CoinbaseCard} alt="Coinbase wallet integration" />
           </div>
 
           <div
@@ -428,7 +428,7 @@ const MultiWallets = () => {
               left: "49rem",
             }}
           >
-            <img src={RabbyCard} alt="Rabby wallet" />
+            <img src={RabbyCard} alt="Rabby wallet integration" />
           </div>
 
           <div
@@ -439,7 +439,7 @@ const MultiWallets = () => {
               left: "75rem",
             }}
           >
-            <img src={MetamaskCard} alt="Metamask wallet" />
+            <img src={MetamaskCard} alt="Metamask wallet integration" />
           </div>
 
           <div
@@ -450,7 +450,7 @@ const MultiWallets = () => {
               left: "79rem",
             }}
           >
-            <img src={RainbowCard} alt="Rainbow wallet" />
+            <img src={RainbowCard} alt="Rainbow wallet integration" />
           </div>
           <p className="sub-title">
             Integrating an external wallet into your platform or service
@@ -532,7 +532,7 @@ const Transactions = () => {
         <img
           className="transaction-img"
           src={TransactionSend}
-          alt="Transaction using Nefentus"
+          alt="Cryptocurrency transactions using Nefentus"
         />
 
         <div className="transaction-description">

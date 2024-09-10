@@ -147,8 +147,8 @@ const Hero = () => {
           </div>
         </div>
         <div className="hero-img">
-          <img src={Hero1} alt="Payment details using Nefentus" />
-          <img src={Hero2} alt="Payment using Nefentus" />
+          <img src={Hero1} alt="Payment details on Nefentus" />
+          <img src={Hero2} alt="Cryptocurrency payments on Nefentus" />
         </div>
       </div>
       <hr
@@ -221,7 +221,7 @@ const helps = [
       <img
         src={Help3}
         style={{ width: "100%" }}
-        alt="Create Products using Nefentus"
+        alt="Create products on Nefentus"
       />
     ),
   },
@@ -472,10 +472,7 @@ const Benefits = () => {
               Streamline Your Online Checkout Experience
               {/* <span style={{ textWrap: "nowrap" }}>Checkout Experience</span> */}
             </p>
-            <img
-              src={Benefit2}
-              alt="Streamline checkout experience using Nefentus"
-            />
+            <img src={Benefit2} alt="Cryptocurrency checkout" />
             <p className="sub-title">
               Easily complete payments online with a successful transaction of
               $5 via Payme. Integrate a pre-built payment page into your website
