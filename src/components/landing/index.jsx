@@ -446,7 +446,7 @@ const Benefits = () => {
           </div>
           <div>
             <p>
-              Streamline Your Online Checkout Experience
+              Streamline your online checkout expereince
               {/* <span style={{ textWrap: "nowrap" }}>Checkout Experience</span> */}
             </p>
             <img src={Benefit2} />
@@ -551,7 +551,9 @@ const ScrollAnimation = () => {
           top: "calc(100vh - 58rem)",
         }}
       >
-        <div style={{ position: "relative", width: "100%" }}>
+        <div
+          style={{ position: "relative", width: "100%", overflow: "hidden" }}
+        >
           <img
             className="image-transition"
             style={{ opacity: pos == 0 ? "1" : "0" }}

@@ -1,5 +1,6 @@
 # New changes
 
+- Main page images modified and updated steamline text (MINOR)
 - Legal Text modified (MINOR)
 - Show only login/signup button in user profile component (PATCH)
 - Add link of dashboard download app page (MINOR)
