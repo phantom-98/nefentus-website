@@ -19,6 +19,7 @@
     "react-router-dom": "^6.9.0",
     "react-toastify": "^9.1.3",
     "rollup-plugin-polyfill-node": "^0.13.0",
+    "sitemap": "^8.0.0",
     "slick-carousel": "^1.8.1",
     "smooth-scrollbar": "^8.8.4",
     "stream": "^0.0.2",

@@ -932,10 +932,10 @@ export function getCurrencySymbol() {
 
 export function getCurrencyFlag() {
   return {
-    USD: <img src={getFlagLink("US")} />,
-    EUR: <img src={getFlagLink("EU")} />,
-    CHF: <img src={getFlagLink("CH")} />,
-    UAH: <img src={getFlagLink("UA")} />,
-    AED: <img src={getFlagLink("AE")} />,
+    USD: <img src={getFlagLink("US")} alt="icon" />,
+    EUR: <img src={getFlagLink("EU")} alt="icon" />,
+    CHF: <img src={getFlagLink("CH")} alt="icon" />,
+    UAH: <img src={getFlagLink("UA")} alt="icon" />,
+    AED: <img src={getFlagLink("AE")} alt="icon" />,
   };
 }

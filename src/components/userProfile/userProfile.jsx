@@ -38,6 +38,7 @@ const UserProfile = ({ web, logOut }) => {
           <img
             src={DropDownIcon}
             style={{ width: "1rem", height: "0.6rem", border: "none" }}
+            alt="icon"
           />
         </div>
       </div>
@@ -47,7 +48,7 @@ const UserProfile = ({ web, logOut }) => {
             to={`${process.env.VITE_REACT_APP_DASHBOARD}/new-settings`}
             className={styles.profileItem}
           >
-            <img src={SettingSvg} />
+            <img src={SettingSvg} alt="icon" />
             <p>Settings</p>
           </Link>
           {web && (
@@ -55,13 +56,13 @@ const UserProfile = ({ web, logOut }) => {
               to={`${process.env.VITE_REACT_APP_DASHBOARD}/personal-dashboard`}
               className={styles.profileItem}
             >
-              <img src={DashboardSvg} />
+              <img src={DashboardSvg} alt="icon" />
               <p>Dashboard</p>
             </Link>
           )}
           <hr style={{ border: "1px solid #202020" }} />
           <Link onClick={logOut} className={styles.profileItem}>
-            <img src={LogoutSvg} />
+            <img src={LogoutSvg} alt="icon" />
             <p>Log out</p>
           </Link>
         </div>

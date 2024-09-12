@@ -133,6 +133,7 @@ const BusinessSupportBody = () => {
           top: "0",
           zIndex: "-1",
         }}
+        alt="icon"
       />
       <img
         src={TopSvg}
@@ -142,6 +143,7 @@ const BusinessSupportBody = () => {
           top: "0",
           zIndex: "-1",
         }}
+        alt="icon"
       />
       <img
         src={BottomSvg}
@@ -151,6 +153,7 @@ const BusinessSupportBody = () => {
           bottom: "0",
           zIndex: "-1",
         }}
+        alt="icon"
       />
     </div>
   );

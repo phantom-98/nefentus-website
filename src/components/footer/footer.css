@@ -38,9 +38,9 @@
   gap: 1rem;
 }
 
-.footer-layout .sitemap-item a:first-child {
+/* .footer-layout .sitemap-item a:first-child {
   color: #e9e9e9;
-}
+} */
 
 .footer-layout .footer-bottom {
   padding-block: 2rem 4rem;
@@ -56,6 +56,10 @@
   align-items: center;
   justify-content: end;
   gap: 3rem;
+}
+
+.footer-layout .sitemap-item .anchor-item-title {
+  color: #e9e9e9;
 }
 
 @media (max-width: 640px) {
