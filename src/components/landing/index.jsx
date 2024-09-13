@@ -473,7 +473,7 @@ const Benefits = () => {
               {/* <span style={{ textWrap: "nowrap" }}>Checkout Experience</span> */}
             </p>
             <img src={Benefit2} alt="Cryptocurrency checkout" />
-            <p className="sub-title">
+            <p className="sub-title benefit2-description">
               Nefentus supports hundreds of currencies and cryptocurrency
               wallets. Customers can pay with their preferred wallet and
               currency across Bitcoin, Ethereum, and other networks.
