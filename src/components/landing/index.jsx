@@ -451,9 +451,9 @@ const Benefits = () => {
             </p>
             <img src={Benefit2} />
             <p className="sub-title">
-              Easily complete payments online with a successful transaction of
-              $5 via Payme. Integrate a pre-built payment page into your website
-              to attract clients who favor cryptocurrency payments.
+              Nefentus supports hundreds of currencies and cryptocurrency
+              wallets. Customers can pay with their preferred wallet and
+              currency across Bitcoin, Ethereum, and other networks.
             </p>
           </div>
         </div>
