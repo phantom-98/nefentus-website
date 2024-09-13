@@ -180,7 +180,7 @@ const DropDownMenuItem = ({ icon, title, subtitle }) => {
       className={styles.dropdownMenuItem}
     >
       <div className={styles.iconWrapper}>
-        <img src={ico} />
+        <img src={ico} alt="icon" />
       </div>
       <div className={styles.body}>
         <p>{title}</p>
@@ -209,6 +209,7 @@ const Products = ({ setOpenMenu }) => {
             transition: "0.2s",
             transform: open ? "rotate(180deg)" : "",
           }}
+          alt="icon"
         />
       </div>
       {open && (
@@ -315,6 +316,7 @@ const Resources = () => {
             transition: "0.2s",
             transform: open ? "rotate(180deg)" : "",
           }}
+          alt="icon"
         />
       </div>
       {open && (
@@ -356,13 +358,16 @@ const Resources = () => {
             </p>
             <div className={styles.gridContent}>
               <a href="https://t.me/nefentus">
-                Telegram <img src={Send} style={{ width: "0.8rem" }} />
+                Telegram{" "}
+                <img src={Send} style={{ width: "0.8rem" }} alt="icon" />
               </a>
               <a href="https://cy.linkedin.com/company/nefentuspay">
-                Linkedin <img src={Send} style={{ width: "0.8rem" }} />
+                Linkedin{" "}
+                <img src={Send} style={{ width: "0.8rem" }} alt="icon" />
               </a>
               <a href="https://x.com/nefentusapp">
-                Twitter <img src={Send} style={{ width: "0.8rem" }} />
+                Twitter{" "}
+                <img src={Send} style={{ width: "0.8rem" }} alt="icon" />
               </a>
             </div>
           </div>
@@ -390,6 +395,7 @@ const ContactUs = () => {
             transition: "0.2s",
             transform: open ? "rotate(180deg)" : "",
           }}
+          alt="icon"
         />
       </div>
       {open && (

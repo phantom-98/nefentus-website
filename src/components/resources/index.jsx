@@ -355,6 +355,7 @@ const ResourcesBody = () => {
               padding: "0",
               width: "64%",
             }}
+            alt="icon"
           />
           <img
             src={LineRight}
@@ -365,6 +366,7 @@ const ResourcesBody = () => {
               padding: "0",
               width: "64%",
             }}
+            alt="icon"
           />
           {contents[blockId].map((item) => item)}
           <div className="footer">
@@ -375,21 +377,21 @@ const ResourcesBody = () => {
                 onMouseEnter={() => setIcon_x(socials.x.iconHover)}
                 onMouseLeave={() => setIcon_x(socials.x.iconNormal)}
               >
-                <img src={icon_x} />
+                <img src={icon_x} alt="icon" />
               </a>
               <a
                 href={socials.in.link}
                 onMouseEnter={() => setIcon_in(socials.in.iconHover)}
                 onMouseLeave={() => setIcon_in(socials.in.iconNormal)}
               >
-                <img src={icon_in} />
+                <img src={icon_in} alt="icon" />
               </a>
               <a
                 href={socials.telegram.link}
                 onMouseEnter={() => setIcon_tele(socials.telegram.iconHover)}
                 onMouseLeave={() => setIcon_tele(socials.telegram.iconNormal)}
               >
-                <img src={icon_tele} />
+                <img src={icon_tele} alt="icon" />
               </a>
             </div>
           </div>

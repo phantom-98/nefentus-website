@@ -119,7 +119,7 @@ const Hero = () => {
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>
-              <img src={RightArrow} />
+              <img src={RightArrow} alt="Right arrow" />
             </a>
           </div>
         </div>
@@ -129,6 +129,7 @@ const Hero = () => {
           style={{
             width: "50%",
           }}
+          alt="Payment details on Nefentus"
         />
       </div>
       <img
@@ -139,6 +140,7 @@ const Hero = () => {
           width: "80%",
           left: "-10rem",
         }}
+        alt="Background lines"
       />
       <img
         src={HeroLineBottom}
@@ -147,6 +149,7 @@ const Hero = () => {
           width: "70%",
         }}
         className="translate-left"
+        alt="Background lines"
       />
       <hr
         style={{
@@ -245,7 +248,7 @@ const World = () => {
           </p>
         </div>
         <div className="world-img">
-          <img src={WorldPng} />
+          <img src={WorldPng} alt="Worldwide crypto payments" />
         </div>
       </div>
     </div>
@@ -309,7 +312,7 @@ const Invoicing = () => {
                 clearInterval(timeRef.current);
               }}
             >
-              <img src={item.icon} />
+              <img src={item.icon} alt={item.abbr} />
               <p>{item.abbr}</p>
             </div>
           ))}
@@ -334,7 +337,7 @@ const Invoicing = () => {
                 clearInterval(timeRef.current);
               }}
             >
-              <img src={item.icon} />
+              <img src={item.icon} alt={item.abbr} />
               <p>{item.title}</p>
               <p className="sub-title">{item.subtitle}</p>
             </div>
@@ -342,7 +345,11 @@ const Invoicing = () => {
         </div>
         <div className="invoicing-img">
           {steps.map((item, id) => (
-            <img className={step[id] && "visible"} src={item.img} />
+            <img
+              className={step[id] && "visible"}
+              src={item.img}
+              alt={item.abbr}
+            />
           ))}
         </div>
         <hr
@@ -366,16 +373,19 @@ const products = [
     title: `Create product`,
     subtitle: `Fill out a simple form with product details like name, description, category & optional tags.`,
     img: Product1Png,
+    alt: "Create product using Nefentus",
   },
   {
     title: `Explore the product catalog`,
     subtitle: `Clients can browse, filter & sort products by categories, price and other attributes.`,
     img: Product2Png,
+    alt: "Explore product using Nefentus",
   },
   {
     title: `Seamless checkout`,
     subtitle: `Clients enter billing & shipping info. The system shows the payment amount in their chosen cryptocurrency and provides a wallet address or QR code for easy payment.`,
     img: Product3Png,
+    alt: "Seamless checkout using Nefentus",
   },
 ];
 
@@ -400,7 +410,7 @@ const CryptoPayment = () => {
           </ul>
         </div>
         <div className="cryptopayment-img">
-          <img src={CryptoPaymentPng} />
+          <img src={CryptoPaymentPng} alt="Crypto payment using Nefentus" />
         </div>
       </div>
     </div>
@@ -450,7 +460,11 @@ const Product = () => {
       <div className="layout-product">
         <div className="product-img">
           {products.map((p, id) => (
-            <img className={step[id] && "product-img-showed"} src={p.img} />
+            <img
+              className={step[id] && "product-img-showed"}
+              src={p.img}
+              alt={p.alt}
+            />
           ))}
         </div>
         <div className="product-creation-step">
@@ -576,13 +590,13 @@ const APIBlock = () => {
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>
-              <img src={RightArrow} />
+              <img src={RightArrow} alt="Right arrow" />
             </a>
           </div>
         </div>
         <div className="api-block-img">
-          <img src={APIBlockPng1} />
-          <img src={APIBlockPng2} />
+          <img src={APIBlockPng1} alt="Crypto payments API" />
+          <img src={APIBlockPng2} alt="Product details on Nefentus" />
         </div>
         <hr
           style={{
@@ -642,6 +656,7 @@ const Safe = () => {
               width: "2.4rem",
               marginBottom: "1rem",
             }}
+            alt="Safeguarding funds"
           />
           <p style={{ fontSize: "2.8rem" }}>
             Safeguarding <span style={{ textWrap: "nowrap" }}>your funds</span>
@@ -684,6 +699,7 @@ const Safe = () => {
                 <img
                   src={item.icon}
                   style={{ width: "1.8rem", height: "1.8rem" }}
+                  alt={item.title}
                 />
               </div>
               {id + 1 !== safeties.length && (
@@ -743,6 +759,7 @@ const Analytics = () => {
           border: "2px solid #202020",
           borderRadius: "1rem",
         }}
+        alt="Sales analytics on Nefentus"
       />
 
       <p
@@ -764,16 +781,19 @@ const securities = [
     img: Security1Png,
     title: `Your assets, your control`,
     subtitle: `Rest assured, your assets remain in your hands. Every transaction on our platform is direct, between your cryptocurrency wallet & the recipient's—no intermediaries, no fund-holding.`,
+    alt: "Assets security",
   },
   {
     img: Security2Png,
     title: `Data Encryption`,
     subtitle: `Your security is paramount. All data transmitted between your device and our platform is shielded with industry-standard SSL/TLS encryption.`,
+    alt: "Data encryption security",
   },
   {
     img: Security3Png,
     title: `Biometric Authentication`,
     subtitle: `For an extra layer of defense, enjoy the added security of biometric authentication including fingerprint & facial recognition on compatible devices`,
+    alt: "Biometric Authentication",
   },
 ];
 
@@ -807,6 +827,7 @@ const Security = () => {
               style={{
                 width: "100%",
               }}
+              alt={s.alt}
             />
             <div
               style={{
@@ -868,7 +889,10 @@ const CryptoManage = () => {
           </div>
         </div>
         <div className="manage-img">
-          <img src={ManageCrypto} />
+          <img
+            src={ManageCrypto}
+            alt="Manage cryptocurrencies using Nefentus"
+          />
         </div>
       </div>
     </div>
