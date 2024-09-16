@@ -545,10 +545,13 @@
 .landing-layout .outlook p:last-child,
 .landing-layout .benefits > div > p:last-child {
   font-size: 1.3rem;
-  max-width: 48%;
+  max-width: 55%;
 }
 .landing-layout .benefits div:nth-child(2) > p {
-  width: 50%;
+  width: 55%;
+}
+.landing-layout .benefits .benefit2-description {
+  margin-top: 18rem;
 }
 
 .landing-layout .layout-benefits .benefits {

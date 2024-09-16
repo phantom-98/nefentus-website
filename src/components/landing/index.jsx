@@ -469,14 +469,14 @@ const Benefits = () => {
           </div>
           <div>
             <p>
-              Streamline Your Online Checkout Experience
+              Streamline your online checkout expereince
               {/* <span style={{ textWrap: "nowrap" }}>Checkout Experience</span> */}
             </p>
             <img src={Benefit2} alt="Cryptocurrency checkout" />
-            <p className="sub-title">
-              Easily complete payments online with a successful transaction of
-              $5 via Payme. Integrate a pre-built payment page into your website
-              to attract clients who favor cryptocurrency payments.
+            <p className="sub-title benefit2-description">
+              Nefentus supports hundreds of currencies and cryptocurrency
+              wallets. Customers can pay with their preferred wallet and
+              currency across Bitcoin, Ethereum, and other networks.
             </p>
           </div>
         </div>
@@ -578,7 +578,9 @@ const ScrollAnimation = () => {
           top: "calc(100vh - 58rem)",
         }}
       >
-        <div style={{ position: "relative", width: "100%" }}>
+        <div
+          style={{ position: "relative", width: "100%", overflow: "hidden" }}
+        >
           <img
             className="image-transition"
             style={{ opacity: pos == 0 ? "1" : "0" }}
