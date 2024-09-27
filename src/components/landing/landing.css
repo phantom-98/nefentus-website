@@ -86,7 +86,7 @@
 }
 
 .audience-sub-title {
-  width: 70%;
+  width: 100%;
 }
 .api-block-sub-title {
   width: 95%;
@@ -1108,7 +1108,6 @@
     padding-right: 5rem;
     gap: 4rem !important;
   }
-  .audience-sub-title,
   .api-block-sub-title {
     width: 100%;
   }
