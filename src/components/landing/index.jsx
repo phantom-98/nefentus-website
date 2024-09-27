@@ -15,7 +15,7 @@ import Help3 from "../../assets/landing/help 3.png";
 import Help4 from "../../assets/landing/help 4.png";
 import WalletsPng from "../../assets/landing/wallets.png";
 import Benefit1 from "../../assets/landing/benefit 1.png";
-import Benefit2 from "../../assets/landing/benefit 2.png";
+import Benefit2 from "../../assets/landing/benefit 2.svg";
 import ServiceLine1 from "../../assets/landing/service line left.svg";
 import ServiceLine2 from "../../assets/landing/service line right.svg";
 import GettingStarted1 from "../../assets/landing/started left.svg";
@@ -468,16 +468,7 @@ const Benefits = () => {
             </p>
           </div>
           <div>
-            <p>
-              Streamline your online checkout expereince
-              {/* <span style={{ textWrap: "nowrap" }}>Checkout Experience</span> */}
-            </p>
             <img src={Benefit2} alt="Cryptocurrency checkout" />
-            <p className="sub-title benefit2-description">
-              Nefentus supports hundreds of currencies and cryptocurrency
-              wallets. Customers can pay with their preferred wallet and
-              currency across Bitcoin, Ethereum, and other networks.
-            </p>
           </div>
         </div>
       </div>

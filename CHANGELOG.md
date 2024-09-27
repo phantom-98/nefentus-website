@@ -1,5 +1,6 @@
 # New changes
 
+- Replaced Slider images, resolved styling issue in benefit module and renamed Biometric to 2FA (MINOR)
 - Main page images modified and updated steamline text (MINOR)
 - SEO implemented (MAJOR)
 - Legal Text modified (MINOR)
