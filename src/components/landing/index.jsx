@@ -251,7 +251,7 @@ const Helps = () => {
   return (
     <div className="layout-paragraph help">
       <Heading
-        title={`Transform your business with our all-in-one cryptocurrency platform`}
+        title={`Accept crypto payments globally`}
         subtitle={`Empower your business with a comprehensive suite of cryptocurrency tools conveniently housed under one roof.`}
       />
       <div className="layout-horizontal layout-help">
@@ -451,7 +451,7 @@ const Benefits = () => {
           />
           <div className="outlook">
             <p>Access a diverse range of currencies & wallets</p>
-            <p className="sub-title">
+            <p className="sub-title crypto-wallet-subtext">
               Customers have the flexibility to pay using their preferred wallet
               & currency, spanning across Bitcoin, Ethereum and numerous other
               networks.
