@@ -791,9 +791,9 @@ const securities = [
   },
   {
     img: Security3Png,
-    title: `Factor Authentication`,
+    title: `2-Factor Authentication`,
     subtitle: `For an extra layer of security, use our 2-factor authentication methods such as time-based one-time passwords.`,
-    alt: "Factor Authentication",
+    alt: "2-Factor Authentication",
   },
 ];
 
