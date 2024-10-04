@@ -791,9 +791,9 @@ const securities = [
   },
   {
     img: Security3Png,
-    title: `Biometric Authentication`,
-    subtitle: `For an extra layer of defense, enjoy the added security of biometric authentication including fingerprint & facial recognition on compatible devices`,
-    alt: "Biometric Authentication",
+    title: `2-Factor Authentication`,
+    subtitle: `For an extra layer of security, use our 2-factor authentication methods such as time-based one-time passwords.`,
+    alt: "2-Factor Authentication",
   },
 ];
 

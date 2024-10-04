@@ -15,7 +15,7 @@ import Help3 from "../../assets/landing/help 3.png";
 import Help4 from "../../assets/landing/help 4.png";
 import WalletsPng from "../../assets/landing/wallets.png";
 import Benefit1 from "../../assets/landing/benefit 1.png";
-import Benefit2 from "../../assets/landing/benefit 2.png";
+import Benefit2 from "../../assets/landing/benefit 2.svg";
 import ServiceLine1 from "../../assets/landing/service line left.svg";
 import ServiceLine2 from "../../assets/landing/service line right.svg";
 import GettingStarted1 from "../../assets/landing/started left.svg";
@@ -251,7 +251,7 @@ const Helps = () => {
   return (
     <div className="layout-paragraph help">
       <Heading
-        title={`Transform your business with our all-in-one cryptocurrency platform`}
+        title={`Accept crypto payments globally`}
         subtitle={`Empower your business with a comprehensive suite of cryptocurrency tools conveniently housed under one roof.`}
       />
       <div className="layout-horizontal layout-help">
@@ -451,7 +451,7 @@ const Benefits = () => {
           />
           <div className="outlook">
             <p>Access a diverse range of currencies & wallets</p>
-            <p className="sub-title">
+            <p className="sub-title crypto-wallet-subtext">
               Customers have the flexibility to pay using their preferred wallet
               & currency, spanning across Bitcoin, Ethereum and numerous other
               networks.
@@ -468,16 +468,7 @@ const Benefits = () => {
             </p>
           </div>
           <div>
-            <p>
-              Streamline your online checkout expereince
-              {/* <span style={{ textWrap: "nowrap" }}>Checkout Experience</span> */}
-            </p>
             <img src={Benefit2} alt="Cryptocurrency checkout" />
-            <p className="sub-title benefit2-description">
-              Nefentus supports hundreds of currencies and cryptocurrency
-              wallets. Customers can pay with their preferred wallet and
-              currency across Bitcoin, Ethereum, and other networks.
-            </p>
           </div>
         </div>
       </div>

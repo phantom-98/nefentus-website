@@ -86,7 +86,7 @@
 }
 
 .audience-sub-title {
-  width: 70%;
+  width: 100%;
 }
 .api-block-sub-title {
   width: 95%;
@@ -1090,6 +1090,11 @@
   font-size: 1.4rem;
   margin-top: 0.6rem;
 }
+
+.crypto-wallet-subtext {
+  max-width: 40% !important;
+}
+
 @media (max-width: 900px) {
   .audience .layout-horizontal {
     max-width: 100%;
@@ -1108,7 +1113,6 @@
     padding-right: 5rem;
     gap: 4rem !important;
   }
-  .audience-sub-title,
   .api-block-sub-title {
     width: 100%;
   }
