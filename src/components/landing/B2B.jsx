@@ -114,7 +114,7 @@ const Hero = () => {
             streamline your sales process—all from a single platform.
           </p>
           <div className="button-container">
-            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
               <button>Get Started</button>
             </a>
             <a href="/business-support">
@@ -585,7 +585,7 @@ const APIBlock = () => {
             allowing your customers to make payments with ease.
           </p>
           <div className="button-container">
-            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
               <button>Get Started</button>
             </a>
             <a href="/business-support">

@@ -36,9 +36,9 @@ const Navigation = () => {
         </a>
         <a
           className={`${styles.button}`}
-          href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}
+          href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}
         >
-          Sign up
+          Get started
         </a>
       </>
     );
@@ -64,11 +64,11 @@ const Navigation = () => {
         </Button>
         <Button
           style={{ width: "100%" }}
-          link={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}
+          link={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}
           color="white"
           onClick={() => setOpenMenu(false)}
         >
-          Sign up
+          Get started
         </Button>
       </div>
     );

@@ -1,10 +1,11 @@
 # New changes
 
+- updated background images and modified /signup -> /get-started (MINOR)
 - Replaced Slider images, resolved styling issue in benefit module and renamed Biometric to 2FA (MINOR)
 - Main page images modified and updated steamline text (MINOR)
 - SEO implemented (MAJOR)
 - Legal Text modified (MINOR)
-- Show only login/signup button in user profile component (PATCH)
+- Show only login/get-started button in user profile component (PATCH)
 - Add link of dashboard download app page (MINOR)
 - Add new blocks (audience, api) && Update some texts (MINOR)
 - Make landing separate (MAJOR)
