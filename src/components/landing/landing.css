@@ -1095,6 +1095,16 @@
   max-width: 40% !important;
 }
 
+.dashboard-image-container {
+  padding: 8px;
+  background: linear-gradient(
+    180deg,
+    rgba(66, 66, 66, 0.4) 48.01%,
+    rgba(115, 115, 115, 0) 88.64%
+  );
+  backdrop-filter: blur(23.5px);
+}
+
 @media (max-width: 900px) {
   .audience .layout-horizontal {
     max-width: 100%;

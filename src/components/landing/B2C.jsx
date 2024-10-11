@@ -97,7 +97,7 @@ const Hero = () => {
             place.
           </p>
           <div className="button-container">
-            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
               <button>Get Started</button>
             </a>
             <a href="/business-support">

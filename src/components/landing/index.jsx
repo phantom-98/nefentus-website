@@ -137,7 +137,7 @@ const Hero = () => {
             assets.
           </p>
           <div className="button-container">
-            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
               <button>Get Started</button>
             </a>
             <a href="/business-support">
@@ -573,13 +573,13 @@ const ScrollAnimation = () => {
           style={{ position: "relative", width: "100%", overflow: "hidden" }}
         >
           <img
-            className="image-transition"
+            className="image-transition dashboard-image-container"
             style={{ opacity: pos == 0 ? "1" : "0" }}
             src={Main1}
             alt="Image transition"
           />
           <img
-            className="image-transition"
+            className="image-transition dashboard-image-container"
             style={{
               position: "absolute",
               top: "0",
@@ -590,7 +590,7 @@ const ScrollAnimation = () => {
             alt="Image transition"
           />
           <img
-            className="image-transition"
+            className="image-transition dashboard-image-container"
             style={{
               position: "absolute",
               top: "0",
@@ -912,7 +912,7 @@ export const Conclusion = ({
       </div>
       <Heading title={title} subtitle={subtitle} />
       <div className="button-container">
-        <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
+        <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
           <button>{button}</button>
         </a>
         <a href="/business-support">
@@ -960,7 +960,7 @@ export const Audience = () => {
             seamless and secure experience.
           </p>
           <div className="button-container">
-            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/signup`}>
+            <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
               <button>Get Started</button>
             </a>
             <a href="/business-support">
