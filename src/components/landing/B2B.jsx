@@ -31,6 +31,7 @@ import ShoppingCartSvg from "../../assets/landing/shopping-cart.svg";
 import Dollar from "../../assets/landing/dollar.svg";
 import SwapIcon from "../../assets/landing/swap-ico.svg";
 import { useEffect, useRef, useState } from "react";
+import { Flex } from "antd";
 
 const B2BBody = () => {
   const b2bContainer = useRef();
@@ -106,12 +107,12 @@ const Hero = () => {
           }}
         >
           <h1 className="title">
-            Revolutionize Your Business with{" "}
-            <span className="gradient">Effortless Crypto Payments</span>
+            Streamlined <span className="gradient">crypto </span>
+            invoicing
           </h1>
           <p className="sub-title">
-            Seamlessly create & receive payments. Manage all your wallets and
-            streamline your sales process—all from a single platform.
+            Simplify invoicing, centralize your wallets, and boost your sales
+            efficiency—get it all done on one powerful platform.
           </p>
           <div className="button-container">
             <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
@@ -392,23 +393,35 @@ const products = [
 const CryptoPayment = () => {
   return (
     <div className="cryptopayment">
-      <div className="layout-cryptopayment container">
-        <div className="cryptopayment-title-layout">
-          <h1 className="title">Crypto payments are borderless</h1>
-          <p className="sub-title">
-            Unlike traditional banking services, crypto transactions operate
-            24/7 with no limits on transaction amounts.
-          </p>
-          <p className="sub-title">
-            Since every blockchain transaction is final, there are no risks of
-            bank blocks or rejections.
-          </p>
-          <ul className="sub-title">
-            <li>99.9% acceptance rate</li>
-            <li>No chargebacks or rolling reserves</li>
-            <li>Unlimited transaction amounts</li>
-          </ul>
-        </div>
+      <div className="layout-cryptopayment">
+        <Flex
+          vertical
+          gap={32}
+          align={"flex-start"}
+          justify={"space-between"}
+          className="crypto-payment-first-block"
+        >
+          <h1 className="title">
+            Crypto payments are borderless and limitless
+          </h1>
+          <Flex vertical gap={24}>
+            <Flex vertical gap={12}>
+              <p className="sub-title crypto-payment-subtext1">
+                Unlike traditional banking, crypto transactions operate 24/7
+                without restrictions on the amount.
+              </p>
+              <p className="sub-title crypto-payment-subtext2">
+                They cannot be blocked or reversed, as every blockchain
+                transaction is final by design.
+              </p>
+            </Flex>
+            <Flex className="sub-title" vertical gap={12}>
+              <li>99.9% acceptance rate</li>
+              <li>No chargebacks or rolling reserves</li>
+              <li>Unlimited transaction amounts</li>
+            </Flex>
+          </Flex>
+        </Flex>
         <div className="cryptopayment-img">
           <img src={CryptoPaymentPng} alt="Crypto payment using Nefentus" />
         </div>
@@ -560,11 +573,12 @@ const safeties = [
     title: `Transaction Completion`,
     subtitle: `Buyers send their payment in the selected cryptocurrency.`,
   },
-  {
-    icon: SwapIcon,
-    title: `Real-Time Conversion`,
-    subtitle: `Received cryptocurrency is instantly converted to stablecoins`,
-  },
+  // Discussed to remove converter on 25 Oct 2024
+  // {
+  //   icon: SwapIcon,
+  //   title: `Real-Time Conversion`,
+  //   subtitle: `Received cryptocurrency is instantly converted to stablecoins`,
+  // },
   {
     icon: Dollar,
     title: `Stablecoin Deposit`,

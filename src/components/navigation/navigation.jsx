@@ -98,11 +98,19 @@ const Navigation = () => {
             </Link>
 
             <ul className={styles.navList}>
-              <li className="standard">
+              {/** Removing it as it's not need to show (as per discussion on 25 Oct 2024) */}
+
+              {/* <li className="standard">
                 <Products />
+              </li> */}
+              {/* <li className="standard"> 
+                <Resources />
+              </li> */}
+              <li className="standard">
+                <Business />
               </li>
               <li className="standard">
-                <Resources />
+                <Private />
               </li>
               <li className="standard">
                 <ContactUs />
@@ -144,11 +152,19 @@ const Navigation = () => {
         }}
       >
         <ul>
-          <li>
+          {/** Removing it as it's not need to show (as per discussion on 25 Oct 2024) */}
+
+          {/* <li>
             <Products setOpenMenu={setOpenMenu} />
           </li>
           <li>
             <Resources />
+          </li> */}
+          <li className="standard">
+            <Business />
+          </li>
+          <li className="standard">
+            <Private />
           </li>
           <li>
             <ContactUs />
@@ -190,7 +206,7 @@ const DropDownMenuItem = ({ icon, title, subtitle }) => {
   );
 };
 
-const Products = ({ setOpenMenu }) => {
+const Private = ({ setOpenMenu }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -202,7 +218,7 @@ const Products = ({ setOpenMenu }) => {
       onMouseLeave={() => setOpen(false)}
     >
       <div className={styles.products}>
-        <p>Products</p>
+        <p>Private</p>
         <img
           src={Dropdown}
           style={{
@@ -214,46 +230,6 @@ const Products = ({ setOpenMenu }) => {
       </div>
       {open && (
         <div className={styles.dropdown}>
-          <div
-            style={{
-              padding: "1.4rem",
-              display: "flex",
-              flexDirection: "column",
-              borderRight: "1px solid #323232",
-            }}
-          >
-            <a href="/b2b" onClick={() => setOpenMenu(false)}>
-              <p
-                style={{
-                  color: "#b1b1b1",
-                  padding: "0.8rem",
-                }}
-              >
-                Business tools
-              </p>
-            </a>
-            <a href="/b2b#hero" onClick={() => setOpenMenu(false)}>
-              <DropDownMenuItem
-                icon={{ normal: Shopping, hover: ShoppingBlue }}
-                title={`Cryptocurrency payments`}
-                subtitle={`Accept cryptocurrencies using unique payment links`}
-              />
-            </a>
-            <a href="/b2b#invoicing" onClick={() => setOpenMenu(false)}>
-              <DropDownMenuItem
-                icon={{ normal: Invoicing, hover: InvoicingBlue }}
-                title={`Invoicing`}
-                subtitle={`Create and send professional invoices that can be paid in cryptocurrency`}
-              />
-            </a>
-            <a href="/b2b#sales" onClick={() => setOpenMenu(false)}>
-              <DropDownMenuItem
-                icon={{ normal: Sales, hover: SalesBlue }}
-                title={`Sales dashboard`}
-                subtitle={`Track your sales and monitor transaction trends`}
-              />
-            </a>
-          </div>
           <div
             style={{
               padding: "1.4rem",
@@ -290,6 +266,75 @@ const Products = ({ setOpenMenu }) => {
                 icon={{ normal: InternalWallet, hover: InternalWalletBlue }}
                 title={`Nefentus wallet`}
                 subtitle={`Manage your digital assets securely within the Nefentus ecosystem`}
+              />
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const Business = ({ setOpenMenu }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div
+      style={{
+        position: "relative",
+      }}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <div className={styles.products}>
+        <p>Business</p>
+        <img
+          src={Dropdown}
+          style={{
+            transition: "0.2s",
+            transform: open ? "rotate(180deg)" : "",
+          }}
+          alt="icon"
+        />
+      </div>
+      {open && (
+        <div className={styles.dropdown}>
+          <div
+            style={{
+              padding: "1.4rem",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <a href="/b2b" onClick={() => setOpenMenu(false)}>
+              <p
+                style={{
+                  color: "#b1b1b1",
+                  padding: "0.8rem",
+                }}
+              >
+                Business tools
+              </p>
+            </a>
+            <a href="/b2b#hero" onClick={() => setOpenMenu(false)}>
+              <DropDownMenuItem
+                icon={{ normal: Shopping, hover: ShoppingBlue }}
+                title={`Cryptocurrency payments`}
+                subtitle={`Accept cryptocurrencies using unique payment links`}
+              />
+            </a>
+            <a href="/b2b#invoicing" onClick={() => setOpenMenu(false)}>
+              <DropDownMenuItem
+                icon={{ normal: Invoicing, hover: InvoicingBlue }}
+                title={`Invoicing`}
+                subtitle={`Create and send professional invoices that can be paid in cryptocurrency`}
+              />
+            </a>
+            <a href="/b2b#sales" onClick={() => setOpenMenu(false)}>
+              <DropDownMenuItem
+                icon={{ normal: Sales, hover: SalesBlue }}
+                title={`Sales dashboard`}
+                subtitle={`Track your sales and monitor transaction trends`}
               />
             </a>
           </div>

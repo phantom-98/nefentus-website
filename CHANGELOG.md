@@ -1,5 +1,6 @@
 # New changes
 
+- Removing Converter content and adding FAQ section
 - updated background images and modified /signup -> /get-started (MINOR)
 - Replaced Slider images, resolved styling issue in benefit module and renamed Biometric to 2FA (MINOR)
 - Main page images modified and updated steamline text (MINOR)

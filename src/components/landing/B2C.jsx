@@ -23,6 +23,7 @@ import Zerion from "../../assets/landing/ico-zerion.png";
 import CoinbaseCard from "../../assets/landing/wallet-card-coinbase.png";
 import NefentusCard from "../../assets/landing/wallet-card-nefentus.png";
 import MetamaskCard from "../../assets/landing/wallet-card-metamask.png";
+import WalletConnectCard from "../../assets/landing/wallet-card-wallet-connect.png";
 import RabbyCard from "../../assets/landing/wallet-card-rabby.png";
 import RainbowCard from "../../assets/landing/wallet-card-rainbow.png";
 import TransactionSend from "../../assets/landing/transaction-send.png";
@@ -30,6 +31,7 @@ import TransactionConverter from "../../assets/landing/transaction-converter.png
 import SendIcon from "../../assets/landing/send-ico.svg";
 import SwapIcon from "../../assets/landing/swap-ico.svg";
 import { useEffect } from "react";
+import { Flex } from "antd";
 
 const B2CBody = () => {
   useEffect(() => {
@@ -318,7 +320,10 @@ const MultiWallets = () => {
         subtitle={`Effortlessly handle multiple wallets with our platform. Choose our built-in wallet or link countless external wallets for ultimate flexibility.`}
       />
 
-      <div className="multi-wallet-management container">
+      <div
+        className="multi-wallet-management"
+        style={{ overflow: "hidden", width: "100vw", height: "594px" }}
+      >
         <hr
           style={{
             top: "0",
@@ -332,133 +337,121 @@ const MultiWallets = () => {
             width: "100vw",
           }}
         />
-        <div className="wallet-internal">
+        <div style={{ borderRight: "1px solid #202020", width: "25%" }}>
           <div
+            className="ico-card-wallet metamask"
             style={{
-              width: "fit-content",
-              background: "#202020",
-              borderRadius: "50%",
-              padding: "0.6rem",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              transform: "rotate(6deg)",
+              top: "5rem",
+              left: "0rem",
             }}
           >
-            <img
-              src={NefentusLogo}
-              style={{
-                width: "2rem",
-                height: "2rem",
-              }}
-              alt="Nefentus logo"
-            />
+            <img src={MetamaskCard} alt="Metamask wallet integration" />
           </div>
-          <p
-            style={{
-              fontSize: "2rem",
-            }}
-          >
-            Utilize our trusted Nefentus wallet
-          </p>
-          <p className="sub-title">
-            Rely on our internal Nefentus Wallet, fortified with advanced
-            security features. Benefit from encryption, multi-factor
-            authentication and other robust protocols, ensuring the safety of
-            your digital assets.
-          </p>
           <div
-            className="ico-card-wallet"
+            className="ico-card-wallet hide-in-mobile"
             style={{
-              transform: "rotate(-5deg)",
-              top: "29rem",
-              left: "2rem",
+              transform: "rotate(-12deg)",
+              top: "30rem",
+              left: "3rem",
             }}
           >
-            <img src={NefentusCard} alt="Nefentus wallet" />
+            <img src={RainbowCard} alt="Rainbow wallet integration" />
           </div>
         </div>
-        <div className="wallet-external">
-          <p>Or connect an unlimited number of external wallets</p>
-          <div className="wallet-club">
-            {wallets.map((item) => (
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
-                <img
-                  src={item.icon}
-                  style={{
-                    width: "3.6rem",
-                    height: "3.6rem",
-                    borderRadius: "50%",
-                  }}
-                  alt={item.name}
-                />
-                <p
-                  style={{
-                    fontSize: "1.2rem",
-                  }}
-                >
-                  {item.name}
-                </p>
+        <Flex
+          vertical
+          align={"center"}
+          style={{
+            borderRight: "1px solid #202020",
+            width: "50%",
+            height: "100%",
+            justifyContent: "center",
+            // alignItems: "center",
+          }}
+        >
+          <Flex style={{ width: "70%" }}>
+            <Flex vertical gap={24}>
+              <p style={{ fontSize: "2rem", maxWidth: "55%" }}>
+                Or connect an unlimited number of external wallets
+              </p>
+              <div className="wallet-club">
+                {wallets.map((item) => (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1rem",
+                    }}
+                  >
+                    <img
+                      src={item.icon}
+                      style={{
+                        width: "3.6rem",
+                        height: "3.6rem",
+                        borderRadius: "50%",
+                      }}
+                      alt={item.name}
+                    />
+                    <p
+                      style={{
+                        fontSize: "1.2rem",
+                      }}
+                    >
+                      {item.name}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <hr style={{ display: "none" }} />
 
+              <p
+                className="sub-title"
+                style={{ fontSize: "1.4rem", maxWidth: "75%" }}
+              >
+                Integrating an external wallet into your platform or service
+                enhances transaction convenience. Seamlessly send & receive
+                payments without the need for external wallets or exchanges,
+                simplifying the process for you.
+              </p>
+            </Flex>
+          </Flex>
+        </Flex>
+        <Flex vertical style={{ width: "25%" }}>
           <div
             className="ico-card-wallet coinbase"
             style={{
               transform: "rotate(16deg)",
-              top: "8rem",
-              left: "46rem",
+              top: "0rem",
+              left: "8rem",
+              zIndex: -2,
+              overflow: "hidden",
             }}
           >
             <img src={CoinbaseCard} alt="Coinbase wallet integration" />
           </div>
 
           <div
+            className="ico-card-wallet metamask"
+            style={{
+              transform: "rotate(0deg)",
+              top: "20rem",
+              left: "20rem",
+            }}
+          >
+            <img src={WalletConnectCard} alt="Wallet connect integration" />
+          </div>
+
+          <div
             className="ico-card-wallet hide-in-mobile"
             style={{
               transform: "rotate(-9deg)",
-              top: "34rem",
-              left: "49rem",
+              top: "39rem",
+              left: "10rem",
             }}
           >
             <img src={RabbyCard} alt="Rabby wallet integration" />
           </div>
-
-          <div
-            className="ico-card-wallet metamask"
-            style={{
-              transform: "rotate(6deg)",
-              top: "12rem",
-              left: "75rem",
-            }}
-          >
-            <img src={MetamaskCard} alt="Metamask wallet integration" />
-          </div>
-
-          <div
-            className="ico-card-wallet hide-in-mobile"
-            style={{
-              transform: "rotate(-12deg)",
-              top: "36rem",
-              left: "79rem",
-            }}
-          >
-            <img src={RainbowCard} alt="Rainbow wallet integration" />
-          </div>
-          <p className="sub-title">
-            Integrating an external wallet into your platform or service
-            enhances transaction convenience. Seamlessly send & receive payments
-            without the need for external wallets or exchanges, simplifying the
-            process for you.
-          </p>
-        </div>
+        </Flex>
       </div>
     </div>
   );
@@ -571,7 +564,8 @@ const Transactions = () => {
           </p>
         </div>
       </div>
-      <div className="layout-transactions">
+      {/** Discussed to remove converter content on 25 Oct 2024 */}
+      {/* <div className="layout-transactions">
         <hr
           style={{
             top: "0",
@@ -631,7 +625,7 @@ const Transactions = () => {
           src={TransactionConverter}
           alt="Convert cryptocurrency"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

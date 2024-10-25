@@ -52,6 +52,8 @@
   gap: 6rem;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
 }
 /* 
 .layout-horizontal > div {
@@ -117,6 +119,11 @@
   justify-content: space-between;
   align-items: start;
   width: 40%;
+}
+
+.crypto-payment-first-block {
+  padding: 60px;
+  width: 50%;
 }
 
 .hero-layout h1,
@@ -282,7 +289,7 @@
 .landing-layout .cryptopayment-img {
   display: flex;
   flex-direction: row-reverse;
-  width: 60%;
+  width: 50%;
 }
 .landing-layout .cryptopayment-img img {
   max-width: 100%;
@@ -1105,7 +1112,46 @@
   backdrop-filter: blur(23.5px);
 }
 
+.faq-container {
+  padding: 60px;
+  align-self: stretch;
+  background: #171717;
+}
+
+.faq-first-section {
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+.faq-first-section-text {
+  color: #b1b1b1;
+  font-size: 1.2rem;
+  width: 80%;
+}
+
+.faq-contact-text {
+  color: #fafafa;
+  font-size: 1.2rem;
+}
+
+.faq-list {
+  width: 50%;
+  height: 100%;
+  background: #171717;
+}
+
+.crypto-payment-subtext1 {
+  width: 65%;
+}
+
+.crypto-payment-subtext2 {
+  width: 60%;
+}
+
 @media (max-width: 900px) {
+  .crypto-payment-first-block {
+    width: 100%;
+  }
   .audience .layout-horizontal {
     max-width: 100%;
     margin-left: auto;
@@ -1215,7 +1261,7 @@
     width: 100%;
   }
   .landing-layout .cryptopayment-img {
-    width: 95%;
+    width: 100%;
   }
   .landing-layout .benefits {
     flex-direction: column;

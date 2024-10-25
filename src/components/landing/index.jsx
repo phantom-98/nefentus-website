@@ -59,6 +59,7 @@ import Main3 from "../../assets/landing/main3.png";
 import Logos from "../../components/logos/logos";
 
 import { useEffect, useState } from "react";
+import { Flex } from "antd";
 
 const HomeBody = () => {
   useEffect(() => {
@@ -89,7 +90,8 @@ const HomeBody = () => {
 
       <Community />
 
-      <Audience />
+      {/* <Audience /> */}
+      <FAQ />
 
       {/* <Conclusion
         icon={NefentusLogo}
@@ -127,14 +129,14 @@ const Hero = () => {
       <div className="layout-horizontal">
         <div className="hero-layout">
           <h1 className="title">
-            The Ultimate{" "}
-            <span className="gradient">Crypto Payment Ecosystem </span>
-            for Businesses
+            Get more customers with{" "}
+            <span className="gradient">seamless crypto invoicing </span>
           </h1>
           <p className="sub-title">
-            Leading the charge in mass adoption, our innovative products empower
-            businesses to seamlessly transition into the new era of digital
-            assets.
+            Leading the way in mass adoption, our invoicing tool helps
+            businesses easily transition into digital assets. Free to start, no
+            onboarding fees – seamless crypto payments for businesses of any
+            size!
           </p>
           <div className="button-container">
             <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
@@ -225,17 +227,18 @@ const helps = [
       />
     ),
   },
-  {
-    title: "Different ways to use cryptocurrency",
-    body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
-    element: (
-      <img
-        src={Help1}
-        style={{ width: "100%" }}
-        alt="Send and swap cryptocurrency"
-      />
-    ),
-  },
+  // Discussed to remove it on 25 Oct 2024
+  // {
+  //   title: "Different ways to use cryptocurrency",
+  //   body: "Buying and Selling Cryptocurrency: This involves exchanging fiat currency or other cryptocurrencies for a specific digital currency or token. Trading on Exchanges: Traders buy and sell cryptocurrencies on various digital asset exchanges to capitalize on price fluctuations and market trends. Peer-to-Peer Transactions: Users can directly transfer cryptocurrencies to one another without the need for intermediaries, utilizing blockchain technology.",
+  //   element: (
+  //     <img
+  //       src={Help1}
+  //       style={{ width: "100%" }}
+  //       alt="Send and swap cryptocurrency"
+  //     />
+  //   ),
+  // },
   {
     title: "Sales analytics",
     body: "Gain valuable insights into your sales performance. Analyze key metrics, track trends and make informed decisions to optimize your business strategy & drive growth.",
@@ -980,5 +983,73 @@ export const Audience = () => {
         }}
       />
     </div>
+  );
+};
+
+const FAQList = [
+  {
+    title: "How does your crypto invoicing platform work?",
+    body: "Our platform allows you to create and send invoices that your customers can pay using a variety of cryptocurrencies. Payments are processed seamlessly, and you can track everything from one dashboard.",
+    element: null,
+  },
+  {
+    title: "Is it complicated to set up?",
+    body: "Not at all! You can get started in minutes with no onboarding fees or monthly costs. It's designed to be user-friendly for businesses of any size.",
+    element: null,
+  },
+  {
+    title: "Do I need to understand cryptocurrencies to use the platform?",
+    body: "No prior knowledge is needed. Our platform simplifies the process, so even if you're new to crypto, you can easily accept payments without any hassle.",
+    element: null,
+  },
+  {
+    title: "What cryptocurrencies do you support?",
+    body: "We support a wide range of popular cryptocurrencies, including Bitcoin, Ethereum, and stablecoins, allowing your customers flexibility in how they pay.",
+    element: null,
+  },
+  {
+    title: "Are there any hidden fees?",
+    body: "No hidden fees! We offer a transparent pricing model with zero monthly charges and no onboarding costs.",
+    element: null,
+  },
+];
+
+export const FAQ = () => {
+  const [expands, setExpands] = useState(FAQList.map((_, index) => !index));
+  return (
+    <Flex
+      gap={20}
+      className="faq-container"
+      align={"flex-start"}
+      justify={"center"}
+    >
+      <Flex vertical gap={16}>
+        <div className="faq-first-section">FAQ</div>
+        <div className="faq-first-section-text">
+          {" "}
+          Everything you need to know about the product.
+          <br /> Can't find the answer you're looking for?
+          <span className="faq-contact-text">
+            {" "}
+            Please chat to our friendly team
+          </span>
+        </div>
+      </Flex>
+
+      <Flex vertical align={"flex-start"} className="faq-list">
+        {FAQList.map((help, index) => {
+          return (
+            <Feature
+              title={help.title}
+              description={help.body}
+              index={index}
+              element={help.element}
+              expands={expands}
+              setExpands={setExpands}
+            />
+          );
+        })}
+      </Flex>
+    </Flex>
   );
 };
