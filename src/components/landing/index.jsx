@@ -129,7 +129,7 @@ const Hero = () => {
       <div className="layout-horizontal">
         <div className="hero-layout">
           <h1 className="title">
-            Get more customers with{" "}
+            Reach more customers with{" "}
             <span className="gradient">seamless crypto invoicing </span>
           </h1>
           <p className="sub-title">
@@ -988,7 +988,7 @@ export const Audience = () => {
 
 const FAQList = [
   {
-    title: "How does your crypto invoicing platform work?",
+    title: "How does Nefentus crypto invoicing platform work?",
     body: "Our platform allows you to create and send invoices that your customers can pay using a variety of cryptocurrencies. Payments are processed seamlessly, and you can track everything from one dashboard.",
     element: null,
   },
@@ -1003,7 +1003,7 @@ const FAQList = [
     element: null,
   },
   {
-    title: "What cryptocurrencies do you support?",
+    title: "What cryptocurrencies do Nefentus support?",
     body: "We support a wide range of popular cryptocurrencies, including Bitcoin, Ethereum, and stablecoins, allowing your customers flexibility in how they pay.",
     element: null,
   },

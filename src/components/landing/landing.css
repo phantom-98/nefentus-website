@@ -1140,6 +1140,10 @@
   background: #171717;
 }
 
+.crypto-payment-container {
+  width: 100vw !important;
+}
+
 .crypto-payment-subtext1 {
   width: 65%;
 }
@@ -1148,8 +1152,47 @@
   width: 60%;
 }
 
+.crypto-payment-title {
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+.crypto-payment-second-block {
+  padding: 60px;
+  width: 50%;
+  background: #171717;
+  background-image: url("../../assets/landing/best-suited-background.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right;
+}
+
+.best-suited {
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+
+.best-suited-list li {
+  list-style: none;
+}
+
+.best-suited-list li::before {
+  content: "\2022";
+  color: #387d91;
+  display: inline-block;
+  width: 1em;
+}
+
+.crypto-payment-subtext {
+  font-size: 1.2rem !important;
+}
+
 @media (max-width: 900px) {
-  .crypto-payment-first-block {
+  .crypto-payment-container {
+    flex-direction: column;
+  }
+  .crypto-payment-first-block,
+  .crypto-payment-second-block {
     width: 100%;
   }
   .audience .layout-horizontal {

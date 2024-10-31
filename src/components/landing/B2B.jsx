@@ -2,7 +2,6 @@ import { Audience, Conclusion, Heading } from ".";
 import "./landing.css";
 import RightArrow from "../../assets/icon/right-arrow.svg";
 import ManageCrypto from "../../assets/landing/manage-crypto.png";
-import CryptoPaymentPng from "../../assets/landing/crypto-payment.png";
 import APIBlockPng1 from "../../assets/landing/b2b-api-block1.png";
 import APIBlockPng2 from "../../assets/landing/b2b-api-block2.png";
 import WorldPng from "../../assets/landing/world.png";
@@ -392,41 +391,45 @@ const products = [
 
 const CryptoPayment = () => {
   return (
-    <div className="cryptopayment">
-      <div className="layout-cryptopayment">
-        <Flex
-          vertical
-          gap={32}
-          align={"flex-start"}
-          justify={"space-between"}
-          className="crypto-payment-first-block"
-        >
-          <h1 className="title">
-            Crypto payments are borderless and limitless
-          </h1>
-          <Flex vertical gap={24}>
-            <Flex vertical gap={12}>
-              <p className="sub-title crypto-payment-subtext1">
-                Unlike traditional banking, crypto transactions operate 24/7
-                without restrictions on the amount.
-              </p>
-              <p className="sub-title crypto-payment-subtext2">
-                They cannot be blocked or reversed, as every blockchain
-                transaction is final by design.
-              </p>
-            </Flex>
-            <Flex className="sub-title" vertical gap={12}>
-              <li>99.9% acceptance rate</li>
-              <li>No chargebacks or rolling reserves</li>
-              <li>Unlimited transaction amounts</li>
-            </Flex>
+    <Flex
+      justify={"space-between"}
+      gap={"6rem"}
+      className="crypto-payment-container"
+    >
+      <Flex vertical gap={32} className="crypto-payment-first-block">
+        <div className="crypto-payment-title">
+          Crypto payments are borderless and limitless
+        </div>
+        <Flex vertical gap={24}>
+          <Flex vertical gap={12}>
+            <p className="crypto-payment-subtext crypto-payment-subtext1">
+              Unlike traditional banking, crypto transactions operate 24/7
+              without restrictions on the amount.
+            </p>
+            <p className="crypto-payment-subtext crypto-payment-subtext2">
+              They cannot be blocked or reversed, as every blockchain
+              transaction is final by design.
+            </p>
+          </Flex>
+          <Flex className="crypto-payment-subtext" vertical gap={12}>
+            <li>99.9% acceptance rate</li>
+            <li>No chargebacks or rolling reserves</li>
+            <li>Unlimited transaction amounts</li>
           </Flex>
         </Flex>
-        <div className="cryptopayment-img">
-          <img src={CryptoPaymentPng} alt="Crypto payment using Nefentus" />
-        </div>
-      </div>
-    </div>
+      </Flex>
+
+      <Flex vertical gap={"2rem"} className="crypto-payment-second-block">
+        <div className="best-suited">Best suited for:</div>
+        <Flex vertical gap={12} className="best-suited-list">
+          <li className="sub-title">Software Development</li>
+          <li className="sub-title">Travel</li>
+          <li className="sub-title">Real Estate</li>
+          <li className="sub-title">E-Commerce</li>
+          <li className="sub-title">Marketing & Advertising</li>
+        </Flex>
+      </Flex>
+    </Flex>
   );
 };
 
