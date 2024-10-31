@@ -3,6 +3,7 @@ import RightArrow from "../../assets/icon/right-arrow.svg";
 import { Audience, Conclusion, Heading } from ".";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import ManageCrypto from "../../assets/landing/manage-crypto.png";
+import MultipleWallets from "../../assets/landing/multi-wallets.png";
 import Hero1 from "../../assets/landing/Hero 1.png";
 import Hero2 from "../../assets/landing/Hero 2.png";
 import Hero3 from "../../assets/landing/hero 3.png";
@@ -32,6 +33,7 @@ import SendIcon from "../../assets/landing/send-ico.svg";
 import SwapIcon from "../../assets/landing/swap-ico.svg";
 import { useEffect } from "react";
 import { Flex } from "antd";
+import CommonButton from "../commonButton";
 
 const B2CBody = () => {
   useEffect(() => {
@@ -53,7 +55,7 @@ const B2CBody = () => {
         gap: "4rem",
       }}
     >
-      <Hero />
+      <B2CHero />
 
       <MultiWallets />
 
@@ -68,11 +70,11 @@ const B2CBody = () => {
 
 export default B2CBody;
 
-const Hero = () => {
+export const B2CHero = () => {
   return (
     <div
       id="hero"
-      className="layout-paragraph hero"
+      className="hero b2c-hero"
       style={{
         paddingBlock: "0",
       }}
@@ -100,7 +102,7 @@ const Hero = () => {
           </p>
           <div className="button-container">
             <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
-              <button>Get Started</button>
+              <CommonButton text={"Get started"} type={"primary"} />
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>
@@ -153,7 +155,7 @@ const Hero = () => {
               display: "flex",
               flexDirection: "column",
               gap: "2rem",
-              justifyContent: "end",
+              justifyContent: "center",
             }}
           >
             <img
@@ -161,82 +163,9 @@ const Hero = () => {
               style={{ width: "100%" }}
               alt="Swap cryptocurrency"
             />
-            <img
-              src={Hero4}
-              style={{
-                width: "100%",
-                borderBottom: "none",
-                borderBottomRightRadius: "0",
-                borderBottomLeftRadius: "0",
-              }}
-              alt="Swap cryptocurrency using Nefentus"
-            />
           </div>
         </div>
       </div>
-      <img
-        src={HeroLineTop}
-        style={{
-          top: "0",
-          width: "80%",
-        }}
-        alt="line"
-      />
-      <img
-        src={HeroLineBottom}
-        style={{
-          bottom: "0",
-          width: "80%",
-        }}
-        className="translate-left"
-        alt="line"
-      />
-      <hr
-        style={{
-          right: "calc(25% - 0.5rem)",
-          bottom: "0",
-          height: "100%",
-        }}
-        className="hide-in-tablet"
-      />
-      <hr
-        style={{
-          right: "0",
-          bottom: "0",
-          height: "100%",
-        }}
-        className="hide-in-tablet"
-      />
-      <div
-        style={{
-          right: "calc(25% - 2.6rem)",
-          bottom: "0",
-          height: "100%",
-        }}
-        className="hide-in-tablet vertical-dashed-line"
-      />
-      <hr
-        style={{
-          right: "calc(50% - 3rem)",
-          bottom: "0",
-          height: "100%",
-        }}
-        className="hide-in-tablet"
-      />
-      <hr
-        style={{
-          top: "0",
-          width: "100vw",
-          zIndex: "1",
-        }}
-      />
-      <hr
-        style={{
-          bottom: "0",
-          width: "100vw",
-          zIndex: "1",
-        }}
-      />
     </div>
   );
 };
@@ -304,155 +233,31 @@ const wallets = [
   },
 ];
 
-const MultiWallets = () => {
+export const MultiWallets = () => {
   return (
     <div
       id="multi-wallets"
-      className="layout-paragraph"
+      className="layout-paragraph b2c-multi-wallet"
       style={{
         paddingBottom: "0",
-        width: "100vw",
+        width: "100%",
         overflow: "hidden",
       }}
     >
-      <Heading
-        title={`Juggle multiple wallets seamlessly`}
-        subtitle={`Effortlessly handle multiple wallets with our platform. Choose our built-in wallet or link countless external wallets for ultimate flexibility.`}
-      />
-
-      <div
-        className="multi-wallet-management"
-        style={{ overflow: "hidden", width: "100vw", height: "594px" }}
-      >
-        <hr
-          style={{
-            top: "0",
-            width: "100vw",
-          }}
-          className="hide-in-mobile"
-        />
-        <hr
-          style={{
-            bottom: "0",
-            width: "100vw",
-          }}
-        />
-        <div style={{ borderRight: "1px solid #202020", width: "25%" }}>
-          <div
-            className="ico-card-wallet metamask"
-            style={{
-              transform: "rotate(6deg)",
-              top: "5rem",
-              left: "0rem",
-            }}
-          >
-            <img src={MetamaskCard} alt="Metamask wallet integration" />
+      <div className="multi-wallet-head">
+        <Flex vertical gap={"1rem"}>
+          <div className="default-text multi-wallet-title">
+            Juggle multiple wallets seamlessly
           </div>
-          <div
-            className="ico-card-wallet hide-in-mobile"
-            style={{
-              transform: "rotate(-12deg)",
-              top: "30rem",
-              left: "3rem",
-            }}
-          >
-            <img src={RainbowCard} alt="Rainbow wallet integration" />
-          </div>
-        </div>
-        <Flex
-          vertical
-          align={"center"}
-          style={{
-            borderRight: "1px solid #202020",
-            width: "50%",
-            height: "100%",
-            justifyContent: "center",
-            // alignItems: "center",
-          }}
-        >
-          <Flex style={{ width: "70%" }}>
-            <Flex vertical gap={24}>
-              <p style={{ fontSize: "2rem", maxWidth: "55%" }}>
-                Or connect an unlimited number of external wallets
-              </p>
-              <div className="wallet-club">
-                {wallets.map((item) => (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "1rem",
-                    }}
-                  >
-                    <img
-                      src={item.icon}
-                      style={{
-                        width: "3.6rem",
-                        height: "3.6rem",
-                        borderRadius: "50%",
-                      }}
-                      alt={item.name}
-                    />
-                    <p
-                      style={{
-                        fontSize: "1.2rem",
-                      }}
-                    >
-                      {item.name}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <p
-                className="sub-title"
-                style={{ fontSize: "1.4rem", maxWidth: "75%" }}
-              >
-                Integrating an external wallet into your platform or service
-                enhances transaction convenience. Seamlessly send & receive
-                payments without the need for external wallets or exchanges,
-                simplifying the process for you.
-              </p>
-            </Flex>
-          </Flex>
-        </Flex>
-        <Flex vertical style={{ width: "25%" }}>
-          <div
-            className="ico-card-wallet coinbase"
-            style={{
-              transform: "rotate(16deg)",
-              top: "0rem",
-              left: "8rem",
-              zIndex: -2,
-              overflow: "hidden",
-            }}
-          >
-            <img src={CoinbaseCard} alt="Coinbase wallet integration" />
-          </div>
-
-          <div
-            className="ico-card-wallet metamask"
-            style={{
-              transform: "rotate(0deg)",
-              top: "20rem",
-              left: "20rem",
-            }}
-          >
-            <img src={WalletConnectCard} alt="Wallet connect integration" />
-          </div>
-
-          <div
-            className="ico-card-wallet hide-in-mobile"
-            style={{
-              transform: "rotate(-9deg)",
-              top: "39rem",
-              left: "10rem",
-            }}
-          >
-            <img src={RabbyCard} alt="Rabby wallet integration" />
+          <div className="multi-wallet-subtitle default-text-gray">
+            Effortlessly handle multiple wallets with our platform. Choose our
+            built-in wallet or link countless external wallets for ultimate
+            flexibility.
           </div>
         </Flex>
       </div>
+
+      <img src={MultipleWallets} alt="Multiple Wallets" width={"100%"} />
     </div>
   );
 };
@@ -493,35 +298,10 @@ const CryptoManage = () => {
   );
 };
 
-const Transactions = () => {
+export const Transactions = () => {
   return (
-    <div
-      id="transactions"
-      className="layout-paragraph"
-      style={{
-        paddingBlock: "4rem 8rem",
-      }}
-    >
-      <Heading
-        title={`All financial transactions involving your wallets`}
-        subtitle={`A cryptocurrency conversion function serves as a tool or software capability crafted to simplify the transformation of one cryptocurrency into another.`}
-      />
+    <div id="transactions" className="layout-paragraph">
       <div className="layout-transactions first">
-        <hr
-          style={{
-            top: "0",
-            width: "100vw",
-          }}
-          className="hide-in-tablet"
-        />
-        <hr
-          style={{
-            bottom: "0",
-            width: "100vw",
-          }}
-          className="hide-in-tablet"
-        />
-
         <img
           className="transaction-img"
           src={TransactionSend}
@@ -552,7 +332,7 @@ const Transactions = () => {
           </div>
           <p
             style={{
-              fontSize: "2rem",
+              fontSize: "2.5rem",
             }}
           >
             Send/Receive with Ease

@@ -21,6 +21,7 @@ import ContactExpert from "../../assets/icon/contact-expert.svg";
 import ContactExpertBlue from "../../assets/icon/contact-expert-blue.svg";
 import Send from "../../assets/landing/send-ico.svg";
 import Dropdown from "../../assets/icon/dropdown.svg";
+import { Flex } from "antd";
 
 const Navigation = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -318,7 +319,7 @@ const Business = () => {
 //   );
 // };
 
-const ContactUs = () => {
+export const ContactUs = () => {
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -328,7 +329,7 @@ const ContactUs = () => {
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
-      <div className={styles.contactus}>
+      <Flex gap={"1rem"} className={`cursor-pointer default-text`}>
         <p>Contact us</p>
         <img
           src={Dropdown}
@@ -338,7 +339,7 @@ const ContactUs = () => {
           }}
           alt="icon"
         />
-      </div>
+      </Flex>
       {open && (
         <div className={styles.dropdown} style={{ left: "-28rem" }}>
           <div

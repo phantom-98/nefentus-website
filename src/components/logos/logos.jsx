@@ -25,9 +25,11 @@ const Logos = () => {
   return (
     <div
       className={` ${styles.logos}`}
-      style={{
-        borderBlock: "1px solid #202020",
-      }}
+      style={
+        {
+          // borderBlock: "1px solid #202020",
+        }
+      }
     >
       <div className={styles.logoImage}>
         <div className={`${styles.line1} line1`}>

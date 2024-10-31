@@ -1,7 +1,11 @@
 .footer-layout {
   color: #b1b1b1;
   font-size: 1.4rem;
-  border-top: 1px solid #202020;
+  border-radius: 16px;
+  border: 1px solid #323232;
+  background: #171717;
+
+  /* border-top: 1px solid #202020; */
 }
 .footer-layout .footer-top {
   display: flex;

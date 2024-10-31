@@ -31,6 +31,7 @@ import Dollar from "../../assets/landing/dollar.svg";
 import SwapIcon from "../../assets/landing/swap-ico.svg";
 import { useEffect, useRef, useState } from "react";
 import { Flex } from "antd";
+import CommonButton from "../commonButton";
 
 const B2BBody = () => {
   const b2bContainer = useRef();
@@ -56,7 +57,7 @@ const B2BBody = () => {
         }}
         ref={b2bContainer}
       >
-        <Hero />
+        <HeroB2B />
 
         <World />
 
@@ -74,7 +75,7 @@ const B2BBody = () => {
 
         <Security />
 
-        <CryptoManage />
+        <B2BCryptoManage />
 
         <Audience />
       </div>
@@ -84,11 +85,11 @@ const B2BBody = () => {
 
 export default B2BBody;
 
-const Hero = () => {
+export const HeroB2B = () => {
   return (
     <div
       id="hero"
-      className="layout-paragraph hero"
+      className="layout-paragraph hero b2b-banner"
       style={{
         paddingBlock: "0",
       }}
@@ -113,15 +114,17 @@ const Hero = () => {
             Simplify invoicing, centralize your wallets, and boost your sales
             efficiency—get it all done on one powerful platform.
           </p>
-          <div className="button-container">
+          <Flex gap={"2rem"} className="button-container">
             <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
-              <button>Get Started</button>
+              <CommonButton text={"Get started"} type={"primary"} />
             </a>
             <a href="/business-support">
-              <span>Talk to an expert</span>
+              <span className="talk-to-expert default-text">
+                Talk to an expert
+              </span>
               <img src={RightArrow} alt="Right arrow" />
             </a>
-          </div>
+          </Flex>
         </div>
         <img
           src={HeroPng}
@@ -132,7 +135,7 @@ const Hero = () => {
           alt="Payment details on Nefentus"
         />
       </div>
-      <img
+      {/* <img
         src={HeroLineTop}
         style={{
           position: "absolute",
@@ -195,7 +198,7 @@ const Hero = () => {
           width: "100vw",
         }}
         className="hide-in-tablet"
-      />
+      /> */}
     </div>
   );
 };
@@ -231,10 +234,10 @@ const steps = [
   },
 ];
 
-const World = () => {
+export const World = () => {
   return (
     <div className="layout-paragraph world">
-      <div className="layout-world container">
+      <div className="layout-world">
         <div className="world-title-layout">
           <h1 className="title">Over 580M crypto owners worldwide</h1>
           <p className="sub-title">
@@ -255,7 +258,7 @@ const World = () => {
   );
 };
 
-const Invoicing = () => {
+export const Invoicing = () => {
   const [step, setStep] = useState(steps.map((_, i) => !i));
   const timeRef = useRef();
   const updateProgress = () => {
@@ -278,7 +281,7 @@ const Invoicing = () => {
   }, []);
 
   return (
-    <div id="invoicing" className="layout-paragraph">
+    <div id="invoicing" className="layout-paragraph b2b-invoice-section">
       <Heading
         title={`Effortless invoice creation`}
         subtitle={`Use our built-in wallet or link an unlimited number of external wallets for seamless transactions.`}
@@ -433,7 +436,7 @@ const CryptoPayment = () => {
   );
 };
 
-const Product = () => {
+export const Product = () => {
   const [stepId, setStepId] = useState(0);
   const [progress, setProgress] = useState(0);
   const [step, setStep] = useState(products.map((item, id) => !id));
@@ -468,7 +471,7 @@ const Product = () => {
     });
   }, [stepId]);
   return (
-    <div id="product" className="layout-paragraph product">
+    <div id="product" className="layout-paragraph product b2b-product">
       <Heading
         title={`Simplified <span style="text-wrap: nowrap">product creation</span>`}
         subtitle={`Utilize our internal wallet or link an unlimited number of external wallets for hassle-free product creation.`}
@@ -755,15 +758,9 @@ const Safe = () => {
   );
 };
 
-const Analytics = () => {
+export const Analytics = () => {
   return (
-    <div
-      id="sales"
-      className="layout-paragraph analytics"
-      style={{
-        paddingBottom: "0",
-      }}
-    >
+    <div id="sales" className="layout-paragraph analytics">
       <Heading
         title={`Insightful sales analytics`}
         subtitle={`Harness the power of our internal wallet or connect an unlimited number of external wallets for comprehensive sales analytics.`}
@@ -778,17 +775,6 @@ const Analytics = () => {
         }}
         alt="Sales analytics on Nefentus"
       />
-
-      <p
-        style={{
-          fontSize: "2.4rem",
-          textAlign: "center",
-          width: "70%",
-        }}
-      >
-        Harness these insights to make informed decisions, streamline your
-        operations & drive business growth
-      </p>
     </div>
   );
 };
@@ -814,14 +800,9 @@ const securities = [
   },
 ];
 
-const Security = () => {
+export const Security = () => {
   return (
-    <div
-      className="layout-paragraph"
-      style={{
-        paddingBottom: "0",
-      }}
-    >
+    <div className="layout-paragraph security">
       <Heading
         title={`Fortified protection`}
         subtitle={`Employ our internal wallet or link limitless external wallets for enhanced security measures.`}
@@ -835,8 +816,8 @@ const Security = () => {
             style={{
               width: `calc(${100 / securities.length}%)`,
               position: "relative",
-              borderInline: "1px solid #202020",
-              background: "#171717",
+              borderInline: "1px solid #323232",
+              background: "#202020",
             }}
           >
             <img
@@ -881,7 +862,7 @@ const Security = () => {
   );
 };
 
-const CryptoManage = () => {
+export const B2BCryptoManage = () => {
   return (
     <div className="layout-paragraph b2b-manage">
       <div className="layout-horizontal layout-b2b-manage">
@@ -901,7 +882,7 @@ const CryptoManage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button>Download App</button>
+              <CommonButton text={"Download App"} type={"primary"} />
             </a>
           </div>
         </div>

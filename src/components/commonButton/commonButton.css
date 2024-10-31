@@ -1,0 +1,33 @@
+.header-login,
+.header-login:focus {
+  color: var(--Dark-color-theme-Dark, #202020) !important;
+  font-size: 1.6rem;
+  border-radius: 6px;
+  padding: 10px 24px;
+  border: 1px solid var(--Dark-color-theme-Grey, #323232) !important;
+  background: var(--Dark-color-theme-Light-grey, #e9e9e9) !important;
+}
+
+.header-login:hover {
+  color: var(--Dark-color-theme-Dark, #202020) !important;
+  background: linear-gradient(0deg, #fff 13.1%, #cfcfcf 187.8%);
+  box-shadow:
+    0px 78px 22px 0px rgba(239, 239, 239, 0),
+    0px -8px 20px 0px rgba(239, 239, 239, 0.18),
+    0px 28px 17px 0px rgba(239, 239, 239, 0.02),
+    0px 12px 12px 0px rgba(239, 239, 239, 0.04),
+    0px 3px 7px 0px rgba(239, 239, 239, 0.04);
+}
+
+.header-signup {
+  border-radius: 6px;
+  background: var(--Whitemode-Blue, #0097cd);
+  padding: 10px 24px;
+  border: 1px solid var(--Whitemode-Blue, #0097cd);
+  font-size: 1.6rem;
+}
+
+.header-signup:hover {
+  background: var(--Whitemode-Blue, #0097cdc5) !important;
+  border: 1px solid var(--Whitemode-Blue, #0097cdc5) !important;
+}

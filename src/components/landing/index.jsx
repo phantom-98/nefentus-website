@@ -60,6 +60,7 @@ import Logos from "../../components/logos/logos";
 
 import { useEffect, useState } from "react";
 import { Flex } from "antd";
+import CommonButton from "../commonButton";
 
 const HomeBody = () => {
   useEffect(() => {
@@ -248,13 +249,13 @@ const helps = [
   },
 ];
 
-const Helps = () => {
+export const Helps = () => {
   const [expands, setExpands] = useState(helps.map((_, index) => !index));
 
   return (
     <div className="layout-paragraph help">
       <Heading
-        title={`Accept crypto payments globally`}
+        title={`Transform your business with \n our all-in-one cryptocurrency platform`}
         subtitle={`Empower your business with a comprehensive suite of cryptocurrency tools conveniently housed under one roof.`}
       />
       <div className="layout-horizontal layout-help">
@@ -278,7 +279,7 @@ const Helps = () => {
           })}
         </div>
       </div>
-      <div
+      {/* <div
         className="vertical-dashed-line"
         style={{
           right: "0",
@@ -329,14 +330,14 @@ const Helps = () => {
           bottom: "0",
           width: "100vw",
         }}
-      />
+      /> */}
     </div>
   );
 };
 
-const CryptoManage = () => {
+export const CryptoManage = () => {
   return (
-    <div className="layout-paragraph manage">
+    <div className="layout-paragraph">
       <div className="layout-horizontal layout-manage">
         <div className="manage-title-layout">
           <h1 className="title">Manage your crypto on the go with our app</h1>
@@ -354,7 +355,7 @@ const CryptoManage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button>Download App</button>
+              <CommonButton text={"Download App"} type={"primary"} />
             </a>
           </div>
         </div>
@@ -431,13 +432,13 @@ const IcoGroup = ({ icons }) => {
   );
 };
 
-const Benefits = () => {
+export const Benefits = () => {
   return (
     <div
       className="layout-paragraph"
       style={{
         borderTop: "1px solid #202020",
-        paddingTop: "5rem",
+        padding: "5rem",
       }}
     >
       <IcoGroup icons={[HeartSquare, Smile, HeartChecked]} />
@@ -446,7 +447,7 @@ const Benefits = () => {
         subtitle={`Nefentus prioritizes your customers' convenience at every step.`}
       />
       <div className="layout-benefits">
-        <div style={{ objectFit: "cover" }}>
+        <div style={{ objectFit: "cover", borderRadius: "16px" }}>
           <img
             src={WalletsPng}
             style={{ height: "100%" }}
@@ -462,7 +463,7 @@ const Benefits = () => {
           </div>
         </div>
         <div className="benefits">
-          <div>
+          <div style={{ borderRadius: "16px" }}>
             <p>Pre-configured payment.</p>
             <img src={Benefit1} alt="Pre configured payments using Nefentus" />
             <p className="sub-title">
@@ -470,7 +471,7 @@ const Benefits = () => {
               removing any need for manual data entry.
             </p>
           </div>
-          <div>
+          <div style={{ borderRadius: "16px" }}>
             <img src={Benefit2} alt="Cryptocurrency checkout" />
           </div>
         </div>
@@ -534,11 +535,22 @@ const ScrollAnimation = () => {
   const [pos, setPos] = useState(0);
 
   const handleScroll = (e) => {
-    const position =
+    let scrollPercentage =
       (100 * document.documentElement.scrollTop) /
-      document.documentElement.offsetHeight;
-    console.log("scroll >", position);
-    setPos(position < 50 ? 0 : position < 59.2 ? 1 : 2);
+      (document.documentElement.scrollHeight -
+        document.documentElement.clientHeight);
+
+    console.log(
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight,
+      100 * document.documentElement.scrollTop,
+    );
+    console.log(scrollPercentage);
+    // debugger;
+
+    if (window.innerWidth <= 1300) scrollPercentage += 5;
+    // else if (window.innerWidth <= 1920) scrollPercentage += 3;
+    setPos(scrollPercentage < 52.5 ? 0 : scrollPercentage < 59 ? 1 : 2);
   };
 
   useEffect(() => {
@@ -550,7 +562,7 @@ const ScrollAnimation = () => {
   }, []);
 
   return (
-    <div className="scroll-container container">
+    <div id="scroll-wrapper" className="scroll-container container">
       <div className="text-part">
         {features.map((item, i) => {
           return (
@@ -609,17 +621,19 @@ const ScrollAnimation = () => {
   );
 };
 
-const MainFeaturesHead = () => {
+export const MainFeaturesHead = () => {
   return (
     <div
       className="layout-paragraph"
       style={{
-        marginTop: "8rem",
+        // marginTop: "0rem",
         paddingBlock: "5rem",
-        width: "100vw",
-        borderBlock: "1px solid #343434",
+        width: "100%",
+        // borderBlock: "1px solid #343434",
+        // borderRadius: "16px 16px 0px 0px",
+        border: "none",
         background: "#131313",
-        overflow: "hidden",
+        // overflow: "hidden",
       }}
     >
       <IcoGroup icons={[PC, Dollar, Chain]} />
@@ -627,7 +641,7 @@ const MainFeaturesHead = () => {
         title={`Insightful dashboards`}
         subtitle={`Nefentus prioritizes customer convenience through thoughtfully designed dashboards`}
       />
-      <hr
+      {/* <hr
         style={{
           right: "25%",
           width: "1px",
@@ -656,11 +670,11 @@ const MainFeaturesHead = () => {
           zIndex: "1",
         }}
         className="hide-in-tablet vertical-dashed-line"
-      />
+      /> */}
     </div>
   );
 };
-const MainFeaturesBody = () => {
+export const MainFeaturesBody = () => {
   return (
     <div className="main-feature">
       <ScrollAnimation />
@@ -752,7 +766,7 @@ const IndustryCard = ({ icon, name }) => {
   );
 };
 
-const Industries = () => {
+export const Industries = () => {
   return (
     <div className="layout-paragraph layout-industry">
       <Heading
@@ -790,40 +804,6 @@ const Industries = () => {
           </div>
         </div>
       </div>
-      <img
-        src={ServiceLine1}
-        style={{
-          position: "absolute",
-          left: "0",
-          top: "0",
-          width: "42%",
-          zIndex: "1",
-        }}
-        alt="Background left line"
-      />
-      <img
-        src={ServiceLine2}
-        style={{
-          position: "absolute",
-          right: "0",
-          top: "0",
-          width: "36%",
-          zIndex: "1",
-        }}
-        alt="Background right line"
-      />
-      <hr
-        style={{
-          width: "100vw",
-          bottom: "-1px",
-        }}
-      />
-      <hr
-        style={{
-          width: "100vw",
-          top: "-1px",
-        }}
-      />
     </div>
   );
 };
@@ -859,7 +839,7 @@ const communities = [
   },
 ];
 
-const Community = () => {
+export const Community = () => {
   return (
     <div className="layout-paragraph layout-community">
       <Heading
@@ -964,7 +944,7 @@ export const Audience = () => {
           </p>
           <div className="button-container">
             <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
-              <button>Get Started</button>
+              <CommonButton text={"Get started"} type={"primary"} />
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>

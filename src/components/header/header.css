@@ -1,0 +1,71 @@
+.mobMenu {
+  display: none !important;
+}
+
+.mobile-header {
+  background: #171717;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  padding: 5rem;
+}
+
+@media screen and (max-width: 900px) {
+  .web-options {
+    display: none;
+  }
+  .mobMenu {
+    position: relative;
+    display: initial !important;
+    cursor: pointer;
+    pointer-events: initial !important;
+    width: 25px;
+    padding-block: 2.2rem;
+  }
+  .lineButton {
+    position: absolute;
+    width: 25px;
+    right: 0;
+    top: 0;
+    height: 44px;
+  }
+  .mobMenu img {
+    width: 1.6rem;
+  }
+
+  .line {
+    top: 50%;
+    width: 15px;
+    height: 1px;
+    position: absolute;
+    right: 0;
+    transition: 0.2s ease-out;
+    /* transform-origin: left; */
+    transform-origin: center;
+
+    background-color: var(--text-color);
+  }
+
+  .line:nth-child(1) {
+    transform: translateY(-5px);
+  }
+
+  .line:nth-child(3) {
+    transform: translateY(5px);
+  }
+
+  .openLine:nth-child(2) {
+    width: 0px;
+    right: 12.5px;
+  }
+
+  .openLine:nth-child(1) {
+    transform: translateY(0) rotate(45deg);
+  }
+
+  .openLine:nth-child(3) {
+    transform: translateY(0) rotate(-45deg);
+  }
+}

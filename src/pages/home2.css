@@ -1,0 +1,171 @@
+.crypto-payment-container {
+  width: 100vw !important;
+}
+
+.crypto-payment-subtext1 {
+  width: 65%;
+}
+
+.crypto-payment-subtext2 {
+  width: 60%;
+}
+
+.crypto-payment-title {
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+.crypto-payment-second-block {
+  padding: 60px;
+  width: 50%;
+  background: #171717;
+  background-image: url("../../assets/landing/best-suited-background.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right;
+}
+
+.best-suited {
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+
+.best-suited-list li {
+  list-style: none;
+}
+
+.best-suited-list li::before {
+  content: "\2022";
+  color: #387d91;
+  display: inline-block;
+  width: 1em;
+}
+
+.crypto-payment-subtext {
+  font-size: 1.2rem !important;
+}
+
+.home-banner {
+  position: relative;
+  margin-top: 64px;
+  padding: 30px 60px;
+  align-items: center;
+  border-radius: 16px;
+  border: 1px solid #323232;
+  background: rgba(23, 23, 23, 0.85);
+  box-shadow:
+    0px 863px 242px 0px rgba(0, 0, 0, 0),
+    0px 552px 221px 0px rgba(0, 0, 0, 0.01),
+    0px 311px 186px 0px rgba(0, 0, 0, 0.05),
+    0px 138px 138px 0px rgba(0, 0, 0, 0.09),
+    0px 35px 76px 0px rgba(0, 0, 0, 0.1);
+  background-image: url("../assets/landing/home-banner-background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* .home-banner-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  object-fit: cover;
+} */
+
+.home-banner-left {
+  width: 50%;
+  /* padding: 88px 0px 60px 60px; */
+  /* background-image: url("../assets/landing/home-banner-left.svg");
+  background-repeat: no-repeat;
+  background-size: contain; */
+}
+
+.home-banner-right {
+  width: 50%;
+  /* padding: 28px 60px 0px 0px; */
+  /* background-image: url("../assets/landing/home-banner-right.svg"); */
+  /* background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right; */
+}
+
+.home-banner-right img {
+  width: 100%;
+  max-width: 472px;
+}
+
+/* .home-banner-right img:last-child {
+  margin-top: 40px;
+  margin-left: -40px;
+} */
+
+.home-banner-subtext {
+  font-size: 1.6rem;
+}
+
+.banner-get-started,
+.banner-get-started:hover,
+.banner-get-started:focus {
+  border-radius: 6px;
+  background: var(--Whitemode-Blue, #0097cd) !important;
+  border: 1px solid #0097cd !important;
+  /* Shad1 */
+  box-shadow:
+    0px 27px 8px 0px rgba(0, 0, 0, 0),
+    0px 18px 7px 0px rgba(0, 0, 0, 0.01),
+    0px 10px 6px 0px rgba(0, 0, 0, 0.05),
+    0px 4px 4px 0px rgba(0, 0, 0, 0.09),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.banner-get-started,
+.banner-get-started:focus {
+  border-radius: 6px;
+  background: var(--Whitemode-Blue, #0097cd);
+  padding: 10px 24px;
+  border: 1px solid var(--Whitemode-Blue, #0097cd);
+  font-size: 1.6rem;
+  box-shadow:
+    0px 27px 8px 0px rgba(0, 0, 0, 0),
+    0px 18px 7px 0px rgba(0, 0, 0, 0.01),
+    0px 10px 6px 0px rgba(0, 0, 0, 0.05),
+    0px 4px 4px 0px rgba(0, 0, 0, 0.09),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.banner-get-started:hover {
+  background: var(--Whitemode-Blue, #0097cdc5) !important;
+  border: 1px solid var(--Whitemode-Blue, #0097cdc5) !important;
+}
+
+.talk-to-expert {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.logos-scroller {
+  width: 100%;
+}
+
+@media screen and (max-width: 900px) {
+  .home-banner {
+    flex-direction: column;
+    background-image: url("../assets/landing/home-banner-mobile.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: top;
+    padding: 30px;
+    padding-top: 100px;
+    gap: 50px;
+  }
+  .home-banner-left,
+  .home-banner-right {
+    width: 100%;
+  }
+  .home-banner-right {
+    justify-content: center;
+  }
+}

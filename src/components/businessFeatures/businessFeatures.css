@@ -1,0 +1,42 @@
+.business-features {
+  padding: 60px;
+  border-radius: 16px;
+  border: 1px solid var(--Dark-color-theme-Grey, #323232);
+  background: var(--Dark-color-theme-BG2, #171717);
+}
+
+.business-feature-left {
+  padding: 1.8rem;
+  border-radius: 12px;
+  border: 1px solid var(--Dark-color-theme-Grey, #323232);
+  background: var(--Dark-color-theme-BG2, #171717);
+  width: 33.33%;
+  height: fit-content;
+}
+
+.business-nefentus-logo {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid #202020;
+  background: var(--Dark-color-theme-Dark, #202020);
+  box-shadow:
+    0px 49px 14px 0px rgba(0, 0, 0, 0),
+    0px 31px 12px 0px rgba(0, 0, 0, 0.01),
+    0px 18px 11px 0px rgba(0, 0, 0, 0.05),
+    0px 8px 8px 0px rgba(0, 0, 0, 0.09),
+    0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+}
+
+.business-feature-left-text {
+  font-size: 24px;
+}
+
+.business-feature-right {
+  width: 66.66%;
+}
+
+.business-account-create {
+  width: fit-content !important;
+  margin-top: 8px;
+}

@@ -1,0 +1,136 @@
+.SubscriptionPlan {
+  padding: 60px;
+  border-radius: 16px;
+  border: 1px solid var(--Dark-color-theme-Grey, #323232);
+  background: var(--Dark-color-theme-BG2, #171717);
+}
+
+.subscription-plan-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.subscription-plan-table tr td {
+  width: 22.22%;
+}
+
+.subscription-plan-table tr td:first-child {
+  border-top: none;
+  width: 33.33%;
+}
+
+.plan-table-border-row {
+  border-bottom: 1px solid #323232; /* Define border width, style, and color */
+}
+
+.plan-table-border-row:last-child {
+  border-bottom: none;
+}
+
+.subscription-plan-table tr:first-child td:nth-child(2) .plan-type,
+.subscription-plan-table tr:first-child td:nth-child(3) .plan-type,
+.subscription-plan-table tr:first-child td:nth-child(4) .plan-type {
+  border-top: 1px solid #323232;
+  border-radius: 12px 12px 0px 0px;
+}
+
+.subscription-plan-table tr:last-child td:nth-child(2) .plan-type,
+.subscription-plan-table tr:last-child td:nth-child(3) .plan-type,
+.subscription-plan-table tr:last-child td:nth-child(4) .plan-type {
+  border-bottom: 1px solid #323232;
+  border-radius: 0px 0px 12px 12px;
+}
+
+.subscription-plan-table tr td:nth-child(2) .plan-type,
+.subscription-plan-table tr td:nth-child(3) .plan-type,
+.subscription-plan-table tr td:nth-child(4) .plan-type {
+  margin-left: 24px;
+}
+
+.plan-table-border-row td,
+th {
+  border-bottom: inherit; /* Applies the border to each cell within the row */
+}
+
+.plan-type {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  background: var(--Dark-color-theme-Dark, #202020);
+  border-left: 1px solid #323232;
+  border-right: 1px solid #323232;
+  min-height: 60.5px;
+}
+
+.plan-payment-text-min-height {
+  min-height: 36px;
+}
+
+.plan-card-head {
+  padding: 24px;
+  width: 100%;
+  border-bottom: 1px solid #323232;
+}
+
+.plan-card-title {
+  font-size: 2.2rem;
+}
+
+.plan-type label {
+  border-radius: 6px;
+  border: 1px solid var(--Dark-color-theme-Grey, #323232);
+  background: var(--Dark-color-theme-Grey, #323232);
+  box-shadow:
+    0px 385px 108px 0px rgba(0, 0, 0, 0),
+    0px 246px 99px 0px rgba(0, 0, 0, 0.01),
+    0px 139px 83px 0px rgba(0, 0, 0, 0.05),
+    0px 62px 62px 0px rgba(0, 0, 0, 0.09),
+    0px 15px 34px 0px rgba(0, 0, 0, 0.1);
+  padding: 5px 12px;
+  font-size: 1.2rem;
+  width: fit-content;
+}
+
+.select-plan-button {
+  padding: 10px 24px;
+  border-radius: 6px;
+  border: 1px solid var(--Dark-color-theme-Grey, #323232) !important;
+  background: var(--Dark-color-theme-Grey, #323232) !important;
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+.select-plan-button:hover {
+  background: var(--Whitemode-Blue, #0097cd) !important;
+}
+
+.plan-type:hover .plan-card-head {
+  background: linear-gradient(187deg, #252525 10.75%, #3e3e3e 248.84%);
+  border-radius: 12px 12px 0px 0px;
+}
+
+.plan-label {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--Light-grey2, #b1b1b1);
+  padding: 20px 0px;
+}
+
+.plan-payment {
+  padding: 24px;
+}
+
+.plan-payment p {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.plan-payment h5 {
+  font-size: 1.4rem;
+}
+
+.plan-label h3 {
+  font-size: 2.5rem;
+}

@@ -2,7 +2,7 @@ import styles from "./vacancyBody.module.css";
 
 const VacancyBody = () => {
   return (
-    <div className={`container ${styles.vacancyBody}`}>
+    <div className={`${styles.vacancyBody}`}>
       <div className={styles.heading}>
         <p>Become a part</p>
         <p>

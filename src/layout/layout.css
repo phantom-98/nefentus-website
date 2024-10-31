@@ -1,0 +1,13 @@
+.layout-container {
+  background-image: url("../assets/landing/header-background.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 36px 60px;
+}
+
+.layout-container-wrapper {
+  background-image: url("../assets/landing/footer-background.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom;
+}

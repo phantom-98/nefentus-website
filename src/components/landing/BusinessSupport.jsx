@@ -7,6 +7,7 @@ import TopSvg from "../../assets/landing/contact-top.svg";
 import BottomSvg from "../../assets/landing/contact-bottom.svg";
 import backendAPI from "../../api/backendAPI";
 import { MessageContext } from "../../context/message";
+import CommonButton from "../commonButton";
 
 const BusinessSupportBody = () => {
   const [fullName, setFullName] = useState("");
@@ -110,7 +111,7 @@ const BusinessSupportBody = () => {
             value={description}
             setState={setDescription}
           />
-          <button onClick={contact}>Submit</button>
+          <CommonButton text={"Submit"} type={"primary"} onClick={contact} />
         </div>
         <h2>
           Thank you for reaching out to us.
@@ -118,43 +119,6 @@ const BusinessSupportBody = () => {
           We look forward to assisting you!
         </h2>
       </div>
-      <hr
-        style={{
-          top: "0",
-          zIndex: "1",
-          width: "100vw",
-        }}
-      />
-      <img
-        src={LeftSvg}
-        style={{
-          position: "absolute",
-          left: "0",
-          top: "0",
-          zIndex: "-1",
-        }}
-        alt="icon"
-      />
-      <img
-        src={TopSvg}
-        style={{
-          position: "absolute",
-          right: "0",
-          top: "0",
-          zIndex: "-1",
-        }}
-        alt="icon"
-      />
-      <img
-        src={BottomSvg}
-        style={{
-          position: "absolute",
-          right: "0",
-          bottom: "0",
-          zIndex: "-1",
-        }}
-        alt="icon"
-      />
     </div>
   );
 };

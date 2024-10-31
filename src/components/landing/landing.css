@@ -16,18 +16,18 @@
   gap: 6rem;
   justify-content: space-between;
   align-items: center;
-  padding: 0rem 0 4rem 0;
+  padding: 0px 28px 28px 60px;
 }
 /* .cryptopayment {
   background-color:#171717;
 } */
 
 .landing-layout .world {
-  margin-top: -4rem;
   background: #171717;
   border-block: 1px solid #202020;
-  width: 100vw !important;
+  width: 100% !important;
   overflow: hidden;
+  padding: 60px;
 }
 
 .landing-layout .cryptopayment {
@@ -100,7 +100,8 @@
   gap: 2rem;
   justify-content: space-between;
   align-items: start;
-  width: 45%;
+  width: 50%;
+  padding-left: 4rem;
 }
 
 .world-title-layout {
@@ -140,7 +141,6 @@
   font-weight: 500;
 }
 .world-title-layout h1 {
-  width: 72%;
   font-size: 3.2rem;
   line-height: 5rem;
   font-weight: 500;
@@ -198,7 +198,7 @@
   align-items: center;
   gap: 3.6rem;
 }
-
+/* 
 .landing-layout button {
   font-size: 1.4rem;
   padding: 1rem 3.6rem;
@@ -227,7 +227,7 @@
   box-shadow:
     0px -1px 0px 0px #c9c9c9 inset,
     0px 1px 0px 0px #fff inset;
-}
+} */
 
 .button-container a {
   display: flex;
@@ -311,14 +311,17 @@
   flex-direction: column;
   align-items: center;
   gap: 4rem;
-  padding: 8rem 0;
+  overflow: hidden;
   position: relative;
+  border-radius: 16px;
+  border: 1px solid var(--Dark-color-theme-Grey, #323232);
+  background: var(--Dark-color-theme-BG2, #171717);
 }
 .audience {
   padding: 0 !important;
   background: #171717;
   border-block: 1px solid #202020;
-  width: 100vw !important;
+  width: 100% !important;
   overflow: hidden;
 }
 .audience .layout-horizontal {
@@ -365,7 +368,7 @@
   padding: 0;
   align-items: flex-start;
   gap: 0;
-  border: 1px solid #171717;
+  border-top: 1px solid var(--Dark-color-theme-Grey, #323232);
   background: #202020;
   width: 100%;
 }
@@ -389,6 +392,8 @@
   align-items: flex-start;
   background: #171717;
   padding: 2rem;
+  border-right: 1px solid var(--Dark-color-theme-Grey, #323232);
+  background: var(--Dark-color-theme-Dark, #202020);
 }
 
 .landing-layout .feature {
@@ -600,7 +605,12 @@
 }
 
 .landing-layout .layout-industry {
-  border: 1px solid #202020;
+  border-radius: 16px;
+  border: 1px solid var(--Dark-color-theme-Grey, #323232);
+  background-image: url("../../assets/landing/industry-background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 .landing-layout .layout-getting-started {
   margin-top: 16rem;
@@ -854,6 +864,7 @@
 
 .landing-layout .transaction-img {
   width: 70%;
+  border-right: 1px solid #323232;
 }
 .landing-layout .transaction-img img {
   width: 100%;
@@ -865,6 +876,10 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  background: #1e1e1e;
+  border: 1px solid var(--Dark-color-theme-Grey, #323232);
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .landing-layout .invoicing-step-wrapper {
@@ -873,7 +888,8 @@
   flex-direction: column;
   justify-content: space-evenly;
   gap: 1rem;
-  padding: 1rem 1rem 1rem 0;
+  padding: 2rem;
+  border-right: 1px solid var(--Dark-color-theme-Dark, #202020);
 }
 
 .landing-layout .invoicing-step {
@@ -881,8 +897,8 @@
   flex-direction: column;
   gap: 0.6rem;
   padding: 1.2rem 1rem;
-  border-radius: 0.6rem;
-  border: 1px solid #202020;
+  border-radius: 6px;
+  border: 1px solid var(--Dark-color-theme-Grey, #323232);
   font-size: 1.4rem;
   cursor: pointer;
   transition: 0.5s ease-in;
@@ -1005,8 +1021,7 @@
 .landing-layout .help {
   gap: 8rem;
   /* padding-block: 16rem; */
-  padding-top: 16rem;
-  padding-bottom: 4rem;
+  padding-top: 12rem;
 }
 .landing-layout .manage {
   padding-block: 12rem;
@@ -1014,9 +1029,9 @@
 .landing-layout .b2c-manage {
   padding-block: 4rem;
 }
-.landing-layout .b2b-manage {
+/* .landing-layout .b2b-manage {
   padding-block: 10rem;
-}
+} */
 .landing-layout .benefits img {
   height: 100%;
   position: absolute;
@@ -1031,10 +1046,11 @@
 }
 .landing-layout .main-feature {
   padding-block: 8rem 0;
-  margin-bottom: 16rem;
-  width: 100vw;
+  /* margin-bottom: 16rem; */
+  width: 100%;
   background: #131313;
   border-bottom: 1px solid #202020;
+  border-radius: 0px 0px 16px 16px;
 }
 .landing-layout .safe-top {
   display: flex;
@@ -1055,6 +1071,7 @@
 }
 .layout-community {
   align-items: start !important;
+  padding: 5rem;
 }
 .layout-community .layout-title {
   padding: 0;
@@ -1116,6 +1133,8 @@
   padding: 60px;
   align-self: stretch;
   background: #171717;
+  border: 1px solid #323232;
+  border-radius: 16px;
 }
 
 .faq-first-section {
@@ -1185,6 +1204,54 @@
 
 .crypto-payment-subtext {
   font-size: 1.2rem !important;
+}
+
+.b2b-banner {
+  background-image: url("../../assets/landing/b2b-banner-bg.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+}
+
+.b2b-invoice-section,
+.b2b-product,
+.landing-layout .analytics,
+.security {
+  padding: 5rem;
+}
+
+.b2c-hero {
+  background-image: url("../../assets/landing/b2c-hero-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 16px;
+  border: 1px solid #323232;
+  /* background: rgba(23, 23, 23, 0.85); */
+  box-shadow:
+    0px 863px 242px 0px rgba(0, 0, 0, 0),
+    0px 552px 221px 0px rgba(0, 0, 0, 0.01),
+    0px 311px 186px 0px rgba(0, 0, 0, 0.05),
+    0px 138px 138px 0px rgba(0, 0, 0, 0.09),
+    0px 35px 76px 0px rgba(0, 0, 0, 0.1);
+}
+
+.b2c-multi-wallet {
+  align-items: start !important;
+  gap: 0 !important;
+}
+
+.multi-wallet-head {
+  padding: 4rem;
+}
+
+.multi-wallet-title {
+  font-size: 3.2rem;
+  line-height: 5rem;
+  font-weight: 500;
+}
+
+.multi-wallet-subtitle {
+  font-size: 1.5rem;
+  max-width: 52rem;
 }
 
 @media (max-width: 900px) {
@@ -1266,7 +1333,7 @@
   }
   .landing-layout .help {
     gap: 4rem;
-    padding-block: 8rem;
+    /* padding-block: 8rem; */
   }
   .landing-layout .layout-feature {
     width: 100%;
@@ -1684,6 +1751,9 @@
 .landing-layout.contact {
   width: 100%;
   position: relative;
+  background: #202020;
+  border: 1px solid #323232;
+  border-radius: 16px;
 }
 .contact .contact-layout {
   margin: 4rem auto 8rem;

@@ -31,11 +31,11 @@ const sitemap = [
     body: [
       {
         subtitle: "Personal use",
-        link: "/b2c",
+        link: "/private",
       },
       {
         subtitle: "Business use",
-        link: "/b2b",
+        link: "/business",
       },
     ],
   },

@@ -23,11 +23,16 @@ import PageNotFound from "./components/pageNotFound";
 
 import { AuthProvider } from "./context/auth/authContext";
 import Home from "./pages/Home";
+import Home2 from "./pages/Home2";
 import B2C from "./pages/B2C";
 import B2B from "./pages/B2B";
 import Resources from "./pages/Resources";
 import BusinessSupport from "./pages/BusinessSupport";
 import TechnicalSupport from "./pages/TechnicalSupport";
+import Layout2 from "./layout";
+import Pricing from "./pages/pricing";
+import Business from "./pages/business";
+import Private from "./pages/private";
 
 function App() {
   useEffect(() => {
@@ -86,6 +91,38 @@ function App() {
                     }
                   />
                   <Route
+                    path="/home2"
+                    element={
+                      <Layout2>
+                        <Home2 />
+                      </Layout2>
+                    }
+                  />
+                  <Route
+                    path="/pricing"
+                    element={
+                      <Layout2>
+                        <Pricing />
+                      </Layout2>
+                    }
+                  />
+                  <Route
+                    path="/business"
+                    element={
+                      <Layout2>
+                        <Business />
+                      </Layout2>
+                    }
+                  />
+                  <Route
+                    path="/private"
+                    element={
+                      <Layout2>
+                        <Private />
+                      </Layout2>
+                    }
+                  />
+                  <Route
                     path="/b2c"
                     element={
                       <Layout>
@@ -105,26 +142,26 @@ function App() {
                   <Route
                     path="/business-support"
                     element={
-                      <Layout>
+                      <Layout2>
                         <BusinessSupport />
-                      </Layout>
+                      </Layout2>
                     }
                   />
                   <Route
                     path="/technical-support"
                     element={
-                      <Layout>
+                      <Layout2>
                         <TechnicalSupport />
-                      </Layout>
+                      </Layout2>
                     }
                   />
                   <Route
                     path="/terms-of-use"
                     element={
                       <>
-                        <Navigation />
-                        <TermsofUSe />
-                        <Footer />
+                        <Layout2>
+                          <TermsofUSe />
+                        </Layout2>
                       </>
                     }
                   />
@@ -132,9 +169,9 @@ function App() {
                     path="/aml-policy"
                     element={
                       <>
-                        <Navigation />
-                        <AMLPolicy />
-                        <Footer />
+                        <Layout2>
+                          <AMLPolicy />
+                        </Layout2>
                       </>
                     }
                   />
@@ -142,9 +179,9 @@ function App() {
                     path="/cookie-policy"
                     element={
                       <>
-                        <Navigation />
-                        <CookiePolicy />
-                        <Footer />
+                        <Layout2>
+                          <CookiePolicy />
+                        </Layout2>
                       </>
                     }
                   />
@@ -152,9 +189,9 @@ function App() {
                     path="/privacy-policy"
                     element={
                       <>
-                        <Navigation />
-                        <Privacy />
-                        <Footer />
+                        <Layout2>
+                          <Privacy />
+                        </Layout2>
                       </>
                     }
                   />
@@ -172,9 +209,9 @@ function App() {
                     path="/vacancy"
                     element={
                       <>
-                        <Layout>
+                        <Layout2>
                           <Vacancy />
-                        </Layout>
+                        </Layout2>
                       </>
                     }
                   />
