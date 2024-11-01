@@ -59,28 +59,14 @@
     0px 311px 186px 0px rgba(0, 0, 0, 0.05),
     0px 138px 138px 0px rgba(0, 0, 0, 0.09),
     0px 35px 76px 0px rgba(0, 0, 0, 0.1);
-  background-image: url("../assets/landing/home-banner-background.png");
+  background-image: url("../../assets/landing/home-banner-background.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 
-/* .home-banner-bg {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  object-fit: cover;
-} */
-
 .home-banner-left {
   width: 50%;
-  /* padding: 88px 0px 60px 60px; */
-  /* background-image: url("../assets/landing/home-banner-left.svg");
-  background-repeat: no-repeat;
-  background-size: contain; */
 }
 
 .home-banner-left h1,
@@ -90,22 +76,12 @@
 
 .home-banner-right {
   width: 50%;
-  /* padding: 28px 60px 0px 0px; */
-  /* background-image: url("../assets/landing/home-banner-right.svg"); */
-  /* background-repeat: no-repeat;
-  background-size: contain;
-  background-position: right; */
 }
 
 .home-banner-right img {
   width: 100%;
   max-width: 472px;
 }
-
-/* .home-banner-right img:last-child {
-  margin-top: 40px;
-  margin-left: -40px;
-} */
 
 .home-banner-subtext {
   font-size: 1.6rem;
@@ -117,7 +93,6 @@
   border-radius: 6px;
   background: var(--Whitemode-Blue, #0097cd) !important;
   border: 1px solid #0097cd !important;
-  /* Shad1 */
   box-shadow:
     0px 27px 8px 0px rgba(0, 0, 0, 0),
     0px 18px 7px 0px rgba(0, 0, 0, 0.01),
@@ -155,16 +130,25 @@
   width: 100%;
 }
 
+.main-features {
+  border: 1px solid #323232;
+  border-radius: 16px;
+}
+
 @media screen and (max-width: 900px) {
   .home-banner {
     flex-direction: column;
-    background-image: url("../assets/landing/home-banner-mobile.svg");
+    background-image: url("../../assets/landing/home-banner-mobile.svg");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: top;
+    background-color: #111111;
     padding: 30px;
     padding-top: 100px;
     gap: 50px;
+    border: none;
+    border-radius: 0px;
+    margin-top: 0px;
   }
   .home-banner-left,
   .home-banner-right {
@@ -172,5 +156,12 @@
   }
   .home-banner-right {
     justify-content: center;
+  }
+  .crypto-manage-layout {
+    display: none;
+  }
+  .main-features {
+    border: none;
+    border-radius: 0px;
   }
 }

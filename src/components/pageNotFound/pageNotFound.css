@@ -23,3 +23,20 @@
     0px 8px 8px 0px rgba(0, 0, 0, 0.04),
     0px 2px 5px 0px rgba(0, 0, 0, 0.05);
 }
+
+.page-back-to-home:hover {
+  color: var(--BG2) !important;
+}
+
+.page-not-found-container {
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid #323232;
+  background: rgba(23, 23, 23, 0.85);
+  box-shadow:
+    0px 863px 242px 0px rgba(0, 0, 0, 0),
+    0px 552px 221px 0px rgba(0, 0, 0, 0.01),
+    0px 311px 186px 0px rgba(0, 0, 0, 0.05),
+    0px 138px 138px 0px rgba(0, 0, 0, 0.09),
+    0px 35px 76px 0px rgba(0, 0, 0, 0.1);
+}

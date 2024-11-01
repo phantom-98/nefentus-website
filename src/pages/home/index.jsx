@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { Flex } from "antd";
-import Button from "../components/button/button";
 import { useNavigate } from "react-router-dom";
-import LogoWide from "../assets/logo/logo_wide2.svg";
-import HeroLine1 from "../assets/landing/hero-line-top-left.svg";
-import HeroLine2 from "../assets/landing/hero-line-bottom-left.svg";
-import HeroImage from "../assets/landing/hero.png";
-import Hero1 from "../assets/landing/hero1.png";
-import Hero2 from "../assets/landing/hero2.png";
-import RightArrow from "../assets/icon/right-arrow.svg";
-// import HomeBackground from "../assets/landing/home-banner-background.svg";
-import "./home2.css";
-import Logos from "../components/logos/logos";
+import { Flex } from "antd";
+import Button from "../../components/button/button";
+import LogoWide from "../../assets/logo/logo_wide2.svg";
+import HeroLine1 from "../../assets/landing/hero-line-top-left.svg";
+import HeroLine2 from "../../assets/landing/hero-line-bottom-left.svg";
+import HeroImage from "../../assets/landing/hero.png";
+import Hero1 from "../../assets/landing/hero1.png";
+import Hero2 from "../../assets/landing/hero2.png";
+import RightArrow from "../../assets/icon/right-arrow.svg";
+// import HomeBackground from "../../assets/landing/home-banner-background.svg";
+import Logos from "../../components/logos/logos";
 import {
   Benefits,
   Community,
@@ -21,14 +20,15 @@ import {
   Industries,
   MainFeaturesBody,
   MainFeaturesHead,
-} from "../components/landing";
-import CommonButton from "../components/commonButton";
-import Footer from "../components/footer";
-import { ContactUs } from "../components/navigation/navigation";
-import SubscriptionPlan from "../components/subscriptionPlan";
+} from "../../components/landing";
+import CommonButton from "../../components/commonButton";
+import Footer from "../../components/footer";
+import { ContactUs } from "../../components/navigation/navigation";
+import SubscriptionPlan from "../../components/subscriptionPlan";
 import { Helmet } from "react-helmet";
+import "./home.css";
 
-const Home2 = () => {
+const Home = () => {
   return (
     <>
       <Helmet>
@@ -79,19 +79,13 @@ const Home2 = () => {
         <Helps />
       </div>
 
-      <div className="landing-layout">
+      <div className="landing-layout crypto-manage-layout">
         <CryptoManage />
       </div>
       <div className="landing-layout">
         <Benefits />
       </div>
-      <div
-        className="landing-layout"
-        style={{
-          border: "1px solid #323232",
-          borderRadius: "16px",
-        }}
-      >
+      <div className="landing-layout main-features">
         <MainFeaturesHead />
         <MainFeaturesBody />
       </div>
@@ -111,4 +105,4 @@ const Home2 = () => {
   );
 };
 
-export default Home2;
+export default Home;

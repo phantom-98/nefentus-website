@@ -7,7 +7,7 @@ const PageNotFound = () => {
   const navigate = useNavigate();
   return (
     <Flex className="page-not-found" align="center" justify="center">
-      <Flex vertical gap={16}>
+      <Flex vertical gap={16} className="page-not-found-container">
         <div className="default-text page-not-found-title">
           Error: Page Not Found
         </div>

@@ -1,3 +1,4 @@
+// Deprecated on October 25 following the implementation of the new Nefentus design.
 import "./resources.css";
 import LineLeft from "../../assets/resources/line-left.svg";
 import LineRight from "../../assets/resources/line-right.svg";

@@ -95,7 +95,7 @@ export const HeroB2B = () => {
       }}
     >
       <div
-        className="layout-horizontal"
+        className="layout-horizontal b2b-mobile-view"
         style={{
           paddingBottom: "0",
         }}
@@ -129,9 +129,7 @@ export const HeroB2B = () => {
         <img
           src={HeroPng}
           className="hero-img"
-          style={{
-            width: "50%",
-          }}
+          style={{}}
           alt="Payment details on Nefentus"
         />
       </div>

@@ -259,7 +259,7 @@ export const Helps = () => {
         subtitle={`Empower your business with a comprehensive suite of cryptocurrency tools conveniently housed under one roof.`}
       />
       <div className="layout-horizontal layout-help">
-        <div className="layout-feature">
+        <div className="layout-feature help-subcontainer">
           {helps.map((help, index) => {
             return (
               <Feature
@@ -279,58 +279,6 @@ export const Helps = () => {
           })}
         </div>
       </div>
-      {/* <div
-        className="vertical-dashed-line"
-        style={{
-          right: "0",
-          top: "2rem",
-          zIndex: "-1",
-          height: "300%",
-        }}
-      />
-      <div
-        className="vertical-dashed-line hide-in-tablet"
-        style={{
-          right: "18rem",
-          top: "0",
-          height: "50%",
-        }}
-      />
-      <img
-        src={BlueLine}
-        style={{
-          position: "absolute",
-          right: "18rem",
-          top: "28rem",
-          zIndex: "1",
-        }}
-        className="hide-in-tablet"
-        alt="line"
-      />
-      <img
-        src={BlueLine}
-        style={{
-          position: "absolute",
-          left: "0",
-          top: "10rem",
-          zIndex: "1",
-        }}
-        alt="line"
-      />
-      <hr
-        style={{
-          left: "0",
-          top: "0",
-          height: "100%",
-        }}
-      />
-      <div
-        className="horizontal-dashed-line"
-        style={{
-          bottom: "0",
-          width: "100vw",
-        }}
-      /> */}
     </div>
   );
 };
@@ -540,14 +488,6 @@ const ScrollAnimation = () => {
       (document.documentElement.scrollHeight -
         document.documentElement.clientHeight);
 
-    console.log(
-      document.documentElement.clientHeight,
-      document.documentElement.scrollHeight,
-      100 * document.documentElement.scrollTop,
-    );
-    console.log(scrollPercentage);
-    // debugger;
-
     if (window.innerWidth <= 1300) scrollPercentage += 5;
     // else if (window.innerWidth <= 1920) scrollPercentage += 3;
     setPos(scrollPercentage < 52.5 ? 0 : scrollPercentage < 59 ? 1 : 2);
@@ -623,54 +563,12 @@ const ScrollAnimation = () => {
 
 export const MainFeaturesHead = () => {
   return (
-    <div
-      className="layout-paragraph"
-      style={{
-        // marginTop: "0rem",
-        paddingBlock: "5rem",
-        width: "100%",
-        // borderBlock: "1px solid #343434",
-        // borderRadius: "16px 16px 0px 0px",
-        border: "none",
-        background: "#131313",
-        // overflow: "hidden",
-      }}
-    >
+    <div className="layout-paragraph main-feature-head">
       <IcoGroup icons={[PC, Dollar, Chain]} />
       <Heading
         title={`Insightful dashboards`}
         subtitle={`Nefentus prioritizes customer convenience through thoughtfully designed dashboards`}
       />
-      {/* <hr
-        style={{
-          right: "25%",
-          width: "1px",
-          height: "100%",
-          top: "0",
-          zIndex: "1",
-        }}
-        className="hide-in-tablet"
-      />
-      <img
-        src={BlueLine}
-        style={{
-          position: "absolute",
-          right: "25%",
-          top: "6rem",
-          zIndex: "1",
-        }}
-        className="hide-in-tablet"
-        alt="line"
-      />
-      <div
-        style={{
-          left: "25%",
-          height: "100%",
-          top: "0",
-          zIndex: "1",
-        }}
-        className="hide-in-tablet vertical-dashed-line"
-      /> */}
     </div>
   );
 };

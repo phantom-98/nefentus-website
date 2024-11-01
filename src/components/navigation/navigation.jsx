@@ -1,3 +1,4 @@
+// Deprecated on October 25 following the implementation of the new Nefentus design.
 import styles from "./navigation.module.css";
 import LogoWide from "../../assets/logo/logo_wide2.svg";
 import Button from "../button/button";

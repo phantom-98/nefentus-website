@@ -22,8 +22,7 @@ const Jobs = React.lazy(() => import("./pages/Jobs"));
 import PageNotFound from "./components/pageNotFound";
 
 import { AuthProvider } from "./context/auth/authContext";
-import Home from "./pages/Home";
-import Home2 from "./pages/Home2";
+import Home from "./pages/home/index.jsx";
 import B2C from "./pages/B2C";
 import B2B from "./pages/B2B";
 import Resources from "./pages/Resources";
@@ -85,19 +84,19 @@ function App() {
                   <Route
                     path="/"
                     element={
-                      <Layout>
+                      <Layout2>
                         <Home />
-                      </Layout>
+                      </Layout2>
                     }
                   />
-                  <Route
+                  {/* <Route
                     path="/home2"
                     element={
                       <Layout2>
                         <Home2 />
                       </Layout2>
                     }
-                  />
+                  /> */}
                   <Route
                     path="/pricing"
                     element={
@@ -122,23 +121,6 @@ function App() {
                       </Layout2>
                     }
                   />
-                  <Route
-                    path="/b2c"
-                    element={
-                      <Layout>
-                        <B2C />
-                      </Layout>
-                    }
-                  />
-                  <Route
-                    path="/b2b"
-                    element={
-                      <Layout>
-                        <B2B />
-                      </Layout>
-                    }
-                  />
-                  <Route path="/resources" element={<Resources />} />
                   <Route
                     path="/business-support"
                     element={
@@ -198,11 +180,9 @@ function App() {
                   <Route
                     path="/imprint"
                     element={
-                      <>
-                        <Navigation />
+                      <Layout2>
                         <Imprint />
-                        <Footer />
-                      </>
+                      </Layout2>
                     }
                   />
                   <Route
@@ -219,19 +199,18 @@ function App() {
                     path="/jobs"
                     element={
                       <>
-                        <Layout>
+                        <Layout2>
                           <Jobs />
-                        </Layout>
+                        </Layout2>
                       </>
                     }
                   />
                   <Route
                     path="*"
                     element={
-                      <>
-                        <Navigation />
+                      <Layout2>
                         <PageNotFound />
-                      </>
+                      </Layout2>
                     }
                   />
                 </Routes>

@@ -8,8 +8,11 @@ import Hero1 from "../../assets/landing/hero 1.png";
 import Hero2 from "../../assets/landing/hero 2.png";
 import Hero3 from "../../assets/landing/hero 3.png";
 import Hero4 from "../../assets/landing/hero 4.png";
+import MobileHero from "../../assets/landing/mobile-b2c-image.png";
 import HeroLineTop from "../../assets/landing/b2c-hero-top.svg";
 import HeroLineBottom from "../../assets/landing/b2c-hero-down.svg";
+import MobileMultiWallet from "../../assets/landing/mobile-view-multi-wallet.png";
+import MobileMultiWallet2 from "../../assets/landing/multi-wallets-mobile-view2.png";
 import Blocto from "../../assets/landing/ico-blocto.png";
 import Coinbase from "../../assets/landing/ico-coinbase.png";
 import MetaMask from "../../assets/landing/ico-metamask.png";
@@ -80,7 +83,7 @@ export const B2CHero = () => {
       }}
     >
       <div
-        className="layout-horizontal"
+        className="layout-horizontal b2c-banner"
         style={{
           paddingBottom: "0",
         }}
@@ -110,15 +113,7 @@ export const B2CHero = () => {
             </a>
           </div>
         </div>
-        <div
-          className="hero-img"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "2rem",
-            width: "50%",
-          }}
-        >
+        <div className="hero-img b2c-banner-image">
           <div
             style={{
               width: "50%",
@@ -164,6 +159,9 @@ export const B2CHero = () => {
               alt="Swap cryptocurrency"
             />
           </div>
+        </div>
+        <div className="mobile-b2c-image">
+          <img src={MobileHero} alt="Swap currency" width="100%" />
         </div>
       </div>
     </div>
@@ -235,30 +233,61 @@ const wallets = [
 
 export const MultiWallets = () => {
   return (
-    <div
-      id="multi-wallets"
-      className="layout-paragraph b2c-multi-wallet"
-      style={{
-        paddingBottom: "0",
-        width: "100%",
-        overflow: "hidden",
-      }}
-    >
-      <div className="multi-wallet-head">
-        <Flex vertical gap={"1rem"}>
-          <div className="default-text multi-wallet-title">
-            Juggle multiple wallets seamlessly
+    <>
+      <div
+        id="multi-wallets"
+        className="layout-paragraph b2c-multi-wallet"
+        style={{
+          paddingBottom: "0",
+          width: "100%",
+          overflow: "hidden",
+        }}
+      >
+        <div className="multi-wallet-head">
+          <Flex vertical gap={"1rem"}>
+            <div className="default-text multi-wallet-title">
+              Juggle multiple wallets seamlessly
+            </div>
+            <div className="multi-wallet-subtitle default-text-gray">
+              Effortlessly handle multiple wallets with our platform. Choose our
+              built-in wallet or link countless external wallets for ultimate
+              flexibility.
+            </div>
+          </Flex>
+        </div>
+
+        <img src={MultipleWallets} alt="Multiple Wallets" width={"100%"} />
+      </div>
+      <div>
+        <Flex vertical className="multi-wallet-mobile-view" gap={24}>
+          <div className="multi-wallet-head">
+            <Flex vertical gap={"1rem"}>
+              <div className="default-text multi-wallet-title">
+                Juggle multiple wallets seamlessly
+              </div>
+              <div className="multi-wallet-subtitle default-text-gray">
+                Effortlessly handle multiple wallets with our platform. Choose
+                our built-in wallet or link countless external wallets for
+                ultimate flexibility.
+              </div>
+            </Flex>
           </div>
-          <div className="multi-wallet-subtitle default-text-gray">
-            Effortlessly handle multiple wallets with our platform. Choose our
-            built-in wallet or link countless external wallets for ultimate
-            flexibility.
+          <img src={MobileMultiWallet} alt="Multi wallets" width="100%" />
+          <div className="default-text-gray">
+            Having an internal wallet integrated into your platform or service
+            can make transactions more convenient. You can easily send and
+            receive payments without having to use external wallets or
+            exchanges.
           </div>
+          <img
+            src={MobileMultiWallet2}
+            alt="Multi wallets"
+            width="100%"
+            style={{ marginTop: "6rem" }}
+          />
         </Flex>
       </div>
-
-      <img src={MultipleWallets} alt="Multiple Wallets" width={"100%"} />
-    </div>
+    </>
   );
 };
 

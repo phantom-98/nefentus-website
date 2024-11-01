@@ -42,8 +42,12 @@ const Header = () => {
   };
   return (
     <>
-      <Flex align={"center"} justify={"space-between"}>
-        <div className="cursor-pointer" onClick={() => navigate("/home2")}>
+      <Flex
+        align={"center"}
+        justify={"space-between"}
+        className="header-container"
+      >
+        <div className="cursor-pointer" onClick={() => navigate("/")}>
           <img src={LogoWide} alt="Nefentus" />
         </div>
         <Flex gap={"4.5rem"} className="header-list-container web-options">
@@ -92,9 +96,10 @@ const Header = () => {
           </div>
         </Flex>
         <Flex vertical gap={"4.5rem"} className="header-list-container">
-          <div className="default-text">Business</div>
-          <div className="default-text">Private</div>
+          <Business />
+          <Private />
           <ContactUs />
+          <Pricing />
         </Flex>
         {loginAndSignupMobile()}
       </Flex>

@@ -1,3 +1,4 @@
+// Deprecated on October 25 following the implementation of the new Nefentus design.
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/footer";

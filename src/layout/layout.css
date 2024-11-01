@@ -11,3 +11,14 @@
   background-size: contain;
   background-position: bottom;
 }
+
+@media screen and (max-width: 900px) {
+  .layout-container {
+    padding: 0;
+  }
+
+  .layout-container,
+  .layout-container-wrapper {
+    background: #111;
+  }
+}

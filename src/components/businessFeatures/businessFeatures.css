@@ -40,3 +40,39 @@
   width: fit-content !important;
   margin-top: 8px;
 }
+
+.mobile-business-feature-right {
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .business-features {
+    padding: 20px;
+    border-radius: 0px;
+    border: none;
+    background: none;
+  }
+  .business-feature-left {
+    width: 100%;
+    border: none;
+    border-radius: 12px 12px 0px 0px;
+  }
+  .business-features-container {
+    border: 1px solid #323232;
+    flex-direction: column;
+    gap: 0px !important;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .business-features {
+    margin: 0px 20px;
+  }
+
+  .mobile-business-feature-right {
+    display: flex;
+  }
+
+  .business-feature-right {
+    display: none;
+  }
+}
