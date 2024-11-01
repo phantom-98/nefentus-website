@@ -158,6 +158,11 @@
   font-size: 1.6rem;
 }
 
+.hero-layout h1,
+.hero-layout p {
+  max-width: 595px;
+}
+
 .manage-title-layout p {
   font-size: 1.6rem;
   width: 73%;

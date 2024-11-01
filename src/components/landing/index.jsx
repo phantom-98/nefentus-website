@@ -450,7 +450,7 @@ export const Benefits = () => {
         <div style={{ objectFit: "cover", borderRadius: "16px" }}>
           <img
             src={WalletsPng}
-            style={{ height: "100%" }}
+            style={{ height: "100%", width: "100%" }}
             alt="Wallets for cryptocurrency"
           />
           <div className="outlook">

@@ -126,6 +126,7 @@
   position: absolute;
   top: 100%;
   width: max-content;
+  z-index: 1;
 }
 
 .gridContent {
