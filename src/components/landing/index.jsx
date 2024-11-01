@@ -1,7 +1,7 @@
 import "./landing.css";
 import RightArrow from "../../assets/icon/right-arrow.svg";
-import Hero1 from "../../assets/landing/hero1.png";
-import Hero2 from "../../assets/landing/hero2.png";
+import Hero1 from "../../assets/landing/home-hero1.png";
+import Hero2 from "../../assets/landing/home-hero2.png";
 import AudienceImg from "../../assets/landing/audience.png";
 import ManageCrypto from "../../assets/landing/manage-crypto.png";
 import HeroLine1 from "../../assets/landing/hero-line-top-left.svg";
