@@ -89,19 +89,18 @@ export const B2CHero = () => {
         }}
       >
         <div
-          className="hero-layout"
+          className="hero-layout b2c-hero-layout"
           style={{
             width: "50%",
           }}
         >
           <h1 className="title">
-            <span className="gradient">Take charge</span> of your <br />{" "}
-            finances with Nefentus
+            <span className="gradient">Take charge</span> of your <br /> crypto
+            with Nefentus
           </h1>
           <p className="sub-title">
-            Simplify your crypto experience. Easily send & receive payments,
-            manage all your wallets and handle sales—all in one convenient
-            place.
+            Seamlessly create & receive payments. Manage all your wallets and
+            streamline your sales process—all from a single platform.
           </p>
           <div className="button-container">
             <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
@@ -161,7 +160,12 @@ export const B2CHero = () => {
           </div>
         </div>
         <div className="mobile-b2c-image">
-          <img src={MobileHero} alt="Swap currency" width="100%" />
+          <img
+            src={MobileHero}
+            alt="Swap currency"
+            width="100%"
+            style={{ marginTop: "20px" }}
+          />
         </div>
       </div>
     </div>

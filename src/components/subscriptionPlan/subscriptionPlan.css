@@ -139,7 +139,21 @@ th {
   display: none;
 }
 
+.heading-for-mobile {
+  display: none;
+}
+
 @media screen and (max-width: 1200px) {
+  .mobile-plan-label {
+    width: 100%;
+  }
+  .mobile-plan-label h3 {
+    font-size: 3rem;
+    font-weight: 500;
+  }
+  .mobile-plan-label p {
+    font-size: 1.4rem;
+  }
   .SubscriptionPlan {
     display: none;
   }
@@ -215,5 +229,14 @@ th {
   .online-payments-container div span {
     color: var(--Dark-color-theme-Blue, #078bb9);
     font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .heading-for-tablet {
+    display: none;
+  }
+  .heading-for-mobile {
+    display: block;
   }
 }

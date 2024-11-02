@@ -9,6 +9,7 @@ import NefentusLogo from "../../assets/logo/logo.svg";
 import HeroLineTop from "../../assets/landing/b2c-hero-top.svg";
 import HeroLineBottom from "../../assets/landing/b2c-hero-down.svg";
 import HeroPng from "../../assets/landing/b2b-hero.png";
+import MobileHeroPng from "../../assets/landing/mobile-b2b-hero.png";
 import Invoicing1Png from "../../assets/landing/b2b-invoice1.png";
 import Invoicing2Png from "../../assets/landing/b2b-invoice2.png";
 import Invoicing3Png from "../../assets/landing/b2b-invoice3.png";
@@ -107,12 +108,12 @@ export const HeroB2B = () => {
           }}
         >
           <h1 className="title">
-            Streamlined <span className="gradient">crypto </span>
-            invoicing
+            Revolutionize Your Business with Effortless{" "}
+            <span className="gradient">Crypto Payments </span>
           </h1>
           <p className="sub-title">
-            Simplify invoicing, centralize your wallets, and boost your sales
-            efficiency—get it all done on one powerful platform.
+            Seamlessly create & receive payments. Manage all your wallets and
+            streamline your sales process—all from a single platform.
           </p>
           <Flex gap={"2rem"} className="button-container">
             <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
@@ -128,7 +129,13 @@ export const HeroB2B = () => {
         </div>
         <img
           src={HeroPng}
-          className="hero-img"
+          className="hero-img web-b2b-hero"
+          style={{}}
+          alt="Payment details on Nefentus"
+        />
+        <img
+          src={MobileHeroPng}
+          className="hero-img mobile-b2b-hero"
           style={{}}
           alt="Payment details on Nefentus"
         />

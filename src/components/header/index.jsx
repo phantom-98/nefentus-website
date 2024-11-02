@@ -40,6 +40,9 @@ const Header = () => {
       </div>
     );
   };
+  const onClose = () => {
+    setOpenMenu((prev) => !prev);
+  };
   return (
     <>
       <Flex
@@ -51,10 +54,37 @@ const Header = () => {
           <img src={LogoWide} alt="Nefentus" />
         </div>
         <Flex gap={"4.5rem"} className="header-list-container web-options">
-          <Business />
-          <Private />
+          <Flex
+            align={"center"}
+            justify={"center"}
+            className="default-text cursor-pointer"
+            onClick={() => {
+              navigate("/business");
+            }}
+          >
+            Business
+          </Flex>
+          <Flex
+            align={"center"}
+            justify={"center"}
+            className="default-text cursor-pointer"
+            onClick={() => {
+              navigate("/private");
+            }}
+          >
+            Private
+          </Flex>
           <ContactUs />
-          <Pricing />
+          <Flex
+            align={"center"}
+            justify={"center"}
+            className="default-text cursor-pointer"
+            onClick={() => {
+              navigate("/pricing");
+            }}
+          >
+            Pricing
+          </Flex>
         </Flex>
         <Flex gap={8} className="web-options">
           <CommonButton text={"Log in"} type={"secondary"} />
@@ -73,7 +103,7 @@ const Header = () => {
       </Flex>
       <Flex
         vertical
-        gap={12}
+        gap={"2.5rem"}
         className="mobile-header"
         style={{
           transform: openMenu ? "translateY(0%)" : "translateY(-190%)",
@@ -81,7 +111,12 @@ const Header = () => {
         }}
       >
         <Flex align={"center"} justify={"space-between"}>
-          <div>
+          <div
+            onClick={() => {
+              navigate("/");
+              onClose();
+            }}
+          >
             <img src={LogoWide} alt="Nefentus" />
           </div>
           <div className={"mobMenu"}>
@@ -95,11 +130,35 @@ const Header = () => {
             ></div>
           </div>
         </Flex>
-        <Flex vertical gap={"4.5rem"} className="header-list-container">
-          <Business />
-          <Private />
+        <Flex vertical gap={"2.5rem"} className="header-list-container">
+          <div
+            className="default-text cursor-pointer"
+            onClick={() => {
+              navigate("/business");
+              onClose();
+            }}
+          >
+            Business
+          </div>
+          <div
+            className="default-text cursor-pointer"
+            onClick={() => {
+              navigate("/private");
+              onClose();
+            }}
+          >
+            Private
+          </div>
           <ContactUs />
-          <Pricing />
+          <div
+            className="default-text cursor-pointer"
+            onClick={() => {
+              navigate("/pricing");
+              onClose();
+            }}
+          >
+            Pricing
+          </div>
         </Flex>
         {loginAndSignupMobile()}
       </Flex>
@@ -117,7 +176,7 @@ const Business = () => {
       className="default-text cursor-pointer"
       onClick={() => navigate("/business")}
     >
-      <p>Business</p>
+      Business
     </div>
   );
 };
@@ -130,7 +189,7 @@ const Private = () => {
       className="default-text cursor-pointer"
       onClick={() => navigate("/private")}
     >
-      <p>Private</p>
+      Private
     </div>
   );
 };
@@ -143,7 +202,7 @@ const Pricing = () => {
       className="default-text cursor-pointer"
       onClick={() => navigate("/pricing")}
     >
-      <p>Pricing</p>
+      Pricing
     </div>
   );
 };

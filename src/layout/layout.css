@@ -17,8 +17,27 @@
     padding: 0;
   }
 
-  .layout-container,
+  .layout-container {
+    background-image: url("../assets/landing/mobile-view-layout-image.svg");
+    background-size: contain;
+  }
+
+  .layout-container::before {
+    content: ""; /* This is required for pseudo-elements to render */
+    background-image: url("../assets/landing/mobile-view-layout-lines.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    /* Add dimensions and positioning */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Adjust if needed to place the image behind other content */
+  }
+
   .layout-container-wrapper {
-    background: #111;
+    background-image: url("../assets/landing/mobile-view-footer-bg.svg");
   }
 }

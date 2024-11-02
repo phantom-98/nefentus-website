@@ -202,7 +202,9 @@ const DropDownMenuItem = ({ icon, title, subtitle }) => {
       </div>
       <div className={styles.body}>
         <p className="default-text">{title}</p>
-        <p className="default-text-gray">{subtitle}</p>
+        <p className={"default-text-gray " + styles.dropdownOptionsSubtext}>
+          {subtitle}
+        </p>
       </div>
     </div>
   );
@@ -324,13 +326,16 @@ export const ContactUs = () => {
   const [open, setOpen] = useState(false);
   return (
     <div
-      style={{
-        position: "relative",
-      }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
+      className={styles.contactUsContainer}
     >
-      <Flex gap={"1rem"} className={`cursor-pointer default-text`}>
+      <Flex
+        align={"center"}
+        gap={"1rem"}
+        className={`cursor-pointer default-text`}
+        style={{ height: "37px" }}
+      >
         <p>Contact us</p>
         <img
           src={Dropdown}
@@ -339,33 +344,39 @@ export const ContactUs = () => {
             transform: open ? "rotate(180deg)" : "",
           }}
           alt="icon"
+          width={10}
+          height={20}
         />
       </Flex>
       {open && (
-        <div className={styles.dropdown} style={{ left: "-28rem" }}>
-          <div
-            className={styles.contactus_dropdown}
-            style={{
-              padding: "1.4rem",
-              display: "flex",
-              borderRight: "1px solid #323232",
-            }}
-          >
-            <a href="/technical-support" onClick={() => setOpenMenu(false)}>
+        <div
+          className={styles.dropdown}
+          style={{ left: "-28rem", top: "3.5rem" }}
+        >
+          <Flex className={styles.contactus_dropdown}>
+            <a
+              href="/technical-support"
+              onClick={() => setOpenMenu(false)}
+              className={styles.contactUsOptions}
+            >
               <DropDownMenuItem
                 icon={{ normal: ContactSupport, hover: ContactSupportBlue }}
                 title={`Technical support`}
                 subtitle={`Report technical issues with the platform`}
               />
             </a>
-            <a href="/business-support" onClick={() => setOpenMenu(false)}>
+            <a
+              href="/business-support"
+              onClick={() => setOpenMenu(false)}
+              className={styles.contactUsOptions}
+            >
               <DropDownMenuItem
                 icon={{ normal: ContactExpert, hover: ContactExpertBlue }}
                 title={`Business support`}
                 subtitle={`Let us discuss how to integrate Nefentus into your own business`}
               />
             </a>
-          </div>
+          </Flex>
         </div>
       )}
     </div>

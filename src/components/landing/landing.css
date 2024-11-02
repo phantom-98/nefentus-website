@@ -11,6 +11,10 @@
   width: 100%;
 }
 
+.crypto-manage-layout .layout-horizontal {
+  padding: 0px !important;
+}
+
 .layout-horizontal {
   display: flex;
   gap: 6rem;
@@ -62,7 +66,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: start;
-  gap: 4rem;
+  gap: 2rem;
   width: 60%;
 }
 
@@ -1023,7 +1027,7 @@
 .landing-layout .help {
   gap: 8rem;
   /* padding-block: 16rem; */
-  padding-top: 12rem;
+  padding-top: 8rem;
 }
 .landing-layout .manage {
   padding-block: 12rem;
@@ -1257,10 +1261,10 @@
 }
 
 .main-feature-head {
-  paddingblock: 5rem;
-  width: 100%;
-  border: none;
-  background: #131313;
+  padding-block: 5rem;
+  width: 100% !important;
+  border: none !important;
+  background: #131313 !important;
 }
 
 .b2c-banner-image {
@@ -1275,7 +1279,27 @@
   display: none;
 }
 
+.mobile-b2b-hero {
+  display: none;
+}
+
 @media (max-width: 900px) {
+  .landing-layout .feature-header {
+    padding: 1rem 1rem 1rem 0rem;
+  }
+  .landing-layout .feature-body {
+    padding: 0 4rem 0.8rem 0rem;
+  }
+
+  .web-b2b-hero {
+    display: none;
+  }
+  .mobile-b2b-hero {
+    display: block;
+  }
+  .landing-layout .main-feature {
+    padding-block: 1rem;
+  }
   .multi-wallet-head {
     padding: 4rem 0rem;
     text-align: center;
@@ -1288,7 +1312,10 @@
     margin: auto;
   }
   .b2c-banner {
-    padding: 0px 20px 20px 20px !important;
+    padding: 0px 20px 20px 0px !important;
+  }
+  .b2c-hero-layout {
+    padding-left: 20px;
   }
   .b2c-multi-wallet,
   .b2c-banner-image {
@@ -1306,7 +1333,7 @@
     border-radius: 0;
     border: none;
     background: none;
-    padding: 80px 20px;
+    padding: 40px 20px;
   }
 
   .main-feature-head {
@@ -1360,7 +1387,7 @@
     margin-right: auto;
     /* padding-left: 5rem;
     padding-right: 5rem; */
-    padding: 5rem;
+    padding: 40px 20px;
     gap: 4rem !important;
   }
   .b2b .api-block .layout-horizontal {
@@ -1411,6 +1438,9 @@
   }
   .b2b-banner .hero-img {
     width: 100% !important;
+  }
+  .b2b-mobile-view {
+    padding: 0px;
   }
   .b2b-mobile-view div:first-child {
     margin-bottom: 6rem !important;

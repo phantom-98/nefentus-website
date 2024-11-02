@@ -129,6 +129,22 @@
   z-index: 1;
 }
 
+.dropdownOptionsSubtext {
+  font-size: 12px;
+}
+
+.contactUsContainer {
+  position: relative;
+}
+
+.contactUsOptions {
+  padding: 1.8rem;
+}
+
+.contactUsOptions:first-child {
+  border-right: 1px solid var(--Dark-color-theme-Grey, #323232);
+}
+
 .gridContent {
   display: grid;
   grid-template-columns: 1fr 1fr;
