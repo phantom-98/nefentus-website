@@ -866,27 +866,27 @@ export const Audience = () => {
 
 const FAQList = [
   {
-    title: "How does Nefentus crypto invoicing platform work?",
+    title: "How does the Nefentus invoicing platform work?",
     body: "Our platform allows you to create and send invoices that your customers can pay using a variety of cryptocurrencies. Payments are processed seamlessly, and you can track everything from one dashboard.",
     element: null,
   },
   {
-    title: "Is it complicated to set up?",
+    title: "Is it complicated to set up my Nefentus account?",
     body: "Not at all! You can get started in minutes with no onboarding fees or monthly costs. It's designed to be user-friendly for businesses of any size.",
     element: null,
   },
   {
-    title: "Do I need to understand cryptocurrencies to use the platform?",
+    title: "Do I need to understand cryptocurrencies to use Nefentus?",
     body: "No prior knowledge is needed. Our platform simplifies the process, so even if you're new to crypto, you can easily accept payments without any hassle.",
     element: null,
   },
   {
-    title: "What cryptocurrencies do Nefentus support?",
+    title: "What cryptocurrencies does Nefentus support?",
     body: "We support a wide range of popular cryptocurrencies, including Bitcoin, Ethereum, and stablecoins, allowing your customers flexibility in how they pay.",
     element: null,
   },
   {
-    title: "Are there any hidden fees?",
+    title: "Are there any hidden fees when using Nefentus?",
     body: "No hidden fees! We offer a transparent pricing model with zero monthly charges and no onboarding costs.",
     element: null,
   },

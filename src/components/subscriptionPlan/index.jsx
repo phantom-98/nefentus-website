@@ -116,7 +116,7 @@ const SubscriptionPlan = () => {
           <tr>
             <td>
               <div className="plan-label">
-                <p>Option to accept online payments </p>
+                <p>Accept crypto payments online </p>
               </div>
             </td>
             <td>
@@ -181,35 +181,60 @@ const SubscriptionPlan = () => {
               </td>
               <td>
                 <div className="plan-type">
-                  <div className="plan-tick-icon">
-                    <img src={TickIcon} alt="tick icon" />
-                  </div>
+                  {planDeatils?.Starter?.features?.some(
+                    (option) => option == label,
+                  ) && (
+                    <div className="plan-tick-icon">
+                      <img src={TickIcon} alt="tick icon" />
+                    </div>
+                  )}
                 </div>
               </td>
               <td>
                 <div className="plan-type">
-                  <div className="plan-tick-icon">
-                    <img src={TickIcon} alt="tick icon" />
-                  </div>
+                  {planDeatils?.Business?.features?.some(
+                    (option) => option == label,
+                  ) && (
+                    <div className="plan-tick-icon">
+                      <img src={TickIcon} alt="tick icon" />
+                    </div>
+                  )}
                 </div>
               </td>
               <td>
                 <div className="plan-type">
-                  <div className="plan-tick-icon">
-                    <img src={TickIcon} alt="tick icon" />
-                  </div>
+                  {planDeatils?.Enterprise?.features?.some(
+                    (option) => option == label,
+                  ) && (
+                    <div className="plan-tick-icon">
+                      <img src={TickIcon} alt="tick icon" />
+                    </div>
+                  )}
                 </div>
               </td>
             </tr>
           ))}
         </table>
       </div>
+
       <Flex
         gap={24}
         vertical
         align="center"
         className="subscription-plan-mobile"
       >
+        <Flex vertical gap={8} className="mobile-plan-label">
+          <h3 className="heading-for-tablet">
+            Plans to make your plans happen.
+          </h3>
+          <h3 className="heading-for-mobile">
+            Plans to make
+            <br /> your plans happen.
+          </h3>
+          <p className="default-text-gray">
+            Get paid fast and look good doing it
+          </p>
+        </Flex>
         <Flex gap={4} className="subscription-plan-segments">
           {options.map((option, index) => (
             <Flex
@@ -240,7 +265,7 @@ const SubscriptionPlan = () => {
             </Flex>
             <Flex vertical className="online-payments-container" gap={16}>
               <div className="default-text-gray">
-                Option to accept online payments{" "}
+                Accept crypto payments online{" "}
               </div>
               <div className="default-text">
                 Starting at{" "}

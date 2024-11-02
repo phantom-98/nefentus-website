@@ -47,7 +47,7 @@
 
 .home-banner {
   position: relative;
-  margin-top: 64px;
+  margin-top: 36px;
   padding: 30px 60px;
   align-items: center;
   border-radius: 16px;
@@ -138,13 +138,14 @@
 @media screen and (max-width: 900px) {
   .home-banner {
     flex-direction: column;
-    background-image: url("../../assets/landing/home-banner-mobile.svg");
+    background: none;
+    /* background-image: url("../../assets/landing/home-banner-mobile.svg");
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: top;
-    background-color: #111111;
+    background-position: top; */
+    /* background-color: #111111; */
     padding: 30px;
-    padding-top: 100px;
+    padding-top: 60px;
     gap: 50px;
     border: none;
     border-radius: 0px;

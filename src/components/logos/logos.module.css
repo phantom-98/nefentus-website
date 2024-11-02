@@ -7,11 +7,11 @@
 }
 
 .logos::before {
-  background: linear-gradient(
+  /* background: linear-gradient(
     90deg,
     var(--background-color),
     rgba(9, 9, 9, 0) 100%
-  );
+  ); */
   position: absolute;
   left: 0;
   top: 0;
@@ -24,11 +24,11 @@
 
 .logos::after {
   z-index: 2;
-  background: linear-gradient(
+  /* background: linear-gradient(
     -90deg,
     var(--background-color),
     rgba(9, 9, 9, 0) 100%
-  );
+  ); */
   position: absolute;
   right: 0;
   pointer-events: none;
