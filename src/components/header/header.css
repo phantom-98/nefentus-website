@@ -12,7 +12,14 @@
   padding: 4rem;
 }
 
+.header-text-font {
+  font-size: 1.8rem;
+}
+
 @media screen and (max-width: 900px) {
+  .header-text-font {
+    font-size: 1.6rem;
+  }
   .header-container {
     padding: 24px;
   }

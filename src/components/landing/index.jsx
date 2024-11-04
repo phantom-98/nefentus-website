@@ -311,14 +311,6 @@ export const CryptoManage = () => {
           <img src={ManageCrypto} alt="Manage crypto currency using Nefentus" />
         </div>
       </div>
-      <hr
-        style={{
-          left: "0",
-          bottom: "0",
-          height: "100%",
-        }}
-        className="hide-in-tablet"
-      />
     </div>
   );
 };
@@ -385,7 +377,6 @@ export const Benefits = () => {
     <div
       className="layout-paragraph"
       style={{
-        borderTop: "1px solid #202020",
         padding: "5rem",
       }}
     >
@@ -395,10 +386,15 @@ export const Benefits = () => {
         subtitle={`Nefentus prioritizes your customers' convenience at every step.`}
       />
       <div className="layout-benefits">
-        <div style={{ objectFit: "cover", borderRadius: "16px" }}>
+        <div style={{ borderRadius: "16px" }}>
           <img
             src={WalletsPng}
-            style={{ height: "100%", width: "100%" }}
+            style={{
+              height: "100%",
+              width: "100%",
+              objectFit: "cover",
+              objectPosition: "center top",
+            }}
             alt="Wallets for cryptocurrency"
           />
           <div className="outlook">
@@ -424,33 +420,6 @@ export const Benefits = () => {
           </div>
         </div>
       </div>
-
-      <hr
-        style={{
-          position: "absolute",
-          left: "0",
-          top: "0",
-          zIndex: "-1",
-          height: "calc(100% - 16rem)",
-        }}
-      />
-      <img
-        src={BlueLine}
-        style={{
-          position: "absolute",
-          left: "0",
-          top: "6rem",
-          zIndex: "1",
-        }}
-        alt="line"
-      />
-      <hr
-        style={{
-          width: "100vw",
-          bottom: "8rem",
-        }}
-        className="hide-in-tablet"
-      />
     </div>
   );
 };
@@ -502,7 +471,7 @@ const ScrollAnimation = () => {
   }, []);
 
   return (
-    <div id="scroll-wrapper" className="scroll-container container">
+    <div id="scroll-wrapper" className="scroll-container">
       <div className="text-part">
         {features.map((item, i) => {
           return (
@@ -833,7 +802,7 @@ export const Audience = () => {
     <div className="layout-paragraph audience">
       <div className="layout-horizontal">
         <div className="hero-layout audience-layout">
-          <h1 className="title">
+          <h1 className="title audience-title">
             We've earned the trust of over 10,000 active users worldwide.
           </h1>
           <p className="sub-title audience-sub-title">
@@ -899,7 +868,7 @@ export const FAQ = () => {
       gap={20}
       className="faq-container"
       align={"flex-start"}
-      justify={"center"}
+      justify={"space-between"}
     >
       <Flex vertical gap={16}>
         <div className="faq-first-section">FAQ</div>

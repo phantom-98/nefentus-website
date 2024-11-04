@@ -213,17 +213,17 @@ svg {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
-@media (max-width: 550px) {
+/* @media (max-width: 550px) {
   .container {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
   }
-}
+} */
 
 /* Text */
 .standard {

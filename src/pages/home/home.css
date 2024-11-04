@@ -67,11 +67,7 @@
 
 .home-banner-left {
   width: 50%;
-}
-
-.home-banner-left h1,
-.home-banner-left p {
-  max-width: 595px;
+  max-width: 111rem;
 }
 
 .home-banner-right {
@@ -84,7 +80,7 @@
 }
 
 .home-banner-subtext {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 }
 
 .banner-get-started,
@@ -133,6 +129,7 @@
 .main-features {
   border: 1px solid #323232;
   border-radius: 16px;
+  background: var(--Dark-color-theme-BG2, #171717);
 }
 
 @media screen and (max-width: 900px) {

@@ -1,6 +1,6 @@
 .footer-layout {
   color: #b1b1b1;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   border-radius: 16px;
   border: 1px solid #323232;
   background: #171717;
@@ -9,8 +9,9 @@
   display: flex;
   justify-content: space-between;
   align-items: start;
-  padding-block: 4rem;
+  padding: 4rem;
   border-bottom: 1px solid #202020;
+  max-width: 100%;
 }
 
 .footer-layout .logo {
@@ -45,7 +46,7 @@
 } */
 
 .footer-layout .footer-bottom {
-  padding-block: 2rem 4rem;
+  padding: 4rem 6rem;
 }
 
 .footer-layout .footer-bottom > p {
@@ -68,6 +69,7 @@
   .footer-layout {
     border-radius: 0px;
     border: none;
+    font-size: 1.4rem;
   }
 }
 

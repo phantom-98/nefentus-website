@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  margin-top: 6.5rem;
+  margin-top: 3.6rem;
   color: #e9e9e9;
 }
 
@@ -61,6 +61,11 @@
     width: 50%;
 } */
 
+.b2b-subtext,
+.b2c-subtext {
+  font-size: 2rem !important;
+}
+
 .hero-layout {
   display: flex;
   flex-direction: column;
@@ -77,6 +82,7 @@
   align-items: start;
   gap: 4rem;
   width: 45%;
+  padding-left: 4rem;
 }
 
 .api-block-layout {
@@ -131,24 +137,24 @@
 .hero-layout h1,
 .audience-layout h1,
 .api-block-layout h1 {
-  font-size: 4rem;
+  font-size: 5rem;
   line-height: 6rem;
 }
 
 .manage-title-layout h1 {
   width: 72%;
-  font-size: 3.2rem;
+  font-size: 3.8rem;
   line-height: 5rem;
   font-weight: 500;
 }
 .world-title-layout h1 {
-  font-size: 3.2rem;
+  font-size: 3.8rem;
   line-height: 5rem;
   font-weight: 500;
 }
 .cryptopayment-title-layout h1 {
   width: 75%;
-  font-size: 3.2rem;
+  font-size: 3.8rem;
   line-height: 5rem;
   font-weight: 500;
 }
@@ -161,7 +167,7 @@
 
 .hero-layout h1,
 .hero-layout p {
-  max-width: 595px;
+  max-width: 111rem;
 }
 
 .manage-title-layout p {
@@ -196,7 +202,7 @@
 
 .landing-layout .sub-title {
   color: #b1b1b1;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 }
 
 .landing-layout .button-container {
@@ -242,7 +248,7 @@
 }
 
 .button-container span {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
 }
 
 .landing-layout .hero-img {
@@ -331,7 +337,6 @@
   overflow: hidden;
 }
 .audience .layout-horizontal {
-  max-width: 111rem;
   padding: 0;
 }
 .b2b .api-block {
@@ -359,13 +364,13 @@
 }
 
 .landing-layout .layout-title h1 {
-  font-size: 3.2rem;
+  font-size: 3.8rem;
   line-height: 5rem;
   font-weight: 500;
 }
 
 .landing-layout .layout-title p {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
 }
 
 .landing-layout .layout-help {
@@ -403,7 +408,7 @@
 }
 
 .landing-layout .feature {
-  border-bottom: 1px solid #202020;
+  border-bottom: 1px solid var(--Dark-color-theme-Grey, #323232);
   width: 100%;
 }
 
@@ -411,18 +416,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.5rem;
-  padding: 1rem;
+  font-size: 2rem;
+  padding: 1rem 0rem;
   cursor: pointer;
 }
 
 .landing-layout .feature-body {
   padding: 0 4rem 0.8rem 1rem;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
 }
 
-.landing-layout .layout-feature > div:last-child {
-  border-bottom: none;
+.faq-container .feature-body {
+  padding: 0 4rem 0.8rem 0rem;
 }
 
 .landing-layout .layout-feature-img,
@@ -558,12 +563,12 @@
 }
 .landing-layout .outlook p:first-child,
 .landing-layout .benefits > div > p:first-child {
-  font-size: 1.6rem;
+  font-size: 2rem;
 }
 .landing-layout .outlook p:last-child,
 .landing-layout .benefits > div > p:last-child {
-  font-size: 1.3rem;
-  max-width: 55%;
+  font-size: 1.6rem;
+  max-width: 50%;
 }
 .landing-layout .benefits div:nth-child(2) > p {
   width: 55%;
@@ -746,6 +751,7 @@
   width: 100%;
   gap: 2rem;
   position: relative;
+  padding: 0rem 5rem;
 }
 
 .landing-layout .text-part {
@@ -780,10 +786,10 @@
 }
 
 .landing-layout .feature-heading p {
-  font-size: 2.4rem;
+  font-size: 2.8rem;
 }
 .landing-layout .feature-heading p:nth-last-child(2) {
-  font-size: 1.2rem;
+  font-size: 1.8rem;
 }
 
 .landing-layout .multi-wallet-management {
@@ -905,7 +911,7 @@
   padding: 1.2rem 1rem;
   border-radius: 6px;
   border: 1px solid var(--Dark-color-theme-Grey, #323232);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   cursor: pointer;
   transition: 0.5s ease-in;
 }
@@ -924,7 +930,7 @@
 }
 
 .landing-layout .invoicing-step p:last-child {
-  font-size: 1.2rem;
+  font-size: 1.6rem;
 }
 
 .landing-layout .invoicing-img {
@@ -1002,11 +1008,11 @@
 }
 
 .landing-layout .product-step p:first-child {
-  font-size: 1.6rem;
+  font-size: 2rem;
 }
 
 .landing-layout .product-step p:last-child {
-  font-size: 1.36rem;
+  font-size: 1.6rem;
 }
 .landing-layout .translate-left {
   left: -32rem;
@@ -1051,7 +1057,7 @@
   -webkit-mask-image: linear-gradient(to bottom, #fff 40%, #fff0 96%);
 }
 .landing-layout .main-feature {
-  padding-block: 8rem 0;
+  padding-block: 0 0;
   /* margin-bottom: 16rem; */
   width: 100%;
   background: #131313;
@@ -1106,7 +1112,7 @@
 }
 .community-body h3 {
   color: #e9e9e9;
-  font-size: 1.8rem;
+  font-size: 2rem;
 }
 .community-body img {
   width: 1.2rem;
@@ -1117,7 +1123,7 @@
 }
 .community-body p {
   color: #b1b1b1;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   margin-top: 0.6rem;
 }
 
@@ -1136,7 +1142,7 @@
 }
 
 .faq-container {
-  padding: 60px;
+  padding: 4rem;
   align-self: stretch;
   background: #171717;
   border: 1px solid #323232;
@@ -1144,19 +1150,19 @@
 }
 
 .faq-first-section {
-  font-size: 3rem;
+  font-size: 3.8rem;
   font-weight: 500;
 }
 
 .faq-first-section-text {
   color: #b1b1b1;
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   width: 80%;
 }
 
 .faq-contact-text {
   color: #fafafa;
-  font-size: 1.2rem;
+  font-size: 1.8rem;
 }
 
 .faq-list {
@@ -1250,18 +1256,23 @@
 }
 
 .multi-wallet-title {
-  font-size: 3.2rem;
+  font-size: 3.8rem;
   line-height: 5rem;
   font-weight: 500;
 }
 
 .multi-wallet-subtitle {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   max-width: 52rem;
 }
 
+.audience-title {
+  font-size: 3.8rem !important;
+}
+
 .main-feature-head {
-  padding-block: 5rem;
+  gap: 1rem !important;
+  padding-block: 8rem;
   width: 100% !important;
   border: none !important;
   background: #131313 !important;
@@ -1284,11 +1295,16 @@
 }
 
 @media (max-width: 900px) {
+  .audience-layout {
+    padding-left: 0px;
+  }
   .landing-layout .feature-header {
     padding: 1rem 1rem 1rem 0rem;
+    font-size: 1.8rem;
   }
   .landing-layout .feature-body {
     padding: 0 4rem 0.8rem 0rem;
+    font-size: 1.4rem;
   }
 
   .web-b2b-hero {
@@ -1333,7 +1349,7 @@
     border-radius: 0;
     border: none;
     background: none;
-    padding: 40px 20px;
+    padding: 40px 20px !important;
   }
 
   .main-feature-head {
@@ -1387,7 +1403,7 @@
     margin-right: auto;
     /* padding-left: 5rem;
     padding-right: 5rem; */
-    padding: 40px 20px;
+    /* padding: 40px 20px; */
     gap: 4rem !important;
   }
   .b2b .api-block .layout-horizontal {
@@ -1756,8 +1772,18 @@
   .cryptopayment-title-layout p {
     width: 100%;
   }
+
+  .manage-title-layout h1 {
+    font-size: 2rem;
+  }
+  .manage-title-layout p {
+    font-size: 1.6rem;
+  }
 }
 @media (max-width: 640px) {
+  .crypto-wallet-subtext {
+    max-width: 100% !important;
+  }
   .landing-layout .hide-in-mobile {
     display: none;
   }

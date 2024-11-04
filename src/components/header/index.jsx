@@ -57,7 +57,7 @@ const Header = () => {
           <Flex
             align={"center"}
             justify={"center"}
-            className="default-text cursor-pointer"
+            className="default-text cursor-pointer header-text-font"
             onClick={() => {
               navigate("/business");
             }}
@@ -67,28 +67,42 @@ const Header = () => {
           <Flex
             align={"center"}
             justify={"center"}
-            className="default-text cursor-pointer"
+            className="default-text cursor-pointer header-text-font"
             onClick={() => {
               navigate("/private");
             }}
           >
             Private
           </Flex>
-          <ContactUs />
           <Flex
             align={"center"}
             justify={"center"}
-            className="default-text cursor-pointer"
+            className="default-text cursor-pointer header-text-font"
             onClick={() => {
               navigate("/pricing");
             }}
           >
             Pricing
           </Flex>
+          <ContactUs />
         </Flex>
         <Flex gap={8} className="web-options">
-          <CommonButton text={"Log in"} type={"secondary"} />
-          <CommonButton text={"Sign up"} type={"primary"} />
+          <CommonButton
+            key={"Login"}
+            text={"Log in"}
+            type={"secondary"}
+            onClick={() => {
+              window.location.href = `${process.env.VITE_REACT_APP_DASHBOARD}/login`;
+            }}
+          />
+          <CommonButton
+            key={"signup"}
+            text={"Sign up"}
+            type={"primary"}
+            onClick={() => {
+              window.location.href = `${process.env.VITE_REACT_APP_DASHBOARD}/get-started`;
+            }}
+          />
         </Flex>
         <div className={"mobMenu"}>
           <div className={`line ${openMenu ? "openLine" : ""}`}></div>
@@ -132,7 +146,7 @@ const Header = () => {
         </Flex>
         <Flex vertical gap={"2.5rem"} className="header-list-container">
           <div
-            className="default-text cursor-pointer"
+            className="default-text cursor-pointer header-text-font"
             onClick={() => {
               navigate("/business");
               onClose();
@@ -141,7 +155,7 @@ const Header = () => {
             Business
           </div>
           <div
-            className="default-text cursor-pointer"
+            className="default-text cursor-pointer header-text-font"
             onClick={() => {
               navigate("/private");
               onClose();
@@ -149,9 +163,8 @@ const Header = () => {
           >
             Private
           </div>
-          <ContactUs />
           <div
-            className="default-text cursor-pointer"
+            className="default-text cursor-pointer header-text-font"
             onClick={() => {
               navigate("/pricing");
               onClose();
@@ -159,6 +172,7 @@ const Header = () => {
           >
             Pricing
           </div>
+          <ContactUs />
         </Flex>
         {loginAndSignupMobile()}
       </Flex>
@@ -167,42 +181,3 @@ const Header = () => {
 };
 
 export default Header;
-
-const Business = () => {
-  const navigate = useNavigate();
-
-  return (
-    <div
-      className="default-text cursor-pointer"
-      onClick={() => navigate("/business")}
-    >
-      Business
-    </div>
-  );
-};
-
-const Private = () => {
-  const navigate = useNavigate();
-
-  return (
-    <div
-      className="default-text cursor-pointer"
-      onClick={() => navigate("/private")}
-    >
-      Private
-    </div>
-  );
-};
-
-const Pricing = () => {
-  const navigate = useNavigate();
-
-  return (
-    <div
-      className="default-text cursor-pointer"
-      onClick={() => navigate("/pricing")}
-    >
-      Pricing
-    </div>
-  );
-};

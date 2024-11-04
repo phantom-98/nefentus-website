@@ -334,7 +334,7 @@ export const ContactUs = () => {
         align={"center"}
         gap={"1rem"}
         className={`cursor-pointer default-text`}
-        style={{ height: "37px" }}
+        style={{ height: "37px", fontSize: "1.8rem" }}
       >
         <p>Contact us</p>
         <img

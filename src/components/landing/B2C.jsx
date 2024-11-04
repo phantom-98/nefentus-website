@@ -4,8 +4,8 @@ import { Audience, Conclusion, Heading } from ".";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import ManageCrypto from "../../assets/landing/manage-crypto.png";
 import MultipleWallets from "../../assets/landing/multi-wallets.png";
-import Hero1 from "../../assets/landing/Hero 1.png";
-import Hero2 from "../../assets/landing/Hero 2.png";
+import Hero1 from "../../assets/landing/hero 1.png";
+import Hero2 from "../../assets/landing/hero 2.png";
 import Hero3 from "../../assets/landing/hero 3.png";
 import Hero4 from "../../assets/landing/hero 4.png";
 import MobileHero from "../../assets/landing/mobile-b2c-image.png";
@@ -98,7 +98,7 @@ export const B2CHero = () => {
             <span className="gradient">Take charge</span> of your <br /> crypto
             with Nefentus
           </h1>
-          <p className="sub-title">
+          <p className="sub-title b2b-subtext">
             Seamlessly create & receive payments. Manage all your wallets and
             streamline your sales process—all from a single platform.
           </p>
@@ -365,7 +365,7 @@ export const Transactions = () => {
           </div>
           <p
             style={{
-              fontSize: "2.5rem",
+              fontSize: "3.8rem",
             }}
           >
             Send/Receive with Ease

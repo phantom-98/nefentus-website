@@ -129,7 +129,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="container footer-bottom">
+      <div className="footer-bottom">
         <p>
           Data and information on this website are provided for informational
           purposes only, and are not intended for reference or other purposes.

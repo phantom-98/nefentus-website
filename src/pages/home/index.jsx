@@ -35,7 +35,7 @@ const Home = () => {
         <title>Nefentus | Home</title>
       </Helmet>
       <Flex className="home-banner">
-        <Flex vertical gap={16} className="home-banner-left">
+        <Flex vertical gap={"2rem"} className="home-banner-left">
           <h1 className="title">
             Reach more customers with{" "}
             <span className="gradient">seamless crypto invoicing </span>
@@ -94,9 +94,6 @@ const Home = () => {
       </div>
       <div className="landing-layout">
         <Community />
-      </div>
-      <div className="landing-layout">
-        <SubscriptionPlan />
       </div>
       <div className="landing-layout">
         <FAQ />

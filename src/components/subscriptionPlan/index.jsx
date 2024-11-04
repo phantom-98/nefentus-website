@@ -44,7 +44,7 @@ const planDeatils = {
     ],
   },
   Enterprise: {
-    label: "For Cooperations",
+    label: "For Corporations",
     title: "Enterprise",
     percentage: "1.9",
     subtext: "Custom From\n250,000 Monthly Volume",
@@ -103,7 +103,7 @@ const SubscriptionPlan = () => {
               <div className="plan-type">
                 <Flex className="plan-card-head" vertical gap={16}>
                   <label className="default-text-gray plan-label-text">
-                    For Cooperations
+                    For Corporations
                   </label>
                   <div className="plan-card-title">Enterprises</div>
                   <Button className="default-text select-plan-button">

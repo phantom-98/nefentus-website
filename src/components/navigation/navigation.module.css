@@ -372,6 +372,9 @@
 }
 
 @media (max-width: 900px) {
+  .contactUsOptions:first-child {
+    border-right: none;
+  }
   .contactus_dropdown {
     flex-direction: column;
   }

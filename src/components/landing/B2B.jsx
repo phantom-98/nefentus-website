@@ -111,7 +111,7 @@ export const HeroB2B = () => {
             Revolutionize Your Business with Effortless{" "}
             <span className="gradient">Crypto Payments </span>
           </h1>
-          <p className="sub-title">
+          <p className="sub-title b2b-subtext">
             Seamlessly create & receive payments. Manage all your wallets and
             streamline your sales process—all from a single platform.
           </p>
