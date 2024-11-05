@@ -201,7 +201,7 @@ const DropDownMenuItem = ({ icon, title, subtitle }) => {
         <img src={ico} alt="icon" />
       </div>
       <div className={styles.body}>
-        <p className="default-text">{title}</p>
+        <p className={"default-text " + styles.dropdownOptionTitle}>{title}</p>
         <p className={"default-text-gray " + styles.dropdownOptionsSubtext}>
           {subtitle}
         </p>

@@ -1255,6 +1255,10 @@
   padding: 4rem;
 }
 
+.multi-wallet-border {
+  border: 1px solid #323232;
+}
+
 .multi-wallet-title {
   font-size: 3.8rem;
   line-height: 5rem;
