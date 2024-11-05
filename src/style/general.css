@@ -676,7 +676,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
   color: currentColor;
-  border-color: currentColor;
+  border-color: transparent;
 }
 
 input:-webkit-autofill,

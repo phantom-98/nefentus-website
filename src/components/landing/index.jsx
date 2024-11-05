@@ -459,7 +459,7 @@ const ScrollAnimation = () => {
 
     if (window.innerWidth <= 1300) scrollPercentage += 5;
     // else if (window.innerWidth <= 1920) scrollPercentage += 3;
-    setPos(scrollPercentage < 60.5 ? 0 : scrollPercentage < 70 ? 1 : 2);
+    setPos(scrollPercentage < 58.5 ? 0 : scrollPercentage < 67 ? 1 : 2);
   };
 
   useEffect(() => {
@@ -491,8 +491,10 @@ const ScrollAnimation = () => {
         style={{
           position: "sticky",
           top:
-            window.innerWidth <= 2000
-              ? "calc(100vh - 80rem)"
+            window.innerWidth <= 1500
+              ? "calc(100vh - 70rem)"
+              : window.innerWidth <= 2000
+              ? "calc(100vh - 75rem)"
               : "calc(100vh - 110rem)",
         }}
       >
