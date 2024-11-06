@@ -9,10 +9,12 @@ const Layout2 = ({ children }) => {
   return (
     <div className="layout-container-wrapper">
       <div className="layout-container">
-        <Header />
-        {children}
-        <div className="landing-layout">
-          <Footer />
+        <div className="layout-sub-container">
+          <Header />
+          {children}
+          <div className="landing-layout">
+            <Footer />
+          </div>
         </div>
       </div>
     </div>

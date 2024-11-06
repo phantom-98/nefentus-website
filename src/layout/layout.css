@@ -12,6 +12,11 @@
   background-position: bottom;
 }
 
+.layout-sub-container {
+  max-width: 111rem;
+  margin: auto;
+}
+
 @media screen and (max-width: 900px) {
   .layout-container {
     padding: 0;
