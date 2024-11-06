@@ -117,7 +117,11 @@ export const HeroB2B = () => {
           </p>
           <Flex gap={"2rem"} className="button-container">
             <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
-              <CommonButton text={"Get started"} type={"primary"} />
+              <CommonButton
+                text={"Get started"}
+                type={"primary"}
+                className={"banner-get-started-button"}
+              />
             </a>
             <a href="/business-support">
               <span className="talk-to-expert default-text">

@@ -692,3 +692,7 @@ input:-webkit-autofill:active {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.banner-get-started-button {
+  padding: 1.2rem 3.8rem !important;
+}
