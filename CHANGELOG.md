@@ -1,5 +1,6 @@
 # New changes
 
+- fix alignment issues (MINOR)
 - Resolved UI issues (MINOR)
 - Implemented New Design of Nefentus website (MAJOR)
 - Removing Converter content and adding FAQ section

@@ -8,8 +8,8 @@ const AMLPolicyBody = () => {
     >
       <h4>Last Update: July 23, 2024</h4>
       <h2>AML policy</h2>
-      <div className={`${styles.body}`}>
-        <div className={styles.content}>
+      <div>
+        <div>
           <div>
             <h4>AML Policy</h4>
 

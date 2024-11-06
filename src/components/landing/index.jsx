@@ -14,8 +14,8 @@ import Help2 from "../../assets/landing/help 2.png";
 import Help3 from "../../assets/landing/help 3.png";
 import Help4 from "../../assets/landing/help 4.png";
 import WalletsPng from "../../assets/landing/wallets.png";
-import Benefit1 from "../../assets/landing/benefit 1.png";
-import Benefit2 from "../../assets/landing/benefit 2.svg";
+import Benefit1 from "../../assets/landing/benefit1.png";
+import Benefit2 from "../../assets/landing/benefit2.png";
 import ServiceLine1 from "../../assets/landing/service line left.svg";
 import ServiceLine2 from "../../assets/landing/service line right.svg";
 import GettingStarted1 from "../../assets/landing/started left.svg";
@@ -349,7 +349,7 @@ const Feature = ({
         />
       </div>
       {expands && expands[index] && (
-        <div className="feature-body sub-title">
+        <div className="feature-body sub-title description-padding">
           <p>{description}</p>
           <div className="feature-img">{element}</div>
         </div>
@@ -406,17 +406,22 @@ export const Benefits = () => {
             </p>
           </div>
         </div>
-        <div className="benefits">
-          <div style={{ borderRadius: "16px" }}>
+        <div className="benefits benefits-padding">
+          <div style={{ borderRadius: "16px" }} className="benefits-block-left">
             <p>Pre-configured payment.</p>
-            <img src={Benefit1} alt="Pre configured payments using Nefentus" />
+            {/* <img src={Benefit1} alt="Pre configured payments using Nefentus" /> */}
             <p className="sub-title">
               Commerce shares payment information directly with their wallet,
               removing any need for manual data entry.
             </p>
           </div>
-          <div style={{ borderRadius: "16px" }}>
-            <img src={Benefit2} alt="Cryptocurrency checkout" />
+          <div className="benefits-block-right">
+            <img
+              src={Benefit2}
+              alt="Cryptocurrency checkout"
+              width={"100%"}
+              height="100%"
+            />
           </div>
         </div>
       </div>
@@ -888,7 +893,7 @@ export const FAQ = () => {
         </div>
       </Flex>
 
-      <Flex vertical align={"flex-start"} className="faq-list">
+      <Flex gap={"1.6rem"} vertical align={"flex-start"} className="faq-list">
         {FAQList.map((help, index) => {
           return (
             <Feature

@@ -25,10 +25,9 @@
 .header-signup {
   border-radius: 6px;
   background: var(--Whitemode-Blue, #0097cd);
-  padding: 10px 24px;
+  padding: 12px 38px;
   border: 1px solid var(--Whitemode-Blue, #0097cd);
   font-size: 1.6rem;
-  height: 36px;
   gap: 10px;
   transition: none;
 }

@@ -137,10 +137,9 @@ const Footer = () => {
           clients/merchants, conducted transactions, etc., has been provided as
           aggregate from activities of all legal entities operating under the
           brand name of Nefentus, including, but not limited to: (I) Nefentus
-          Soutions LTD, Faneromenis Avenue 85, Office 301, Larnaca, Cyprus.
-          <br />
-          The information on this site is not directed at residents of the
-          United States or any particular country or jurisdiction where such
+          Soutions LTD, Faneromenis Avenue 85, Office 301, Larnaca, Cyprus. The
+          information on this site is not directed at residents of the United
+          States or any particular country or jurisdiction where such
           distribution or use would be contrary to local law or regulation.
           Please examine the terms and conditions of our service and consult an
           expert if necessary.
