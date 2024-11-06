@@ -248,7 +248,7 @@
 }
 
 .button-container span {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 .landing-layout .hero-img {
@@ -399,6 +399,7 @@
   display: flex;
   width: 56%;
   height: 100%;
+  gap: 1.6rem;
   flex-direction: column;
   align-items: flex-start;
   background: #171717;
@@ -410,6 +411,7 @@
 .landing-layout .feature {
   border-bottom: 1px solid var(--Dark-color-theme-Grey, #323232);
   width: 100%;
+  padding-bottom: 1.6rem;
 }
 
 .landing-layout .feature-header {
@@ -417,13 +419,16 @@
   justify-content: space-between;
   align-items: center;
   font-size: 2rem;
-  padding: 1rem 0rem;
   cursor: pointer;
 }
 
 .landing-layout .feature-body {
   padding: 0 4rem 0.8rem 1rem;
   font-size: 1.6rem;
+}
+
+.description-padding {
+  padding: 0 !important;
 }
 
 .faq-container .feature-body {
@@ -541,14 +546,25 @@
   gap: 2.8rem;
 }
 
-.landing-layout .layout-benefits > div:first-child,
-.landing-layout .benefits > div {
+.landing-layout .layout-benefits > div:first-child {
   width: 100%;
   height: 36rem;
-  background: #171717;
+  background: #1d1d1d;
   overflow: hidden;
   position: relative;
-  border: 1px solid #202020;
+  border: 1px solid #323232;
+}
+.landing-layout .benefits div:first-child {
+  width: 50%;
+  /* height: 36rem; */
+  background: #1d1d1d;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #323232;
+}
+
+.benefits-padding {
+  padding: 0 !important;
 }
 
 .landing-layout .outlook {
@@ -568,7 +584,7 @@
 .landing-layout .outlook p:last-child,
 .landing-layout .benefits > div > p:last-child {
   font-size: 1.6rem;
-  max-width: 50%;
+  max-width: 55%;
 }
 .landing-layout .benefits div:nth-child(2) > p {
   width: 55%;
@@ -583,12 +599,12 @@
   gap: 2.8rem;
 }
 
-.landing-layout .benefits > div {
+.landing-layout .benefits div:first-child {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 3rem;
+  padding: 2.4rem;
 }
 
 .landing-layout .ico-card {
@@ -1041,15 +1057,21 @@
 .landing-layout .b2c-manage {
   padding-block: 4rem;
 }
+.benefits-block-left {
+  background-image: url("../../assets/landing/benefit1.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  width: 50%;
+}
 /* .landing-layout .b2b-manage {
   padding-block: 10rem;
 } */
-.landing-layout .benefits img {
+/* .landing-layout .benefits img {
   height: 100%;
   position: absolute;
   bottom: 0;
   right: 0;
-}
+} */
 .landing-layout .feature-heading > img:last-child {
   display: none;
   width: 100%;
@@ -1298,7 +1320,19 @@
   display: none;
 }
 
+.benefits-block-right {
+  border-radius: 16px;
+  width: 50%;
+}
+
 @media (max-width: 900px) {
+  .benefits-block-right {
+    width: 100%;
+  }
+  .landing-layout .benefits div:first-child {
+    width: 100% !important;
+    height: 47rem;
+  }
   .audience-layout {
     padding-left: 0px;
   }
@@ -1794,9 +1828,9 @@
   .landing-layout.home .hero-img {
     transform: translateX(-8rem);
   }
-  .landing-layout .benefits img {
+  /* .landing-layout .benefits img {
     left: 0;
-  }
+  } */
   .landing-layout.b2c .hero-img > div:last-child {
     display: none !important;
   }
