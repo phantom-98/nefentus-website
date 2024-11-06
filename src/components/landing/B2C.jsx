@@ -4,9 +4,9 @@ import { Audience, Conclusion, Heading } from ".";
 import NefentusLogo from "../../assets/logo/logo.svg";
 import ManageCrypto from "../../assets/landing/manage-crypto.png";
 import MultipleWallets from "../../assets/landing/multi-wallets.png";
-import Hero1 from "../../assets/landing/Hero 1.png";
-import Hero2 from "../../assets/landing/Hero 2.png";
-import Hero3 from "../../assets/landing/hero 3.png";
+import Hero1 from "../../assets/landing/B2C-Hero1.png";
+import Hero2 from "../../assets/landing/B2C-Hero2.png";
+import Hero3 from "../../assets/landing/B2C-Hero3.png";
 import Hero4 from "../../assets/landing/hero 4.png";
 import MobileHero from "../../assets/landing/mobile-b2c-image.png";
 import HeroLineTop from "../../assets/landing/b2c-hero-top.svg";
@@ -260,7 +260,12 @@ export const MultiWallets = () => {
           </Flex>
         </div>
 
-        <img src={MultipleWallets} alt="Multiple Wallets" width={"100%"} />
+        <img
+          src={MultipleWallets}
+          alt="Multiple Wallets"
+          width={"100%"}
+          className="multi-wallet-border"
+        />
       </div>
       <div>
         <Flex vertical className="multi-wallet-mobile-view" gap={24}>

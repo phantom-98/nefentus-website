@@ -70,7 +70,9 @@ const SubscriptionPlan = () => {
             <td>
               <Flex vertical gap={8} className="plan-label">
                 <h3>Plans to make your plans happen.</h3>
-                <p>Get paid fast and look good doing it</p>
+                <p className="sub-label">
+                  Get paid fast and look good doing it
+                </p>
               </Flex>
             </td>
             <td>
@@ -144,7 +146,7 @@ const SubscriptionPlan = () => {
                   className="plan-payment"
                 >
                   <p className="default-text-gray">Starting at</p>
-                  <h5 className="default-text">2.9%</h5>
+                  <h5 className="default-text">1.9%</h5>
                   <p className="default-text-gray plan-payment-text-min-height">
                     From 50,000
                     <br /> Monthly Volume
@@ -162,7 +164,7 @@ const SubscriptionPlan = () => {
                   className="plan-payment"
                 >
                   <p className="default-text-gray">Starting at</p>
-                  <h5 className="default-text">2.9%</h5>
+                  <h5 className="default-text">1.9%</h5>
                   <p className="default-text-gray plan-payment-text-min-height">
                     Custom From
                     <br /> 250,000 Monthly Volume

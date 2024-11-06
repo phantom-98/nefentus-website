@@ -61,7 +61,7 @@ th {
   background: var(--Dark-color-theme-Dark, #202020);
   border-left: 1px solid #323232;
   border-right: 1px solid #323232;
-  min-height: 63px;
+  min-height: 68px;
 }
 
 .plan-payment-text-min-height {
@@ -90,6 +90,7 @@ th {
     0px 15px 34px 0px rgba(0, 0, 0, 0.1);
   padding: 5px 12px;
   font-size: 1.6rem;
+  line-height: 2.5rem;
   width: fit-content;
 }
 
@@ -99,6 +100,7 @@ th {
   border: 1px solid var(--Dark-color-theme-Grey, #323232) !important;
   background: var(--Dark-color-theme-Grey, #323232) !important;
   font-size: 1.6rem;
+  font-weight: 400;
   width: 100%;
 }
 
@@ -112,10 +114,14 @@ th {
 }
 
 .plan-label {
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: 500;
   color: var(--Light-grey2, #b1b1b1);
   padding: 20px 0px;
+}
+
+.sub-label {
+  font-size: 1.8rem;
 }
 
 .plan-payment {

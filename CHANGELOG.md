@@ -1,5 +1,6 @@
 # New changes
 
+- Resolved UI issues (MINOR)
 - Implemented New Design of Nefentus website (MAJOR)
 - Removing Converter content and adding FAQ section
 - updated background images and modified /signup -> /get-started (MINOR)
