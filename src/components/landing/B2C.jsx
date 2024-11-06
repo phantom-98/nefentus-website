@@ -104,7 +104,11 @@ export const B2CHero = () => {
           </p>
           <div className="button-container">
             <a href={`${process.env.VITE_REACT_APP_DASHBOARD}/get-started`}>
-              <CommonButton text={"Get started"} type={"primary"} />
+              <CommonButton
+                text={"Get started"}
+                type={"primary"}
+                className={"banner-get-started-button"}
+              />
             </a>
             <a href="/business-support">
               <span>Talk to an expert</span>
