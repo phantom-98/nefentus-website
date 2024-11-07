@@ -14,6 +14,7 @@ import Help2 from "../../assets/landing/help 2.png";
 import Help3 from "../../assets/landing/help 3.png";
 import Help4 from "../../assets/landing/help 4.png";
 import WalletsPng from "../../assets/landing/wallets.png";
+import MobileWalletPng from "../../assets/landing/WalletImage-2.png";
 import Benefit1 from "../../assets/landing/benefit1.png";
 import Benefit2 from "../../assets/landing/benefit2.png";
 import ServiceLine1 from "../../assets/landing/service line left.svg";
@@ -386,14 +387,14 @@ export const Benefits = () => {
         subtitle={`Nefentus prioritizes your customers' convenience at every step.`}
       />
       <div className="layout-benefits">
-        <div style={{ borderRadius: "16px" }}>
+        <div style={{ borderRadius: "16px" }} className="web-outlook-options">
           <img
             src={WalletsPng}
             style={{
               height: "100%",
               width: "100%",
               objectFit: "cover",
-              objectPosition: "center top",
+              objectPosition: "center ",
             }}
             alt="Wallets for cryptocurrency"
           />
@@ -403,6 +404,17 @@ export const Benefits = () => {
               Customers have the flexibility to pay using their preferred wallet
               & currency, spanning across Bitcoin, Ethereum and numerous other
               networks.
+            </p>
+          </div>
+        </div>
+        <div className="mobile-outlook-img">
+          <div className="mobile-view-wallet-images">
+            <p className="crypto-wallet-mobile-title mobile-subtext">
+              Hundreds of currencies, all Web3 wallets
+            </p>
+            <p className="sub-title crypto-wallet-mobile-subtext">
+              Customers can pay with their preferred wallet and currency across
+              Bitcoin, Ethereum, and other networks
             </p>
           </div>
         </div>

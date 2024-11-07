@@ -2,8 +2,8 @@ import React from "react";
 import { Flex } from "antd";
 import CommonButton from "../commonButton";
 import BusinessFeatureImage from "../../assets/landing/business-features.png";
-import MobileBusinessFeatureImage1 from "../../assets/landing/mobile-business-features1.png";
-import MobileBusinessFeatureImage2 from "../../assets/landing/mobile-business-features2.png";
+import MobileBusinessFeatureImage1 from "../../assets/landing/MobileBusinessFeatureImage-1.png";
+import MobileBusinessFeatureImage2 from "../../assets/landing/MobileBusinessFeatureImage-2.png";
 
 import Logo from "../../assets/logo/logo_n.png";
 import { Heading } from "../landing";

@@ -196,13 +196,24 @@
   color: #387d91;
 }
 
+.wallet-bg-color {
+  background-color: #171717;
+}
+
 .landing-layout .title {
   color: #e9e9e9;
 }
 
+.title-size {
+  font-size: 3.8rem !important;
+}
 .landing-layout .sub-title {
   color: #b1b1b1;
   font-size: 1.6rem;
+}
+
+.sub-title-text-size {
+  font-size: 1.2rem !important;
 }
 
 .landing-layout .button-container {
@@ -607,6 +618,41 @@
   padding: 2.4rem;
 }
 
+.mobile-outlook-img {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .web-outlook-options {
+    display: none;
+  }
+  .mobile-outlook-img {
+    display: initial !important;
+    background-image: url("../../assets/landing/WalletImage-2.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+    height: 47rem;
+    border-radius: 15px;
+  }
+
+  .crypto-wallet-mobile-title {
+    color: #b1b1b1;
+    width: 60%;
+    font-family: "DM Sans";
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .mobile-view-wallet-images {
+    padding: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+}
 .landing-layout .ico-card {
   position: absolute;
   display: flex;
@@ -1764,6 +1810,11 @@
   .landing-layout .safe-bottom hr {
     width: 1px !important;
     height: 6rem;
+  }
+  .security-hline {
+    width: 100% !important;
+    height: 36rem;
+    border: 1px solid #323232 !important;
   }
   .landing-layout .layout-security {
     flex-direction: column;

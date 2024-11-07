@@ -822,6 +822,7 @@ export const Security = () => {
       >
         {securities.map((s) => (
           <div
+            className="security-hline"
             style={{
               width: `calc(${100 / securities.length}%)`,
               position: "relative",
@@ -876,7 +877,9 @@ export const B2BCryptoManage = () => {
     <div className="layout-paragraph b2b-manage">
       <div className="layout-horizontal layout-b2b-manage">
         <div className="manage-title-layout">
-          <h1 className="title">Manage your crypto on the go with our app</h1>
+          <h1 className="title title-size">
+            Manage your crypto on the go with our app
+          </h1>
           <p className="sub-title">
             Stay connected to your cryptocurrency transactions anytime, anywhere
             with the Nefentus mobile app.
