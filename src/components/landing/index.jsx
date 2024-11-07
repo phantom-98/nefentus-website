@@ -341,7 +341,18 @@ const Feature = ({
 }) => {
   return (
     <div className="feature">
-      <div className="feature-header title">
+      <div className="feature-header title"
+        onClick={() => {
+          setExpands &&
+            index !== undefined &&
+            setExpands(
+              expands.map((item, i) => {
+                if (i == index) return !item;
+                return false;
+              }),
+            );
+        }}
+      >
         <p>{title}</p>
       </div>
       <div className="feature-body sub-title description-padding">
