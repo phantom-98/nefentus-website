@@ -330,7 +330,6 @@ const Feature = ({
         className="feature-header title"
         onClick={() => {
           setExpands &&
-            !expands[index] &&
             index !== undefined &&
             setExpands(
               expands.map((item, i) => {

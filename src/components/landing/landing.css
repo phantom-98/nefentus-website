@@ -1868,6 +1868,10 @@
   .manage-title-layout p {
     font-size: 1.6rem;
   }
+  .landing-layout.contact {
+    background: none !important;
+    border: none !important;
+  }
 }
 @media (max-width: 640px) {
   .crypto-wallet-subtext {

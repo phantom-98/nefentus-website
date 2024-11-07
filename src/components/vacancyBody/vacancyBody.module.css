@@ -74,6 +74,8 @@
 @media (max-width: 640px) {
   .vacancyBody {
     margin: 8rem auto;
+    background: none;
+    border: none;
   }
   .heading {
     line-height: 6rem;
