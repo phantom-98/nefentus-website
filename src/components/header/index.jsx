@@ -118,7 +118,7 @@ const Header = () => {
       <Flex
         vertical
         gap={"2.5rem"}
-        className="mobile-header"
+        className="mobile-header header-length"
         style={{
           transform: openMenu ? "translateY(0%)" : "translateY(-190%)",
           transition: "transform 0.5s ease",

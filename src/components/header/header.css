@@ -12,6 +12,10 @@
   padding: 4rem;
 }
 
+.header-length {
+  height: 100vh !important;
+}
+
 .header-text-font {
   font-size: 1.8rem;
 }

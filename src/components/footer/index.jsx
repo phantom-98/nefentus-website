@@ -89,11 +89,11 @@ const Footer = () => {
   const [icon_tele, setIcon_tele] = useState(socials.telegram.iconNormal);
   const [icon_x, setIcon_x] = useState(socials.x.iconNormal);
   return (
-    <div className="footer-layout">
-      <div className="footer-top container">
+    <div className="footer-layout ">
+      <div className="footer-top container social-gap">
         <div style={{ width: "12rem" }}>
           <NefentusLogo />
-          <div className="socials">
+          <div className="socials ">
             <a
               href={socials.x.link}
               onMouseEnter={() => setIcon_x(socials.x.iconHover)}
@@ -130,20 +130,6 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>
-          Data and information on this website are provided for informational
-          purposes only, and are not intended for reference or other purposes.
-          All financial, statistical and other relevant data regarding the
-          clients/merchants, conducted transactions, etc., has been provided as
-          aggregate from activities of all legal entities operating under the
-          brand name of Nefentus, including, but not limited to: (I) Nefentus
-          Soutions LTD, Faneromenis Avenue 85, Office 301, Larnaca, Cyprus. The
-          information on this site is not directed at residents of the United
-          States or any particular country or jurisdiction where such
-          distribution or use would be contrary to local law or regulation.
-          Please examine the terms and conditions of our service and consult an
-          expert if necessary.
-        </p>
         <div
           style={{
             display: "flex",
@@ -151,8 +137,10 @@ const Footer = () => {
             alignItems: "center",
           }}
         >
-          <p>© 2024 Nefentus. All rights reserved.</p>
-          <div className="bottom-right">
+          <p className="mobile-view-footer-bottom">
+            © 2024 Nefentus. All rights reserved.
+          </p>
+          <div className="bottom-right mobile-view-footer-bottom">
             {sitemap_bottom.map((item) => (
               <a href={item.link}>{item.title}</a>
             ))}

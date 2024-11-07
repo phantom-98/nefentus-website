@@ -377,7 +377,15 @@
   border-radius: 6px;
 }
 
+.contactUsText {
+  height: 37px;
+  font-size: 1.8rem;
+}
+
 @media (max-width: 900px) {
+  .contactUsText {
+    font-size: 1.6rem;
+  }
   .contactUsOptions:first-child {
     border-right: none;
   }
