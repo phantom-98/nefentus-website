@@ -639,11 +639,8 @@
   .crypto-wallet-mobile-title {
     color: #b1b1b1;
     width: 60%;
-    font-family: "DM Sans";
     font-size: 2rem;
-    font-style: normal;
     font-weight: 500;
-    line-height: normal;
   }
   .mobile-view-wallet-images {
     padding: 2.4rem;
@@ -651,6 +648,8 @@
     flex-direction: column;
     height: 100%;
     justify-content: space-between;
+    border: 1px solid #323232;
+    border-radius: 16px;
   }
 }
 .landing-layout .ico-card {
