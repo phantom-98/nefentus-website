@@ -6,6 +6,7 @@ import AudienceImg from "../../assets/landing/audience.png";
 import ManageCrypto from "../../assets/landing/manage-crypto.png";
 import HeroLine1 from "../../assets/landing/hero-line-top-left.svg";
 import HeroLine2 from "../../assets/landing/hero-line-bottom-left.svg";
+import chevronRight from "../../assets/landing/chevron-right.svg";
 import BlueLine from "../../assets/landing/BlueLine.svg";
 import Plus from "../../assets/landing/plus.svg";
 import Minus from "../../assets/landing/minus.svg";
@@ -61,7 +62,17 @@ import Logos from "../../components/logos/logos";
 import { useEffect, useState } from "react";
 import { Flex } from "antd";
 import CommonButton from "../commonButton";
-
+import Slider from "react-slick";
+var settings = {
+  dots: true,
+  infinite: true,
+  autoplay: true,
+  speed: 1000,
+  nextArrow: <img src={chevronRight} alt="arrow" />,
+  prevArrow: <img src={chevronRight} alt="arrow" />,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 const HomeBody = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -274,9 +285,13 @@ export const Helps = () => {
           })}
         </div>
         <div className="layout-feature-img">
-          {helps.map((help, index) => {
-            return expands[index] ? help.element : null;
-          })}
+          <div className="feature-slider">
+            <Slider {...settings}>
+              {helps.map((help, index) => {
+                return <div key={index}>{help.element}</div>;
+              })}
+            </Slider>
+          </div>
         </div>
       </div>
     </div>
@@ -325,35 +340,12 @@ const Feature = ({
 }) => {
   return (
     <div className="feature">
-      <div
-        className="feature-header title"
-        onClick={() => {
-          setExpands &&
-            !expands[index] &&
-            index !== undefined &&
-            setExpands(
-              expands.map((item, i) => {
-                if (i == index) return !item;
-                return false;
-              }),
-            );
-        }}
-      >
+      <div className="feature-header title">
         <p>{title}</p>
-        <img
-          src={expands && expands[index] ? Minus : Plus}
-          style={{
-            width: "2rem",
-          }}
-          alt="icon"
-        />
       </div>
-      {expands && expands[index] && (
-        <div className="feature-body sub-title description-padding">
-          <p>{description}</p>
-          <div className="feature-img">{element}</div>
-        </div>
-      )}
+      <div className="feature-body sub-title description-padding">
+        <p>{description}</p>
+      </div>
     </div>
   );
 };
