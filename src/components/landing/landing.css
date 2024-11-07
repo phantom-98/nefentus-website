@@ -451,8 +451,7 @@
 }
 
 .landing-layout .layout-feature-img > div img {
-  border-radius: 1rem;
-  border: 1px solid #202020;
+  border-top: 1px solid #323232;
 }
 
 .slick-slider > img {
@@ -1478,8 +1477,8 @@
   }
 
   .help-subcontainer {
-    border: 1px solid #323232;
-    border-radius: 16px;
+    /* border: 1px solid #323232;
+    border-radius: 16px 16px 0px 0px; */
   }
 
   .help-subcontainer:has(> .layout-paragraph) {
@@ -1616,6 +1615,9 @@
     height: fit-content;
     border-top: none;
     background: none;
+    gap: 0rem;
+    border: 1px solid var(--Dark-color-theme-Grey, #323232);
+    overflow: hidden;
   }
   .landing-layout .manage {
     padding-block: 4rem;
