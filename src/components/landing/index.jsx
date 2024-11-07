@@ -273,16 +273,7 @@ export const Helps = () => {
       <div className="layout-horizontal layout-help">
         <div className="layout-feature help-subcontainer">
           {helps.map((help, index) => {
-            return (
-              <Feature
-                title={help.title}
-                description={help.body}
-                index={index}
-                element={help.element}
-                expands={expands}
-                setExpands={setExpands}
-              />
-            );
+            return <ListFeature title={help.title} description={help.body} />;
           })}
         </div>
         <div className="layout-feature-img">
@@ -341,7 +332,8 @@ const Feature = ({
 }) => {
   return (
     <div className="feature">
-      <div className="feature-header title"
+      <div
+        className="feature-header title"
         onClick={() => {
           setExpands &&
             index !== undefined &&
@@ -353,6 +345,29 @@ const Feature = ({
             );
         }}
       >
+        <p>{title}</p>
+        <img
+          src={expands && expands[index] ? Minus : Plus}
+          style={{
+            width: "2rem",
+          }}
+          alt="icon"
+        />
+      </div>
+      {expands && expands[index] && (
+        <div className="feature-body sub-title description-padding">
+          <p>{description}</p>
+          <div className="feature-img">{element}</div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ListFeature = ({ title, description }) => {
+  return (
+    <div className="feature">
+      <div className="feature-header title">
         <p>{title}</p>
       </div>
       <div className="feature-body sub-title description-padding">
