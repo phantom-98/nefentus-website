@@ -13,7 +13,7 @@ import Help1 from "../../assets/landing/help 1.png";
 import Help2 from "../../assets/landing/help 2.png";
 import Help3 from "../../assets/landing/help 3.png";
 import Help4 from "../../assets/landing/help 4.png";
-import WalletsPng from "../../assets/landing/wallets.png";
+import WalletsPng from "../../assets/landing/Wallets.png";
 import MobileWalletPng from "../../assets/landing/WalletImage-2.png";
 import Benefit1 from "../../assets/landing/benefit1.png";
 import Benefit2 from "../../assets/landing/benefit2.png";
