@@ -1,5 +1,6 @@
 # New changes
 
+- mobile feedbacks related UI (MINOR)
 - fix alignment issues (MINOR)
 - Resolved UI issues (MINOR)
 - Implemented New Design of Nefentus website (MAJOR)
