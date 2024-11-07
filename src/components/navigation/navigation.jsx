@@ -333,8 +333,7 @@ export const ContactUs = () => {
       <Flex
         align={"center"}
         gap={"1rem"}
-        className={`cursor-pointer default-text`}
-        style={{ height: "37px", fontSize: "1.8rem" }}
+        className={`cursor-pointer default-text ${styles.contactUsText}`}
       >
         <p>Contact us</p>
         <img
