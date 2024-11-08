@@ -66,8 +66,8 @@
 
 .dropdownMenuItem {
   display: flex;
-  gap: 1rem;
-  padding: 0.8rem;
+  gap: 1.5rem;
+  /* padding: 0.8rem; */
   border-radius: 6px;
 }
 
@@ -144,7 +144,7 @@
 }
 
 .contactUsOptions {
-  padding: 1.8rem;
+  padding: 0rem;
 }
 
 .contactUsOptions:first-child {
@@ -385,6 +385,7 @@
 @media (max-width: 900px) {
   .contactUsText {
     font-size: 1.6rem;
+    height: 16px !important;
   }
   .contactUsOptions:first-child {
     border-right: none;
@@ -392,6 +393,10 @@
   .contactus_dropdown {
     flex-direction: column;
   }
+  .dropdown_text_options {
+    padding: 1.5rem !important;
+  }
+
   .logo {
     height: 2.2rem;
   }
