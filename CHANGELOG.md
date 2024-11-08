@@ -1,5 +1,6 @@
 # New changes
 
+- Update terms of use (MINOR)
 - mobile feedbacks related UI (MINOR)
 - modified help section (MINOR)
 - fix alignment issues (MINOR)
