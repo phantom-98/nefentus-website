@@ -267,7 +267,7 @@ export const Helps = () => {
   return (
     <div className="layout-paragraph help">
       <Heading
-        title={`Transform your business with \n our all-in-one cryptocurrency platform`}
+        title={`Transform your business with \n our all-in- one crypto invoicing`}
         subtitle={`Empower your business with a comprehensive suite of cryptocurrency tools conveniently housed under one roof.`}
       />
       <div className="layout-horizontal layout-help">
@@ -516,7 +516,11 @@ const ScrollAnimation = () => {
               </div>
               <p>{item.title}</p>
               <p className="sub-title">{item.subtitle}</p>
-              <img src={item.img} alt={item.alt} />
+              <img
+                className="feature-image-fixed"
+                src={item.img}
+                alt={item.alt}
+              />
             </div>
           );
         })}

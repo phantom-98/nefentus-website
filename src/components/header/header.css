@@ -16,6 +16,13 @@
   height: 100vh !important;
 }
 
+.whole-mob-menu-section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .header-text-font {
   font-size: 1.8rem;
 }
@@ -29,6 +36,9 @@
   }
   .web-options {
     display: none;
+  }
+  .mob-menu-top-logo-img {
+    padding: 2rem 0;
   }
   .mobMenu {
     position: relative;

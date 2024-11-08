@@ -335,7 +335,7 @@ export const ContactUs = () => {
         gap={"1rem"}
         className={`cursor-pointer default-text ${styles.contactUsText}`}
       >
-        <p>Contact us</p>
+        <p onClick={() => setOpen(!open)}>Contact us</p>
         <img
           src={Dropdown}
           style={{
@@ -352,11 +352,13 @@ export const ContactUs = () => {
           className={styles.dropdown}
           style={{ left: "-28rem", top: "3.5rem" }}
         >
-          <Flex className={styles.contactus_dropdown}>
+          <Flex
+            className={`${styles.contactus_dropdown} ${styles.dropdown_text_options}`}
+          >
             <a
               href="/technical-support"
               onClick={() => setOpenMenu(false)}
-              className={styles.contactUsOptions}
+              className={`${styles.contactUsOptions} ${styles.dropdown_text_options}`}
             >
               <DropDownMenuItem
                 icon={{ normal: ContactSupport, hover: ContactSupportBlue }}

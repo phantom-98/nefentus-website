@@ -11,7 +11,14 @@
   border: 1px solid var(--Dark-color-theme-Grey, #323232);
   background: var(--Dark-color-theme-BG2, #171717);
   width: 33.33%;
-  height: fit-content;
+  /* height: fit-content; */
+}
+
+.business-feature-text-btn {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .business-nefentus-logo {

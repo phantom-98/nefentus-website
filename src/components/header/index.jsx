@@ -124,57 +124,67 @@ const Header = () => {
           transition: "transform 0.5s ease",
         }}
       >
-        <Flex align={"center"} justify={"space-between"}>
-          <div
-            onClick={() => {
-              navigate("/");
-              onClose();
-            }}
-          >
-            <img src={LogoWide} alt="Nefentus" />
-          </div>
-          <div className={"mobMenu"}>
-            <div className={`line ${openMenu ? "openLine" : ""}`}></div>
-            <div className={`line ${openMenu ? "openLine" : ""}`}></div>
-            <div className={`line ${openMenu ? "openLine" : ""}`}></div>
+        <div className="whole-mob-menu-section">
+          <div className="top-mob-menu-section">
+            <Flex align={"center"} justify={"space-between"}>
+              <div
+                onClick={() => {
+                  navigate("/");
+                  onClose();
+                }}
+              >
+                <img
+                  className="mob-menu-top-logo-img"
+                  src={LogoWide}
+                  alt="Nefentus"
+                />
+              </div>
+              <div className={"mobMenu"}>
+                <div className={`line ${openMenu ? "openLine" : ""}`}></div>
+                <div className={`line ${openMenu ? "openLine" : ""}`}></div>
+                <div className={`line ${openMenu ? "openLine" : ""}`}></div>
 
-            <div
-              onClick={() => setOpenMenu((prev) => !prev)}
-              className={"lineButton"}
-            ></div>
+                <div
+                  onClick={() => setOpenMenu((prev) => !prev)}
+                  className={"lineButton"}
+                ></div>
+              </div>
+            </Flex>
+            <Flex vertical gap={"2.0rem"} className="header-list-container">
+              <div
+                className="default-text cursor-pointer header-text-font"
+                onClick={() => {
+                  navigate("/business");
+                  onClose();
+                }}
+              >
+                Business
+              </div>
+              <div
+                className="default-text cursor-pointer header-text-font"
+                onClick={() => {
+                  navigate("/private");
+                  onClose();
+                }}
+              >
+                Private
+              </div>
+              <div
+                className="default-text cursor-pointer header-text-font"
+                onClick={() => {
+                  navigate("/pricing");
+                  onClose();
+                }}
+              >
+                Pricing
+              </div>
+              <ContactUs />
+            </Flex>
           </div>
-        </Flex>
-        <Flex vertical gap={"2.5rem"} className="header-list-container">
-          <div
-            className="default-text cursor-pointer header-text-font"
-            onClick={() => {
-              navigate("/business");
-              onClose();
-            }}
-          >
-            Business
+          <div className="bottom-mob-menu-section">
+            {loginAndSignupMobile()}
           </div>
-          <div
-            className="default-text cursor-pointer header-text-font"
-            onClick={() => {
-              navigate("/private");
-              onClose();
-            }}
-          >
-            Private
-          </div>
-          <div
-            className="default-text cursor-pointer header-text-font"
-            onClick={() => {
-              navigate("/pricing");
-              onClose();
-            }}
-          >
-            Pricing
-          </div>
-          <ContactUs />
-        </Flex>
-        {loginAndSignupMobile()}
+        </div>
       </Flex>
     </>
   );
