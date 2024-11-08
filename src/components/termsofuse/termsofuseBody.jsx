@@ -57,34 +57,22 @@ const TermsofUseBody = () => {
 
             <p>
               1.4 Nefentus (the "Platform"): An online platform operated by the
-              Company, offering Virtual Currency wallet services, exchanging
-              Virtual Currencies, and other services as described in Section 3.
+              Company offering crypto invoicing services.
             </p>
 
             <p>
-              1.5 Deposit: A transaction transferring Virtual Currency units
-              from external wallets to your Account.
-            </p>
-
-            <p>
-              1.6 Nefentus Solutions LTD (the "Company", "We", "Our"): A company
+              1.5 Nefentus Solutions LTD (the "Company", "We", "Our"): A company
               incorporated in Cyprus under Company Number ΗΕ 443585, providing
               access to services on the Platform.
             </p>
 
             <p>
-              1.7 Exchange Rate: The value correlation between assets in trading
-              pairs based on demand, supply, value, utility, and other economic
-              variables.
-            </p>
-
-            <p>
-              1.8 Fee: Commission or other costs charged by the Company for
+              1.6 Fee: Commission or other costs charged by the Company for
               using services.
             </p>
 
             <p>
-              1.9 Privacy Policy: Rules of personal data collection, storage,
+              1.7 Privacy Policy: Rules of personal data collection, storage,
               and use in accordance with the Applicable Law, accessible at
               <a href="https://nefentus.com/privacy-policy">
                 https://nefentus.com/privacy-policy
@@ -93,38 +81,33 @@ const TermsofUseBody = () => {
             </p>
 
             <p>
-              1.10 Services: Any services provided on the Platform by the
+              1.8 Services: Any services provided on the Platform by the
               Company, as described in Section 3.
             </p>
 
             <p>
-              1.11 User ("You", "Your"): An individual or a legal entity with an
+              1.9 User ("You", "Your"): An individual or a legal entity with an
               Account on the Website, capable of entering into a legally binding
               contract and using the Website and services under the Applicable
               Law.
             </p>
 
             <p>
-              1.12 Virtual Currency: Decentralized digital asset not issued by a
+              1.10 Virtual Currency: Decentralized digital asset not issued by a
               central authority, not legal tender, securities, e-money, or money
               under the Applicable Law.
             </p>
 
             <p>
-              1.13 Virtual Currency Merchant: A third-party provider of
+              1.11 Virtual Currency Merchant: A third-party provider of
               goods/services supporting payments in Virtual Currencies through
               the User's Account.
             </p>
 
             <p>
-              1.14 Website: The Internet website maintained and owned by the
+              1.12 Website: The Internet website maintained and owned by the
               Company at
               <a href="https://nefentus.com/">https://nefentus.com/</a>.
-            </p>
-
-            <p>
-              1.15 Withdrawal: A transaction transferring Virtual Currency units
-              from your Account to external wallets.
             </p>
 
             <h4>2. Terms of Use Status and Acceptance</h4>
@@ -177,53 +160,23 @@ const TermsofUseBody = () => {
             <h4>3. Services</h4>
             <p>
               3.1 The Company provides the following services on the Website:
+              Invoice creation and payments in Virtual Currencies.
             </p>
 
             <p>
-              Exchange of Virtual Currency units for units of another Virtual
-              Currency;
-              <br />
-              Virtual Currency wallet services;
-              <br />
-              Depositing and withdrawing Virtual Currency units on the Platform.
-            </p>
-
-            <p>
-              3.2 The Company provides a digitally secured wallet for Virtual
-              Currencies. We do not store your private keys; they can be
-              accessed and deleted in your Account.
-            </p>
-
-            <p>
-              3.3 To access services in Section 3.2, you must deposit Virtual
-              Currency units on the Platform.
-            </p>
-
-            <p>
-              3.4 Deposits and withdrawals are made in accordance with Section 9
-              of the Terms.
-            </p>
-
-            <p>
-              3.5 The Company may disable access to the Website, Account, or
+              3.2 The Company may disable access to the Website, Account, or
               specific services at its sole discretion. Restoration of funds
               from disabled access, if possible, will incur a fee.
             </p>
 
             <p>
-              3.6 The Company only offers services regarding supported Virtual
+              3.3 The Company only offers services regarding supported Virtual
               Currencies. Check the Website regularly for updates.
             </p>
 
             <p>
-              3.7 Service provision might be delayed due to technical
+              3.4 Service provision might be delayed due to technical
               difficulties, doubts about fund sources, AML/KYC checks, etc.
-            </p>
-
-            <p>
-              3.8 The maximum threshold for payments to Virtual Currency
-              Merchants is set by the Merchant. Check their policies and terms
-              of service.
             </p>
 
             <h4>4. User Eligibility</h4>
@@ -376,33 +329,29 @@ const TermsofUseBody = () => {
             </p>
 
             <h4>9. Deposits and Withdrawals</h4>
-            <p>
-              9.1 Deposit Virtual Currency units to your Account by following
-              Deposit instructions.
-            </p>
 
             <p>
-              9.2 Withdraw units at any time subject to transaction limits and
+              9.1 Withdraw units at any time subject to transaction limits and
               restrictions imposed during investigations or by law.
             </p>
 
             <p>
-              9.3 Withdraw any amount provided there are enough units to cover
+              9.2 Withdraw any amount provided there are enough units to cover
               applicable fees.
             </p>
 
             <p>
-              9.4 Each withdrawal is subject to a mining fee determined by the
+              9.3 Each withdrawal is subject to a mining fee determined by the
               respective blockchain network.
             </p>
 
             <p>
-              9.5 The Company is not liable for transfers to other wallets.
+              9.4 The Company is not liable for transfers to other wallets.
               Ensure accuracy of withdrawal information.
             </p>
 
             <p>
-              9.6 Blockchain transactions are irreversible. Once sent,
+              9.5 Blockchain transactions are irreversible. Once sent,
               transactions cannot be reversed.
             </p>
 
