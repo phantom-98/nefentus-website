@@ -792,7 +792,7 @@ const securities = [
   {
     img: Security1Png,
     title: `Your assets, your control`,
-    subtitle: `Rest assured, your assets remain in your hands. Every transaction on our platform is direct, between your cryptocurrency wallet & the recipient's—no intermediaries, no fund-holding.`,
+    subtitle: `Rest assured, your assets remain in your hands. We are not holding any funds for you.`,
     alt: "Assets security",
   },
   {
@@ -820,14 +820,17 @@ export const Security = () => {
         className="layout-security"
         style={{ borderInline: "1px solid #202020" }}
       >
-        {securities.map((s) => (
+        {securities.map((s, index) => (
           <div
-            className="security-hline"
+            className="security-hline "
+            key={index}
             style={{
               width: `calc(${100 / securities.length}%)`,
               position: "relative",
               borderInline: "1px solid #323232",
               background: "#202020",
+              height: "100%",
+              padding: index == 0 && "24px",
             }}
           >
             <img
@@ -838,35 +841,22 @@ export const Security = () => {
               alt={s.alt}
             />
             <div
-              style={{
-                position: "absolute",
-                width: "100%",
-                bottom: "0",
-                padding: "2rem",
-              }}
+              className="securities_text_width"
+              style={{ padding: index == 0 && "2rem 1rem 1rem 0rem" }}
             >
-              <p style={{ fontSize: "1.8rem", marginBottom: "0.8rem" }}>
+              <p
+                style={{
+                  fontSize: "1.8rem",
+                  marginBottom: "0.4rem",
+                  height: "100%",
+                }}
+              >
                 {s.title}
               </p>
               <p className="sub-title">{s.subtitle}</p>
             </div>
           </div>
         ))}
-
-        <hr
-          style={{
-            top: "0",
-            width: "100vw",
-            zIndex: "1",
-          }}
-        />
-        <hr
-          style={{
-            bottom: "0",
-            width: "100vw",
-            zIndex: "1",
-          }}
-        />
       </div>
     </div>
   );

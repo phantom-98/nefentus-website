@@ -1,5 +1,6 @@
 # New changes
 
+- Fixing website changes (MINOR)
 - fixing footer issues (MINOR)
 - mobile feedbacks related UI (MINOR)
 - modified help section (MINOR)

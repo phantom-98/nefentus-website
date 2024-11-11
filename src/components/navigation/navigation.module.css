@@ -24,7 +24,7 @@
   justify-content: space-between;
   position: relative;
   padding-block: 0.96rem;
-  max-width: 111rem !important;
+  max-width: 130rem !important;
 }
 
 .content > div {
@@ -67,8 +67,9 @@
 .dropdownMenuItem {
   display: flex;
   gap: 1.5rem;
-  /* padding: 0.8rem; */
-  border-radius: 6px;
+  padding: 2.4rem;
+  border-radius: 0px;
+  height: 100%;
 }
 
 .dropdownMenuItem:hover {
@@ -141,10 +142,6 @@
 
 .contactUsContainer {
   position: relative;
-}
-
-.contactUsOptions {
-  padding: 0rem;
 }
 
 .contactUsOptions:first-child {
@@ -386,6 +383,8 @@
   .contactUsText {
     font-size: 1.6rem;
     height: 16px !important;
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
   }
   .contactUsOptions:first-child {
     border-right: none;
@@ -394,7 +393,7 @@
     flex-direction: column;
   }
   .dropdown_text_options {
-    padding: 1.5rem !important;
+    padding: 1.5rem 0 0 !important;
   }
 
   .logo {
@@ -587,6 +586,7 @@
 
   .dropdownMenuItem {
     align-items: center;
+    padding: 1.5rem !important;
   }
   .dropdownMenuItem .body > p:last-child {
     display: none;

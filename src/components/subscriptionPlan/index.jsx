@@ -76,7 +76,7 @@ const SubscriptionPlan = () => {
               </Flex>
             </td>
             <td>
-              <div className="plan-type">
+              <div className="plan-type plan-type-head">
                 <Flex className="plan-card-head" vertical gap={16}>
                   <label className="default-text-gray plan-label-text">
                     For Beginners
@@ -89,7 +89,7 @@ const SubscriptionPlan = () => {
               </div>
             </td>
             <td>
-              <div className="plan-type">
+              <div className="plan-type plan-type-head">
                 <Flex className="plan-card-head" vertical gap={16}>
                   <label className="default-text-gray plan-label-text">
                     For Professionals
@@ -102,7 +102,7 @@ const SubscriptionPlan = () => {
               </div>
             </td>
             <td>
-              <div className="plan-type">
+              <div className="plan-type plan-type-head">
                 <Flex className="plan-card-head" vertical gap={16}>
                   <label className="default-text-gray plan-label-text">
                     For Corporations
@@ -122,7 +122,7 @@ const SubscriptionPlan = () => {
               </div>
             </td>
             <td>
-              <div className="plan-type">
+              <div className="plan-type starting-at-column">
                 <Flex
                   vertical
                   gap={4}
@@ -137,7 +137,7 @@ const SubscriptionPlan = () => {
               </div>
             </td>
             <td>
-              <div className="plan-type">
+              <div className="plan-type starting-at-column">
                 <Flex
                   vertical
                   gap={4}
@@ -155,7 +155,7 @@ const SubscriptionPlan = () => {
               </div>
             </td>
             <td>
-              <div className="plan-type">
+              <div className="plan-type starting-at-column">
                 <Flex
                   vertical
                   gap={4}

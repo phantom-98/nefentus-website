@@ -4,16 +4,17 @@
 
 .mobile-header {
   background: #171717;
-  position: absolute;
+  position: fixed;
   width: 100%;
   left: 0;
   top: 0;
-  z-index: 10;
-  padding: 4rem;
+  z-index: 1000;
+  padding: 4rem 4rem 8rem 4rem;
 }
 
 .header-length {
   height: 100vh !important;
+  overflow: hidden;
 }
 
 .whole-mob-menu-section {

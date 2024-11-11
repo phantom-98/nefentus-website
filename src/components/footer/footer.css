@@ -55,12 +55,13 @@
 }
 
 .footer-bottom-text {
-  max-width: 67.2rem;
+  max-width: 100%;
   font-size: 1.2rem;
   padding-bottom: 3rem !important;
   padding-top: 0 !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
+  text-align: justify;
 }
 
 .footer-layout .bottom-right {

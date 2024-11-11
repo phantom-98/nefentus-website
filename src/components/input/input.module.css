@@ -2,7 +2,8 @@
 .textarea,
 .attachment {
   width: 100%;
-  background: var(--BG2, #171717);
+  background: var(--BG2, #202020);
+  background: #202020;
   border-radius: 6px;
   font-size: 14px;
   padding: 1rem;

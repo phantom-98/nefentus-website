@@ -350,15 +350,13 @@ export const ContactUs = () => {
       {open && (
         <div
           className={styles.dropdown}
-          style={{ left: "-28rem", top: "3.5rem" }}
+          style={{ left: "-28rem", top: "4rem" }}
         >
-          <Flex
-            className={`${styles.contactus_dropdown} ${styles.dropdown_text_options}`}
-          >
+          <Flex className={`${styles.contactus_dropdown} `}>
             <a
               href="/technical-support"
               onClick={() => setOpenMenu(false)}
-              className={`${styles.contactUsOptions} ${styles.dropdown_text_options}`}
+              className={`${styles.contactUsOptions}`}
             >
               <DropDownMenuItem
                 icon={{ normal: ContactSupport, hover: ContactSupportBlue }}
@@ -369,7 +367,7 @@ export const ContactUs = () => {
             <a
               href="/business-support"
               onClick={() => setOpenMenu(false)}
-              className={styles.contactUsOptions}
+              className={`${styles.contactUsOptions}`}
             >
               <DropDownMenuItem
                 icon={{ normal: ContactExpert, hover: ContactExpertBlue }}
