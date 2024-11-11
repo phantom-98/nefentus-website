@@ -167,7 +167,7 @@
 
 .hero-layout h1,
 .hero-layout p {
-  max-width: 111rem;
+  max-width: 130rem;
 }
 
 .manage-title-layout p {
@@ -210,6 +210,22 @@
 .landing-layout .sub-title {
   color: #b1b1b1;
   font-size: 1.6rem;
+}
+
+.sub-title-right {
+  padding: 2.4rem;
+  color: #b1b1b1;
+  font-size: 1.6rem;
+  width: 100%;
+  height: 59%;
+}
+
+.title-right {
+  padding: 2.4rem;
+  color: #fff;
+  font-size: 1.6rem;
+  width: 100%;
+  height: 59%;
 }
 
 .sub-title-text-size {
@@ -358,7 +374,7 @@
 }
 .b2b .api-block .layout-horizontal {
   position: relative;
-  max-width: 111rem;
+  max-width: 130rem;
   padding: 0;
 }
 .landing-layout .layout-title {
@@ -644,7 +660,7 @@
 }
 .landing-layout .benefits div:first-child {
   width: 50%;
-  /* height: 36rem; */
+  max-height: 40rem;
   background: #1d1d1d;
   overflow: hidden;
   position: relative;
@@ -668,14 +684,19 @@
 .landing-layout .outlook p:first-child,
 .landing-layout .benefits > div > p:first-child {
   font-size: 2rem;
+  margin-bottom: 1.4rem;
 }
 .landing-layout .outlook p:last-child,
 .landing-layout .benefits > div > p:last-child {
   font-size: 1.6rem;
-  max-width: 55%;
-}
-.landing-layout .benefits div:nth-child(2) > p {
   width: 55%;
+}
+.landing-layout .benefits div:nth-child(2) > p:first-child {
+  width: 55%;
+  margin-bottom: 1.4rem;
+}
+.landing-layout .benefits div:nth-child(2) > p:last-child {
+  width: 75%;
 }
 .landing-layout .benefits .benefit2-description {
   margin-top: 18rem;
@@ -691,7 +712,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: end;
   padding: 2.4rem;
 }
 
@@ -702,6 +723,13 @@
 @media screen and (max-width: 767px) {
   .web-outlook-options {
     display: none;
+  }
+  .landing-layout .benefits div:first-child {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2.4rem;
   }
   .mobile-outlook-img {
     display: initial !important;
@@ -1180,20 +1208,28 @@
   padding-block: 4rem;
 }
 .benefits-block-left {
+  background-image: url("../../assets/landing/wallet-benefit-1.png") !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  min-width: 50% !important;
+  height: 40rem;
+}
+/* .benefits-block-right {
   background-image: url("../../assets/landing/benefit1.png") !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
   width: 50%;
-}
+} */
+
 /* .landing-layout .b2b-manage {
   padding-block: 10rem;
 } */
-/* .landing-layout .benefits img {
+.landing-layout .benefits img {
   height: 100%;
   position: absolute;
   bottom: 0;
   right: 0;
-} */
+}
 .landing-layout .feature-heading > img:last-child {
   display: none;
   width: 100%;
@@ -1433,6 +1469,13 @@
   width: 50%;
 }
 
+.securities_text_width {
+  max-width: 100%;
+  position: absolute;
+  bottom: 0;
+  padding: 2rem;
+}
+
 .mobile-b2c-image,
 .multi-wallet-mobile-view {
   display: none;
@@ -1443,13 +1486,23 @@
 }
 
 .benefits-block-right {
+  background-image: url("../../assets/landing/wallet-benefit-2.png");
   border-radius: 16px;
   width: 50%;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  padding: 2.4rem;
+  border: 1px solid #323232;
+  min-height: 301px;
 }
 
 @media (max-width: 900px) {
   .benefits-block-right {
     width: 100%;
+    justify-content: space-between;
   }
   .landing-layout .benefits div:first-child {
     width: 100% !important;
@@ -1892,7 +1945,6 @@
     height: 6rem;
   }
   .security-hline {
-    width: 100% !important;
     height: 36rem;
     border: 1px solid #323232 !important;
   }
@@ -2007,6 +2059,9 @@
   .landing-layout .wallet-external hr {
     display: none !important;
   }
+  .benefits-block-right {
+    background-position: center;
+  }
   .landing-layout .wallet-external > p {
     width: 100%;
   }
@@ -2083,7 +2138,7 @@
 .landing-layout.contact {
   width: 100%;
   position: relative;
-  background: #202020;
+  background: #171717;
   border: 1px solid #323232;
   border-radius: 16px;
 }

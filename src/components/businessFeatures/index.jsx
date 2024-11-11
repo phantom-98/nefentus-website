@@ -27,14 +27,16 @@ const BusinessFeatures = () => {
             <div className="business-nefentus-logo">
               <img src={Logo} alt="Nefentus" width={26} />
             </div>
-            <div className="default-text-gray business-feature-left-text">
-              Nefentus supports your business with efficient crypto solutions.
+            <div className="business-feature-text-btn">
+              <div className="default-text-gray business-feature-left-text">
+                Nefentus supports your business with efficient crypto solutions.
+              </div>
+              <CommonButton
+                text={"Create an account"}
+                type={"primary"}
+                className="business-account-create"
+              />
             </div>
-            <CommonButton
-              text={"Create an account"}
-              type={"primary"}
-              className="business-account-create"
-            />
           </Flex>
           <div className="business-feature-right">
             <img

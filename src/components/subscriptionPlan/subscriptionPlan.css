@@ -19,6 +19,14 @@
   width: 33.33%;
 }
 
+.starting-at-column {
+  min-height: 180px !important;
+}
+
+.plan-type-head {
+  min-height: 240px !important;
+}
+
 .plan-table-border-row {
   border-bottom: 1px solid #323232; /* Define border width, style, and color */
 }
@@ -88,8 +96,8 @@ th {
     0px 139px 83px 0px rgba(0, 0, 0, 0.05),
     0px 62px 62px 0px rgba(0, 0, 0, 0.09),
     0px 15px 34px 0px rgba(0, 0, 0, 0.1);
-  padding: 5px 12px;
-  font-size: 1.6rem;
+  padding: 5px 10px;
+  font-size: 1.4rem;
   line-height: 2.5rem;
   width: fit-content;
 }
@@ -108,10 +116,10 @@ th {
   background: var(--Whitemode-Blue, #0097cd) !important;
 }
 
-.plan-type:hover .plan-card-head {
+/* .plan-type:hover .plan-card-head {
   background: linear-gradient(187deg, #252525 10.75%, #3e3e3e 248.84%);
   border-radius: 12px 12px 0px 0px;
-}
+} */
 
 .plan-label {
   font-size: 2rem;
@@ -147,6 +155,12 @@ th {
 
 .heading-for-mobile {
   display: none;
+}
+
+@media (max-width: 1350px) {
+  .plan-type {
+    min-height: 84px;
+  }
 }
 
 @media screen and (max-width: 1200px) {

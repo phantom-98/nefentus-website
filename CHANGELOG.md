@@ -1,6 +1,8 @@
 # New changes
 
 - Update terms of use (MINOR)
+- Fixing website changes (MINOR)
+- fixing footer issues (MINOR)
 - mobile feedbacks related UI (MINOR)
 - modified help section (MINOR)
 - fix alignment issues (MINOR)

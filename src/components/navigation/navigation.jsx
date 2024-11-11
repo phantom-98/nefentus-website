@@ -335,7 +335,7 @@ export const ContactUs = () => {
         gap={"1rem"}
         className={`cursor-pointer default-text ${styles.contactUsText}`}
       >
-        <p>Contact us</p>
+        <p onClick={() => setOpen(!open)}>Contact us</p>
         <img
           src={Dropdown}
           style={{
@@ -350,13 +350,13 @@ export const ContactUs = () => {
       {open && (
         <div
           className={styles.dropdown}
-          style={{ left: "-28rem", top: "3.5rem" }}
+          style={{ left: "-28rem", top: "4rem" }}
         >
-          <Flex className={styles.contactus_dropdown}>
+          <Flex className={`${styles.contactus_dropdown} `}>
             <a
               href="/technical-support"
               onClick={() => setOpenMenu(false)}
-              className={styles.contactUsOptions}
+              className={`${styles.contactUsOptions}`}
             >
               <DropDownMenuItem
                 icon={{ normal: ContactSupport, hover: ContactSupportBlue }}
@@ -367,7 +367,7 @@ export const ContactUs = () => {
             <a
               href="/business-support"
               onClick={() => setOpenMenu(false)}
-              className={styles.contactUsOptions}
+              className={`${styles.contactUsOptions}`}
             >
               <DropDownMenuItem
                 icon={{ normal: ContactExpert, hover: ContactExpertBlue }}

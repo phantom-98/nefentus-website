@@ -54,6 +54,16 @@
   padding-right: 6rem;
 }
 
+.footer-bottom-text {
+  max-width: 100%;
+  font-size: 1.2rem;
+  padding-bottom: 3rem !important;
+  padding-top: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-align: justify;
+}
+
 .footer-layout .bottom-right {
   display: flex;
   align-items: center;
@@ -86,7 +96,13 @@
     padding-top: 4rem;
     padding-bottom: 4rem;
   }
-
+  .footer-bottom-text {
+    width: 100%;
+    padding-bottom: 3rem !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
   .sitemap {
     gap: 4.8rem !important;
     font-size: 1.6rem;

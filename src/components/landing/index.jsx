@@ -16,8 +16,8 @@ import Help3 from "../../assets/landing/help 3.png";
 import Help4 from "../../assets/landing/help 4.png";
 import WalletsPng from "../../assets/landing/Wallets.png";
 import MobileWalletPng from "../../assets/landing/WalletImage-2.png";
-import Benefit1 from "../../assets/landing/benefit1.png";
-import Benefit2 from "../../assets/landing/benefit2.png";
+import Benefit1 from "../../assets/landing/wallet-benefit-1.png";
+import Benefit2 from "../../assets/landing/wallet-benefit-2.png";
 import ServiceLine1 from "../../assets/landing/service line left.svg";
 import ServiceLine2 from "../../assets/landing/service line right.svg";
 import GettingStarted1 from "../../assets/landing/started left.svg";
@@ -74,6 +74,7 @@ var settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
 };
+
 const HomeBody = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -267,7 +268,7 @@ export const Helps = () => {
   return (
     <div className="layout-paragraph help">
       <Heading
-        title={`Transform your business with \n our all-in-one cryptocurrency platform`}
+        title={`Transform your business with \n our all-in- one crypto invoicing`}
         subtitle={`Empower your business with a comprehensive suite of cryptocurrency tools conveniently housed under one roof.`}
       />
       <div className="layout-horizontal layout-help">
@@ -392,6 +393,19 @@ const IcoGroup = ({ icons }) => {
 };
 
 export const Benefits = () => {
+  const [mobileView, setMobileView] = useState(null);
+
+  useEffect(() => {
+    const getNewDate = () => {
+      setMobileView(window.innerWidth);
+    };
+
+    window.addEventListener("resize", getNewDate);
+
+    return () => {
+      window.removeEventListener("resize", getNewDate);
+    };
+  }, []);
   return (
     <div
       className="layout-paragraph"
@@ -438,20 +452,31 @@ export const Benefits = () => {
         </div>
         <div className="benefits benefits-padding">
           <div style={{ borderRadius: "16px" }} className="benefits-block-left">
-            <p>Pre-configured payment.</p>
-            {/* <img src={Benefit1} alt="Pre configured payments using Nefentus" /> */}
+            <p>
+              {mobileView && mobileView > 900
+                ? "Pre-configured payment."
+                : "Multi-wallet management"}
+            </p>
             <p className="sub-title">
-              Commerce shares payment information directly with their wallet,
-              removing any need for manual data entry.
+              {mobileView && mobileView > 900
+                ? " Commerce shares payment information directly with their wallet,removing any need for manual data entry."
+                : "Hundreds of currencies, all Web3 wallets. Customers can pay with their preferred wallet and currency across Bitcoin, Ethereum, and other networks"}
             </p>
           </div>
-          <div className="benefits-block-right">
-            <img
-              src={Benefit2}
-              alt="Cryptocurrency checkout"
-              width={"100%"}
-              height="100%"
-            />
+          <div
+            style={{ borderRadius: "16px" }}
+            className="benefits-block-right"
+          >
+            <p>
+              {mobileView && mobileView > 900
+                ? "Streamline your online checkout experience"
+                : "Online checkout"}
+            </p>
+            <p className="sub-title">
+              {mobileView && mobileView > 900
+                ? "Nefentus supports hundreds of currencies and cryptocurrency wallets. Customers can pay with their preferred wallet and currency across Bitcoin, Ethereum, and other networks."
+                : "Integrate a ready-made payment page to your website and attract clients who prefer paying in crypto"}
+            </p>
           </div>
         </div>
       </div>
@@ -516,7 +541,11 @@ const ScrollAnimation = () => {
               </div>
               <p>{item.title}</p>
               <p className="sub-title">{item.subtitle}</p>
-              <img src={item.img} alt={item.alt} />
+              <img
+                className="feature-image-fixed"
+                src={item.img}
+                alt={item.alt}
+              />
             </div>
           );
         })}
